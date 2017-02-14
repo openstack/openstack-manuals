@@ -81,8 +81,9 @@ must create a database, service credentials, and API endpoints.
         +---------------------+----------------------------------+
         | domain_id           | default                          |
         | enabled             | True                             |
-        | id                  | 319f34694728440eb8ffcb27b6dd8b8a |
+        | id                  | fdb0f541e28141719b6a43c8944bf1fb |
         | name                | neutron                          |
+        | options             | {}                               |
         | password_expires_at | None                             |
         +---------------------+----------------------------------+
 

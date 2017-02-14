@@ -19,41 +19,95 @@ Verify operation
 
    .. code-block:: console
 
-      $ neutron ext-list
+      $ openstack extension list --network
 
-      +---------------------------+---------------------------------+
-      | alias                     | name                            |
-      +---------------------------+---------------------------------+
-      | default-subnetpools       | Default Subnetpools             |
-      | availability_zone         | Availability Zone               |
-      | network_availability_zone | Network Availability Zone       |
-      | binding                   | Port Binding                    |
-      | agent                     | agent                           |
-      | subnet_allocation         | Subnet Allocation               |
-      | dhcp_agent_scheduler      | DHCP Agent Scheduler            |
-      | tag                       | Tag support                     |
-      | external-net              | Neutron external network        |
-      | flavors                   | Neutron Service Flavors         |
-      | net-mtu                   | Network MTU                     |
-      | network-ip-availability   | Network IP Availability         |
-      | quotas                    | Quota management support        |
-      | provider                  | Provider Network                |
-      | multi-provider            | Multi Provider Network          |
-      | address-scope             | Address scope                   |
-      | subnet-service-types      | Subnet service types            |
-      | standard-attr-timestamp   | Resource timestamps             |
-      | service-type              | Neutron Service Type Management |
-      | extra_dhcp_opt            | Neutron Extra DHCP opts         |
-      | standard-attr-revisions   | Resource revision numbers       |
-      | pagination                | Pagination support              |
-      | sorting                   | Sorting support                 |
-      | security-group            | security-group                  |
-      | rbac-policies             | RBAC Policies                   |
-      | standard-attr-description | standard-attr-description       |
-      | port-security             | Port Security                   |
-      | allowed-address-pairs     | Allowed Address Pairs           |
-      | project-id                | project_id field enabled        |
-      +---------------------------+---------------------------------+
+      +---------------------------+---------------------------+----------------------------+
+      | Name                      | Alias                     | Description                |
+      +---------------------------+---------------------------+----------------------------+
+      | Default Subnetpools       | default-subnetpools       | Provides ability to mark   |
+      |                           |                           | and use a subnetpool as    |
+      |                           |                           | the default                |
+      | Availability Zone         | availability_zone         | The availability zone      |
+      |                           |                           | extension.                 |
+      | Network Availability Zone | network_availability_zone | Availability zone support  |
+      |                           |                           | for network.               |
+      | Port Binding              | binding                   | Expose port bindings of a  |
+      |                           |                           | virtual port to external   |
+      |                           |                           | application                |
+      | agent                     | agent                     | The agent management       |
+      |                           |                           | extension.                 |
+      | Subnet Allocation         | subnet_allocation         | Enables allocation of      |
+      |                           |                           | subnets from a subnet pool |
+      | DHCP Agent Scheduler      | dhcp_agent_scheduler      | Schedule networks among    |
+      |                           |                           | dhcp agents                |
+      | Tag support               | tag                       | Enables to set tag on      |
+      |                           |                           | resources.                 |
+      | Neutron external network  | external-net              | Adds external network      |
+      |                           |                           | attribute to network       |
+      |                           |                           | resource.                  |
+      | Neutron Service Flavors   | flavors                   | Flavor specification for   |
+      |                           |                           | Neutron advanced services  |
+      | Network MTU               | net-mtu                   | Provides MTU attribute for |
+      |                           |                           | a network resource.        |
+      | Network IP Availability   | network-ip-availability   | Provides IP availability   |
+      |                           |                           | data for each network and  |
+      |                           |                           | subnet.                    |
+      | Quota management support  | quotas                    | Expose functions for       |
+      |                           |                           | quotas management per      |
+      |                           |                           | tenant                     |
+      | Provider Network          | provider                  | Expose mapping of virtual  |
+      |                           |                           | networks to physical       |
+      |                           |                           | networks                   |
+      | Multi Provider Network    | multi-provider            | Expose mapping of virtual  |
+      |                           |                           | networks to multiple       |
+      |                           |                           | physical networks          |
+      | Address scope             | address-scope             | Address scopes extension.  |
+      | Subnet service types      | subnet-service-types      | Provides ability to set    |
+      |                           |                           | the subnet service_types   |
+      |                           |                           | field                      |
+      | Resource timestamps       | standard-attr-timestamp   | Adds created_at and        |
+      |                           |                           | updated_at fields to all   |
+      |                           |                           | Neutron resources that     |
+      |                           |                           | have Neutron standard      |
+      |                           |                           | attributes.                |
+      | Neutron Service Type      | service-type              | API for retrieving service |
+      | Management                |                           | providers for Neutron      |
+      |                           |                           | advanced services          |
+      | Tag support for           | tag-ext                   | Extends tag support to     |
+      | resources: subnet,        |                           | more L2 and L3 resources.  |
+      | subnetpool, port, router  |                           |                            |
+      | Neutron Extra DHCP opts   | extra_dhcp_opt            | Extra options              |
+      |                           |                           | configuration for DHCP.    |
+      |                           |                           | For example PXE boot       |
+      |                           |                           | options to DHCP clients    |
+      |                           |                           | can be specified (e.g.     |
+      |                           |                           | tftp-server, server-ip-    |
+      |                           |                           | address, bootfile-name)    |
+      | Resource revision numbers | standard-attr-revisions   | This extension will        |
+      |                           |                           | display the revision       |
+      |                           |                           | number of neutron          |
+      |                           |                           | resources.                 |
+      | Pagination support        | pagination                | Extension that indicates   |
+      |                           |                           | that pagination is         |
+      |                           |                           | enabled.                   |
+      | Sorting support           | sorting                   | Extension that indicates   |
+      |                           |                           | that sorting is enabled.   |
+      | security-group            | security-group            | The security groups        |
+      |                           |                           | extension.                 |
+      | RBAC Policies             | rbac-policies             | Allows creation and        |
+      |                           |                           | modification of policies   |
+      |                           |                           | that control tenant access |
+      |                           |                           | to resources.              |
+      | standard-attr-description | standard-attr-description | Extension to add           |
+      |                           |                           | descriptions to standard   |
+      |                           |                           | attributes                 |
+      | Port Security             | port-security             | Provides port security     |
+      | Allowed Address Pairs     | allowed-address-pairs     | Provides allowed address   |
+      |                           |                           | pairs                      |
+      | project_id field enabled  | project-id                | Extension that indicates   |
+      |                           |                           | that project_id field is   |
+      |                           |                           | enabled.                   |
+      +---------------------------+---------------------------+----------------------------+
 
    .. end
 
