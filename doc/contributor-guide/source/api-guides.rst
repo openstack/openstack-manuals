@@ -48,6 +48,35 @@ target directory for the content in the ``api-ref-jobs:`` indicator. If
 your service does not have a name indicated in the governance repo,
 please ask your PTL or a Technical Committee member how to proceed.
 
+Versions and releases for API reference information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All API reference jobs publish from master as soon as a change lands in the
+respective project repository. This publishing practice means that you must
+write inline information when an API has a change release-to-release. Inline
+text descriptions are the only way to convey the corresponding release
+information to the documentation consumer.
+
+There are different types of versions related to OpenStack services that
+provide an API. For example, a version of a service is separate from the
+version of an API provided by that service. Also, `microversions`_
+are small, documented changes to an individual API method, and are only
+applicable to some OpenStack APIs, as indicated with (microversions) on
+the `API Quick Start page`_.
+
+Example representations of versions for the OpenStack Compute service:
+
+* Header version: `OpenStack-API-Version: compute 2.1`
+* Service version (Release name): 15.0 (Newton)
+* URI version:  `https://servers.api.openstack.org/v2.1/`
+* MIME type version: `application/vnd.openstack.compute.v2.1+json`
+* Microversion: `2.6`
+
+Each project that follows the `cycle-with-milestones release model`_ has stable
+branches that contain a point-in-time set of API reference content. If needed,
+refer to that source repository's content for release comparisons for API
+reference information.
+
 .. _how-to-document-api:
 
 How to document your OpenStack API service
@@ -153,6 +182,10 @@ documentation, patch the ``reference/projects.yaml`` file in the
 .. _`Compute API Guide`: https://developer.openstack.org/api-guide/compute
 .. _`example patch`: https://review.openstack.org/#/c/233446/
 .. _`API documentation guidelines`: https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
+.. _`microversions`: https://developer.openstack.org/api-guide/compute/microversions.html
+.. _`API Quick Start page`: https://developer.openstack.org/api-guide/quick-start/
+.. _`cycle-with-milestones release model`: https://releases.openstack.org/reference/release_models.html#cycle-with-milestones
 .. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py
 .. _`openstack/api-site repository`: https://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start/source/index.rst
 .. _`openstack/governance repository`: https://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml
+
