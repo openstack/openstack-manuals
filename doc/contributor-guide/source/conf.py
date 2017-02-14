@@ -217,9 +217,20 @@ html_copy_source = False
 
 # -- Options for LaTeX output ---------------------------------------------
 
+latex_engine = 'xelatex'
+
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
+
+    # set font (TODO: different fonts for translated PDF document builds)
+    'fontenc': '\\usepackage{fontspec}',
+    'fontpkg': '''\
+\defaultfontfeatures{Scale=MatchLowercase}
+\setmainfont{Liberation Serif}
+\setsansfont{Liberation Sans}
+\setmonofont[SmallCapsFont={Liberation Mono}]{Liberation Mono}
+''',
 
     # The font size ('10pt', '11pt' or '12pt').
     # 'pointsize': '10pt',
