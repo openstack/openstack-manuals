@@ -86,9 +86,9 @@ relaxed about database access and actions:
    security policy for Galera Cluster and then switch SELinux back
    into enforcing mode.
 
-    For more information on configuring SELinux to work with
-    Galera Cluster, see the `SELinux Documentation
-    <http://galeracluster.com/documentation-webpages/selinux.html>`_
+   For more information on configuring SELinux to work with
+   Galera Cluster, see the `SELinux Documentation
+   <http://galeracluster.com/documentation-webpages/selinux.html>`_
 
 AppArmor
 ---------
