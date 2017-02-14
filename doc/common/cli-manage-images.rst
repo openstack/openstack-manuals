@@ -142,7 +142,7 @@ model:
    :command:`openstack image create`.
    Also, we recommend that you set the ``hypervisor_type="vmware"`` property.
    For more information, see `Images with VMware vSphere
-   <https://docs.openstack.org/newton/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
+   <https://docs.openstack.org/ocata/config-reference/compute/hypervisor-vmware.html#images-with-vmware-vsphere>`_
    in the OpenStack Configuration Reference.
 
 .. code-block:: console
