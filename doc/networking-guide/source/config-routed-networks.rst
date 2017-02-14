@@ -192,13 +192,13 @@ Controller node
    .. code-block:: ini
 
       [placement]
-      auth_uri = http://192.168.33.72/identity
+      auth_uri = http://192.0.2.72/identity
       project_domain_name = Default
       project_name = service
       user_domain_name = Default
       password = apassword
       username = nova
-      auth_url = http://192.168.33.72/identity_admin
+      auth_url = http://192.0.2.72/identity_admin
       auth_type = password
       region_name = RegionOne
 
