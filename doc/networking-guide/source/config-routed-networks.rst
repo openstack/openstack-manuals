@@ -409,11 +409,11 @@ segment contains one IPv4 subnet and one IPv6 subnet.
    .. code-block:: console
 
       $ SEGMENT_ID=053b7925-9a89-4489-9992-e164c8cc8763
-      $ curl -s -X GET
-      > http://localhost/placement/resource_providers/$SEGMENT_ID/inventories \
-      > -H "Content-type: application/json" \
-      > -H "X-Auth-Token: $TOKEN" \
-      > -H "Openstack-Api-Version: placement 1.1"
+      $ curl -s -X GET \
+        http://localhost/placement/resource_providers/$SEGMENT_ID/inventories \
+        -H "Content-type: application/json" \
+        -H "X-Auth-Token: $TOKEN" \
+        -H "Openstack-Api-Version: placement 1.1"
       {
           "resource_provider_generation": 1,
           "inventories": {
