@@ -95,7 +95,11 @@ Shared storage
    modify the commands accordingly.
 
 -  You must specify ``vncserver_listen=0.0.0.0`` or live migration
-   will not work correctly.
+   will not work correctly. Because of this listening access, you must take
+   additional security measures to protect access to the VNC proxy from the
+   hypervisor. Using secure networks for that connection and configuring
+   firewalls is a best practice to make sure that you do not provide root
+   access to attackers gaining access to VMs through the proxy.
 
 -  You must specify the ``instances_path`` in each node that runs
    ``nova-compute``. The mount point for ``instances_path`` must be the
