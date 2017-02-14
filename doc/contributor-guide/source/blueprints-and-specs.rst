@@ -78,21 +78,21 @@ process for multiple distributions based on the following packaging systems:
 
    * - Installation Tutorial for openSUSE and SUSE Linux Enterprise Server
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - https://docs.openstack.org/newton/install-guide-obs/
+     - https://docs.openstack.org/ocata/install-guide-obs/
 
    * - Installation Tutorial for Red Hat Enterprise Linux and CentOS
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - https://docs.openstack.org/newton/install-guide-rdo/
+     - https://docs.openstack.org/ocata/install-guide-rdo/
 
    * - Installation Tutorial for Ubuntu 16.04 (LTS)
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
-     - https://docs.openstack.org/newton/install-guide-ubuntu/
+     - https://docs.openstack.org/ocata/install-guide-ubuntu/
 
-   * - Installation Tutorial For Debian With Debconf
+   * - Installation Tutorial For Debian With Debconf (is not provided for Ocata)
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-debconf/
 
-   * - Installation Tutorial For Debian
+   * - Installation Tutorial For Debian (is not provided for Ocata)
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-debian/
 
@@ -100,11 +100,11 @@ Guides for deployers and administrators
 ---------------------------------------
 
 * `OpenStack Configuration Reference
-  <https://docs.openstack.org/newton/config-reference/>`_:
+  <https://docs.openstack.org/ocata/config-reference/>`_:
   Contains a reference listing of all configuration options for OpenStack
   services by release version.
 * `OpenStack Networking Guide
-  <https://docs.openstack.org/newton/networking-guide/>`_:
+  <https://docs.openstack.org/ocata/networking-guide/>`_:
   This guide targets OpenStack administrators seeking to deploy and manage
   OpenStack Networking (neutron).
 
@@ -117,11 +117,11 @@ Guides for deployers and administrators
 
    * - Configuration Reference
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
-     - https://docs.openstack.org/newton/config-reference/
+     - https://docs.openstack.org/ocata/config-reference/
 
    * - OpenStack Networking Guide
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
-     - https://docs.openstack.org/newton/networking-guide/
+     - https://docs.openstack.org/ocata/networking-guide/
 
 Continuously released documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
