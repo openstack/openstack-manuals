@@ -15,18 +15,16 @@ general, events represent any action made in the OpenStack system.
 Event configuration
 ~~~~~~~~~~~~~~~~~~~
 
-To enable the creation and storage of events in the Telemetry service
-``store_events`` option needs to be set to ``True``. For further configuration
-options, see the event section in the `OpenStack Configuration Reference
-<https://docs.openstack.org/newton/config-reference/telemetry.html>`__.
+By default, ceilometer builds event data from the messages it receives from
+other OpenStack services.
 
 .. note::
 
-    It is advisable to set ``disable_non_metric_meters`` to ``True``
-    when enabling events in the Telemetry service. The Telemetry service
-    historically represented events as metering data, which may create
-    duplication of data if both events and non-metric meters are
-    enabled.
+    In releases older than Ocata, it is advisable to set
+    ``disable_non_metric_meters`` to ``True`` when enabling events in the
+    Telemetry service. The Telemetry service historically represented events as
+    metering data, which may create duplication of data if both events and
+    non-metric meters are enabled.
 
 Event structure
 ~~~~~~~~~~~~~~~
