@@ -102,6 +102,7 @@ After these changes have merged, you can set up the jobs for building.
 #. Commit the changes to the infra repository for review.
 
 To create or update the master index file, create or update the
-``www/project-install-guide/RELEASE/index.html`` file at the
+``www/project-install-guide/RELEASE/index.html`` file and the
+``doc/install-guide/source/additional-services.rst`` at the
 ``openstack-manuals`` repository.
 For draft (unreleased) version, replace ``RELEASE`` with ``draft``.
