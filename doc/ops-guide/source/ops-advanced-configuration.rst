@@ -12,7 +12,7 @@ possible deployments with the default configuration values.
 At the time of writing, OpenStack has more than 3,000 configuration
 options. You can see them documented at the
 `OpenStack Configuration Reference
-<https://docs.openstack.org/newton/config-reference/config-overview.html>`_.
+<https://docs.openstack.org/ocata/config-reference/config-overview.html>`_.
 This chapter cannot hope to document all of these, but we do try to
 introduce the important concepts so that you know where to go digging
 for more information.
@@ -31,7 +31,7 @@ different tuning requirements.
 
    The currently implemented hypervisors are listed on the `OpenStack
    Configuration Reference
-   <https://docs.openstack.org/newton/config-reference/compute/hypervisors.html>`__.
+   <https://docs.openstack.org/ocata/config-reference/compute/hypervisors.html>`__.
    You can see a matrix of the various features in OpenStack Compute
    (nova) hypervisor drivers at the `Hypervisor support matrix
    page <https://docs.openstack.org/developer/nova/support-matrix.html>`_.

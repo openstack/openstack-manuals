@@ -36,7 +36,7 @@ Upgrade planning
 -  Consider adopting structure and options from the service
    configuration files and merging them with existing configuration
    files. The `OpenStack Configuration
-   Reference <https://docs.openstack.org/newton/config-reference/>`_
+   Reference <https://docs.openstack.org/ocata/config-reference/>`_
    contains new, updated, and deprecated options for most services.
 
 -  Like all major system upgrades, your upgrade could fail for one or
@@ -96,7 +96,7 @@ Watch the network
 To set up the test environment, you can use one of several methods:
 
 -  Do a full manual install by using the `Installation Tutorials and Guides
-   <https://docs.openstack.org/project-install-guide/newton/>`_ for
+   <https://docs.openstack.org/project-install-guide/ocata/>`_ for
    your platform. Review the final configuration files and installed
    packages.
 
@@ -177,7 +177,7 @@ Upgrade process
 This section describes the process to upgrade a basic OpenStack
 deployment based on the basic two-node architecture in the `Installation
 Tutorials and Guides
-<https://docs.openstack.org/project-install-guide/newton/>`_. All
+<https://docs.openstack.org/project-install-guide/ocata/>`_. All
 nodes must run a supported distribution of Linux with a recent kernel
 and the current release packages.
 
@@ -243,7 +243,7 @@ Perform a backup
 
       Consider updating your SQL server configuration as described in the
       `Installation Tutorials and Guides
-      <https://docs.openstack.org/project-install-guide/newton/>`_.
+      <https://docs.openstack.org/project-install-guide/ocata/>`_.
 
 Manage repositories
 -------------------
