@@ -26,7 +26,7 @@ To enable KVM explicitly, add the following configuration options to the
 The KVM hypervisor supports the following virtual machine image formats:
 
 * Raw
-* QEMU Copy-on-write (qcow2)
+* QEMU Copy-on-write (QCOW2)
 * QED Qemu Enhanced Disk
 * VMware virtual machine disk format (vmdk)
 
@@ -231,15 +231,24 @@ Backing Storage is the storage used to provide the expanded operating system
 image, and any ephemeral storage. Inside the virtual machine, this is normally
 presented as two virtual hard disks (for example, ``/dev/vda`` and ``/dev/vdb``
 respectively). However, inside OpenStack, this can be derived from one of
-these methods: ``lvm``, ``qcow``, ``rbd`` or ``raw``, chosen using the
+these methods: ``lvm``, ``qcow``, ``rbd`` or ``flat``, chosen using the
 ``images_type`` option in ``nova.conf`` on the compute node.
+
+.. note::
+
+   The option ``raw`` is acceptable but deprecated in favor of ``flat``.
+   The Flat back end uses either raw or QCOW2 storage. It never uses
+   a backing store, so when using QCOW2 it copies an image rather than
+   creating an overlay. By default, it creates raw files but will use
+   QCOW2 when creating a disk from a QCOW2 if ``force_raw_images`` is
+   not set in configuration.
 
 QCOW is the default backing store. It uses a copy-on-write philosophy to delay
 allocation of storage until it is actually needed. This means that the space
 required for the backing of an image can be significantly less on the real disk
 than what seems available in the virtual machine operating system.
 
-RAW creates files without any sort of file formatting, effectively creating
+Flat creates files without any sort of file formatting, effectively creating
 files with the plain binary one would normally see on a real disk. This can
 increase performance, but means that the entire size of the virtual disk is
 reserved on the physical disk.
