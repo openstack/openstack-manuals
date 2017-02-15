@@ -13,7 +13,7 @@ Abstract
 This guide targets OpenStack administrators seeking to deploy and
 manage OpenStack Networking (neutron).
 
-This guide documents the OpenStack Newton release.
+This guide documents the OpenStack Ocata release.
 
 Contents
 ~~~~~~~~
