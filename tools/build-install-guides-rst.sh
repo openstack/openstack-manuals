@@ -2,7 +2,8 @@
 
 mkdir -p publish-docs
 
-TAGS=${1:-obs rdo ubuntu debian debconf}
+# Do not build  debian debconf for now, there're no Ocata packages at all.
+TAGS=${1:-obs rdo ubuntu}
 INDEX=doc/install-guide/source/index.rst
 
 LINKCHECK=""
