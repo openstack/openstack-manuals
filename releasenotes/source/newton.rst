@@ -41,17 +41,17 @@ API guides
 
 * The API reference documentation has been moved from the api-site
   repository to project specific repositories. The collection of API docs
-  is now available on the `API Quick Start page <http://developer.openstack.org/api-guide/quick-start/>`_.
+  is now available on the `OpenStack API Documentation <https://developer.openstack.org/api-guide/quick-start/>`_.
 
-* The `Compute API <http://developer.openstack.org/api-ref/compute/>`_ and
-  `DNS API <http://developer.openstack.org/api-ref/dns/>`__ sites offer great
+* The `Compute API <https://developer.openstack.org/api-ref/compute/>`_ and
+  `DNS API <https://developer.openstack.org/api-ref/dns/>`__ sites offer great
   examples of the new API reference, maintained by the project team rather
   than a central docs team.
 
-* Updated the `Contributor Guide <http://docs.openstack.org/contributor-guide/api-guides.html>`__
+* Updated the `Contributor Guide <https://docs.openstack.org/contributor-guide/api-guides.html>`__
   to include specific API Guides information.
 
-* Completed `API Documentation <http://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html>`__
+* Completed `API Documentation <https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html>`__
   guidelines with the API Working Group.
 
 Architecture design guide
@@ -98,7 +98,7 @@ Installation guide
   service (magnum), Messaging service (zaqar), Key Manager service (barbican),
   and Bare Metal service (ironic).
 
-* Created `cookiecutter <http://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
+* Created `cookiecutter <https://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
   tool to ensure project specific guides have a consistent structure.
 
 Networking guide
@@ -178,13 +178,13 @@ Security Guide
 Training guides
 ~~~~~~~~~~~~~~~
 
-* Improved and restructured `Upstream Training <http://docs.openstack.org/upstream-training/>`_
-* Added new chapters in the draft `Training guides <http://docs.openstack.org/draft/training-guides/>`_
+* Improved and restructured `Upstream Training <https://docs.openstack.org/upstream-training/>`_
+* Added new chapters in the draft `Training guides <https://docs.openstack.org/draft/training-guides/>`_
 
 Training labs
 ~~~~~~~~~~~~~
 
-* Training labs landing page is published under `docs.openstack.org <http://docs.openstack.org/training_labs/>`_:
+* Training labs landing page is published under `docs.openstack.org <https://docs.openstack.org/training_labs/>`_:
 
   * Users can download zip/tar files for Windows, Linux and Mac OS X platforms
     for supported releases.
