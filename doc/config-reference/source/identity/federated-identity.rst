@@ -27,7 +27,8 @@ There is currently support for two major federation protocols:
 
 To enable federation:
 
-#. Run keystone under Apache. See `Configure the Apache HTTP server <https://docs.openstack.org/newton/install-guide-obs/keystone-install.html>`_
+#. Run keystone under Apache. See `Configure the Apache HTTP server
+   <https://docs.openstack.org/ocata/install-guide-obs/keystone-install.html>`_
    for more information.
 
    .. note::
