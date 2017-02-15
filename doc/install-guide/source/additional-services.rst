@@ -38,6 +38,16 @@ Installation and configuration is documented in the
 `Database installation guide
 <https://docs.openstack.org/project-install-guide/database/draft/>`_.
 
+DNS service (designate)
+========================
+
+The DNS service (designate) provides cloud provisioning functionality for
+DNS Zones and Recordsets.
+
+Installation and configuration is documented in the
+`DNS installation guide
+<https://docs.openstack.org/project-install-guide/dns/draft/>`_.
+
 Key Manager service (barbican)
 ==============================
 
