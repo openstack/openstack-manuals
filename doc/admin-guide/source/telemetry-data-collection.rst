@@ -6,17 +6,14 @@ Data collection
 
 The main responsibility of Telemetry in OpenStack is to collect
 information about the system that can be used by billing systems or
-interpreted by analytic tooling. Telemetry in OpenStack originally focused
-on the counters used for billing, and the recorded range is
-continuously growing wider.
+interpreted by analytic tooling.
 
 Collected data can be stored in the form of samples or events in the
 supported databases, which are listed
 in :ref:`telemetry-supported-databases`.
 
-Samples can have various sources. Sample sources depend on, and adapt to,
-the needs and configuration of Telemetry. The Telemetry service requires
-multiple methods to collect data samples.
+Samples capture a numerical measurement of a resource. The Telemetry service
+leverages multiple methods to collect data samples.
 
 The available data collection mechanisms are:
 
@@ -29,8 +26,15 @@ Polling
     machine using SNMP, or by using the APIs of other OpenStack
     services.
 
-RESTful API
+RESTful API (deprecated in Ocata)
     Pushing samples via the RESTful API of Telemetry.
+
+.. note::
+
+   Rather than pushing data through Ceilometer's API, it is advised to push
+   directly into gnocchi. Ceilometer's API is officially deprecated as of
+   Ocata.
+
 
 Notifications
 ~~~~~~~~~~~~~
@@ -39,16 +43,19 @@ or system state. Several notifications carry information that can be
 metered. For example, CPU time of a VM instance created by OpenStack
 Compute service.
 
-The notification agent works alongside, but separately, from the
-Telemetry service. The agent is responsible for consuming notifications.
-This component is responsible for consuming from the message bus and
-transforming notifications into events and measurement samples.
+The notification agent is responsible for consuming notifications. This
+component is responsible for consuming from the message bus and transforming
+notifications into events and measurement samples.
 
-Since the Liberty release, the notification agent is responsible
-for all data processing such as transformations and publishing. After
-processing, the data is sent via AMQP to the collector service or any
-external service. These external services persist the data in
-configured databases.
+Additionally, the notification agent is responsible for all data processing
+such as transformations and publishing. After processing, the data is sent
+to any supported publisher target such as gnocchi or panko. These services
+persist the data in configured databases.
+
+.. note::
+
+   Prior to Ocata, the data was sent via AMQP to the collector service or any
+   external service.
 
 The different OpenStack services emit several notifications about the
 various types of events that happen in the system during normal
@@ -87,7 +94,7 @@ types by each OpenStack service that Telemetry transforms into samples.
        image.delete
 
        image.send
-     - The required configuration for Image service can be  * - service found in
+     - The required configuration for Image service can be found in the
        `Configure the Image service for Telemetry <https://docs.openstack.org/project-install-guide/telemetry/newton>`__
        section in the Installation Tutorials and Guides.
    * - OpenStack Networking
@@ -171,8 +178,8 @@ types by each OpenStack service that Telemetry transforms into samples.
        volume.backup.restore.\
        \*
      - The required configuration for Block Storage service can be found in the
-       `Add the Block Storage service agent for Telemetry section <https://docs.openstack.org/project-install-guide/telemetry/newton/configure_services/cinder/install-cinder-ubuntu.html>`__
-       in the Installation Tutorials and Guides.
+       `Add the Block Storage service agent for Telemetry <https://docs.openstack.org/project-install-guide/telemetry/newton/configure_services/cinder/install-cinder-ubuntu.html>`__
+       section in the Installation Tutorials and Guides.
 
 .. note::
 
@@ -189,46 +196,6 @@ compute service, see
 `Telemetry services <https://docs.openstack.org/project-install-guide/
 telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__ in the
 Installation Tutorials and Guides.
-
-.. note::
-
-   When the ``store_events`` option is set to ``True`` in
-   ``ceilometer.conf``, Prior to the Kilo release, the notification agent
-   needed database access in order to work properly.
-
-Compute agent
--------------
-
-This agent is responsible for collecting resource usage data of VM
-instances on individual compute nodes within an OpenStack deployment.
-This mechanism requires a closer interaction with the hypervisor,
-therefore a separate agent type fulfills the collection of the related
-meters, which is placed on the host machines to retrieve this
-information locally.
-
-A Compute agent instance has to be installed on each and every compute
-node, installation instructions can be found in the `Install the Compute
-agent for Telemetry
-<https://docs.openstack.org/project-install-guide/
-telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__
-section in the Installation Tutorials and Guides.
-
-Just like the central agent, this component also does not need a direct
-database connection. The samples are sent via AMQP to the notification agent.
-
-The list of supported hypervisors can be found in
-:ref:`telemetry-supported-hypervisors`. The Compute agent uses the API of the
-hypervisor installed on the compute hosts. Therefore, the supported meters may
-be different in case of each virtualization back end, as each inspection tool
-provides a different set of meters.
-
-The list of collected meters can be found in :ref:`telemetry-compute-meters`.
-The support column provides the information about which meter is available for
-each hypervisor supported by the Telemetry service.
-
-.. note::
-
-    Telemetry supports Libvirt, which hides the hypervisor under it.
 
 Middleware for the OpenStack Object Storage service
 ---------------------------------------------------
@@ -316,9 +283,40 @@ polling plug-ins to be loaded by using the ``pollster-list`` option:
    HA deployment is NOT supported if the ``pollster-list`` option is
    used.
 
+Compute agent
+-------------
+
+This agent is responsible for collecting resource usage data of VM
+instances on individual compute nodes within an OpenStack deployment.
+This mechanism requires a closer interaction with the hypervisor,
+therefore a separate agent type fulfills the collection of the related
+meters, which is placed on the host machines to retrieve this
+information locally.
+
+A Compute agent instance has to be installed on each and every compute
+node, installation instructions can be found in the `Install the Compute
+agent for Telemetry
+<https://docs.openstack.org/project-install-guide/
+telemetry/newton/configure_services/nova/install-nova-ubuntu.html>`__
+section in the Installation Tutorials and Guides.
+
+The compute agent does not need direct database connection. The samples
+collected by this agent are sent via AMQP to the notification agent to be
+processed.
+
+The list of supported hypervisors can be found in
+:ref:`telemetry-supported-hypervisors`. The Compute agent uses the API of the
+hypervisor installed on the compute hosts. Therefore, the supported meters may
+be different in case of each virtualization back end, as each inspection tool
+provides a different set of meters.
+
+The list of collected meters can be found in :ref:`telemetry-compute-meters`.
+The support column provides the information about which meter is available for
+each hypervisor supported by the Telemetry service.
+
 .. note::
 
-   The ``ceilometer-polling`` service is available since Kilo release.
+    Telemetry supports Libvirt, which hides the hypervisor under it.
 
 Central agent
 -------------
@@ -338,20 +336,14 @@ The following services can be polled with this agent:
 -  Hardware resources via SNMP
 
 -  Energy consumption meters via `Kwapi <https://launchpad.net/kwapi>`__
-   framework
+   framework (deprecated in Newton)
 
 To install and configure this service use the `Add the Telemetry service
 <https://docs.openstack.org/project-install-guide/telemetry/newton/install-base-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
-The central agent does not need direct database connection. The samples
-collected by this agent are sent via AMQP to the notification agent to be
-processed.
-
-.. note::
-
-   Prior to the Liberty release, data from the polling agents was processed
-   locally and published accordingly rather than by the notification agent.
+Just like the compute agent, this component also does not need a direct
+database connection. The samples are sent via AMQP to the notification agent.
 
 .. _telemetry-ipmi-agent:
 
@@ -389,16 +381,13 @@ The list of collected meters can be found in
 
 Support for HA deployment
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Both the polling agents and notification agents can run in an HA deployment,
 which means that multiple instances of these services can run in
 parallel with workload partitioning among these running instances.
 
 The `Tooz <https://pypi.python.org/pypi/tooz>`__ library provides the
-coordination within the groups of service instances. It provides an API
-above several back ends that can be used for building distributed
-applications.
-
-Tooz supports `various
+coordination within the groups of service instances. Tooz supports `various
 drivers <https://docs.openstack.org/developer/tooz/drivers.html>`__
 including the following back end solutions:
 
@@ -422,8 +411,7 @@ in the OpenStack Configuration Reference.
 Notification agent HA deployment
 --------------------------------
 
-In the Kilo release, workload partitioning support was added to the
-notification agent. This is particularly useful as the pipeline processing
+Workload partitioning support is particularly useful as the pipeline processing
 is handled exclusively by the notification agent now which may result
 in a larger amount of load.
 
@@ -432,12 +420,14 @@ option must be set in the ``ceilometer.conf`` configuration file.
 Additionally, ``workload_partitioning`` should be enabled in the
 `Notification section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__ in the OpenStack Configuration Reference.
 
+The notification agent creates multiple queues to divide the workload across
+all active agents. The number of queues can be controlled by  the
+``pipeline_processing_queues`` option in the ``ceilometer.conf`` configuration
+file.
+
 .. note::
 
-   In Liberty, the notification agent creates multiple queues to divide the
-   workload across all active agents. The number of queues can be controlled by
-   the ``pipeline_processing_queues`` option in the ``ceilometer.conf``
-   configuration file. A larger value will result in better distribution of
+   A larger value will result in better distribution of
    tasks but will also require more memory and longer startup time. It is
    recommended to have a value approximately three times the number of active
    notification agents. At a minimum, the value should be equal to the number
@@ -489,6 +479,11 @@ in the ``ceilometer.conf`` configuration file.
 
 Send samples to Telemetry
 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   Sample pushing via the API is deprecated in Ocata. Measurement data should
+   be pushed directly into `gnocchi's API <http://gnocchi.xyz/rest.html>`__.
 
 While most parts of the data collection in the Telemetry service are
 automated, Telemetry provides the possibility to submit samples via the
@@ -553,16 +548,17 @@ following command should be invoked:
 
 Meter definitions
 -----------------
+
 The Telemetry service collects a subset of the meters by filtering
-notifications emitted by other OpenStack services. Starting with the Liberty
-release, you can find the meter definitions in a separate configuration file,
-called ``ceilometer/meter/data/meter.yaml``. This enables
+notifications emitted by other OpenStack services. You can find the meter
+definitions in a separate configuration file, called
+``ceilometer/meter/data/meters.yaml``. This enables
 operators/administrators to add new meters to Telemetry project by updating
-the ``meter.yaml`` file without any need for additional code changes.
+the ``meters.yaml`` file without any need for additional code changes.
 
 .. note::
 
-   The ``meter.yaml`` file should be modified with care. Unless intended
+   The ``meters.yaml`` file should be modified with care. Unless intended,
    do not remove any existing meter definitions from the file. Also, the
    collected meters can differ in some cases from what is referenced in the
    documentation.
@@ -580,13 +576,14 @@ A standard meter definition looks like:
        volume: 'path to a measurable value eg: $.payload.size'
        resource_id: 'path to resource id eg: $.payload.id'
        project_id: 'path to project id eg: $.payload.owner'
+       metadata: 'addiitonal key-value data describing resource'
 
 The definition above shows a simple meter definition with some fields,
 from which ``name``, ``event_type``, ``type``, ``unit``, and ``volume``
 are required. If there is a match on the event type, samples are generated
 for the meter.
 
-If you take a look at the ``meter.yaml`` file, it contains the sample
+If you take a look at the ``meters.yaml`` file, it contains the sample
 definitions for all the meters that Telemetry is collecting from
 notifications. The value of each field is specified by using JSON path in
 order to find the right value from the notification message. In order to be
@@ -648,30 +645,6 @@ between two ``datetime`` fields from one notification.
     project_id: $.payload.tenant_id
     resource_id: $.payload.instance_id
 
-You will find some existence meters in the ``meter.yaml``. These
-meters have a ``volume`` as ``1`` and are at the bottom of the yaml file
-with a note suggesting that these will be removed in Mitaka release.
-
-For example, the meter definition for existence meters is as follows:
-
-.. code-block:: yaml
-
-   ---
-   metric:
-     - name: 'meter name'
-       type: 'delta'
-       unit: 'volume'
-       volume: 1
-       event_type:
-           - 'event type'
-       resource_id: $.payload.volume_id
-       user_id: $.payload.user_id
-       project_id: $.payload.tenant_id
-
-These meters are not loaded by default. To load these meters, flip
-the `disable_non_metric_meters` option in the ``ceilometer.conf``
-file.
-
 Block Storage audit script setup to get notifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -709,27 +682,78 @@ persisting the data that comes from the pollsters or is received as
 notifications. The data can be stored in a file or a database back end,
 for which the list of supported databases can be found in
 :ref:`telemetry-supported-databases`. The data can also be sent to an external
-data store by using an HTTP dispatcher.
+data store by using an HTTP publisher.
 
-The ``ceilometer-collector`` service receives the data as messages from the
-message bus of the configured AMQP service. It sends these datapoints
-without any modification to the configured target. The service has to
-run on a host machine from which it has access to the configured
-dispatcher.
+The ``ceilometer-agent-notificaiton`` service receives the data as messages
+from the message bus of the configured AMQP service. It sends these datapoints
+without any modification to the configured target.
 
 .. note::
 
-   Multiple dispatchers can be configured for Telemetry at one time.
+   Multiple publishers can be configured for Telemetry at one time by editing
+   the pipeline definition.
 
-Multiple ``ceilometer-collector`` processes can be run at a time. It is also
-supported to start multiple worker threads per collector process. The
-``collector_workers`` configuration option has to be modified in the
-`Collector section
+Multiple ``ceilometer-agent-notification`` agents can be run at a time. It is
+also supported to start multiple worker threads per agent. The
+``workers`` configuration option has to be modified in the
+`notification section
 <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
 of the ``ceilometer.conf`` configuration file.
 
-Database dispatcher
+.. note::
+
+   Prior to Ocata, this functionality was provided via dispatchers in
+   ``ceilometer-collector``. This can now be handled exclusively by
+   ``ceilometer-agent-notification`` to minimize messaging load.
+   Dispatchers can still be leveraged by setting ``meter_dispatchers`` and
+   ``event_dispatchers`` in ``ceilometer.conf``.
+
+Gnocchi publisher
+-----------------
+
+When the gnocchi publisher is enabled, measurement and resource information is
+pushed to gnocchi for time-series optimized storage. ``gnocchi://`` should be
+added as a publisher endpoint in the ``pipeline.yaml`` and
+``event_pipeline.yaml`` files. Gnocchi must be registered in the Identity
+service as Ceilometer discovers the exact path via the Identity service.
+
+More details on how to enable and configure gnocchi regarding how to enable and
+configure the service can be found on its
+`official documentation page <http://gnocchi.xyz>`__.
+
+Panko publisher
+---------------
+
+Event data in Ceilometer can be stored in panko which provides an HTTP REST
+interface to query system events in OpenStack. To push data to panko,
+set the publisher to ``direct://?dispatcher=panko``. Beginning in panko's
+Pike release, the publisher can be set as ``panko://``
+
+HTTP publisher
+---------------
+
+The Telemetry service supports sending samples to an external HTTP
+target. The samples are sent without any modification. To set this
+option as the notification agents' target, set ``http://`` as a publisher
+endpoint in the pipeline definition files. The http target should be set along
+with the publisher declaration. For example, various addtional configuration
+options can be passed in such as:
+``http://localhost:80/?timeout=1&max_retries=2&batch=False&poolsize=10``
+
+File dispatcher
+---------------
+
+You can store samples in a file by setting the publisher to ``file`` in the
+``pipeline.yaml`` file. You can also pass in configuration options
+such as ``file:///path/to/file?max_bytes=1000&backup_count=5``
+
+Database publisher
 -------------------
+
+.. note::
+
+   As of the Ocata release, this publisher is deprecated. Database storage
+   should use gnocchi and/or panko publishers depending on requirements.
 
 When the database dispatcher is configured as data store, you have the
 option to set a ``time_to_live`` option (ttl) for samples. By default
@@ -774,22 +798,3 @@ The level of support differs in case of the configured back end:
      - DB2 NoSQL does not have native TTL
        nor ``ceilometer-expirer`` support.
 
-HTTP dispatcher
----------------
-
-The Telemetry service supports sending samples to an external HTTP
-target. The samples are sent without any modification. To set this
-option as the collector's target, the ``dispatcher`` has to be changed
-to ``http`` in the ``ceilometer.conf`` configuration file. For the list
-of options that you need to set, see the see the `dispatcher_http
-section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
-in the OpenStack Configuration Reference.
-
-File dispatcher
----------------
-
-You can store samples in a file by setting the ``dispatcher`` option in the
-``ceilometer.conf`` file. For the list of configuration options,
-see the `dispatcher_file section
-<https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`__
-in the OpenStack Configuration Reference.
