@@ -123,7 +123,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Newton/openSUSE_Leap_42.2 Newton
+        # zypper addrepo -f obs://Cloud:OpenStack:Ocata/openSUSE_Leap_42.2 Ocata
 
      .. end
 
@@ -146,7 +146,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # zypper addrepo -f obs://Cloud:OpenStack:Newton/SLE_12_SP2 Newton
+        # zypper addrepo -f obs://Cloud:OpenStack:Ocata/SLE_12_SP2 Ocata
 
      .. end
 
