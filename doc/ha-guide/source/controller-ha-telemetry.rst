@@ -39,7 +39,7 @@ the Telemetry services.
 
 For information about the required configuration options
 to set in the :file:`ceilometer.conf`, see the `coordination section
-<https://docs.openstack.org/newton/config-reference/telemetry.html>`_
+<https://docs.openstack.org/ocata/config-reference/telemetry.html>`_
 in the OpenStack Configuration Reference.
 
 .. note::
@@ -61,7 +61,7 @@ agent configuration supports using different configuration files. This is for
 groups of service instances that are running in parallel.
 For enabling this configuration, set a value for the
 ``partitioning_group_prefix`` option in the
-`polling section <https://docs.openstack.org/newton/config-reference/telemetry/telemetry-config-options.html>`_
+`polling section <https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`_
 in the OpenStack Configuration Reference.
 
 .. warning::
@@ -77,5 +77,5 @@ in the OpenStack Configuration Reference.
 
 To enable the compute agent to run multiple instances simultaneously with
 workload partitioning, the ``workload_partitioning`` option must be set to
-``True`` under the `compute section <https://docs.openstack.org/newton/config-reference/telemetry.html>`_
+``True`` under the `compute section <https://docs.openstack.org/ocata/config-reference/telemetry.html>`_
 in the :file:`ceilometer.conf` configuration file.
