@@ -13,19 +13,19 @@ Configuration Reference
 High Availability Guide
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* Added the `Highly available Shared File Systems API <http://docs.openstack.org/ha-guide/storage-ha-file-systems.html>`_
+* Added the `Highly available Shared File Systems API <https://docs.openstack.org/ha-guide/storage-ha-file-systems.html>`_
   section.
 
-* Improved `Pacemaker/Corosync cluster <http://docs.openstack.org/ha-guide/controller-ha-pacemaker.html>`_
+* Improved `Pacemaker/Corosync cluster <https://docs.openstack.org/ha-guide/controller-ha-pacemaker.html>`_
   installation and configuration details.
 
-* Documented the `Pacemaker cluster manager <http://docs.openstack.org/ha-guide/intro-ha-arch-pacemaker.html>`_
+* Documented the `Pacemaker cluster manager <https://docs.openstack.org/ha-guide/intro-ha-arch-pacemaker.html>`_
   and Keepalived architecture details and limitations.
 
-* Added the `MariaDB Galera cluster <http://docs.openstack.org/ha-guide/shared-database.html>`_
+* Added the `MariaDB Galera cluster <https://docs.openstack.org/ha-guide/shared-database.html>`_
   installation, configuration, and management details.
 
-* Improved the `RabbitMQ section <http://docs.openstack.org/ha-guide/shared-messaging.html>`_.
+* Improved the `RabbitMQ section <https://docs.openstack.org/ha-guide/shared-messaging.html>`_.
 
 Installation Guide
 ~~~~~~~~~~~~~~~~~~
@@ -62,7 +62,7 @@ User Guides
   a step toward improved troubleshooting sections.
 
 * The **Admin User Guide** content has been removed from
-  `OpenStack Docs <http://docs.openstack.org>`_ since all files have been
+  `OpenStack Docs <https://docs.openstack.org>`_ since all files have been
   reorganised into the **Administrator Guide**.
 
 Virtual Machine Image Guide
@@ -88,13 +88,13 @@ Architecture Design Guide
 API Guides
 ~~~~~~~~~~
 
-* New, cleaner `developer.openstack.org <http://developer.openstack.org>`_
+* New, cleaner `developer.openstack.org <https://developer.openstack.org>`_
   landing page.
-* `API Quick Start <http://developer.openstack.org/api-guide/compute/>`_
+* `API Quick Start <https://developer.openstack.org/api-guide/quick-start/>`_
   converted to RST with theme styling to match.
-* `Compute API Guide <http://developer.openstack.org/api-guide/compute/>`_
+* `Compute API Guide <https://developer.openstack.org/api-guide/compute/>`_
   now built from nova source tree.
-* Draft swagger files now built to http://developer.openstack.org/draft/swagger/
+* Built draft swagger files.
 * Created templates for writing API guides for projects teams available
   in projects repositories.
 * Released fairy-slipper, a migration tool for WADL to RST plus API reference
@@ -103,7 +103,7 @@ API Guides
 Training Guides
 ~~~~~~~~~~~~~~~
 
-* Added the `Upstream Training Archives <http://docs.openstack.org/upstream-training/upstream-archives.html>`_
+* Added the `Upstream Training Archives <https://docs.openstack.org/upstream-training/upstream-archives.html>`_
   (the list of past global and local Upstream Training events).
 * Added the bug report links to each slide and the landing page.
 * Enabled translation.
