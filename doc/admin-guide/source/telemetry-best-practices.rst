@@ -13,53 +13,46 @@ Data collection
 
    -  Based on your needs, you can edit the ``pipeline.yaml`` configuration
       file to include a selected number of meters while disregarding the
-      rest.
+      rest. Similarly, in Ocata, you will need to edit ``polling.yaml`` to
+      define which meters to generate.
 
    -  By default, Telemetry service polls the service APIs every 10
       minutes. You can change the polling interval on a per meter basis by
-      editing the ``pipeline.yaml`` configuration file.
-
-      .. warning::
-
-         If the polling interval is too short, it will likely cause
-         increase of stored data and the stress on the service APIs.
-
-   -  Expand the configuration to have greater control over different meter
-      intervals.
+      editing the ``polling.yaml`` configuration file.
 
       .. note::
 
-         For more information, see the
-         :ref:`telemetry-pipeline-configuration`.
+         Prior to Ocata, the polling configuration was handled by
+         ``pipeline.yaml``
 
-#. If you are using the Kilo version of Telemetry, you can delay or adjust
-   polling requests by enabling the jitter support. This adds a random
-   delay on how the polling agents send requests to the service APIs. To
-   enable jitter, set ``shuffle_time_before_polling_task`` in the
-   ``ceilometer.conf`` configuration file to an integer greater
+      .. warning::
+
+         If the polling interval is too short, it will likely increase the
+         stress on the service APIs.
+
+   -  Expand the configuration to have greater control over different meter
+      intervals. For more information, see the
+      :ref:`telemetry-pipeline-configuration`.
+
+#. You can delay or adjust polling requests by enabling the jitter support.
+   This adds a random delay on how the polling agents send requests to the
+   service APIs. To enable jitter, set ``shuffle_time_before_polling_task`` in
+   the ``ceilometer.conf`` configuration file to an integer greater
    than 0.
 
-#. If you are using Juno or later releases, based on the number of
-   resources that will be polled, you can add additional central and
-   compute agents as necessary. The agents are designed to scale
-   horizontally.
-
-   .. note::
-
-      For more information see, :ref:`ha-deploy-services`.
-
-#. If you are using Juno or later releases, use the ``notifier://``
-   publisher rather than ``rpc://`` as there is a certain level of overhead
-   that comes with RPC.
-
-   .. note::
-
-      For more information on RPC overhead, see `RPC overhead
-      info <https://www.rabbitmq.com/tutorials/tutorial-six-python.html>`__.
-
+#. If polling many resources or at a high frequency, you can add additional
+   central and compute agents as necessary. The agents are designed to scale
+   horizontally. For more information see, :ref:`ha-deploy-services`.
 
 Data storage
 ------------
+
+.. note::
+
+   As of Newton, data storage is not recommended in ceilometer. Alarm,
+   metric, and event data should be stored in aodh, gnocchi, and panko
+   respectively. The following details only relate to ceilometer's legacy
+   API.
 
 #. We recommend that you avoid open-ended queries. In order to get better
    performance you can use reasonable time ranges and/or other query
@@ -81,13 +74,13 @@ Data storage
 
    .. note::
 
-      As of the Liberty release, the number of items returned will be
+      The number of items returned will be
       restricted to the value defined by ``default_api_return_limit`` in the
       ``ceilometer.conf`` configuration file. Alternatively, the value can
       be set per query by passing ``limit`` option in request.
 
-#. You can install the API behind ``mod_wsgi``, as it provides more
-   settings to tweak, like ``threads`` and ``processes`` in case of
+#. We recommend that you install the API behind ``mod_wsgi``, as it provides
+   more settings to tweak, like ``threads`` and ``processes`` in case of
    ``WSGIDaemon``.
 
    .. note::
@@ -106,11 +99,6 @@ Data storage
 
       For more information on how to set the TTL, see
       :ref:`telemetry-storing-samples`.
-
-#. We recommend that you do not use SQLAlchemy back end prior to the Juno
-   release, as it previously contained extraneous relationships to handle
-   deprecated data models. This resulted in extremely poor query
-   performance.
 
 #. We recommend that you do not run MongoDB on the same node as the
    controller. Keep it on a separate node optimized for fast storage for
