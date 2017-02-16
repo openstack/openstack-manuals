@@ -8,7 +8,7 @@ OpenStack supports simple client environment scripts also known as
 OpenRC files. These scripts typically contain common options for
 all clients, but also support unique options. For more information, see the
 `OpenStack End User Guide <https://docs.openstack.org/user-guide/common/
-cli_set_environment_variables_using_openstack_rc.html>`__.
+cli_set_environment_variables_using_openstack_rc.html>`_.
 
 Creating the scripts
 --------------------
@@ -18,6 +18,12 @@ projects and users. Future portions of this guide reference these
 scripts to load appropriate credentials for client operations.
 
 #. Create and edit the ``admin-openrc`` file and add the following content:
+
+   .. note::
+
+      The OpenStack client also supports using a ``clouds.yaml`` file.
+      For more information, see
+      the `os-client-config <http://docs.openstack.org/developer/os-client-config/>`_.
 
    .. code-block:: bash
 
