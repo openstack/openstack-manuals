@@ -21,7 +21,7 @@ Permission control options in each API version:
 
   * RBAC policy options: ``policy_default_rule``, ``policy_dirs``,
     ``policy_file`` which controls the permissions to access each type of
-    functionality for different types of users. See :doc:`../policy-json-file`.
+    functionality for different types of users. See :doc:`../policy-yaml-file`.
   * ``secret_key`` option which defines a secret key to use for signing
     special URLs. These are called pre-signed URLs and give temporary
     permissions to outsiders of the system.

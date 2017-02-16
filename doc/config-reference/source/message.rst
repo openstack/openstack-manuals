@@ -77,10 +77,10 @@ options in these files:
   Resides in the ``/etc/zaqar`` directory. If there is a file ``zaqar.conf``
   in ``~/.zaqar`` directory, it is used instead of the one in ``/etc/zaqar``
   directory.
-* ``policy.json``. Contains RBAC policy for all actions. Only applies to API
+* ``policy.yaml``. Contains RBAC policy for all actions. Only applies to API
   v2. Resides in the ``/etc/zaqar`` directory. If there is a file
-  ``policy.json`` in ``~/.zaqar`` directory, it is used instead of the one in
-  ``/etc/zaqar`` directory. See :doc:`../policy-json-file`.
+  ``policy.yaml`` in ``~/.zaqar`` directory, it is used instead of the one in
+  ``/etc/zaqar`` directory. See :doc:`../policy-yaml-file`.
 
 .. note::
 
