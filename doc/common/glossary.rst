@@ -950,8 +950,8 @@ C
 
    Crowbar
 
-      An open source community project by Dell that aims to provide
-      all necessary services to quickly deploy clouds.
+      An open source community project by SUSE that aims to provide
+      all necessary services to quickly deploy and manage clouds.
 
    current workload
 
