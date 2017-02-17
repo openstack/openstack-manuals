@@ -21,7 +21,7 @@ the review process, see `Code Review
 Repositories and core team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The OpenStack Documentation team is core for api-site, openstack-manuals,
+The OpenStack Documentation team is core for the api-site, openstack-manuals,
 openstackdocstheme, and openstack-doc-tools projects.
 
 For the following repositories that are part of the Documentation program,

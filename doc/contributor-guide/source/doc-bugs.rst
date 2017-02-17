@@ -67,21 +67,22 @@ information, see `Documentation/DocImpact
 Launchpad projects and repositories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Documentation team uses two projects for tracking documentation bugs
-across OpenStack:
+The Documentation team uses the following projects for tracking documentation
+bugs across OpenStack:
 
-* Launchpad bug area `openstack-manuals
-  <https://bugs.launchpad.net/openstack-manuals>`_ is the default one for
-  doc bugs and should be used for docs sourced from these repositories:
+* `openstack-manuals <https://bugs.launchpad.net/openstack-manuals>`_ is the
+  default area for doc bugs in the openstack-manuals repository.
 
-  * openstackdocstheme
-  * openstack-doc-tools
-  * openstack-manuals
-  * security-doc
+* `OpenStack Security Guide Documentation
+  <https://launchpad.net/ossp-security-documentation>`_ is used for the
+  security-doc repository.
 
-* Launchpad bug area `openstack-api-site
-  <https://bugs.launchpad.net/openstack-api-site>`_ is used for
-  the api-site API repository.
+* `openstack-api-site <https://bugs.launchpad.net/openstack-api-site>`_ is used
+  for the api-site API repository.
+
+* `openstack-doc-tools <https://bugs.launchpad.net/openstack-doc-tools>`_ is
+  used for the doc-tools and openstackdocstheme repositories.
+
 
 .. _doc_bugs_triaging:
 
@@ -143,8 +144,8 @@ Depending on the area a bug affects, it has one or more tags. For example:
 * **sec guide**, **install guide**, **ops-guide**, and other for specific
   guides.
 
-* **doc-builds** for documentation bugs that are in the documentation build
-  tool chain, such as the Sphinx theme, openstackdocstheme.
+* **infra**, **theme** for documentation bugs that are in the documentation
+  build tool chain.
 
 Bugs for third-party drivers
 ----------------------------

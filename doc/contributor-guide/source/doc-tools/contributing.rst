@@ -40,6 +40,6 @@ File a bug against the tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you experience an issue while using the tools,
-file a bug on Launchpad in the `openstack-manuals project
-<https://bugs.launchpad.net/openstack-manuals>`_ and apply the ``doc-tools``
-tag. Do not file issues on GitHub.
+file a bug on Launchpad in the `openstack-doc-tools project
+<https://bugs.launchpad.net/openstack-doc-tools>`_. Do not file issues on
+GitHub.
