@@ -1,6 +1,6 @@
-==============
-EMC VNX driver
-==============
+===================
+Dell EMC VNX driver
+===================
 
 EMC VNX driver interacts with configured VNX array. It supports
 both iSCSI and FC protocol.
@@ -38,6 +38,7 @@ Supported operations
 - Create a cloned consistency group.
 - Create a consistency group from consistency group snapshots.
 - Replication v2.1 support.
+- Generic Group support.
 
 Preparation
 ~~~~~~~~~~~
@@ -141,7 +142,7 @@ Set ``storage_protocol = iscsi`` if iSCSI protocol is used.
    san_login = sysadmin
    san_password = sysadmin
    naviseccli_path = /opt/Navisphere/bin/naviseccli
-   volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+   volume_driver = cinder.volume.drivers.dell_emc.vnx.driver.VNXDriver
    initiator_auto_registration = True
    storage_protocol = fc
 
@@ -161,7 +162,7 @@ Set ``storage_protocol = iscsi`` if iSCSI protocol is used.
    san_ip = 10.10.72.41
    storage_vnx_security_file_dir = /etc/secfile/array1
    naviseccli_path = /opt/Navisphere/bin/naviseccli
-   volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+   volume_driver = cinder.volume.drivers.dell_emc.vnx.driver.VNXDriver
    initiator_auto_registration = True
    storage_protocol = fc
 
@@ -171,7 +172,7 @@ Set ``storage_protocol = iscsi`` if iSCSI protocol is used.
    san_login = username
    san_password = password
    naviseccli_path = /opt/Navisphere/bin/naviseccli
-   volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+   volume_driver = cinder.volume.drivers.dell_emc.vnx.driver.VNXDriver
    initiator_auto_registration = True
    storage_protocol = fc
 
@@ -235,14 +236,14 @@ Specify the absolute path to your naviseccli:
 
    .. code-block:: ini
 
-      volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+      volume_driver = cinder.volume.drivers.dell_emc.vnx.driver.VNXDriver
       storage_protocol = fc
 
 -  For iSCSI Driver, add the following option:
 
    .. code-block:: ini
 
-      volume_driver = cinder.volume.drivers.emc.vnx.driver.EMCVNXDriver
+      volume_driver = cinder.volume.drivers.dell_emc.vnx.driver.VNXDriver
       storage_protocol = iscsi
 
 Optional configurations
@@ -616,9 +617,8 @@ Snap copy
 VNX driver supports snap copy which accelerates the process for
 creating a copied volume.
 
-By default, the driver will do full data copy when creating a
-volume from a snapshot or cloning a volume. This is time-consuming, especially
-for large volumes. When snap copy is used, driver creates a
+By default, the driver will use `asynchronous migration support`_, which will
+start a VNX migration session. When snap copy is used, driver creates a
 snapshot and mounts it as a volume for the 2 kinds of operations which will be
 instant even for large volumes.
 
@@ -767,6 +767,19 @@ And then create volume with above volume type:
 - Write intent log enabled on both VNX systems.
 
 For more information on how to configure, please refer to: `MirrorView-Knowledgebook:-Releases-30-–-33 <https://support.emc.com/docu32906_MirrorView-Knowledgebook:-Releases-30-%E2%80%93-33---A-Detailed-Review.pdf?language=en_US>`_
+
+Asynchronous migration support
+------------------------------
+
+VNX Cinder driver now supports asynchronous migration during volume cloning.
+
+The driver now using asynchronous migration when creating a volume from source
+as the default cloning method. The driver will return immediately after the
+migration session starts on the VNX, which dramatically reduces the time before
+a volume is available for use.
+
+To disable this feature, user can add ``--metadata async_migrate=False`` when
+creating new volume from source.
 
 
 Best practice
