@@ -88,7 +88,7 @@ Configure the server component
        # ...
        core_plugin = ml2
        service_plugins = router
-       allow_overlapping_ips = True
+       allow_overlapping_ips = true
 
     .. end
 
@@ -147,8 +147,8 @@ Configure the server component
 
        [DEFAULT]
        # ...
-       notify_nova_on_port_status_changes = True
-       notify_nova_on_port_data_changes = True
+       notify_nova_on_port_status_changes = true
+       notify_nova_on_port_data_changes = true
 
        [nova]
        # ...
@@ -274,7 +274,7 @@ and switching) virtual networking infrastructure for instances.
 
        [securitygroup]
        # ...
-       enable_ipset = True
+       enable_ipset = true
 
     .. end
 
@@ -310,9 +310,9 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [vxlan]
-       enable_vxlan = True
+       enable_vxlan = true
        local_ip = OVERLAY_INTERFACE_IP_ADDRESS
-       l2_population = True
+       l2_population = true
 
     .. end
 
@@ -331,7 +331,7 @@ networking infrastructure for instances and handles security groups.
 
        [securitygroup]
        # ...
-       enable_security_group = True
+       enable_security_group = true
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
     .. end
@@ -376,7 +376,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
        # ...
        interface_driver = linuxbridge
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-       enable_isolated_metadata = True
+       enable_isolated_metadata = true
 
     .. end
 
