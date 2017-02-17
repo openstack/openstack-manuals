@@ -187,14 +187,24 @@ Service specific upgrade instructions
 Refer to the following upgrade notes for information on upgrading specific
 OpenStack services:
 
-* `Upgrading the Networking service
+* `Networking service (neutron) upgrades
   <https://docs.openstack.org/developer/neutron/devref/upgrade.html>`_
-* `Upgrading the Compute service
+* `Compute service (nova) upgrades
   <https://docs.openstack.org/developer/nova/upgrade.html>`_
-* `Upgrading the Identity service
+* `Identity service (keystone) upgrades
   <https://docs.openstack.org/developer/keystone/upgrading.html>`_
-* `Upgrading the Block Storage service
+* `Block Storage service (cinder) upgrades
   <https://docs.openstack.org/developer/cinder/upgrade.html>`_
+* `Image service (glance) zero downtime database upgrades
+  <https://docs.openstack.org/developer/glance/db.html#zero-downtime-database-upgrades>`_
+* `Image service (glance) rolling upgrades
+  <https://docs.openstack.org/developer/glance/rollingupgrades.html>`_
+* `Bare metal service (ironic) upgrades
+  <https://docs.openstack.org/developer/ironic/deploy/upgrade-guide.html>`_
+* `Object Storage (swift) upgrades
+  <https://docs.openstack.org/developer/swift/overview_policies.html#upgrade-policy>`_
+* `Telemetry service (ceilometer) upgrades
+  <https://docs.openstack.org/developer/ceilometer/install/upgrade.html>`_
 
 Prerequisites
 -------------
