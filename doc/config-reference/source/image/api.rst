@@ -9,8 +9,8 @@ Both of the APIs currently have two major versions: v1 (SUPPORTED) and
 v2 (CURRENT). You can run either or both versions by setting
 appropriate values of ``enable_v1_api``, ``enable_v2_api``,
 ``enable_v1_registry``, and ``enable_v2_registry``.
-If the v2 API is used, running ``glance-registry`` is optional,
-as v2 of ``glance-api`` can connect directly to the database.
+Running ``glance-registry`` is optional if using the v2 ``glance-api``
+as it can connect directly to the database.
 
 To assist you in formulating your deployment strategy for the Image APIs,
 the Glance team has published a statement concerning the status and
