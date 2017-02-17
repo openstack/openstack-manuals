@@ -44,24 +44,28 @@ Driver configuration
 
    .. code-block:: console
 
-     # pip install storops
+      # pip install storops
 
 
 #. Add the following content into ``/etc/cinder/cinder.conf``:
 
    .. code-block:: ini
 
-     # Storage protocol
-     storage_protocol = iSCSI
-     # Unisphere IP
-     san_ip = <SAN IP>
-     # Unisphere username and password
-     san_login = <SAN LOGIN>
-     san_password = <SAN PASSWORD>
-     # Volume driver name
-     volume_driver = cinder.volume.drivers.dell_emc.unity.Driver
-     # backend's name
-     volume_backend_name = Storage_ISCSI_01
+      [DEFAULT]
+      enabled_backends = unity
+
+      [unity]
+      # Storage protocol
+      storage_protocol = iSCSI
+      # Unisphere IP
+      san_ip = <SAN IP>
+      # Unisphere username and password
+      san_login = <SAN LOGIN>
+      san_password = <SAN PASSWORD>
+      # Volume driver name
+      volume_driver = cinder.volume.drivers.dell_emc.unity.Driver
+      # backend's name
+      volume_backend_name = Storage_ISCSI_01
 
    .. note:: These are minimal options for Unity driver, for more options,
              see `Driver options`_.
@@ -75,7 +79,7 @@ Driver configuration
 
    .. code-block:: console
 
-     # apt-get install multipath-tools sg3-utils sysfsutils
+      # apt-get install multipath-tools sg3-utils sysfsutils
 
 
 #. (Required for FC driver in case `Auto-zoning Support`_ is disabled) Zone the
@@ -129,14 +133,14 @@ Driver configuration
 
    .. code-block:: console
 
-     # service multipath-tools restart
+      # service multipath-tools restart
 
 
 #. Enable multipath for image transfer in ``/etc/cinder/cinder.conf``.
 
    .. code-block:: ini
 
-     use_multipath_for_image_xfer = True
+      use_multipath_for_image_xfer = True
 
    Restart the ``cinder-volume`` service to load the change.
 
@@ -144,10 +148,10 @@ Driver configuration
 
    .. code-block:: ini
 
-     [libvirt]
-     ...
-     volume_use_multipath = True
-     ...
+      [libvirt]
+      ...
+      volume_use_multipath = True
+      ...
 
 #. Restart the ``nova-compute`` service.
 
@@ -155,6 +159,39 @@ Driver options
 ~~~~~~~~~~~~~~
 
 .. include:: ../../tables/cinder-dell_emc_unity.rst
+
+FC or iSCSI ports option
+------------------------
+
+Specify the list of FC or iSCSI ports to be used to perform the IO. Wild card
+character is supported.
+For iSCSI ports, use the following format:
+
+.. code-block:: ini
+
+   unity_io_ports = spa_eth2, spb_eth2, *_eth3
+
+For FC ports, use the following format:
+
+.. code-block:: ini
+
+   unity_io_ports = spa_iom_0_fc0, spb_iom_0_fc0, *_iom_0_fc1
+
+List the port ID with the :command:`uemcli` command:
+
+.. code-block:: console
+
+   $ uemcli /net/port/eth show -output csv
+   ...
+   "spa_eth2","SP A Ethernet Port 2","spa","file, net, iscsi", ...
+   "spb_eth2","SP B Ethernet Port 2","spb","file, net, iscsi", ...
+   ...
+
+   $ uemcli /net/port/fc show -output csv
+   ...
+   "spa_iom_0_fc0","SP A I/O Module 0 FC Port 0","spa", ...
+   "spb_iom_0_fc0","SP B I/O Module 0 FC Port 0","spb", ...
+   ...
 
 Live migration integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -173,10 +210,10 @@ To enable multipath in live migration:
 
    .. code-block:: none
 
-     [libvirt]
-     ...
-     volume_use_multipath = True
-     ...
+      [libvirt]
+      ...
+      volume_use_multipath = True
+      ...
 
    Restart `nova-compute` service.
 
@@ -185,11 +222,11 @@ To enable multipath in live migration:
 
    .. code-block:: none
 
-     ...
-     defaults {
-         user_friendly_names no
-     }
-     ...
+      ...
+      defaults {
+          user_friendly_names no
+      }
+      ...
 
 #. Restart the ``multipath-tools`` service.
 
@@ -201,7 +238,7 @@ Only thin volume provisioning is supported in Unity volume driver.
 
 
 QoS support
-```````````
+~~~~~~~~~~~
 
 Unity driver supports ``maxBWS`` and ``maxIOPS`` specs for the back-end
 consumer type. ``maxBWS`` represents the ``Maximum IO/S`` absolute limit,
@@ -228,6 +265,14 @@ and adds it to each host to occupy the `HLU 0` during volume attachment.
 
 .. note:: This `Dummy LUN` is shared among all hosts connected to the Unity.
 
+Efficient non-disruptive volume backup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The default implementation in Block Storage for non-disruptive volume backup is
+not efficient since a cloned volume will be created during backup.
+
+An effective approach to backups is to create a snapshot for the volume and
+connect this snapshot to the Block Storage host for volume backup.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
@@ -242,14 +287,14 @@ track specific Block Storage command logs.
 
    .. code-block:: none
 
-     [DEFALUT]
+      [DEFAULT]
 
-     ...
+      ...
 
-     debug = True
-     verbose = True
+      debug = True
+      verbose = True
 
-     ...
+      ...
 
 
    If other projects (usually Compute) are also involved, set `debug`
@@ -259,35 +304,35 @@ track specific Block Storage command logs.
 
    .. code-block:: console
 
-     # cinder --debug create --name unity_vol1 100
+      # cinder --debug create --name unity_vol1 100
 
 
    You will see the request ID from the console, for example:
 
    .. code-block:: console
 
-     DEBUG:keystoneauth:REQ: curl -g -i -X POST
-     http://192.168.1.9:8776/v2/e50d22bdb5a34078a8bfe7be89324078/volumes -H
-     "User-Agent: python-cinderclient" -H "Content-Type: application/json" -H
-     "Accept: application/json" -H "X-Auth-Token:
-     {SHA1}bf4a85ad64302b67a39ad7c6f695a9630f39ab0e" -d '{"volume": {"status":
-     "creating", "user_id": null, "name": "unity_vol1", "imageRef": null,
-     "availability_zone": null, "description": null, "multiattach": false,
-     "attach_status": "detached", "volume_type": null, "metadata": {},
-     "consistencygroup_id": null, "source_volid": null, "snapshot_id": null,
-     "project_id": null, "source_replica": null, "size": 10}}'
-     DEBUG:keystoneauth:RESP: [202] X-Compute-Request-Id:
-     req-3a459e0e-871a-49f9-9796-b63cc48b5015 Content-Type: application/json
-     Content-Length: 804 X-Openstack-Request-Id:
-     req-3a459e0e-871a-49f9-9796-b63cc48b5015 Date: Mon, 12 Dec 2016 09:31:44 GMT
-     Connection: keep-alive
+      DEBUG:keystoneauth:REQ: curl -g -i -X POST
+      http://192.168.1.9:8776/v2/e50d22bdb5a34078a8bfe7be89324078/volumes -H
+      "User-Agent: python-cinderclient" -H "Content-Type: application/json" -H
+      "Accept: application/json" -H "X-Auth-Token:
+      {SHA1}bf4a85ad64302b67a39ad7c6f695a9630f39ab0e" -d '{"volume": {"status":
+      "creating", "user_id": null, "name": "unity_vol1", "imageRef": null,
+      "availability_zone": null, "description": null, "multiattach": false,
+      "attach_status": "detached", "volume_type": null, "metadata": {},
+      "consistencygroup_id": null, "source_volid": null, "snapshot_id": null,
+      "project_id": null, "source_replica": null, "size": 10}}'
+      DEBUG:keystoneauth:RESP: [202] X-Compute-Request-Id:
+      req-3a459e0e-871a-49f9-9796-b63cc48b5015 Content-Type: application/json
+      Content-Length: 804 X-Openstack-Request-Id:
+      req-3a459e0e-871a-49f9-9796-b63cc48b5015 Date: Mon, 12 Dec 2016 09:31:44 GMT
+      Connection: keep-alive
 
 #. Use commands like ``grep``, ``awk`` to find the error related to the Block
    Storage operations.
 
    .. code-block:: console
 
-     # grep "req-3a459e0e-871a-49f9-9796-b63cc48b5015" cinder-volume.log
+      # grep "req-3a459e0e-871a-49f9-9796-b63cc48b5015" cinder-volume.log
 
 
 

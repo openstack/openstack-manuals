@@ -1,6 +1,6 @@
-==============
-EMC VNX driver
-==============
+===================
+Dell EMC VNX driver
+===================
 
 The EMC Shared File Systems service driver framework (EMCShareDriver)
 utilizes the EMC storage products to provide the shared file systems to
@@ -212,10 +212,10 @@ The following parameters need to be configured in the
    emc_nas_server = <IP address>
    emc_nas_password = <password>
    emc_nas_login = <user>
-   emc_nas_server_container = <Data Mover name>
-   emc_nas_pool_names = <Comma separated pool names>
+   vnx_server_container = <Data Mover name>
+   vnx_share_data_pools = <Comma separated pool names>
    share_driver = manila.share.drivers.emc.driver.EMCShareDriver
-   emc_interface_ports = <Comma separated ports list>
+   vnx_ethernet_ports = <Comma separated ports list>
 
 - `emc_share_backend`
     The plug-in name. Set it to ``vnx`` for the VNX driver.
@@ -227,10 +227,10 @@ The following parameters need to be configured in the
     The fields that are used to provide credentials to the
     VNX system. Only local users of VNX File is supported.
 
-- `emc_nas_server_container`
+- `vnx_server_container`
     Name of the Data Mover to serve the share service.
 
-- `emc_nas_pool_names`
+- `vnx_share_data_pools`
     Comma separated list specifying the name of the pools to be used
     by this back end. Do not set this option if all storage pools
     on the system can be used.
@@ -238,7 +238,7 @@ The following parameters need to be configured in the
 
     Examples: pool_1, pool_*, *
 
-- `emc_interface_ports`
+- `vnx_ethernet_ports`
     Comma separated list specifying the ports (devices) of Data Mover
     that can be used for share server interface. Do not set this
     option if all ports on the Data Mover can be used.
