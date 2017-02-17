@@ -86,6 +86,20 @@ Install and configure components
 
 .. endonly
 
+.. only:: obs
+
+    .. note::
+
+        Starting with the Newton release, SUSE OpenStack packages are shipping
+        with the upstream default configuration files. For example
+        ``/etc/keystone/keystone.conf``, with customizations in
+        ``/etc/keystone/keystone.conf.d/010-keystone.conf``. While the
+        following instructions modify the default configuration file, adding a
+        new file in ``/etc/keystone/keystone.conf.d`` achieves the same
+        result.
+
+.. endonly
+
 .. only:: ubuntu or debian
 
    .. note::

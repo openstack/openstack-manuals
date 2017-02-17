@@ -190,6 +190,22 @@ Install and configure components
 
 .. only:: obs
 
+    .. note::
+
+        Starting with the Newton release, SUSE OpenStack packages are shipping
+        with the upstream default configuration files. For example
+        ``/etc/glance/glance-api.conf`` or
+        ``/etc/glance/glance-registry.conf``, with customizations in
+        ``/etc/glance/glance-api.conf.d/`` or
+        ``/etc/glance/glance-registry.conf.d/``. While the following
+        instructions modify the default configuration files, adding new files
+        in ``/etc/glance/glance-api.conf.d`` or
+        ``/etc/glance/glance-registry.conf.d`` achieves the same result.
+
+.. endonly
+
+.. only:: obs
+
    #. Install the packages:
 
       .. code-block:: console
