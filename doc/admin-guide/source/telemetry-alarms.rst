@@ -280,8 +280,8 @@ a convenient short-cut for getting and setting the alarm state:
 
 .. code-block:: console
 
-   $ ceilometer alarm-state-get ALARM_ID
-   $ ceilometer alarm-state-set --state ok -a ALARM_ID
+   $ openstack alarm state get ALARM_ID
+   $ openstack alarm state set --state ok ALARM_ID
 
 Over time the state of the alarm may change often, especially if the
 threshold is chosen to be close to the trending value of the
