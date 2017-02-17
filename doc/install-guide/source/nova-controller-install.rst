@@ -194,6 +194,19 @@ Install and configure components
 
 .. only:: obs
 
+    .. note::
+
+        As of the Newton release, SUSE OpenStack packages are shipped
+        with the upstream default configuration files. For example,
+        ``/etc/nova/nova.conf`` has customizations in
+        ``/etc/nova/nova.conf.d/010-nova.conf``. While the following
+        instructions modify the default configuration file, adding a new file
+        in ``/etc/nova/nova.conf.d`` achieves the same result.
+
+.. endonly
+
+.. only:: obs
+
    #. Install the packages:
 
       .. code-block:: console
