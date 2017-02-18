@@ -39,7 +39,7 @@
    * - ``policy_dirs`` = ``['policy.d']``
      - (Multi-valued) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
    * - ``policy_file`` = ``policy.json``
-     - (String) The JSON file that defines policies.
+     - (String) The file that defines policies.
    * - **[paste_deploy]**
      -
    * - ``config_file`` = ``None``

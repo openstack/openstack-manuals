@@ -36,8 +36,20 @@
      - (Boolean) Enables or disables publication of error events.
    * - ``tcp_keepidle`` = ``600``
      - (Integer) Sets the value of TCP_KEEPIDLE in seconds for each server socket. Not supported on OS X.
-   * - ``use_router_proxy`` = ``True``
+   * - ``use_router_proxy`` = ``False``
      - (Boolean) Use ROUTER remote proxy.
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.
    * - **[murano]**
      -
    * - ``api_limit_max`` = ``100``
