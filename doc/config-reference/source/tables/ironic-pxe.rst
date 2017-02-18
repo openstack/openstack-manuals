@@ -42,8 +42,12 @@
      - (String) Additional append parameters for baremetal PXE boot.
    * - ``pxe_bootfile_name`` = ``pxelinux.0``
      - (String) Bootfile DHCP parameter.
+   * - ``pxe_bootfile_name_by_arch`` = ``{}``
+     - (Dict) Bootfile DHCP parameter per node architecture. For example: aarch64:grubaa64.efi
    * - ``pxe_config_template`` = ``$pybasedir/drivers/modules/pxe_config.template``
      - (String) On ironic-conductor node, template file for PXE configuration.
+   * - ``pxe_config_template_by_arch`` = ``{}``
+     - (Dict) On ironic-conductor node, template file for PXE configuration per node architecture. For example: aarch64:/opt/share/grubaa64_pxe_config.template
    * - ``tftp_master_path`` = ``/tftpboot/master_images``
      - (String) On ironic-conductor node, directory where master TFTP images are stored on disk. Setting to <None> disables image caching.
    * - ``tftp_root`` = ``/tftpboot``

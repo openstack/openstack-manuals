@@ -19,7 +19,7 @@
    * - **[conductor]**
      -
    * - ``api_url`` = ``None``
-     - (String) URL of Ironic API service. If not set ironic can get the current value from the keystone service catalog.
+     - (String) URL of Ironic API service. If not set ironic can get the current value from the keystone service catalog. If set, the value must start with either http:// or https://.
    * - ``automated_clean`` = ``True``
      - (Boolean) Enables or disables automated cleaning. Automated cleaning is a configurable set of steps, such as erasing disk drives, that are performed on the node to ensure it is in a baseline state and ready to be deployed to. This is done after instance deletion as well as during the transition from a "manageable" to "available" state. When enabled, the particular steps performed to clean a node depend on which driver that node is managed by; see the individual driver's documentation for details. NOTE: The introduction of the cleaning operation causes instance deletion to take significantly longer. In an environment where all tenants are trusted (eg, because there is only one tenant), this option could be safely disabled.
    * - ``check_provision_state_interval`` = ``60``
@@ -54,6 +54,12 @@
      - (Integer) Seconds between conductor sending sensor data message to ceilometer via the notification bus.
    * - ``send_sensor_data_types`` = ``ALL``
      - (List) List of comma separated meter types which need to be sent to Ceilometer. The default value, "ALL", is a special value meaning send all the sensor data.
+   * - ``send_sensor_data_wait_timeout`` = ``300``
+     - (Integer) The time in seconds to wait for send sensors data periodic task to be finished before allowing periodic call to happen again. Should be less than send_sensor_data_interval value.
+   * - ``send_sensor_data_workers`` = ``4``
+     - (Integer) The maximum number of workers that can be started simultaneously for send data from sensors periodic task.
+   * - ``soft_power_off_timeout`` = ``600``
+     - (Integer) Timeout (in seconds) of soft reboot and soft power off operation. This value always has to be positive.
    * - ``sync_local_state_interval`` = ``180``
      - (Integer) When conductors join or leave the cluster, existing conductors may need to update any persistent local state as nodes are moved around the cluster. This option controls how often, in seconds, each conductor will check for nodes that it should "take over". Set it to a negative value to disable the check entirely.
    * - ``sync_power_state_interval`` = ``60``

@@ -42,6 +42,8 @@
      - (String) Sensor data retrieval method.
    * - ``snmp_community`` = ``public``
      - (String) SNMP community. Required for versions "v1" and "v2c"
+   * - ``snmp_polling_interval`` = ``10``
+     - (Integer) SNMP polling interval in seconds
    * - ``snmp_port`` = ``161``
      - (Port number) SNMP port
    * - ``snmp_security`` = ``None``

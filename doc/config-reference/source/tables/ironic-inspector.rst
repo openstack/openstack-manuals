@@ -27,7 +27,7 @@
    * - ``certfile`` = ``None``
      - (String) PEM encoded client certificate cert file
    * - ``enabled`` = ``False``
-     - (Boolean) whether to enable inspection using ironic-inspector
+     - (Boolean) whether to enable inspection using ironic-inspector. This option does not affect new-style dynamic drivers and the fake_inspector driver.
    * - ``insecure`` = ``False``
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``

@@ -34,6 +34,8 @@
      - (Boolean) Allow to perform insecure SSL (https) requests to glance.
    * - ``glance_api_servers`` = ``None``
      - (List) A list of the glance api servers available to ironic. Prefix with https:// for SSL-based glance API servers. Format is [hostname|IP]:port.
+   * - ``glance_api_version`` = ``2``
+     - (Integer) Glance API version (1 or 2) to use.
    * - ``glance_cafile`` = ``None``
      - (String) Optional path to a CA certificate bundle to be used to validate the SSL certificate served by glance. It is used when glance_api_insecure is set to False.
    * - ``glance_host`` = ``$my_ip``
