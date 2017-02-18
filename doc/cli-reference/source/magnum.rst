@@ -24,7 +24,7 @@ The magnum client is the command-line interface (CLI) for
 the Container Infrastructure Management service (magnum) API and its
 extensions.
 
-This chapter documents :command:`magnum` version ``2.4.0``.
+This chapter documents :command:`magnum` version ``2.5.0``.
 
 For help on a specific :command:`magnum` command, enter:
 
