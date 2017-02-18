@@ -18,12 +18,12 @@
      - Description
    * - **[audit]**
      -
-   * - ``audit_map_file`` = ``/etc/ironic/ironic_api_audit_map.conf``
+   * - ``audit_map_file`` = ``/etc/ironic/api_audit_map.conf``
      - (String) Path to audit map file for ironic-api service. Used only when API audit is enabled.
    * - ``enabled`` = ``False``
      - (Boolean) Enable auditing of API requests (for ironic-api service).
-   * - ``ignore_req_list`` = ``None``
-     - (String) Comma separated list of Ironic REST API HTTP methods to be ignored during audit. For example: auditing will not be done on any GET or POST requests if this is set to "GET,POST". It is used only when API audit is enabled.
+   * - ``ignore_req_list`` =
+     - (String) Comma separated list of Ironic REST API HTTP methods to be ignored during audit logging. For example: auditing will not be done on any GET or POST requests if this is set to "GET,POST". It is used only when API audit is enabled.
    * - ``namespace`` = ``openstack``
      - (String) namespace prefix for generated id
    * - **[audit_middleware_notifications]**

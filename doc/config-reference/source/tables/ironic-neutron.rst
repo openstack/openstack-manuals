@@ -28,16 +28,20 @@
      - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
    * - ``certfile`` = ``None``
      - (String) PEM encoded client certificate cert file
-   * - ``cleaning_network_uuid`` = ``None``
-     - (String) Neutron network UUID for the ramdisk to be booted into for cleaning nodes. Required for "neutron" network interface. It is also required if cleaning nodes when using "flat" network interface or "neutron" DHCP provider.
+   * - ``cleaning_network`` = ``None``
+     - (String) Neutron network UUID or name for the ramdisk to be booted into for cleaning nodes. Required for "neutron" network interface. It is also required if cleaning nodes when using "flat" network interface or "neutron" DHCP provider. If a name is provided, it must be unique among all networks or cleaning will fail.
+   * - ``cleaning_network_security_groups`` =
+     - (List) List of Neutron Security Group UUIDs to be applied during cleaning of the nodes. Optional for the "neutron" network interface and not used for the "flat" or "noop" network interfaces. If not specified, default security group is used.
    * - ``insecure`` = ``False``
      - (Boolean) Verify HTTPS connections.
    * - ``keyfile`` = ``None``
      - (String) PEM encoded client certificate key file
    * - ``port_setup_delay`` = ``0``
      - (Integer) Delay value to wait for Neutron agents to setup sufficient DHCP configuration for port.
-   * - ``provisioning_network_uuid`` = ``None``
-     - (String) Neutron network UUID for the ramdisk to be booted into for provisioning nodes. Required for "neutron" network interface.
+   * - ``provisioning_network`` = ``None``
+     - (String) Neutron network UUID or name for the ramdisk to be booted into for provisioning nodes. Required for "neutron" network interface. If a name is provided, it must be unique among all networks or deploy will fail.
+   * - ``provisioning_network_security_groups`` =
+     - (List) List of Neutron Security Group UUIDs to be applied during provisioning of the nodes. Optional for the "neutron" network interface and not used for the "flat" or "noop" network interfaces. If not specified, default security group is used.
    * - ``retries`` = ``3``
      - (Integer) Client retries in the case of a failed request.
    * - ``timeout`` = ``None``

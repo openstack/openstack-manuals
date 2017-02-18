@@ -20,6 +20,8 @@
      -
    * - ``continue_if_disk_secure_erase_fails`` = ``False``
      - (Boolean) Defines what to do if an ATA secure erase operation fails during cleaning in the Ironic Python Agent. If False, the cleaning operation will fail and the node will be put in ``clean failed`` state. If True, shred will be invoked and cleaning will continue.
+   * - ``default_boot_option`` = ``None``
+     - (String) Default boot option to use when no boot option is requested in node's driver_info. Currently the default is "netboot", but it will be changed to "local" in the future. It is recommended to set an explicit value for this option.
    * - ``erase_devices_metadata_priority`` = ``None``
      - (Integer) Priority to run in-band clean step that erases metadata from devices, via the Ironic Python Agent ramdisk. If unset, will use the priority set in the ramdisk (defaults to 99 for the GenericHardwareManager). If set to 0, will not run during cleaning.
    * - ``erase_devices_priority`` = ``None``
