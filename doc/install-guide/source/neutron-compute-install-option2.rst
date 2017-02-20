@@ -35,9 +35,9 @@ networking infrastructure for instances and handles security groups.
     .. code-block:: ini
 
        [vxlan]
-       enable_vxlan = True
+       enable_vxlan = true
        local_ip = OVERLAY_INTERFACE_IP_ADDRESS
-       l2_population = True
+       l2_population = true
 
     .. end
 
@@ -56,7 +56,7 @@ networking infrastructure for instances and handles security groups.
 
        [securitygroup]
        # ...
-       enable_security_group = True
+       enable_security_group = true
        firewall_driver = neutron.agent.linux.iptables_firewall.IptablesFirewallDriver
 
     .. end

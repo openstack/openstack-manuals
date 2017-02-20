@@ -324,7 +324,7 @@ The :term:`DHCP agent` provides DHCP services for virtual networks.
        # ...
        interface_driver = linuxbridge
        dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
-       enable_isolated_metadata = True
+       enable_isolated_metadata = true
 
     .. end
 

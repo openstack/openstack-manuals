@@ -266,7 +266,7 @@ Configure the Compute service to use the Networking service
        project_name = service
        username = neutron
        password = NEUTRON_PASS
-       service_metadata_proxy = True
+       service_metadata_proxy = true
        metadata_proxy_shared_secret = METADATA_SECRET
 
     .. end
