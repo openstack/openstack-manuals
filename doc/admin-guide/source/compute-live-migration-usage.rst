@@ -27,22 +27,13 @@ Before starting a migration, review the Configure migrations section.
 
        $ openstack server list
 
-   ..  list-table::
-       :header-rows: 1
-       :widths: 46 12 13 22
-
-       * - ID
-         - Name
-         - Status
-         - Networks
-       * - d1df1b5a-70c4-4fed-98b7-423362f2c47c
-         - vm1
-         - ACTIVE
-         - private=a.b.c.d
-       * - d693db9e-a7cf-45ef-a7c9-b3ecb5f22645
-         - vm2
-         - ACTIVE
-         - private=e.f.g.h
+       +--------------------------------------+------+--------+-----------------+------------+
+       | ID                                   | Name | Status | Networks        | Image Name |
+       +--------------------------------------+------+--------+-----------------+------------+
+       | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d | ...        |
+       +--------------------------------------+------+--------+-----------------+------------+
+       | d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h | ...        |
+       +--------------------------------------+------+--------+-----------------+------------+
 
 #. Check the information associated with the instance. In this example,
    ``vm1`` is running on ``HostB``:
@@ -51,100 +42,37 @@ Before starting a migration, review the Configure migrations section.
 
        $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
 
-   ..  list-table::
-       :widths: 30 45
-       :header-rows: 1
-
-       * - Property
-         - Value
-       * - ...
-
-           OS-EXT-SRV-ATTR:host
-
-           ...
-
-           flavor
-
-           id
-
-
-           name
-
-           private network
-
-           status
-
-           ...
-
-
-         - ...
-
-           HostB
-
-           ...
-
-           m1.tiny
-
-           d1df1b5a-70c4-4fed-98b7-423362f2c47c
-
-           vm1
-
-           a.b.c.d
-
-           ACTIVE
-
-           ...
+       +----------------------+--------------------------------------+
+       | Field                | Value                                |
+       +----------------------+--------------------------------------+
+       | ...                  | ...                                  |
+       | OS-EXT-SRV-ATTR:host | HostB                                |
+       | ...                  | ...                                  |
+       | addresses            | a.b.c.d                              |
+       | flavor               | m1.tiny                              |
+       | id                   | d1df1b5a-70c4-4fed-98b7-423362f2c47c |
+       | name                 | vm1                                  |
+       | status               | ACTIVE                               |
+       | ...                  | ...                                  |
+       +----------------------+--------------------------------------+
 
 #. Select the compute node the instance will be migrated to. In this
    example, we will migrate the instance to ``HostC``, because
    ``nova-compute`` is running on it:
 
-   .. list-table:: **openstack compute service list**
-      :widths: 20 9 12 11 9 30
-      :header-rows: 1
+   .. code-block:: console
 
-      * - Binary
-        - Host
-        - Zone
-        - Status
-        - State
-        - Updated_at
-      * - nova-consoleauth
-        - HostA
-        - internal
-        - enabled
-        - up
-        - 2014-03-25T10:33:25.000000
-      * - nova-scheduler
-        - HostA
-        - internal
-        - enabled
-        - up
-        - 2014-03-25T10:33:25.000000
-      * - nova-conductor
-        - HostA
-        - internal
-        - enabled
-        - up
-        - 2014-03-25T10:33:27.000000
-      * - nova-compute
-        - HostB
-        - nova
-        - enabled
-        - up
-        - 2014-03-25T10:33:31.000000
-      * - nova-compute
-        - HostC
-        - nova
-        - enabled
-        - up
-        - 2014-03-25T10:33:31.000000
-      * - nova-cert
-        - HostA
-        - internal
-        - enabled
-        - up
-        - 2014-03-25T10:33:31.000000
+      $ openstack compute service list
+
+      +----+------------------+-------+----------+---------+-------+----------------------------+
+      | ID | Binary           | Host  | Zone     | Status  | State | Updated At                 |
+      +----+------------------+-------+----------+---------+-------+----------------------------+
+      |  3 | nova-conductor   | HostA | internal | enabled | up    | 2017-02-18T09:42:29.000000 |
+      |  4 | nova-scheduler   | HostA | internal | enabled | up    | 2017-02-18T09:42:26.000000 |
+      |  5 | nova-consoleauth | HostA | internal | enabled | up    | 2017-02-18T09:42:29.000000 |
+      |  6 | nova-compute     | HostB | nova     | enabled | up    | 2017-02-18T09:42:29.000000 |
+      |  7 | nova-compute     | HostC | nova     | enabled | up    | 2017-02-18T09:42:29.000000 |
+      +----+------------------+-------+----------+---------+-------+----------------------------+
 
 #. Check that ``HostC`` has enough resources for migration:
 
@@ -152,40 +80,15 @@ Before starting a migration, review the Configure migrations section.
 
        # openstack host show HostC
 
-   ..  list-table::
-       :header-rows: 1
-       :widths: 14 14 7 15 12
-
-       * - HOST
-         - PROJECT
-         - cpu
-         - memory_mb
-         - disk_gb
-       * - HostC
-         - (total)
-         - 16
-         - 32232
-         - 878
-       * - HostC
-         - (used_now)
-         - 22
-         - 21284
-         - 442
-       * - HostC
-         - (used_max)
-         - 22
-         - 21284
-         - 422
-       * - HostC
-         - p1
-         - 22
-         - 21284
-         - 422
-       * - HostC
-         - p2
-         - 22
-         - 21284
-         - 422
+       +-------+------------+-----+-----------+---------+
+       | Host  | Project    | CPU | Memory MB | Disk GB |
+       +-------+------------+-----+-----------+---------+
+       | HostC | (total)    |  16 |     32232 |     878 |
+       | HostC | (used_now) |  22 |     21284 |     422 |
+       | HostC | (used_max) |  22 |     21284 |     422 |
+       | HostC | p1         |  22 |     21284 |     422 |
+       | HostC | p2         |  22 |     21284 |     422 |
+       +-------+------------+-----+-----------+---------+
 
    -  ``cpu``: Number of CPUs
 
