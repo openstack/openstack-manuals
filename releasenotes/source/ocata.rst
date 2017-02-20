@@ -30,6 +30,19 @@ Configuration Reference
 
 * Created a few vendor plug-in sections newly added for Ocata.
 
+Contributor Guide
+~~~~~~~~~~~~~~~~~
+
+* Added content about building documentation from end-of-life releases.
+* General bug fixes and updates.
+
+Deployment Guides
+~~~~~~~~~~~~~~~~~
+
+* Created new section for project-specific Deployment Guides (guides for
+  using automated installation tools)
+* OpenStack-Ansible Deployment guide created
+
 End User Guide
 ~~~~~~~~~~~~~~
 
@@ -41,6 +54,14 @@ End User Guide
 
 * Changes to swift content on ``.rlistings``, and  neutron dnsmasq log file
   content.
+
+Installation Tutorials
+~~~~~~~~~~~~~~~~~~~~~~
+
+* Updated landing page to improve ease of use.
+* Deleted references to default flavors.
+* Updated commands to use openstackclient where possible.
+* General bug fixes and updates.
 
 Networking Guide
 ~~~~~~~~~~~~~~~~
