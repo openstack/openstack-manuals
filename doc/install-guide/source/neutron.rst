@@ -20,4 +20,4 @@ service (neutron) using the :ref:`provider networks <network1>` or
 
 For more information about the Networking service including virtual
 networking components, layout, and traffic flows, see the
-`OpenStack Networking Guide <https://docs.openstack.org/newton/networking-guide/>`__.
+`OpenStack Networking Guide <https://docs.openstack.org/ocata/networking-guide/>`__.

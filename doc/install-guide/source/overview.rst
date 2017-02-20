@@ -50,7 +50,7 @@ follows:
 For more information on production architectures, see the
 `Architecture Design Guide <https://docs.openstack.org/arch-design/>`__,
 `OpenStack Operations Guide <https://docs.openstack.org/ops/>`__, and
-`OpenStack Networking Guide <https://docs.openstack.org/newton/networking-guide/>`__.
+`OpenStack Networking Guide <https://docs.openstack.org/ocata/networking-guide/>`__.
 
 .. _figure-hwreqs:
 
