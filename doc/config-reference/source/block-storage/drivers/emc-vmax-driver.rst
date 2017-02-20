@@ -180,6 +180,36 @@ Setup VMAX drivers
 
          # yum install pywbem
 
+.. note::
+
+   A potential issue can exist with the ``python-pywbem`` dependency package,
+   especially M2crypto. To troubleshot and resolve these types of issues,
+   follow these steps.
+
+   -  On Ubuntu:
+
+      .. code-block:: console
+
+         # apt-get remove --purge -y python-m2crypto
+         # pip uninstall pywbem
+         # apt-get install python-pywbem
+
+   -  On openSUSE:
+
+      .. code-block:: console
+
+         # zypper remove --clean-deps python-m2crypto
+         # pip uninstall pywbem
+         # zypper install python-pywbem
+
+  -  On Red Hat Enterprise Linux, CentOS, and Fedora:
+
+      .. code-block:: console
+
+         # yum remove python-m2crypto
+         # sudo pip uninstall pywbem
+         # yum install pywbem
+
 #. Install iSCSI Utilities (for iSCSI drivers only).
 
    #. Download and configure the Cinder node as an iSCSI initiator.
@@ -428,6 +458,43 @@ VMAX All Flash and Hybrid
 
    OS-[shortHostName]-[SRP]-[SLO]-[Workload]-[protocol]-SG
 
+
+Intervals and Retries
+---------------------
+
+By default, ``Intervals`` and ``Retries`` are ``10`` seconds and ``60``
+retries respectively. These determine how long (``Intervals``) and how many
+times (``Retries``) a user is willing to wait for a single SMIS call,
+``10*60=300seconds``. Depending on usage, these may need to be overriden by
+the user in the XML file.  For example, if performance is a factor, then the
+``Intervals`` should be decreased to check the job status more frequently,
+and if multiple concurrent provisioning requests are issued then ``Retries``
+should be increased so calls will not timeout prematurely.
+
+In the example below, the driver checks every 5 seconds for the status of the
+job. It will continue checking for 120 retries before it times out.
+
+Add the following lines to the XML file:
+
+   VMAX All Flash and Hybrid
+
+     .. code-block:: xml
+
+       <?xml version="1.0" encoding="UTF-8" ?>
+       <EMC>
+         <EcomServerIp>1.1.1.1</EcomServerIp>
+         <EcomServerPort>00</EcomServerPort>
+         <EcomUserName>user1</EcomUserName>
+         <EcomPassword>password1</EcomPassword>
+         <PortGroups>
+           <PortGroup>OS-PORTGROUP1-PG</PortGroup>
+           <PortGroup>OS-PORTGROUP2-PG</PortGroup>
+         </PortGroups>
+         <Array>111111111111</Array>
+         <Pool>SRP_1</Pool>
+         <Intervals>5</Intervals>
+         <Retries>120</Retries>
+       </EMC>
 
 SSL support
 ~~~~~~~~~~~
@@ -920,8 +987,8 @@ for Consistency groups.
 .. note::
    Even though the terminology is 'Consistency Group' in OpenStack, a Storage
    Group is created on the VMAX, and should not be confused with a VMAX
-   Consistency Group which is an SRDF construct. The Storage Group is not
-   associated with any FAST policy.
+   Consistency Group which is an SRDF feature. The Storage Group is not
+   associated with any Service Level.
 
 Operations
 ----------
@@ -1015,8 +1082,7 @@ Operations
 
      $ cinder consisgroup-delete --force 618d962d-2917-4cca-a3ee-9699373e6625
 
-* Create a Consistency group from source (the source can only be a CG
-  snapshot):
+* Create a Consistency group from source:
 
   .. code-block:: console
 
@@ -1027,6 +1093,9 @@ Operations
 
      $ cinder consisgroup-create-from-src --source-cg 25dae184-1f25-412b-b8d7-9a25698fdb6d
 
+  .. code-block:: console
+
+     $ cinder consisgroup-create-from-src --cgsnapshot 618d962d-2917-4cca-a3ee-9699373e6625
 
 * You can also create a volume in a consistency group in one step:
 
@@ -1459,131 +1528,6 @@ using the same command and specifying ``--backend_id default``:
      --backend_id default
 
 
-Generic volume group support
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Generic volume group operations are performed through the CLI using API
-version 3.1x of the cinder API. Generic volume groups are multi-purpose groups
-which can be used for various features. The only feature supported currently
-by the ``VMAX`` plugin is the ability to take group snapshots, which can either
-be consistent or not based on the group specs. Generic volume groups will
-eventually replace the consistency groups in a future release.
-
-.. note::
-   Generic volume groups are supported for ``VMAX3`` arrays only. The consistent
-   group snapshot should not be confused with the ``VMAX`` consistency which
-   primarily applies to SRDF.
-
-Operations
-----------
-
-#. Create a group type:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.11 group-type-create [--description DESCRIPTION] [--is-public IS_PUBLIC] NAME
-
-#. Show a group type:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.11 group-type-show GROUP_TYPE
-
-#. List group types:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.11 group-type-list
-
-#. Delete group type:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.11 group-type-delete GROUP_TYPE [GROUP_TYPE ...]
-
-#. Set/unset a group spec:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.11 group-type-key GROUP_TYPE ACTION KEY = VALUE [KEY = VALUE ...]
-
-   ..  note::
-     For creating a consistent group snapshot, a group-spec, set the key
-     ``consistent_group_snapshot_enabled`` to ``True``.
-
-#. List group types and group specs:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.11 group-specs-list
-
-#. Create a group:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.13 group-create [--name NAME] [--description DESCRIPTION]
-      [--availability-zone AVAILABILITY_ZONE] GROUP_TYPE VOLUME_TYPES
-
-#. Show a group:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.13 group-show GROUP
-
-#. List all groups:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.13 group-list [--all-tenants [<0|1>]]
-
-#. Create a volume and add it to a group at the time of creation:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.13 create --volume-type VOLUME_TYPE --group-id GROUP_ID SIZE
-
-#. Modify a group to add or remove volumes:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.13 group-update [--name NAME] [--description DESCRIPTION]
-      [--add-volumes UUID1,UUID2,......] [--remove-volumes UUID3,UUID4,......] GROUP
-
-#. Create a group snapshot:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.14 group-snapshot-create [--name NAME] [--description DESCRIPTION] GROUP
-
-   .. note::
-      If the group snapshot has to be consistent then both group type and
-      volume type, configure the specs with the key
-      ``consistent_group_snapshot_enabled`` set to ``True``.
-
-#. Delete group snapshot(s):
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.14 group-snapshot-delete GROUP_SNAPSHOT [GROUP_SNAPSHOT ...]
-
-#. Create a group from a group snapshot:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.14 group-create-from-src [--group-snapshot GROUP_SNAPSHOT]
-      [--name NAME] [--description DESCRIPTION]
-
-   .. note::
-      Creating group from a source group is not supported
-
-#. Delete a group:
-
-   .. code-block:: console
-
-      cinder --os-volume-api-version 3.13 group-delete [--delete-volumes] GROUP [GROUP ...]
-
-
-
 Volume retype -  storage assisted volume migration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1647,8 +1591,8 @@ retype, follow these steps:
    .. code-block:: console
 
       $ openstack volume type create VMAX_FC_DIAMOND_OLTP
-      $ openstack volume type set --property volume_backend_name = FC_backend VMAX_FC_DIAMOND
-      $ openstack volume type set --property pool_name =  Diamond+OLTP+SRP_1+111111111111
+      $ openstack volume type set --property volume_backend_name=FC_backend VMAX_FC_DIAMOND_OLTP
+      $ openstack volume type set --property pool_name=Diamond+OLTP+SRP_1+111111111111
 
    .. note::
       Create as many volume types as the number of Service Level and Workload
