@@ -64,7 +64,7 @@ Controller
 
 The controller node runs the Identity service, Image service, management
 portions of Compute, management portion of Networking, various Networking
-agents, and the dashboard. It also includes supporting services such as
+agents, and the Dashboard. It also includes supporting services such as
 an SQL database, :term:`message queue`, and :term:`NTP <Network Time Protocol
 (NTP)>`.
 
@@ -131,13 +131,13 @@ for layer-3 (routing) services. Additionally, a :term:`DHCP<Dynamic Host
 Configuration Protocol (DHCP)>` service provides IP address information to
 instances.
 
-.. note::
+.. warning::
 
    This option lacks support for self-service (private) networks, layer-3
    (routing) services, and advanced services such as
    :term:`LBaaS <Load-Balancer-as-a-Service (LBaaS)>` and
    :term:`FWaaS<FireWall-as-a-Service (FWaaS)>`.
-   Consider the self-service networks option if you desire these features.
+   Consider the self-service networks option below if you desire these features.
 
 .. _figure-network1-services:
 
