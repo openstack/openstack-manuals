@@ -30,10 +30,6 @@ assist in troubleshooting your Block Storage configuration.
    # of default WARNING level). (boolean value)
    # debug=false
 
-   # Print more verbose output (set logging level to INFO instead
-   # of default WARNING level). (boolean value)
-   # verbose=false
-
    # Log output to standard error (boolean value)
    # use_stderr=true
 
