@@ -104,7 +104,7 @@ To enable type drivers in the ML2 plug-in. Edit the
   Update Link. See bug https://bugs.launchpad.net/openstack-manuals/+bug/1567792
 
 For more details, see the
-`Networking configuration options <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__
+`Networking configuration options <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__
 of Configuration Reference.
 
 The following type drivers are available
@@ -132,14 +132,14 @@ More information about provider networks see
   The administrator needs to configure a list of physical network names that
   can be used for provider networks.
   For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-flat-type-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-flat-type-configuration-options>`__.
 
 * VLAN
 
   The administrator needs to configure a list of physical network names that
   can be used for provider networks.
   For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vlan-type-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vlan-type-configuration-options>`__.
 
 * GRE
 
@@ -179,21 +179,21 @@ server:
   The administrator needs to configure the range of VLAN IDs that can be
   used for project network allocation.
   For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vlan-type-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vlan-type-configuration-options>`__.
 
 * GRE
 
   The administrator needs to configure the range of tunnel IDs that can be
   used for project network allocation.
   For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-gre-type-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-gre-type-configuration-options>`__.
 
 * VXLAN
 
   The administrator needs to configure the range of VXLAN IDs that can be
   used for project network allocation.
   For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vxlan-type-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-vxlan-type-configuration-options>`__.
 
 .. note::
    Flat networks for project allocation are not supported. They only
@@ -214,7 +214,7 @@ To enable mechanism drivers in the ML2 plug-in, edit the
   Update Link. See bug https://bugs.launchpad.net/openstack-manuals/+bug/1567792
 
 For more details, see the
-`Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__.
+`Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__.
 
 * Linux bridge
 
@@ -232,7 +232,7 @@ For more details, see the
 
   The administrator needs to define a list PCI hardware that shall be used
   by OpenStack. For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-sr-iov-mechanism-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-sr-iov-mechanism-configuration-options>`__.
 
 * MacVTap
 
@@ -243,7 +243,7 @@ For more details, see the
 
   The administrator can configure some optional configuration options. For more
   details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-l2-population-mechanism-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-l2-population-mechanism-configuration-options>`__.
 
 * Specialized
 
@@ -283,7 +283,7 @@ resources. It typically runs on each Network Node and on each Compute Node.
   you pass this configuration file as argument.
 
   For a detailed list of configuration options, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#open-vswitch-agent-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#open-vswitch-agent-configuration-options>`__.
 
 * Linux bridge agent
 
@@ -295,7 +295,7 @@ resources. It typically runs on each Network Node and on each Compute Node.
   you pass this configuration file as argument.
 
   For a detailed list of configuration options, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#linux-bridge-agent-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#linux-bridge-agent-configuration-options>`__.
 
 * SRIOV Nic Switch agent
 
@@ -308,7 +308,7 @@ resources. It typically runs on each Network Node and on each Compute Node.
   you pass this configuration file as argument.
 
   For a detailed list of configuration options, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#sr-iov-agent-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#sr-iov-agent-configuration-options>`__.
 
 * MacVTap agent
 
@@ -321,7 +321,7 @@ resources. It typically runs on each Network Node and on each Compute Node.
   you pass this configuration file as argument.
 
   For a detailed list of configuration options, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-macvtap-mechanism-configuration-options>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-macvtap-mechanism-configuration-options>`__.
 
 L3 agent
 ^^^^^^^^
@@ -334,7 +334,7 @@ Configuration for the L3 agent is typically done in the
 you pass this configuration file as argument.
 
 For a detailed list of configuration options, see the related section in the
-`Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#l3-agent>`__.
+`Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#l3-agent>`__.
 
 DHCP agent
 ^^^^^^^^^^
@@ -348,7 +348,7 @@ Configuration for the DHCP agent is typically done in the
 you pass this configuration file as argument.
 
 For a detailed list of configuration options, see the related section in the
-`Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#dhcp-agent>`__.
+`Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#dhcp-agent>`__.
 
 Metadata agent
 ^^^^^^^^^^^^^^
@@ -361,7 +361,7 @@ Configuration for the Metadata agent is typically done in the
 you pass this configuration file as argument.
 
 For a detailed list of configuration options, see the related section in the
-`Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#metadata-agent>`__.
+`Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#metadata-agent>`__.
 
 L3 metering agent
 ^^^^^^^^^^^^^^^^^
@@ -374,7 +374,7 @@ Configuration for the L3 metering agent is typically done in the
 you pass this configuration file as argument.
 
 For a detailed list of configuration options, see the related section in the
-`Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#metering-agent>`__.
+`Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#metering-agent>`__.
 
 Security
 --------
@@ -384,7 +384,7 @@ L2 agents support some important security configurations.
 * Security Groups
 
   For more details, see the related section in the
-  `Configuration Reference <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#security-groups>`__.
+  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#security-groups>`__.
 
 * Arp Spoofing Prevention
 
