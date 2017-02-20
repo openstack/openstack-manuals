@@ -56,3 +56,31 @@ Networking Guide
 * Improved SR-IOV.
 * Improved MTU considerations.
 * Improved Load-Balancer-as-a-Service.
+
+Translations
+~~~~~~~~~~~~
+
+Besides updating the existing translated manuals,
+the I18n(internationalization) team added the following new manuals:
+
+* German
+
+  * Published Installation Tutorials for Newton
+
+* Indonesian
+
+  * Published Installation Tutorials for Newton
+
+* Japanese
+
+  * Published High Availability Guide
+  * Published Installation Tutorials for Newton
+  * Published Operations Guide
+
+* Korean
+
+  * Published Installation Tutorials for Newton
+
+* Simplified Chinese
+
+  * Published End User Guide
