@@ -78,6 +78,14 @@ Networking Guide
 * Improved MTU considerations.
 * Improved Load-Balancer-as-a-Service.
 
+Operations Guide
+~~~~~~~~~~~~~~~~
+
+* Added links to upgrade documentation for nova, keystone, cinder, glance,
+  swift, and ceilometer.
+* General updates to the Upgrades chapter.
+* Replaced project CLI commands with OpenStack client commands.
+
 Translations
 ~~~~~~~~~~~~
 
