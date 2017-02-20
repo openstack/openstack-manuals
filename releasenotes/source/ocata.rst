@@ -18,6 +18,14 @@ Administrator Guide
 
 * Addressed technical debt: toctree positions, spelling, and grammar.
 
+API guides
+~~~~~~~~~~
+
+* Updates to the landing page at
+  `developer.openstack.org <https://developer.openstack.org/>`_ to point to
+  development environments, "Writing your first OpenStack application,"
+  and application reference architectures.
+
 Command-Line Interface Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
