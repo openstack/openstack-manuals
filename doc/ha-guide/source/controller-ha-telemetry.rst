@@ -70,9 +70,8 @@ in the OpenStack Configuration Reference.
    ``partitioning_group_prefix``, a disjoint subset of meters must be polled
    to avoid samples being missing or duplicated. The list of meters to poll
    can be set in the :file:`/etc/ceilometer/pipeline.yaml` configuration file.
-   For more information about pipelines see the `Data collection and
-   processing
-   <https://docs.openstack.org/admin-guide/telemetry-data-collection.html#data-collection-and-processing>`_
+   For more information about pipelines see the `Data processing and pipelines
+   <https://docs.openstack.org/admin-guide/telemetry-data-pipelines.html>`_
    section.
 
 To enable the compute agent to run multiple instances simultaneously with

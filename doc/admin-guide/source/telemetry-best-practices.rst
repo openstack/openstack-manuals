@@ -98,7 +98,7 @@ Data storage
    .. note::
 
       For more information on how to set the TTL, see
-      :ref:`telemetry-storing-samples`.
+      :ref:`telemetry-expiry`.
 
 #. We recommend that you do not run MongoDB on the same node as the
    controller. Keep it on a separate node optimized for fast storage for
