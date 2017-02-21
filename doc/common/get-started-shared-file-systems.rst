@@ -35,4 +35,4 @@ manila-share
 Messaging queue
   Routes information between the Shared File Systems processes.
 
-For more information, see `OpenStack Configuration Reference <https://docs.openstack.org/newton/config-reference/shared-file-systems/overview.html>`__.
+For more information, see `OpenStack Configuration Reference <https://docs.openstack.org/ocata/config-reference/shared-file-systems/overview.html>`__.

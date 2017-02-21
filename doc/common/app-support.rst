@@ -34,19 +34,13 @@ associated components:
 
 *  `Installation Tutorial for openSUSE Leap 42.2 and SUSE Linux Enterprise
    Server 12 SP2
-   <https://docs.openstack.org/newton/install-guide-obs/>`__
+   <https://docs.openstack.org/ocata/install-guide-obs/>`__
 
 *  `Installation Tutorial for Red Hat Enterprise Linux 7 and CentOS 7
-   <https://docs.openstack.org/newton/install-guide-rdo/>`__
+   <https://docs.openstack.org/ocata/install-guide-rdo/>`__
 
 *  `Installation Tutorial for Ubuntu 16.04 (LTS)
-   <https://docs.openstack.org/newton/install-guide-ubuntu/>`__
-
-*  `Installation Tutorial for Debian with Debconf
-   <https://docs.openstack.org/newton/install-guide-debconf/>`__
-
-*  `Installation Tutorial for Debian
-   <https://docs.openstack.org/newton/install-guide-debian/>`__
+   <https://docs.openstack.org/ocata/install-guide-ubuntu/>`__
 
 The following books explain how to configure and run an OpenStack cloud:
 
@@ -54,11 +48,11 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `Administrator Guide <https://docs.openstack.org/admin-guide/>`__
 
-*  `Configuration Reference <https://docs.openstack.org/newton/config-reference/>`__
+*  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/>`__
 
 *  `Operations Guide <https://docs.openstack.org/ops/>`__
 
-*  `Networking Guide <https://docs.openstack.org/newton/networking-guide>`__
+*  `Networking Guide <https://docs.openstack.org/ocata/networking-guide>`__
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`__
 
