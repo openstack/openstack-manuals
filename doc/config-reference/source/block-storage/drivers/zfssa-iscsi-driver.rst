@@ -40,6 +40,7 @@ Configuration
 
       scope=stmf - allow_configure=true
       scope=nas - allow_clone=true, allow_createProject=true, allow_createShare=true, allow_changeSpaceProps=true, allow_changeGeneralProps=true, allow_destroy=true, allow_rollback=true, allow_takeSnap=true
+      scope=schema - allow_modify=true
 
    You can create a role with authorizations as follows:
 
@@ -80,8 +81,11 @@ Configuration
    .. note::
 
       You can also run this `workflow
-      <https://java.net/projects/solaris-userland/sources/gate/content/components/openstack/cinder/files/zfssa/cinder.akwf>`__
+      <https://openstackci.oracle.com/openstack_docs/zfssa_cinder_workflow.akwf>`__
       to automate the above tasks.
+      Refer to `Oracle documentation
+      <https://docs.oracle.com/cd/E37831_01/html/E52872/godgw.html>`__
+      on how to download, view, and execute a workflow.
 
 #. Ensure that the ZFSSA iSCSI service is online. If the ZFSSA iSCSI service is
    not online, enable the service by using the BUI, CLI or REST API in the
@@ -126,6 +130,33 @@ Configuration
    .. note::
 
       Do not use management interfaces for ``zfssa_target_interfaces``.
+
+#. Configure the cluster:
+
+   If a cluster is used as the cinder storage resource, the following
+   verifications are required on your Oracle ZFS Storage Appliance:
+
+   - Verify that both the pool and the network interface are of type
+     singleton and are not locked to the current controller. This
+     approach ensures that the pool and the interface used for data
+     always belong to the active controller, regardless of the current
+     state of the cluster.
+
+   - Verify that the management IP, data IP and storage pool belong to
+     the same head.
+
+   .. note::
+
+      Most configuration settings, including service properties, users, roles,
+      and iSCSI initiator definitions are replicated on both heads
+      automatically. If the driver modifies any of these settings, they will be
+      modified automatically on both heads.
+
+   .. note::
+
+      A short service interruption occurs during failback or takeover,
+      but once the process is complete, the ``cinder-volume`` service should be able
+      to access the pool through the data IP.
 
 ZFSSA assisted volume migration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

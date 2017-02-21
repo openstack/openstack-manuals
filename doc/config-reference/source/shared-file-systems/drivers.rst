@@ -16,6 +16,7 @@ Share drivers
    drivers/hdfs-native-driver.rst
    drivers/lvm-driver.rst
    drivers/zfs-on-linux-driver.rst
+   drivers/zfssa-manila-driver.rst
    drivers/emc-isilon-driver.rst
    drivers/emc-vnx-driver.rst
    drivers/emc-unity-driver.rst
