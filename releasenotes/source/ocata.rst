@@ -116,6 +116,12 @@ Training labs
   delay is intentional, to let the distribution packages stabilize, and to
   ensure all test cases and reliability checks meet criteria.
 
+Training guides
+~~~~~~~~~~~~~~~
+
+* Incorporated feedback from Barcelona
+  `Upstream Training <https://docs.openstack.org/upstream-training/>`_.
+
 Translations
 ~~~~~~~~~~~~
 
@@ -123,14 +129,24 @@ Besides updating the existing translated manuals,
 the Internationalization (i18n) team added the following new manuals:
 
 * German:
+
   * Published Installation Tutorials for Newton.
+
 * Indonesian:
+
   * Published Installation Tutorials for Newton.
+  * Published Upstream Training.
+
 * Japanese:
+
   * Published High Availability Guide.
   * Published Installation Tutorials for Newton.
   * Published Operations Guide.
+
 * Korean:
+
   * Published Installation Tutorials for Newton.
+
 * Simplified Chinese:
+
   * Published End User Guide.
