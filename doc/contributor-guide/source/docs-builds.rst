@@ -13,6 +13,8 @@ file with specific sections that run jobs using the `Tox
 <https://tox.readthedocs.org/en/latest/>`_ tool, a virtualenv-based
 automation of test activities.
 
+.. _docs_dependencies:
+
 Install dependencies for building documentation
 -----------------------------------------------
 
@@ -47,7 +49,8 @@ Install dependencies for building documentation
 
    This will install all required packages for building both RST and
    PDF files. If you do not build PDF files, you do not need to install
-   the ``texlive`` packages.
+   the `texlive <https://www.tug.org/texlive/>`__ packages and
+   `Liberation font family <https://fedorahosted.org/liberation-fonts/>`__.
 
 Build workflow
 --------------
@@ -147,6 +150,27 @@ The following individual checks are also availableː
      environment.
 
 .. _docs_builds_locally:
+
+Generate PDF
+------------
+
+To build a specific guide with a PDF file, use the :command:`tox build`
+command for the guide with the ``pdf`` option. For example:
+
+.. code-block:: console
+
+   $ tox -e build -- contributor-guide --pdf
+
+PDF builds are accomplished using LaTeX as an intermediate format.
+Currently, you can generate a PDF file for a limited number of guides.
+The supported list is maintained in the `tools/build-all-rst.sh
+<https://git.openstack.org/cgit/openstack/openstack-manuals/tree/tools/build-all-rst.sh#n24>`_
+file.
+
+.. note::
+
+   * PDF builds need additional dependencies. For details, see
+     :ref:`docs_dependencies` section.
 
 Build an existing patch locally
 -------------------------------
@@ -294,4 +318,3 @@ To build documentation from a particular release locally, follow these steps.
 #. Read the :file:`README.rst` file available at that point in time for the
    prerequisites for building the documentation locally. For example, you may
    need to install Apache Maven in order to build old documents.
-
