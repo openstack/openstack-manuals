@@ -94,6 +94,30 @@ Operations Guide
 * General updates to the Upgrades chapter.
 * Replaced project CLI commands with OpenStack client commands.
 
+rst2bash
+~~~~~~~~
+
+* Created repository and pushed initial code from GitHub domain.
+* Improved logging configuration.
+* Added custom exceptions.
+* Improved terminal output with colors and better formatting of the messages.
+* Feature improvement to link exceptions with the exact location in the RST
+  file from Installation Guides.
+* Updated Installation Guides RST with new syntax changes.
+* Configured infrastructure to parse and run labs with auto-generated bash
+  scripts. This is an unstable prototype at this stage.
+* General bug fixes and updates.
+
+Training labs
+~~~~~~~~~~~~~
+
+* Rewrote the host-side script in Python. The new main script is called
+  ``st.py``. The old bash script, ``osbash.sh``, remains available and
+  supported.
+* Ocata support will be available shortly after the Ocata release date. This
+  delay is intentional, to let the distribution packages stabilize, and to
+  ensure all test cases and reliability checks meet criteria.
+
 Translations
 ~~~~~~~~~~~~
 
