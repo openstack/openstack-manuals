@@ -58,6 +58,8 @@ and their associated references in the guide.
      - Database password for Compute service
    * - ``NOVA_PASS``
      - Password of Compute service user ``nova``
+   * - ``PLACEMENT_PASS``
+     - Password of the Placement service user ``placement``
    * - ``RABBIT_PASS``
      - Password of user guest of RabbitMQ
 
