@@ -47,35 +47,20 @@ these procedures on all nodes.
 
    .. note::
 
-      CentOS does not require the following steps.
+      The following steps apply to RHEL only. CentOS does not require these
+      steps.
 
-   #. On RHEL, register your system with Red Hat Subscription Management, using
-      your Customer Portal user name and password:
+   #. When using RHEL, it is assumed that you have registered your system using
+      Red Hat Subscription Management and that you have the
+      ``rhel-7-server-rpms`` repository enabled by default.
 
-      .. code-block:: console
+      For more information on registering the system, see the
+      `Red Hat Enterprise Linux 7 System Administrator's Guide
+      <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/part-Subscription_and_Support.html>`_.
 
-         # subscription-manager register --username="USERNAME" --password="PASSWORD"
-
-      .. end
-
-   #. Find entitlement pools containing the channels for your RHEL system:
-
-      .. code-block:: console
-
-         # subscription-manager list --available
-
-      .. end
-
-   #. Use the pool identifiers found in the previous step to attach your RHEL
-      entitlements:
-
-      .. code-block:: console
-
-         # subscription-manager attach --pool="POOLID"
-
-      .. end
-
-   #. Enable required repositories:
+   #. In addition to ``rhel-7-server-rpms``, you also need to have the
+      ``rhel-7-server-optional-rpms``, ``rhel-7-server-extras-rpms``, and
+      ``rhel-7-server-rh-common-rpms`` repositories enabled:
 
       .. code-block:: console
 
@@ -98,7 +83,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # yum install centos-release-openstack-newton
+        # yum install centos-release-openstack-ocata
 
      .. end
 
