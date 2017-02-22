@@ -73,6 +73,9 @@ ports that each OpenStack service uses:
    * - Orchestration AWS CloudWatch-compatible API (``openstack-heat-api-cloudwatch``)
      - 8003
      -
+   * - Root Cause Analysis service (``Vitrage``)
+     - 8999
+     -
    * - Telemetry (``ceilometer``)
      - 8777
      - publicurl and adminurl
