@@ -57,6 +57,13 @@ You can find the root of the generated HTML documentation at::
 
     doc/user-guide/build/html/index.html
 
+To build a specific guide with a PDF file, add a ``-pdf`` option like::
+
+    $ tox -e build -- user-guide --pdf
+
+The generated PDF file will be copied to the root directory of the
+generated HTML documentation.
+
 
 Testing of changes and building of the manual
 =============================================
