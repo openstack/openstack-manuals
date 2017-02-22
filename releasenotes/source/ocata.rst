@@ -95,7 +95,7 @@ Operations Guide
 rst2bash
 ~~~~~~~~
 
-* Created repository and pushed initial code from GitHub domain.
+* Created the repository and pushed initial code from GitHub domain.
 * Improved logging configuration.
 * Added custom exceptions.
 * Improved terminal output with colors and better formatting of the messages.
