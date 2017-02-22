@@ -133,12 +133,14 @@ VNC
   installed onto the running ESXi host or added to a custom image profile
   used to install ESXi hosts. For details about how to create a VIB
   for persisting the firewall configuration modifications, see
-  http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381.
+  `Knowledge Base
+  <http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=2007381>`_.
 
   .. note::
 
      The VIB can be downloaded from
-     https://github.com/openstack-vmwareapi-team/Tools.
+     `openstack-vmwareapi-team/Tools
+     <https://github.com/openstack-vmwareapi-team/Tools>`_.
 
 To use multiple vCenter installations with OpenStack, each vCenter
 must be assigned to a separate availability zone. This is required
