@@ -1,6 +1,6 @@
-===========================
-Next release: Ocata release
-===========================
+=============
+Ocata release
+=============
 
 * The documentation sites ``developer.openstack.org`` and
   ``docs.openstack.org`` are now using ``https`` and links to
@@ -33,7 +33,7 @@ Command-Line Interface Reference
 Configuration Reference
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* Cleaned up content that is not directly configuration options.
+* Removed content that is not specifically configuration options.
 * Created sections for newly added vendor plug-ins for Ocata.
 
 Contributor Guide
@@ -99,14 +99,19 @@ rst2bash
 * Improved logging configuration.
 * Added custom exceptions.
 * Improved terminal output with colors and better formatting of the messages.
-* Feature improvement to link exceptions with the exact location in the RST
-  file from Installation Guides.
+* Improved feature to link exceptions to the exact location in the source RST
+  file.
 * Updated Installation Guides RST with new syntax changes.
-* Configured infrastructure to parse and run labs with auto-generated bash
-  scripts. This is an unstable prototype at this stage.
+* Configured infrastructure to parse and run Labs with auto-generated bash
+  scripts. This is currently an unstable prototype.
 * General bug fixes and updates.
 
-Training labs
+Training Guides
+~~~~~~~~~~~~~~~
+
+* General bug fixes and updates.
+
+Training Labs
 ~~~~~~~~~~~~~
 
 * Rewrote the host-side script in Python. The new main script is called
@@ -115,12 +120,6 @@ Training labs
 * Ocata support will be available shortly after the Ocata release date. This
   delay is intentional, to let the distribution packages stabilize, and to
   ensure all test cases and reliability checks meet criteria.
-
-Training guides
-~~~~~~~~~~~~~~~
-
-* Incorporated feedback from Barcelona
-  `Upstream Training <https://docs.openstack.org/upstream-training/>`_.
 
 Translations
 ~~~~~~~~~~~~
