@@ -63,7 +63,7 @@ human-readable string:
 
 For more information about CORS configuration,
 see `cross-origin resource sharing
-<https://docs.openstack.org/newton/config-reference/common-configurations/cors.html>`_
+<https://docs.openstack.org/ocata/config-reference/common-configurations/cors.html>`_
 in OpenStack Configuration Reference.
 
 Enabling CORS with PasteDeploy

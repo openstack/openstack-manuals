@@ -3,7 +3,7 @@ Plug-in configurations
 ======================
 
 For configurations options, see `Networking configuration
-options <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html>`__
+options <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html>`__
 in Configuration Reference. These sections explain how to configure
 specific plug-ins.
 
@@ -31,7 +31,7 @@ Configure Big Switch (Floodlight REST Proxy) plug-in
       server = CONTROLLER_IP:PORT
 
    For database configuration, see `Install Networking
-   Services <https://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
+   Services <https://docs.openstack.org/ocata/install-guide-ubuntu/neutron-controller-install.html>`__
    in the Installation Tutorials and Guides. (The link defaults to the Ubuntu
    version.)
 
@@ -77,7 +77,7 @@ Configure Brocade plug-in
       ostype   = NOS
 
    For database configuration, see `Install Networking
-   Services <https://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
+   Services <https://docs.openstack.org/ocata/install-guide-ubuntu/neutron-controller-install.html>`__
    in any of the Installation Tutorials and Guides in the `OpenStack Documentation
    index <https://docs.openstack.org>`__. (The link defaults to the Ubuntu
    version.)
@@ -173,7 +173,7 @@ formerly known as Nicira NVP.
             NEUTRON_PLUGIN_CONFIG = /etc/neutron/plugins/vmware/nsx.ini
 
       For database configuration, see `Install Networking
-      Services <https://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
+      Services <https://docs.openstack.org/ocata/install-guide-ubuntu/neutron-controller-install.html>`__
       in the Installation Tutorials and Guides.
 
 #. Restart ``neutron-server`` to apply settings:
@@ -236,7 +236,7 @@ Configure PLUMgrid plug-in
       password = "PLUMgrid-director-admin-password"
 
    For database configuration, see `Install Networking
-   Services <https://docs.openstack.org/newton/install-guide-ubuntu/neutron-controller-install.html>`__
+   Services <https://docs.openstack.org/ocata/install-guide-ubuntu/neutron-controller-install.html>`__
    in the Installation Tutorials and Guides.
 
 #. Restart the ``neutron-server`` service to apply the settings:

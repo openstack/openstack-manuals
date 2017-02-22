@@ -20,7 +20,7 @@ below.
    You may need to configure Telemetry or other OpenStack services in
    order to be able to collect all the samples you need. For further
    information about configuration requirements see the `Telemetry chapter
-   <https://docs.openstack.org/project-install-guide/telemetry/newton/>`__
+   <https://docs.openstack.org/project-install-guide/telemetry/ocata/>`__
    in the Installation Tutorials and Guides. Also check the `Telemetry manual
    installation <https://docs.openstack.org/developer/ceilometer/install/manual.html>`__
    description.
@@ -459,7 +459,7 @@ the compute host machines. In order to use that you need to set the
 ``compute_monitors`` option to ``ComputeDriverCPUMonitor`` in the
 ``nova.conf`` configuration file. For further information see the
 Compute configuration section in the `Compute chapter
-<https://docs.openstack.org/newton/config-reference/compute/config-options.html>`__
+<https://docs.openstack.org/ocata/config-reference/compute/config-options.html>`__
 of the OpenStack Configuration Reference.
 
 The following host machine related meters are collected for OpenStack
@@ -515,7 +515,7 @@ data from the host machine.
    The sensor data is not available in the Bare metal service by
    default. To enable the meters and configure this module to emit
    notifications about the measured values see the `Installation
-   Guide <https://docs.openstack.org/project-install-guide/baremetal/newton>`__
+   Guide <https://docs.openstack.org/project-install-guide/baremetal/ocata>`__
    for the Bare metal service.
 
 The following meters are recorded for the Bare metal service:

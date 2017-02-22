@@ -11,7 +11,7 @@ logging, the format of the log entries and the log levels.
 The log settings can be changed in ``ceilometer.conf``. The list of
 configuration options are listed in the logging configuration options
 table in the `Telemetry
-section <https://docs.openstack.org/newton/config-reference/telemetry.html>`__
+section <https://docs.openstack.org/ocata/config-reference/telemetry.html>`__
 in the OpenStack Configuration Reference.
 
 By default ``stderr`` is used as standard output for the log messages.

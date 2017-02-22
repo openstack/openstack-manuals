@@ -126,7 +126,7 @@ service, or no longer needed.
 
 This feature applies to all plug-ins that support DHCP scaling. For more
 information, see the `DHCP agent configuration
-options <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#dhcp-agent>`__
+options <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#dhcp-agent>`__
 listed in the OpenStack Configuration Reference.
 
 DHCP agent setup: OVS plug-in
@@ -418,7 +418,7 @@ Configure Hyper-V L2 agent
 Before you install the OpenStack Networking Hyper-V L2 agent on a
 Hyper-V compute node, ensure the compute node has been configured
 correctly using these
-`instructions <https://docs.openstack.org/newton/config-reference/compute/hypervisor-hyper-v.html>`__.
+`instructions <https://docs.openstack.org/ocata/config-reference/compute/hypervisor-hyper-v.html>`__.
 
 **To install the OpenStack Networking Hyper-V agent and configure the node**
 
@@ -444,7 +444,7 @@ correctly using these
 
 #. Create the ``C:\etc\neutron-hyperv-agent.conf`` file and add the proper
    configuration options and the `Hyper-V related
-   options <https://docs.openstack.org/newton/config-reference/networking/networking_options_reference.html#cloudbase-hyper-v-agent-configuration-options>`__. Here is a sample config file:
+   options <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#cloudbase-hyper-v-agent-configuration-options>`__. Here is a sample config file:
 
    .. code-block:: ini
 

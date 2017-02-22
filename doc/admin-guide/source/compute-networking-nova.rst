@@ -195,7 +195,7 @@ configuration file. Specify the configuration file using the
 
 For more information about creating a dnsmasq configuration file, see
 the `OpenStack Configuration
-Reference <https://docs.openstack.org/newton/config-reference/>`__,
+Reference <https://docs.openstack.org/ocata/config-reference/>`__,
 and `the dnsmasq
 documentation <http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example>`__.
 
