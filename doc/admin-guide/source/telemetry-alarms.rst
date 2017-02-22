@@ -109,9 +109,8 @@ The alarm evaluation process uses the same mechanism for workload
 partitioning as the central and compute agents. The
 `Tooz <https://pypi.python.org/pypi/tooz>`_ library provides the
 coordination within the groups of service instances. For further
-information about this approach, see the section called
-:ref:`Support for HA deployment of the central and compute agent services
-<ha-deploy-services>`.
+information about this approach, see the `high availability guide
+<https://docs.openstack.org/ha-guide/controller-ha-telemetry.html>`_.
 
 To use this workload partitioning solution set the
 ``evaluation_service`` option to ``default``. For more

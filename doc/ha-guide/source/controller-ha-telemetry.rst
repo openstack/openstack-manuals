@@ -1,15 +1,15 @@
-==============================
-Highly available Telemetry API
-==============================
+==========================
+Highly available Telemetry
+==========================
 
 The `Telemetry service
 <https://docs.openstack.org/admin-guide/common/get-started-telemetry.html>`_
 provides a data collection service and an alarming service.
 
-Telemetry central agent
+Telemetry polling agent
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The Telemetry central agent can be configured to partition its polling
+The Telemetry polling agent can be configured to partition its polling
 workload between multiple agents. This enables high availability (HA).
 
 Both the central and the compute agent can run in an HA deployment.
