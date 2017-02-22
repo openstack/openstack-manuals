@@ -11,8 +11,8 @@ To back up a volume, you must create a snapshot of it. An LVM snapshot
 is the exact copy of a logical volume, which contains data in a frozen
 state. This prevents data corruption because data cannot be manipulated
 during the volume creation process. Remember that the volumes created
-through a :command:`nova volume-create` command exist in an LVM logical
-volume.
+through an :command:`openstack volume create` command exist in an LVM
+logical volume.
 
 You must also make sure that the operating system is not using the
 volume and that all data has been flushed on the guest file systems.
