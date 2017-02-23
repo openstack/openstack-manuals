@@ -177,3 +177,19 @@ bugs:
   <https://bugs.launchpad.net/openstack-api-site>`_
 * `low hanging fruit documentation bugs
   <https://bugs.launchpad.net/openstack-manuals/+bugs?field.tag=low-hanging-fruit>`_
+
+Tracking bugs by tag
+--------------------
+
+If you need to regularly track activity relating to particular tags,
+you can set up email subscriptions by visiting `the subscriptions page
+of the launchpad project
+<https://bugs.launchpad.net/openstack-manuals/+subscriptions>`_:
+
+1. Select :guilabel:`Add a subscription`.
+2. Select the option to receive mail for bugs affecting the project
+   that :guilabel:`are added or changed in any way`.
+3. Check the :guilabel:`Bugs must match this filter` checkbox.
+4. Select the :guilabel:`Tags` subsection.
+5. Populate the tag(s) you want to track.
+6. Create the subscription.
