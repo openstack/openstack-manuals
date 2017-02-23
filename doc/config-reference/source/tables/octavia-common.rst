@@ -30,8 +30,8 @@
      - (String) The handler that the API communicates with
    * - ``api_paste_config`` = ``api-paste.ini``
      - (String) The API paste config file to use
-   * - ``auth_strategy`` = ``keystone``
-     - (String) The type of authentication to use
+   * - ``auth_strategy`` = ``noauth``
+     - (String) The auth strategy for API requests.
    * - ``bind_host`` = ``127.0.0.1``
      - (IP) The host IP to bind to
    * - ``bind_port`` = ``9876``
@@ -48,11 +48,13 @@
      - (String) The maximum number of items returned in a single response. The string 'infinite' or a negative integer value means 'no limit'
    * - **[amphora_agent]**
      -
+   * - ``agent_request_read_timeout`` = ``120``
+     - (Integer) The time in seconds to allow a request from the controller to run before terminating the socket.
    * - ``agent_server_ca`` = ``/etc/octavia/certs/client_ca.pem``
      - (String) The ca which signed the client certificates
    * - ``agent_server_cert`` = ``/etc/octavia/certs/server.pem``
      - (String) The server certificate for the agent.py server to use
-   * - ``agent_server_network_dir`` = ``/etc/netns/amphora-haproxy/network/interfaces.d/``
+   * - ``agent_server_network_dir`` = ``None``
      - (String) The directory where new network interfaces are located
    * - ``agent_server_network_file`` = ``None``
      - (String) The file where the network interfaces are located. Specifying this will override any value set for agent_server_network_dir.
@@ -72,6 +74,8 @@
      - (String) Name of the Barbican authentication method to use
    * - ``ca_certificate`` = ``/etc/ssl/certs/ssl-cert-snakeoil.pem``
      - (String) Absolute path to the CA Certificate for signing. Defaults to env[OS_OCTAVIA_TLS_CA_CERT].
+   * - ``ca_certificates_file`` = ``None``
+     - (String) CA certificates file path
    * - ``ca_private_key`` = ``/etc/ssl/private/ssl-cert-snakeoil.key``
      - (String) Absolute path to the Private Key for signing. Defaults to env[OS_OCTAVIA_TLS_CA_KEY].
    * - ``ca_private_key_passphrase`` = ``None``
@@ -80,10 +84,16 @@
      - (String) Name of the cert generator to use
    * - ``cert_manager`` = ``barbican_cert_manager``
      - (String) Name of the cert manager to use
+   * - ``endpoint`` = ``None``
+     - (String) A new endpoint to override the endpoint in the keystone catalog.
    * - ``endpoint_type`` = ``publicURL``
      - (String) The endpoint_type to be used for barbican service.
+   * - ``insecure`` = ``False``
+     - (Boolean) Disable certificate validation on SSL connections
    * - ``region_name`` = ``None``
      - (String) Region in Identity service catalog to use for communication with the barbican service.
+   * - ``service_name`` = ``None``
+     - (String) The name of the certificate service in the keystonecatalog
    * - ``signing_digest`` = ``sha256``
      - (String) Certificate signing digest. Defaults to env[OS_OCTAVIA_CA_SIGNING_DIGEST] or "sha256".
    * - ``storage_path`` = ``/var/lib/octavia/certificates/``
@@ -114,8 +124,6 @@
      - (String) SSH key name used to boot the Amphora
    * - ``amphora_driver`` = ``amphora_noop_driver``
      - (String) Name of the amphora driver to use
-   * - ``cert_generator`` = ``local_cert_generator``
-     - (String) Name of the cert generator to use
    * - ``client_ca`` = ``/etc/octavia/certs/ca_01.pem``
      - (String) Client CA for the amphora agent to use
    * - ``compute_driver`` = ``compute_noop_driver``
@@ -146,7 +154,7 @@
      - (String) Base directory for cert storage.
    * - ``base_path`` = ``/var/lib/octavia``
      - (String) Base directory for amphora files.
-   * - ``bind_host`` = ``0.0.0.0``
+   * - ``bind_host`` = ``::``
      - (IP) The host IP to bind to
    * - ``bind_port`` = ``9443``
      - (Port number) The port to bind to
@@ -162,6 +170,8 @@
      - (String) Size of the HAProxy stick table. Accepts k, m, g suffixes. Example: 10k
    * - ``haproxy_template`` = ``None``
      - (String) Custom haproxy template.
+   * - ``lb_network_interface`` = ``o-hm0``
+     - (String) Network interface through which to reach amphora, only required if using IPv6 link local addresses.
    * - ``respawn_count`` = ``2``
      - (Integer) The respawn count for haproxy's upstart script
    * - ``respawn_interval`` = ``2``
@@ -173,7 +183,9 @@
    * - ``server_ca`` = ``/etc/octavia/certs/server_ca.pem``
      - (String) The ca which signed the server certificates
    * - ``use_upstart`` = ``True``
-     - (Boolean) If False, use sysvinit.
+     - (Boolean) DEPRECATED: If False, use sysvinit. This is now automatically discovered  and configured.
+   * - ``user_group`` = ``nogroup``
+     - (String) The user group for haproxy to run under inside the amphora.
    * - **[health_manager]**
      -
    * - ``bind_ip`` = ``127.0.0.1``
@@ -198,6 +210,18 @@
      - (Integer) sets the value of the heartbeat recv buffer
    * - ``status_update_threads`` = ``50``
      - (Integer) Number of threads performing amphora status update.
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.
    * - **[house_keeping]**
      -
    * - ``amphora_expiry_age`` = ``604800``
@@ -278,6 +302,42 @@
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
      - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
+   * - **[oslo_policy]**
+     -
+   * - ``policy_default_rule`` = ``default``
+     - (String) Default rule. Enforced when a requested rule is not found.
+   * - ``policy_dirs`` = ``['policy.d']``
+     - (Multi-valued) Directories where policy configuration files are stored. They can be relative to any directory in the search path defined by the config_dir option, or absolute paths. The file defined by policy_file must exist for these directories to be searched. Missing or empty directories are ignored.
+   * - ``policy_file`` = ``policy.json``
+     - (String) The file that defines policies.
+   * - **[quotas]**
+     -
+   * - ``default_health_monitor_quota`` = ``-1``
+     - (Integer) Default per project health monitor quota.
+   * - ``default_listener_quota`` = ``-1``
+     - (Integer) Default per project listener quota.
+   * - ``default_load_balancer_quota`` = ``-1``
+     - (Integer) Default per project load balancer quota.
+   * - ``default_member_quota`` = ``-1``
+     - (Integer) Default per project member quota.
+   * - ``default_pool_quota`` = ``-1``
+     - (Integer) Default per project pool quota.
+   * - **[service_auth]**
+     -
+   * - ``auth_section`` = ``None``
+     - (Unknown) Config Section from which to load plugin specific options
+   * - ``auth_type`` = ``None``
+     - (Unknown) Authentication type to load
+   * - ``cafile`` = ``None``
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+   * - ``certfile`` = ``None``
+     - (String) PEM encoded client certificate cert file
+   * - ``insecure`` = ``False``
+     - (Boolean) Verify HTTPS connections.
+   * - ``keyfile`` = ``None``
+     - (String) PEM encoded client certificate key file
+   * - ``timeout`` = ``None``
+     - (Integer) Timeout value for http requests
    * - **[task_flow]**
      -
    * - ``engine`` = ``serial``
