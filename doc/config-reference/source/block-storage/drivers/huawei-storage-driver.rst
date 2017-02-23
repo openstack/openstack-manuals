@@ -298,7 +298,7 @@ Multiple storage systems configuration example:
 .. code-block:: ini
 
    enabled_backends = 18000_iscsi, 18000_fc
-   [18000-iscsi]
+   [18000_iscsi]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIFCDriver
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_iscsi.xml
    volume_backend_name = HuaweiISCSIFCDriver
