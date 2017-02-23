@@ -33,9 +33,7 @@ driver, Huawei storage system and OpenStack:
        Clone a volume
 
        QoS
-     - OceanStor T series V1R5 C02/C30
-
-       OceanStor T series V2R2 C00/C20/C30
+     - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
 
@@ -153,18 +151,15 @@ To configure the volume driver, follow the steps below:
             <Storage>
                <Product>PRODUCT</Product>
                <Protocol>iSCSI</Protocol>
-               <ControllerIP1>x.x.x.x</ControllerIP1>
+               <RestURL>https://x.x.x.x:8088</RestURL>
                <UserName>xxxxxxxx</UserName>
                <UserPassword>xxxxxxxx</UserPassword>
             </Storage>
             <LUN>
                <LUNType>xxx</LUNType>
-               <StripUnitSize>xxx</StripUnitSize>
                <WriteType>xxx</WriteType>
-               <MirrorSwitch>xxx</MirrorSwitch>
                <Prefetch Type="xxx" Value="xxx" />
-               <StoragePool Name="xxx" />
-               <StoragePool Name="xxx" />
+               <StoragePool>xxx;xxx</StoragePool>
             </LUN>
             <iSCSI>
                <DefaultTargetIP>x.x.x.x</DefaultTargetIP>
@@ -172,32 +167,6 @@ To configure the volume driver, follow the steps below:
             </iSCSI>
             <Host OSType="Linux" HostIP="x.x.x.x, x.x.x.x"/>
          </config>
-
-    The corresponding ``Product`` values for each product are as below:
-
-   * **For T series V1**
-
-     .. code-block:: xml
-
-        <Product>T</Product>
-
-   * **For T series V2**
-
-     .. code-block:: xml
-
-        <Product>TV2</Product>
-
-   * **For V3**
-
-     .. code-block:: xml
-
-        <Product>V3</Product>
-
-   * **For OceanStor 18000 series**
-
-     .. code-block:: xml
-
-        <Product>18000</Product>
 
    The ``Protocol`` value to be used is ``iSCSI`` for iSCSI and ``FC`` for
    Fibre Channel as shown below:
@@ -245,17 +214,7 @@ To configure the volume driver, follow the steps below:
 
    The ``volume-driver`` values for each iSCSI product is as below:
 
-   * **For T series V1**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTFCDriver
-
-   * **For T series V2**
+   * **For T series V2, V3, OceanStor 18000 series**
 
      .. code-block:: ini
 
@@ -264,26 +223,6 @@ To configure the volume driver, follow the steps below:
 
         # For FC
         volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2FCDriver
-
-   * **For V3**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiV3ISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiV3FCDriver
-
-   * **For OceanStor 18000 series**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
 
      .. note::
 
@@ -358,11 +297,11 @@ Multiple storage systems configuration example:
 
 .. code-block:: ini
 
-   enabled_backends = t_fc, 18000_fc
-   [t_fc]
-   volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTFCDriver
-   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_fc.xml
-   volume_backend_name = HuaweiTFCDriver
+   enabled_backends = 18000_iscsi, 18000_fc
+   [18000-iscsi]
+   volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIFCDriver
+   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_18000_iscsi.xml
+   volume_backend_name = HuaweiISCSIFCDriver
    [18000_fc]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_fc.xml
@@ -392,16 +331,6 @@ of the Huawei volume driver.
      - Type of a connection protocol. The possible value is either ``'iSCSI'``
        or ``'FC'``.
      - All
-   * - ControllerIP0
-     - -
-     - IP address of the primary controller on an OceanStor T series V100R005
-       storage device.
-     - T series V1
-   * - ControllerIP1
-     - -
-     - IP address of the secondary controller on an OceanStor T series V100R005
-       storage device.
-     - T series V1
    * - RestURL
      - -
      - Access address of the REST interface,
@@ -443,31 +372,21 @@ of the Huawei volume driver.
      - Thin
      - Type of the LUNs to be created. The value can be ``Thick`` or ``Thin``.
      - All
-   * - StripUnitSize
-     - 64
-     - Stripe depth of a LUN to be created. The unit is KB. This parameter is
-       invalid when a thin LUN is created.
-     - T series V1
    * - WriteType
      - 1
      - Cache write type, possible values are: ``1`` (write back), ``2``
        (write through), and ``3`` (mandatory write back).
-     - All
-   * - MirrorSwitch
-     - 1
-     - Cache mirroring or not, possible values are: ``0`` (without mirroring)
-       or ``1`` (with mirroring).
      - All
    * - Prefetch Type
      - 3
      - Cache prefetch policy, possible values are: ``0`` (no prefetch), ``1``
        (fixed prefetch), ``2`` (variable prefetch) or ``3``
        (intelligent prefetch).
-     - T series V1
+     - All
    * - Prefetch Value
      - 0
      - Cache prefetch value.
-     - T series V1
+     - All
    * - LUNcopyWaitInterval
      - 5
      - After LUN copy is enabled, the plug-in frequently queries the copy
