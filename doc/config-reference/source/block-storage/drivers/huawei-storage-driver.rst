@@ -300,7 +300,7 @@ Multiple storage systems configuration example:
    enabled_backends = 18000_iscsi, 18000_fc
    [18000-iscsi]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIFCDriver
-   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_18000_iscsi.xml
+   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_iscsi.xml
    volume_backend_name = HuaweiISCSIFCDriver
    [18000_fc]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
@@ -369,7 +369,7 @@ of the Huawei volume driver.
      - Description
      - Applicable to
    * - LUNType
-     - Thin
+     - Thick
      - Type of the LUNs to be created. The value can be ``Thick`` or ``Thin``.
      - All
    * - WriteType
