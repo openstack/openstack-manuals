@@ -9,7 +9,8 @@ Installation Tutorial testing
 
 The process for Installation Tutorial testing begins about six weeks before
 release day. First of all, create a new testing page on the wiki, based on
-`the previous one <https://wiki.openstack.org/wiki/Documentation/NewtonDocTesting>`_.
+`the previous one
+<https://wiki.openstack.org/wiki/Documentation/NewtonDocTesting>`_.
 
 You will need to locate pre-release packages for each distribution, and
 disseminate information about obtaining the packages for testing purposes.
@@ -30,9 +31,9 @@ and it's confirmed to be a bug in the documentation, add a note in the
 
 .. note::
 
-  Testers should avoid raising bugs against the book at this stage, to ensure
-  that the fix lands before release. Instead, list the details on the testing
-  wiki page, so other testers are aware of it.
+   Testers should avoid raising bugs against the book at this stage, to ensure
+   that the fix lands before release. Instead, list the details on the testing
+   wiki page, so other testers are aware of it.
 
 It is also important to ask Cross Project Liaisons (CPLs) to check the
 chapters or project-specific guides that relate to their projects. It is
@@ -40,7 +41,7 @@ possible that changes might have happened within projects during the
 release that have not been reflected in the documentation.
 
 As release day draws near, and testing progresses, the PTL will make a
-judgement call on whether or not the various Installation Tutorials are
+judgment call on whether or not the various Installation Tutorials are
 tested sufficiently to be released. In some rare cases, the book either
 has not been tested adequately, or has performed badly in tests, which can
 justify not publishing that book. In this case, the PTL will contact
@@ -56,34 +57,64 @@ However, we do need to write release notes for our documentation. Release
 notes should be added as major changes occur throughout the release, however
 this is often overlooked - both by authors and reviewers - and thus a final
 review is needed to check that all major changes are in. Contact each
-Speciality Team lead, listed at :doc:`../team-structure`., and ask them for
+Speciality Team lead, listed at :doc:`../team-structure`, and ask them for
 the notes for the books they look after. The source repository for release
 notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
 published to
-``https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html``.
+`https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html`.
 
-Publish index page
-~~~~~~~~~~~~~~~~~~
+Update www pages
+~~~~~~~~~~~~~~~~
 
-Create a new index page for docs.openstack.org, at
-`openstack-manuals/www/RELEASENAME/index.html`, copying the existing page
-for the current release, with updated release name and date. Add the new page
-to the list in `openstack-manuals/www/www-index.html`. This patch should have
-a core -2 review on it until it is ready to be published. This should happen
-about a week before release day, sending the page live, but should remain
-unlinked until the last moment. This is to allow the release team to link
-to the new page.
+Make the following changes in the **openstack-manuals** repository:
+
+#. Create the docs.openstack.org index page for the new release, using the
+   existing page as a template:
+
+   - ``/www/RELEASE/index.html``
+
+#. Create the project-install-guide index pages for the new release, using the
+   existing pages as templates:
+
+   - ``/www/project-install-guide/RELEASE/index.html``
+   - ``/www/project-install-guide/RELEASE/obs-services.html``
+   - ``/www/project-install-guide/RELEASE/rdo-services.html``
+   - ``/www/project-install-guide/RELEASE/ubuntu-services.html``
+
+#. Create the ``project-deploy-guide`` index for the new release, using the
+   existing page as a template:
+
+   - ``/www/project-deploy-guide/RELEASE/index.html``
+
+#. Add the new pages to the list in ``/www/www-index.html``.
+
+   This patch should have a core -2 review on it until it is ready to be
+   published. This should happen about a week before release day, sending the
+   page live, but should remain unlinked until the last moment. This is to
+   allow the release team to link to the new page.
+
+#. Update the drop-down menu. Merge this patch on release day:
+
+   - ``/www/templates/dropdown_releases_and_languages.tmpl``
+
+#. Update the site redirects. Merge this patch on release day:
+
+   - ``/www/static/.htaccess``
+
+#. Update the *Get started* links. Do not merge this patch until after the
+   links are active:
+
+   - ``/doc/common/get-started-with-openstack.rst``
 
 Update links in all books
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Every book maintained by OpenStack Manuals will need to be checked for
-links referencing the old release. Do one patch per book, record the review
-number in the release etherpad so that release managers can review easily.
-For versioned books, these patches should have a core -2 review on them until
-they are ready to be published at release time. For continuously released
-books, these patches can be merged immediately.
-
+Every book maintained by OpenStack Manuals must be checked for links
+referencing the old release. Do one patch per book, record the review number in
+the release etherpad so that release managers can review easily. For versioned
+books, these patches should have a core -2 review on them until they are ready
+to be published at release time. For continuously released books, these patches
+can be merged immediately.
 
 Run scripts for Configuration and CLI Reference Guides
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,18 +126,27 @@ CLI Reference Guides. Instructions for using these scripts are in the
 Update main docs page
 ~~~~~~~~~~~~~~~~~~~~~
 
-Change the front page so the new release is the default, by synchronising
-`openstack-manuals/www/RELEASENAME/index.html`, which you created earlier,
-with `openstack/openstack-manuals/www/index.html`. These two files should
-have the same content. You will also need to update the release version in the
-dropdown header. This is the main patch that sends the release live, so it
-must have a core -2 review on it until it is ready to be published. Changes to
-the docs site can take an hour or more to populate, depending on the status of
-the gate and the number of changes being pushed at release time, so be
-prepared to have this ready well ahead of the official release time. You can
-check the current gate status at
-`Zuul status <http://status.openstack.org/zuul/>`_ to get an idea of the
-current merge times.
+On release day, change the front page so the new release is the default by
+synchronising `openstack-manuals/www/RELEASENAME/index.html`, which you
+created earlier, with `openstack/openstack-manuals/www/index.html`. These
+two files should have the same content.
+
+Merge all the release day patches prepared earlier.
+
+Changes to the docs site can take an hour or more to populate, depending on
+the status of the gate and the number of changes being pushed at release time,
+so be prepared to have the release day patches ready well ahead of the
+official release time. You can check the current gate status at `Zuul status
+<http://status.openstack.org/zuul/>`_ to get an idea of the current merge
+times.
+
+Generate the site map
+~~~~~~~~~~~~~~~~~~~~~
+
+After the release day patches have merged, generate a new site map for
+docs.openstack.org using the ``sitemap`` script in the **openstack-doc-tools**
+repository. Copy the `sitemap.xml` file into the `www/static` directory in
+the **openstack-manuals** repository and commit the change.
 
 Cut the branch
 ~~~~~~~~~~~~~~

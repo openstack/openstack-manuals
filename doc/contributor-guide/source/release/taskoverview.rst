@@ -22,7 +22,7 @@ Release day is usually 1300UTC on the `initial release date` listed on the
   openstack-manuals.
 
 *One to two weeks*
-  Publish project-specific docs to new branch, publish index page to docs
+  Publish project-specific docs to new branch, publish index pages to docs
   (but leave unlinked).
 
 *One week*
