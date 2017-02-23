@@ -11,44 +11,44 @@ OpenStack supports booting instances using ISO images. But before you
 make such instances functional, use the :command:`openstack server create`
 command with the following parameters to boot an instance:
 
-   .. code-block:: console
+.. code-block:: console
 
-      $ openstack server create --image ubuntu-14.04.2-server-amd64.iso \
-        --nic net-id = NETWORK_UUID \
-        --flavor 2 INSTANCE_NAME
-      +--------------------------------------+--------------------------------------------+
-      | Field                                | Value                                      |
-      +--------------------------------------+--------------------------------------------+
-      | OS-DCF:diskConfig                    | MANUAL                                     |
-      | OS-EXT-AZ:availability_zone          | nova                                       |
-      | OS-EXT-SRV-ATTR:host                 | -                                          |
-      | OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                          |
-      | OS-EXT-SRV-ATTR:instance_name        | instance-00000004                          |
-      | OS-EXT-STS:power_state               | 0                                          |
-      | OS-EXT-STS:task_state                | scheduling                                 |
-      | OS-EXT-STS:vm_state                  | building                                   |
-      | OS-SRV-USG:launched_at               | -                                          |
-      | OS-SRV-USG:terminated_at             | -                                          |
-      | accessIPv4                           |                                            |
-      | accessIPv6                           |                                            |
-      | adminPass                            | ZaiYeC8iucgU                               |
-      | config_drive                         |                                            |
-      | created                              | 2015-06-01T16:34:50Z                       |
-      | flavor                               | m1.small (2)                               |
-      | hostId                               |                                            |
-      | id                                   | 1e1797f3-1662-49ff-ae8c-a77e82ee1571       |
-      | image                                | ubuntu-14.04.2-server-amd64.iso            |
-      | key_name                             | -                                          |
-      | metadata                             | {}                                         |
-      | name                                 | INSTANCE_NAME                              |
-      | os-extended-volumes:volumes_attached | []                                         |
-      | progress                             | 0                                          |
-      | security_groups                      | default                                    |
-      | status                               | BUILD                                      |
-      | tenant_id                            | ccef9e62b1e645df98728fb2b3076f27           |
-      | updated                              | 2014-05-09T16:34:51Z                       |
-      | user_id                              | fef060ae7bfd4024b3edb97dff59017a           |
-      +--------------------------------------+--------------------------------------------+
+   $ openstack server create --image ubuntu-14.04.2-server-amd64.iso \
+     --nic net-id = NETWORK_UUID \
+     --flavor 2 INSTANCE_NAME
+   +--------------------------------------+--------------------------------------------+
+   | Field                                | Value                                      |
+   +--------------------------------------+--------------------------------------------+
+   | OS-DCF:diskConfig                    | MANUAL                                     |
+   | OS-EXT-AZ:availability_zone          | nova                                       |
+   | OS-EXT-SRV-ATTR:host                 | -                                          |
+   | OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                          |
+   | OS-EXT-SRV-ATTR:instance_name        | instance-00000004                          |
+   | OS-EXT-STS:power_state               | 0                                          |
+   | OS-EXT-STS:task_state                | scheduling                                 |
+   | OS-EXT-STS:vm_state                  | building                                   |
+   | OS-SRV-USG:launched_at               | -                                          |
+   | OS-SRV-USG:terminated_at             | -                                          |
+   | accessIPv4                           |                                            |
+   | accessIPv6                           |                                            |
+   | adminPass                            | ZaiYeC8iucgU                               |
+   | config_drive                         |                                            |
+   | created                              | 2015-06-01T16:34:50Z                       |
+   | flavor                               | m1.small (2)                               |
+   | hostId                               |                                            |
+   | id                                   | 1e1797f3-1662-49ff-ae8c-a77e82ee1571       |
+   | image                                | ubuntu-14.04.2-server-amd64.iso            |
+   | key_name                             | -                                          |
+   | metadata                             | {}                                         |
+   | name                                 | INSTANCE_NAME                              |
+   | os-extended-volumes:volumes_attached | []                                         |
+   | progress                             | 0                                          |
+   | security_groups                      | default                                    |
+   | status                               | BUILD                                      |
+   | tenant_id                            | ccef9e62b1e645df98728fb2b3076f27           |
+   | updated                              | 2014-05-09T16:34:51Z                       |
+   | user_id                              | fef060ae7bfd4024b3edb97dff59017a           |
+   +--------------------------------------+--------------------------------------------+
 
 In this command, ``ubuntu-14.04.2-server-amd64.iso`` is the ISO image,
 and ``INSTANCE_NAME`` is the name of the new instance. ``NETWORK_UUID``

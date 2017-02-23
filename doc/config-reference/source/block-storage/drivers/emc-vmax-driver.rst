@@ -180,35 +180,35 @@ Setup VMAX drivers
 
          # yum install pywbem
 
-.. note::
+   .. note::
 
-   A potential issue can exist with the ``python-pywbem`` dependency package,
-   especially M2crypto. To troubleshot and resolve these types of issues,
-   follow these steps.
+      A potential issue can exist with the ``python-pywbem`` dependency package,
+      especially M2crypto. To troubleshot and resolve these types of issues,
+      follow these steps.
 
-   -  On Ubuntu:
+      -  On Ubuntu:
 
-      .. code-block:: console
+         .. code-block:: console
 
-         # apt-get remove --purge -y python-m2crypto
-         # pip uninstall pywbem
-         # apt-get install python-pywbem
+            # apt-get remove --purge -y python-m2crypto
+            # pip uninstall pywbem
+            # apt-get install python-pywbem
 
-   -  On openSUSE:
+      -  On openSUSE:
 
-      .. code-block:: console
+         .. code-block:: console
 
-         # zypper remove --clean-deps python-m2crypto
-         # pip uninstall pywbem
-         # zypper install python-pywbem
+            # zypper remove --clean-deps python-m2crypto
+            # pip uninstall pywbem
+            # zypper install python-pywbem
 
-  -  On Red Hat Enterprise Linux, CentOS, and Fedora:
+      -  On Red Hat Enterprise Linux, CentOS, and Fedora:
 
-      .. code-block:: console
+         .. code-block:: console
 
-         # yum remove python-m2crypto
-         # sudo pip uninstall pywbem
-         # yum install pywbem
+            # yum remove python-m2crypto
+            # sudo pip uninstall pywbem
+            # yum install pywbem
 
 #. Install iSCSI Utilities (for iSCSI drivers only).
 

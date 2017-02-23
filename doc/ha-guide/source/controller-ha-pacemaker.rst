@@ -529,27 +529,27 @@ start it:
 
 #. Start ``pacemaker`` with the LSB init script:
 
-  .. code-block:: console
+   .. code-block:: console
 
-     # /etc/init.d/pacemaker start
+      # /etc/init.d/pacemaker start
 
-  Alternatively:
+   Alternatively:
 
-  .. code-block:: console
+   .. code-block:: console
 
-     # service pacemaker start
+      # service pacemaker start
 
 #. Start ``pacemaker`` with upstart:
 
-  .. code-block:: console
+   .. code-block:: console
 
-     # start pacemaker
+      # start pacemaker
 
 #. Start ``pacemaker`` with the systemd unit file:
 
-  .. code-block:: console
+   .. code-block:: console
 
-     # systemctl start pacemaker
+      # systemctl start pacemaker
 
 After the ``pacemaker`` service has started, Pacemaker creates a default empty
 cluster configuration with no resources. Use the :command:`crm_mon` utility to
