@@ -3,15 +3,32 @@
 mkdir -p publish-docs
 
 # Do not build  debian debconf for now, there're no Ocata packages at all.
-TAGS=${1:-obs rdo ubuntu}
 INDEX=doc/install-guide/source/index.rst
 
+TAGS="obs rdo ubuntu"
 LINKCHECK=""
-if [[ $# > 0 ]] ; then
-    if [ "$1" = "--linkcheck" ] ; then
-        LINKCHECK="$1"
-    fi
-fi
+PDF_OPTION=""
+while [[ $# > 0 ]] ; do
+    option="$1"
+    case $option in
+        obs)
+            TAGS=obs
+            ;;
+        rdo)
+            TAGS=rdo
+            ;;
+        ubuntu)
+            TAGS=ubuntu
+            ;;
+        --linkcheck)
+            LINKCHECK="--linkcheck"
+            ;;
+        --pdf)
+            PDF_OPTION="--pdf"
+            ;;
+    esac
+    shift
+done
 
 # For translation work, we should have only one index file,
 # because our tools generate translation resources from
@@ -38,7 +55,7 @@ for tag in $TAGS; do
         # Build the guide with debconf
         # To use debian only contents, use "debian" tag.
         tools/build-rst.sh doc/install-guide-debconf  \
-            --tag debian --target "$TARGET" $LINKCHECK --pdf
+            --tag debian --target "$TARGET" $LINKCHECK $PDF_OPTION
     else
         ##
         # Because Sphinx uses the first heading as title regardless of
@@ -51,7 +68,7 @@ for tag in $TAGS; do
 
         # Build the guide
         tools/build-rst.sh doc/install-guide \
-            --tag ${tag} --target "$TARGET" $LINKCHECK --pdf
+            --tag ${tag} --target "$TARGET" $LINKCHECK $PDF_OPTION
     fi
     # Add this for stable branches
     if [ "$ZUUL_REFNAME" != "master" ] ; then

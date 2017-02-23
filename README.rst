@@ -33,7 +33,6 @@ In addition to the guides, this repository contains:
 
  * docs.openstack.org contents: ``www``
 
-
 Building
 ========
 
@@ -43,7 +42,7 @@ Guides
 ------
 
 All guides are in the RST format. You can use ``tox`` to prepare
-virtual environment and build all guides::
+virtual environment and build all guides (HTML only):
 
     $ tox -e docs
 
@@ -64,12 +63,15 @@ To build a specific guide with a PDF file, add a ``-pdf`` option like::
 The generated PDF file will be copied to the root directory of the
 generated HTML documentation.
 
-To install all requirements to execute the commands above check the
-output of the ``bindep`` command, it reports missing requirements for
-all build targets::
+To install all requirements to execute the commands above, on Linux you can
+check the output of the ``bindep`` command. This tool reports missing
+requirements for all build targets::
 
     $ tox -e bindep
 
+If you get this message `make: xelatex: No such file or directory` it means
+your local environment does not have LaTeX installed. Read `Getting LaTeX
+ <https://www.latex-project.org/get/>`_ for instructions.
 
 Testing of changes and building of the manual
 =============================================
