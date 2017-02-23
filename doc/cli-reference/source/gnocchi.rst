@@ -24,7 +24,7 @@ The gnocchi client is the command-line interface (CLI) for
 the A time series storage and resources index service (gnocchi) API and its
 extensions.
 
-This chapter documents :command:`gnocchi` version ``3.0.0``.
+This chapter documents :command:`gnocchi` version ``3.1.0``.
 
 For help on a specific :command:`gnocchi` command, enter:
 
@@ -40,8 +40,6 @@ gnocchi usage
 .. code-block:: console
 
    usage: gnocchi [--version] [-v | -q] [--log-file LOG_FILE] [-h] [--debug]
-                  [--os-region-name <auth-region-name>]
-                  [--os-interface <interface>]
                   [--gnocchi-api-version GNOCCHI_API_VERSION] [--insecure]
                   [--os-cacert <ca-certificate>] [--os-cert <certificate>]
                   [--os-key <key>] [--timeout <seconds>] [--os-auth-type <name>]
@@ -69,13 +67,6 @@ gnocchi optional arguments
 
 ``--debug``
   Show tracebacks on errors.
-
-``--os-region-name <auth-region-name>``
-  Authentication region name (Env: OS_REGION_NAME)
-
-``--os-interface <interface>``
-  Select an interface type. Valid interface types:
-  [admin, public, internal]. (Env: OS_INTERFACE)
 
 ``--gnocchi-api-version GNOCCHI_API_VERSION``
   Defaults to ``env[GNOCCHI_API_VERSION]`` or 1.
