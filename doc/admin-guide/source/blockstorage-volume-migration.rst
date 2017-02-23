@@ -87,7 +87,7 @@ Next, as the admin user, you can see the current status of the volume
    | migration_status               | None                                 |
    | multiattach                    | False                                |
    | name                           | test                                 |
-   | os-vol-host-attr:host          | controller@lvm#LVM                   |
+   | os-vol-host-attr:host          | server1@lvmstorage-1#lvmstorage-1    |
    | os-vol-mig-status-attr:migstat | None                                 |
    | os-vol-mig-status-attr:name_id | None                                 |
    | os-vol-tenant-attr:tenant_id   | d88310717a8e4ebcae84ed075f82c51e     |
@@ -148,6 +148,9 @@ Migrate this volume to the second LVM back end:
    $ cinder migrate 6088f80a-f116-4331-ad48-9afb0dfb196c \
      server2@lvmstorage-2#lvmstorage-2
 
+   Request to migrate volume 6088f80a-f116-4331-ad48-9afb0dfb196c has been
+   accepted.
+
 You can use the :command:`openstack volume show` command to see the status of
 the migration. While migrating, the ``migstat`` attribute shows states such as
 ``migrating`` or ``completing``. On error, ``migstat`` is set to None and the
@@ -155,6 +158,8 @@ host attribute shows the original ``host``. On success, in this example, the
 output looks like:
 
 .. code-block:: console
+
+   $ openstack volume show 6088f80a-f116-4331-ad48-9afb0dfb196c
 
    +--------------------------------+--------------------------------------+
    | Field                          | Value                                |
@@ -170,8 +175,8 @@ output looks like:
    | migration_status               | None                                 |
    | multiattach                    | False                                |
    | name                           | test                                 |
-   | os-vol-host-attr:host          | controller@lvm#LVM                   |
-   | os-vol-mig-status-attr:migstat | None                                 |
+   | os-vol-host-attr:host          | server2@lvmstorage-2#lvmstorage-2    |
+   | os-vol-mig-status-attr:migstat | completing                           |
    | os-vol-mig-status-attr:name_id | None                                 |
    | os-vol-tenant-attr:tenant_id   | d88310717a8e4ebcae84ed075f82c51e     |
    | properties                     | readonly='False'                     |
@@ -181,7 +186,7 @@ output looks like:
    | source_volid                   | None                                 |
    | status                         | in-use                               |
    | type                           | None                                 |
-   | updated_at                     | 2016-07-31T07:22:19.000000           |
+   | updated_at                     | 2017-02-22T02:35:03.000000           |
    | user_id                        | d8e5e5727f3a4ce1886ac8ecec058e83     |
    +--------------------------------+--------------------------------------+
 
