@@ -21,15 +21,40 @@ Set up project specific installation guides:
 
       # pip install cookiecutter
 
-#. Run the Install Guide cookiecutter to create a skeleton for your project:
+#. Run the Install Guide cookiecutter in the top-level directory of your
+   projects repository to create a skeleton for the install guide of your
+   project:
 
    .. code-block:: console
 
       $ cookiecutter https://git.openstack.org/openstack/installguide-cookiecutter.git
 
-   You will be prompted to answer questions to complete the installation.
-   Content will be added to the ``install-guide`` directory in the
-   top-level of the project repository.
+   You will be prompted to answer the following questions to complete the
+   installation:
+
+   .. list-table::
+      :header-rows: 1
+
+      * - Parameter
+        - Explanation
+        - Example
+
+      * - directory_name
+        - The name of the install guide directory inside the project repository.
+          This should be, ``install-guide``.
+        - install-guide
+
+      * - service
+        - The service name what the project implements.
+        - Compute, Telemetry Alarming, or Root Cause Analysis
+
+      * - codename
+        - The name how the different components of the project are refering to the project
+        - nova, aodh, or vitrage as in nova-conductor or vitrage-api
+
+   A directory will be created with the name that was defined in
+   ``directory_name`` (usually ``install-guide``) with the skeleton
+   of the install guide.
 
 #. Create a ``tox.ini`` environment for ``install-guide`` in your project
    repository, using this content:
@@ -39,15 +64,6 @@ Set up project specific installation guides:
       [testenv:install-guide]
       commands = sphinx-build -a -E -W -d install-guide/build/doctrees -b html install-guide/source install-guide/build/html
 
-
-#. Add your installation content, and test the build locally with ``tox``:
-
-   .. code-block:: console
-
-      $ tox -e install-guide
-
-   The local build is in ``install-guide/build/html``.
-
 #. Add the python package ``openstackdocstheme``  to the
    ``test-requirements.txt`` file. Copy the exact requirement line from the
    `global file
@@ -56,6 +72,15 @@ Set up project specific installation guides:
    .. code-block:: none
 
       openstackdocstheme>=1.5.0  # Apache-2.0
+
+#. Add your installation content, and test the build locally with ``tox``:
+
+   .. code-block:: console
+
+      $ tox -e install-guide
+
+   The local build will be generated in the ``install-guide/build/html``
+   directory".
 
 #. Commit the changes to your project repository for review.
 
