@@ -785,7 +785,7 @@ volumes and the instances they are connected to, if any:
    | ID                                   | Display Name | Status | Size | Attached to |
    +--------------------------------------+--------------+--------+------+-------------+
    | 6cf4114a-56b2-476b-acf7-7359d8334aa2 | volume1      | error  |   10 |             |
-   +------------+-----------+-------------+------+-------------+----------+------------+
+   +--------------------------------------+--------------+--------+------+-------------+
 
 OpenStack Block Storage also allows creating snapshots of volumes.
 Remember that this is a block-level snapshot that is crash consistent,
