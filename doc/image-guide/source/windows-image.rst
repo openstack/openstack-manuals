@@ -31,7 +31,8 @@ using the :command:`virt-install` command and the KVM hypervisor.
         --disk path=ws2012.qcow2,format=qcow2,device=disk,bus=virtio \
         --cdrom /path/to/en_windows_server_2012_x64_dvd.iso \
         --disk path=/path/to/virtio-win-0.1-XX.iso,device=cdrom \
-        --vnc --os-type windows --os-variant win2k8
+        --vnc --os-type windows --os-variant win2k12 \
+        --os-distro windows --os-version 2012
 
    Use :command:`virt-manager` or :command:`virt-viewer` to
    connect to the VM and start the Windows installation.
