@@ -128,11 +128,11 @@ consistency group snapshot:
 
 The details of consistency group operations are shown in the following.
 
-   .. note::
+.. note::
 
-      Currently, no OpenStack client command is available to run in
-      place of the cinder consistency group creation commands. Use the
-      cinder commands detailed in the following examples.
+   Currently, no OpenStack client command is available to run in
+   place of the cinder consistency group creation commands. Use the
+   cinder commands detailed in the following examples.
 
 **Create a consistency group**:
 
