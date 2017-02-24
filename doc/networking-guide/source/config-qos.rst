@@ -37,7 +37,10 @@ to `QoS rule types
 
 .. note::
 
-   For the Newton release onward DSCP marking will be supported.
+   Bandwidth limit is supported on OVS, Linux bridge, and SR-IOV mechanism
+   drivers. For the Newton release onward DSCP marking is supported on the
+   OVS and Linux bridge mechanism drivers, and the minimum bandwidth rules
+   on the SR-IOV NIC mechanism driver.
 
 In the most simple case, the property can be represented by a simple Python
 list defined on the class.
@@ -121,26 +124,34 @@ Modify ``/etc/neutron/policy.json`` policy entries as follows:
    "create_policy": "rule:regular_user",
    "update_policy": "rule:regular_user",
    "delete_policy": "rule:regular_user",
+   "get_rule_type": "rule:regular_user",
 
 To enable bandwidth limit rule:
 
 .. code-block:: none
 
    "get_policy_bandwidth_limit_rule": "rule:regular_user",
-   "create_policy_bandwidth_limit_rule": "rule:admin_only",
-   "delete_policy_bandwidth_limit_rule": "rule:admin_only",
-   "update_policy_bandwidth_limit_rule": "rule:admin_only",
-   "get_rule_type": "rule:regular_user",
+   "create_policy_bandwidth_limit_rule": "rule:regular_user",
+   "delete_policy_bandwidth_limit_rule": "rule:regular_user",
+   "update_policy_bandwidth_limit_rule": "rule:regular_user",
 
 To enable DSCP marking rule:
 
 .. code-block:: none
 
    "get_policy_dscp_marking_rule": "rule:regular_user",
-   "create_dscp_marking_rule": "rule:admin_only",
-   "delete_dscp_marking_rule": "rule:admin_only",
-   "update_dscp_marking_rule": "rule:admin_only",
-   "get_rule_type": "rule:regular_user",
+   "create_dscp_marking_rule": "rule:regular_user",
+   "delete_dscp_marking_rule": "rule:regular_user",
+   "update_dscp_marking_rule": "rule:regular_user",
+
+To enable minimum bandwidth rule:
+
+.. code-block:: none
+
+    "get_policy_minimum_bandwidth_rule": "rule:regular_user",
+    "create_policy_minimum_bandwidth_rule": "rule:regular_user",
+    "delete_policy_minimum_bandwidth_rule": "rule:regular_user",
+    "update_policy_minimum_bandwidth_rule": "rule:regular_user",
 
 User workflow
 ~~~~~~~~~~~~~
@@ -377,3 +388,70 @@ with the neutron client:
         115e4f70-8034-4176-8fe9-2c47f8878a7d dscp-marking
       Deleted dscp_rule: 115e4f70-8034-4176-8fe9-2c47f8878a7d
 
+You can also include minimum bandwidth rules in your policy:
+
+.. code-block:: console
+
+    $ openstack network qos policy create bandwidth-control
+    +-------------+--------------------------------------+
+    | Field       | Value                                |
+    +-------------+--------------------------------------+
+    | description |                                      |
+    | id          | 8491547e-add1-4c6c-a50e-42121237256c |
+    | name        | bandwidth-control                    |
+    | project_id  | 7cc5a84e415d48e69d2b06aa67b317d8     |
+    | rules       | []                                   |
+    | shared      | False                                |
+    +-------------+--------------------------------------+
+
+    $ openstack network qos rule create bandwidth-control \
+      --type minimum-bandwidth --min-kbps 1000 --egress
+    +------------+--------------------------------------+
+    | Field      | Value                                |
+    +------------+--------------------------------------+
+    | direction  | egress                               |
+    | id         | da858b32-44bc-43c9-b92b-cf6e2fa836ab |
+    | min_kbps   | 1000                                 |
+    | name       | None                                 |
+    | project_id |                                      |
+    +------------+--------------------------------------+
+
+A policy with a minimum bandwidth ensures best efforts are made to provide
+no less than the specified bandwidth to each port on which the rule is
+applied. However, as this feature is not yet integrated with the Compute
+scheduler, minimum bandwidth cannot be guaranteed.
+
+It is also possible to combine several rules in one policy:
+
+.. code-block:: console
+
+    $ openstack network qos rule create bandwidth-control \
+      --type bandwidth-limit --max-kbps 50000 --max-burst-kbits 50000
+    +----------------+--------------------------------------+
+    | Field          | Value                                |
+    +----------------+--------------------------------------+
+    | id             | 0db48906-a762-4d32-8694-3f65214c34a6 |
+    | max_burst_kbps | 50000                                |
+    | max_kbps       | 50000                                |
+    | name           | None                                 |
+    | project_id     |                                      |
+    +----------------+--------------------------------------+
+
+    $ openstack network qos policy show bandwidth-control
+    +-------------+-------------------------------------------------------------------+
+    | Field       | Value                                                             |
+    +-------------+-------------------------------------------------------------------+
+    | description |                                                                   |
+    | id          | 8491547e-add1-4c6c-a50e-42121237256c                              |
+    | name        | bandwidth-control                                                 |
+    | project_id  | 7cc5a84e415d48e69d2b06aa67b317d8                                  |
+    | rules       | [{u'max_kbps': 50000, u'type': u'bandwidth_limit',                |
+    |             |   u'id': u'0db48906-a762-4d32-8694-3f65214c34a6',                 |
+    |             |   u'max_burst_kbps': 50000,                                       |
+    |             |   u'qos_policy_id': u'8491547e-add1-4c6c-a50e-42121237256c'},     |
+    |             |  {u'direction':                                                   |
+    |             |   u'egress', u'min_kbps': 1000, u'type': u'minimum_bandwidth',    |
+    |             |   u'id': u'da858b32-44bc-43c9-b92b-cf6e2fa836ab',                 |
+    |             |   u'qos_policy_id': u'8491547e-add1-4c6c-a50e-42121237256c'}]     |
+    | shared      | False                                                             |
+    +-------------+-------------------------------------------------------------------+
