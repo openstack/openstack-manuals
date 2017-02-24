@@ -2088,11 +2088,6 @@ J
 
       One of the supported response formats in OpenStack.
 
-   Jenkins
-
-      Tool used to run jobs automatically for OpenStack
-      development.
-
    jumbo frame
 
       Feature in modern Ethernet networks that supports frames up to
@@ -2145,9 +2140,9 @@ K
       The code name for the eleventh release of OpenStack. The
       design summit took place in Paris, France. Due to delays in the name
       selection, the release was known only as K. Because ``k`` is the
-      unit symbol for kilo and the reference artifact is stored near Paris
-      in the Pavillon de Breteuil in Sèvres, the community chose Kilo as
-      the release name.
+      unit symbol for kilo and the kilogram reference artifact is stored
+      near Paris in the Pavillon de Breteuil in Sèvres, the community
+      chose Kilo as the release name.
 
 L
 ~
@@ -2201,6 +2196,11 @@ L
 
       An application protocol for accessing and maintaining distributed
       directory information services over an IP network.
+
+   Linux
+
+      Unix-like computer operating system assembled under the model of
+      free and open-source software development and distribution.
 
    Linux bridge
 
