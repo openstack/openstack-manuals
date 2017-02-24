@@ -13,37 +13,41 @@ file with specific sections that run jobs using the `Tox
 <https://tox.readthedocs.org/en/latest/>`_ tool, a virtualenv-based
 automation of test activities.
 
-Tox prerequisites and installation
-----------------------------------
-
-**Install the prerequisites for Tox:**
+Install dependencies for building documentation
+-----------------------------------------------
 
 * On Ubuntu or Debian:
 
   .. code-block:: console
 
-     # apt-get install gcc gettext python-dev libxml2-dev libxslt1-dev \
-       zlib1g-dev
-
-  You may need to use :command:`pip install` for some packages.
+     # apt-get install python-pip
+     # pip install tox
+     $ tox -e bindep
+     # apt-get install <indicated missing package names>
 
 * On RHEL or CentOS including Fedora:
 
   .. code-block:: console
 
-     # yum install gcc python-devel libxml2-devel libxslt-devel
+     # yum install python-pip
+     # pip install tox
+     $ tox -e bindep
+     # yum install <indicated missing package names>
 
 * On openSUSE or SUSE Linux Enterprise:
 
   .. code-block:: console
 
-     # zypper install gcc python-devel libxml2-devel libxslt-devel
+     # zypper in python-pip
+     # pip install tox
+     $ tox -e bindep
+     # zypper in <indicated missing package names>
 
-**Install python-tox:**
+.. note::
 
-.. code-block:: console
-
-   # pip install tox
+   This will install all required packages for building both RST and
+   PDF files. If you do not build PDF files, you do not need to install
+   the ``texlive`` packages.
 
 Build workflow
 --------------

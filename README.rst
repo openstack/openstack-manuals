@@ -64,6 +64,12 @@ To build a specific guide with a PDF file, add a ``-pdf`` option like::
 The generated PDF file will be copied to the root directory of the
 generated HTML documentation.
 
+To install all requirements to execute the commands above check the
+output of the ``bindep`` command, it reports missing requirements for
+all build targets::
+
+    $ tox -e bindep
+
 
 Testing of changes and building of the manual
 =============================================
