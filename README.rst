@@ -41,6 +41,12 @@ Various manuals are in subdirectories of the ``doc/`` directory.
 Guides
 ------
 
+Some pre-requisites are needed to build the guides. If you are using a Linux
+operating system you can generate a report of missing local requirements with
+the ``bindep`` command::
+
+    $ tox -e bindep
+
 All guides are in the RST format. You can use ``tox`` to prepare
 virtual environment and build all guides (HTML only):
 
@@ -62,12 +68,6 @@ To build a specific guide with a PDF file, add a ``-pdf`` option like::
 
 The generated PDF file will be copied to the root directory of the
 generated HTML documentation.
-
-To install all requirements to execute the commands above, on Linux you can
-check the output of the ``bindep`` command. This tool reports missing
-requirements for all build targets::
-
-    $ tox -e bindep
 
 If you get this message `make: xelatex: No such file or directory` it means
 your local environment does not have LaTeX installed. Read `Getting LaTeX
