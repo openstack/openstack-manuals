@@ -28,18 +28,18 @@ OpenStack architecture:
      - Provides a web-based self-service portal to interact with underlying
        OpenStack services, such as launching an instance, assigning IP
        addresses and configuring access controls.
-   * - `Compute <https://www.openstack.org/software/releases/ocata/components/nova>`__
+   * - `Compute service <https://www.openstack.org/software/releases/ocata/components/nova>`__
      - `Nova <https://docs.openstack.org/developer/nova/>`__
      - Manages the lifecycle of compute instances in an OpenStack environment.
        Responsibilities include spawning, scheduling and decommissioning of
        virtual machines on demand.
-   * - `Networking <https://www.openstack.org/software/releases/ocata/components/neutron>`__
+   * - `Networking service <https://www.openstack.org/software/releases/ocata/components/neutron>`__
      - `Neutron <https://docs.openstack.org/developer/neutron/>`__
      - Enables Network-Connectivity-as-a-Service for other OpenStack services,
        such as OpenStack Compute. Provides an API for users to define networks
        and the attachments into them. Has a pluggable architecture that
        supports many popular networking vendors and technologies.
-   * - `Object Storage <https://www.openstack.org/software/releases/ocata/components/swift>`__
+   * - `Object Storage service <https://www.openstack.org/software/releases/ocata/components/swift>`__
      - `Swift <https://docs.openstack.org/developer/swift/>`__
      - Stores and retrieves arbitrary unstructured data objects via a RESTful,
        HTTP based API. It is highly fault tolerant with its data replication
@@ -47,7 +47,7 @@ OpenStack architecture:
        with mountable directories. In this case, it writes objects and files to
        multiple drives, ensuring the data is replicated across a server
        cluster.
-   * - `Block Storage <https://www.openstack.org/software/releases/ocata/components/cinder>`__
+   * - `Block Storage service <https://www.openstack.org/software/releases/ocata/components/cinder>`__
      - `Cinder <https://docs.openstack.org/developer/cinder/>`__
      - Provides persistent block storage to running instances. Its pluggable
        driver architecture facilitates the creation and management of block
@@ -61,11 +61,11 @@ OpenStack architecture:
      - `Glance <https://docs.openstack.org/developer/glance/>`__
      - Stores and retrieves virtual machine disk images. OpenStack Compute
        makes use of this during instance provisioning.
-   * - `Telemetry <https://www.openstack.org/software/releases/ocata/components/ceilometer>`__
+   * - `Telemetry service <https://www.openstack.org/software/releases/ocata/components/ceilometer>`__
      - `Ceilometer <https://docs.openstack.org/developer/ceilometer/>`__
      - Monitors and meters the OpenStack cloud for billing, benchmarking,
        scalability, and statistical purposes.
-   * - `Orchestration <https://www.openstack.org/software/releases/ocata/components/heat>`__
+   * - `Orchestration service <https://www.openstack.org/software/releases/ocata/components/heat>`__
      - `Heat <https://docs.openstack.org/developer/heat/>`__
      - Orchestrates multiple composite cloud applications by using either the
        native HOT template format or the AWS CloudFormation template format,
@@ -75,7 +75,7 @@ OpenStack architecture:
      - `Trove <https://docs.openstack.org/developer/trove/>`__
      - Provides scalable and reliable Cloud Database-as-a-Service functionality
        for both relational and non-relational database engines.
-   * - `Data processing service <https://www.openstack.org/software/releases/ocata/components/sahara>`__
+   * - `Data Processing service <https://www.openstack.org/software/releases/ocata/components/sahara>`__
      - `Sahara <https://docs.openstack.org/developer/sahara/>`__
      - Provides capabilities to provision and scale Hadoop clusters in OpenStack
        by specifying parameters like Hadoop version, cluster topology and nodes
