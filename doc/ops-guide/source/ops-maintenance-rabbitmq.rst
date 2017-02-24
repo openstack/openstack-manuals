@@ -49,7 +49,8 @@ you manually restart RabbitMQ on each controller node.
 
       # rabbitmqctl cluster_status
 
-   For more information, see https://www.rabbitmq.com/partitions.html.
+   For more information, see `RabbitMQ documentation
+   <https://www.rabbitmq.com/partitions.html>`_.
 
 #. Go back to the first step and try restarting the RabbitMQ service again. If
    you still have errors, remove the contents in the
