@@ -225,10 +225,10 @@ this by doing a quick image upload:
 
 
    . /root/openrc
-   wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+   wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
    openstack image create --name='cirros image' --public \
    --container-format=bare --disk-format=qcow2 \
-   --file cirros-0.3.4-x86_64-disk.img
+   --file cirros-0.3.5-x86_64-disk.img
 
 By taking this script and rolling it into an alert for your monitoring
 system (such as Nagios), you now have an automated way of ensuring that

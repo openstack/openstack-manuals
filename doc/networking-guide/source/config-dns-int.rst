@@ -131,7 +131,7 @@ The following is an example of an instance creation, showing how its
    | flavor                               | m1.nano (42)                                                   |
    | hostId                               |                                                                |
    | id                                   | 66c13cb4-3002-4ab3-8400-7efc2659c363                           |
-   | image                                | cirros-0.3.4-x86_64-uec(b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f)  |
+   | image                                | cirros-0.3.5-x86_64-uec(b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f)  |
    | key_name                             | -                                                              |
    | locked                               | False                                                          |
    | metadata                             | {}                                                             |
@@ -347,7 +347,7 @@ external DNS service. This is an example:
    | flavor                               | m1.nano (42)                                                   |
    | hostId                               |                                                                |
    | id                                   | 62c19691-d1c7-4d7b-a88e-9cc4d95d4f41                           |
-   | image                                | cirros-0.3.4-x86_64-uec (b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f) |
+   | image                                | cirros-0.3.5-x86_64-uec (b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f) |
    | key_name                             | -                                                              |
    | locked                               | False                                                          |
    | metadata                             | {}                                                             |
@@ -467,7 +467,7 @@ Following is an example of these steps:
    | flavor                               | m1.nano (42)                                                   |
    | hostId                               |                                                                |
    | id                                   | 43f328bb-b2d1-4cf1-a36f-3b2593397cb1                           |
-   | image                                | cirros-0.3.4-x86_64-uec (b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f) |
+   | image                                | cirros-0.3.5-x86_64-uec (b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f) |
    | key_name                             | -                                                              |
    | locked                               | False                                                          |
    | metadata                             | {}                                                             |
@@ -627,7 +627,7 @@ allocated for the instance:
    | flavor                               | m1.nano (42)                                                   |
    | hostId                               |                                                                |
    | id                                   | 71fb4ac8-eed8-4644-8113-0641962bb125                           |
-   | image                                | cirros-0.3.4-x86_64-uec (b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f) |
+   | image                                | cirros-0.3.5-x86_64-uec (b9d981eb-d21c-4ce2-9dbc-dd38f3d9015f) |
    | key_name                             | -                                                              |
    | locked                               | False                                                          |
    | metadata                             | {}                                                             |

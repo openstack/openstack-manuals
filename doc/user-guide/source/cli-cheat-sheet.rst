@@ -52,7 +52,7 @@ Upload kernel image
 
    $ openstack image create "cirros-threepart-kernel" \
      --disk-format aki --container-format aki --public \
-     --file ~/images/cirros-0.3.1~pre4-x86_64-vmlinuz
+     --file ~/images/cirros-0.3.5-x86_64-kernel
 
 Upload RAM image
 
@@ -60,7 +60,7 @@ Upload RAM image
 
    $ openstack image create "cirros-threepart-ramdisk" \
      --disk-format ari --container-format ari --public \
-     --file ~/images/cirros-0.3.1~pre4-x86_64-initrd
+     --file ~/images/cirros-0.3.5-x86_64-initramfs
 
 Upload three-part image
 
@@ -69,7 +69,7 @@ Upload three-part image
    $ openstack image create "cirros-threepart" --disk-format ami \
      --container-format ami --public \
      --property kernel_id=$KID-property ramdisk_id=$RID \
-     --file ~/images/cirros-0.3.1~pre4-x86_64-blank.img
+     --file ~/images/cirros-0.3.5-x86_64-rootfs.img
 
 Register raw image
 
@@ -77,7 +77,7 @@ Register raw image
 
    $ openstack image create "cirros-raw" --disk-format raw \
      --container-format bare --public \
-     --file ~/images/cirros-0.3.1~pre4-x86_64-disk.img
+     --file ~/images/cirros-0.3.5-x86_64-disk.img
 
 Compute (nova)
 ~~~~~~~~~~~~~~
@@ -111,7 +111,7 @@ Boot an instance using flavor and image names (if names are unique)
 .. code-block:: console
 
    $ openstack server create --image IMAGE --flavor FLAVOR INSTANCE_NAME
-   $ openstack server create --image cirros-0.3.1-x86_64-uec --flavor m1.tiny \
+   $ openstack server create --image cirros-0.3.5-x86_64-uec --flavor m1.tiny \
      MyFirstInstance
 
 Log in to the instance (from Linux)
@@ -260,7 +260,7 @@ Start an instance (boot)
 
 .. code-block:: console
 
-   $ openstack server create --image cirros-0.3.0-x86_64 --flavor m1.small \
+   $ openstack server create --image cirros-0.3.5-x86_64 --flavor m1.small \
      --key-name test MyFirstServer
 
 Use ssh to connect to the instance
