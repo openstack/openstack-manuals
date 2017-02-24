@@ -122,7 +122,7 @@ To address this issue:
 
       # rabbitmqctl status
 
-#. Edit the file:`etc/rabbitmq/rabbitmq.config` configuration file, and change
+#. Edit the file:`/etc/rabbitmq/rabbitmq.config` configuration file, and change
    the ``collect_statistics_interval`` parameter between 30000-60000
    milliseconds. Alternatively you can turn off statistics collection by
    setting ``collect_statistics`` parameter to "none".
