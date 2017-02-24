@@ -11,7 +11,7 @@ Administrator Guide
 
 * Removed legacy commands in favor of the ``openstack`` client commands where
   equivalent functions existed. Legacy commands changed include ``nova``,
-  ``neutron``, ``cinder``, ``glance``, and ``manila`` clients.
+  ``neutron``, ``cinder``, ``glance``, ``keystone``, and ``manila`` clients.
 * Updated identity and compute content - PCI DSS v3.1 compliance, and Huge
   Page functionality, respectively.
 * General bug fixes and updates.
@@ -54,7 +54,7 @@ End User Guide
 
 * Removed legacy commands in favor of the ``openstack`` client commands where
   equivalent functions existed. Legacy commands changed include ``nova``,
-  ``neutron``, ``cinder``, ``glance``, and ``manila`` clients.
+  ``neutron``, ``cinder``, ``glance``, ``keystone``, and ``manila`` clients.
 * Deleted references to default flavors.
 * Changes to swift content on ``.rlistings``, and  neutron dnsmasq log file
   content.
