@@ -8,4 +8,6 @@ multiple agents across nodes. The DHCP agent can be natively highly available.
 To configure the number of DHCP agents per network, modify the
 ``dhcp_agents_per_network`` parameter in the :file:`/etc/neutron/neutron.conf`
 file. By default this is set to 1. To achieve high availability, assign more
-than one DHCP agent per network.
+than one DHCP agent per network. For more information, see
+`High-availability for DHCP
+<https://docs.openstack.org/newton/networking-guide/config-dhcp-ha.html>`_.
