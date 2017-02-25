@@ -2,7 +2,7 @@
 Object Storage service overview
 ===============================
 
-The OpenStack Object Storage is a multi-tenant object storage system. It
+The OpenStack Object Storage is a multi-project object storage system. It
 is highly scalable and can manage large amounts of unstructured data at
 low cost through a RESTful HTTP API.
 

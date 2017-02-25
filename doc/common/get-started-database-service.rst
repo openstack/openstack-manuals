@@ -24,7 +24,7 @@ This example is a high-level process flow for using Database services:
    #. Create an image for each type of database. For example, one for MySQL
       and one for MongoDB.
    #. Use the :command:`trove-manage` command to import images and offer them
-      to tenants.
+      to projects.
 
 #. The OpenStack end user deploys the Database service using the following
    steps:

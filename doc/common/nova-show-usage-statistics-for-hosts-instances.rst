@@ -117,7 +117,7 @@ Show instance usage statistics
          | vda_write_req             | 74     |
          +---------------------------+--------+
 
-*  Get summary statistics for each tenant:
+*  Get summary statistics for each project:
 
    .. code-block:: console
 
