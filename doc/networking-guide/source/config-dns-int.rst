@@ -838,4 +838,4 @@ meet the following requirements:
 * The network cannot have attribute ``router:external`` set to ``True``.
 * The network type can be FLAT, VLAN, GRE, VXLAN or GENEVE.
 * For network types VLAN, GRE, VXLAN or GENEVE, the segmentation ID must be
-  outside the ranges assigned to tenant networks.
+  outside the ranges assigned to project networks.

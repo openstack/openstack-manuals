@@ -81,7 +81,7 @@ create or update provider networks with the following parameters of
 
    The creation and modification of provider networks enables use of
    physical network resources, such as VLAN-s. Enable these changes
-   only for trusted tenants.
+   only for trusted projects.
 
 Also, provider networks only handle layer-2 connectivity for instances, thus
 lacking support for features such as routers and floating IP addresses.
@@ -180,7 +180,7 @@ GRE and VXLAN
     from an external network using floating IP addresses.
 
 .. image:: figures/NetworkTypes.png
-   :alt: Tenant and provider networks
+   :alt: Project and provider networks
 
 Subnets
 -------
