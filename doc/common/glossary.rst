@@ -1820,7 +1820,7 @@ I
    Identity service (keystone)
 
       The project that facilitates API client authentication, service
-      discovery, distributed multi-tenant authorization, and auditing.
+      discovery, distributed multi-project authorization, and auditing.
       It provides a central directory of users mapped to the OpenStack
       services they can access. It also registers endpoints for OpenStack
       services and acts as a common authentication system.
@@ -1903,7 +1903,7 @@ I
    Infrastructure Optimization service (watcher)
 
       OpenStack project that aims to provide a flexible and scalable resource
-      optimization service for multi-tenant OpenStack-based clouds.
+      optimization service for multi-project OpenStack-based clouds.
 
    Infrastructure-as-a-Service (IaaS)
 
@@ -2400,11 +2400,11 @@ M
 
    Monitoring (monasca)
 
-      The OpenStack service that provides a multi-tenant, highly scalable,
+      The OpenStack service that provides a multi-project, highly scalable,
       performant, fault-tolerant monitoring-as-a-service solution for metrics,
       complex event processing and logging. To build an extensible platform for
       advanced monitoring services that can be used by both operators and
-      tenants to gain operational insight and visibility, ensuring availability
+      projects to gain operational insight and visibility, ensuring availability
       and stability.
 
    multi-factor authentication
@@ -3470,7 +3470,7 @@ S
    Shared File Systems service (manila)
 
       The service that provides a set of services for
-      management of shared file systems in a multi-tenant cloud
+      management of shared file systems in a multi-project cloud
       environment, similar to how OpenStack provides block-based storage
       management through the OpenStack :term:`Block Storage service<Block
       Storage service (cinder)>` project.
