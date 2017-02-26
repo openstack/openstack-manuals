@@ -119,10 +119,10 @@ https://docs.openstack.org/user-guide/.
 Using Tox to check builds
 -------------------------
 
-As a part of the review process, Jenkins runs gating scripts to check that
-the patch is fine. Locally, you can use the Tox tool to ensure that a patch
-works. To check all books, run the following command from the base directory
-of repository:
+As a part of the review process, the OpenStack CI system runs scripts
+to check that the patch is fine. Locally, you can use the Tox tool to
+ensure that a patch works. To check all books, run the following
+command from the base directory of repository:
 
 .. code-block:: console
 
@@ -190,7 +190,7 @@ The build jobs for documentation are stored in the
 https://git.openstack.org/cgit/openstack-infra/project-config
 repository. The :file:`zuul/layout.yaml` file and the
 ``jenkins/jobs/manual-jobs.yaml`` or ``jenkins/jobs/api-jobs.yaml``
-file contain the Jenkins build jobs that build to the docs.openstack.org
+file contain the build jobs that build to the docs.openstack.org
 and developer.openstack.org sites, copying built files via FTP.
 
 The release specific books are built for the currently supported branches
