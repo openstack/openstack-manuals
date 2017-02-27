@@ -212,7 +212,7 @@ basic L3 operations:
      - .. code-block:: console
 
           $ openstack network create public --external
-          $ openstack subnet create --network public --subnet-range 172.16.1.0/24 public-subnet
+          $ openstack subnet create --network public --subnet-range 172.16.1.0/24 subnetname
    * - Lists external networks.
      - .. code-block:: console
 
@@ -221,12 +221,12 @@ basic L3 operations:
      - .. code-block:: console
 
           $ openstack network create net1
-          $ openstack subnet create --network net1 --subnet-range 10.0.0.0/24 subnet1
+          $ openstack subnet create --network net1 --subnet-range 10.0.0.0/24 subnetname1
           $ openstack network create net2
-          $ openstack subnet create --network net2 --subnet-range 10.0.1.0/24 subnet2
+          $ openstack subnet create --network net2 --subnet-range 10.0.1.0/24 subnetname2
           $ openstack router create router1
-          $ openstack router add subnet router1 SUBNET1_UUID
-          $ openstack router add subnet router1 SUBNET2_UUID
+          $ openstack router add subnet router1 subnetname1
+          $ openstack router add subnet router1 subnetname2
 
        An internal router port can have only one IPv4 subnet and multiple IPv6 subnets
        that belong to the same network ID. When you call ``router-interface-add`` with an IPv6
@@ -237,7 +237,8 @@ basic L3 operations:
        act as a NAT gateway for external connectivity.
      - .. code-block:: console
 
-          $ openstack router set router1 --external-gateway EXT_NET_ID
+          $ openstack router set --external-gateway EXT_NET_ID router1
+          $ openstack router set --route destination=172.24.4.0/24,gateway=172.24.4.1 router1
 
        The router obtains an interface with the gateway_ip address of the
        subnet and this interface is attached to a port on the L2 Networking
@@ -704,7 +705,7 @@ Router rule attributes
 
 Each project router has a set of router rules associated with it. Each
 router rule has the attributes in this table. Router rules and their
-attributes can be set using the :command:`openstack router set` command,
+attributes can be set using the :command:`neutron router-update` command,
 through the horizon interface or the Networking API.
 
 .. list-table:: **Big Switch Router rule attributes**
@@ -856,4 +857,13 @@ complete basic L3 metering operations:
    * - Lists the value of created metering label rules.
      - .. code-block:: console
 
-          $ ceilometer sample-list -m bandwidth -q resource=LABEL_UUID
+          $ ceilometer sample-list -m SNMP_MEASUREMENT
+
+       For example:
+
+       .. code-block:: console
+
+          $ ceilometer sample-list -m hardware.network.bandwidth.bytes
+          $ ceilometer sample-list -m hardware.network.incoming.bytes
+          $ ceilometer sample-list -m hardware.network.outgoing.bytes
+          $ ceilometer sample-list -m hardware.network.outgoing.errors
