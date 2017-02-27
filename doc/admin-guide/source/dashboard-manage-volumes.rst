@@ -112,7 +112,7 @@ volumes.
 |                    |                       |size would only be 128-bits*|
 +--------------------+-----------------------+----------------------------+
 
-`*` Source `NIST SP 800-38E <http://csrc.nist.gov/publications/nistpubs/800-38E/nist-sp-800-38E.pdf>`_
+`*` Source `NIST SP 800-38E <http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38e.pdf>`_
 
 Delete volume types
 ~~~~~~~~~~~~~~~~~~~
