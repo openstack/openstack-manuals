@@ -380,8 +380,8 @@ Another alternative is to use the "default" storage
 
    sr_matching_filter = "default-sr:true"
 
-Image upload in ``tgz`` compressed format
------------------------------------------
+Image upload in TGZ compressed format
+-------------------------------------
 
 To start uploading ``tgz`` compressed raw disk images to the Image service,
 configure ``xenapi_image_upload_handler`` by replacing ``GlanceStore``
