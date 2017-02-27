@@ -6,8 +6,8 @@ The ``openstack`` CLI is used to interact with the Identity service.
 It is set up to expect commands in the general
 form of ``openstack command argument``, followed by flag-like keyword
 arguments to provide additional (often optional) information. For
-example, the :command:`user list` and :command:`project create`
-commands can be invoked as follows:
+example, the :command:`openstack user list` and
+:command:`openstack project create` commands can be invoked as follows:
 
 .. code-block:: bash
 
