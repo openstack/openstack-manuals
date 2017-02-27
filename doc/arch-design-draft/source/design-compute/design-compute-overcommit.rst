@@ -45,22 +45,3 @@ where each instance has 8 GB of RAM).
 
 You must select the appropriate CPU and RAM allocation ratio for your
 particular use case.
-
-Logging
-~~~~~~~
-
-Logging is described in more detail in `Logging and Monitoring
-<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_. However,
-it is an important design consideration to take into account before
-commencing operations of your cloud.
-
-OpenStack produces a great deal of useful logging information, however,
-for the information to be useful for operations purposes, you should
-consider having a central logging server to send logs to, and a log
-parsing/analysis system (such as logstash).
-
-Networking
-~~~~~~~~~~
-
-Networking in OpenStack is a complex, multifaceted challenge. See
-:doc:`../design-networking/design-networking-concepts`.
