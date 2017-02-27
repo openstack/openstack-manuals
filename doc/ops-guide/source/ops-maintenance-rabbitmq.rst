@@ -42,7 +42,7 @@ you manually restart RabbitMQ on each controller node.
       # rabbitmqctl list_queues
       # rabbitmqctl list_queues 2>&1 | grep -i error
 
-#. If there are errors, run the :command:`cluster-status` command to make sure
+#. If there are errors, run the :command:`cluster_status` command to make sure
    there are no partitions:
 
    .. code-block:: console
