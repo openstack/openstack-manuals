@@ -17,6 +17,7 @@ for your operating system.
    dashboard-sessions.rst
    dashboard-manage-images.rst
    dashboard-admin-manage-roles.rst
+   dashboard-manage-projects-and-users.rst
    dashboard-manage-instances.rst
    dashboard-manage-flavors.rst
    dashboard-manage-volumes.rst
