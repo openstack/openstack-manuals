@@ -33,30 +33,13 @@ To list all floating IP addresses for all projects, run:
 .. code-block:: console
 
    $ openstack floating ip list
-   +------------+---------------+---------------+--------+-----------+
-   | project_id | address       | instance_uuid | pool   | interface |
-   +------------+---------------+---------------+--------+-----------+
-   | None       | 172.24.4.225  | None          | public | eth0      |
-   | None       | 172.24.4.226  | None          | public | eth0      |
-   | None       | 172.24.4.227  | None          | public | eth0      |
-   | None       | 172.24.4.228  | None          | public | eth0      |
-   | None       | 172.24.4.229  | None          | public | eth0      |
-   | None       | 172.24.4.230  | None          | public | eth0      |
-   | None       | 172.24.4.231  | None          | public | eth0      |
-   | None       | 172.24.4.232  | None          | public | eth0      |
-   | None       | 172.24.4.233  | None          | public | eth0      |
-   | None       | 172.24.4.234  | None          | public | eth0      |
-   | None       | 172.24.4.235  | None          | public | eth0      |
-   | None       | 172.24.4.236  | None          | public | eth0      |
-   | None       | 172.24.4.237  | None          | public | eth0      |
-   | None       | 172.24.4.238  | None          | public | eth0      |
-   | None       | 192.168.253.1 | None          | test   | eth0      |
-   | None       | 192.168.253.2 | None          | test   | eth0      |
-   | None       | 192.168.253.3 | None          | test   | eth0      |
-   | None       | 192.168.253.4 | None          | test   | eth0      |
-   | None       | 192.168.253.5 | None          | test   | eth0      |
-   | None       | 192.168.253.6 | None          | test   | eth0      |
-   +------------+---------------+---------------+--------+-----------+
+   +--------------------------------------+---------------------+------------------+------+
+   | ID                                   | Floating IP Address | Fixed IP Address | Port |
+   +--------------------------------------+---------------------+------------------+------+
+   | 89532684-13e1-4af3-bd79-f434c9920cc3 | 172.24.4.235        | None             | None |
+   | c70ad74b-2f64-4e60-965e-f24fc12b3194 | 172.24.4.236        | None             | None |
+   | ea3ebc6d-a146-47cd-aaa8-35f06e1e8c3d | 172.24.4.229        | None             | None |
+   +--------------------------------------+---------------------+------------------+------+
 
 Bulk create floating IP addresses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
