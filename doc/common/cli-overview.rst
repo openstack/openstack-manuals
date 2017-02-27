@@ -74,10 +74,6 @@ service with its package name and description.
      - magnum
      - python-magnumclient
      - Creates and manages containers.
-   * - Data Processing service
-     - sahara
-     - python-saharaclient
-     - Creates and manages Hadoop clusters on OpenStack.
    * - Database service
      - trove
      - python-troveclient

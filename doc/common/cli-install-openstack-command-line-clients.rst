@@ -164,7 +164,6 @@ list below.
 *  ``murano`` - Application catalog API
 *  ``neutron`` - Networking API
 *  ``nova`` - Compute API and extensions
-*  ``sahara`` - Data Processing API
 *  ``senlin`` - Clustering service API
 *  ``swift`` - Object Storage API
 *  ``trove`` - Database service API
