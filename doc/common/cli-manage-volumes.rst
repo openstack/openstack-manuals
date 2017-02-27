@@ -407,7 +407,7 @@ recipient, or new owner, accepts the transfer by using the ID and key.
 
 .. note::
 
-   The procedure for volume transfer is intended for tenants (both the
+   The procedure for volume transfer is intended for projects (both the
    volume donor and recipient) within the same cloud.
 
 Use cases include:
