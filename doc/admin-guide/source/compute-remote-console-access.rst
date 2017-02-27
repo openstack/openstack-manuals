@@ -40,32 +40,20 @@ disable the VNC console.
 Use the following options to configure SPICE as the console for
 OpenStack Compute:
 
-.. list-table:: **Description of SPICE configuration options**
-   :header-rows: 1
-   :widths: 25 25
+.. code-block:: console
 
-   * - **[spice]**
-     -
-   * - Spice configuration option = Default value
-     - Description
-   * - ``agent_enabled = True``
-     - (BoolOpt) Enable spice guest agent support
-   * - ``enabled = False``
-     - (BoolOpt) Enable spice related features
-   * - ``html5proxy_base_url = http://127.0.0.1:6082/spice_auto.html``
-     - (StrOpt) Location of spice HTML5 console proxy, in the form
-       "http://127.0.0.1:6082/spice_auto.html"
-   * - ``html5proxy_host = 0.0.0.0``
-     - (StrOpt) Host on which to listen for incoming requests
-   * - ``html5proxy_port = 6082``
-     - (IntOpt) Port on which to listen for incoming requests
-   * - ``keymap = en-us``
-     - (StrOpt) Keymap for spice
-   * - ``server_listen = 127.0.0.1``
-     - (StrOpt) IP address on which instance spice server should listen
-   * - ``server_proxyclient_address = 127.0.0.1``
-     - (StrOpt) The address to which proxy clients (like nova-spicehtml5proxy)
-       should connect
+   [spice]
+   agent_enabled = False
+   enabled = True
+   html5proxy_base_url = http://IP_ADDRESS:6082/spice_auto.html
+   html5proxy_host = 0.0.0.0
+   html5proxy_port = 6082
+   keymap = en-us
+   server_listen = 127.0.0.1
+   server_proxyclient_address = 127.0.0.1
+
+Replace ``IP_ADDRESS`` with the management interface IP address
+of the controller or the VIP.
 
 VNC console proxy
 ~~~~~~~~~~~~~~~~~
