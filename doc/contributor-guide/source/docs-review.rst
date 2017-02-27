@@ -55,11 +55,12 @@ Once done, follow the steps below to submit a patch review.
    you can also highlight the line or word in question, and press 'c'
    on your keyboard, which enables commenting directly on that line or word.
    Click :guilabel:`Save` button once you write a draft of your comment.
-#. In the :guilabel:`Jenkins check` section, click the Jenkins ``checkbuild``
+#. In the :guilabel:`Jenkins check` section, click the ``checkbuild``
    gate link (for the openstack-manuals, it is called
    ``gate-openstack-manuals-tox-doc-publish-checkbuild``) and review the
    built manuals to see how the change will look on the web page. For a new
-   patch, it takes some time before Jenkins checks appear on the Gerrit page.
+   patch, it takes some time before the OpenStack CI system checks appear on
+   the Gerrit page.
    You can also :ref:`build the patch locally <docs_builds_locally>`
    if necessary.
 #. Click :guilabel:`Reply` to vote and enter any comments about your review,

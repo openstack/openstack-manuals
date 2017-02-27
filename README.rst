@@ -75,8 +75,8 @@ Testing of changes and building of the manual
 =============================================
 
 Install the Python tox package and run ``tox`` from the top-level
-directory to use the same tests that are done as part of our Jenkins
-gating jobs.
+directory to use the same tests that are done as part of the OpenStack
+CI jobs.
 
 If you like to run individual tests, run:
 
