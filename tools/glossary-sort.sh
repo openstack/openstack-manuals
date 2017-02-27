@@ -3,10 +3,11 @@
 # Check that doc/common/glossary entries are alphabetized and prints
 # list of entries that should be sorted.
 
-export TMPDIR=`/bin/mktemp -d`
-trap "rm -rf $TMPDIR" EXIT
+# Cross-platform (Mac and Linux) commands to make a temporary working directory
+thetmpdir=`mktemp -d 2>/dev/null || mktemp -d -t 'thetmpdir'`
+trap "rm -rf $thetmpdir" EXIT
 
-pushd $TMPDIR
+pushd $thetmpdir
 GLOSSARY=$OLDPWD/doc/common/glossary.rst
 
 grep '^   [a-zA-Z0-9]' $GLOSSARY > glossary_entries
