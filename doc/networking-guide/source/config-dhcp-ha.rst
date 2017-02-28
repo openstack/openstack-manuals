@@ -220,8 +220,8 @@ Managing agents in neutron deployment
 
 #. Show agent details.
 
-   The :command:`neutron agent-show` command shows details for a specified
-   agent:
+   The :command:`openstack network agent show` command shows details
+   for a specified agent:
 
    .. code-block:: console
 
