@@ -199,9 +199,9 @@ OpenStack services:
   <https://docs.openstack.org/developer/glance/db.html#zero-downtime-database-upgrades>`_
 * `Image service (glance) rolling upgrades
   <https://docs.openstack.org/developer/glance/rollingupgrades.html>`_
-* `Bare metal service (ironic) upgrades
+* `Bare Metal service (ironic) upgrades
   <https://docs.openstack.org/developer/ironic/deploy/upgrade-guide.html>`_
-* `Object Storage (swift) upgrades
+* `Object Storage service (swift) upgrades
   <https://docs.openstack.org/developer/swift/overview_policies.html#upgrade-policy>`_
 * `Telemetry service (ceilometer) upgrades
   <https://docs.openstack.org/developer/ceilometer/install/upgrade.html>`_
