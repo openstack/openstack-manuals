@@ -276,9 +276,9 @@ OS selection also directly influences hypervisor selection. A cloud
 architect who selects Ubuntu, RHEL, or SLES has some flexibility in
 hypervisor; KVM, Xen, and LXC are supported virtualization methods
 available under OpenStack Compute (nova) on these Linux distributions.
-However, a cloud architect who selects Hyper-V is limited to Windows
-Servers. Similarly, a cloud architect who selects XenServer is limited
-to the CentOS-based dom0 operating system provided with XenServer.
+However, a cloud architect who selects Windows Server is limited to Hyper-V.
+Similarly, a cloud architect who selects XenServer is limited to the
+CentOS-based dom0 operating system provided with XenServer.
 
 The primary factors that play into OS-hypervisor selection include:
 
