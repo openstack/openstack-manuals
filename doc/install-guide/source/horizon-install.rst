@@ -124,10 +124,10 @@ Install and configure components
 
         .. note::
 
-           ``ALLOWED_HOSTS`` can also be ['*'] to accept all hosts. This may be
+           ``ALLOWED_HOSTS`` can also be ``['*']`` to accept all hosts. This may be
            useful for development work, but is potentially insecure and should
-           not be used in production. See
-           `allowed hosts <https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts>`_
+           not be used in production. See `Django documentation
+           <https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts>`_
            for further information.
 
       * Configure the ``memcached`` session storage service:
@@ -391,7 +391,8 @@ Install and configure components
 
         .. end
 
-      * Allow your hosts to access the dashboard:
+      * In the Dashboard configuration section, allow your hosts to access
+        Dashboard:
 
         .. path /etc/openstack-dashboard/local_settings.py
         .. code-block:: python
@@ -402,11 +403,14 @@ Install and configure components
 
         .. note::
 
-           ALLOWED_HOSTS can also be ['*'] to accept all hosts. This may be
-           useful for development work, but is potentially insecure and should
-           not be used in production. See
-           https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-           for further information.
+           - Do not edit the ``ALLOWED_HOSTS`` parameter under the Ubuntu
+             configuration section.
+           - ``ALLOWED_HOSTS`` can also be ``['*']`` to accept all hosts. This
+             may be useful for development work, but is potentially insecure
+             and should not be used in production. See the
+             `Django documentation
+             <https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts>`_
+             for further information.
 
       * Configure the ``memcached`` session storage service:
 
