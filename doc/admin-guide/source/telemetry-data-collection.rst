@@ -38,6 +38,7 @@ RESTful API (deprecated in Ocata)
 
 Notifications
 ~~~~~~~~~~~~~
+
 All OpenStack services send notifications about the executed operations
 or system state. Several notifications carry information that can be
 metered. For example, CPU time of a VM instance created by OpenStack
@@ -199,35 +200,104 @@ compute service, see
 telemetry/ocata/configure_services/nova/install-nova-ubuntu.html>`__ in the
 Installation Tutorials and Guides.
 
-Middleware for the OpenStack Object Storage service
----------------------------------------------------
+Meter definitions
+-----------------
 
-A subset of Object Store statistics requires additional middleware to
-be installed behind the proxy of Object Store. This additional component
-emits notifications containing data-flow-oriented meters, namely the
-``storage.objects.(incoming|outgoing).bytes values``. The list of these
-meters are listed in :ref:`telemetry-object-storage-meter`, marked with
-``notification`` as origin.
+The Telemetry service collects a subset of the meters by filtering
+notifications emitted by other OpenStack services. You can find the meter
+definitions in a separate configuration file, called
+``ceilometer/meter/data/meters.yaml``. This enables
+operators/administrators to add new meters to Telemetry project by updating
+the ``meters.yaml`` file without any need for additional code changes.
 
-The instructions on how to install this middleware can be found in
-`Configure the Object Storage service for Telemetry
-<https://docs.openstack.org/project-install-guide/
-telemetry/ocata/configure_services/swift/install-swift-ubuntu.html>`__
-section in the Installation Tutorials and Guides.
+.. note::
 
-Telemetry middleware
---------------------
+   The ``meters.yaml`` file should be modified with care. Unless intended,
+   do not remove any existing meter definitions from the file. Also, the
+   collected meters can differ in some cases from what is referenced in the
+   documentation.
 
-Telemetry provides HTTP request and API endpoint counting
-capability in OpenStack. This is achieved by
-storing a sample for each event marked as ``audit.http.request``,
-``audit.http.response``, ``http.request`` or ``http.response``.
+A standard meter definition looks like:
 
-It is recommended that these notifications be consumed as events rather
-than samples to better index the appropriate values and avoid massive
-load on the Metering database. If preferred, Telemetry can consume these
-events as samples if the services are configured to emit ``http.*``
-notifications.
+.. code-block:: yaml
+
+   ---
+   metric:
+     - name: 'meter name'
+       event_type: 'event name'
+       type: 'type of meter eg: gauge, cumulative or delta'
+       unit: 'name of unit eg: MB'
+       volume: 'path to a measurable value eg: $.payload.size'
+       resource_id: 'path to resource id eg: $.payload.id'
+       project_id: 'path to project id eg: $.payload.owner'
+       metadata: 'addiitonal key-value data describing resource'
+
+The definition above shows a simple meter definition with some fields,
+from which ``name``, ``event_type``, ``type``, ``unit``, and ``volume``
+are required. If there is a match on the event type, samples are generated
+for the meter.
+
+The ``meters.yaml`` file contains the sample
+definitions for all the meters that Telemetry is collecting from
+notifications. The value of each field is specified by using JSON path in
+order to find the right value from the notification message. In order to be
+able to specify the right field you need to be aware of the format of the
+consumed notification. The values that need to be searched in the notification
+message are set with a JSON path starting with ``$.`` For instance, if you need
+the ``size`` information from the payload you can define it like
+``$.payload.size``.
+
+A notification message may contain multiple meters. You can use ``*`` in
+the meter definition to capture all the meters and generate samples
+respectively. You can use wild cards as shown in the following example:
+
+.. code-block:: yaml
+
+   ---
+   metric:
+     - name: $.payload.measurements.[*].metric.[*].name
+       event_type: 'event_name.*'
+       type: 'delta'
+       unit: $.payload.measurements.[*].metric.[*].unit
+       volume: payload.measurements.[*].result
+       resource_id: $.payload.target
+       user_id: $.payload.initiator.id
+       project_id: $.payload.initiator.project_id
+
+In the above example, the ``name`` field is a JSON path with matching
+a list of meter names defined in the notification message.
+
+You can use complex operations on JSON paths. In the following example,
+``volume`` and ``resource_id`` fields perform an arithmetic
+and string concatenation:
+
+.. code-block:: yaml
+
+   ---
+   metric:
+   - name: 'compute.node.cpu.idle.percent'
+     event_type: 'compute.metrics.update'
+     type: 'gauge'
+     unit: 'percent'
+     volume: payload.metrics[?(@.name='cpu.idle.percent')].value * 100
+     resource_id: $.payload.host + "_" + $.payload.nodename
+
+You can use the ``timedelta`` plug-in to evaluate the difference in seconds
+between two ``datetime`` fields from one notification.
+
+.. code-block:: yaml
+
+   ---
+   metric:
+   - name: 'compute.instance.booting.time'
+     event_type: 'compute.instance.create.end'
+    type: 'gauge'
+    unit: 'sec'
+    volume:
+      fields: [$.payload.created_at, $.payload.launched_at]
+      plugin: 'timedelta'
+    project_id: $.payload.tenant_id
+    resource_id: $.payload.instance_id
 
 Polling
 ~~~~~~~
@@ -378,107 +448,6 @@ The list of collected meters can be found in
    compute node. If ``conductor.send_sensor_data`` is set, this
    misconfiguration causes duplicated IPMI sensor samples.
 
-
-.. _ha-deploy-services:
-
-Support for HA deployment
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Both the polling agents and notification agents can run in an HA deployment,
-which means that multiple instances of these services can run in
-parallel with workload partitioning among these running instances.
-
-The `Tooz <https://pypi.python.org/pypi/tooz>`__ library provides the
-coordination within the groups of service instances. Tooz supports `various
-drivers <https://docs.openstack.org/developer/tooz/drivers.html>`__
-including the following back end solutions:
-
--  `Zookeeper <http://zookeeper.apache.org/>`__. Recommended solution by
-   the Tooz project.
-
--  `Redis <http://redis.io/>`__. Recommended solution by the Tooz
-   project.
-
--  `Memcached <http://memcached.org/>`__. Recommended for testing.
-
-You must configure a supported Tooz driver for the HA deployment of the
-Telemetry services.
-
-For information about the required configuration options that have to be
-set in the ``ceilometer.conf`` configuration file for both the central
-and Compute agents, see the `Coordination section
-<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
-in the OpenStack Configuration Reference.
-
-Notification agent HA deployment
---------------------------------
-
-Workload partitioning support is particularly useful as the pipeline processing
-is handled exclusively by the notification agent now which may result
-in a larger amount of load.
-
-To enable workload partitioning by notification agent, the ``backend_url``
-option must be set in the ``ceilometer.conf`` configuration file.
-Additionally, ``workload_partitioning`` should be enabled in the
-`Notification section <https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__ in the OpenStack Configuration Reference.
-
-The notification agent creates multiple queues to divide the workload across
-all active agents. The number of queues can be controlled by  the
-``pipeline_processing_queues`` option in the ``ceilometer.conf`` configuration
-file.
-
-.. note::
-
-   A larger value will result in better distribution of
-   tasks but will also require more memory and longer startup time. It is
-   recommended to have a value approximately three times the number of active
-   notification agents. At a minimum, the value should be equal to the number
-   of active agents.
-
-Polling agent HA deployment
----------------------------
-
-.. note::
-
-    Without the ``backend_url`` option being set only one instance of
-    both the central and Compute agent service is able to run and
-    function correctly.
-
-The availability check of the instances is provided by heartbeat
-messages. When the connection with an instance is lost, the workload
-will be reassigned within the remained instances in the next polling
-cycle.
-
-.. note::
-
-    ``Memcached`` uses a ``timeout`` value, which should always be set
-    to a value that is higher than the ``heartbeat`` value set for
-    Telemetry.
-
-For backward compatibility and supporting existing deployments, the
-central agent configuration also supports using different configuration
-files for groups of service instances of this type that are running in
-parallel. For enabling this configuration set a value for the
-``partitioning_group_prefix`` option in the `polling section
-<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
-in the OpenStack Configuration Reference.
-
-.. warning::
-
-    For each sub-group of the central agent pool with the same
-    ``partitioning_group_prefix`` a disjoint subset of meters must be
-    polled, otherwise samples may be missing or duplicated. The list of
-    meters to poll can be set in the ``/etc/ceilometer/pipeline.yaml``
-    configuration file. For more information about pipelines see
-    :ref:`telemetry-data-pipelines`.
-
-To enable the Compute agent to run multiple instances simultaneously
-with workload partitioning, the ``workload_partitioning`` option has to
-be set to ``True`` under the `Compute section
-<https://docs.openstack.org/ocata/config-reference/telemetry/telemetry-config-options.html>`__
-in the ``ceilometer.conf`` configuration file.
-
-
 Send samples to Telemetry
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -545,131 +514,3 @@ following command should be invoked:
    | user_id           | 679b0499e7a34ccb9d90b64208401f8e           |
    | volume            | 48.0                                       |
    +-------------------+--------------------------------------------+
-
-.. _telemetry-meter-definitions:
-
-Meter definitions
------------------
-
-The Telemetry service collects a subset of the meters by filtering
-notifications emitted by other OpenStack services. You can find the meter
-definitions in a separate configuration file, called
-``ceilometer/meter/data/meters.yaml``. This enables
-operators/administrators to add new meters to Telemetry project by updating
-the ``meters.yaml`` file without any need for additional code changes.
-
-.. note::
-
-   The ``meters.yaml`` file should be modified with care. Unless intended,
-   do not remove any existing meter definitions from the file. Also, the
-   collected meters can differ in some cases from what is referenced in the
-   documentation.
-
-A standard meter definition looks like:
-
-.. code-block:: yaml
-
-   ---
-   metric:
-     - name: 'meter name'
-       event_type: 'event name'
-       type: 'type of meter eg: gauge, cumulative or delta'
-       unit: 'name of unit eg: MB'
-       volume: 'path to a measurable value eg: $.payload.size'
-       resource_id: 'path to resource id eg: $.payload.id'
-       project_id: 'path to project id eg: $.payload.owner'
-       metadata: 'addiitonal key-value data describing resource'
-
-The definition above shows a simple meter definition with some fields,
-from which ``name``, ``event_type``, ``type``, ``unit``, and ``volume``
-are required. If there is a match on the event type, samples are generated
-for the meter.
-
-If you take a look at the ``meters.yaml`` file, it contains the sample
-definitions for all the meters that Telemetry is collecting from
-notifications. The value of each field is specified by using JSON path in
-order to find the right value from the notification message. In order to be
-able to specify the right field you need to be aware of the format of the
-consumed notification. The values that need to be searched in the notification
-message are set with a JSON path starting with ``$.`` For instance, if you need
-the ``size`` information from the payload you can define it like
-``$.payload.size``.
-
-A notification message may contain multiple meters. You can use ``*`` in
-the meter definition to capture all the meters and generate samples
-respectively. You can use wild cards as shown in the following example:
-
-.. code-block:: yaml
-
-   ---
-   metric:
-     - name: $.payload.measurements.[*].metric.[*].name
-       event_type: 'event_name.*'
-       type: 'delta'
-       unit: $.payload.measurements.[*].metric.[*].unit
-       volume: payload.measurements.[*].result
-       resource_id: $.payload.target
-       user_id: $.payload.initiator.id
-       project_id: $.payload.initiator.project_id
-
-In the above example, the ``name`` field is a JSON path with matching
-a list of meter names defined in the notification message.
-
-You can even use complex operations on JSON paths. In the following example,
-``volume`` and ``resource_id`` fields perform an arithmetic
-and string concatenation:
-
-.. code-block:: yaml
-
-   ---
-   metric:
-   - name: 'compute.node.cpu.idle.percent'
-     event_type: 'compute.metrics.update'
-     type: 'gauge'
-     unit: 'percent'
-     volume: payload.metrics[?(@.name='cpu.idle.percent')].value * 100
-     resource_id: $.payload.host + "_" + $.payload.nodename
-
-You can use the ``timedelta`` plug-in to evaluate the difference in seconds
-between two ``datetime`` fields from one notification.
-
-.. code-block:: yaml
-
-   ---
-   metric:
-   - name: 'compute.instance.booting.time'
-     event_type: 'compute.instance.create.end'
-    type: 'gauge'
-    unit: 'sec'
-    volume:
-      fields: [$.payload.created_at, $.payload.launched_at]
-      plugin: 'timedelta'
-    project_id: $.payload.tenant_id
-    resource_id: $.payload.instance_id
-
-Block Storage audit script setup to get notifications
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you want to collect OpenStack Block Storage notification on demand,
-you can use :command:`cinder-volume-usage-audit` from OpenStack Block Storage.
-This script becomes available when you install OpenStack Block Storage,
-so you can use it without any specific settings and you don't need to
-authenticate to access the data. To use it, you must run this command in
-the following format:
-
-.. code-block:: console
-
-   $ cinder-volume-usage-audit \
-     --start_time='YYYY-MM-DD HH:MM:SS' --end_time='YYYY-MM-DD HH:MM:SS' --send_actions
-
-This script outputs what volumes or snapshots were created, deleted, or
-exists in a given period of time and some information about these
-volumes or snapshots. Information about the existence and size of
-volumes and snapshots is store in the Telemetry service. This data is
-also stored as an event which is the recommended usage as it provides
-better indexing of data.
-
-Using this script via cron you can get notifications periodically, for
-example, every 5 minutes::
-
-    */5 * * * * /path/to/cinder-volume-usage-audit --send_actions
