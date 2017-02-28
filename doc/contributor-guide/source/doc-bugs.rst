@@ -1,71 +1,11 @@
 .. _doc_bugs:
 
-============================
-Reporting documentation bugs
-============================
+==================
+Documentation bugs
+==================
 
 The Documentation team tracks all its work through bugs. This section includes
 the detailed overview of documentation bugs specifics.
-
-.. note::
-
-   To work on documentation bugs, join the openstack-doc-bugs team on
-   Launchpad. For more information, see :ref:`first_timers`.
-
-Go through the triaging process and look for possible duplicate bugs
-before working on a bug. Do not work on a documentation bug until it is set to
-`Confirmed`. Ideally, another person has to confirm the bug for you. Once the
-changes are made in a patch, they are reviewed and approved, just like other
-OpenStack code.
-
-To pick up a documentation bug or mark a bug as related to the documentation,
-go to `the aggregated list of documentation bugs from all OpenStack projects
-<https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
-
-Filing a bug
-~~~~~~~~~~~~
-
-Bugs differ depending on:
-
-* The way they are filed:
-
-  * Manually
-  * Automatically (through the DocImpact flag)
-
-* The required changes:
-
-  * Fix spelling errors or formatting
-  * Update existing content
-  * Add new content
-
-.. important::
-
-   Do not file a bug with troubleshooting issues. If you are experiencing
-   problems with your environment, and you are following the installation
-   tutorials, seek assistance from the relevant team and operations
-   specialists on IRC,
-   `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
-   or the OpenStack mailing list.
-
-   For more information about the relevant IRC channels, see the
-   `OpenStack IRC wiki <https://wiki.openstack.org/wiki/IRC>`_.
-
-   For more information about the OpenStack mailing list, see the
-   `Mailing lists wiki <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
-
-   A bug should be filed only if the documentation itself is found to be
-   incorrect.
-
-**DocImpact**
-
-When adding code that affects documentation (for example, to add a new
-parameter), the developer adds a DocImpact flag. This flag automatically
-files a bug in the system explaining what needs to be done. For more
-information, see `Documentation/DocImpact
-<https://wiki.openstack.org/wiki/Documentation/DocImpact>`_.
-
-Launchpad projects and repositories
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Documentation team uses the following projects for tracking documentation
 bugs across OpenStack:
@@ -83,11 +23,91 @@ bugs across OpenStack:
 * `openstack-doc-tools <https://bugs.launchpad.net/openstack-doc-tools>`_ is
   used for the doc-tools and openstackdocstheme repositories.
 
+.. toctree::
+   :maxdepth: 2
 
-.. _doc_bugs_triaging:
+   doc-impact.rst
+
+Bug triage liaison
+~~~~~~~~~~~~~~~~~~
+
+The documentation team assigns bug triage liaisons to ensure all bugs reported
+against OpenStack manuals are triaged in a timely manner.
+
+If you are interested in serving as a bug triage liaison, there are several
+steps you will need to follow in order to be prepared.
+
+.. note::
+
+   Read this page in full. Keep this document in mind at all times as it
+   describes the duties of the liaison and how to triage bugs. In particular,
+   it describes how to set bug importance, and how to select bug tags.
+
+#. Before you begin to work on documentation bugs, you must join the
+   openstack-doc-bugs team on Launchpad. For more information,
+   see :ref:`first_timers`.
+
+#. Sign up for openstack-manuals emails from Launchpad if you have not already:
+
+   #. Navigate to the Launchpad openstack-manuals bug list.
+   #. Click on the right hand side, :guilabel:`Subscribe to bug mail`.
+   #. In the pop-up that is displayed, keep the recipient as
+      :guilabel:`Yourself`, and name your subscription something useful
+      like :guilabel:`Docs Bugs`. You can choose
+      either option or how much mail you get, but keep in mind that getting
+      mail for all changes - while informative - will result in several dozen
+      emails per day at least.
+
+#. Volunteer during the course of the Docs team meeting, when volunteers to
+   be bug deputy are requested (usually towards the beginning of the meeting).
+
+#. View your scheduled week on the
+   `Bug Triage Team <https://wiki.openstack.org/wiki/Documentation/SpecialityTeams#Bug_Triage_Team>`_
+   page.
+
+#. During your scheduled time as a liaison, if it is feasible for your
+   timezone, plan on attending the Docs team meeting. That way if you have
+   any CRITICAL or HIGH bugs, you can address them with the team.
+
+Bug triaging process
+~~~~~~~~~~~~~~~~~~~~
+
+The process of bug triaging consists of the following steps:
+
+* Check if a bug was filed for a correct component (project). If not,
+  either change the project or mark it as ``Invalid``.
+  For example, if the bug impacts the project-specific dev-ref, then
+  mark it as ``Invalid``.
+
+* If the reported bug affects the ReST API, tools, openstackdocstheme, or
+  the Security Guide, add the relevant project to the affected
+  projects and remove ``openstack-manuals``.
+  For example, if the bug affects the ReST API, file a bug in
+  ``openstack-api-site`` and remove ``openstack-manuals``.
+
+* Tag the bug for the appropriate guide. For example, for the
+  ``networking-guide`` remove ``neutron`` from the affected projects if it
+  only affects ``openstack-manuals`` and tag ``networking-guide``.
+
+* Set the bug to ``Invalid`` if it is a request for support or a
+  troubleshooting request.
+
+* Check if a similar bug was filed before. You may also check
+  already verified bugs to see if the bug has been reported. If so, mark it as
+  a duplicate of the previous bug.
+
+* Verify if the bug meets the requirements of a good bug report by checking
+  that the guidelines or checklist has been followed.
+
+* Omitted information is still acceptable if the issue is clear. Use your good
+  judgment and your experience and consult another core member or the PTL if in
+  doubt. If the bug report requires more context, mark the bug as
+  ``Incomplete``, point the submitter to this document.
+
+.. _guidelines:
 
 Doc bug triaging guidelines
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 Bug triaging is the process of reviewing new bugs, verifying whether a bug is
 valid or not, and gathering more information about it. Before being triaged,
@@ -147,8 +167,24 @@ Depending on the area a bug affects, it has one or more tags. For example:
 * **infra**, **theme** for documentation bugs that are in the documentation
   build tool chain.
 
+Tracking bugs by tag
+--------------------
+
+If you need to regularly track activity relating to particular tags,
+you can set up email subscriptions by visiting `the subscriptions page
+of the launchpad project
+<https://bugs.launchpad.net/openstack-manuals/+subscriptions>`_:
+
+#. Select :guilabel:`Add a subscription`.
+#. Select the option to receive mail for bugs affecting the project
+   that :guilabel:`are added or changed in any way`.
+#. Check the :guilabel:`Bugs must match this filter` checkbox.
+#. Select the :guilabel:`Tags` subsection.
+#. Populate the tag(s) you want to track.
+#. Create the subscription.
+
 Bugs for third-party drivers
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Bugs to update tables for the configuration references use the tag
 **autogenerate-config-docs**.
@@ -165,31 +201,49 @@ committer of the change that triggered the bug report, mark it as
 specification and handle it since the documentation team will not
 document third-party drivers.
 
-Doc bug categories
-------------------
+Filing a bug
+~~~~~~~~~~~~
 
-To help with bug fixing, use these quick links to pick a certain subset of
-bugs:
+Bugs differ depending on:
 
-* `list of all documentation bugs
-  <https://bugs.launchpad.net/openstack-manuals>`_
-* `list of all API site bugs
-  <https://bugs.launchpad.net/openstack-api-site>`_
-* `low hanging fruit documentation bugs
-  <https://bugs.launchpad.net/openstack-manuals/+bugs?field.tag=low-hanging-fruit>`_
+* The way they are filed:
 
-Tracking bugs by tag
---------------------
+  * Manually
+  * Automatically (through the DocImpact flag)
 
-If you need to regularly track activity relating to particular tags,
-you can set up email subscriptions by visiting `the subscriptions page
-of the launchpad project
-<https://bugs.launchpad.net/openstack-manuals/+subscriptions>`_:
+* The required changes:
 
-1. Select :guilabel:`Add a subscription`.
-2. Select the option to receive mail for bugs affecting the project
-   that :guilabel:`are added or changed in any way`.
-3. Check the :guilabel:`Bugs must match this filter` checkbox.
-4. Select the :guilabel:`Tags` subsection.
-5. Populate the tag(s) you want to track.
-6. Create the subscription.
+  * Fix spelling errors or formatting
+  * Update existing content
+  * Add new content
+
+.. important::
+
+   Do not file a bug with troubleshooting issues. If you are experiencing
+   problems with your environment, and you are following the installation
+   tutorials, seek assistance from the relevant team and operations
+   specialists on IRC,
+   `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
+   or the OpenStack mailing list.
+
+   For more information about the relevant IRC channels, see the
+   `OpenStack IRC wiki <https://wiki.openstack.org/wiki/IRC>`_.
+
+   For more information about the OpenStack mailing list, see the
+   `Mailing lists wiki <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
+
+   A bug should be filed only if the documentation itself is found to be
+   incorrect.
+
+Working on documentation bugs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Do not work on a documentation bug until it is set to
+'Confirmed'. Ideally, someone other than the reporter will confirm the bug
+for you. Once the changes are made in a patch, they are reviewed and approved,
+just like other OpenStack code.
+
+To pick up a documentation bug or mark a bug as related to the
+documentation, go to `the aggregated list of documentation bugs from all
+OpenStack projects
+<https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
