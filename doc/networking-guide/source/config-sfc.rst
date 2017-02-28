@@ -196,12 +196,12 @@ HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80.
 
    .. code-block:: console
 
-      $ neutron port-create --name p1 net1
-      $ neutron port-create --name p2 net1
-      $ neutron port-create --name p3 net1
-      $ neutron port-create --name p4 net1
-      $ neutron port-create --name p5 net1
-      $ neutron port-create --name p6 net1
+      $ openstack port create p1 --network net1
+      $ openstack port create p2 --network net1
+      $ openstack port create p3 --network net1
+      $ openstack port create p4 --network net1
+      $ openstack port create p5 --network net1
+      $ openstack port create p6 --network net1
 
 #. Launch service function instance ``vm1`` using ports ``p1`` and ``p2``,
    ``vm2`` using ports ``p3`` and ``p4``, and ``vm3`` using ports ``p5``
