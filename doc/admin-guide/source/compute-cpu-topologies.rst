@@ -38,13 +38,55 @@ In OpenStack, SMP CPUs are known as *cores*, NUMA cells or nodes are known as
 eight core system with Hyper-Threading would have four sockets, eight cores per
 socket and two threads per core, for a total of 64 CPUs.
 
+Configuring compute nodes for instances with NUMA placement policies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hyper-V is configured by default to allow instances to span multiple NUMA
+nodes, regardless if the instances have been configured to only span N NUMA
+nodes. This behaviour allows Hyper-V instances to have up to 64 vCPUs and 1 TB
+of memory.
+
+Checking NUMA spanning can easily be done by running this following powershell
+command:
+
+.. code-block:: console
+
+   (Get-VMHost).NumaSpanningEnabled
+
+In order to disable this behaviour, the host will have to be configured to
+disable NUMA spanning. This can be done by executing these following
+powershell commands:
+
+.. code-block:: console
+
+   Set-VMHost -NumaSpanningEnabled $false
+   Restart-Service vmms
+
+In order to restore this behaviour, execute these powershell commands:
+
+.. code-block:: console
+
+   Set-VMHost -NumaSpanningEnabled $true
+   Restart-Service vmms
+
+The ``vmms`` service (Virtual Machine Management Service) is responsible for
+managing the Hyper-V VMs. The VMs will still run while the service is down
+or restarting, but they will not be manageable by the ``nova-compute``
+service. In order for the effects of the Host NUMA spanning configuration
+to take effect, the VMs will have to be restarted.
+
+Hyper-V does not allow instances with a NUMA topology to have dynamic
+memory allocation turned on. The Hyper-V driver will ignore the configured
+``dynamic_memory_ratio`` from the given ``nova.conf`` file when spawning
+instances with a NUMA topology.
+
 Customizing instance NUMA placement policies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. important::
 
    The functionality described below is currently only supported by the
-   libvirt/KVM driver.
+   libvirt/KVM and Hyper-V driver.
 
 When running workloads on NUMA hosts, it is important that the vCPUs executing
 processes are on the same NUMA node as the memory used by these processes.
@@ -116,6 +158,11 @@ memory mapping between the two nodes, run:
      --property hw:numa_cpus.1=2,3,4,5 \
      --property hw:numa_mem.1=4096
 
+.. note::
+
+    Hyper-V does not support asymmetric NUMA topologies, and the Hyper-V
+    driver will not spawn instances with such topologies.
+
 For more information about the syntax for ``hw:numa_nodes``, ``hw:numa_cpus.N``
 and ``hw:num_mem.N``, refer to the `Flavors`_ guide.
 
@@ -125,7 +172,7 @@ Customizing instance CPU pinning policies
 .. important::
 
    The functionality described below is currently only supported by the
-   libvirt/KVM driver.
+   libvirt/KVM driver. Hyper-V does not support CPU pinning.
 
 By default, instance vCPU processes are not assigned to any particular host
 CPU, instead, they float across host CPUs like any other process. This allows
