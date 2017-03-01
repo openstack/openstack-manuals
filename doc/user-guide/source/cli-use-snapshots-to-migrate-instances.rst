@@ -73,9 +73,9 @@ Create a snapshot of the instance
       +--------------------------------------+---------------------------------+--------+
       | ID                                   | Name                            | Status |
       +--------------------------------------+---------------------------------+--------+
-      | 657ebb01-6fae-47dc-986a-e49c4dd8c433 | cirros-0.3.2-x86_64-uec         | active |
-      | 72074c6d-bf52-4a56-a61c-02a17bf3819b | cirros-0.3.2-x86_64-uec-kernel  | active |
-      | 3c5e5f06-637b-413e-90f6-ca7ed015ec9e | cirros-0.3.2-x86_64-uec-ramdisk | active |
+      | 657ebb01-6fae-47dc-986a-e49c4dd8c433 | cirros-0.3.5-x86_64-uec         | active |
+      | 72074c6d-bf52-4a56-a61c-02a17bf3819b | cirros-0.3.5-x86_64-uec-kernel  | active |
+      | 3c5e5f06-637b-413e-90f6-ca7ed015ec9e | cirros-0.3.5-x86_64-uec-ramdisk | active |
       | f30b204e-1ce6-40e7-b8d9-b353d4d84e7d | myInstanceSnapshot              | active |
       +--------------------------------------+---------------------------------+--------+
 

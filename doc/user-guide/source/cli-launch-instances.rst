@@ -105,9 +105,9 @@ Before you begin, source the OpenStack RC file.
     +--------------------------------------+---------------------------------+--------+
     | ID                                   | Name                            | Status |
     +--------------------------------------+---------------------------------+--------+
-    | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.2-x86_64-uec         | active |
-    | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | active |
-    | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.2-x86_64-uec-ramdisk | active |
+    | 397e713c-b95b-4186-ad46-6126863ea0a9 | cirros-0.3.5-x86_64-uec         | active |
+    | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.5-x86_64-uec-kernel  | active |
+    | 3cf852bd-2332-48f4-9ae4-7d926d50945e | cirros-0.3.5-x86_64-uec-ramdisk | active |
     +--------------------------------------+---------------------------------+--------+
 
    You can also filter the image list by using :command:`grep` to find a specific
@@ -117,7 +117,7 @@ Before you begin, source the OpenStack RC file.
 
       $ openstack image list | grep 'kernel'
 
-      | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.2-x86_64-uec-kernel  | active |
+      | df430cc2-3406-4061-b635-a51c16e488ac | cirros-0.3.5-x86_64-uec-kernel  | active |
 
 #. List the available security groups.
 

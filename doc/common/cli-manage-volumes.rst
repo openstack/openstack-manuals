@@ -59,9 +59,9 @@ This example creates a ``my-new-volume`` volume based on an image.
       +--------------------------------------+---------------------------------+
       | ID                                   | Name                            |
       +--------------------------------------+---------------------------------+
-      | 8bf4dc2a-bf78-4dd1-aefa-f3347cf638c8 | cirros-0.3.4-x86_64-uec         |
-      | 9ff9bb2e-3a1d-4d98-acb5-b1d3225aca6c | cirros-0.3.4-x86_64-uec-kernel  |
-      | 4b227119-68a1-4b28-8505-f94c6ea4c6dc | cirros-0.3.4-x86_64-uec-ramdisk |
+      | 8bf4dc2a-bf78-4dd1-aefa-f3347cf638c8 | cirros-0.3.5-x86_64-uec         |
+      | 9ff9bb2e-3a1d-4d98-acb5-b1d3225aca6c | cirros-0.3.5-x86_64-uec-kernel  |
+      | 4b227119-68a1-4b28-8505-f94c6ea4c6dc | cirros-0.3.5-x86_64-uec-ramdisk |
       +--------------------------------------+---------------------------------+
 
 
@@ -176,11 +176,11 @@ a volume from the image.
       +----------------------------------+---------------------------------+--------+
       | ID                               | Name                            | Status |
       +----------------------------------+---------------------------------+--------+
-      | 376bd633-c9c9-4c5d-a588-342f4f66 | cirros-0.3.4-x86_64-uec         | active |
+      | 376bd633-c9c9-4c5d-a588-342f4f66 | cirros-0.3.5-x86_64-uec         | active |
       | d086                             |                                 |        |
-      | 2c20fce7-2e68-45ee-ba8d-         | cirros-0.3.4-x86_64-uec-ramdisk | active |
+      | 2c20fce7-2e68-45ee-ba8d-         | cirros-0.3.5-x86_64-uec-ramdisk | active |
       | beba27a91ab5                     |                                 |        |
-      | a5752de4-9faf-4c47-acbc-         | cirros-0.3.4-x86_64-uec-kernel  | active |
+      | a5752de4-9faf-4c47-acbc-         | cirros-0.3.5-x86_64-uec-kernel  | active |
       | 78a5efa7cc6e                     |                                 |        |
       +----------------------------------+---------------------------------+--------+
 
@@ -197,7 +197,7 @@ a volume from the image.
       | id               | 376bd633-c9c9-4c5d-a588-342f4f66d086                      |
       | min_disk         | 0                                                         |
       | min_ram          | 0                                                         |
-      | name             | cirros-0.3.4-x86_64-uec                                   |
+      | name             | cirros-0.3.5-x86_64-uec                                   |
       | owner            | 88ba456e3a884c318394737765e0ef4d                          |
       | properties       | kernel_id='a5752de4-9faf-4c47-acbc-78a5efa7cc6e',         |
       |                  | ramdisk_id='2c20fce7-2e68-45ee-ba8d-beba27a91ab5'         |
@@ -306,7 +306,7 @@ Attach a volume to an instance
       | volume_image_metadata        |{u'kernel_id': u'df430cc2...,                  |
       |                              |        u'image_id': u'397e713c...,            |
       |                              |        u'ramdisk_id': u'3cf852bd...,          |
-      |                              |u'image_name': u'cirros-0.3.2-x86_64-uec'}     |
+      |                              |u'image_name': u'cirros-0.3.5-x86_64-uec'}     |
       +------------------------------+-----------------------------------------------+
 
 

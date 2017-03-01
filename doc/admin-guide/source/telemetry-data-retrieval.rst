@@ -393,7 +393,7 @@ following command can be executed:
     |                                      |               |                            | |     name    |  type  |                value                 | |
     |                                      |               |                            | +-------------+--------+--------------------------------------+ |
     |                                      |               |                            | |  created_at | string |         2015-09-24T22:17:39Z         | |
-    |                                      |               |                            | |     name    | string |    cirros-0.3.4-x86_64-uec-kernel    | |
+    |                                      |               |                            | |     name    | string |    cirros-0.3.5-x86_64-uec-kernel    | |
     |                                      |               |                            | |  project_id | string |   56ffddea5b4f423496444ea36c31be23   | |
     |                                      |               |                            | | resource_id | string | 86eb8273-edd7-4483-a07c-002ff1c5657d | |
     |                                      |               |                            | |   service   | string |           image.localhost            | |

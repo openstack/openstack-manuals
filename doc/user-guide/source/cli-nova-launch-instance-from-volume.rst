@@ -119,7 +119,7 @@ system.
       | flavor                               | m1.small (2)                               |
       | hostId                               |                                            |
       | id                                   | 1e1797f3-1662-49ff-ae8c-a77e82ee1571       |
-      | image                                | cirros-0.3.1-x86_64-uec (98901246-af91-... |
+      | image                                | cirros-0.3.5-x86_64-uec (98901246-af91-... |
       | key_name                             | -                                          |
       | metadata                             | {}                                         |
       | name                                 | myInstanceWithVolume                       |
@@ -150,9 +150,9 @@ the volume to boot an instance.
       | ID              | Name                            | Status |
       +-----------------+---------------------------------+--------+
       | 484e05af-a14... | Fedora-x86_64-20-20131211.1-sda | active |
-      | 98901246-af9... | cirros-0.3.1-x86_64-uec         | active |
-      | b6e95589-7eb... | cirros-0.3.1-x86_64-uec-kernel  | active |
-      | c90893ea-e73... | cirros-0.3.1-x86_64-uec-ramdisk | active |
+      | 98901246-af9... | cirros-0.3.5-x86_64-uec         | active |
+      | b6e95589-7eb... | cirros-0.3.5-x86_64-uec-kernel  | active |
+      | c90893ea-e73... | cirros-0.3.5-x86_64-uec-ramdisk | active |
       +-----------------+---------------------------------+--------+
 
    Note the ID of the image that you want to use to create a volume.
@@ -164,7 +164,7 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ openstack image show 98901246-af9...
+      $ openstack image show 98901246-af9d-4b61-bea8-09cc6dc41829
       +------------------+------------------------------------------------------+
       | Field            | Value                                                |
       +------------------+------------------------------------------------------+
@@ -176,7 +176,7 @@ the volume to boot an instance.
       | id               | 98901246-af9d-4b61-bea8-09cc6dc41829                 |
       | min_disk         | 0                                                    |
       | min_ram          | 0                                                    |
-      | name             | cirros-0.3.4-x86_64-uec                              |
+      | name             | cirros-0.3.5-x86_64-uec                              |
       | owner            | 8d8ef3cdf2b54c25831cbb409ad9ae86                     |
       | protected        | False                                                |
       | schema           | /v2/schemas/image                                    |

@@ -28,8 +28,8 @@ and used for testing purposes. To add this image, simply do:
 
 .. code-block:: console
 
-   $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-   $ openstack image create --file cirros-0.3.4-x86_64-disk.img \
+   $ wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
+   $ openstack image create --file cirros-0.3.5-x86_64-disk.img \
      --public --container-format bare \
      --disk-format qcow2 "cirros image"
 
@@ -72,7 +72,7 @@ to be set to enable this signature feature.
    be generated. In this example, these are called private_key.pem and
    new_cert.crt, respectively, and both reside in the current
    directory. Also note that the image in this example is
-   cirros-0.3.4-x86_64-disk.img, but any image can be used.
+   cirros-0.3.5-x86_64-disk.img, but any image can be used.
 
 The following are steps needed to create the signature used for the
 signed images:
@@ -81,7 +81,7 @@ signed images:
 
    .. code-block:: console
 
-      $ wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+      $ wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img
 
 #. Use private key to create a signature of the image
 
@@ -109,7 +109,7 @@ signed images:
    .. code-block:: console
 
       $ openssl dgst -sha256 -sign private_key.pem -sigopt rsa_padding_mode:pss \
-        -out image-file.signature cirros-0.3.4-x86_64-disk.img
+        -out image-file.signature cirros-0.3.5-x86_64-disk.img
       $ base64 -w 0 image-file.signature > signature_64
       $ cat signature_64
       'c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwMgRxzFYeUyydRTWCcUS2ZLudPR9X7rM
@@ -189,7 +189,7 @@ signed images:
         --property img_signature='c4br5f3FYQV6Nu20cRUSnx75R/VcW3diQdsUN2nhPw+UcQRDoGx92hwMgRxzFYeUyydRTWCcUS2ZLudPR9X7rMTHFInA54Zj1TwEIbJTkHwlqbWBMU4+k5IUIjXxHO6RuH3Z5fSlSt7ajsNVXaIclWqIw5YvEkgXTIEuDPE+C4=' \
         --property img_signature_certificate_uuid='62a33f41-f061-44ba-9a69-4fc247d3bfce' \
         --property img_signature_hash_method='SHA-256' \
-        --property img_signature_key_type='RSA-PSS' < ~/cirros-0.3.4-x86_64-disk.img
+        --property img_signature_key_type='RSA-PSS' < ~/cirros-0.3.5-x86_64-disk.img
 
 #. Signature verification will occur when Compute boots the signed image
 

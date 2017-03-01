@@ -136,7 +136,7 @@ available with the specified ``vendor_id`` and ``product_id`` that matches the
 
 .. code-block:: console
 
-   # openstack server create --flavor m1.large --image cirros-0.3.4-x86_64-uec --wait test-pci
+   # openstack server create --flavor m1.large --image cirros-0.3.5-x86_64-uec --wait test-pci
 
 .. Links
 .. _`Create Virtual Functions`: https://docs.openstack.org/ocata/networking-guide/config-sriov.html#create-virtual-functions-compute

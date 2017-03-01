@@ -155,7 +155,7 @@ a VM.
 .. code-block:: console
 
    $ openstack server create --flavor m1.small --image \
-     cirros-0.3.4-x86_64-uec --nic \
+     cirros-0.3.5-x86_64-uec --nic \
      net-id=8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 vm1
 
 The auto-allocated topology for a user never changes. In practice, when a user
