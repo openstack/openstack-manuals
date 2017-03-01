@@ -316,68 +316,92 @@ using neutron ports which contain the IPv4 & IPv6 address.
 
    .. code-block:: console
 
-      $ neutron port-create Public_AGILE
+      $ openstack port create port1 --network Public_AGILE
 
       Created a new port:
-
-      +-----------------------+-------------------------------------------+
-      | Field                 | Value                                     |
-      +-----------------------+-------------------------------------------+
-      | admin_state_up        | True                                      |
-      | allowed_address_pairs |                                           |
-      | binding:host_id       |                                           |
-      | binding:profile       | {}                                        |
-      | binding:vif_details   | {}                                        |
-      | binding:vif_type      | unbound                                   |
-      | binding:vnic_type     | normal                                    |
-      | device_id             |                                           |
-      | device_owner          |                                           |
-      | fixed_ips             | {"subnet_id": "11d8087b-6288-4129-95ff... |
-      |                       | "ip_address": "2001:558:fc0b:100:f816:... |
-      |                       | {"subnet_id": "4279c70a-7218-4c7e-94e5... |
-      |                       | "ip_address": "96.118.182.106"}           |
-      | id                    | 3871bf29-e963-4701-a7dd-8888dbaab375      |
-      | mac_address           | fa:16:3e:e2:09:e0                         |
-      | name                  |                                           |
-      | network_id            | f41bd921-3a59-49c4-aa95-c2e4496a4b56      |
-      | security_groups       | 20d96891-0055-428a-8fa6-d5aed25f0dc6      |
-      | status                | DOWN                                      |
-      | tenant_id             | 52f0574689f14c8a99e7ca22c4eb572           |
-      +-----------------------+-------------------------------------------+
+      +-----------------------+------------------------------------------------------+
+      | Field                 | Value                                                |
+      +-----------------------+------------------------------------------------------+
+      | admin_state_up        | UP                                                   |
+      | allowed_address_pairs |                                                      |
+      | binding_host_id       | None                                                 |
+      | binding_profile       | None                                                 |
+      | binding_vif_details   | None                                                 |
+      | binding_vif_type      | None                                                 |
+      | binding_vnic_type     | normal                                               |
+      | created_at            | 2017-02-26T14:23:18Z                                 |
+      | description           |                                                      |
+      | device_id             |                                                      |
+      | device_owner          |                                                      |
+      | dns_assignment        | None                                                 |
+      | dns_name              | None                                                 |
+      | extra_dhcp_opts       |                                                      |
+      | fixed_ips             | ip_address='96.118.182.106',                         |
+      |                       | subnet_id='4279c70a-7218-4c7e-94e5-7bd4c045644e'     |
+      |                       | ip_address='2001:558:fc0b:100:f816:3eff:fefb:45fb',  |
+      |                       | subnet_id='11d8087b-6288-4129-95ff-42c3df0c1df0'     |
+      | id                    | 3871bf29-e963-4701-a7dd-8888dbaab375                 |
+      | ip_address            | None                                                 |
+      | mac_address           | fa:16:3e:e2:09:e0                                    |
+      | name                  | port1                                                |
+      | network_id            | f41bd921-3a59-49c4-aa95-c2e4496a4b56                 |
+      | option_name           | None                                                 |
+      | option_value          | None                                                 |
+      | port_security_enabled | True                                                 |
+      | project_id            | 52f0574689f14c8a99e7ca22c4eb572                      |
+      | qos_policy_id         | None                                                 |
+      | revision_number       | 6                                                    |
+      | security_groups       | 20d96891-0055-428a-8fa6-d5aed25f0dc6                 |
+      | status                | DOWN                                                 |
+      | subnet_id             | None                                                 |
+      | updated_at            | 2017-02-26T14:23:19Z                                 |
+      +-----------------------+------------------------------------------------------+
 
 #. If you know the fully qualified domain name (FQDN) that will be assigned to
    the IP address, assign the port with the same name:
 
    .. code-block:: console
 
-      $ neutron port-create Public_AGILE --name \
-      "example-fqdn-01.sys.example.com"
+      $ openstack port create "example-fqdn-01.sys.example.com" --network Public_AGILE
 
       Created a new port:
-      +-----------------------+--------------------------------------------+
-      | Field                 | Value                                      |
-      +-----------------------+--------------------------------------------+
-      | admin_state_up        | True                                       |
-      | allowed_address_pairs |                                            |
-      | binding:host_id       |                                            |
-      | binding:profile       | {}                                         |
-      | binding:vif_details   | {}                                         |
-      | binding:vif_type      | unbound                                    |
-      | binding:vnic_type     | normal                                     |
-      | device_id             |                                            |
-      | device_owner          |                                            |
-      | fixed_ips             | {"subnet_id": "11d8087b-6288-4129-95ff...  |
-      |                       | "ip_address": "2001:558:fc0b:100:f816:...  |
-      |                       | {"subnet_id": "4279c70a-7218-4c7e-94e5...  |
-      |                       | "ip_address": "96.118.182.107"}            |
-      | id                    | 731c3b28-3753-4e63-bae3-b58a52d6ccca       |
-      | mac_address           | fa:16:3e:fb:65:fc                          |
-      | name                  | example-fqdn-01.sys.example.com            |
-      | network_id            | f41bd921-3a59-49c4-aa95-c2e4496a4b56       |
-      | security_groups       | 20d96891-0055-428a-8fa6-d5aed25f0dc6       |
-      | status                | DOWN                                       |
-      | tenant_id             | 52f0574689f14c8a99e7ca22c4eb5720           |
-      +-----------------------+--------------------------------------------+
+      +-----------------------+------------------------------------------------------+
+      | Field                 | Value                                                |
+      +-----------------------+------------------------------------------------------+
+      | admin_state_up        | UP                                                   |
+      | allowed_address_pairs |                                                      |
+      | binding_host_id       | None                                                 |
+      | binding_profile       | None                                                 |
+      | binding_vif_details   | None                                                 |
+      | binding_vif_type      | None                                                 |
+      | binding_vnic_type     | normal                                               |
+      | created_at            | 2017-02-26T14:24:16Z                                 |
+      | description           |                                                      |
+      | device_id             |                                                      |
+      | device_owner          |                                                      |
+      | dns_assignment        | None                                                 |
+      | dns_name              | None                                                 |
+      | extra_dhcp_opts       |                                                      |
+      | fixed_ips             | ip_address='96.118.182.107',                         |
+      |                       | subnet_id='4279c70a-7218-4c7e-94e5-7bd4c045644e'     |
+      |                       | ip_address='2001:558:fc0b:100:f816:3eff:fefb:65fc',  |
+      |                       | subnet_id='11d8087b-6288-4129-95ff-42c3df0c1df0'     |
+      | id                    | 731c3b28-3753-4e63-bae3-b58a52d6ccca                 |
+      | ip_address            | None                                                 |
+      | mac_address           | fa:16:3e:fb:65:fc                                    |
+      | name                  | example-fqdn-01.sys.example.com                      |
+      | network_id            | f41bd921-3a59-49c4-aa95-c2e4496a4b56                 |
+      | option_name           | None                                                 |
+      | option_value          | None                                                 |
+      | port_security_enabled | True                                                 |
+      | project_id            | 52f0574689f14c8a99e7ca22c4eb5720                     |
+      | qos_policy_id         | None                                                 |
+      | revision_number       | 6                                                    |
+      | security_groups       | 20d96891-0055-428a-8fa6-d5aed25f0dc6                 |
+      | status                | DOWN                                                 |
+      | subnet_id             | None                                                 |
+      | updated_at            | 2017-02-26T14:24:17Z                                 |
+      +-----------------------+------------------------------------------------------+
 
 #. Use the port when creating an instance:
 
@@ -440,22 +464,17 @@ using neutron ports which contain the IPv4 & IPv6 address.
 
    .. code-block:: console
 
-      $ neutron port-list | grep -B1 96.118.182.107
+      $ openstack port list | grep -B1 96.118.182.107
 
-      | 731c3b28-3753-4e63-bae3-b58a52d6ccca | example-fqdn-01.sys.comcast.net
-      | fa:16:3e:fb:65:fc |
-      {"subnet_id": "11d8087b-6288-4129-95ff-42c3df0c1df0",
-       "ip_address": "2001:558:fc0b:100:f816:3eff:fefb:65fc"} |
-      | {"subnet_id": "4279c70a-7218-4c7e-94e5-7bd4c045644e",
-      "ip_address": "96.118.182.107"}                           |
+      | 731c3b28-3753-4e63-bae3-b58a52d6ccca | example-fqdn-01.sys.example.com | fa:16:3e:fb:65:fc | ip_address='96.118.182.107', subnet_id='4279c70a-7218-4c7e-94e5-7bd4c045644e' |
 
-#. Run the :command:`neutron port-update` command to remove the port from
+#. Run the :command:`openstack port set` command to remove the port from
    the instance:
 
    .. code-block:: console
 
-      $ neutron port-update 731c3b28-3753-4e63-bae3-b58a52d6ccca \
-      --device_id "" --device_owner "" --binding:host_id ""
+      $ openstack port set 731c3b28-3753-4e63-bae3-b58a52d6ccca \
+      --device "" --device-owner "" --no-binding-profile
 
 #.  Delete the instance and create a new instance using the
     ``--nic port-id`` option.
@@ -470,22 +489,22 @@ when an instance has been deleted with the port still attached:
 
    .. code-block:: console
 
-      $ for i in {0..10}; do neutron port-create Public_AGILE --name \
+      $ for i in {0..10}; do openstack port create --network Public_AGILE \
       ip-recovery; done
 
 #. Check the ports for the lost IP address and update the name:
 
    .. code-block:: console
 
-      $ neutron port-update 731c3b28-3753-4e63-bae3-b58a52d6ccca \
+      $ openstack port set 731c3b28-3753-4e63-bae3-b58a52d6ccca \
       --name "don't delete"
 
 #. Delete the ports that are not needed:
 
    .. code-block:: console
 
-      $ for port in $(neutron port-list | grep -i ip-recovery | \
-      awk '{print $2}'); do neutron port-delete $port; done
+      $ for port in $(openstack port list | grep -i ip-recovery | \
+      awk '{print $2}'); do openstack port delete $port; done
 
 #. If you still cannot find the lost IP address, repeat these steps
    again.
