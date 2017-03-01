@@ -134,7 +134,8 @@ For asynchronous backup, the Block Storage API makes it possible
 to export the data and also the metadata of a particular volume,
 so that it can be moved and replicated elsewhere.
 More information can be found here:
-https://blueprints.launchpad.net/cinder/+spec/cinder-backup-volume-metadata-support.
+`Add volume metadata support to Cinder backup
+<https://blueprints.launchpad.net/cinder/+spec/cinder-backup-volume-metadata-support>`_.
 
 The synchronous backups create an identical volume in both
 clouds and chooses the appropriate flavor so that each cloud
