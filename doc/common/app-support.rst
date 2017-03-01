@@ -19,63 +19,63 @@ Documentation
 ~~~~~~~~~~~~~
 
 For the available OpenStack documentation, see
-`docs.openstack.org <https://docs.openstack.org>`__.
+`docs.openstack.org <https://docs.openstack.org>`_.
 
 To provide feedback on documentation, join and use the
 openstack-docs@lists.openstack.org mailing list at `OpenStack
 Documentation Mailing
-List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`__,
+List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`_,
 join our IRC channel ``#openstack-doc`` on the freenode IRC network,
 or `report a
-bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
+bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`_.
 
 The following books explain how to install an OpenStack cloud and its
 associated components:
 
 *  `Installation Tutorial for openSUSE Leap 42.2 and SUSE Linux Enterprise
    Server 12 SP2
-   <https://docs.openstack.org/ocata/install-guide-obs/>`__
+   <https://docs.openstack.org/ocata/install-guide-obs/>`_
 
 *  `Installation Tutorial for Red Hat Enterprise Linux 7 and CentOS 7
-   <https://docs.openstack.org/ocata/install-guide-rdo/>`__
+   <https://docs.openstack.org/ocata/install-guide-rdo/>`_
 
 *  `Installation Tutorial for Ubuntu 16.04 (LTS)
-   <https://docs.openstack.org/ocata/install-guide-ubuntu/>`__
+   <https://docs.openstack.org/ocata/install-guide-ubuntu/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
-*  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`__
+*  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
 
-*  `Administrator Guide <https://docs.openstack.org/admin-guide/>`__
+*  `Administrator Guide <https://docs.openstack.org/admin-guide/>`_
 
-*  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/>`__
+*  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/>`_
 
-*  `Operations Guide <https://docs.openstack.org/ops/>`__
+*  `Operations Guide <https://docs.openstack.org/ops-guide/>`_
 
-*  `Networking Guide <https://docs.openstack.org/ocata/networking-guide>`__
+*  `Networking Guide <https://docs.openstack.org/ocata/networking-guide>`_
 
-*  `High Availability Guide <https://docs.openstack.org/ha-guide/>`__
+*  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
-*  `Security Guide <https://docs.openstack.org/sec/>`__
+*  `Security Guide <https://docs.openstack.org/sec/>`_
 
-*  `Virtual Machine Image Guide <https://docs.openstack.org/image-guide/>`__
+*  `Virtual Machine Image Guide <https://docs.openstack.org/image-guide/>`_
 
 The following books explain how to use the OpenStack Dashboard and
 command-line clients:
 
-*  `End User Guide <https://docs.openstack.org/user-guide/>`__
+*  `End User Guide <https://docs.openstack.org/user-guide/>`_
 
 *  `Command-Line Interface Reference
-   <https://docs.openstack.org/cli-reference/>`__
+   <https://docs.openstack.org/cli-reference/>`_
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
-*  `API Guide <https://developer.openstack.org/api-guide/quick-start/>`__
+*  `API Guide <https://developer.openstack.org/api-guide/quick-start/>`_
 
 The following guide provides how to contribute to OpenStack documentation:
 
-*  `Documentation Contributor Guide <https://docs.openstack.org/contributor-guide/>`__
+*  `Documentation Contributor Guide <https://docs.openstack.org/contributor-guide/>`_
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~
@@ -83,7 +83,7 @@ ask.openstack.org
 During the set up or testing of OpenStack, you might have questions
 about how a specific task is completed or be in a situation where a
 feature does not work correctly. Use the
-`ask.openstack.org <https://ask.openstack.org>`__ site to ask questions
+`ask.openstack.org <https://ask.openstack.org>`_ site to ask questions
 and get answers. When you visit the `Ask OpenStack
 <https://ask.openstack.org>`_ site, scan
 the recently asked questions to see whether your question has already
@@ -101,12 +101,12 @@ and help others who might have similar issues. To subscribe or view the
 archives, go to the `general OpenStack mailing list
 <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack>`_. If you are
 interested in the other mailing lists for specific projects or development,
-refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`__.
+refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
 
 The OpenStack wiki
 ~~~~~~~~~~~~~~~~~~
 
-The `OpenStack wiki <https://wiki.openstack.org/>`__ contains a broad
+The `OpenStack wiki <https://wiki.openstack.org/>`_ contains a broad
 range of topics but some of the information can be difficult to find or
 is a few pages deep. Fortunately, the wiki search feature enables you to
 search by title or content. If you search for specific information, such
@@ -120,7 +120,7 @@ The Launchpad Bugs area
 
 The OpenStack community values your set up and testing efforts and wants
 your feedback. To log a bug, you must sign up for a Launchpad account at
-https://launchpad.net/+login. You can view existing bugs and report bugs
+`<https://launchpad.net/+login>`_. You can view existing bugs and report bugs
 in the Launchpad Bugs area. Use the search feature to determine whether
 the bug has already been reported or already been fixed. If it still
 seems like your bug is unreported, fill out a bug report.
@@ -143,69 +143,69 @@ Some tips:
 The following Launchpad Bugs areas are available:
 
 *  `Bugs: OpenStack Block Storage
-   (cinder) <https://bugs.launchpad.net/cinder>`__
+   (cinder) <https://bugs.launchpad.net/cinder>`_
 
-*  `Bugs: OpenStack Compute (nova) <https://bugs.launchpad.net/nova>`__
+*  `Bugs: OpenStack Compute (nova) <https://bugs.launchpad.net/nova>`_
 
 *  `Bugs: OpenStack Dashboard
-   (horizon) <https://bugs.launchpad.net/horizon>`__
+   (horizon) <https://bugs.launchpad.net/horizon>`_
 
 *  `Bugs: OpenStack Identity
-   (keystone) <https://bugs.launchpad.net/keystone>`__
+   (keystone) <https://bugs.launchpad.net/keystone>`_
 
 *  `Bugs: OpenStack Image service
-   (glance) <https://bugs.launchpad.net/glance>`__
+   (glance) <https://bugs.launchpad.net/glance>`_
 
 *  `Bugs: OpenStack Networking
-   (neutron) <https://bugs.launchpad.net/neutron>`__
+   (neutron) <https://bugs.launchpad.net/neutron>`_
 
 *  `Bugs: OpenStack Object Storage
-   (swift) <https://bugs.launchpad.net/swift>`__
+   (swift) <https://bugs.launchpad.net/swift>`_
 
-*  `Bugs: Application catalog (murano) <https://bugs.launchpad.net/murano>`__
+*  `Bugs: Application catalog (murano) <https://bugs.launchpad.net/murano>`_
 
-*  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`__
+*  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`_
 
-*  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`__
+*  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`_
 
-*  `Bugs: Container Infrastructure Management service (magnum) <https://bugs.launchpad.net/magnum>`__
+*  `Bugs: Container Infrastructure Management service (magnum) <https://bugs.launchpad.net/magnum>`_
 
 *  `Bugs: Data processing service
-   (sahara) <https://bugs.launchpad.net/sahara>`__
+   (sahara) <https://bugs.launchpad.net/sahara>`_
 
-*  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`__
+*  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`_
 
-*  `Bugs: Deployment service (fuel) <https://bugs.launchpad.net/fuel>`__
+*  `Bugs: Deployment service (fuel) <https://bugs.launchpad.net/fuel>`_
 
-*  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`__
+*  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`_
 
-*  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`__
+*  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`_
 
-*  `Bugs: Monitoring (monasca) <https://bugs.launchpad.net/monasca>`__
+*  `Bugs: Monitoring (monasca) <https://bugs.launchpad.net/monasca>`_
 
-*  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`__
+*  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`_
 
-*  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`__
+*  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`_
 
-*  `Bugs: Shared file systems (manila) <https://bugs.launchpad.net/manila>`__
+*  `Bugs: Shared file systems (manila) <https://bugs.launchpad.net/manila>`_
 
 *  `Bugs: Telemetry
-   (ceilometer) <https://bugs.launchpad.net/ceilometer>`__
+   (ceilometer) <https://bugs.launchpad.net/ceilometer>`_
 
 *  `Bugs: Telemetry v3
-   (gnocchi) <https://bugs.launchpad.net/gnocchi>`__
+   (gnocchi) <https://bugs.launchpad.net/gnocchi>`_
 
 *  `Bugs: Workflow service
-   (mistral) <https://bugs.launchpad.net/mistral>`__
+   (mistral) <https://bugs.launchpad.net/mistral>`_
 
 *  `Bugs: Messaging service
-   (zaqar) <https://bugs.launchpad.net/zaqar>`__
+   (zaqar) <https://bugs.launchpad.net/zaqar>`_
 
 *  `Bugs: OpenStack API Documentation
-   (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`__
+   (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`_
 
 *  `Bugs: OpenStack Documentation
-   (docs.openstack.org) <https://bugs.launchpad.net/openstack-manuals>`__
+   (docs.openstack.org) <https://bugs.launchpad.net/openstack-manuals>`_
 
 The OpenStack IRC channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -214,7 +214,7 @@ The OpenStack community lives in the #openstack IRC channel on the
 Freenode network. You can hang out, ask questions, or get immediate
 feedback for urgent and pressing issues. To install an IRC client or use
 a browser-based client, go to
-`https://webchat.freenode.net/ <https://webchat.freenode.net>`__. You can
+`https://webchat.freenode.net/ <https://webchat.freenode.net>`_. You can
 also use `Colloquy <http://colloquy.info/>`_ (Mac OS X),
 `mIRC <http://www.mirc.com/>`_ (Windows),
 or XChat (Linux). When you are in the IRC channel
@@ -232,9 +232,9 @@ Documentation feedback
 To provide feedback on documentation, join and use the
 openstack-docs@lists.openstack.org mailing list at `OpenStack
 Documentation Mailing
-List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`__,
+List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`_,
 or `report a
-bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`__.
+bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`_.
 
 OpenStack distribution packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

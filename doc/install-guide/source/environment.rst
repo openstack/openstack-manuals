@@ -71,7 +71,7 @@ of nested VMs.
    interface.
 
 For more information about system requirements, see the `OpenStack
-Operations Guide <https://docs.openstack.org/ops/>`_.
+Operations Guide <https://docs.openstack.org/ops-guide/>`_.
 
 .. toctree::
    :maxdepth: 1
