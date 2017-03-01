@@ -82,7 +82,7 @@ command-line clients, and provides installation instructions as needed.
        depending on the package being installed, such as is the case with
        Tempest.
 
-       **Red Hat Enterprise Linux, CentOS, or Fedora**
+       **Red Hat Enterprise Linux or CentOS**
 
        A packaged version enables you to use yum to install the package:
 
@@ -90,9 +90,23 @@ command-line clients, and provides installation instructions as needed.
 
           # yum install python-devel python-pip
 
-       There are also packaged versions of the clients available in
-       `RDO <https://www.rdoproject.org/>`__ that enable yum to install
-       the clients as described in Installing_from_packages_.
+       On Red Hat Enterprise Linux, this command assumes that you have enabled
+       the OpenStack repository. For more information, see the
+       `Installation Tutorial for Red Hat Enterprise Linux and CentOS
+       <https://docs.openstack.org/ocata/install-guide-rdo/environment-packages.html>`_.
+
+       There are also packaged versions of the clients available that enable
+       :command:`yum` to install the clients as described in
+       Installing_from_packages_.
+
+       **Fedora**
+
+       A packaged version enables you to use :command:`dnf` to install the
+       package:
+
+       .. code-block:: console
+
+          # dnf install python-devel python-pip
 
        **SUSE Linux Enterprise Server**
 
@@ -100,11 +114,9 @@ command-line clients, and provides installation instructions as needed.
        <https://build.opensuse.org/package/show?package=python-pip&project=Cloud:OpenStack:Master>`__
        enables you to use YaST or zypper to install the package.
 
-       First, add the Open Build Service repository:
-
-       .. code-block:: console
-
-          # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/SLE_12_SP1 Mitaka
+       First, add the Open Build Service repository as described in the
+       `Installation Tutorial
+       <https://docs.openstack.org/ocata/install-guide-obs/environment-packages.html>`_.
 
        Then install pip and use it to manage client installation:
 
@@ -197,15 +209,19 @@ Installing from packages
 ------------------------
 
 RDO, openSUSE, SUSE Linux Enterprise, Debian, and Ubuntu have client packages
-that can be installed without ``pip``.
+that can be installed without pip.
 
-*  On Red Hat Enterprise Linux, CentOS, or Fedora, use ``yum`` to install
-   the clients from the packaged versions available in
-   `RDO <https://www.rdoproject.org/>`__:
+*  On Red Hat Enterprise Linux or CentOS, use ``yum`` to install the clients
+   from the packaged versions:
 
    .. code-block:: console
 
       # yum install python-PROJECTclient
+
+   This command assumes that you have enabled the OpenStack repository for your
+   distribution. For more information, see the
+   `Installation Tutorial for Red Hat Enterprise Linux and CentOS
+   <https://docs.openstack.org/ocata/install-guide-rdo/environment-packages.html>`_.
 
 * For Ubuntu or Debian, use ``apt-get`` to install the clients from the
   packaged versions:
@@ -222,30 +238,28 @@ that can be installed without ``pip``.
       # zypper install python-PROJECTclient
 
 *  For SUSE Linux Enterprise Server, use ``zypper`` to install the clients from
-   the distribution packages in the Open Build Service. First, add the Open
-   Build Service repository:
-
-   .. code-block:: console
-
-      # zypper addrepo -f obs://Cloud:OpenStack:Mitaka/SLE_12_SP1 Mitaka
-
-   Then you can install the packages:
+   the packaged versions:
 
    .. code-block:: console
 
       # zypper install python-PROJECTclient
 
+   This command assumes that you have enabled the OpenStack repository for your
+   distribution. For more information, see the
+   `Installation Tutorial for openSUSE and SUSE Linux Enterprise
+   <https://docs.openstack.org/ocata/install-guide-obs/environment-packages.html>`_.
+
 Upgrade or remove clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To upgrade a client, add the ``--upgrade`` option to the
+To upgrade a client with :command:`pip`, add the ``--upgrade`` option to the
 :command:`pip install` command:
 
 .. code-block:: console
 
    # pip install --upgrade python-PROJECTclient
 
-To remove the client, run the :command:`pip uninstall` command:
+To remove the client with pip, run the :command:`pip uninstall` command:
 
 .. code-block:: console
 
