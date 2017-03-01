@@ -14,7 +14,9 @@ integration.
 
 This guide covers step-by-step deployment of the major OpenStack
 services using a functional example architecture suitable for
-new users of OpenStack with sufficient Linux experience.
+new users of OpenStack with sufficient Linux experience. This guide is not
+intended to be used for production system installations, but to create a
+minimum proof-of-concept for the purpose of learning about OpenStack.
 
 After becoming familiar with basic installation, configuration, operation,
 and troubleshooting of these OpenStack services, you should consider the
@@ -37,6 +39,15 @@ Example architecture
 The example architecture requires at least two nodes (hosts) to launch a basic
 :term:`virtual machine <virtual machine (VM)>` or instance. Optional
 services such as Block Storage and Object Storage require additional nodes.
+
+.. important::
+
+   The example architecture used in this guide is a minimum configuration,
+   and is not intended for production system installations. It is designed to
+   provide a minimum proof-of-concept for the purpose of learning about
+   OpenStack. For information on creating architectures for specific
+   use cases, or how to determine which architecture is required, see the
+   `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_.
 
 This example architecture differs from a minimal production architecture as
 follows:
