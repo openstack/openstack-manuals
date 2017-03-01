@@ -466,7 +466,7 @@ Finalize installation
       .. code-block:: console
 
          # service cinder-scheduler restart
-         # service cinder-api restart
+         # service apache2 restart
 
       .. end
 
