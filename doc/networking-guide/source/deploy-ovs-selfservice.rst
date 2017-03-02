@@ -92,7 +92,8 @@ Controller node
 
 #. Restart the following services:
 
-   * Server
+   * Neutron Server
+   * Open vSwitch agent
 
 Network node
 ------------
