@@ -119,8 +119,8 @@ The Launchpad Bugs area
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenStack community values your set up and testing efforts and wants
-your feedback. To log a bug, you must sign up for a Launchpad account at
-`<https://launchpad.net/+login>`_. You can view existing bugs and report bugs
+your feedback. To log a bug, you must `sign up for a Launchpad account
+<https://launchpad.net/+login>`_. You can view existing bugs and report bugs
 in the Launchpad Bugs area. Use the search feature to determine whether
 the bug has already been reported or already been fixed. If it still
 seems like your bug is unreported, fill out a bug report.
