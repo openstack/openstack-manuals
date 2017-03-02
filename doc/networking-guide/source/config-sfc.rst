@@ -166,7 +166,7 @@ Create a port chain
 
 The following example uses the ``neutron`` command-line interface (CLI) to
 create a port chain consisting of three service function instances to handle
-HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80.
+HTTP (TCP) traffic flows from 192.0.2.11:1000 to 198.51.100.11:80.
 
 * Instance 1
 
@@ -231,10 +231,10 @@ HTTP (TCP) traffic flows from 192.168.1.11:1000 to 192.168.2.11:80.
    .. code-block:: console
 
       $ neutron flow-classifier-create \
-        --description "HTTP traffic from 192.168.1.11 to 192.168.2.11" \
+        --description "HTTP traffic from 192.0.2.11 to 198.51.100.11" \
         --ethertype IPv4 \
-        --source-ip-prefix 192.168.1.11/32 \
-        --destination-ip-prefix 192.168.2.11/32 \
+        --source-ip-prefix 192.0.2.11/32 \
+        --destination-ip-prefix 198.51.100.11/32 \
         --protocol tcp \
         --source-port 1000:1000 \
         --destination-port 80:80 FC1
