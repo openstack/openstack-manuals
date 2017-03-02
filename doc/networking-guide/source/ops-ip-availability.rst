@@ -50,7 +50,7 @@ Get Network IP address availability statistics for a specific network:
    | network_id             | 0bf90de6-fc0f-4dba-b80d-96670dfb331a                         |
    | network_name           | public                                                       |
    | project_id             | 5669caad86a04256994cdf755df4d3c1                             |
-   | subnet_ip_availability | cidr='172.24.4.224/28', ip_version='4', subnet_id='346806ee- |
+   | subnet_ip_availability | cidr='192.0.2.224/28', ip_version='4', subnet_id='346806ee-  |
    |                        | a53e-44fd-968a-ddb2bcd2ba96', subnet_name='public_subnet',   |
    |                        | total_ips='13', used_ips='5'                                 |
    | total_ips              | 13                                                           |
