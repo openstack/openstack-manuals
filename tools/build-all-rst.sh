@@ -12,13 +12,19 @@ fi
 MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
 
 LINKCHECK=""
-if [[ $# > 0 ]] ; then
-    if [ "$1" = "--linkcheck" ] ; then
-        LINKCHECK="$1"
-    fi
-fi
-
-PDF_OPTION="--pdf"
+PDF_OPTION=""
+while [[ $# > 0 ]] ; do
+    option="$1"
+    case $option in
+        --linkcheck)
+            LINKCHECK="--linkcheck"
+            ;;
+        --pdf)
+            PDF_OPTION="--pdf"
+            ;;
+    esac
+    shift
+done
 
 # PDF targets for Install guides are dealt in build-install-guides-rst.sh
 PDF_TARGETS=( 'arch-design'\
@@ -54,7 +60,7 @@ for guide in networking-guide arch-design-draft config-reference; do
     fi
 done
 
-tools/build-install-guides-rst.sh $LINKCHECK
+tools/build-install-guides-rst.sh $LINKCHECK $PDF_OPTION
 
 # For master, just mark the root
 if [ "$ZUUL_REFNAME" = "master" ] ; then

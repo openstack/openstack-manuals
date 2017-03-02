@@ -46,8 +46,8 @@ function copy_to_branch {
 
 mkdir -p publish-docs
 
-# Build all RST guides
-tools/build-all-rst.sh
+# Build all RST guides including PDF files
+tools/build-all-rst.sh --pdf
 
 # Build the www pages so that openstack-indexpage creates a link to
 # www/www-index.html.
