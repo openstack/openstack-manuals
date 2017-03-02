@@ -91,7 +91,7 @@ NexentaEdge can provide access to cluster storage via a Network Block Device
 
 The NexentaEdge cluster must be installed and configured according to the
 relevant Nexenta documentation. A cluster, tenant, bucket must be pre-created.
-The driver requires NexentaEdge Service to run on Hypervisor Node (Nova) node.
+The driver requires NexentaEdge Service to run on Hypervisor (Nova) node.
 The node must sit on Replicast Network and only runs NexentaEdge service, does
 not require physical disks.
 
