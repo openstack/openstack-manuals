@@ -26,7 +26,7 @@ or multiple back-end volume drivers.
 You must configure these items for each NexentaEdge cluster that the iSCSI
 volume driver controls:
 
-#. Make the following changes on the volume node ``/etc/cinder/cinder.conf``
+#. Make the following changes on the storage node ``/etc/cinder/cinder.conf``
    file.
 
    .. code-block:: ini
@@ -98,7 +98,7 @@ not require physical disks.
 You must configure these items for each NexentaEdge cluster that the NBD
 volume driver controls:
 
-#. Make the following changes on data node ``/etc/cinder/cinder.conf``
+#. Make the following changes on storage node ``/etc/cinder/cinder.conf``
    file.
 
    .. code-block:: ini
