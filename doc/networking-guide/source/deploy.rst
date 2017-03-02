@@ -111,8 +111,6 @@ and network interfaces:
 For illustration purposes, the configuration examples typically reference
 the following IP address ranges:
 
-* Management network: 10.0.0.0/24
-* Overlay (tunnel) network: 10.0.1.0/24
 * Provider network 1:
 
   * IPv4: 203.0.113.0/24
@@ -125,8 +123,8 @@ the following IP address ranges:
 
 * Self-service networks:
 
-  * IPv4: 192.168.0.0/16 in /24 segments
-  * IPv6: fd00:192:168::/48 in /64 segments
+  * IPv4: 198.51.100.0/24 in /24 segments
+  * IPv6: fd00:198:51::/48 in /64 segments
 
 You may change them to work with your particular network infrastructure.
 
