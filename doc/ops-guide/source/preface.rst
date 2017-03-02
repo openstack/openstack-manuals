@@ -160,7 +160,7 @@ Installation Tutorials and Guides
     Describes potential strategies for making your OpenStack services
     and related controllers and data stores highly available
 
-`OpenStack Security Guide <https://docs.openstack.org/sec/>`_
+`OpenStack Security Guide <https://docs.openstack.org/security-guide/>`_
     Provides best practices and conceptual information about securing an
     OpenStack cloud
 

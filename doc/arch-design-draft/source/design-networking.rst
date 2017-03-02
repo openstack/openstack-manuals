@@ -21,7 +21,8 @@ services that are essential for stable operation.
    Additionally, you must research and discuss cloud network connectivity
    through proxy servers and firewalls.
 
-See the `OpenStack Security Guide <https://docs.openstack.org/sec/>`_ for tips
+See the `OpenStack Security Guide
+<https://docs.openstack.org/security-guide/>`_ for tips
 on securing your network.
 
 Networking (neutron)

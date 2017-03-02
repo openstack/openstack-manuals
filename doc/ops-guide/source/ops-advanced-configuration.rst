@@ -106,7 +106,7 @@ consider tuning. It is by no means an exhaustive list.
 Security Configuration for Compute, Networking, and Storage
 -----------------------------------------------------------
 
-The `OpenStack Security Guide <https://docs.openstack.org/sec/>`_
+The `OpenStack Security Guide <https://docs.openstack.org/security-guide/>`_
 provides a deep dive into securing an OpenStack cloud, including
 SSL/TLS, key management, PKI and certificate management, data transport
 and privacy concerns, and compliance.

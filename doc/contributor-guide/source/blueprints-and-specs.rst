@@ -148,7 +148,7 @@ Guides for deployers and administrators
 * `OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/>`_:
   Describes potential strategies for making your OpenStack services and
   related controllers and data stores highly available.
-* `OpenStack Security Guide <https://docs.openstack.org/sec/>`_:
+* `OpenStack Security Guide <https://docs.openstack.org/security-guide/>`_:
   Provide best practices and conceptual
   information about securing an OpenStack cloud.
 * `OpenStack Virtual Machine Image Guide

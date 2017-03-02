@@ -56,7 +56,7 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
-*  `Security Guide <https://docs.openstack.org/sec/>`_
+*  `Security Guide <https://docs.openstack.org/security-guide/>`_
 
 *  `Virtual Machine Image Guide <https://docs.openstack.org/image-guide/>`_
 
