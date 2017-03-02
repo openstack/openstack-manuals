@@ -88,9 +88,9 @@ create a database, service credentials, and API endpoints.
         | enabled             | True                             |
         | id                  | 3f4e777c4062483ab8d9edd7dff829df |
         | name                | glance                           |
+        | options             | {}                               |
         | password_expires_at | None                             |
         +---------------------+----------------------------------+
-
 
      .. end
 
