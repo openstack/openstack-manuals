@@ -69,7 +69,7 @@ topology creation. To perform this task, proceed with the following steps:
    .. code-block:: console
 
       $ openstack subnet pool create --share --default \
-        --pool-prefix 10.0.0.0/24 --default-prefix-length 26 \
+        --pool-prefix 192.0.2.0/24 --default-prefix-length 26 \
         shared-default
 
         +-------------------+--------------------------------------+
@@ -87,7 +87,7 @@ topology creation. To perform this task, proceed with the following steps:
         | max_prefixlen     | 32                                   |
         | min_prefixlen     | 8                                    |
         | name              | shared-default                       |
-        | prefixes          | 10.0.0.0/24                          |
+        | prefixes          | 192.0.2.0/24                         |
         | project_id        | 86acdbd1d72745fd8e8320edd7543400     |
         | revision_number   | 1                                    |
         | shared            | True                                 |
