@@ -426,7 +426,6 @@ Disable the DHCP agent on HostA before you stop it:
 .. code-block:: console
 
    $ neutron agent-update a0c1c21c-d4f4-4577-9ec7-908f2d48622d --admin-state-up False
-   $ neutron agent-list
    $ openstack network agent list
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
    | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
