@@ -50,9 +50,9 @@ Add a new user
 
 #. Log into the OpenStack Dashboard as the Admin user.
 #. Click on the :guilabel:`Identity` label on the left column, and click
-   :guilabel:'Users'.
+   :guilabel:`Users`.
 #. Click :guilabel:`Create User`.
-#. Enter a :guilabel"`Domain Name`, the :guilabel:`Username`, a
+#. Enter a :guilabel:`Domain Name`, the :guilabel:`Username`, and a
    :guilabel:`password` for the new user. Enter an email for the new user,
    and specify which :guilabel:`Primary Project` they belong to. Leave the
    :guilabel:`Domain ID` field set at *default*. You can also enter a
