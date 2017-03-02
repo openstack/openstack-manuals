@@ -194,16 +194,16 @@ supports adding distributed routing to existing routers.
 
    .. code-block:: console
 
-      $ openstack subnet create --subnet-range 192.168.2.0/24 \
+      $ openstack subnet create --subnet-range 192.0.2.0/24 \
         --network selfservice2 --dns-nameserver 8.8.4.4 selfservice2-v4
       +-------------------+---------------------------+
       | Field             | Value                     |
       +-------------------+---------------------------+
-      | allocation_pools  | 192.168.2.2-192.168.2.254 |
-      | cidr              | 192.168.2.0/24            |
+      | allocation_pools  | 192.0.2.2-192.0.2.254     |
+      | cidr              | 192.0.2.0/24              |
       | dns_nameservers   | 8.8.4.4                   |
       | enable_dhcp       | True                      |
-      | gateway_ip        | 192.168.2.1               |
+      | gateway_ip        | 192.0.2.1                 |
       | ip_version        | 4                         |
       | name              | selfservice2-v4           |
       +-------------------+---------------------------+
@@ -212,17 +212,17 @@ supports adding distributed routing to existing routers.
 
    .. code-block:: console
 
-      $ openstack subnet create --subnet-range fd00:192:168:2::/64 --ip-version 6 \
+      $ openstack subnet create --subnet-range fd00:192:0:2::/64 --ip-version 6 \
         --ipv6-ra-mode slaac --ipv6-address-mode slaac --network selfservice2 \
         --dns-nameserver 2001:4860:4860::8844 selfservice2-v6
       +-------------------+------------------------------------------------------+
       | Field             | Value                                                |
       +-------------------+------------------------------------------------------+
-      | allocation_pools  | fd00:192:168:2::2-fd00:192:168:2:ffff:ffff:ffff:ffff |
-      | cidr              | fd00:192:168:2::/64                                  |
+      | allocation_pools  | fd00:192:0:2::2-fd00:192:0:2:ffff:ffff:ffff:ffff     |
+      | cidr              | fd00:192:0:2::/64                                    |
       | dns_nameservers   | 2001:4860:4860::8844                                 |
       | enable_dhcp       | True                                                 |
-      | gateway_ip        | fd00:192:168:2::1                                    |
+      | gateway_ip        | fd00:192:0:2::1                                      |
       | ip_version        | 6                                                    |
       | ipv6_address_mode | slaac                                                |
       | ipv6_ra_mode      | slaac                                                |
@@ -328,7 +328,7 @@ Verify network operation
       +--------------------------------------+-----------------------+--------+---------------------------------------------------------------------------+
       | ID                                   | Name                  | Status | Networks                                                                  |
       +--------------------------------------+-----------------------+--------+---------------------------------------------------------------------------+
-      | bde64b00-77ae-41b9-b19a-cd8e378d9f8b | selfservice-instance2 | ACTIVE | selfservice2=fd00:192:168:2:f816:3eff:fe71:e93e, 192.168.2.4              |
+      | bde64b00-77ae-41b9-b19a-cd8e378d9f8b | selfservice-instance2 | ACTIVE | selfservice2=fd00:192:0:2:f816:3eff:fe71:e93e, 192.0.2.4                  |
       +--------------------------------------+-----------------------+--------+---------------------------------------------------------------------------+
 
 #. Create a floating IPv4 address on the provider network.
