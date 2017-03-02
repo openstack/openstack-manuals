@@ -49,7 +49,7 @@ confident that those services are in working condition:
 
 .. code-block:: console
 
-   # source openrc
+   # . openrc
    # glance index
    # openstack server list
    # openstack project list
