@@ -53,7 +53,7 @@
 
        Possible values:
 
-       * A string of of the following form: ``<service_type>:<service_name>:<endpoint_type>`` At least ``service_type`` and ``endpoint_type`` should be specified. ``service_name`` can be omitted.
+       * A string of of the following form: ``<service_type>:<service_name>:<interface>`` At least ``service_type`` and ``interface`` should be specified. ``service_name`` can be omitted.
 
        Related options:
 
@@ -194,3 +194,17 @@
        * cinder_store_password
 
        * cinder_store_project_name
+   * - ``cinder_volume_type`` = ``None``
+     - (String) Volume type that will be used for volume creation in cinder.
+
+       Some cinder backends can have several volume types to optimize storage usage. Adding this option allows an operator to choose a specific volume type in cinder that can be optimized for images.
+
+       If this is not set, then the default volume type specified in the cinder configuration will be used for volume creation.
+
+       Possible values:
+
+       * A valid volume type from cinder
+
+       Related options:
+
+       * None
