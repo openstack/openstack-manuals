@@ -8,8 +8,9 @@ OpenStack client.
 Install the prerequisite software
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most Linux distributions include packaged versions of the command-line
-clients that you can install directly, see Installing_from_packages_.
+Most Linux distributions include packaged versions of the command-line clients.
+You can directly install the clients from the packages with prerequisites.
+For more information, see Installing_from_packages_.
 
 If you need to install the source package for the command-line package,
 the following table lists the software needed to run the
@@ -180,6 +181,8 @@ list below.
 *  ``swift`` - Object Storage API
 *  ``trove`` - Database service API
 
+.. _Installing_with_pip:
+
 Installing with pip
 -------------------
 
@@ -210,6 +213,12 @@ Installing from packages
 
 RDO, openSUSE, SUSE Linux Enterprise, Debian, and Ubuntu have client packages
 that can be installed without pip.
+
+.. note::
+
+   The packaged version might install older clients.
+   If you want to make sure the latest clients are installed,
+   you might need to :ref:`install the clients with pip <installing_with_pip>`.
 
 *  On Red Hat Enterprise Linux or CentOS, use ``yum`` to install the clients
    from the packaged versions:
