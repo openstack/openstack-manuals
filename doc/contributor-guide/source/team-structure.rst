@@ -41,7 +41,7 @@ with their respective leads:
 * `Training labs
   <https://wiki.openstack.org/wiki/Documentation/training-labs>`_:
   Pranav Salunke, Roger Luethi
-* `User guides <https://wiki.openstack.org/wiki/User_Guides>`_:
+* `User and Administrator guides <https://wiki.openstack.org/wiki/User_Guides>`_:
   Joseph Robinson
 
 The current list of docs cores for openstack-manuals, openstackdocstheme,
