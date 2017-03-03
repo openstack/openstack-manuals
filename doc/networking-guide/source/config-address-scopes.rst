@@ -355,7 +355,7 @@ route straight to an external network without NAT.
       +-------------------+-----------------------------------------+
 
 
-#. Create a subnet using a subnet pool associated with a address scope
+#. Create a subnet using a subnet pool associated with an address scope
    from an external network:
 
    .. code-block:: console
