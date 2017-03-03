@@ -4,7 +4,7 @@
 IPv6
 ====
 
-Scope:
+This section describes the following items:
 
 * How to enable dual-stack (IPv4 and IPv6 enabled) instances.
 * How those instances receive an IPv6 address.
@@ -12,16 +12,13 @@ Scope:
   the internet.
 * How those instances interact with other OpenStack services.
 
-To enable a dual-stack network in OpenStack Networking simply requires
+Enabling a dual-stack network in OpenStack Networking simply requires
 creating a subnet with the ``ip_version`` field set to ``6``, then the
 IPv6 attributes (``ipv6_ra_mode`` and ``ipv6_address_mode``) set.  The
 ``ipv6_ra_mode`` and ``ipv6_address_mode`` will be described in detail in
 the next section. Finally, the subnets ``cidr`` needs to be provided.
 
-Not in scope
-~~~~~~~~~~~~
-
-Things not in the scope of this document include:
+This section does not include the following items:
 
 * Single stack IPv6 project networking
 * OpenStack control communication between servers and services over an IPv6
@@ -30,7 +27,6 @@ Things not in the scope of this document include:
 * IPv6 multicast
 * IPv6 support in conjunction with any out of tree routers, switches, services
   or agents whether in physical or virtual form factors.
-
 
 Neutron subnets and the IPv6 API attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,12 +67,12 @@ advertisements for a subnet.
 The IPv6 Protocol uses Internet Control Message Protocol packets
 (ICMPv6) as a way to distribute information about networking. ICMPv6
 packets with the type flag set to 134 are called "Router
-Advertisement" packets, which broadcasts information about the router
+Advertisement" packets, which contain information about the router
 and the route that can be used by guest instances to send network
 traffic.
 
 The ``ipv6_ra_mode`` is used to specify if the Networking service should
-transmit ICMPv6 packets, for a subnet.
+generate Router Advertisement packets for a subnet.
 
 ipv6_ra_mode and ipv6_address_mode combinations
 -----------------------------------------------
@@ -192,23 +188,23 @@ components after the ports are all connected and MAC addresses learned.
 Addresses for subnets
 ---------------------
 
-There are four methods for a subnet to get its ``cidr`` in OpenStack:
+There are three methods currently implemented for a subnet to get its
+``cidr`` in OpenStack:
 
 #. Direct assignment during subnet creation via command line or Horizon
 #. Referencing a subnet pool during subnet creation
+#. Using a Prefix Delegation (PD) client to request a prefix for a
+   subnet from a PD server
 
-In the future, different techniques could be used to allocate subnets
-to projects:
-
-#. Using a PD client to request a prefix for a subnet from a PD server
-#. Use of an external IPAM module to allocate the subnet
+In the future, additional techniques could be used to allocate subnets
+to projects, for example, use of an external IPAM module.
 
 Address modes for ports
 -----------------------
 
 .. note::
 
-   That an external DHCPv6 server in theory could override the full
+   An external DHCPv6 server in theory could override the full
    address OpenStack assigns based on the EUI-64 address, but that
    would not be wise as it would not be consistent through the system.
 
@@ -271,7 +267,7 @@ flags in the RA messages:
 * Managed Configuration Flag = 0
 * Other Configuration Flag = 0
 
-New or existing Neutron networks that contain a SLAAC enabled IPv6 subnet will
+New or existing neutron networks that contain a SLAAC enabled IPv6 subnet will
 result in all neutron ports attached to the network receiving IPv6 addresses.
 This is because when RA broadcast messages are sent out on a neutron
 network, they are received by all IPv6 capable ports on the network,
@@ -283,7 +279,7 @@ that the port already has been assigned.
 DHCPv6
 ------
 
-For DHCPv6-stateless, the currently supported combinations are as
+For DHCPv6, the currently supported combinations are as
 follows:
 
 .. list-table::
@@ -295,14 +291,14 @@ follows:
      - Result
    * - DHCPv6-stateless
      - DHCPv6-stateless
-     - Address and optional information using neutron router and DHCP
-       implementation respectively.
+     - Addresses are assigned through RAs (see SLAAC above) and optional
+       information is delivered through DHCPv6.
    * - DHCPv6-stateful
      - DHCPv6-stateful
      - Addresses and optional information are assigned using DHCPv6.
 
 Setting DHCPv6-stateless for ``ipv6_ra_mode`` configures the neutron
-router with radvd agent to send RAs. The table below captures the
+router with radvd agent to send RAs. The list below captures the
 values set for the address configuration flags in the RA packet in
 this scenario. Similarly, setting DHCPv6-stateless for
 ``ipv6_address_mode`` configures neutron DHCP implementation to provide
@@ -312,10 +308,21 @@ the additional network information.
 * Managed Configuration Flag = 0
 * Other Configuration Flag = 1
 
+Setting DHCPv6-stateful for ``ipv6_ra_mode`` configures the neutron
+router with radvd agent to send RAs. The list below captures the
+values set for the address configuration flags in the RA packet in
+this scenario. Similarly, setting DHCPv6-stateful for
+``ipv6_address_mode`` configures neutron DHCP implementation to provide
+addresses and additional network information through DHCPv6.
+
+* Auto Configuration Flag = 0
+* Managed Configuration Flag = 1
+* Other Configuration Flag = 1
+
 Router support
 ~~~~~~~~~~~~~~
 
-The behavior of the neutron router for IPv6 is different than IPv4 in
+The behavior of the neutron router for IPv6 is different than for IPv4 in
 a few ways.
 
 Internal router ports, that act as default gateway ports for a network, will
@@ -353,7 +360,7 @@ gateway for the subnet.
 
 .. note::
 
-   That it should be possible for projects to communicate with each other
+   It should be possible for projects to communicate with each other
    on an isolated network (a network without a router port) using LLA
    with little to no participation on the part of OpenStack. The authors
    of this section have not proven that to be true for all scenarios.
@@ -409,7 +416,7 @@ NAT & Floating IPs
 At the current time OpenStack Networking does not provide any facility
 to support any flavor of NAT with IPv6. Unlike IPv4 there is no
 current embedded support for floating IPs with IPv6. It is assumed
-that the IPv6 addressing amongst the projects are using GUAs with no
+that the IPv6 addressing amongst the projects is using GUAs with no
 overlap across the projects.
 
 Security considerations
@@ -427,18 +434,18 @@ as described in RFC 2373. The compute hosts must not be setup to utilize the
 privacy extensions when generating their interface identifier.
 
 There is no provisions for an IPv6-based metadata service similar to what is
-provided for IPv4. In the case of dual stack Guests though it is always
+provided for IPv4. In the case of dual stacked guests though it is always
 possible to use the IPv4 metadata service instead.
 
 Unlike IPv4 the MTU of a given network can be conveyed in the RA messages sent
-by the router and not in the DHCP messages.
+by the router as well as in the DHCP messages.
 
 OpenStack control & management network considerations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As of the Kilo release, considerable effort has gone in to ensuring
 the project network can handle dual stack IPv6 and IPv4 transport
-across the variety of configurations describe above. OpenStack control
+across the variety of configurations described above. OpenStack control
 network can be run in a dual stack configuration and OpenStack API
 endpoints can be accessed via an IPv6 network. At this time, Open vSwitch
 (OVS) tunnel types - STT, VXLAN, GRE, support both IPv4 and IPv6 endpoints.
