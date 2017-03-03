@@ -301,7 +301,7 @@
 
        * show_image_direct_url
 
-       * location_strategy This option will be removed in the Ocata release because the same functionality can be achieved with greater granularity by using policies. Please see the Newton release notes for more information.
+       * location_strategy This option will be removed in the Pike release or later because the same functionality can be achieved with greater granularity by using policies. Please see the Newton release notes for more information.
    * - ``tcp_keepidle`` = ``600``
      - (Integer) Set the wait time before a connection recheck.
 
@@ -365,7 +365,7 @@
 
        NOTE: For more information on store capabilities and their updates, please visit: https://specs.openstack.org/openstack/glance-specs/specs/kilo/store-capabilities.html
 
-       For more information on setting up a particular store in your deplyment and help with the usage of this feature, please contact the storage driver maintainers listed here: http://docs.openstack.org/developer/glance_store/drivers/index.html
+       For more information on setting up a particular store in your deployment and help with the usage of this feature, please contact the storage driver maintainers listed here: http://docs.openstack.org/developer/glance_store/drivers/index.html
 
        Possible values:
 

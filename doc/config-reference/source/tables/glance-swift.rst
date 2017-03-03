@@ -111,13 +111,15 @@
 
        Include a string value representing the path to a configuration file that has references for each of the configured Swift account(s)/backing stores. By default, no file path is specified and customized Swift referencing is disabled. Configuring this option is highly recommended while using Swift storage backend for image storage as it avoids storage of credentials in the database.
 
+       NOTE: Please do not configure this option if you have set ``swift_store_multi_tenant`` to ``True``.
+
        Possible values:
 
        * String value representing an absolute path on the glance-api node
 
        Related options:
 
-       * None
+       * swift_store_multi_tenant
    * - ``swift_store_container`` = ``glance``
      - (String) Name of single container to store images/name prefix for multiple containers
 
@@ -237,6 +239,8 @@
 
        This enables multi-tenant storage mode which causes Glance images to be stored in tenant specific Swift accounts. If this is disabled, Glance stores all images in its own account. More details multi-tenant store can be found at https://wiki.openstack.org/wiki/GlanceSwiftTenantSpecificStorage
 
+       NOTE: If using multi-tenant swift store, please make sure that you do not set a swift configuration file with the 'swift_store_config_file' option.
+
        Possible values:
 
        * True
@@ -245,7 +249,7 @@
 
        Related options:
 
-       * None
+       * swift_store_config_file
    * - ``swift_store_multiple_containers_seed`` = ``0``
      - (Integer) Seed indicating the number of containers to use for storing images.
 

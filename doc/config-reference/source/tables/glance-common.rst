@@ -316,11 +316,23 @@
        Related options:
 
        * None
+   * - **[healthcheck]**
+     -
+   * - ``backends`` =
+     - (List) Additional backends that can perform health checks and report that information back as part of a request.
+   * - ``detailed`` = ``False``
+     - (Boolean) Show more detailed information as part of the response
+   * - ``disable_by_file_path`` = ``None``
+     - (String) Check the presence of a file to determine if an application is running on a port. Used by DisableByFileHealthcheck plugin.
+   * - ``disable_by_file_paths`` =
+     - (List) Check the presence of a file based on a port to determine if an application is running on a port. Expects a "port:path" list of strings. Used by DisableByFilesPortsHealthcheck plugin.
+   * - ``path`` = ``/healthcheck``
+     - (String) DEPRECATED: The path to respond to healtcheck requests on.
    * - **[image_format]**
      -
    * - ``container_formats`` = ``ami, ari, aki, bare, ovf, ova, docker``
      - (List) Supported values for the 'container_format' image attribute
-   * - ``disk_formats`` = ``ami, ari, aki, vhd, vhdx, vmdk, raw, qcow2, vdi, iso``
+   * - ``disk_formats`` = ``ami, ari, aki, vhd, vhdx, vmdk, raw, qcow2, vdi, iso, ploop``
      - (List) Supported values for the 'disk_format' image attribute
    * - **[task]**
      -
