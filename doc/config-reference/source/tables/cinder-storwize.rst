@@ -18,6 +18,16 @@
      - Description
    * - **[DEFAULT]**
      -
+   * - ``san_ip`` =
+     - (String) IP address of SAN controller
+   * - ``san_login`` = ``admin``
+     - (String) Username for SAN controller
+   * - ``san_password`` =
+     - (String) Password for SAN controller
+   * - ``san_private_key`` =
+     - (String) Filename of private key to use for SSH authentication
+   * - ``san_ssh_port`` = ``22``
+     - (Port number) SSH port to use with SAN
    * - ``storwize_san_secondary_ip`` = ``None``
      - (String) Specifies secondary management IP or hostname to be used if san_ip is invalid or becomes inaccessible.
    * - ``storwize_svc_allow_tenant_qos`` = ``False``

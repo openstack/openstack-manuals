@@ -12,21 +12,21 @@ Supported operations
 Storwize/SVC driver supports the following Block Storage service volume
 operations:
 
--  Create, list, delete, attach (map), and detach (unmap) volumes
--  Create, list, and delete volume snapshots
--  Copy an image to a volume
--  Copy a volume to an image
--  Clone a volume
--  Extend a volume
--  Retype a volume
--  Create a volume from a snapshot
--  Create, list, and delete consistency group
--  Create, list, and delete consistency group snapshot
--  Modify consistency group (add/remove volumes)
+-  Create, list, delete, attach (map), and detach (unmap) volumes.
+-  Create, list, and delete volume snapshots.
+-  Copy an image to a volume.
+-  Copy a volume to an image.
+-  Clone a volume.
+-  Extend a volume.
+-  Retype a volume.
+-  Create a volume from a snapshot.
+-  Create, list, and delete consistency group.
+-  Create, list, and delete consistency group snapshot.
+-  Modify consistency group (add or remove volumes).
 -  Create consistency group from source (source can be a CG or CG snapshot)
--  Manage an existing volume
--  Failover-host for replicated back ends
--  Failback-host for replicated back ends
+-  Manage an existing volume.
+-  Failover-host for replicated back ends.
+-  Failback-host for replicated back ends.
 
 Configure the Storwize family and SVC system
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,148 +230,21 @@ Storwize family and SVC driver options in cinder.conf
 The following options specify default values for all volumes. Some can
 be over-ridden using volume types, which are described below.
 
-.. list-table:: List of configuration flags for Storwize storage and SVC driver
-   :header-rows: 1
-
-   * - Flag name
-     - Type
-     - Default
-     - Description
-   * - ``san_ip``
-     - Required
-     -
-     - Management IP or host name
-   * - ``san_ssh_port``
-     - Optional
-     - 22
-     - Management port
-   * - ``san_login``
-     - Required
-     -
-     - Management login username
-   * - ``san_password``
-     - Required [1]_
-     -
-     - Management login password
-   * - ``san_private_key``
-     - Required
-     -
-     - Management login SSH private key
-   * - ``storwize_svc_volpool_name``
-     - Required
-     -
-     - Default pool name for volumes
-   * - ``storwize_svc_vol_rsize``
-     - Optional
-     - 2
-     - Initial physical allocation (percentage)  [2]_
-   * - ``storwize_svc_vol_warning``
-     - Optional
-     - 0 (disabled)
-     - Space allocation warning threshold (percentage)
-   * - ``storwize_svc_vol_autoexpand``
-     - Optional
-     - True
-     - Enable or disable volume auto expand  [3]_
-   * - ``storwize_svc_vol_grainsize``
-     - Optional
-     - 256
-     - Volume grain size in KB
-   * - ``storwize_svc_vol_compression``
-     - Optional
-     - False
-     - Enable or disable Real-time Compression  [4]_
-   * - ``storwize_svc_vol_easytier``
-     - Optional
-     - True
-     - Enable or disable Easy Tier  [5]_
-   * - ``storwize_svc_vol_iogrp``
-     - Optional
-     - 0
-     - The I/O group in which to allocate vdisks
-   * - ``storwize_svc_flashcopy_timeout``
-     - Optional
-     - 120
-     - FlashCopy timeout threshold  [6]_ (seconds)
-   * - ``storwize_svc_iscsi_chap_enabled``
-     - Optional
-     - True
-     - Configure CHAP authentication for iSCSI connections
-   * - ``storwize_svc_multihost_enabled``
-     - Optional
-     - True
-     - Enable mapping vdisks to multiple hosts  [7]_
-   * - ``storwize_svc_vol_nofmtdisk``
-     - Optional
-     - False
-     - Enable or disable fast format  [8]_
-   * - ``max_over_subscription_ratio``
-     - Optional
-     - 20.0
-     - The ratio of oversubscription when thin provisioned
-       volumes are involved  [9]_
-
-.. [1]
-   The authentication requires either a password (``san_password``) or
-   SSH private key (``san_private_key``). One must be specified. If both
-   are specified, the driver uses only the SSH private key.
-
-.. [2]
-   The driver creates thin-provisioned volumes by default. The
-   ``storwize_svc_vol_rsize`` flag defines the initial physical
-   allocation percentage for thin-provisioned volumes, or if set to
-   ``-1``, the driver creates full allocated volumes. More details about
-   the available options are available in the Storwize family and SVC
-   documentation.
-
-.. [3]
-   Defines whether thin-provisioned volumes can be auto expanded by the
-   storage system, a value of ``True`` means that auto expansion is
-   enabled, a value of ``False`` disables auto expansion. Details about
-   this option can be found in the ``–autoexpand`` flag of the Storwize
-   family and SVC command line interface ``mkvdisk`` command.
-
-.. [4]
-   Defines whether Real-time Compression is used for the volumes created
-   with OpenStack. Details on Real-time Compression can be found in the
-   Storwize family and SVC documentation. The Storwize or SVC system
-   must have compression enabled for this feature to work.
-
-.. [5]
-   Defines whether Easy Tier is used for the volumes created with
-   OpenStack. Details on EasyTier can be found in the Storwize family
-   and SVC documentation. The Storwize or SVC system must have Easy Tier
-   enabled for this feature to work.
-
-.. [6]
-   The driver wait timeout threshold when creating an OpenStack
-   snapshot. This is actually the maximum amount of time that the driver
-   waits for the Storwize family or SVC system to prepare a new
-   FlashCopy mapping. The driver accepts a maximum wait time of 600
-   seconds (10 minutes).
-
-.. [7]
-   This option allows the driver to map a vdisk to more than one host at
-   a time. This scenario occurs during migration of a virtual machine
-   with an attached volume; the volume is simultaneously mapped to both
-   the source and destination compute hosts. If your deployment does not
-   require attaching vdisks to multiple hosts, setting this flag to
-   ``False`` will provide added safety.
-
-.. [8]
-   Defines whether or not the fast formatting of thick-provisioned
-   volumes is disabled at creation. The default value is ``False`` and a
-   value of ``True`` means that fast format is disabled. Details about
-   this option can be found in the ``–nofmtdisk`` flag of the Storwize
-   family and SVC command-line interface :command:`mkvdisk` command.
-
-.. [9]
-   This option allows that the sum of all volume's provisioned capacity to
-   be larger than the pool’s total capacity. The default value is 20.0,
-   which means that the provisioned capacity can be 20 times of the total
-   physical capacity.
-
 .. include:: ../../tables/cinder-storwize.rst
+
+Note the following:
+
+* The authentication requires either a password (``san_password``) or
+  SSH private key (``san_private_key``). One must be specified. If
+  both are specified, the driver uses only the SSH private key.
+
+* The driver creates thin-provisioned volumes by default. The
+  ``storwize_svc_vol_rsize`` flag defines the initial physical
+  allocation percentage for thin-provisioned volumes, or if set to
+  ``-1``, the driver creates full allocated volumes. More details about
+  the available options are available in the Storwize family and SVC
+  documentation.
+
 
 Placement with volume types
 ---------------------------
