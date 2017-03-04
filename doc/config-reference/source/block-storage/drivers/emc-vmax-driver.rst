@@ -263,9 +263,11 @@ Setup VMAX drivers
    configure the ECOM, go to that directory and type ``TestSmiProvider.exe``
    for windows and ``./TestSmiProvider`` for linux
 
-   Use ``addsys`` in ``TestSmiProvider`` to add an array. Use ``dv`` and
-   examine the output after the array is added. Make sure that the arrays are
-   recognized by the ECOM server before using the EMC VMAX drivers.
+   Use ``disco`` in ``TestSmiProvider`` to add an array. Use ``dv`` and examine
+   the output after the array is added. In advance of ``TestSmiProvider``,
+   arrays need to be discovered on the Solutions Enabler by using the
+   :command:`symcfg discover` command. Make sure that the arrays are recognized by the
+   SMI-S server before using the EMC VMAX drivers.
 
 #. Configure Block Storage
 
