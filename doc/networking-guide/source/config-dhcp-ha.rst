@@ -163,7 +163,7 @@ Configuration
       admin_auth_url=http://controlnode:35357/v2.0/
       auth_strategy=keystone
       admin_tenant_name=servicetenant
-      url=http://100.1.1.10:9696/
+      url=http://203.0.113.10:9696/
 
 **HostA and HostB: DHCP agent**
 
@@ -185,13 +185,13 @@ To experiment, you need VMs and a neutron network:
 .. code-block:: console
 
    $ openstack server list
-   +--------------------------------------+-----------+--------+---------------+------------+
-   | ID                                   | Name      | Status | Networks      | Image Name |
-   +--------------------------------------+-----------+--------+---------------+------------+
-   | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 | cirros     |
-   | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 | ubuntu     |
-   | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 | centos     |
-   +--------------------------------------+-----------+--------+---------------+------------+
+   +--------------------------------------+-----------+--------+----------------+------------+
+   | ID                                   | Name      | Status | Networks       | Image Name |
+   +--------------------------------------+-----------+--------+----------------+------------+
+   | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=192.0.2.3 | cirros     |
+   | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=192.0.2.4 | ubuntu     |
+   | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=192.0.2.5 | centos     |
+   +--------------------------------------+-----------+--------+----------------+------------+
 
    $ openstack network list
    +--------------------------------------+------+--------------------------------------+
@@ -243,11 +243,11 @@ Managing agents in neutron deployment
    .. code-block:: console
 
       $ neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-      +--------------------------------------+------+--------------------------------------------------+
-      | id                                   | name | subnets                                          |
-      +--------------------------------------+------+--------------------------------------------------+
-      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 10.0.1.0/24 |
-      +--------------------------------------+------+--------------------------------------------------+
+      +--------------------------------------+------+---------------------------------------------------+
+      | id                                   | name | subnets                                           |
+      +--------------------------------------+------+---------------------------------------------------+
+      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 192.0.2.0/24 |
+      +--------------------------------------+------+---------------------------------------------------+
 
 #. Show agent details.
 
@@ -327,7 +327,7 @@ You can add a network to a DHCP agent and remove one from it.
    .. code-block:: console
 
       $ neutron net-create net2
-      $ neutron subnet-create net2 9.0.1.0/24 --name subnet2
+      $ neutron subnet-create net2 198.51.100.0/24 --name subnet2
       $ neutron port-create net2
       $ openstack network agent list --agent-type dhcp --host qiaomin-free
       +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
@@ -400,14 +400,14 @@ in turn to see if the VM can still get the desired IP.
         --nic net-id=9b96b14f-71b8-4918-90aa-c5d705606b1a
       ...
       $ openstack server list
-      +--------------------------------------+-----------+--------+---------------+------------+
-      | ID                                   | Name      | Status | Networks      | Image Name |
-      +--------------------------------------+-----------+--------+---------------+------------+
-      | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=10.0.1.3 | cirros     |
-      | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=10.0.1.4 | ubuntu     |
-      | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=10.0.1.5 | centos     |
-      | f62f4731-5591-46b1-9d74-f0c901de567f | myserver4 | ACTIVE | net2=9.0.1.2  | cirros1    |
-      +--------------------------------------+-----------+--------+---------------+------------+
+      +--------------------------------------+-----------+--------+-------------------+------------+
+      | ID                                   | Name      | Status | Networks          | Image Name |
+      +--------------------------------------+-----------+--------+-------------------+------------+
+      | c394fcd0-0baa-43ae-a793-201815c3e8ce | myserver1 | ACTIVE | net1=192.0.2.3    | cirros     |
+      | 2d604e05-9a6c-4ddb-9082-8a1fbdcc797d | myserver2 | ACTIVE | net1=192.0.2.4    | ubuntu     |
+      | c7c0481c-3db8-4d7a-a948-60ce8211d585 | myserver3 | ACTIVE | net1=192.0.2.5    | centos     |
+      | f62f4731-5591-46b1-9d74-f0c901de567f | myserver4 | ACTIVE | net2=198.51.100.2 | cirros1    |
+      +--------------------------------------+-----------+--------+-------------------+------------+
 
 #. Make sure both DHCP agents hosting ``net2``:
 
