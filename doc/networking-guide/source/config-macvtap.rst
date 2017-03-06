@@ -148,13 +148,16 @@ Verify service operation
 
    .. code-block:: console
 
-      $ neutron agent-list
-      +--------------------------------------+---------------+----------+-------------------+-------+----------------+---------------------------+
-      | id                                   | agent_type    | host     | availability_zone | alive | admin_state_up | binary                |
-      +--------------------------------------+--------------------+----------+-------------------+-------+----------------+---------------------------+
-      | 7af923a4-8be6-11e6-afc3-3762f3c3cf6e | Macvtap agent | compute1 |                   | :-)   | True           | neutron-macvtap-agent |
-      | 80af6934-8be6-11e6-a046-7b842f93bb23 | Macvtap agent | compute2 |                   | :-)   | True           | neutron-macvtap-agent |
-      +--------------------------------------+---------------+----------+-------------------+-------+----------------+---------------------------+
+      $ openstack network agent list
+      +--------------------------------------+--------------------+----------+-------------------+-------+-------+---------------------------+
+      | ID                                   | Agent Type         | Host     | Availability Zone | Alive | State | Binary                    |
+      +--------------------------------------+--------------------+----------+-------------------+-------+-------+---------------------------+
+      | 31e1bc1b-c872-4429-8fc3-2c8eba52634e | Metadata agent     | compute1 | None              | True  | UP    | neutron-metadata-agent    |
+      | 378f5550-feee-42aa-a1cb-e548b7c2601f | Open vSwitch agent | compute1 | None              | True  | UP    | neutron-openvswitch-agent |
+      | 7d2577d0-e640-42a3-b303-cb1eb077f2b6 | L3 agent           | compute1 | nova              | True  | UP    | neutron-l3-agent          |
+      | d5d7522c-ad14-4c63-ab45-f6420d6a81dd | Metering agent     | compute1 | None              | True  | UP    | neutron-metering-agent    |
+      | e838ef5c-75b1-4b12-84da-7bdbd62f1040 | DHCP agent         | compute1 | nova              | True  | UP    | neutron-dhcp-agent        |
+      +--------------------------------------+--------------------+----------+-------------------+-------+-------+---------------------------+
 
 Create initial networks
 -----------------------
