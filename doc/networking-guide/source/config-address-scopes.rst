@@ -365,7 +365,7 @@ route straight to an external network without NAT.
       +-------------------+--------------------------------------+
       | Field             | Value                                |
       +-------------------+--------------------------------------+
-      | allocation_pools  | 203.0.113.2-203.0.112.62             |
+      | allocation_pools  | 203.0.113.2-203.0.113.62             |
       | cidr              | 203.0.113.0/26                       |
       | created_at        | 2016-12-13T23:32:12Z                 |
       | description       |                                      |
@@ -485,8 +485,8 @@ with address scopes.
       +--------------+-----------+---------------------------------------------------------------------------+------------+
       | ID           | Name      | Networks                                                                  | Image Name |
       +--------------+-----------+---------------------------------------------------------------------------+------------+
-      | 97e49c8e-... | instance1 | network1=2001:db8:80d2:c4d3:f816:3eff:fe52:b69f, 198.51.100.3, 172.24.4.3 | cirros     |
-      | ceba9638-... | instance2 | network2=203.0.113.3, 2001:db8:a583:0:f816:3eff:fe42:1eeb, 172.24.4.4     | centos     |
+      | 97e49c8e-... | instance1 | network1=2001:db8:80d2:c4d3:f816:3eff:fe52:b69f, 198.51.100.3, 203.0.113.3| cirros     |
+      | ceba9638-... | instance2 | network2=203.0.113.3, 2001:db8:a583:0:f816:3eff:fe42:1eeb, 203.0.113.4    | centos     |
       +--------------+-----------+---------------------------------------------------------------------------+------------+
 
 Regardless of address scopes, the floating IPs can be pinged from the
@@ -494,9 +494,9 @@ external network:
 
 .. code-block:: console
 
-    $ ping -c 1 172.24.4.3
+    $ ping -c 1 203.0.113.3
     1 packets transmitted, 1 received, 0% packet loss, time 0ms
-    $ ping -c 1 172.24.4.4
+    $ ping -c 1 203.0.113.4
     1 packets transmitted, 1 received, 0% packet loss, time 0ms
 
 You can now ping ``instance2`` directly because ``instance2`` shares the
@@ -507,7 +507,7 @@ same address scope as the external network:
 
 .. code-block:: console
 
-    # ip route add 203.0.113.0/26 via 172.24.4.2
+    # ip route add 203.0.113.0/26 via 203.0.113.2
     $ ping -c 1 203.0.113.3
     1 packets transmitted, 1 received, 0% packet loss, time 0ms
 
@@ -522,7 +522,7 @@ match:
 
 .. code-block:: console
 
-    # ip route add 198.51.100.0/26 via 172.24.4.2
+    # ip route add 198.51.100.0/26 via 203.0.113.2
     $ ping -c 1 198.51.100.3
     1 packets transmitted, 0 received, 100% packet loss, time 0ms
 
