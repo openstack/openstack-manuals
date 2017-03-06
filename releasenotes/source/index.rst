@@ -16,6 +16,9 @@ Thus this file covers the content of the following repositories:
 Contents
 ~~~~~~~~
 
+.. release-notes::
+   :branch: origin/master
+
 .. toctree::
    :maxdepth: 2
 
