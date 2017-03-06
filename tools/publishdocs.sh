@@ -32,7 +32,7 @@ function copy_to_branch {
         # We don't need this file
         rm -f publish-docs/$BRANCH/draft-index.html
         # We don't need these draft guides on the branch
-        rm -rf publish-docs/$BRANCH/arch-design-draft
+        rm -rf publish-docs/$BRANCH/arch-design-to-archive
         rm -rf publish-docs/$BRANCH/ops-guide
 
         for f in $(find publish-docs/$BRANCH -name "atom.xml"); do

@@ -54,7 +54,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Architecture Design Guide'
-bug_tag = u'arch-design-draft'
+bug_tag = u'arch-design-to-archive'
 copyright = u'2015-2016, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -71,7 +71,7 @@ release = '0.9'
 #   gitsha: The SHA checksum of the bug description. Automatically extracted from git log.
 #   bug_tag: Tag for categorizing the bug. Must be set manually.
 # These variables are passed to the logabug code via html_context.
-giturl = u'https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/arch-design-draft/source'
+giturl = u'https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/arch-design-rst/source'
 git_cmd = "/usr/bin/git log | head -n1 | cut -f2 -d' '"
 gitsha = os.popen(git_cmd).read().strip('\n')
 html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
@@ -201,7 +201,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'arch-design-draft'
+htmlhelp_basename = 'arch-design-to-archive'
 
 # If true, publish source files
 html_copy_source = False
