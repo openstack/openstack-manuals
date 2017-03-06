@@ -36,9 +36,9 @@ does. In particular, libvirt uses:
 By default, libvirt creates a network named *default*. The details of this
 network may vary by distribution; on Ubuntu this network involves:
 
-* a Linux bridge named ``virbr0`` with an IP address of ``192.168.122.1/24``
+* a Linux bridge named ``virbr0`` with an IP address of ``192.0.2.1/24``
 * a dnsmasq process that listens on the ``virbr0`` interface and hands out IP
-  addresses in the range ``192.168.122.2-192.168.122.254``
+  addresses in the range ``192.0.2.2-192.0.2.254``
 * a set of iptables rules
 
 When libvirt boots a virtual machine, it places the machine's VIF in the bridge
@@ -48,11 +48,11 @@ On Ubuntu, the iptables ruleset that libvirt creates includes the following
 rules::
 
     *nat
-    -A POSTROUTING -s 192.168.122.0/24 -d 224.0.0.0/24 -j RETURN
-    -A POSTROUTING -s 192.168.122.0/24 -d 255.255.255.255/32 -j RETURN
-    -A POSTROUTING -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
-    -A POSTROUTING -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
-    -A POSTROUTING -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
+    -A POSTROUTING -s 192.0.2.0/24 -d 224.0.0.0/24 -j RETURN
+    -A POSTROUTING -s 192.0.2.0/24 -d 255.255.255.255/32 -j RETURN
+    -A POSTROUTING -s 192.0.2.0/24 ! -d 192.0.2.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
+    -A POSTROUTING -s 192.0.2.0/24 ! -d 192.0.2.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
+    -A POSTROUTING -s 192.0.2.0/24 ! -d 192.0.2.0/24 -j MASQUERADE
     *mangle
     -A POSTROUTING -o virbr0 -p udp -m udp --dport 68 -j CHECKSUM --checksum-fill
     *filter
@@ -60,8 +60,8 @@ rules::
     -A INPUT -i virbr0 -p tcp -m tcp --dport 53 -j ACCEPT
     -A INPUT -i virbr0 -p udp -m udp --dport 67 -j ACCEPT
     -A INPUT -i virbr0 -p tcp -m tcp --dport 67 -j ACCEPT
-    -A FORWARD -d 192.168.122.0/24 -o virbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-    -A FORWARD -s 192.168.122.0/24 -i virbr0 -j ACCEPT
+    -A FORWARD -d 192.0.2.0/24 -o virbr0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    -A FORWARD -s 192.0.2.0/24 -i virbr0 -j ACCEPT
     -A FORWARD -i virbr0 -o virbr0 -j ACCEPT
     -A FORWARD -o virbr0 -j REJECT --reject-with icmp-port-unreachable
     -A FORWARD -i virbr0 -j REJECT --reject-with icmp-port-unreachable
