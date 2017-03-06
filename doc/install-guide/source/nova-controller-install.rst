@@ -93,6 +93,7 @@ create databases, service credentials, and API endpoints.
         | enabled             | True                             |
         | id                  | 8a7dbf5279404537b1c7b86c033620fe |
         | name                | nova                             |
+        | options             | {}                               |
         | password_expires_at | None                             |
         +---------------------+----------------------------------+
 

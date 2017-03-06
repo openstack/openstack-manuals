@@ -74,6 +74,7 @@ service. The authentication service uses a combination of :term:`domains
         | enabled             | True                             |
         | id                  | aeda23aa78f44e859900e22c24817832 |
         | name                | demo                             |
+        | options             | {}                               |
         | password_expires_at | None                             |
         +---------------------+----------------------------------+
 
