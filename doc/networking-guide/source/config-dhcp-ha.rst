@@ -16,19 +16,50 @@ scalability and HA.
 
    .. code-block:: console
 
-      $ neutron ext-list -c name -c alias
-      +-----------------+--------------------------+
-      | alias           | name                     |
-      +-----------------+--------------------------+
-      | agent_scheduler | Agent Schedulers         |
-      | binding         | Port Binding             |
-      | quotas          | Quota management support |
-      | agent           | agent                    |
-      | provider        | Provider Network         |
-      | router          | Neutron L3 Router        |
-      | lbaas           | Load Balancing service   |
-      | extraroute      | Neutron Extra Route      |
-      +-----------------+--------------------------+
+      $ openstack extension list --network -c Name -c Alias
+      +-------------------------------------------------------------+---------------------------+
+      | Name                                                        | Alias                     |
+      +-------------------------------------------------------------+---------------------------+
+      | Default Subnetpools                                         | default-subnetpools       |
+      | Network IP Availability                                     | network-ip-availability   |
+      | Network Availability Zone                                   | network_availability_zone |
+      | Auto Allocated Topology Services                            | auto-allocated-topology   |
+      | Neutron L3 Configurable external gateway mode               | ext-gw-mode               |
+      | Port Binding                                                | binding                   |
+      | Neutron Metering                                            | metering                  |
+      | agent                                                       | agent                     |
+      | Subnet Allocation                                           | subnet_allocation         |
+      | L3 Agent Scheduler                                          | l3_agent_scheduler        |
+      | Tag support                                                 | tag                       |
+      | Neutron external network                                    | external-net              |
+      | Neutron Service Flavors                                     | flavors                   |
+      | Network MTU                                                 | net-mtu                   |
+      | Availability Zone                                           | availability_zone         |
+      | Quota management support                                    | quotas                    |
+      | HA Router extension                                         | l3-ha                     |
+      | Provider Network                                            | provider                  |
+      | Multi Provider Network                                      | multi-provider            |
+      | Address scope                                               | address-scope             |
+      | Neutron Extra Route                                         | extraroute                |
+      | Subnet service types                                        | subnet-service-types      |
+      | Resource timestamps                                         | standard-attr-timestamp   |
+      | Neutron Service Type Management                             | service-type              |
+      | Router Flavor Extension                                     | l3-flavors                |
+      | Tag support for resources: subnet, subnetpool, port, router | tag-ext                   |
+      | Neutron Extra DHCP opts                                     | extra_dhcp_opt            |
+      | Resource revision numbers                                   | standard-attr-revisions   |
+      | Pagination support                                          | pagination                |
+      | Sorting support                                             | sorting                   |
+      | security-group                                              | security-group            |
+      | DHCP Agent Scheduler                                        | dhcp_agent_scheduler      |
+      | Router Availability Zone                                    | router_availability_zone  |
+      | RBAC Policies                                               | rbac-policies             |
+      | standard-attr-description                                   | standard-attr-description |
+      | Neutron L3 Router                                           | router                    |
+      | Allowed Address Pairs                                       | allowed-address-pairs     |
+      | project_id field enabled                                    | project-id                |
+      | Distributed Virtual Router                                  | dvr                       |
+      +-------------------------------------------------------------+---------------------------+
 
 Demo setup
 ~~~~~~~~~~
@@ -298,12 +329,12 @@ You can add a network to a DHCP agent and remove one from it.
       $ neutron net-create net2
       $ neutron subnet-create net2 9.0.1.0/24 --name subnet2
       $ neutron port-create net2
-      $ neutron dhcp-agent-list-hosting-net net2
-      +--------------------------------------+-------+----------------+-------+
-      | id                                   | host  | admin_state_up | alive |
-      +--------------------------------------+-------+----------------+-------+
-      | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
-      +--------------------------------------+-------+----------------+-------+
+      $ openstack network agent list --agent-type dhcp --host qiaomin-free
+      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
+      | ID                                   | Agent Type | Host  | Availability Zone | Alive | State | Binary             |
+      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
+      | e838ef5c-75b1-4b12-84da-7bdbd62f1040 | DHCP agent | HostA | nova              | True  | UP    | neutron-dhcp-agent |
+      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
 
    It is allocated to DHCP agent on HostA. If you want to validate the
    behavior through the :command:`dnsmasq` command, you must create a subnet for
@@ -318,13 +349,13 @@ You can add a network to a DHCP agent and remove one from it.
 
       $ neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2
       Added network net2 to dhcp agent
-      $ neutron dhcp-agent-list-hosting-net net2
-      +--------------------------------------+-------+----------------+-------+
-      | id                                   | host  | admin_state_up | alive |
-      +--------------------------------------+-------+----------------+-------+
-      | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
-      | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
-      +--------------------------------------+-------+----------------+-------+
+      $ openstack network agent list --agent-type dhcp --host qiaomin-free
+      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
+      | ID                                   | Agent Type | Host  | Availability Zone | Alive | State | Binary             |
+      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
+      | e838ef5c-75b1-4b12-84da-7bdbd62f1040 | DHCP agent | HostA | nova              | True  | UP    | neutron-dhcp-agent |
+      | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent | HostB | nova              | True  | UP    | neutron-dhcp-agent |
+      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
 
    Both DHCP agents host the ``net2`` network.
 
@@ -426,6 +457,7 @@ Disable the DHCP agent on HostA before you stop it:
 .. code-block:: console
 
    $ neutron agent-update a0c1c21c-d4f4-4577-9ec7-908f2d48622d --admin-state-up False
+   $ neutron agent-list
    $ openstack network agent list
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
    | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
