@@ -29,40 +29,40 @@ on that router.
 
    .. code-block:: console
 
-      $ openstack subnet create --subnet-range 192.168.2.0/24 \
+      $ openstack subnet create --subnet-range 198.51.100.0/24 \
         --network selfservice2 --dns-nameserver 8.8.4.4 selfservice2-v4
-      +-------------------+---------------------------+
-      | Field             | Value                     |
-      +-------------------+---------------------------+
-      | allocation_pools  | 192.168.2.2-192.168.2.254 |
-      | cidr              | 192.168.2.0/24            |
-      | dns_nameservers   | 8.8.4.4                   |
-      | enable_dhcp       | True                      |
-      | gateway_ip        | 192.168.2.1               |
-      | ip_version        | 4                         |
-      | name              | selfservice2-v4           |
-      +-------------------+---------------------------+
+      +-------------------+------------------------------+
+      | Field             | Value                        |
+      +-------------------+------------------------------+
+      | allocation_pools  | 198.51.100.2-198.51.100.254  |
+      | cidr              | 198.51.100.0/24              |
+      | dns_nameservers   | 8.8.4.4                      |
+      | enable_dhcp       | True                         |
+      | gateway_ip        | 198.51.100.1                 |
+      | ip_version        | 4                            |
+      | name              | selfservice2-v4              |
+      +-------------------+------------------------------+
 
 #. Create a IPv6 subnet on the self-service network.
 
    .. code-block:: console
 
-      $ openstack subnet create --subnet-range fd00:192:168:2::/64 --ip-version 6 \
+      $ openstack subnet create --subnet-range fd00:198:51:100::/64 --ip-version 6 \
         --ipv6-ra-mode slaac --ipv6-address-mode slaac --network selfservice2 \
         --dns-nameserver 2001:4860:4860::8844 selfservice2-v6
-      +-------------------+------------------------------------------------------+
-      | Field             | Value                                                |
-      +-------------------+------------------------------------------------------+
-      | allocation_pools  | fd00:192:168:2::2-fd00:192:168:2:ffff:ffff:ffff:ffff |
-      | cidr              | fd00:192:168:2::/64                                  |
-      | dns_nameservers   | 2001:4860:4860::8844                                 |
-      | enable_dhcp       | True                                                 |
-      | gateway_ip        | fd00:192:168:2::1                                    |
-      | ip_version        | 6                                                    |
-      | ipv6_address_mode | slaac                                                |
-      | ipv6_ra_mode      | slaac                                                |
-      | name              | selfservice2-v6                                      |
-      +-------------------+------------------------------------------------------+
+      +-------------------+--------------------------------------------------------+
+      | Field             | Value                                                  |
+      +-------------------+--------------------------------------------------------+
+      | allocation_pools  | fd00:198:51:100::2-fd00:198:51:100:ffff:ffff:ffff:ffff |
+      | cidr              | fd00:198:51:100::/64                                   |
+      | dns_nameservers   | 2001:4860:4860::8844                                   |
+      | enable_dhcp       | True                                                   |
+      | gateway_ip        | fd00:198:51:100::1                                     |
+      | ip_version        | 6                                                      |
+      | ipv6_address_mode | slaac                                                  |
+      | ipv6_ra_mode      | slaac                                                  |
+      | name              | selfservice2-v6                                        |
+      +-------------------+--------------------------------------------------------+
 
 #. Create a router.
 
