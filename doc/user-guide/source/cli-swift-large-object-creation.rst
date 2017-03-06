@@ -337,3 +337,31 @@ their differences:
        ``X-Object-Manifest`` request header in a ``PUT`` operation.
        This creates a new manifest object that shares the same set of
        segment objects as the original manifest object.
+
+Upload large objects with python-swiftclient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use ``python-swiftclient`` to easily upload large objects.
+
+*  Upload a large file by specifying the segment size with the
+   ``--segment-size`` or ``-S`` arguments:
+
+   .. code-block:: console
+
+      $ swift upload CONTAINER OBJECT_FILENAME --segment-size <bytes>
+
+   This will automatically break the file into the desired segment size
+   and upload segments to a container named ``<container>_segments``.
+
+*  After upload has completed, you can download the large object as a
+   single file:
+
+   .. code-block:: console
+
+      $ swift download CONTAINER OBJECT_FILENAME
+
+*  Additional large object arguments can be found by using ``--help``:
+
+   .. code-block:: console
+
+      $ swift upload --help
