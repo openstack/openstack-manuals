@@ -42,16 +42,16 @@ NAT for IPv4 network traffic and directly routes IPv6 network traffic.
 
    .. code-block:: console
 
-      $ openstack subnet create --subnet-range 192.168.1.0/24 \
+      $ openstack subnet create --subnet-range 192.0.2.0/24 \
         --network selfservice1 --dns-nameserver 8.8.4.4 selfservice1-v4
       +-------------------+---------------------------+
       | Field             | Value                     |
       +-------------------+---------------------------+
-      | allocation_pools  | 192.168.1.2-192.168.1.254 |
-      | cidr              | 192.168.1.0/24            |
+      | allocation_pools  | 192.0.2.2-192.0.2.254     |
+      | cidr              | 192.0.2.0/24              |
       | dns_nameservers   | 8.8.4.4                   |
       | enable_dhcp       | True                      |
-      | gateway_ip        | 192.168.1.1               |
+      | gateway_ip        | 192.0.2.1                 |
       | ip_version        | 4                         |
       | name              | selfservice1-v4           |
       +-------------------+---------------------------+
@@ -60,17 +60,17 @@ NAT for IPv4 network traffic and directly routes IPv6 network traffic.
 
    .. code-block:: console
 
-      $ openstack subnet create --subnet-range fd00:192:168:1::/64 --ip-version 6 \
+      $ openstack subnet create --subnet-range fd00:192:0:2::/64 --ip-version 6 \
         --ipv6-ra-mode slaac --ipv6-address-mode slaac --network selfservice1 \
         --dns-nameserver 2001:4860:4860::8844 selfservice1-v6
       +-------------------+------------------------------------------------------+
       | Field             | Value                                                |
       +-------------------+------------------------------------------------------+
-      | allocation_pools  | fd00:192:168:1::2-fd00:192:168:1:ffff:ffff:ffff:ffff |
-      | cidr              | fd00:192:168:1::/64                                  |
+      | allocation_pools  | fd00:192:0:2::2-fd00:192:0:2:ffff:ffff:ffff:ffff     |
+      | cidr              | fd00:192:0:2::/64                                    |
       | dns_nameservers   | 2001:4860:4860::8844                                 |
       | enable_dhcp       | True                                                 |
-      | gateway_ip        | fd00:192:168:1::1                                    |
+      | gateway_ip        | fd00:192:0:2::1                                      |
       | ip_version        | 6                                                    |
       | ipv6_address_mode | slaac                                                |
       | ipv6_ra_mode      | slaac                                                |
