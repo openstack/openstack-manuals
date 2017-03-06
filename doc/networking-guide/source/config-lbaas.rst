@@ -252,7 +252,7 @@ Building an LBaaS v2 load balancer
        | provider            | haproxy                                        |
        | provisioning_status | ACTIVE                                         |
        | tenant_id           | fbfce4cb346c4f9097a977c54904cafd               |
-       | vip_address         | 192.168.1.22                                   |
+       | vip_address         | 192.0.2.22                                     |
        | vip_port_id         | 9f8f8a75-a731-4a34-b622-864907e1d556           |
        | vip_subnet_id       | f1e7827d-1bfe-40b6-b8f0-2d9fd946f59b           |
        +---------------------+------------------------------------------------+
@@ -311,27 +311,27 @@ Adding an HTTP listener
          --protocol HTTP \
          --protocol-port 80
 
-    This load balancer is active and ready to serve traffic on ``192.168.1.22``.
+    This load balancer is active and ready to serve traffic on ``192.0.2.22``.
 
 #.  Verify that the load balancer is responding to pings before moving further:
 
     .. code-block:: console
 
-       $ ping -c 4 192.168.1.22
-       PING 192.168.1.22 (192.168.1.22) 56(84) bytes of data.
-       64 bytes from 192.168.1.22: icmp_seq=1 ttl=62 time=0.410 ms
-       64 bytes from 192.168.1.22: icmp_seq=2 ttl=62 time=0.407 ms
-       64 bytes from 192.168.1.22: icmp_seq=3 ttl=62 time=0.396 ms
-       64 bytes from 192.168.1.22: icmp_seq=4 ttl=62 time=0.397 ms
+       $ ping -c 4 192.0.2.22
+       PING 192.0.2.22 (192.0.2.22) 56(84) bytes of data.
+       64 bytes from 192.0.2.22: icmp_seq=1 ttl=62 time=0.410 ms
+       64 bytes from 192.0.2.22: icmp_seq=2 ttl=62 time=0.407 ms
+       64 bytes from 192.0.2.22: icmp_seq=3 ttl=62 time=0.396 ms
+       64 bytes from 192.0.2.22: icmp_seq=4 ttl=62 time=0.397 ms
 
-       --- 192.168.1.22 ping statistics ---
+       --- 192.0.2.22 ping statistics ---
        4 packets transmitted, 4 received, 0% packet loss, time 2997ms
        rtt min/avg/max/mdev = 0.396/0.402/0.410/0.020 ms
 
 
 #.  You can begin building a pool and adding members to the pool to serve HTTP
-    content on port 80. For this example, the web servers are ``192.168.1.16``
-    and ``192.168.1.17``:
+    content on port 80. For this example, the web servers are ``192.0.2.16``
+    and ``192.0.2.17``:
 
     .. code-block:: console
 
@@ -343,13 +343,13 @@ Adding an HTTP listener
        $ neutron lbaas-member-create \
          --name test-lb-http-member-1 \
          --subnet private-subnet \
-         --address 192.168.1.16 \
+         --address 192.0.2.16 \
          --protocol-port 80 \
          test-lb-pool-http
        $ neutron lbaas-member-create \
          --name test-lb-http-member-2 \
          --subnet private-subnet \
-         --address 192.168.1.17 \
+         --address 192.0.2.17 \
          --protocol-port 80 \
          test-lb-pool-http
 
@@ -358,13 +358,13 @@ Adding an HTTP listener
 
     .. code-block:: console
 
-       $ curl 192.168.1.22
+       $ curl 192.0.2.22
        web2
-       $ curl 192.168.1.22
+       $ curl 192.0.2.22
        web1
-       $ curl 192.168.1.22
+       $ curl 192.0.2.22
        web2
-       $ curl 192.168.1.22
+       $ curl 192.0.2.22
        web1
 
     In this example, the load balancer uses the round robin algorithm and the
@@ -412,13 +412,13 @@ approach and allows encrypted connections to terminate at each member server.
        $ neutron lbaas-member-create \
          --name test-lb-https-member-1 \
          --subnet private-subnet \
-         --address 192.168.1.16 \
+         --address 192.0.2.16 \
          --protocol-port 443 \
          test-lb-pool-https
        $ neutron lbaas-member-create \
          --name test-lb-https-member-2 \
          --subnet private-subnet \
-         --address 192.168.1.17 \
+         --address 192.0.2.17 \
          --protocol-port 443 \
          test-lb-pool-https
 
