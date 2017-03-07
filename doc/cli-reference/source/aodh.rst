@@ -23,7 +23,7 @@ Telemetry Alarming service (aodh) command-line client
 The aodh client is the command-line interface (CLI) for
 the Telemetry Alarming service (aodh) API and its extensions.
 
-This chapter documents :command:`aodh` version ``0.8.0``.
+This chapter documents :command:`aodh` version ``0.9.0``.
 
 For help on a specific :command:`aodh` command, enter:
 
@@ -514,7 +514,7 @@ aodh capabilities list
                                  [-c COLUMN] [--max-width <integer>]
                                  [--print-empty] [--noindent] [--prefix PREFIX]
 
-List capabilities
+List capabilities of alarming service
 
 **Optional arguments:**
 
