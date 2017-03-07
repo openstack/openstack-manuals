@@ -10,7 +10,8 @@ servers, and builds on Nexenta IP and patent pending Cloud Copy On Write (CCOW)
 technology to break new ground in terms of reliability, functionality and cost
 efficiency.
 
-For NexentaEdge user documentation, visit http://docs.nexenta.com.
+For user documentation, see the
+`Nexenta Documentation Center <http://docs.nexenta.com>`_.
 
 
 iSCSI driver
