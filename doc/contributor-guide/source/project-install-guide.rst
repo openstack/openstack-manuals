@@ -100,8 +100,6 @@ After these changes have merged, you can set up the jobs for building.
 
       - project:
           name: heat
-          tarball-site: tarballs.openstack.org
-          doc-publisher-site: docs.openstack.org
 
           jobs:
           ...
