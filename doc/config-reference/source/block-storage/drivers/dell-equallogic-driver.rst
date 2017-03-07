@@ -42,7 +42,7 @@ Dell EqualLogic Group:
    [DEFAULT]
    # Required settings
 
-   volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+   volume_driver = cinder.volume.drivers.dell_emc.ps.PSSeriesISCSIDriver
    san_ip = IP_EQLX
    san_login = SAN_UNAME
    san_password = SAN_PW
@@ -118,7 +118,7 @@ Storage service that uses two Dell EqualLogic back ends:
    san_thin_provision = true
 
    [backend1]
-   volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+   volume_driver = cinder.volume.drivers.dell_emc.ps.PSSeriesISCSIDriver
    volume_backend_name = backend1
    san_ip = IP_EQLX1
    san_login = SAN_UNAME
@@ -127,7 +127,7 @@ Storage service that uses two Dell EqualLogic back ends:
    eqlx_pool = EQLX_POOL
 
    [backend2]
-   volume_driver = cinder.volume.drivers.eqlx.DellEQLSanISCSIDriver
+   volume_driver = cinder.volume.drivers.dell_emc.ps.PSSeriesISCSIDriver
    volume_backend_name = backend2
    san_ip = IP_EQLX2
    san_login = SAN_UNAME
