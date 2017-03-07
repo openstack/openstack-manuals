@@ -198,3 +198,20 @@ To enable and use object versioning
       Date: Thu, 23 Jan 2014 21:57:12 GMT
 
     <html><h1>Accepted</h1><p>The request is accepted for processing.</p></html>
+
+Versioning with python-swiftclient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can utilize ``python-swiftclient`` to enable object versioning.
+
+*  Create an additional container to hold previous versions:
+
+   .. code-block:: console
+
+      $ swift post CONTAINER_versions
+
+*  Enable object versioning on your desired container:
+
+   .. code-block:: console
+
+      $ swift post CONTAINER -H "X-Versions-Location:CONTAINER-versions"
