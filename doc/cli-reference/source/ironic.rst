@@ -23,7 +23,7 @@ Bare Metal service (ironic) command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service (ironic) API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.11.0``.
+This chapter documents :command:`ironic` version ``1.11.1``.
 
 For help on a specific :command:`ironic` command, enter:
 
