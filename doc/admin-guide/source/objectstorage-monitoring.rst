@@ -18,7 +18,7 @@ Swift Recon
 ~~~~~~~~~~~
 
 The Swift Recon middleware (see
-`Defining Storage Policies <http://swift.openstack.org/admin_guide.html#cluster-telemetry-and-monitoring>`_)
+`Defining Storage Policies <https://docs.openstack.org/developer/swift/admin_guide.html#cluster-telemetry-and-monitoring>`_)
 provides general machine statistics, such as load average, socket
 statistics, ``/proc/meminfo`` contents, as well as Swift-specific meters:
 
