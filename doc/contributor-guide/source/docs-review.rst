@@ -36,7 +36,8 @@ special rules apply:
   includes the openstack-manuals core team.
 
 The current list of docs cores for openstack-manuals can be found at
-https://review.openstack.org/#/admin/groups/30,members.
+`Group openstack-doc-core
+<https://review.openstack.org/#/admin/groups/30,members>`_.
 
 Reviewing a documentation patch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
