@@ -19,23 +19,29 @@ driver, Huawei storage system and OpenStack:
 
    * - Description
      - Storage System Version
-   * - Create, delete, expand, attach, detach, manage, and unmanage volumes.
+   * - Create, delete, expand, attach, detach, manage and unmanage volumes
 
-       Create, delete, manage, unmanage, and backup a snapshot.
+       Create volumes with assigned storage pools
 
-       Create, delete, and update a consistency group.
+       Create volumes with assigned disk types
 
-       Create and delete a cgsnapshot.
+       Create, delete and update a consistency group
 
-       Copy an image to a volume.
+       Copy an image to a volume
 
-       Copy a volume to an image.
+       Copy a volume to an image
 
-       Create a volume from a snapshot.
+       Auto Zoning
 
-       Clone a volume.
+       SmartThin
 
-       QoS
+       Volume Migration
+
+       Replication V2.1
+
+       Create, delete, manage, unmanage and backup snapshots
+
+       Create and delete a cgsnapshot
      - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
@@ -45,17 +51,21 @@ driver, Huawei storage system and OpenStack:
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800 V1R1C00/C20/C30 V3R3C00
-   * - Volume Migration
 
-       Auto zoning
+       OceanStor Dorado V300R001C00
+   * - Clone a volume
+
+       Create volume from snapshot
+
+       Retype
+
+       SmartQoS
 
        SmartTier
 
        SmartCache
 
-       Smart Thin/Thick
-
-       Replication V2.1
+       Thick
      - OceanStor T series V2R2 C00/C20/C30
 
        OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
@@ -73,45 +83,14 @@ driver, Huawei storage system and OpenStack:
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800V1R1C00/C20/C30
+   * - Hypermetro
 
-Block Storage driver installation and deployment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       Hypermetro consistency group
+     - OceanStor V3 V3R3C00
 
-#. Before installation, delete all the installation files of Huawei OpenStack
-   Driver. The default path may be:
-   ``/usr/lib/python2.7/disk-packages/cinder/volume/drivers/huawei``.
+       OceanStor 2600V3 V3R5C00
 
-   .. note::
-
-      In this example, the version of Python is 2.7. If another version is
-      used, make corresponding changes to the driver path.
-
-#. Copy `the Block Storage driver
-   <https://git.openstack.org/cgit/openstack/cinder/tree/cinder/volume/drivers/huawei?h=stable/newton>`_
-   to the Block Storage driver installation directory.
-   Refer to step 1 to find the default directory.
-
-#. Refer to chapter :ref:`huawei-driver-configuration` to complete the
-   configuration.
-
-#. After configuration, restart the ``cinder-volume`` service:
-
-#. Check the status of services using the
-   :command:`openstack volume service list`
-   command. If the ``State`` of ``cinder-volume`` is ``up``, that means
-   ``cinder-volume`` is okay.
-
-   .. code-block:: console
-
-      # openstack volume service list
-      +------------------+-----------------+------+---------+-------+----------------------------+
-      | Binary           | Host            | Zone | Status  | State | Updated At                 |
-      +------------------+-----------------+------+---------+-------+----------------------------+
-      | cinder-scheduler | controller      | nova | enabled | up    | 2017-01-03T11:53:30.000000 |
-      | cinder-volume    | controller@v3r3 | nova | enabled | up    | 2017-01-03T11:53:34.000000 |
-      +------------------+-----------------+------+---------+-------+----------------------------+
-
-.. _huawei-driver-configuration:
+       OceanStor 18500/18800 V3R3C00
 
 Volume driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -148,19 +127,16 @@ To configure the volume driver, follow the steps below:
          <config>
             <Storage>
                <Product>PRODUCT</Product>
-               <Protocol>iSCSI</Protocol>
-               <ControllerIP1>x.x.x.x</ControllerIP1>
+               <Protocol>PROTOCOL</Protocol>
                <UserName>xxxxxxxx</UserName>
                <UserPassword>xxxxxxxx</UserPassword>
+               <RestURL>https://x.x.x.x:8088/deviceManager/rest/</RestURL>
             </Storage>
             <LUN>
                <LUNType>xxx</LUNType>
-               <StripUnitSize>xxx</StripUnitSize>
                <WriteType>xxx</WriteType>
-               <MirrorSwitch>xxx</MirrorSwitch>
                <Prefetch Type="xxx" Value="xxx" />
-               <StoragePool Name="xxx" />
-               <StoragePool Name="xxx" />
+               <StoragePool>xxx</StoragePool>
             </LUN>
             <iSCSI>
                <DefaultTargetIP>x.x.x.x</DefaultTargetIP>
@@ -190,6 +166,12 @@ To configure the volume driver, follow the steps below:
 
         <Product>18000</Product>
 
+   * **For OceanStor Dorado series**
+
+     .. code-block:: xml
+
+        <Product>Dorado</Product>
+
    The ``Protocol`` value to be used is ``iSCSI`` for iSCSI and ``FC`` for
    Fibre Channel as shown below:
 
@@ -208,31 +190,67 @@ To configure the volume driver, follow the steps below:
 
 #. Configure the ``cinder.conf`` file.
 
-   In the ``[default]`` block of ``/etc/cinder/cinder.conf``, add the following
-   contents:
+   In the ``[default]`` block of ``/etc/cinder/cinder.conf``,
+   enable the ``VOLUME_BACKEND``:
+
+   .. code-block:: ini
+
+      enabled_backends = VOLUME_BACKEND
+
+
+   Add a new block ``[VOLUME_BACKEND]``, and add the following contents:
+
+   .. code-block:: ini
+
+      [VOLUME_BACKEND]
+      volume_driver = VOLUME_DRIVER
+      cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml
+      volume_backend_name = Huawei_Storage
 
    * ``volume_driver`` indicates the loaded driver.
 
    * ``cinder_huawei_conf_file`` indicates the specified Huawei-customized
      configuration file.
 
-   * ``hypermetro_devices`` indicates the list of remote storage devices for
-     which Hypermetro is to be used.
+   * ``volume_backend_name`` indicates the name of the backend.
 
-   The added content in the ``[default]`` block of ``/etc/cinder/cinder.conf``
-   with the appropriate ``volume_driver`` and the list of
-   ``remote storage devices`` values for each product is as below:
+   Add information about remote devices in ``/etc/cinder/cinder.conf``
+   in target backend block for ``Hypermetro``.
 
    .. code-block:: ini
 
+      [VOLUME_BACKEND]
       volume_driver = VOLUME_DRIVER
       cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml
-      hypermetro_devices = {STORAGE_DEVICE1, STORAGE_DEVICE2....}
+      volume_backend_name = Huawei_Storage
+      metro_san_user = xxx
+      metro_san_password = xxx
+      metro_domain_name = xxx
+      metro_san_address = https://x.x.x.x:8088/deviceManager/rest/
+      metro_storage_pools = xxx
+
+   Add information about remote devices in ``/etc/cinder/cinder.conf``
+   in target backend block for ``Replication``.
+
+   .. code-block:: ini
+
+      [VOLUME_BACKEND]
+      volume_driver = VOLUME_DRIVER
+      cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml
+      volume_backend_name = Huawei_Storage
+      replication_device =
+          backend_id: xxx,
+          storage_pool :xxx,
+          san_address: https://x.x.x.x:8088/deviceManager/rest/,
+          san_user: xxx,
+          san_passowrd: xxx,
+          iscsi_default_target_ip: x.x.x.x
 
    .. note::
 
-      By default, the value for ``hypermetro_devices`` is ``None``.
-
+      By default, the value for ``Hypermetro`` and  ``Replication`` is
+      ``None``. For details about the parameters in the configuration file,
+      see the `Configuration file parameters`_ section.
 
    The ``volume-driver`` value for every product is as below:
 
@@ -252,16 +270,6 @@ Configuring iSCSI Multipathing
 
 To configure iSCSI Multipathing, follow the steps below:
 
-#. Create a port group on the storage device using the ``DeviceManager`` and add
-   service links that require multipathing into the port group.
-
-#. Log in to the storage device using CLI commands and enable the multiport
-   discovery switch in the multipathing.
-
-   .. code-block:: console
-
-      developer:/>change iscsi discover_multiport switch=on
-
 #. Add the port group settings in the Huawei-customized driver configuration
    file and configure the port group name needed by an initiator.
 
@@ -274,7 +282,20 @@ To configure iSCSI Multipathing, follow the steps below:
 
 #. Enable the multipathing switch of the Compute service module.
 
-   Add ``iscsi_use_multipath = True`` in ``[libvirt]`` of
+   Add ``volume_use_multipath = True`` in ``[libvirt]`` of
+   ``/etc/nova/nova.conf``.
+
+#. Run the :command:`service nova-compute restart` command to restart the
+   ``nova-compute`` service.
+
+Configuring FC Multipathing
+------------------------------
+
+To configure FC Multipathing, follow the steps below:
+
+#. Enable the multipathing switch of the Compute service module.
+
+   Add ``volume_use_multipath = True`` in ``[libvirt]`` of
    ``/etc/nova/nova.conf``.
 
 #. Run the :command:`service nova-compute restart` command to restart the
@@ -310,13 +331,13 @@ Multiple storage systems configuration example:
 
    enabled_backends = v3_fc, 18000_fc
    [v3_fc]
-   volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiFCDriver
+   volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_v3_fc.xml
-   volume_backend_name = HuaweiTFCDriver
+   volume_backend_name = huawei_v3_fc
    [18000_fc]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_fc.xml
-   volume_backend_name = HuaweiFCDriver
+   volume_backend_name = huawei_18000_fc
 
 Configuration file parameters
 -----------------------------
@@ -350,9 +371,7 @@ of the Huawei volume driver.
        and V2 and V3 requires you to add port number ``8088``, for example,
        ``https://x.x.x.x:8088/deviceManager/rest/``. If you need to configure
        multiple RestURL, separate them by semicolons (;).
-     - T series V2
-
-       V3 18000
+     - All
    * - UserName
      - ``-``
      - User name of a storage administrator.
@@ -380,33 +399,24 @@ of the Huawei volume driver.
      - Description
      - Applicable to
    * - LUNType
-     - Thin
-     - Type of the LUNs to be created. The value can be ``Thick`` or ``Thin``.
+     - Thick
+     - Type of the LUNs to be created. The value can be ``Thick`` or ``Thin``. Dorado series only support ``Thin`` LUNs.
      - All
    * - WriteType
      - 1
      - Cache write type, possible values are: ``1`` (write back), ``2``
        (write through), and ``3`` (mandatory write back).
      - All
-   * - MirrorSwitch
-     - 1
-     - Cache mirroring or not, possible values are: ``0`` (without mirroring)
-       or ``1`` (with mirroring).
-     - All
    * - LUNcopyWaitInterval
      - 5
      - After LUN copy is enabled, the plug-in frequently queries the copy
        progress. You can set a value to specify the query interval.
-     - T series V2 V3
-
-       18000
+     - All
    * - Timeout
      - 432000
      - Timeout interval for waiting LUN copy of a storage device to complete.
        The unit is second.
-     - T series V2 V3
-
-       18000
+     - All
    * - Initiator Name
      - ``-``
      - Name of a compute node initiator.
@@ -419,9 +429,7 @@ of the Huawei volume driver.
      - ``-``
      - IP address of the iSCSI target port that is provided for compute
        nodes.
-     - T series V2 V3
-
-       18000
+     - All
    * - DefaultTargetIP
      - ``-``
      - Default IP address of the iSCSI target port that is provided for
@@ -435,7 +443,50 @@ of the Huawei volume driver.
      - ``-``
      - IP address of the Nova compute node's host.
      - All
-
+   * - metro_san_user
+     - ``-``
+     - User name of a storage administrator of hypermetro remote device.
+     - V3R3/2600 V3R5/18000 V3R3
+   * - metro_san_password
+     - ``-``
+     - Password of a storage administrator of hypermetro remote device.
+     - V3R3/2600 V3R5/18000 V3R3
+   * - metro_domain_name
+     - ``-``
+     - Hypermetro domain name configured on ISM.
+     - V3R3/2600 V3R5/18000 V3R3
+   * - metro_san_address
+     - ``-``
+     - Access address of the REST interface, https://x.x.x.x/devicemanager/rest/. The value x.x.x.x indicates the management IP address.
+     - V3R3/2600 V3R5/18000 V3R3
+   * - metro_storage_pools
+     - ``-``
+     - Remote storage pool for hypermetro.
+     - V3R3/2600 V3R5/18000 V3R3
+   * - backend_id
+     - ``-``
+     - Target device ID.
+     - All
+   * - storage_pool
+     - ``-``
+     - Pool name of target backend when failover for replication.
+     - All
+   * - san_address
+     - ``-``
+     - Access address of the REST interface, https://x.x.x.x/devicemanager/rest/. The value x.x.x.x indicates the management IP address.
+     - All
+   * - san_user
+     - ``-``
+     - User name of a storage administrator of replication remote device.
+     - All
+   * - san_password
+     - ``-``
+     - Password of a storage administrator of replication remote device.
+     - All
+   * - iscsi_default_target_ip
+     - ``-``
+     - Remote transacton port IP.
+     - All
 .. important::
 
    The ``Initiator Name``, ``Initiator TargetIP``, and
