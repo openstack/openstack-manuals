@@ -8,11 +8,17 @@ Manage objects
 
       $ swift upload CONTAINER OBJECT_FILENAME
 
-   To upload in chunks, for larger than 5GB files, run the following command:
+   To upload an object in chunks, for larger than 5GB files, run the following
+   command:
 
    .. code-block:: console
 
       $ swift upload -S CHUNK_SIZE CONTAINER OBJECT_FILENAME
+
+   .. important::
+
+      Uploading objects in chunks is mandatory if uploading an object larger
+      than 5GB.
 
 -  To check the status of the object, run the following command:
 
