@@ -76,7 +76,7 @@ Controller node
   .. code-block:: ini
 
      [DEFAULT]
-     service_plugins = router,bgp
+     service_plugins = neutron_dynamic_routing.services.bgp.bgp_plugin.BgpPlugin,neutron.services.l3_router.l3_router_plugin.L3RouterPlugin
 
 Agent nodes
 -----------
@@ -88,7 +88,7 @@ Agent nodes
     .. code-block:: ini
 
        [BGP]
-       bgp_speaker_driver = neutron.services.bgp.driver.ryu.driver.RyuBgpDriver
+       bgp_speaker_driver = neutron_dynamic_routing.services.bgp.agent.driver.ryu.driver.RyuBgpDriver
 
     .. note::
 
