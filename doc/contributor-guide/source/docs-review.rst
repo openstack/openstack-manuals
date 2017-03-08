@@ -102,9 +102,12 @@ The process is:
 * Every month (usually on the 1st), the documentation PTL draws the top 12
   names using these reports:
 
-  * http://russellbryant.net/openstack-stats/docs-reviewers-30.txt
-  * http://russellbryant.net/openstack-stats/docs-reviewers-90.txt
-  * http://stackalytics.com/?module=openstack-manuals&metric=commits
+  * `Reviews for the last 30 days
+    <http://russellbryant.net/openstack-stats/docs-reviewers-30.txt>`_
+  * `Reviews for the last 90 days
+    <http://russellbryant.net/openstack-stats/docs-reviewers-90.txt>`_
+  * `Openstack Manuals stackalytics
+    <http://stackalytics.com/?module=openstack-manuals&metric=commits>`_
 
 * The PTL then consults the existing core team with a list of names to be
   removed from and added to the core list. Once an agreement is reached,
