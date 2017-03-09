@@ -24,7 +24,7 @@ Elastic Stack consists of mainly three components: Elasticsearch (log search
 and analysis), Logstash (log intake, processing and output) and Kibana (log
 dashboard service).
 
-.. image:: ../figures/ELKbasicArch.svg
+.. figure:: ../figures/ELKbasicArch.png
    :align: center
    :alt: Elastic Search Basic Architecture
 

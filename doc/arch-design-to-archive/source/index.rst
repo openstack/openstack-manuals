@@ -7,18 +7,12 @@
 OpenStack Architecture Design Guide
 ===================================
 
-.. note::
-
-   Parts of this guide is a work in progress. Contributions are welcome.
-
 Abstract
 ~~~~~~~~
 
-This guide provides information on planning and designing an OpenStack
-cloud. It describes common use cases, high availability, and considerations
-when changing capacity and scaling your cloud environment. A breakdown of the
-major OpenStack components is also described in relation to cloud architecture
-design.
+To reap the benefits of OpenStack, you should plan, design,
+and architect your cloud properly, taking user's needs into
+account and understanding the use cases.
 
 Contents
 ~~~~~~~~
@@ -27,11 +21,17 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-   overview.rst
-   use-cases.rst
-   high-availability.rst
-   capacity-planning-scaling.rst
-   design.rst
+   introduction.rst
+   legal-security-requirements.rst
+   generalpurpose.rst
+   compute-focus.rst
+   storage-focus.rst
+   network-focus.rst
+   multi-site.rst
+   hybrid.rst
+   massively-scalable.rst
+   specialized.rst
+   references.rst
 
 Appendix
 ~~~~~~~~
@@ -53,3 +53,4 @@ Search in this guide
 ~~~~~~~~~~~~~~~~~~~~
 
 * :ref:`search`
+
