@@ -6,7 +6,12 @@ Cross-references
 ~~~~~~~~~~~~~~~~
 
 To cross-reference to arbitrary locations within one document,
-use the ``ref`` role:
+use the ``ref`` role.
+Reference target names need to start with an underscore.
+For example, ``.. _example:``. However, the reference itself should not
+have the underscore preceding the reference. For example, ``example``.
+For more information on referencing, see `Internal Hyperlink Targets
+<http://docutils.sourceforge.net/docs/user/rst/quickref.html#internal-hyperlink-targets>`_.
 
 **Input**
 
