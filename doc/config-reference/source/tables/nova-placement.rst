@@ -16,51 +16,43 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[placement]**
-     -
-   * - ``auth_section`` = ``None``
-     - (Unknown) Config Section from which to load plugin specific options
+
    * - ``auth_type`` = ``None``
+
      - (Unknown) Authentication type to load
-   * - ``cafile`` = ``None``
-     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+
    * - ``certfile`` = ``None``
+
      - (String) PEM encoded client certificate cert file
-   * - ``insecure`` = ``False``
-     - (Boolean) Verify HTTPS connections.
+
+   * - ``timeout`` = ``None``
+
+     - (Integer) Timeout value for http requests
+
    * - ``keyfile`` = ``None``
+
      - (String) PEM encoded client certificate key file
+
+   * - ``insecure`` = ``False``
+
+     - (Boolean) Verify HTTPS connections.
+
+   * - ``os_interface`` = ``None``
+
+     - (String) Endpoint interface for this node. This is used when picking the URL in the service catalog.
+
    * - ``os_region_name`` = ``None``
+
      - (String) Region name of this node. This is used when picking the URL in the service catalog.
 
        Possible values:
 
        * Any string representing region name
-   * - ``timeout`` = ``None``
-     - (Integer) Timeout value for http requests
-   * - **[placement_database]**
-     -
-   * - ``connection`` = ``None``
-     - (String) No help text available for this option.
-   * - ``connection_debug`` = ``0``
-     - (Integer) No help text available for this option.
-   * - ``connection_trace`` = ``False``
-     - (Boolean) No help text available for this option.
-   * - ``idle_timeout`` = ``3600``
-     - (Integer) No help text available for this option.
-   * - ``max_overflow`` = ``None``
-     - (Integer) No help text available for this option.
-   * - ``max_pool_size`` = ``None``
-     - (Integer) No help text available for this option.
-   * - ``max_retries`` = ``10``
-     - (Integer) No help text available for this option.
-   * - ``mysql_sql_mode`` = ``TRADITIONAL``
-     - (String) No help text available for this option.
-   * - ``pool_timeout`` = ``None``
-     - (Integer) No help text available for this option.
-   * - ``retry_interval`` = ``10``
-     - (Integer) No help text available for this option.
-   * - ``slave_connection`` = ``None``
-     - (String) No help text available for this option.
-   * - ``sqlite_synchronous`` = ``True``
-     - (Boolean) No help text available for this option.
+
+   * - ``cafile`` = ``None``
+
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+
+   * - ``auth_section`` = ``None``
+
+     - (Unknown) Config Section from which to load plugin specific options

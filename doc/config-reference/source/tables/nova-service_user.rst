@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-ironic:
+.. _nova-service_user:
 
-.. list-table:: Description of ironic configuration options
+.. list-table:: Description of service_user configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -21,21 +21,17 @@
 
      - (Unknown) Authentication type to load
 
-   * - ``serial_console_state_timeout`` = ``10``
+   * - ``send_service_user_token`` = ``False``
 
-     - (Integer) Timeout (seconds) to wait for node serial console state changed. Set to 0 to disable timeout.
+     - (Boolean) When True, if sending a user token to an REST API, also send a service token.
+
+       Nova often reuses the user token provided to the nova-api to talk to other REST APIs, such as Cinder and Neutron. It is possible that while the user token was valid when the request was made to Nova, the token may expire before it reaches the other service. To avoid any failures, and to make it clear it is Nova calling the service on the users behalf, we include a server token along with the user token. Should the user's token have expired, a valid service token ensures the REST API request will still be accepted by the keystone middleware.
+
+       This feature is currently experimental, and as such is turned off by default while full testing and performance tuning of this feature is completed.
 
    * - ``certfile`` = ``None``
 
      - (String) PEM encoded client certificate cert file
-
-   * - ``api_retry_interval`` = ``2``
-
-     - (Integer) The number of seconds to wait before retrying the request.
-
-       Related options:
-
-       * api_max_retries
 
    * - ``keyfile`` = ``None``
 
@@ -44,18 +40,6 @@
    * - ``insecure`` = ``False``
 
      - (Boolean) Verify HTTPS connections.
-
-   * - ``api_max_retries`` = ``60``
-
-     - (Integer) The number of times to retry when a request conflicts. If set to 0, only try once, no retries.
-
-       Related options:
-
-       * api_retry_interval
-
-   * - ``api_endpoint`` = ``http://ironic.example.org:6385/``
-
-     - (String) URL override for the Ironic API endpoint.
 
    * - ``timeout`` = ``None``
 

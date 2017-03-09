@@ -8,17 +8,19 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-periodic:
+.. _nova-oslo_concurrency:
 
-.. list-table:: Description of periodic configuration options
+.. list-table:: Description of oslo_concurrency configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``periodic_enable`` = ``True``
-     - (Boolean) Enable periodic tasks
-   * - ``periodic_fuzzy_delay`` = ``60``
-     - (Integer) Range of seconds to randomly delay when starting the periodic task scheduler to reduce stampeding. (Disable by setting to 0)
+
+   * - ``disable_process_locking`` = ``False``
+
+     - (Boolean) Enables or disables inter-process locks.
+
+   * - ``lock_path`` = ``None``
+
+     - (String) Directory to use for lock files. For security, the specified directory should only be writable by the user running the processes that need locking. Defaults to environment variable OSLO_LOCK_PATH. If external locks are used, a lock path must be set.

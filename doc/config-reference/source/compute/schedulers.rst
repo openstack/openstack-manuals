@@ -1274,3 +1274,4 @@ Configuration options
 The Compute scheduler configuration options are documented in the tables below.
 
 .. include:: ../tables/nova-scheduler.rst
+   :start-line: 12

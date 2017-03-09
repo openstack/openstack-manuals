@@ -10,109 +10,113 @@
 
 .. _nova-libvirt:
 
-.. list-table:: Description of Libvirt configuration options
+.. list-table:: Description of libvirt configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``remove_unused_base_images`` = ``True``
-     - (Boolean) Should unused base images be removed?
-   * - ``remove_unused_original_minimum_age_seconds`` = ``86400``
-     - (Integer) Unused unresized base images younger than this will not be removed
-   * - **[libvirt]**
-     -
-   * - ``checksum_base_images`` = ``False``
-     - (Boolean) DEPRECATED: Write a checksum for files in _base to disk The image cache no longer periodically calculates checksums of stored images. Data integrity can be checked at the block or filesystem level.
-   * - ``checksum_interval_seconds`` = ``3600``
-     - (Integer) DEPRECATED: How frequently to checksum base images The image cache no longer periodically calculates checksums of stored images. Data integrity can be checked at the block or filesystem level.
-   * - ``connection_uri`` =
-     - (String) Overrides the default libvirt URI of the chosen virtualization type.
 
-       If set, Nova will use this URI to connect to libvirt.
+   * - ``sysinfo_serial`` = ``auto``
 
-       Possible values:
+     - (String) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS.
 
-       * An URI like ``qemu:///system`` or ``xen+ssh://oirase/`` for example. This is only necessary if the URI differs to the commonly known URIs for the chosen virtualization type.
+   * - ``images_rbd_pool`` = ``rbd``
 
-       Related options:
+     - (String) The RADOS pool in which rbd volumes are stored
 
-       * ``virt_type``: Influences what is used as default value here.
-   * - ``cpu_mode`` = ``None``
-     - (String) Is used to set the CPU mode an instance should have.
+   * - ``num_iscsi_scan_tries`` = ``5``
 
-       If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none".
+     - (Integer) Number of times to scan iSCSI target to find volume.
 
-       Possible values:
+   * - ``smbfs_mount_options`` =
 
-       * ``host-model``: Clones the host CPU feature flags.
+     - (String) Mount options passed to the SMBFS client.
 
-       * ``host-passthrough``: Use the host CPU model exactly;
+       Provide SMBFS options as a single string containing all parameters. See mount.cifs man page for details. Note that the libvirt-qemu ``uid`` and ``gid`` must be specified.
 
-       * ``custom``: Use a named CPU model;
-
-       * ``none``: Not set any CPU model.
-
-       Related options:
-
-       * ``cpu_model``: If ``custom`` is used for ``cpu_mode``, set this config option too, otherwise this would result in an error and the instance won't be launched.
-   * - ``cpu_model`` = ``None``
-     - (String) Set the name of the libvirt CPU model the instance should use.
-
-       Possible values:
-
-       * The names listed in /usr/share/libvirt/cpu_map.xml
-
-       Related options:
-
-       * ``cpu_mode``: Don't set this when ``cpu_mode`` is NOT set to ``custom``. This would result in an error and the instance won't be launched.
-
-       * ``virt_type``: Only the virtualization types ``kvm`` and ``qemu`` use this.
-   * - ``disk_cachemodes`` =
-     - (List) Specific cachemodes to use for different disk types e.g: file=directsync,block=none
-   * - ``disk_prefix`` = ``None``
-     - (String) Override the default disk prefix for the devices attached to an instance.
-
-       If set, this is used to identify a free disk device name for a bus.
-
-       Possible values:
-
-       * Any prefix which will result in a valid disk device name like 'sda' or 'hda' for example. This is only necessary if the device names differ to the commonly known device name prefixes for a virtualization type such as: sd, xvd, uvd, vd.
-
-       Related options:
-
-       * ``virt_type``: Influences which device type is used, which determines the default disk prefix.
    * - ``enabled_perf_events`` =
+
      - (List) This is a performance event list which could be used as monitor. These events will be passed to libvirt domain xml while creating a new instances. Then event statistics data can be collected from libvirt. The minimum libvirt version is 2.0.0. For more information about `Performance monitoring events`, refer https://libvirt.org/formatdomain.html#elementsPerf .
 
-       * Possible values: A string list. For example: ``enabled_perf_events = cmt, mbml, mbmt``
+       Possible values:
 
-        The supported events list can be found in https://libvirt.org/html/libvirt-libvirt-domain.html , which you may need to search key words ``VIR_PERF_PARAM_*``
+       * A string list. For example: ``enabled_perf_events = cmt, mbml, mbmt`` The supported events list can be found in https://libvirt.org/html/libvirt-libvirt-domain.html , which you may need to search key words ``VIR_PERF_PARAM_*``
 
-       * Services that use this:
+   * - ``live_migration_uri`` = ``None``
 
-        ``nova-compute``
+     - (String) Live migration target URI to use.
 
-       * Related options: None
-   * - ``gid_maps`` =
-     - (List) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.
-   * - ``hw_disk_discard`` = ``None``
-     - (String) Discard option for nova managed disks. Need Libvirt(1.0.6) Qemu1.5 (raw format) Qemu1.6(qcow2 format)
-   * - ``hw_machine_type`` = ``None``
-     - (List) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2
-   * - ``image_info_filename_pattern`` = ``$instances_path/$image_cache_subdirectory_name/%(image)s.info``
-     - (String) DEPRECATED: Allows image information files to be stored in non-standard locations Image info files are no longer used by the image cache
-   * - ``images_rbd_ceph_conf`` =
-     - (String) Path to the ceph configuration file to use
-   * - ``images_rbd_pool`` = ``rbd``
-     - (String) The RADOS pool in which rbd volumes are stored
-   * - ``images_type`` = ``default``
-     - (String) VM Images format. If default is specified, then use_cow_images flag is used instead of this one.
-   * - ``images_volume_group`` = ``None``
-     - (String) LVM Volume Group that is used for VM images, when you specify images_type=lvm.
+       Override the default libvirt live migration target URI (which is dependent on virt_type). Any included "%s" is replaced with the migration target hostname.
+
+       If this option is set to None (which is the default), Nova will automatically generate the `live_migration_uri` value based on only 3 supported `virt_type` in following list:
+
+       * 'kvm': 'qemu+tcp://%s/system'
+
+       * 'qemu': 'qemu+tcp://%s/system'
+
+       * 'xen': 'xenmigr://%s/system'
+
+       Related options:
+
+       * ``live_migration_inbound_addr``: If ``live_migration_inbound_addr`` value is not None, the ip/hostname address of target compute node is used instead of ``live_migration_uri`` as the uri for live migration.
+
+       * ``live_migration_scheme``: If ``live_migration_uri`` is not set, the scheme used for live migration is taken from ``live_migration_scheme`` instead.
+
+       - **Deprecated**
+
+         live_migration_uri is deprecated for removal in favor of two other options that allow to change live migration scheme and target URI: ``live_migration_scheme`` and ``live_migration_inbound_addr`` respectively.
+
+   * - ``realtime_scheduler_priority`` = ``1``
+
+     - (Integer) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
+
+   * - ``checksum_base_images`` = ``False``
+
+     - (Boolean) Write a checksum for files in _base to disk
+
+       - **Deprecated**
+
+         The image cache no longer periodically calculates checksums of stored images. Data integrity can be checked at the block or filesystem level.
+
+   * - ``live_migration_tunnelled`` = ``False``
+
+     - (Boolean) Enable tunnelled migration.
+
+       This option enables the tunnelled migration feature, where migration data is transported over the libvirtd connection. If enabled, we use the VIR_MIGRATE_TUNNELLED migration flag, avoiding the need to configure the network to allow direct hypervisor to hypervisor communication. If False, use the native transport. If not set, Nova will choose a sensible default based on, for example the availability of native encryption support in the hypervisor. Enable this option will definitely impact performance massively.
+
+       Note that this option is NOT compatible with use of block migration.
+
+       Possible values:
+
+       * Supersedes and (if set) overrides the deprecated 'live_migration_flag' and 'block_migration_flag' to enable tunneled migration.
+
+   * - ``checksum_interval_seconds`` = ``3600``
+
+     - (Integer) How frequently to checksum base images
+
+       - **Deprecated**
+
+         The image cache no longer periodically calculates checksums of stored images. Data integrity can be checked at the block or filesystem level.
+
+   * - ``rescue_image_id`` = ``None``
+
+     - (String) The ID of the image to boot from to rescue data from a corrupted instance.
+
+       If the rescue REST API operation doesn't provide an ID of an image to use, the image which is referenced by this ID is used. If this option is not set, the image from the instance is used.
+
+       Possible values:
+
+       * An ID of an image or nothing. If it points to an *Amazon Machine Image* (AMI), consider to set the config options ``rescue_kernel_id`` and ``rescue_ramdisk_id`` too. If nothing is set, the image of the instance is used.
+
+       Related options:
+
+       * ``rescue_kernel_id``: If the chosen rescue image allows the separate definition of its kernel disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+
+       * ``rescue_ramdisk_id``: If the chosen rescue image allows the separate definition of its RAM disk, the value of this option is used if, specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+
    * - ``inject_key`` = ``False``
+
      - (Boolean) Allow the injection of an SSH key at boot time.
 
        There is no agent needed within the image to do this. If *libguestfs* is available on the host, it will be used. Otherwise *nbd* is used. The file system of the image will be mounted and the SSH key, which is provided in the REST API call will be injected as SSH key for the root user and appended to the ``authorized_keys`` of that user. The SELinux context will be set if necessary. Be aware that the injection is *not* possible when the instance gets launched from a volume.
@@ -122,7 +126,45 @@
        Related options:
 
        * ``inject_partition``: That option will decide about the discovery and usage of the file system. It also can disable the injection at all.
+
+   * - ``uid_maps`` =
+
+     - (List) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.
+
+   * - ``hw_disk_discard`` = ``None``
+
+     - (String) Discard option for nova managed disks.
+
+       Requires:
+
+       * Libvirt >= 1.0.6
+
+       * Qemu >= 1.5 (raw format)
+
+       * Qemu >= 1.6 (qcow2 format)
+
+   * - ``live_migration_downtime`` = ``500``
+
+     - (Integer) Maximum permitted downtime, in milliseconds, for live migration switchover.
+
+       Will be rounded up to a minimum of 100ms. You can increase this value if you want to allow live-migrations to complete faster, or avoid live-migration timeout errors by allowing the guest to be paused for longer during the live-migration switch over.
+
+       Related options:
+
+       * live_migration_completion_timeout
+
+   * - ``vzstorage_mount_group`` = ``qemu``
+
+     - (String) Mount owner group name.
+
+       This option defines the owner group of Vzstorage cluster mountpoint.
+
+       Related options:
+
+       * vzstorage_mount_* group of parameters
+
    * - ``inject_partition`` = ``-2``
+
      - (Integer) Determines the way how the file system is chosen to inject data into it.
 
        *libguestfs* will be used a first solution to inject data. If that's not available on the host, the image will be locally mounted on the host as a fallback solution. If libguestfs is not able to determine the root partition (because there are more or less than one root partition) or cannot mount the file system it will result in an error and the instance won't be boot.
@@ -146,7 +188,55 @@
        * ``guestfs`` You can enable the debug log level of libguestfs with this config option. A more verbose output will help in debugging issues.
 
        * ``virt_type``: If you use ``lxc`` as virt_type it will be treated as a single partition image
+
+   * - ``connection_uri`` =
+
+     - (String) Overrides the default libvirt URI of the chosen virtualization type.
+
+       If set, Nova will use this URI to connect to libvirt.
+
+       Possible values:
+
+       * An URI like ``qemu:///system`` or ``xen+ssh://oirase/`` for example. This is only necessary if the URI differs to the commonly known URIs for the chosen virtualization type.
+
+       Related options:
+
+       * ``virt_type``: Influences what is used as default value here.
+
+   * - ``num_aoe_discover_tries`` = ``3``
+
+     - (Integer) Number of times to rediscover AoE target to find volume.
+
+       Nova provides support for block storage attaching to hosts via AOE (ATA over Ethernet). This option allows the user to specify the maximum number of retry attempts that can be made to discover the AoE device.
+
+   * - ``volume_clear`` = ``zero``
+
+     - (String) Method used to wipe ephemeral disks when they are deleted. Only takes effect if LVM is set as backing storage.
+
+       Possible values:
+
+       * none - do not wipe deleted volumes
+
+       * zero - overwrite volumes with zeroes
+
+       * shred - overwrite volume repeatedly
+
+       Related options:
+
+       * images_type - must be set to ``lvm``
+
+       * volume_clear_size
+
+   * - ``snapshots_directory`` = ``$instances_path/snapshots``
+
+     - (String) Location where libvirt driver will store snapshots before uploading them to image service
+
+   * - ``wait_soft_reboot_seconds`` = ``120``
+
+     - (Integer) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
+
    * - ``inject_password`` = ``False``
+
      - (Boolean) Allow the injection of an admin password for instance only at ``create`` and ``rebuild`` process.
 
        There is no agent needed within the image to do this. If *libguestfs* is available on the host, it will be used. Otherwise *nbd* is used. The file system of the image will be mounted and the admin password, which is provided in the REST API call will be injected as password for the root user. If no root user is available, the instance won't be launched and an error is thrown. Be aware that the injection is *not* possible when the instance gets launched from a volume.
@@ -160,70 +250,192 @@
        Related options:
 
        * ``inject_partition``: That option will decide about the discovery and usage of the file system. It also can disable the injection at all.
-   * - ``iscsi_iface`` = ``None``
-     - (String) The iSCSI transport iface to use to connect to target in case offload support is desired. Default format is of the form <transport_name>.<hwaddress> where <transport_name> is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and <hwaddress> is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.
-   * - ``iser_use_multipath`` = ``False``
-     - (Boolean) Use multipath connection of the iSER volume
-   * - ``mem_stats_period_seconds`` = ``10``
-     - (Integer) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.
-   * - ``realtime_scheduler_priority`` = ``1``
-     - (Integer) In a realtime host context vCPUs for guest will run in that scheduling priority. Priority depends on the host kernel (usually 1-99)
-   * - ``remove_unused_resized_minimum_age_seconds`` = ``3600``
-     - (Integer) Unused resized base images younger than this will not be removed
-   * - ``rescue_image_id`` = ``None``
-     - (String) The ID of the image to boot from to rescue data from a corrupted instance.
 
-       If the rescue REST API operation doesn't provide an ID of an image to use, the image which is referenced by this ID is used. If this option is not set, the image from the instance is used.
+   * - ``live_migration_permit_post_copy`` = ``False``
 
-       Possible values:
+     - (Boolean) This option allows nova to switch an on-going live migration to post-copy mode, i.e., switch the active VM to the one on the destination node before the migration is complete, therefore ensuring an upper bound on the memory that needs to be transferred. Post-copy requires libvirt>=1.3.3 and QEMU>=2.5.0.
 
-       * An ID of an image or nothing. If it points to an *Amazon Machine Image* (AMI), consider to set the config options ``rescue_kernel_id`` and ``rescue_ramdisk_id`` too. If nothing is set, the image of the instance is used.
+       When permitted, post-copy mode will be automatically activated if a live-migration memory copy iteration does not make percentage increase of at least 10% over the last iteration.
+
+       The live-migration force complete API also uses post-copy when permitted. If post-copy mode is not available, force complete falls back to pausing the VM to ensure the live-migration operation will complete.
+
+       When using post-copy mode, if the source and destination hosts loose network connectivity, the VM being live-migrated will need to be rebooted. For more details, please see the Administration guide.
 
        Related options:
 
-       * ``rescue_kernel_id``: If the chosen rescue image allows the separate definition of its kernel disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+       * live_migration_permit_auto_converge
 
-       * ``rescue_ramdisk_id``: If the chosen rescue image allows the separate definition of its RAM disk, the value of this option is used if, specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
-   * - ``rescue_kernel_id`` = ``None``
-     - (String) The ID of the kernel (AKI) image to use with the rescue image.
+   * - ``quobyte_mount_point_base`` = ``$state_path/mnt``
 
-       If the chosen rescue image allows the separate definition of its kernel disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+     - (String) Directory where the Quobyte volume is mounted on the compute node.
 
-       Possible values:
-
-       * An ID of an kernel image or nothing. If nothing is specified, the kernel disk from the instance is used if it was launched with one.
-
-       Related options:
-
-       * ``rescue_image_id``: If that option points to an image in *Amazon*'s AMI/AKI/ARI image format, it's useful to use ``rescue_kernel_id`` too.
-   * - ``rescue_ramdisk_id`` = ``None``
-     - (String) The ID of the RAM disk (ARI) image to use with the rescue image.
-
-       If the chosen rescue image allows the separate definition of its RAM disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+       Nova supports Quobyte volume driver that enables storing Block Storage service volumes on a Quobyte storage back end. This Option sepcifies the path of the directory where Quobyte volume is mounted.
 
        Possible values:
 
-       * An ID of a RAM disk image or nothing. If nothing is specified, the RAM disk from the instance is used if it was launched with one.
+       * A string representing absolute path of mount point.
+
+   * - ``cpu_mode`` = ``None``
+
+     - (String) Is used to set the CPU mode an instance should have.
+
+       If virt_type="kvm|qemu", it will default to "host-model", otherwise it will default to "none".
+
+       Possible values:
+
+       * ``host-model``: Clones the host CPU feature flags.
+
+       * ``host-passthrough``: Use the host CPU model exactly;
+
+       * ``custom``: Use a named CPU model;
+
+       * ``none``: Not set any CPU model.
 
        Related options:
 
-       * ``rescue_image_id``: If that option points to an image in *Amazon*'s AMI/AKI/ARI image format, it's useful to use ``rescue_ramdisk_id`` too.
-   * - ``rng_dev_path`` = ``None``
-     - (String) A path to a device that will be used as source of entropy on the host. Permitted options are: /dev/random or /dev/hwrng
-   * - ``snapshot_compression`` = ``False``
-     - (Boolean) Compress snapshot images when possible. This currently applies exclusively to qcow2 images
+       * ``cpu_model``: If ``custom`` is used for ``cpu_mode``, set this config option too, otherwise this would result in an error and the instance won't be launched.
+
+   * - ``vzstorage_mount_opts`` =
+
+     - (List) Extra mount options for pstorage-mount
+
+       For full description of them, see https://static.openvz.org/vz-man/man1/pstorage-mount.1.gz.html Format is a python string representation of arguments list, like: "['-v', '-R', '500']" Shouldn't include -c, -l, -C, -u, -g and -m as those have explicit vzstorage_* options.
+
+       Related options:
+
+       * All other vzstorage_* options
+
+   * - ``glusterfs_mount_point_base`` = ``$state_path/mnt``
+
+     - (String) Absolute path to the directory where the glusterfs volume is mounted on the compute node.
+
+   * - ``volume_use_multipath`` = ``False``
+
+     - (Boolean) Use multipath connection of the iSCSI or FC volume
+
+       Volumes can be connected in the LibVirt as multipath devices. This will provide high availability and fault tolerance.
+
+   * - ``xen_hvmloader_path`` = ``/usr/lib/xen/boot/hvmloader``
+
+     - (String) Location where the Xen hvmloader is kept
+
+   * - ``live_migration_bandwidth`` = ``0``
+
+     - (Integer) Maximum bandwidth(in MiB/s) to be used during migration.
+
+       If set to 0, the hypervisor will choose a suitable default. Some hypervisors do not support this feature and will return an error if bandwidth is not 0. Please refer to the libvirt documentation for further details.
+
    * - ``snapshot_image_format`` = ``None``
-     - (String) Snapshot image format. Defaults to same as source image
-   * - ``snapshots_directory`` = ``$instances_path/snapshots``
-     - (String) Location where libvirt driver will store snapshots before uploading them to image service
-   * - ``sparse_logical_volumes`` = ``False``
-     - (Boolean) Create sparse logical volumes (with virtualsize) if this flag is set to True.
-   * - ``sysinfo_serial`` = ``auto``
-     - (String) The data source used to the populate the host "serial" UUID exposed to guest in the virtual BIOS.
-   * - ``uid_maps`` =
-     - (List) List of uid targets and ranges.Syntax is guest-uid:host-uid:countMaximum of 5 allowed.
+
+     - (String) Determine the snapshot image format when sending to the image service.
+
+       If set, this decides what format is used when sending the snapshot to the image service. If not set, defaults to same type as source image.
+
+       Possible values:
+
+       * ``raw``: RAW disk format
+
+       * ``qcow2``: KVM default disk format
+
+       * ``vmdk``: VMWare default disk format
+
+       * ``vdi``: VirtualBox default disk format
+
+       * If not set, defaults to same type as source image.
+
+   * - ``vzstorage_mount_user`` = ``stack``
+
+     - (String) Mount owner user name.
+
+       This option defines the owner user of Vzstorage cluster mountpoint.
+
+       Related options:
+
+       * vzstorage_mount_* group of parameters
+
+   * - ``live_migration_scheme`` = ``None``
+
+     - (String) Schema used for live migration.
+
+       Override the default libvirt live migration scheme (which is dependant on virt_type). If this option is set to None, nova will automatically choose a sensible default based on the hypervisor. It is not recommended that you change this unless you are very sure that hypervisor supports a particular scheme.
+
+       Related options:
+
+       * ``virt_type``: This option is meaningful only when ``virt_type`` is set to `kvm` or `qemu`.
+
+       * ``live_migration_uri``: If ``live_migration_uri`` value is not None, the scheme used for live migration is taken from ``live_migration_uri`` instead.
+
+   * - ``snapshot_compression`` = ``False``
+
+     - (Boolean) Enable snapshot compression for ``qcow2`` images.
+
+       Note: you can set ``snapshot_image_format`` to ``qcow2`` to force all snapshots to be in ``qcow2`` format, independently from their original image type.
+
+       Related options:
+
+       * snapshot_image_format
+
+   * - ``vzstorage_cache_path`` = ``None``
+
+     - (String) Path to the SSD cache file.
+
+       You can attach an SSD drive to a client and configure the drive to store a local cache of frequently accessed data. By having a local cache on a client's SSD drive, you can increase the overall cluster performance by up to 10 and more times. WARNING! There is a lot of SSD models which are not server grade and may loose arbitrary set of data changes on power loss. Such SSDs should not be used in Vstorage and are dangerous as may lead to data corruptions and inconsistencies. Please consult with the manual on which SSD models are known to be safe or verify it using vstorage-hwflush-check(1) utility.
+
+       This option defines the path which should include "%(cluster_name)s" template to separate caches from multiple shares.
+
+       Related options:
+
+       * vzstorage_mount_opts may include more detailed cache options.
+
+   * - ``gid_maps`` =
+
+     - (List) List of guid targets and ranges.Syntax is guest-gid:host-gid:countMaximum of 5 allowed.
+
+   * - ``disk_cachemodes`` =
+
+     - (List) Specific cachemodes to use for different disk types e.g: file=directsync,block=none
+
+   * - ``live_migration_progress_timeout`` = ``0``
+
+     - (Integer) Time to wait, in seconds, for migration to make forward progress in transferring data before aborting the operation.
+
+       Set to 0 to disable timeouts.
+
+       This is deprecated, and now disabled by default because we have found serious bugs in this feature that caused false live-migration timeout failures. This feature will be removed or replaced in a future release.
+
+       - **Deprecated**
+
+         Serious bugs found in this feature.
+
+       - **Mutable**
+
+         This option can be changed without restarting.
+
+   * - ``nfs_mount_point_base`` = ``$state_path/mnt``
+
+     - (String) Directory where the NFS volume is mounted on the compute node. The default is 'mnt' directory of the location where nova's Python module is installed.
+
+       NFS provides shared storage for the OpenStack Block Storage service.
+
+       Possible values:
+
+       * A string representing absolute path of mount point.
+
+   * - ``live_migration_inbound_addr`` = ``None``
+
+     - (String) The IP address or hostname to be used as the target for live migration traffic.
+
+       If this option is set to None, the hostname of the migration target compute node will be used.
+
+       This option is useful in environments where the live-migration traffic can impact the network plane significantly. A separate network for live-migration traffic can then use this config option and avoids the impact on the management network.
+
+       Possible values:
+
+       * A valid IP address or hostname, else None.
+
    * - ``use_usb_tablet`` = ``True``
-     - (Boolean) DEPRECATED: Enable a mouse cursor within a graphical VNC or SPICE sessions.
+
+     - (Boolean) Enable a mouse cursor within a graphical VNC or SPICE sessions.
 
        This will only be taken into account if the VM is fully virtualized and VNC and/or SPICE is enabled. If the node doesn't support a graphical framebuffer, then it is valid to set this to False.
 
@@ -231,10 +443,14 @@
 
        * ``[vnc]enabled``: If VNC is enabled, ``use_usb_tablet`` will have an effect.
 
-       * ``[spice]enabled`` + ``[spice].agent_enabled``: If SPICE is enabled and the spice agent is disabled, the config value of ``use_usb_tablet`` will have an effect. This option is being replaced by the 'pointer_model' option.
-   * - ``use_virtio_for_bridges`` = ``True``
-     - (Boolean) Use virtio for bridge interfaces with KVM/QEMU
+       * ``[spice]enabled`` + ``[spice].agent_enabled``: If SPICE is enabled and the spice agent is disabled, the config value of ``use_usb_tablet`` will have an effect.
+
+       - **Deprecated**
+
+         This option is being replaced by the 'pointer_model' option.
+
    * - ``virt_type`` = ``kvm``
+
      - (String) Describes the virtualization type (or so called domain type) libvirt should use.
 
        The choice of this type must match the underlying virtualization strategy you have chosen for this host.
@@ -252,97 +468,289 @@
        * ``cpu_mode``: depends on this
 
        * ``cpu_model``: depends on this
-   * - ``volume_clear`` = ``zero``
-     - (String) Method used to wipe old volumes.
-   * - ``volume_clear_size`` = ``0``
-     - (Integer) Size in MiB to wipe at start of old volumes. 0 => all
-   * - ``volume_use_multipath`` = ``False``
-     - (Boolean) Use multipath connection of the iSCSI or FC volume
-   * - ``vzstorage_cache_path`` = ``None``
-     - (String) Path to the SSD cache file.
 
-       You can attach an SSD drive to a client and configure the drive to store a local cache of frequently accessed data. By having a local cache on a client's SSD drive, you can increase the overall cluster performance by up to 10 and more times. WARNING! There is a lot of SSD models which are not server grade and may loose arbitrary set of data changes on power loss. Such SSDs should not be used in Vstorage and are dangerous as may lead to data corruptions and inconsistencies. Please consult with the manual on which SSD models are known to be safe or verify it using vstorage-hwflush-check(1) utility.
+   * - ``rbd_user`` = ``None``
 
-       This option defines the path which should include "%(cluster_name)s" template to separate caches from multiple shares.
+     - (String) The RADOS client name for accessing rbd(RADOS Block Devices) volumes.
 
-       * Services that use this:
+       Libvirt will refer to this user when connecting and authenticating with the Ceph RBD server.
 
-        ``nova-compute``
+   * - ``rescue_kernel_id`` = ``None``
 
-       * Related options:
+     - (String) The ID of the kernel (AKI) image to use with the rescue image.
 
-        vzstorage_mount_opts may include more detailed cache options.
-   * - ``vzstorage_log_path`` = ``/var/log/pstorage/%(cluster_name)s/nova.log.gz``
-     - (String) Path to vzstorage client log.
+       If the chosen rescue image allows the separate definition of its kernel disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
 
-       This option defines the log of cluster operations, it should include "%(cluster_name)s" template to separate logs from multiple shares.
+       Possible values:
 
-       * Services that use this:
+       * An ID of an kernel image or nothing. If nothing is specified, the kernel disk from the instance is used if it was launched with one.
 
-        ``nova-compute``
+       Related options:
 
-       * Related options:
+       * ``rescue_image_id``: If that option points to an image in *Amazon*'s AMI/AKI/ARI image format, it's useful to use ``rescue_kernel_id`` too.
 
-        vzstorage_mount_opts may include more detailed logging options.
-   * - ``vzstorage_mount_group`` = ``qemu``
-     - (String) Mount owner group name.
-
-       This option defines the owner group of Vzstorage cluster mountpoint.
-
-       * Services that use this:
-
-        ``nova-compute``
-
-       * Related options:
-
-        vzstorage_mount_* group of parameters
-   * - ``vzstorage_mount_opts`` =
-     - (List) Extra mount options for pstorage-mount
-
-       For full description of them, see https://static.openvz.org/vz-man/man1/pstorage-mount.1.gz.html Format is a python string representation of arguments list, like: "['-v', '-R', '500']" Shouldn't include -c, -l, -C, -u, -g and -m as those have explicit vzstorage_* options.
-
-       * Services that use this:
-
-        ``nova-compute``
-
-       * Related options:
-
-        All other vzstorage_* options
-   * - ``vzstorage_mount_perms`` = ``0770``
-     - (String) Mount access mode.
-
-       This option defines the access bits of Vzstorage cluster mountpoint, in the format similar to one of chmod(1) utility, like this: 0770. It consists of one to four digits ranging from 0 to 7, with missing lead digits assumed to be 0's.
-
-       * Services that use this:
-
-        ``nova-compute``
-
-       * Related options:
-
-        vzstorage_mount_* group of parameters
    * - ``vzstorage_mount_point_base`` = ``$state_path/mnt``
+
      - (String) Directory where the Virtuozzo Storage clusters are mounted on the compute node.
 
        This option defines non-standard mountpoint for Vzstorage cluster.
 
-       * Services that use this:
+       Related options:
 
-        ``nova-compute``
+       * vzstorage_mount_* group of parameters
 
-       * Related options:
+   * - ``cpu_model`` = ``None``
 
-        vzstorage_mount_* group of parameters
-   * - ``vzstorage_mount_user`` = ``stack``
-     - (String) Mount owner user name.
+     - (String) Set the name of the libvirt CPU model the instance should use.
 
-       This option defines the owner user of Vzstorage cluster mountpoint.
+       Possible values:
 
-       * Services that use this:
+       * The names listed in /usr/share/libvirt/cpu_map.xml
 
-        ``nova-compute``
+       Related options:
 
-       * Related options:
+       * ``cpu_mode``: Don't set this when ``cpu_mode`` is NOT set to ``custom``. This would result in an error and the instance won't be launched.
 
-        vzstorage_mount_* group of parameters
-   * - ``wait_soft_reboot_seconds`` = ``120``
-     - (Integer) Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
+       * ``virt_type``: Only the virtualization types ``kvm`` and ``qemu`` use this.
+
+   * - ``quobyte_client_cfg`` = ``None``
+
+     - (String) Path to a Quobyte Client configuration file.
+
+   * - ``scality_sofs_config`` = ``None``
+
+     - (String) Path or URL to Scality SOFS(Scale-Out File Server) configuration file.
+
+       The Scality SOFS provides OpenStack users the option of storing their data on a high capacity, replicated, highly available Scality Ring object storage cluster.
+
+   * - ``remote_filesystem_transport`` = ``ssh``
+
+     - (String) libvirt's transport method for remote file operations.
+
+       Because libvirt cannot use RPC to copy files over network to/from other compute nodes, other method must be used for:
+
+       * creating directory on remote host
+
+       * creating file on remote host
+
+       * removing file from remote host
+
+       * copying file to remote host
+
+   * - ``live_migration_downtime_delay`` = ``75``
+
+     - (Integer) Time to wait, in seconds, between each step increase of the migration downtime.
+
+       Minimum delay is 10 seconds. Value is per GiB of guest RAM + disk to be transferred, with lower bound of a minimum of 2 GiB per device.
+
+   * - ``disk_prefix`` = ``None``
+
+     - (String) Override the default disk prefix for the devices attached to an instance.
+
+       If set, this is used to identify a free disk device name for a bus.
+
+       Possible values:
+
+       * Any prefix which will result in a valid disk device name like 'sda' or 'hda' for example. This is only necessary if the device names differ to the commonly known device name prefixes for a virtualization type such as: sd, xvd, uvd, vd.
+
+       Related options:
+
+       * ``virt_type``: Influences which device type is used, which determines the default disk prefix.
+
+   * - ``images_type`` = ``default``
+
+     - (String) VM Images format.
+
+       If default is specified, then use_cow_images flag is used instead of this one.
+
+       Related options:
+
+       * virt.use_cow_images
+
+       * images_volume_group
+
+   * - ``iscsi_iface`` = ``None``
+
+     - (String) The iSCSI transport iface to use to connect to target in case offload support is desired.
+
+       Default format is of the form <transport_name>.<hwaddress> where <transport_name> is one of (be2iscsi, bnx2i, cxgb3i, cxgb4i, qla4xxx, ocs) and <hwaddress> is the MAC address of the interface and can be generated via the iscsiadm -m iface command. Do not confuse the iscsi_iface parameter to be provided here with the actual transport name.
+
+   * - ``vzstorage_mount_perms`` = ``0770``
+
+     - (String) Mount access mode.
+
+       This option defines the access bits of Vzstorage cluster mountpoint, in the format similar to one of chmod(1) utility, like this: 0770. It consists of one to four digits ranging from 0 to 7, with missing lead digits assumed to be 0's.
+
+       Related options:
+
+       * vzstorage_mount_* group of parameters
+
+   * - ``use_virtio_for_bridges`` = ``True``
+
+     - (Boolean) Use virtio for bridge interfaces with KVM/QEMU
+
+   * - ``nfs_mount_options`` = ``None``
+
+     - (String) Mount options passed to the NFS client. See section of the nfs man page for details.
+
+       Mount options controls the way the filesystem is mounted and how the NFS client behaves when accessing files on this mount point.
+
+       Possible values:
+
+       * Any string representing mount options separated by commas.
+
+       * Example string: vers=3,lookupcache=pos
+
+   * - ``image_info_filename_pattern`` = ``$instances_path/$image_cache_subdirectory_name/%(image)s.info``
+
+     - (String) Allows image information files to be stored in non-standard locations
+
+       - **Deprecated**
+
+         Image info files are no longer used by the image cache
+
+   * - ``vzstorage_log_path`` = ``/var/log/pstorage/%(cluster_name)s/nova.log.gz``
+
+     - (String) Path to vzstorage client log.
+
+       This option defines the log of cluster operations, it should include "%(cluster_name)s" template to separate logs from multiple shares.
+
+       Related options:
+
+       * vzstorage_mount_opts may include more detailed logging options.
+
+   * - ``rng_dev_path`` = ``None``
+
+     - (String) A path to a device that will be used as source of entropy on the host. Permitted options are: /dev/random or /dev/hwrng
+
+   * - ``images_volume_group`` = ``None``
+
+     - (String) LVM Volume Group that is used for VM images, when you specify images_type=lvm
+
+       Related options:
+
+       * images_type
+
+   * - ``hw_machine_type`` = ``None``
+
+     - (List) For qemu or KVM guests, set this option to specify a default machine type per host architecture. You can find a list of supported machine types in your environment by checking the output of the "virsh capabilities"command. The format of the value for this config option is host-arch=machine-type. For example: x86_64=machinetype1,armv7l=machinetype2
+
+   * - ``qemu_allowed_storage_drivers`` =
+
+     - (List) Protocols listed here will be accessed directly from QEMU.
+
+       If gluster is present in qemu_allowed_storage_drivers, glusterfs's backend will pass a disk configuration to QEMU. This allows QEMU to access the volume using libgfapi rather than mounting GlusterFS via fuse.
+
+       Possible values:
+
+       * [gluster]
+
+   * - ``num_iser_scan_tries`` = ``5``
+
+     - (Integer) Number of times to scan iSER target to find volume.
+
+       iSER is a server network protocol that extends iSCSI protocol to use Remote Direct Memory Access (RDMA). This option allows the user to specify the maximum number of scan attempts that can be made to find iSER volume.
+
+   * - ``iser_use_multipath`` = ``False``
+
+     - (Boolean) Use multipath connection of the iSER volume.
+
+       iSER volumes can be connected as multipath devices. This will provide high availability and fault tolerance.
+
+   * - ``rescue_ramdisk_id`` = ``None``
+
+     - (String) The ID of the RAM disk (ARI) image to use with the rescue image.
+
+       If the chosen rescue image allows the separate definition of its RAM disk, the value of this option is used, if specified. This is the case when *Amazon*'s AMI/AKI/ARI image format is used for the rescue image.
+
+       Possible values:
+
+       * An ID of a RAM disk image or nothing. If nothing is specified, the RAM disk from the instance is used if it was launched with one.
+
+       Related options:
+
+       * ``rescue_image_id``: If that option points to an image in *Amazon*'s AMI/AKI/ARI image format, it's useful to use ``rescue_ramdisk_id`` too.
+
+   * - ``live_migration_downtime_steps`` = ``10``
+
+     - (Integer) Number of incremental steps to reach max downtime value.
+
+       Will be rounded up to a minimum of 3 steps.
+
+   * - ``rbd_secret_uuid`` = ``None``
+
+     - (String) The libvirt UUID of the secret for the rbd_user volumes.
+
+   * - ``remove_unused_resized_minimum_age_seconds`` = ``3600``
+
+     - (Integer) Unused resized base images younger than this will not be removed
+
+   * - ``scality_sofs_mount_point`` = ``$state_path/scality``
+
+     - (String) Base dir where Scality SOFS shall be mounted.
+
+       The Scality volume driver in Nova mounts SOFS and lets the hypervisor access the volumes.
+
+       Possible values:
+
+       * $state_path/scality where state_path is a config option that specifies the top-level directory for maintaining nova's state or Any string containing the full directory path.
+
+   * - ``volume_clear_size`` = ``0``
+
+     - (Integer) Size of area in MiB, counting from the beginning of the allocated volume, that will be cleared using method set in ``volume_clear`` option.
+
+       Possible values:
+
+       * 0 - clear whole volume
+
+       * >0 - clear specified amount of MiB
+
+       Related options:
+
+       * images_type - must be set to ``lvm``
+
+       * volume_clear - must be set and the value must be different than ``none`` for this option to have any impact
+
+   * - ``sparse_logical_volumes`` = ``False``
+
+     - (Boolean) Create sparse logical volumes (with virtualsize) if this flag is set to True.
+
+   * - ``images_rbd_ceph_conf`` =
+
+     - (String) Path to the ceph configuration file to use
+
+   * - ``live_migration_completion_timeout`` = ``800``
+
+     - (Integer) Time to wait, in seconds, for migration to successfully complete transferring data before aborting the operation.
+
+       Value is per GiB of guest RAM + disk to be transferred, with lower bound of a minimum of 2 GiB. Should usually be larger than downtime delay * downtime steps. Set to 0 to disable timeouts.
+
+       Related options:
+
+       * live_migration_downtime
+
+       * live_migration_downtime_steps
+
+       * live_migration_downtime_delay
+
+       - **Mutable**
+
+         This option can be changed without restarting.
+
+   * - ``live_migration_permit_auto_converge`` = ``False``
+
+     - (Boolean) This option allows nova to start live migration with auto converge on.
+
+       Auto converge throttles down CPU if a progress of on-going live migration is slow. Auto converge will only be used if this flag is set to True and post copy is not permitted or post copy is unavailable due to the version of libvirt and QEMU in use. Auto converge requires libvirt>=1.2.3 and QEMU>=1.6.0.
+
+       Related options:
+
+       * live_migration_permit_post_copy
+
+   * - ``mem_stats_period_seconds`` = ``10``
+
+     - (Integer) A number of seconds to memory usage statistics period. Zero or negative value mean to disable memory usage statistics.
+
+   * - ``smbfs_mount_point_base`` = ``$state_path/mnt``
+
+     - (String) Directory where the SMBFS shares are mounted on the compute node.

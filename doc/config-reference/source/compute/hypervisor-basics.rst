@@ -11,7 +11,7 @@ hypervisor, change the ``virt_type`` option in the ``[libvirt]``
 section of ``nova.conf`` and restart the ``nova-compute`` service.
 
 Here are the general ``nova.conf`` options that are used to
-configure the compute node's hypervisor: :ref:`nova-hypervisor`
+configure the compute node's hypervisor: :ref:`nova-DEFAULT`
 
 Specific options for particular hypervisors can be found in
 the following sections.

@@ -10,67 +10,37 @@
 
 .. _nova-vmware:
 
-.. list-table:: Description of VMware configuration options
+.. list-table:: Description of vmware configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[vmware]**
-     -
-   * - ``api_retry_count`` = ``10``
-     - (Integer) Number of times VMware vCenter server API must be retried on connection failures, e.g. socket error, etc.
-   * - ``ca_file`` = ``None``
-     - (String) Specifies the CA bundle file to be used in verifying the vCenter server certificate.
-   * - ``cache_prefix`` = ``None``
-     - (String) This option adds a prefix to the folder where cached images are stored
 
-       This is not the full path - just a folder prefix. This should only be used when a datastore cache is shared between compute nodes.
+   * - ``vlan_interface`` = ``vmnic0``
 
-       Note: This should only be used when the compute nodes are running on same host or they have a shared file system.
+     - (String) This option specifies the physical ethernet adapter name for VLAN networking.
+
+       Set the vlan_interface configuration option to match the ESX host interface that handles VLAN-tagged VM traffic.
 
        Possible values:
 
-       * Any string representing the cache prefix to the folder
-   * - ``cluster_name`` = ``None``
-     - (String) Name of a VMware Cluster ComputeResource.
-   * - ``console_delay_seconds`` = ``None``
-     - (Integer) Set this value if affected by an increased network latency causing repeated characters when typing in a remote console.
-   * - ``datastore_regex`` = ``None``
-     - (String) Regular expression pattern to match the name of datastore.
+       * Any valid string representing VLAN interface name
 
-       The datastore_regex setting specifies the datastores to use with Compute. For example, datastore_regex="nas.*" selects all the data stores that have a name starting with "nas".
-
-       NOTE: If no regex is given, it just picks the datastore with the most freespace.
-
-       Possible values:
-
-       * Any matching regular expression to a datastore must be given
-   * - ``host_ip`` = ``None``
-     - (String) Hostname or IP address for connection to VMware vCenter host.
-   * - ``host_password`` = ``None``
-     - (String) Password for connection to VMware vCenter host.
    * - ``host_port`` = ``443``
+
      - (Port number) Port for connection to VMware vCenter host.
-   * - ``host_username`` = ``None``
-     - (String) Username for connection to VMware vCenter host.
-   * - ``insecure`` = ``False``
-     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification.
 
-       Related options:
+   * - ``vnc_port_total`` = ``10000``
 
-       * ca_file: This option is ignored if "ca_file" is set.
-   * - ``integration_bridge`` = ``None``
-     - (String) This option should be configured only when using the NSX-MH Neutron plugin. This is the name of the integration bridge on the ESXi server or host. This should not be set for any other Neutron plugin. Hence the default value is not set.
+     - (Integer) Total number of VNC ports.
 
-       Possible values:
+   * - ``console_delay_seconds`` = ``None``
 
-       * Any valid string representing the name of the integration bridge
-   * - ``maximum_objects`` = ``100``
-     - (Integer) This option specifies the limit on the maximum number of objects to return in a single result.
+     - (Integer) Set this value if affected by an increased network latency causing repeated characters when typing in a remote console.
 
-       A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified limit. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.
    * - ``pbm_default_policy`` = ``None``
+
      - (String) This option specifies the default policy to be used.
 
        If pbm_enabled is set and there is no defined storage policy for the specific request, then this policy will be used.
@@ -82,21 +52,87 @@
        Related options:
 
        * pbm_enabled
+
+   * - ``cluster_name`` = ``None``
+
+     - (String) Name of a VMware Cluster ComputeResource.
+
+   * - ``api_retry_count`` = ``10``
+
+     - (Integer) Number of times VMware vCenter server API must be retried on connection failures, e.g. socket error, etc.
+
+   * - ``cache_prefix`` = ``None``
+
+     - (String) This option adds a prefix to the folder where cached images are stored
+
+       This is not the full path - just a folder prefix. This should only be used when a datastore cache is shared between compute nodes.
+
+       Note: This should only be used when the compute nodes are running on same host or they have a shared file system.
+
+       Possible values:
+
+       * Any string representing the cache prefix to the folder
+
+   * - ``integration_bridge`` = ``None``
+
+     - (String) This option should be configured only when using the NSX-MH Neutron plugin. This is the name of the integration bridge on the ESXi server or host. This should not be set for any other Neutron plugin. Hence the default value is not set.
+
+       Possible values:
+
+       * Any valid string representing the name of the integration bridge
+
+   * - ``task_poll_interval`` = ``0.5``
+
+     - (Floating point) Time interval in seconds to poll remote tasks invoked on VMware VC server.
+
    * - ``pbm_enabled`` = ``False``
+
      - (Boolean) This option enables or disables storage policy based placement of instances.
 
        Related options:
 
        * pbm_default_policy
-   * - ``pbm_wsdl_location`` = ``None``
-     - (String) This option specifies the PBM service WSDL file location URL.
 
-       Setting this will disable storage policy based placement of instances.
+   * - ``host_username`` = ``None``
+
+     - (String) Username for connection to VMware vCenter host.
+
+   * - ``insecure`` = ``False``
+
+     - (Boolean) If true, the vCenter server certificate is not verified. If false, then the default CA truststore is used for verification.
+
+       Related options:
+
+       * ca_file: This option is ignored if "ca_file" is set.
+
+   * - ``host_ip`` = ``None``
+
+     - (String) Hostname or IP address for connection to VMware vCenter host.
+
+   * - ``maximum_objects`` = ``100``
+
+     - (Integer) This option specifies the limit on the maximum number of objects to return in a single result.
+
+       A positive value will cause the operation to suspend the retrieval when the count of objects reaches the specified limit. The server may still limit the count to something less than the configured value. Any remaining objects may be retrieved with additional requests.
+
+   * - ``ca_file`` = ``None``
+
+     - (String) Specifies the CA bundle file to be used in verifying the vCenter server certificate.
+
+   * - ``datastore_regex`` = ``None``
+
+     - (String) Regular expression pattern to match the name of datastore.
+
+       The datastore_regex setting specifies the datastores to use with Compute. For example, datastore_regex="nas.*" selects all the data stores that have a name starting with "nas".
+
+       NOTE: If no regex is given, it just picks the datastore with the most freespace.
 
        Possible values:
 
-       * Any valid file path e.g file:///opt/SDK/spbm/wsdl/pbmService.wsdl
+       * Any matching regular expression to a datastore must be given
+
    * - ``serial_port_proxy_uri`` = ``None``
+
      - (String) Identifies a proxy service that provides network access to the serial_port_service_uri.
 
        Possible values:
@@ -106,23 +142,9 @@
        Related options: This option is ignored if serial_port_service_uri is not specified.
 
        * serial_port_service_uri
-   * - ``serial_port_service_uri`` = ``None``
-     - (String) Identifies the remote system where the serial port traffic will be sent.
 
-       This option adds a virtual serial port which sends console output to a configurable service URI. At the service URI address there will be virtual serial port concentrator that will collect console logs. If this is not set, no serial ports will be added to the created VMs.
-
-       Possible values:
-
-       * Any valid URI
-   * - ``task_poll_interval`` = ``0.5``
-     - (Floating point) Time interval in seconds to poll remote tasks invoked on VMware VC server.
-   * - ``use_linked_clone`` = ``True``
-     - (Boolean) This option enables/disables the use of linked clone.
-
-       The ESX hypervisor requires a copy of the VMDK file in order to boot up a virtual machine. The compute driver must download the VMDK via HTTP from the OpenStack Image service to a datastore that is visible to the hypervisor and cache it. Subsequent virtual machines that need the VMDK use the cached version and don't have to copy the file again from the OpenStack Image service.
-
-       If set to false, even with a cached VMDK, there is still a copy operation from the cache location to the hypervisor file directory in the shared datastore. If set to true, the above copy operation is avoided as it creates copy of the virtual machine that shares virtual disks with its parent VM.
    * - ``wsdl_location`` = ``None``
+
      - (String) This option specifies VIM Service WSDL Location
 
        If vSphere API versions 5.1 and later is being used, this section can be ignored. If version is less than 5.1, WSDL files must be hosted locally and their location must be specified in the above section.
@@ -134,3 +156,55 @@
        * http://<server>/vimService.wsdl
 
        * file:///opt/stack/vmware/SDK/wsdl/vim25/vimService.wsdl
+
+       - **Deprecated**
+
+         Only vCenter versions earlier than 5.1 require this option and the current minimum version is 5.1.
+
+   * - ``pbm_wsdl_location`` = ``None``
+
+     - (String) This option specifies the PBM service WSDL file location URL.
+
+       Setting this will disable storage policy based placement of instances.
+
+       Possible values:
+
+       * Any valid file path e.g file:///opt/SDK/spbm/wsdl/pbmService.wsdl
+
+   * - ``use_linked_clone`` = ``True``
+
+     - (Boolean) This option enables/disables the use of linked clone.
+
+       The ESX hypervisor requires a copy of the VMDK file in order to boot up a virtual machine. The compute driver must download the VMDK via HTTP from the OpenStack Image service to a datastore that is visible to the hypervisor and cache it. Subsequent virtual machines that need the VMDK use the cached version and don't have to copy the file again from the OpenStack Image service.
+
+       If set to false, even with a cached VMDK, there is still a copy operation from the cache location to the hypervisor file directory in the shared datastore. If set to true, the above copy operation is avoided as it creates copy of the virtual machine that shares virtual disks with its parent VM.
+
+   * - ``vnc_port`` = ``5900``
+
+     - (Port number) This option specifies VNC starting port.
+
+       Every VM created by ESX host has an option of enabling VNC client for remote connection. Above option 'vnc_port' helps you to set default starting port for the VNC client.
+
+       Possible values:
+
+       * Any valid port number within 5900 -(5900 + vnc_port_total)
+
+       Related options: Below options should be set to enable VNC client.
+
+       * vnc.enabled = True
+
+       * vnc_port_total
+
+   * - ``host_password`` = ``None``
+
+     - (String) Password for connection to VMware vCenter host.
+
+   * - ``serial_port_service_uri`` = ``None``
+
+     - (String) Identifies the remote system where the serial port traffic will be sent.
+
+       This option adds a virtual serial port which sends console output to a configurable service URI. At the service URI address there will be virtual serial port concentrator that will collect console logs. If this is not set, no serial ports will be added to the created VMs.
+
+       Possible values:
+
+       * Any valid URI

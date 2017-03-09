@@ -16,43 +16,49 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``osapi_glance_link_prefix`` = ``None``
-     - (String) This string is prepended to the normal URL that is returned in links to Glance resources. If it is empty (the default), the URLs are returned unchanged.
+
+   * - ``num_retries`` = ``0``
+
+     - (Integer) Enable glance operation retries.
+
+       Specifies the number of retries when uploading / downloading an image to / from glance. 0 means no retries.
+
+   * - ``api_insecure`` = ``False``
+
+     - (Boolean) Enable insecure SSL (https) requests to glance.
+
+       This setting can be used to turn off verification of the glance server certificate against the certificate authorities.
+
+   * - ``allowed_direct_url_schemes`` =
+
+     - (List) List of url schemes that can be directly accessed.
+
+       This option specifies a list of url schemes that can be downloaded directly via the direct_url. This direct_URL can be fetched from Image metadata which can be used by nova to get the image more efficiently. nova-compute could benefit from this by invoking a copy when it has access to the same file system as glance.
 
        Possible values:
 
-       * Any string, including an empty string (the default).
-   * - **[glance]**
-     -
-   * - ``allowed_direct_url_schemes`` =
-     - (List) A list of url scheme that can be downloaded directly via the direct_url. Currently supported schemes: [file].
-   * - ``api_insecure`` = ``False``
-     - (Boolean) Allow to perform insecure SSL (https) requests to glance
+       * [file], Empty list (default)
+
    * - ``api_servers`` = ``None``
-     - (List) A list of the glance api servers endpoints available to nova. These should be fully qualified urls of the form "scheme://hostname:port[/path]" (i.e. "http://10.0.1.0:9292" or "https://my.glance.server/image")
-   * - ``debug`` = ``False``
-     - (Boolean) Enable or disable debug logging with glanceclient.
-   * - ``num_retries`` = ``0``
-     - (Integer) Number of retries when uploading / downloading an image to / from glance.
-   * - ``use_glance_v1`` = ``False``
-     - (Boolean) DEPRECATED: This flag allows reverting to glance v1 if for some reason glance v2 doesn't work in your environment. This will only exist in Newton, and a fully working Glance v2 will be a hard requirement in Ocata.
 
-       * Possible values:
+     - (List) List of glance api servers endpoints available to nova.
 
-        True or False
+       https is used for ssl-based glance api servers.
 
-       * Services that use this:
+       Possible values:
 
-        ``nova-api`` ``nova-compute`` ``nova-conductor``
+       * A list of any fully qualified url of the form "scheme://hostname:port[/path]" (i.e. "http://10.0.1.0:9292" or "https://my.glance.server/image").
 
-       * Related options:
-
-        None Glance v1 support will be removed in Ocata
    * - ``verify_glance_signatures`` = ``False``
-     - (Boolean) Require Nova to perform signature verification on each image downloaded from Glance.
-   * - **[image_file_url]**
-     -
-   * - ``filesystems`` =
-     - (List) DEPRECATED: List of file systems that are configured in this file in the image_file_url:<list entry name> sections The feature to download images from glance via filesystem is not used and will be removed in the future.
+
+     - (Boolean) Enable image signature verification.
+
+       nova uses the image signature metadata from glance and verifies the signature of a signed image while downloading that image. If the image signature cannot be verified or if the image signature metadata is either incomplete or unavailable, then nova will not boot the image and instead will place the instance into an error state. This provides end users with stronger assurances of the integrity of the image data they are using to create servers.
+
+       Related options:
+
+       * The options in the `key_manager` group, as the key_manager is used for the signature validation.
+
+   * - ``debug`` = ``False``
+
+     - (Boolean) Enable or disable debug logging with glanceclient.

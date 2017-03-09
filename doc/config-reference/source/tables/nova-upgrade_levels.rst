@@ -10,101 +10,65 @@
 
 .. _nova-upgrade_levels:
 
-.. list-table:: Description of upgrade levels configuration options
+.. list-table:: Description of upgrade_levels configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[cells]**
-     -
-   * - ``scheduler`` = ``nova.cells.scheduler.CellsScheduler``
-     - (String) Cells scheduler
 
-       The class of the driver used by the cells scheduler. This should be the full Python path to the class to be used. If nothing is specified in this option, the CellsScheduler is used.
-   * - **[upgrade_levels]**
-     -
-   * - ``baseapi`` = ``None``
-     - (String) Set a version cap for messages sent to the base api in any service
-   * - ``cells`` = ``None``
-     - (String) Cells version
-
-       Cells client-side RPC API version. Use this option to set a version cap for messages sent to local cells services.
-
-       Possible values:
-
-       * None: This is the default value.
-
-       * grizzly: message version 1.6.
-
-       * havana: message version 1.24.
-
-       * icehouse: message version 1.27.
-
-       * juno: message version 1.29.
-
-       * kilo: message version 1.34.
-
-       * liberty: message version 1.37.
-
-       Services which consume this:
-
-       * nova-cells
-
-       Related options:
-
-       * None
-   * - ``cert`` = ``None``
-     - (String) Specifies the maximum version for messages sent from cert services. This should be the minimum value that is supported by all of the deployed cert services.
-
-       Possible values:
-
-       Any valid OpenStack release name, in lower case, such as 'mitaka' or 'liberty'. Alternatively, it can be any string representing a version number in the format 'N.N'; for example, possible values might be '1.12' or '2.0'.
-
-       Services which consume this:
-
-       * nova-cert
-
-       Related options:
-
-       * None
    * - ``compute`` = ``None``
-     - (String) Set a version cap for messages sent to compute services. Set this option to "auto" if you want to let the compute RPC module automatically determine what version to use based on the service versions in the deployment. Otherwise, you can set this to a specific version to pin this service to messages at a particular level. All services of a single type (i.e. compute) should be configured to use the same version, and it should be set to the minimum commonly-supported version of all those services in the deployment.
-   * - ``conductor`` = ``None``
-     - (String) Set a version cap for messages sent to conductor services
-   * - ``console`` = ``None``
-     - (String) Set a version cap for messages sent to console services
-   * - ``consoleauth`` = ``None``
-     - (String) Set a version cap for messages sent to consoleauth services
-   * - ``intercell`` = ``None``
-     - (String) Intercell version
 
-       Intercell RPC API is the client side of the Cell<->Cell RPC API. Use this option to set a version cap for messages sent between cells services.
+     - (String) Compute RPC API version cap.
+
+       By default, we always send messages using the most recent version the client knows about.
+
+       Where you have old and new compute services running, you should set this to the lowest deployed version. This is to guarantee that all services never send messages that one of the compute nodes can't understand. Note that we only support upgrading from release N to release N+1.
+
+       Set this option to "auto" if you want to let the compute RPC module automatically determine what version to use based on the service versions in the deployment.
 
        Possible values:
 
-       * None: This is the default value.
+       * By default send the latest version the client knows about
 
-       * grizzly: message version 1.0.
+       * 'auto': Automatically determines what version to use based on the service versions in the deployment.
 
-       Services which consume this:
+       * A string representing a version number in the format 'N.N'; for example, possible values might be '1.12' or '2.0'.
 
-       * nova-cells
+       * An OpenStack release name, in lower case, such as 'mitaka' or 'liberty'.
 
-       Related options:
-
-       * None
    * - ``network`` = ``None``
-     - (String) Set a version cap for messages sent to network services
+
+     - (String) Network RPC API version cap
+
+   * - ``conductor`` = ``None``
+
+     - (String) Conductor RPC API version cap
+
+   * - ``cells`` = ``None``
+
+     - (String) Cells RPC API version cap
+
+   * - ``cert`` = ``None``
+
+     - (String) Cert RPC API version cap
+
    * - ``scheduler`` = ``None``
-     - (String) Sets a version cap (limit) for messages sent to scheduler services. In the situation where there were multiple scheduler services running, and they were not being upgraded together, you would set this to the lowest deployed version to guarantee that other services never send messages that any of your running schedulers cannot understand.
 
-       This is rarely needed in practice as most deployments run a single scheduler. It exists mainly for design compatibility with the other services, such as compute, which are routinely upgraded in a rolling fashion.
+     - (String) Scheduler RPC API version cap
 
-       Services that use this:
+   * - ``intercell`` = ``None``
 
-       * nova-compute, nova-conductor
+     - (String) Intercell RPC API version cap
 
-       Related options:
+   * - ``console`` = ``None``
 
-       * None
+     - (String) Console RPC API version cap
+
+   * - ``consoleauth`` = ``None``
+
+     - (String) Consoleauth RPC API version cap
+
+   * - ``baseapi`` = ``None``
+
+     - (String) Base API RPC API version cap

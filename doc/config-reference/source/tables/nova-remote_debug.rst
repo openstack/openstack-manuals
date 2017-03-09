@@ -8,31 +8,17 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-debug:
+.. _nova-remote_debug:
 
-.. list-table:: Description of logging configuration options
+.. list-table:: Description of remote_debug configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[guestfs]**
-     -
-   * - ``debug`` = ``False``
-     - (Boolean) Enable/disables guestfs logging.
 
-       This configures guestfs to debug messages and push them to Openstack logging system. When set to True, it traces libguestfs API calls and enable verbose debug messages. In order to use the above feature, "libguestfs" package must be installed.
-
-       Related options: Since libguestfs access and modifies VM's managed by libvirt, below options should be set to give access to those VM's.
-
-       * libvirt.inject_key
-
-       * libvirt.inject_partition
-
-       * libvirt.inject_password
-   * - **[remote_debug]**
-     -
    * - ``host`` = ``None``
+
      - (String) Debug host (IP or name) to connect to. This command line parameter is used when you want to connect to a nova service via a debugger running on a different host.
 
        Note that using the remote debug option changes how Nova uses the eventlet library to support async IO. This could result in failures that do not occur under normal operation. Use at your own risk.
@@ -42,7 +28,9 @@
        * IP address of a remote host as a command line parameter to a nova service. For Example:
 
         /usr/local/bin/nova-compute --config-file /etc/nova/nova.conf --remote_debug-host <IP address where the debugger is running>
+
    * - ``port`` = ``None``
+
      - (Port number) Debug port to connect to. This command line parameter allows you to specify the port you want to use to connect to a nova service via a debugger running on different host.
 
        Note that using the remote debug option changes how Nova uses the eventlet library to support async IO. This could result in failures that do not occur under normal operation. Use at your own risk.

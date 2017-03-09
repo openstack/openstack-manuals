@@ -16,57 +16,73 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``neutron_default_tenant_id`` = ``default``
-     - (String) Tenant ID for getting the default network from Neutron API (also referred in some places as the 'project ID') to use.
 
-       Related options:
-
-       * use_neutron_default_nets
-   * - **[neutron]**
-     -
-   * - ``auth_section`` = ``None``
-     - (Unknown) Config Section from which to load plugin specific options
    * - ``auth_type`` = ``None``
+
      - (Unknown) Authentication type to load
-   * - ``cafile`` = ``None``
-     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
-   * - ``certfile`` = ``None``
-     - (String) PEM encoded client certificate cert file
-   * - ``extension_sync_interval`` = ``600``
-     - (Integer) Integer value representing the number of seconds to wait before querying Neutron for extensions. After this number of seconds the next time Nova needs to create a resource in Neutron it will requery Neutron for the extensions that it has loaded. Setting value to 0 will refresh the extensions with no wait.
-   * - ``insecure`` = ``False``
-     - (Boolean) Verify HTTPS connections.
-   * - ``keyfile`` = ``None``
-     - (String) PEM encoded client certificate key file
-   * - ``metadata_proxy_shared_secret`` =
-     - (String) This option holds the shared secret string used to validate proxy requests to Neutron metadata requests. In order to be used, the 'X-Metadata-Provider-Signature' header must be supplied in the request.
 
-       Related options:
-
-       * service_metadata_proxy
-   * - ``ovs_bridge`` = ``br-int``
-     - (String) Specifies the name of an integration bridge interface used by OpenvSwitch. This option is used only if Neutron does not specify the OVS bridge name.
-
-       Possible values:
-
-       * Any string representing OVS bridge name.
-   * - ``region_name`` = ``RegionOne``
-     - (String) Region name for connecting to Neutron in admin context.
-
-       This option is used in multi-region setups. If there are two Neutron servers running in two regions in two different machines, then two services need to be created in Keystone with two different regions and associate corresponding endpoints to those services. When requests are made to Keystone, the Keystone service uses the region_name to determine the region the request is coming from.
    * - ``service_metadata_proxy`` = ``False``
+
      - (Boolean) When set to True, this option indicates that Neutron will be used to proxy metadata requests and resolve instance ids. Otherwise, the instance ID must be passed to the metadata request in the 'X-Instance-ID' header.
 
        Related options:
 
        * metadata_proxy_shared_secret
-   * - ``timeout`` = ``None``
-     - (Integer) Timeout value for http requests
+
+   * - ``region_name`` = ``RegionOne``
+
+     - (String) Region name for connecting to Neutron in admin context.
+
+       This option is used in multi-region setups. If there are two Neutron servers running in two regions in two different machines, then two services need to be created in Keystone with two different regions and associate corresponding endpoints to those services. When requests are made to Keystone, the Keystone service uses the region_name to determine the region the request is coming from.
+
    * - ``url`` = ``http://127.0.0.1:9696``
+
      - (URI) This option specifies the URL for connecting to Neutron.
 
        Possible values:
 
        * Any valid URL that points to the Neutron API service is appropriate here. This typically matches the URL returned for the 'network' service type from the Keystone service catalog.
+
+   * - ``cafile`` = ``None``
+
+     - (String) PEM encoded Certificate Authority to use when verifying HTTPs connections.
+
+   * - ``insecure`` = ``False``
+
+     - (Boolean) Verify HTTPS connections.
+
+   * - ``extension_sync_interval`` = ``600``
+
+     - (Integer) Integer value representing the number of seconds to wait before querying Neutron for extensions. After this number of seconds the next time Nova needs to create a resource in Neutron it will requery Neutron for the extensions that it has loaded. Setting value to 0 will refresh the extensions with no wait.
+
+   * - ``timeout`` = ``None``
+
+     - (Integer) Timeout value for http requests
+
+   * - ``certfile`` = ``None``
+
+     - (String) PEM encoded client certificate cert file
+
+   * - ``ovs_bridge`` = ``br-int``
+
+     - (String) Specifies the name of an integration bridge interface used by OpenvSwitch. This option is used only if Neutron does not specify the OVS bridge name.
+
+       Possible values:
+
+       * Any string representing OVS bridge name.
+
+   * - ``keyfile`` = ``None``
+
+     - (String) PEM encoded client certificate key file
+
+   * - ``auth_section`` = ``None``
+
+     - (Unknown) Config Section from which to load plugin specific options
+
+   * - ``metadata_proxy_shared_secret`` =
+
+     - (String) This option holds the shared secret string used to validate proxy requests to Neutron metadata requests. In order to be used, the 'X-Metadata-Provider-Signature' header must be supplied in the request.
+
+       Related options:
+
+       * service_metadata_proxy

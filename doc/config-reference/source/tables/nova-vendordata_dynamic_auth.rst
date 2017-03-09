@@ -8,9 +8,9 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-ironic:
+.. _nova-vendordata_dynamic_auth:
 
-.. list-table:: Description of ironic configuration options
+.. list-table:: Description of vendordata_dynamic_auth configuration options
    :header-rows: 1
    :class: config-ref-table
 
@@ -21,21 +21,9 @@
 
      - (Unknown) Authentication type to load
 
-   * - ``serial_console_state_timeout`` = ``10``
-
-     - (Integer) Timeout (seconds) to wait for node serial console state changed. Set to 0 to disable timeout.
-
    * - ``certfile`` = ``None``
 
      - (String) PEM encoded client certificate cert file
-
-   * - ``api_retry_interval`` = ``2``
-
-     - (Integer) The number of seconds to wait before retrying the request.
-
-       Related options:
-
-       * api_max_retries
 
    * - ``keyfile`` = ``None``
 
@@ -44,18 +32,6 @@
    * - ``insecure`` = ``False``
 
      - (Boolean) Verify HTTPS connections.
-
-   * - ``api_max_retries`` = ``60``
-
-     - (Integer) The number of times to retry when a request conflicts. If set to 0, only try once, no retries.
-
-       Related options:
-
-       * api_retry_interval
-
-   * - ``api_endpoint`` = ``http://ironic.example.org:6385/``
-
-     - (String) URL override for the Ironic API endpoint.
 
    * - ``timeout`` = ``None``
 

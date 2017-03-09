@@ -16,147 +16,205 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``bandwidth_poll_interval`` = ``600``
-     - (Integer) Interval to pull network bandwidth usage info. Not supported on all hypervisors. Set to -1 to disable. Setting this to 0 will run at the default rate.
-   * - ``enable_network_quota`` = ``False``
-     - (Boolean) DEPRECATED: This option is used to enable or disable quota checking for tenant networks.
 
-       Related options:
+   * - ``metadata_items`` = ``128``
 
-       * quota_networks CRUD operations on tenant networks are only available when using nova-network and nova-network is itself deprecated.
-   * - ``quota_cores`` = ``20``
-     - (Integer) The number of instance cores or VCPUs allowed per project.
+     - (Integer) The number of metadata items allowed per instance.
+
+       Users can associate metadata with an instance during instance creation. This metadata takes the form of key-value pairs.
 
        Possible values:
 
-       * 20 (default) or any positive integer.
+       * A positive integer or 0.
 
-       * -1 : treated as unlimited.
-   * - ``quota_driver`` = ``nova.quota.DbQuotaDriver``
-     - (String) DEPRECATED: Provides abstraction for quota checks. Users can configure a specific driver to use for quota checks.
+       * -1 to disable the quota.
 
-       Possible values:
+   * - ``injected_file_content_bytes`` = ``10240``
 
-       * nova.quota.DbQuotaDriver (default) or any string representing fully qualified class name.
-   * - ``quota_fixed_ips`` = ``-1``
-     - (Integer) The number of fixed IPs allowed per project (this should be at least the number of instances allowed). Unlike floating IPs, fixed IPs are allocated dynamically by the network component when instances boot up.
-
-       Possible values:
-
-       * -1 (default) : treated as unlimited.
-
-       * Any positive integer.
-   * - ``quota_floating_ips`` = ``10``
-     - (Integer) The number of floating IPs allowed per project. Floating IPs are not allocated to instances by default. Users need to select them from the pool configured by the OpenStack administrator to attach to their instances.
-
-       Possible values:
-
-       * 10 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - ``quota_injected_file_content_bytes`` = ``10240``
      - (Integer) The number of bytes allowed per injected file.
 
        Possible values:
 
-       * 10240 (default) or any positive integer representing number of bytes.
+       * A positive integer or 0.
 
-       * -1 : treated as unlimited.
-   * - ``quota_injected_file_path_length`` = ``255``
+       * -1 to disable the quota.
+
+   * - ``max_age`` = ``0``
+
+     - (Integer) The number of seconds between subsequent usage refreshes.
+
+       This defaults to 0 (off) to avoid additional load but it is useful to turn on to help keep quota usage up-to-date and reduce the impact of out of sync usage issues. Note that quotas are not updated on a periodic task, they will update on a new reservation if max_age has passed since the last reservation.
+
+   * - ``server_group_members`` = ``10``
+
+     - (Integer) The maximum number of servers per server group.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+   * - ``server_groups`` = ``10``
+
+     - (Integer) The maxiumum number of server groups per project.
+
+       Server groups are used to control the affinity and anti-affinity scheduling policy for a group of servers or instances. Reducing the quota will not affect any existing group, but new servers will not be allowed into groups that have become over quota.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+   * - ``until_refresh`` = ``0``
+
+     - (Integer) The count of reservations until usage is refreshed.
+
+       This defaults to 0 (off) to avoid additional load but it is useful to turn on to help keep quota usage up-to-date and reduce the impact of out of sync usage issues.
+
+   * - ``injected_file_path_length`` = ``255``
+
      - (Integer) The maximum allowed injected file path length.
 
        Possible values:
 
-       * 255 (default) or any positive integer.
+       * A positive integer or 0.
 
-       * -1 : treated as unlimited.
-   * - ``quota_injected_files`` = ``5``
-     - (Integer) The number of injected files allowed. It allow users to customize the personality of an instance by injecting data into it upon boot. Only text file injection is permitted. Binary or zip files won't work. During file injection, any existing files that match specified files are renamed to include .bak extension appended with a timestamp.
+       * -1 to disable the quota.
 
-       Possible values:
+   * - ``ram`` = ``51200``
 
-       * 5 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - ``quota_instances`` = ``10``
-     - (Integer) The number of instances allowed per project.
-
-       Possible Values
-
-       * 10 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - ``quota_key_pairs`` = ``100``
-     - (Integer) The maximum number of key pairs allowed per user. Users can create at least one key pair for each project and use the key pair for multiple instances that belong to that project.
-
-       Possible values:
-
-       * 100 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - ``quota_metadata_items`` = ``128``
-     - (Integer) The number of metadata items allowed per instance. User can associate metadata while instance creation in the form of key-value pairs.
-
-       Possible values:
-
-       * 128 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - ``quota_networks`` = ``3``
-     - (Integer) DEPRECATED: This option controls the number of private networks that can be created per project (or per tenant).
-
-       Related options:
-
-       * enable_network_quota CRUD operations on tenant networks are only available when using nova-network and nova-network is itself deprecated.
-   * - ``quota_ram`` = ``51200``
      - (Integer) The number of megabytes of instance RAM allowed per project.
 
        Possible values:
 
-       * 51200 (default) or any positive integer.
+       * A positive integer or 0.
 
-       * -1 : treated as unlimited.
-   * - ``quota_security_group_rules`` = ``20``
-     - (Integer) The number of security rules per security group. The associated rules in each security group control the traffic to instances in the group.
+       * -1 to disable the quota.
+
+   * - ``driver`` = ``nova.quota.DbQuotaDriver``
+
+     - (String) The quota enforcer driver.
+
+       Provides abstraction for quota checks. Users can configure a specific driver to use for quota checks.
 
        Possible values:
 
-       * 20 (default) or any positive integer.
+       * nova.quota.DbQuotaDriver (default) or any string representing fully qualified class name.
 
-       * -1 : treated as unlimited.
-   * - ``quota_security_groups`` = ``10``
+       - **Deprecated**
+
+         No deprecation reason provided for this option.
+
+   * - ``floating_ips`` = ``10``
+
+     - (Integer) The number of floating IPs allowed per project.
+
+       Floating IPs are not allocated to instances by default. Users need to select them from the pool configured by the OpenStack administrator to attach to their instances.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
+   * - ``security_group_rules`` = ``20``
+
+     - (Integer) The number of security rules per security group.
+
+       The associated rules in each security group control the traffic to instances in the group.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
+   * - ``instances`` = ``10``
+
+     - (Integer) The number of instances allowed per project.
+
+       Possible Values
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+   * - ``key_pairs`` = ``100``
+
+     - (Integer) The maximum number of key pairs allowed per user.
+
+       Users can create at least one key pair for each project and use the key pair for multiple instances that belong to that project.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+   * - ``injected_files`` = ``5``
+
+     - (Integer) The number of injected files allowed.
+
+       File injection allows users to customize the personality of an instance by injecting data into it upon boot. Only text file injection is permitted: binary or ZIP files are not accepted. During file injection, any existing files that match specified files are renamed to include ``.bak`` extension appended with a timestamp.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+   * - ``cores`` = ``20``
+
+     - (Integer) The number of instance cores or vCPUs allowed per project.
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+   * - ``fixed_ips`` = ``-1``
+
+     - (Integer) The number of fixed IPs allowed per project.
+
+       Unlike floating IPs, fixed IPs are allocated dynamically by the network component when instances boot up. This quota value should be at least the number of instances allowed
+
+       Possible values:
+
+       * A positive integer or 0.
+
+       * -1 to disable the quota.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
+   * - ``reservation_expire`` = ``86400``
+
+     - (Integer) The number of seconds until a reservation expires.
+
+       This quota represents the time period for invalidating quota reservations.
+
+   * - ``security_groups`` = ``10``
+
      - (Integer) The number of security groups per project.
 
        Possible values:
 
-       * 10 (default) or any positive integer.
+       * A positive integer or 0.
 
-       * -1 : treated as unlimited.
-   * - ``quota_server_group_members`` = ``10``
-     - (Integer) Add quota values to constrain the number of servers per server group.
+       * -1 to disable the quota.
 
-       Possible values:
+       - **Deprecated**
 
-       * 10 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - ``quota_server_groups`` = ``10``
-     - (Integer) Add quota values to constrain the number of server groups per project. Server group used to control the affinity and anti-affinity scheduling policy for a group of servers or instances. Reducing the quota will not affect any existing group, but new servers will not be allowed into groups that have become over quota.
-
-       Possible values:
-
-       * 10 (default) or any positive integer.
-
-       * -1 : treated as unlimited.
-   * - **[cells]**
-     -
-   * - ``bandwidth_update_interval`` = ``600``
-     - (Integer) Bandwidth update interval
-
-       Seconds between bandwidth usage cache updates for cells.
-
-       Possible values:
-
-       * Time in seconds.
+         nova-network is deprecated, as are any related configuration options.

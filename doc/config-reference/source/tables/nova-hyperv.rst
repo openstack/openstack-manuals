@@ -10,29 +10,121 @@
 
 .. _nova-hyperv:
 
-.. list-table:: Description of HyperV configuration options
+.. list-table:: Description of hyperv configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[hyperv]**
-     -
-   * - ``dynamic_memory_ratio`` = ``1.0``
-     - (Floating point) Dynamic memory ratio
 
-       Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup.
+   * - ``config_drive_cdrom`` = ``False``
+
+     - (Boolean) Configuration drive cdrom
+
+       OpenStack can be configured to write instance metadata to a configuration drive, which is then attached to the instance before it boots. The configuration drive can be attached as a disk drive (default) or as a CD drive.
 
        Possible values:
 
-       * 1.0: Disables dynamic memory allocation (Default).
+       * True: Attach the configuration drive image as a CD drive.
 
-       * Float values greater than 1.0: Enables allocation of total implied RAM divided by this value for startup.
-   * - ``enable_instance_metrics_collection`` = ``False``
-     - (Boolean) Enable instance metrics collection
+       * False: Attach the configuration drive image as a disk drive (Default).
 
-       Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer.
+       Related options:
+
+       * This option is meaningful with force_config_drive option set to 'True' or when the REST API call to create an instance will have '--config-drive=True' flag.
+
+       * config_drive_format option must be set to 'iso9660' in order to use CD drive as the configuration drive image.
+
+       * To use configuration drive with Hyper-V, you must set the mkisofs_cmd value to the full path to an mkisofs.exe installation. Additionally, you must set the qemu_img_cmd value to the full path to an qemu-img command installation.
+
+       * You can configure the Compute service to always create a configuration drive by setting the force_config_drive option to 'True'.
+
+   * - ``instances_path_share`` =
+
+     - (String) Instances path share
+
+       The name of a Windows share mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share (hidden network share) will be used, looking for the same "instances_path" used locally.
+
+       Possible values:
+
+       * "": An administrative share will be used (Default).
+
+       * Name of a Windows share.
+
+       Related options:
+
+       * "instances_path": The directory which will be used if this option here is left blank.
+
+   * - ``volume_attach_retry_count`` = ``10``
+
+     - (Integer) Volume attach retry count
+
+       The number of times to retry attaching a volume. Volume attachment is retried until success or the given retry count is reached.
+
+       Possible values:
+
+       * Positive integer values (Default: 10).
+
+       Related options:
+
+       * Time interval between attachment attempts is declared with volume_attach_retry_interval option.
+
+   * - ``volume_attach_retry_interval`` = ``5``
+
+     - (Integer) Volume attach retry interval
+
+       Interval between volume attachment attempts, in seconds.
+
+       Possible values:
+
+       * Time in seconds (Default: 5).
+
+       Related options:
+
+       * This options is meaningful when volume_attach_retry_count is greater than 1.
+
+       * The retry loop runs with volume_attach_retry_count and volume_attach_retry_interval configuration options.
+
+   * - ``vswitch_name`` = ``None``
+
+     - (String) External virtual switch name
+
+       The Hyper-V Virtual Switch is a software-based layer-2 Ethernet network switch that is available with the installation of the Hyper-V server role. The switch includes programmatically managed and extensible capabilities to connect virtual machines to both virtual networks and the physical network. In addition, Hyper-V Virtual Switch provides policy enforcement for security, isolation, and service levels. The vSwitch represented by this config option must be an external one (not internal or private).
+
+       Possible values:
+
+       * If not provided, the first of a list of available vswitches is used. This list is queried using WQL.
+
+       * Virtual switch name.
+
+   * - ``qemu_img_cmd`` = ``qemu-img.exe``
+
+     - (String) qemu-img command
+
+       qemu-img is required for some of the image related operations like converting between different image types. You can get it from here: (http://qemu.weilnetz.de/) or you can install the Cloudbase OpenStack Hyper-V Compute Driver (https://cloudbase.it/openstack-hyperv-driver/) which automatically sets the proper path for this config option. You can either give the full path of qemu-img.exe or set its path in the PATH environment variable and leave this option to the default value.
+
+       Possible values:
+
+       * Name of the qemu-img executable, in case it is in the same directory as the nova-compute service or its path is in the PATH environment variable (Default).
+
+       * Path of qemu-img command (DRIVELETTER:\PATH\TO\QEMU-IMG\COMMAND).
+
+       Related options:
+
+       * If the config_drive_cdrom option is False, qemu-img will be used to convert the ISO to a VHD, otherwise the configuration drive will remain an ISO. To use configuration drive with Hyper-V, you must set the mkisofs_cmd value to the full path to an mkisofs.exe installation.
+
+   * - ``power_state_event_polling_interval`` = ``2``
+
+     - (Integer) Power state event polling interval
+
+       Instance power state change event polling frequency. Sets the listener interval for power state events to the given value. This option enhances the internal lifecycle notifications of instances that reboot themselves. It is unlikely that an operator has to change this value.
+
+       Possible values:
+
+       * Time in seconds (Default: 2).
+
    * - ``enable_remotefx`` = ``False``
+
      - (Boolean) Enable RemoteFX feature
 
        This requires at least one DirectX 11 capable graphics adapter for Windows / Hyper-V Server 2012 R2 or newer and RDS-Virtualization feature has to be enabled.
@@ -52,28 +144,74 @@
        **os:vram**. Guest VM VRAM amount. Only available on Windows / Hyper-V Server 2016. Acceptable values::
 
         64, 128, 256, 512, 1024
-   * - ``instances_path_share`` =
-     - (String) Instances path share
 
-       The name of a Windows share mapped to the "instances_path" dir and used by the resize feature to copy files to the target host. If left blank, an administrative share (hidden network share) will be used, looking for the same "instances_path" used locally.
+   * - ``enable_instance_metrics_collection`` = ``False``
+
+     - (Boolean) Enable instance metrics collection
+
+       Enables metrics collections for an instance by using Hyper-V's metric APIs. Collected data can by retrieved by other apps and services, e.g.: Ceilometer.
+
+   * - ``wait_soft_reboot_seconds`` = ``60``
+
+     - (Integer) Wait soft reboot seconds
+
+       Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
 
        Possible values:
 
-       * "": An administrative share will be used (Default).
+       * Time in seconds (Default: 60).
 
-       * Name of a Windows share.
+   * - ``power_state_check_timeframe`` = ``60``
 
-       Related options:
+     - (Integer) Power state check timeframe
 
-       * "instances_path": The directory which will be used if this option here is left blank.
+       The timeframe to be checked for instance power state changes. This option is used to fetch the state of the instance from Hyper-V through the WMI interface, within the specified timeframe.
+
+       Possible values:
+
+       * Timeframe in seconds (Default: 60).
+
+   * - ``dynamic_memory_ratio`` = ``1.0``
+
+     - (Floating point) Dynamic memory ratio
+
+       Enables dynamic memory allocation (ballooning) when set to a value greater than 1. The value expresses the ratio between the total RAM assigned to an instance and its startup RAM amount. For example a ratio of 2.0 for an instance with 1024MB of RAM implies 512MB of RAM allocated at startup.
+
+       Possible values:
+
+       * 1.0: Disables dynamic memory allocation (Default).
+
+       * Float values greater than 1.0: Enables allocation of total implied RAM divided by this value for startup.
+
+   * - ``iscsi_initiator_list`` =
+
+     - (List) List of iSCSI initiators that will be used for estabilishing iSCSI sessions.
+
+       If none are specified, the Microsoft iSCSI initiator service will choose the initiator.
+
    * - ``limit_cpu_features`` = ``False``
+
      - (Boolean) Limit CPU features
 
        This flag is needed to support live migration to hosts with different CPU features and checked during instance creation in order to limit the CPU features used by the instance.
+
+   * - ``config_drive_inject_password`` = ``False``
+
+     - (Boolean) Configuration drive inject password
+
+       Enables setting the admin password in the configuration drive image.
+
+       Related options:
+
+       * This option is meaningful when used with other options that enable configuration drive usage with Hyper-V, such as force_config_drive.
+
+       * Currently, the only accepted config_drive_format is 'iso9660'.
+
    * - ``mounted_disk_query_retry_count`` = ``10``
+
      - (Integer) Mounted disk query retry count
 
-       The number of times to retry checking for a disk mounted via iSCSI. During long stress runs the WMI query that is looking for the iSCSI device number can incorrectly return no data. If the query is retried the appropriate data can then be obtained. The query runs until the device can be found or the retry count is reached.
+       The number of times to retry checking for a mounted disk. The query runs until the device can be found or the retry count is reached.
 
        Possible values:
 
@@ -82,10 +220,26 @@
        Related options:
 
        * Time interval between disk mount retries is declared with "mounted_disk_query_retry_interval" option.
+
+   * - ``use_multipath_io`` = ``False``
+
+     - (Boolean) Use multipath connections when attaching iSCSI or FC disks.
+
+       This requires the Multipath IO Windows feature to be enabled. MPIO must be configured to claim such devices.
+
+   * - ``force_volumeutils_v1`` = ``False``
+
+     - (Boolean) Force V1 volume utility class
+
+       - **Deprecated**
+
+         No deprecation reason provided for this option.
+
    * - ``mounted_disk_query_retry_interval`` = ``5``
+
      - (Integer) Mounted disk query retry interval
 
-       Interval between checks for a mounted iSCSI disk, in seconds.
+       Interval between checks for a mounted disk, in seconds.
 
        Possible values:
 
@@ -96,51 +250,3 @@
        * This option is meaningful when the mounted_disk_query_retry_count is greater than 1.
 
        * The retry loop runs with mounted_disk_query_retry_count and mounted_disk_query_retry_interval configuration options.
-   * - ``power_state_check_timeframe`` = ``60``
-     - (Integer) Power state check timeframe
-
-       The timeframe to be checked for instance power state changes. This option is used to fetch the state of the instance from Hyper-V through the WMI interface, within the specified timeframe.
-
-       Possible values:
-
-       * Timeframe in seconds (Default: 60).
-   * - ``power_state_event_polling_interval`` = ``2``
-     - (Integer) Power state event polling interval
-
-       Instance power state change event polling frequency. Sets the listener interval for power state events to the given value. This option enhances the internal lifecycle notifications of instances that reboot themselves. It is unlikely that an operator has to change this value.
-
-       Possible values:
-
-       * Time in seconds (Default: 2).
-   * - ``qemu_img_cmd`` = ``qemu-img.exe``
-     - (String) qemu-img command
-
-       qemu-img is required for some of the image related operations like converting between different image types. You can get it from here: (http://qemu.weilnetz.de/) or you can install the Cloudbase OpenStack Hyper-V Compute Driver (https://cloudbase.it/openstack-hyperv-driver/) which automatically sets the proper path for this config option. You can either give the full path of qemu-img.exe or set its path in the PATH environment variable and leave this option to the default value.
-
-       Possible values:
-
-       * Name of the qemu-img executable, in case it is in the same directory as the nova-compute service or its path is in the PATH environment variable (Default).
-
-       * Path of qemu-img command (DRIVELETTER:\PATH\TO\QEMU-IMG\COMMAND).
-
-       Related options:
-
-       * If the config_drive_cdrom option is False, qemu-img will be used to convert the ISO to a VHD, otherwise the configuration drive will remain an ISO. To use configuration drive with Hyper-V, you must set the mkisofs_cmd value to the full path to an mkisofs.exe installation.
-   * - ``vswitch_name`` = ``None``
-     - (String) External virtual switch name
-
-       The Hyper-V Virtual Switch is a software-based layer-2 Ethernet network switch that is available with the installation of the Hyper-V server role. The switch includes programmatically managed and extensible capabilities to connect virtual machines to both virtual networks and the physical network. In addition, Hyper-V Virtual Switch provides policy enforcement for security, isolation, and service levels. The vSwitch represented by this config option must be an external one (not internal or private).
-
-       Possible values:
-
-       * If not provided, the first of a list of available vswitches is used. This list is queried using WQL.
-
-       * Virtual switch name.
-   * - ``wait_soft_reboot_seconds`` = ``60``
-     - (Integer) Wait soft reboot seconds
-
-       Number of seconds to wait for instance to shut down after soft reboot request is made. We fall back to hard reboot if instance does not shutdown within this window.
-
-       Possible values:
-
-       * Time in seconds (Default: 60).

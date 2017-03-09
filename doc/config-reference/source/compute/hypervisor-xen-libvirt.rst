@@ -179,7 +179,7 @@ Use the following as a guideline for configuring Xen for use in OpenStack:
    package.
 
 To customize the libvirt driver, use the configuration option settings
-documented in :ref:`nova-xen`.
+documented in :ref:`nova-libvirt`.
 
 Troubleshoot Xen with libvirt
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

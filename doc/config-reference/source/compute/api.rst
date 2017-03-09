@@ -31,5 +31,4 @@ Configuration options
 The Compute API configuration options are documented in the tables below.
 
 .. include:: ../tables/nova-api.rst
-.. include:: ../tables/nova-apiv21.rst
-.. include:: ../tables/nova-ca.rst
+   :start-line: 12

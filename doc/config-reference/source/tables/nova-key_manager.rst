@@ -10,19 +10,21 @@
 
 .. _nova-key_manager:
 
-.. list-table:: Description of key manager configuration options
+.. list-table:: Description of key_manager configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[key_manager]**
-     -
-   * - ``api_class`` = ``castellan.key_manager.barbican_key_manager.BarbicanKeyManager``
-     - (String) The full class name of the key manager API class
+
    * - ``fixed_key`` = ``None``
+
      - (String) Fixed key returned by key manager, specified in hex.
 
        Possible values:
 
        * Empty string or a key in hex value
+
+   * - ``api_class`` = ``castellan.key_manager.barbican_key_manager.BarbicanKeyManager``
+
+     - (String) The full class name of the key manager API class
