@@ -16,7 +16,6 @@ Contents
    acknowledgements.rst
    preface.rst
    common/conventions.rst
-   architecture.rst
    operations.rst
 
 Appendix

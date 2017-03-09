@@ -151,6 +151,9 @@ Installation Tutorials and Guides
     Contains a reference listing of all configuration options for core
     and integrated OpenStack services by release version
 
+`OpenStack Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
+    Contains guidelines for designing an OpenStack cloud
+
 `OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`_
     Contains how-to information for managing an OpenStack cloud as
     needed for your use cases, such as storage, computing, or
@@ -184,50 +187,8 @@ Installation Tutorials and Guides
 How This Book Is Organized
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This book is organized into two parts: the architecture decisions for
-designing OpenStack clouds and the repeated operations for running
-OpenStack clouds.
-
-**Part I:**
-
-:doc:`arch-examples`
-    Because of all the decisions the other chapters discuss, this
-    chapter describes the decisions made for this particular book and
-    much of the justification for the example architecture.
-
-:doc:`arch-provision`
-    While this book doesn't describe installation, we do recommend
-    automation for deployment and configuration, discussed in this
-    chapter.
-
-:doc:`arch-cloud-controller`
-    The cloud controller is an invention for the sake of consolidating
-    and describing which services run on which nodes. This chapter
-    discusses hardware and network considerations as well as how to
-    design the cloud controller for performance and separation of
-    services.
-
-:doc:`arch-compute-nodes`
-    This chapter describes the compute nodes, which are dedicated to
-    running virtual machines. Some hardware choices come into play here,
-    as well as logging and networking descriptions.
-
-:doc:`arch-scaling`
-    This chapter discusses the growth of your cloud resources through
-    scaling and segregation considerations.
-
-:doc:`arch-storage`
-    As with other architecture decisions, storage concepts within
-    OpenStack offer many options. This chapter lays out the choices for
-    you.
-
-:doc:`arch-network-design`
-    Your OpenStack cloud networking needs to fit into your existing
-    networks while also enabling the best design for your users and
-    administrators, and this chapter gives you in-depth information
-    about networking decisions.
-
-**Part II:**
+This book contains several parts to show best practices and tips for
+the repeated operations for running OpenStack clouds.
 
 :doc:`ops-lay-of-the-land`
     This chapter is written to let you get your hands wrapped around
