@@ -23,7 +23,7 @@ Infrastructure Optimization service (watcher) command-line client
 The watcher client is the command-line interface (CLI) for
 the Infrastructure Optimization service (watcher) API and its extensions.
 
-This chapter documents :command:`watcher` version ``0.27.0``.
+This chapter documents :command:`watcher` version ``1.0.0``.
 
 For help on a specific :command:`watcher` command, enter:
 
@@ -142,26 +142,6 @@ watcher optional arguments
 
 ``--os-endpoint-override <endpoint-override>``
   Use this API endpoint instead of the Service Catalog.
-
-``--insecure``
-  Explicitly allow client to perform "insecure" TLS
-  (https) requests. The server's certificate will not be
-  verified against any certificate authorities. This
-  option should be used with caution.
-
-``--os-cacert <ca-certificate>``
-  Specify a CA bundle file to use in verifying a TLS
-  (https) server certificate. Defaults to
-  ``env[OS_CACERT]``.
-
-``--os-cert <certificate>``
-  Defaults to ``env[OS_CERT]``.
-
-``--os-key <key>``
-  Defaults to ``env[OS_KEY]``.
-
-``--timeout <seconds>``
-  Set request timeout (in seconds).
 
 .. _watcher_action_list:
 
@@ -409,7 +389,7 @@ watcher audit create
                                [--print-empty] [--noindent] [--prefix PREFIX]
                                [-t <audit_type>] [-p <name=value>]
                                [-i <interval>] [-g <goal>] [-s <strategy>]
-                               [-a <audit_template>]
+                               [-a <audit_template>] [--auto-trigger]
 
 Create new audit.
 
@@ -427,7 +407,8 @@ Create new audit.
   specified multiple times.
 
 ``-i <interval>, --interval <interval>``
-  Audit interval.
+  Audit interval (in seconds). Only used if the audit is
+  CONTINUOUS.
 
 ``-g <goal>, --goal <goal>``
   Goal UUID or name associated to this audit.
@@ -437,6 +418,10 @@ Create new audit.
 
 ``-a <audit_template>, --audit-template <audit_template>``
   Audit template used for this audit (name or uuid).
+
+``--auto-trigger``
+  Trigger automatically action plan once audit is
+  succeeded.
 
 .. _watcher_audit_delete:
 
@@ -591,7 +576,7 @@ Create new audit template.
   template.
 
 ``-d <description>, --description <description>``
-  Descrition of the audit template.
+  Description of the audit template.
 
 ``--scope <path>``
   Part of the cluster on which an audit will be done.
@@ -775,7 +760,7 @@ List information on retrieved goals.
   show this help message and exit
 
 ``--detail``
-  Show detailed information about metric collectors.
+  Show detailed information about each goal.
 
 ``--limit <limit>``
   Maximum number of goals to return per request, 0 for
