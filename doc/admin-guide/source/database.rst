@@ -434,31 +434,31 @@ Redis integration and unit tests
 Unit tests and integration tests are also available for
 Redis.
 
-#. Install redstack:
+#. Install trovestack:
 
    .. code-block:: console
 
-      $ ./redstack install
+      $ ./trovestack install
 
       .. note::
 
-         Redstack is a development script used for integration
+         Trovestack is a development script used for integration
          testing and Database service development installations.
-         Do not use Redstack in a production environment. For
+         Do not use Trovestack in a production environment. For
          more information, see `the Database service
-         developer docs <https://docs.openstack.org/developer/trove/dev/install.html#running-redstack-to-install-trove>`_
+         developer docs <https://docs.openstack.org/developer/trove/dev/install.html#running-trovestack-to-setup-trove>`_
 
 #. Start Redis:
 
    .. code-block:: console
 
-      $ ./redstack kick-start redis
+      $ ./trovestack kick-start redis
 
 #. Run integration tests:
 
    .. code-block:: console
 
-      $ ./redstack int-tests --group=replication
+      $ ./trovestack int-tests --group=replication
 
    You can run :command:`--group=redis_supported`
    instead of :command:`--group=replication` if needed.
