@@ -92,6 +92,85 @@ weighed against current stability.
 Requirements
 ~~~~~~~~~~~~
 
+.. temporarily location of storage information until we establish a template
+
+Storage requirements
+--------------------
+Using a scale-out storage solution with direct-attached storage (DAS) in
+the servers is well suited for a general purpose OpenStack cloud. Cloud
+services requirements determine your choice of scale-out solution. You
+need to determine if a single, highly expandable and highly vertical,
+scalable, centralized storage array is suitable for your design. After
+determining an approach, select the storage hardware based on this
+criteria.
+
+This list expands upon the potential impacts for including a particular
+storage architecture (and corresponding storage hardware) into the
+design for a general purpose OpenStack cloud:
+
+Connectivity
+ If storage protocols other than Ethernet are part of the storage solution,
+ ensure the appropriate hardware has been selected. If a centralized storage
+ array is selected, ensure that the hypervisor will be able to connect to
+ that storage array for image storage.
+
+Usage
+ How the particular storage architecture will be used is critical for
+ determining the architecture. Some of the configurations that will
+ influence the architecture include whether it will be used by the
+ hypervisors for ephemeral instance storage, or if OpenStack Object
+ Storage will use it for object storage.
+
+Instance and image locations
+ Where instances and images will be stored will influence the
+ architecture.
+
+Server hardware
+ If the solution is a scale-out storage architecture that includes
+ DAS, it will affect the server hardware selection. This could ripple
+ into the decisions that affect host density, instance density, power
+ density, OS-hypervisor, management tools and others.
+
+A general purpose OpenStack cloud has multiple options. The key factors
+that will have an influence on selection of storage hardware for a
+general purpose OpenStack cloud are as follows:
+
+Capacity
+ Hardware resources selected for the resource nodes should be capable
+ of supporting enough storage for the cloud services. Defining the
+ initial requirements and ensuring the design can support adding
+ capacity is important. Hardware nodes selected for object storage
+ should be capable of support a large number of inexpensive disks
+ with no reliance on RAID controller cards. Hardware nodes selected
+ for block storage should be capable of supporting high speed storage
+ solutions and RAID controller cards to provide performance and
+ redundancy to storage at a hardware level. Selecting hardware RAID
+ controllers that automatically repair damaged arrays will assist
+ with the replacement and repair of degraded or deleted storage
+ devices.
+
+Performance
+ Disks selected for object storage services do not need to be fast
+ performing disks. We recommend that object storage nodes take
+ advantage of the best cost per terabyte available for storage.
+ Contrastingly, disks chosen for block storage services should take
+ advantage of performance boosting features that may entail the use
+ of SSDs or flash storage to provide high performance block storage
+ pools. Storage performance of ephemeral disks used for instances
+ should also be taken into consideration.
+
+Fault tolerance
+ Object storage resource nodes have no requirements for hardware
+ fault tolerance or RAID controllers. It is not necessary to plan for
+ fault tolerance within the object storage hardware because the
+ object storage service provides replication between zones as a
+ feature of the service. Block storage nodes, compute nodes, and
+ cloud controllers should all have fault tolerance built in at the
+ hardware level by making use of hardware RAID controllers and
+ varying levels of RAID configuration. The level of RAID chosen
+ should be consistent with the performance and availability
+ requirements of the cloud.
+
 
 Component block diagram
 ~~~~~~~~~~~~~~~~~~~~~~~
