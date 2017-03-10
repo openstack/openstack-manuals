@@ -18,6 +18,12 @@ automation of test activities.
 Install dependencies for building documentation
 -----------------------------------------------
 
+.. note::
+
+   You cannot run :command:`tox -e bindep` on Mac OS X as it uses a Linux tool
+   to parse the information. `Issue logged here
+   <https://storyboard.openstack.org/#!/story/2000888>`_.
+
 * On Ubuntu or Debian:
 
   .. code-block:: console
