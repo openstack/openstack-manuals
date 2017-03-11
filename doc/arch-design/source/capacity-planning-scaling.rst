@@ -130,7 +130,7 @@ CPU performance (CPU/core).
 .. tip::
 
    For a discussion of metric tracking, including how to extract
-   metrics from your cloud, see the .`OpenStack Operations Guide
+   metrics from your cloud, see the `OpenStack Operations Guide
    <https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_.
 
 Adding Cloud Controller Nodes
