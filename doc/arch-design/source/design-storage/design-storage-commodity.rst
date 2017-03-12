@@ -27,7 +27,8 @@ to control your object storage with the OpenStack dashboard, you
 should consider OpenStack Object Storage. More detail can be found
 about OpenStack Object Storage in the section below.
 
-Further information can be found on the `Swift Project page <https://www.openstack.org/software/releases/mitaka/components/swift>`_.
+Further information can be found on the `Swift Project page
+<https://www.openstack.org/software/releases/ocata/components/swift>`_.
 
 Ceph
 ~~~~
