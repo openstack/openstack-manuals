@@ -8,7 +8,8 @@ storage services. NexentaStor runs on industry standard hardware, scales from
 tens of terabytes to petabyte configurations, and includes all data management
 functionality by default.
 
-For NexentaStor user documentation, visit: http://docs.nexenta.com/.
+For user documentation, see the
+`Nexenta Documentation Center <http://docs.nexenta.com>`__.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
