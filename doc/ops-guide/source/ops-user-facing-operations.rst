@@ -191,6 +191,35 @@ signed images:
         --property img_signature_hash_method='SHA-256' \
         --property img_signature_key_type='RSA-PSS' < ~/cirros-0.3.5-x86_64-disk.img
 
+   .. note::
+
+      The maximum image signature character limit is 255.
+
+#. Verify the Keystone URL
+
+   .. note::
+
+      The default Keystone configuration assumes that Keystone is
+      in the local host, and it uses ``http://localhost:5000/v3``
+      as the endpoint URL, which is specified in ``glance-api.conf``
+      and ``nova-api.conf`` files:
+
+   .. code-block:: ini
+
+      [barbican]
+      auth_endpoint = http://localhost:5000/v3
+
+   .. note::
+
+      If Keystone is located remotely instead, edit the
+      ``glance-api.conf`` and ``nova.conf`` files. In the ``[barbican]``
+      section, configre the ``auth_endpoint`` option:
+
+   .. code-block:: ini
+
+      [barbican]
+      auth_endpoint = https://192.168.245.9:5000/v3
+
 #. Signature verification will occur when Compute boots the signed image
 
    .. note::
