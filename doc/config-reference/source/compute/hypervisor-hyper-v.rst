@@ -387,7 +387,8 @@ Hyper-V currently supports only the VHD and VHDX file format for virtual
 machine instances. Detailed instructions for installing virtual machines
 on Hyper-V can be found here:
 
-http://technet.microsoft.com/en-us/library/cc772480.aspx
+`Create Virtual Machines
+<http://technet.microsoft.com/en-us/library/cc772480.aspx>`_
 
 Once you have successfully created a virtual machine, you can then upload
 the image to glance using the openstack-client:
