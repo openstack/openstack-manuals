@@ -96,60 +96,35 @@ OpenStack Compute
 
 The following meters are collected for OpenStack Compute.
 
-.. note::
-
-   There are two resources in the following table:
-
-   - Instance ID provides a unique ID per instance.
-
-   - Interface ID is the interface identifier. You can find an example of how
-     the interface ID is composed in the
-     `net.py <https://git.openstack.org/cgit/openstack/ceilometer/tree/ceilometer/compute/pollsters/net.py#n48>`_
-     file.
-
-   1. In the Ocata release, the ``instance`` meter is no longer supported.
-
-   2. The ``instance:<type>`` meter can be replaced by using extra parameters in
-      both the samples and statistics queries. Sample queries look like:
-
-      .. code-block:: console
-
-         statistics:
-
-           ceilometer statistics -m instance -g resource_metadata.instance_type
-
-         samples:
-
-           ceilometer sample-list -m instance -q metadata.instance_type=<value>
-
 +-----------+-------+------+----------+----------+---------+------------------+
 | Name      | Type  | Unit | Resource | Origin   | Support | Note             |
 +===========+=======+======+==========+==========+=========+==================+
-| **Meters added in the Icehouse release or earlier**                         |
-+-----------+-------+------+----------+----------+---------+------------------+
-| instance  | Gauge | inst\| instance | Notific\ | Libvirt,| Existence of     |
-|           |       | ance | ID       | ation,   | Hyper-V,| instance         |
-|           |       |      |          | Pollster | vSphere |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| instance:\| Gauge | inst\| instance | Notific\ | Libvirt,| Existence of     |
-| <type>    |       | ance | ID       | ation,   | Hyper-V,| instance <type>  |
-|           |       |      |          | Pollster | vSphere | (OpenStack types)|
+| **Meters added in the Mitaka release or earlier**                           |
 +-----------+-------+------+----------+----------+---------+------------------+
 | memory    | Gauge | MB   | instance | Notific\ | Libvirt,| Volume of RAM    |
 |           |       |      | ID       | ation    | Hyper-V | allocated to the |
 |           |       |      |          |          |         | instance         |
 +-----------+-------+------+----------+----------+---------+------------------+
-| memory.\  | Gauge | MB   | instance | Pollster | vSphere | Volume of RAM    |
-| usage     |       |      | ID       |          |         | used by the      |
-|           |       |      |          |          |         | instance from the|
-|           |       |      |          |          |         | amount of its    |
+| memory.\  | Gauge | MB   | instance | Pollster | Libvirt,| Volume of RAM    |
+| usage     |       |      | ID       |          | Hyper-V,| used by the inst\|
+|           |       |      |          |          | vSphere,| ance from the    |
+|           |       |      |          |          | XenAPI  | amount of its    |
 |           |       |      |          |          |         | allocated memory |
++-----------+-------+------+----------+----------+---------+------------------+
+| memory.r\ | Gauge | MB   | instance | Pollster | Libvirt | Volume of RAM u\ |
+| esident   |       |      | ID       |          |         | sed by the inst\ |
+|           |       |      |          |          |         | ance on the phy\ |
+|           |       |      |          |          |         | sical machine    |
 +-----------+-------+------+----------+----------+---------+------------------+
 | cpu       | Cumu\ | ns   | instance | Pollster | Libvirt,| CPU time used    |
 |           | lative|      | ID       |          | Hyper-V |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| cpu_util  | Gauge | %    | instance | Pollster | vSphere | Average CPU      |
-|           |       |      | ID       |          |         | utilization      |
+| cpu.delta | Delta | ns   | instance | Pollster | Libvirt,| CPU time used s\ |
+|           |       |      | ID       |          | Hyper-V | ince previous d\ |
+|           |       |      |          |          |         | atapoint         |
++-----------+-------+------+----------+----------+---------+------------------+
+| cpu_util  | Gauge | %    | instance | Pollster | vSphere,| Average CPU      |
+|           |       |      | ID       |          | XenAPI  | utilization      |
 +-----------+-------+------+----------+----------+---------+------------------+
 | vcpus     | Gauge | vcpu | instance | Notific\ | Libvirt,| Number of virtual|
 |           |       |      | ID       | ation    | Hyper-V | CPUs allocated to|
@@ -174,86 +149,16 @@ The following meters are collected for OpenStack Compute.
 +-----------+-------+------+----------+----------+---------+------------------+
 | disk.read\| Gauge | B/s  | instance | Pollster | Libvirt,| Average rate of  |
 | .bytes.\  |       |      | ID       |          | Hyper-V,| reads            |
-| rate      |       |      |          |          | vSphere |                  |
+| rate      |       |      |          |          | vSphere,|                  |
+|           |       |      |          |          | XenAPI  |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | disk.writ\| Cumu\ | B    | instance | Pollster | Libvirt,| Volume of writes |
 | e.bytes   | lative|      | ID       |          | Hyper-V |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | disk.writ\| Gauge | B/s  | instance | Pollster | Libvirt,| Average rate of  |
 | e.bytes.\ |       |      | ID       |          | Hyper-V,| writes           |
-| rate      |       |      |          |          | vSphere |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| disk.root\| Gauge | GB   | instance | Notific\ | Libvirt,| Size of root disk|
-| .size     |       |      | ID       | ation    | Hyper-V |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| disk.ephe\| Gauge | GB   | instance | Notific\ | Libvirt,| Size of ephemeral|
-| meral.size|       |      | ID       | ation    | Hyper-V | disk             |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Cumu\ | B    | interface| Pollster | Libvirt,| Number of        |
-| incoming.\| lative|      | ID       |          | Hyper-V | incoming bytes   |
-| bytes     |       |      |          |          |         |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | B/s  | interface| Pollster | Libvirt,| Average rate of  |
-| incoming.\|       |      | ID       |          | Hyper-V,| incoming bytes   |
-| bytes.rate|       |      |          |          | vSphere |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Cumu\ | B    | interface| Pollster | Libvirt,| Number of        |
-| outgoing\ | lative|      | ID       |          | Hyper-V | outgoing bytes   |
-| .bytes    |       |      |          |          |         |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | B/s  | interface| Pollster | Libvirt,| Average rate of  |
-| outgoing.\|       |      | ID       |          | Hyper-V,| outgoing bytes   |
-| bytes.rate|       |      |          |          | vSphere |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Cumu\ | pac\ | interface| Pollster | Libvirt,| Number of        |
-| incoming\ | lative| ket  | ID       |          | Hyper-V | incoming packets |
-| .packets  |       |      |          |          |         |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | pack\| interface| Pollster | Libvirt,| Average rate of  |
-| incoming\ |       | et/s | ID       |          | Hyper-V,| incoming packets |
-| .packets\ |       |      |          |          | vSphere |                  |
-| .rate     |       |      |          |          |         |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Cumu\ | pac\ | interface| Pollster | Libvirt,| Number of        |
-| outgoing\ | lative| ket  | ID       |          | Hyper-V | outgoing packets |
-| .packets  |       |      |          |          |         |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | pac\ | interface| Pollster | Libvirt,| Average rate of  |
-| outgoing\ |       | ket/s| ID       |          | Hyper-V,| outgoing packets |
-| .packets\ |       |      |          |          | vSphere |                  |
-| .rate     |       |      |          |          |         |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| **Meters added or hypervisor support changed in the Juno release**          |
-+-----------+-------+------+----------+----------+---------+------------------+
-| instance  | Gauge | ins\ | instance | Notific\ | Libvirt,| Existence of     |
-|           |       | tance| ID       | ation,   | Hyper-V,| instance         |
-|           |       |      |          | Pollster | vSphere,|                  |
-|           |       |      |          |          | XenAPI  |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| instance\ | Gauge | ins\ | instance | Notific\ | Libvirt,| Existence of     |
-| :<type>   |       | tance| ID       | ation,   | Hyper-V,| instance <type>  |
-|           |       |      |          | Pollster | vSphere,| (OpenStack types)|
-|           |       |      |          |          | XenAPI  |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| memory.\  | Gauge | MB   | instance | Pollster | vSphere,| Volume of RAM    |
-| usage     |       |      | ID       |          | XenAPI  | used by the      |
-|           |       |      |          |          |         | instance from the|
-|           |       |      |          |          |         | amount of its    |
-|           |       |      |          |          |         | allocated memory |
-+-----------+-------+------+----------+----------+---------+------------------+
-| cpu_util  | Gauge | %    | instance | Pollster | vSphere,| Average CPU      |
-|           |       |      | ID       |          | XenAPI  | utilization      |
-+-----------+-------+------+----------+----------+---------+------------------+
-| disk.read\| Gauge | B/s  | instance | Pollster | Libvirt,| Average rate of  |
-| .bytes.\  |       |      | ID       |          | Hyper-V,| reads            |
 | rate      |       |      |          |          | vSphere,|                  |
 |           |       |      |          |          | XenAPI  |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| disk.\    | Gauge | B/s  | instance | Pollster | Libvirt,| Average rate of  |
-| write.\   |       |      | ID       |          | Hyper-V,| writes           |
-| bytes.rate|       |      |          |          | vSphere,|                  |
-|           |       |      |          |          | XenAPI  |                  |
-|           |       |      |          |          |         |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | disk.dev\ | Cumu\ | req\ | disk ID  | Pollster | Libvirt,| Number of read   |
 | ice.read\ | lative| uest |          |          | Hyper-V | requests         |
@@ -291,38 +196,11 @@ The following meters are collected for OpenStack Compute.
 | .bytes    |       |      |          |          | vSphere |                  |
 | .rate     |       |      |          |          |         |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | B/s  | interface| Pollster | Libvirt,| Average rate of  |
-| incoming.\|       |      | ID       |          | Hyper-V,| incoming bytes   |
-| bytes.rate|       |      |          |          | vSphere,|                  |
-|           |       |      |          |          | XenAPI  |                  |
+| disk.root\| Gauge | GB   | instance | Notific\ | Libvirt,| Size of root disk|
+| .size     |       |      | ID       | ation    | Hyper-V |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | B/s  | interface| Pollster | Libvirt,| Average rate of  |
-| outgoing.\|       |      | ID       |          | Hyper-V,| outgoing bytes   |
-| bytes.rate|       |      |          |          | vSphere,|                  |
-|           |       |      |          |          | XenAPI  |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | pack\| interface| Pollster | Libvirt,| Average rate of  |
-| incoming.\|       | et/s | ID       |          | Hyper-V,| incoming packets |
-| packets.\ |       |      |          |          | vSphere,|                  |
-| rate      |       |      |          |          | XenAPI  |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| network.\ | Gauge | pack\| interface| Pollster | Libvirt,| Average rate of  |
-| outgoing.\|       | et/s | ID       |          | Hyper-V,| outgoing packets |
-| packets.\ |       |      |          |          | vSphere,|                  |
-| rate      |       |      |          |          | XenAPI  |                  |
-+-----------+-------+------+----------+----------+---------+------------------+
-| **Meters added or hypervisor support changed in the Kilo release**          |
-+-----------+-------+------+----------+----------+---------+------------------+
-| memory.\  | Gauge | MB   | instance | Pollster | Libvirt,| Volume of RAM    |
-| usage     |       |      | ID       |          | Hyper-V,| used by the inst\|
-|           |       |      |          |          | vSphere,| ance from the    |
-|           |       |      |          |          | XenAPI  | amount of its    |
-|           |       |      |          |          |         | allocated memory |
-+-----------+-------+------+----------+----------+---------+------------------+
-| memory.r\ | Gauge | MB   | instance | Pollster | Libvirt | Volume of RAM u\ |
-| esident   |       |      | ID       |          |         | sed by the inst\ |
-|           |       |      |          |          |         | ance on the phy\ |
-|           |       |      |          |          |         | sical machine    |
+| disk.ephe\| Gauge | GB   | instance | Notific\ | Libvirt,| Size of ephemeral|
+| meral.size|       |      | ID       | ation    | Hyper-V | disk             |
 +-----------+-------+------+----------+----------+---------+------------------+
 | disk.lat\ | Gauge | ms   | instance | Pollster | Hyper-V | Average disk la\ |
 | ency      |       |      | ID       |          |         | tency            |
@@ -369,18 +247,41 @@ The following meters are collected for OpenStack Compute.
 |           |       |      |          |          |         | iner on the hos\ |
 |           |       |      |          |          |         | t per device     |
 +-----------+-------+------+----------+----------+---------+------------------+
-| **Meters deprecated in the Kilo release**                                   |
+| network.\ | Cumu\ | B    | interface| Pollster | Libvirt,| Number of        |
+| incoming.\| lative|      | ID       |          | Hyper-V | incoming bytes   |
+| bytes     |       |      |          |          |         |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| instance\ | Gauge | ins\ | instance | Notific\ | Libvirt,| Existence of     |
-| :<type>   |       | tance| ID       | ation,   | Hyper-V,| instance <type>  |
-|           |       |      |          | Pollster | vSphere,| (OpenStack types)|
+| network.\ | Gauge | B/s  | interface| Pollster | Libvirt,| Average rate of  |
+| incoming.\|       |      | ID       |          | Hyper-V,| incoming bytes   |
+| bytes.rate|       |      |          |          | vSphere,|                  |
 |           |       |      |          |          | XenAPI  |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| **Meters added in the Liberty release**                                     |
+| network.\ | Cumu\ | B    | interface| Pollster | Libvirt,| Number of        |
+| outgoing\ | lative|      | ID       |          | Hyper-V | outgoing bytes   |
+| .bytes    |       |      |          |          |         |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
-| cpu.delta | Delta | ns   | instance | Pollster | Libvirt,| CPU time used s\ |
-|           |       |      | ID       |          | Hyper-V | ince previous d\ |
-|           |       |      |          |          |         | atapoint         |
+| network.\ | Gauge | B/s  | interface| Pollster | Libvirt,| Average rate of  |
+| outgoing.\|       |      | ID       |          | Hyper-V,| outgoing bytes   |
+| bytes.rate|       |      |          |          | vSphere,|                  |
+|           |       |      |          |          | XenAPI  |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Cumu\ | pac\ | interface| Pollster | Libvirt,| Number of        |
+| incoming\ | lative| ket  | ID       |          | Hyper-V | incoming packets |
+| .packets  |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Gauge | pack\| interface| Pollster | Libvirt,| Average rate of  |
+| incoming\ |       | et/s | ID       |          | Hyper-V,| incoming packets |
+| .packets\ |       |      |          |          | vSphere,|                  |
+| .rate     |       |      |          |          | XenAPI  |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Cumu\ | pac\ | interface| Pollster | Libvirt,| Number of        |
+| outgoing\ | lative| ket  | ID       |          | Hyper-V | outgoing packets |
+| .packets  |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Gauge | pac\ | interface| Pollster | Libvirt,| Average rate of  |
+| outgoing\ |       | ket/s| ID       |          | Hyper-V,| outgoing packets |
+| .packets\ |       |      |          |          | vSphere,|                  |
+| .rate     |       |      |          |          | XenAPI  |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
 | **Meters added in the Newton release**                                      |
 +-----------+-------+------+----------+----------+---------+------------------+
@@ -411,6 +312,12 @@ The following meters are collected for OpenStack Compute.
 | perf.cac\ | Gauge | cou\ | instance | Pollster | Libvirt | the count of ca\ |
 | he.misses |       | nt   | ID       |          |         | che misses       |
 +-----------+-------+------+----------+----------+---------+------------------+
+| **Meters removed as of Ocata release**                                      |
++-----------+-------+------+----------+----------+---------+------------------+
+| instance  | Gauge | inst\| instance | Notific\ | Libvirt,| Existence of     |
+|           |       | ance | ID       | ation,   | Hyper-V,| instance         |
+|           |       |      |          | Pollster | vSphere |                  |
++-----------+-------+------+----------+----------+---------+------------------+
 
 The Telemetry service supports to create new meters by using
 transformers. For more details about transformers see
@@ -420,6 +327,8 @@ meters that are created by using the ``rate_of_change`` transformer from the
 above table is the following:
 
 -  cpu_util
+
+-  cpu.delta
 
 -  disk.read.requests.rate
 
@@ -454,6 +363,11 @@ above table is the following:
     already have it built in. Telemetry is not able to fetch the
     ``memory.usage`` samples without the image balloon driver.
 
+.. note::
+
+    To enable libvirt ``disk.*`` support when running on RBD-backed shared
+    storage, you need to install libvirt version 1.2.16+.
+
 OpenStack Compute is capable of collecting ``CPU`` related meters from
 the compute host machines. In order to use that you need to set the
 ``compute_monitors`` option to ``ComputeDriverCPUMonitor`` in the
@@ -468,7 +382,7 @@ Compute:
 +---------------------+-------+------+----------+-------------+---------------+
 | Name                | Type  | Unit | Resource | Origin      | Note          |
 +=====================+=======+======+==========+=============+===============+
-| **Meters added in the Icehouse release or earlier**                         |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------------+-------+------+----------+-------------+---------------+
 | compute.node.cpu.\  | Gauge | MHz  | host ID  | Notification| CPU frequency |
 | frequency           |       |      |          |             |               |
@@ -523,7 +437,7 @@ The following meters are recorded for the Bare metal service:
 +------------------+-------+------+----------+-------------+------------------+
 | Name             | Type  | Unit | Resource | Origin      | Note             |
 +==================+=======+======+==========+=============+==================+
-| **Meters added in the Juno release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +------------------+-------+------+----------+-------------+------------------+
 | hardware.ipmi.fan| Gauge | RPM  | fan      | Notification| Fan rounds per   |
 |                  |       |      | sensor   |             | minute (RPM)     |
@@ -564,7 +478,7 @@ meters are recorded from capable platform:
 +---------------------+-------+------+----------+----------+------------------+
 | Name                | Type  | Unit | Resource | Origin   | Note             |
 +=====================+=======+======+==========+==========+==================+
-| **Meters added in the Juno release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.ipmi.node\ | Gauge | W    | host ID  | Pollster | Current power    |
 | .power              |       |      |          |          | of the system    |
@@ -572,8 +486,6 @@ meters are recorded from capable platform:
 | hardware.ipmi.node\ | Gauge | C    | host ID  | Pollster | Current tempera\ |
 | .temperature        |       |      |          |          | ture of the      |
 |                     |       |      |          |          | system           |
-+---------------------+-------+------+----------+----------+------------------+
-| **Meters added in the Kilo release**                                        |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.ipmi.node\ | Gauge | C    | host ID  | Pollster | Inlet temperatu\ |
 | .inlet_temperature  |       |      |          |          | re of the system |
@@ -604,19 +516,6 @@ meters are recorded from capable platform:
 |                     |       |      |          |          | the system       |
 +---------------------+-------+------+----------+----------+------------------+
 
-|
-
-+------------------------------------+----------------------------------------+
-| Meters renamed in the Kilo release                                          |
-+====================================+========================================+
-| **Original Name**                  | **New Name**                           |
-+------------------------------------+----------------------------------------+
-| hardware.ipmi.node.temperature     | hardware.ipmi.node.inlet_temperature   |
-+------------------------------------+----------------------------------------+
-| hardware.ipmi.node.\               | hardware.ipmi.node.temperature         |
-| inlet_temperature                  |                                        |
-+------------------------------------+----------------------------------------+
-
 SNMP based meters
 ~~~~~~~~~~~~~~~~~
 
@@ -629,7 +528,7 @@ SNMP:
 +---------------------+-------+------+----------+----------+------------------+
 | Name                | Type  | Unit | Resource | Origin   | Note             |
 +=====================+=======+======+==========+==========+==================+
-| **Meters added in the Kilo release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.cpu.load.\ | Gauge | proc\| host ID  | Pollster | CPU load in the  |
 | 1min                |       | ess  |          |          | past 1 minute    |
@@ -639,6 +538,9 @@ SNMP:
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.cpu.load.\ | Gauge | proc\| host ID  | Pollster | CPU load in the  |
 | 15min               |       | ess  |          |          | past 15 minutes  |
++---------------------+-------+------+----------+----------+------------------+
+| hardware.cpu.util   | Gauge | %    | host ID  | Pollster | cpu usage        |
+|                     |       |      |          |          | percentage       |
 +---------------------+-------+------+----------+----------+------------------+
 | hardware.disk.size\ | Gauge | KB   | disk ID  | Pollster | Total disk size  |
 | .total              |       |      |          |          |                  |
@@ -696,11 +598,6 @@ SNMP:
 | hardware.system_st\ | Gauge | %    | host ID  | Pollster | CPU idle percen\ |
 | ats.cpu.idle        |       |      |          |          | tage             |
 +---------------------+-------+------+----------+----------+------------------+
-| **Meters added in the Mitaka release**                                      |
-+---------------------+-------+------+----------+----------+------------------+
-| hardware.cpu.util   | Gauge | %    | host ID  | Pollster | cpu usage        |
-|                     |       |      |          |          | percentage       |
-+---------------------+-------+------+----------+----------+------------------+
 
 OpenStack Image service
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -710,11 +607,7 @@ The following meters are collected for OpenStack Image service:
 +--------------------+--------+------+----------+----------+------------------+
 | Name               | Type   | Unit | Resource | Origin   | Note             |
 +====================+========+======+==========+==========+==================+
-| **Meters added in the Icehouse release or earlier**                         |
-+--------------------+--------+------+----------+----------+------------------+
-| image              | Gauge  | image| image ID | Notifica\| Existence of the |
-|                    |        |      |          | tion, Po\| image            |
-|                    |        |      |          | llster   |                  |
+| **Meters added in the Mitaka release or earlier**                           |
 +--------------------+--------+------+----------+----------+------------------+
 | image.size         | Gauge  | image| image ID | Notifica\| Size of the upl\ |
 |                    |        |      |          | tion, Po\| oaded image      |
@@ -735,6 +628,12 @@ The following meters are collected for OpenStack Image service:
 | image.serve        | Delta  | B    | image ID | Notifica\| Image is served  |
 |                    |        |      |          | tion     | out              |
 +--------------------+--------+------+----------+----------+------------------+
+| **Meters removed as of Ocata release**                                      |
++--------------------+--------+------+----------+----------+------------------+
+| image              | Gauge  | image| image ID | Notifica\| Existence of the |
+|                    |        |      |          | tion, Po\| image            |
+|                    |        |      |          | llster   |                  |
++--------------------+--------+------+----------+----------+------------------+
 
 OpenStack Block Storage
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -744,23 +643,21 @@ The following meters are collected for OpenStack Block Storage:
 +--------------------+-------+--------+----------+----------+-----------------+
 | Name               | Type  | Unit   | Resource | Origin   | Note            |
 +====================+=======+========+==========+==========+=================+
-| **Meters added in the Icehouse release or earlier**                         |
-+--------------------+-------+--------+----------+----------+-----------------+
-| volume             | Gauge | volume | volume ID| Notifica\| Existence of the|
-|                    |       |        |          | tion     | volume          |
+| **Meters added in the Mitaka release or earlier**                           |
 +--------------------+-------+--------+----------+----------+-----------------+
 | volume.size        | Gauge | GB     | volume ID| Notifica\| Size of the vol\|
 |                    |       |        |          | tion     | ume             |
 +--------------------+-------+--------+----------+----------+-----------------+
-| **Meters added in the Juno release**                                        |
-+--------------------+-------+--------+----------+----------+-----------------+
-| snapshot           | Gauge | snapsh\| snapshot | Notifica\| Existence of the|
-|                    |       | ot     | ID       | tion     | snapshot        |
-+--------------------+-------+--------+----------+----------+-----------------+
 | snapshot.size      | Gauge | GB     | snapshot | Notifica\| Size of the sna\|
 |                    |       |        | ID       | tion     | pshot           |
 +--------------------+-------+--------+----------+----------+-----------------+
-| **Meters added in the Kilo release**                                        |
+| **Meters removed as of Ocata release**                                      |
++--------------------+-------+--------+----------+----------+-----------------+
+| volume             | Gauge | volume | volume ID| Notifica\| Existence of the|
+|                    |       |        |          | tion     | volume          |
++--------------------+-------+--------+----------+----------+-----------------+
+| snapshot           | Gauge | snapsh\| snapshot | Notifica\| Existence of the|
+|                    |       | ot     | ID       | tion     | snapshot        |
 +--------------------+-------+--------+----------+----------+-----------------+
 | volume.create.(sta\| Delta | volume | volume ID| Notifica\| Creation of the |
 | rt|end)            |       |        |          | tion     | volume          |
@@ -810,7 +707,7 @@ The following meters are collected for OpenStack Object Storage:
 +--------------------+-------+-------+------------+---------+-----------------+
 | Name               | Type  | Unit  | Resource   | Origin  | Note            |
 +====================+=======+=======+============+=========+=================+
-| **Meters added in the Icehouse release or earlier**                         |
+| **Meters added in the Mitaka release or earlier**                           |
 +--------------------+-------+-------+------------+---------+-----------------+
 | storage.objects    | Gauge | object| storage ID | Pollster| Number of objec\|
 |                    |       |       |            |         | ts              |
@@ -839,19 +736,6 @@ The following meters are collected for OpenStack Object Storage:
 | .objects.size      |       |       | /container |         | tored objects i\|
 |                    |       |       |            |         | n container     |
 +--------------------+-------+-------+------------+---------+-----------------+
-| **meters deprecated in the Kilo release**                                   |
-+------------------+-------+------+----------+-------------+------------------+
-| storage.objects.in\| Delta | B     | storage ID | Notific\| Number of incom\|
-| coming.bytes       |       |       |            | ation   | ing bytes       |
-+--------------------+-------+-------+------------+---------+-----------------+
-| storage.objects.ou\| Delta | B     | storage ID | Notific\| Number of outgo\|
-| tgoing.bytes       |       |       |            | ation   | ing bytes       |
-+--------------------+-------+-------+------------+---------+-----------------+
-| storage.api.request| Delta | requ\ | storage ID | Notific\| Number of API r\|
-|                    |       | est   |            | ation   | equests against |
-|                    |       |       |            |         | OpenStack Obje\ |
-|                    |       |       |            |         | ct Storage      |
-+--------------------+-------+-------+------------+---------+-----------------+
 
 
 Ceph Object Storage
@@ -874,7 +758,7 @@ The following meters are collected for Ceph Object Storage:
 +------------------+------+--------+------------+----------+------------------+
 | Name             | Type | Unit   | Resource   | Origin   | Note             |
 +==================+======+========+============+==========+==================+
-| **Meters added in the Kilo release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +------------------+------+--------+------------+----------+------------------+
 | radosgw.objects  | Gauge| object | storage ID | Pollster | Number of objects|
 +------------------+------+--------+------------+----------+------------------+
@@ -912,7 +796,7 @@ The following meters are collected for OpenStack Identity:
 +-------------------+------+--------+-----------+-----------+-----------------+
 | Name              | Type | Unit   | Resource  | Origin    | Note            |
 +===================+======+========+===========+===========+=================+
-| **Meters added in the Juno release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +-------------------+------+--------+-----------+-----------+-----------------+
 | identity.authent\ | Delta| user   | user ID   | Notifica\ | User successful\|
 | icate.success     |      |        |           | tion      | ly authenticated|
@@ -922,6 +806,8 @@ The following meters are collected for OpenStack Identity:
 +-------------------+------+--------+-----------+-----------+-----------------+
 | identity.authent\ | Delta| user   | user ID   | Notifica\ | User failed to  |
 | icate.failure     |      |        |           | tion      | authenticate    |
++-------------------+------+--------+-----------+-----------+-----------------+
+| **Meters removed as of Ocata release**                                      |
 +-------------------+------+--------+-----------+-----------+-----------------+
 | identity.user.cr\ | Delta| user   | user ID   | Notifica\ | User is created |
 | eated             |      |        |           | tion      |                 |
@@ -965,8 +851,6 @@ The following meters are collected for OpenStack Identity:
 | identity.trust.d\ | Delta| trust  | trust ID  | Notifica\ | Trust is deleted|
 | eleted            |      |        |           | tion      |                 |
 +-------------------+------+--------+-----------+-----------+-----------------+
-| **Meters added in the Kilo release**                                        |
-+-------------------+------+--------+-----------+-----------+-----------------+
 | identity.role_as\ | Delta| role_a\| role ID   | Notifica\ | Role is added to|
 | signment.created  |      | ssignm\|           | tion      | an actor on a   |
 |                   |      | ent    |           |           | target          |
@@ -975,8 +859,6 @@ The following meters are collected for OpenStack Identity:
 | signment.deleted  |      | ssignm\|           | tion      | from an actor   |
 |                   |      | ent    |           |           | on a target     |
 +-------------------+------+--------+-----------+-----------+-----------------+
-| **All meters thoroughly deprecated in the liberty release**                 |
-+------------------+-------+------+----------+-------------+------------------+
 
 OpenStack Networking
 ~~~~~~~~~~~~~~~~~~~~
@@ -986,7 +868,13 @@ The following meters are collected for OpenStack Networking:
 +-----------------+-------+--------+-----------+-----------+------------------+
 | Name            | Type  | Unit   | Resource  | Origin    | Note             |
 +=================+=======+========+===========+===========+==================+
-| **Meters added in the Icehouse release or earlier**                         |
+| **Meters added in the Mitaka release or earlier**                           |
++-----------------+-------+--------+-----------+-----------+------------------+
+| bandwidth       | Delta | B      | label ID  | Notifica\ | Bytes through t\ |
+|                 |       |        |           | tion      | his l3 metering  |
+|                 |       |        |           |           | label            |
++-----------------+-------+--------+-----------+-----------+------------------+
+| **Meters removed as of Ocata release**                                      |
 +-----------------+-------+--------+-----------+-----------+------------------+
 | network         | Gauge | networ\| network ID| Notifica\ | Existence of ne\ |
 |                 |       | k      |           | tion      | twork            |
@@ -1037,10 +925,6 @@ The following meters are collected for OpenStack Networking:
 | ip.floating.up\ | Delta | ip     | ip ID     | Notifica\ | Update requests  |
 | date            |       |        |           | tion      | for this IP      |
 +-----------------+-------+--------+-----------+-----------+------------------+
-| bandwidth       | Delta | B      | label ID  | Notifica\ | Bytes through t\ |
-|                 |       |        |           | tion      | his l3 metering  |
-|                 |       |        |           |           | label            |
-+-----------------+-------+--------+-----------+-----------+------------------+
 
 SDN controllers
 ~~~~~~~~~~~~~~~
@@ -1050,7 +934,7 @@ The following meters are collected for SDN:
 +-----------------+---------+--------+-----------+----------+-----------------+
 | Name            | Type    | Unit   | Resource  | Origin   | Note            |
 +=================+=========+========+===========+==========+=================+
-| **Meters added in the Icehouse release or earlier**                         |
+| **Meters added in the Mitaka release or earlier**                           |
 +-----------------+---------+--------+-----------+----------+-----------------+
 | switch          | Gauge   | switch | switch ID | Pollster | Existence of sw\|
 |                 |         |        |           |          | itch            |
@@ -1124,8 +1008,6 @@ The following meters are collected for SDN:
 | tes             | tive    |        |           |          |                 |
 +-----------------+---------+--------+-----------+----------+-----------------+
 
-|
-
 These meters are available for OpenFlow based switches. In order to
 enable these meters, each driver needs to be properly configured.
 
@@ -1137,23 +1019,21 @@ The following meters are collected for LBaaS v1:
 +---------------+---------+---------+-----------+-----------+-----------------+
 | Name          | Type    | Unit    | Resource  | Origin    | Note            |
 +===============+=========+=========+===========+===========+=================+
-| **Meters added in the Juno release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | pool    | pool ID   | Notifica\ | Existence of a  |
-| ices.lb.pool  |         |         |           | tion, Po\ | LB pool         |
-|               |         |         |           | llster    |                 |
+| network.serv\ | Gauge   | pool    | pool ID   | Pollster  | Existence of a  |
+| ices.lb.pool  |         |         |           |           | LB pool         |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | vip     | vip ID    | Notifica\ | Existence of a  |
-| ices.lb.vip   |         |         |           | tion, Po\ | LB VIP          |
-|               |         |         |           | llster    |                 |
+| network.serv\ | Gauge   | vip     | vip ID    | Pollster  | Existence of a  |
+| ices.lb.vip   |         |         |           |           | LB VIP          |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | member  | member ID | Notifica\ | Existence of a  |
-| ices.lb.memb\ |         |         |           | tion, Po\ | LB member       |
-| er            |         |         |           | llster    |                 |
+| network.serv\ | Gauge   | member  | member ID | Pollster  | Existence of a  |
+| ices.lb.memb\ |         |         |           |           | LB member       |
+| er            |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | health\ | monitor ID| Notifica\ | Existence of a  |
-| ices.lb.heal\ |         | _monit\ |           | tion, Po\ | LB health probe |
-| th_monitor    |         | or      |           | llster    |                 |
+| network.serv\ | Gauge   | health\ | monitor ID| Pollster  | Existence of a  |
+| ices.lb.heal\ |         | _monit\ |           |           | LB health probe |
+| th_monitor    |         | or      |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
 | network.serv\ | Cumula\ | connec\ | pool ID   | Pollster  | Total connectio\|
 | ices.lb.tota\ | tive    | tion    |           |           | ns on a LB      |
@@ -1171,7 +1051,7 @@ The following meters are collected for LBaaS v1:
 | ices.lb.outg\ |         |         |           |           | ing Bytes       |
 | oing.bytes    |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| **Meters added in the Kilo release**                                        |
+| **Meters removed as of Ocata release**                                      |
 +---------------+---------+---------+-----------+-----------+-----------------+
 | network.serv\ | Delta   | pool    | pool ID   | Notifica\ | LB pool was cre\|
 | ices.lb.pool\ |         |         |           | tion      | ated            |
@@ -1211,31 +1091,31 @@ The following meters are collected for LBaaS v1:
 Load-Balancer-as-a-Service (LBaaS v2)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following meters are collected for LBaaS v2. They are added in Mitaka
-release:
+The following meters are collected for LBaaS v2.
 
 +---------------+---------+---------+-----------+-----------+-----------------+
 | Name          | Type    | Unit    | Resource  | Origin    | Note            |
 +===============+=========+=========+===========+===========+=================+
-| network.serv\ | Gauge   | pool    | pool ID   | Notifica\ | Existence of a  |
-| ices.lb.pool  |         |         |           | tion, Po\ | LB pool         |
-|               |         |         |           | llster    |                 |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | listen\ | listener  | Notifica\ | Existence of a  |
-| ices.lb.list\ |         | er      | ID        | tion, Po\ | LB listener     |
-| ener          |         |         |           | llster    |                 |
+| network.serv\ | Gauge   | pool    | pool ID   | Pollster  | Existence of a  |
+| ices.lb.pool  |         |         |           |           | LB pool         |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | member  | member ID | Notifica\ | Existence of a  |
-| ices.lb.memb\ |         |         |           | tion, Po\ | LB member       |
-| er            |         |         |           | llster    |                 |
+| network.serv\ | Gauge   | listen\ | listener  | Pollster  | Existence of a  |
+| ices.lb.list\ |         | er      | ID        |           | LB listener     |
+| ener          |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | health\ | monitor ID| Notifica\ | Existence of a  |
-| ices.lb.heal\ |         | _monit\ |           | tion, Po\ | LB health probe |
-| th_monitor    |         | or      |           | llster    |                 |
+| network.serv\ | Gauge   | member  | member ID | Pollster  | Existence of a  |
+| ices.lb.memb\ |         |         |           |           | LB member       |
+| er            |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
-| network.serv\ | Gauge   | loadba\ | loadbala\ | Notifica\ | Existence of a  |
-| ices.lb.load\ |         | lancer  | ncer ID   | tion, Po\ | LB loadbalancer |
-| balancer      |         |         |           | llster    |                 |
+| network.serv\ | Gauge   | health\ | monitor ID| Pollster  | Existence of a  |
+| ices.lb.heal\ |         | _monit\ |           |           | LB health probe |
+| th_monitor    |         | or      |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| network.serv\ | Gauge   | loadba\ | loadbala\ | Pollster  | Existence of a  |
+| ices.lb.load\ |         | lancer  | ncer ID   |           | LB loadbalancer |
+| balancer      |         |         |           |           |                 |
 +---------------+---------+---------+-----------+-----------+-----------------+
 | network.serv\ | Cumula\ | connec\ | pool ID   | Pollster  | Total connectio\|
 | ices.lb.tota\ | tive    | tion    |           |           | ns on a LB      |
@@ -1252,6 +1132,8 @@ release:
 | network.serv\ | Gauge   | B       | pool ID   | Pollster  | Number of outgo\|
 | ices.lb.outg\ |         |         |           |           | ing Bytes       |
 | oing.bytes    |         |         |           |           |                 |
++---------------+---------+---------+-----------+-----------+-----------------+
+| **Meters removed as of Ocata release**                                      |
 +---------------+---------+---------+-----------+-----------+-----------------+
 | network.serv\ | Delta   | pool    | pool ID   | Notifica\ | LB pool was cre\|
 | ices.lb.pool\ |         |         |           | tion      | ated            |
@@ -1312,18 +1194,17 @@ The following meters are collected for VPNaaS:
 +---------------+-------+---------+------------+-----------+------------------+
 | Name          | Type  | Unit    | Resource   | Origin    | Note             |
 +===============+=======+=========+============+===========+==================+
-| **Meters added in the Juno release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------+-------+---------+------------+-----------+------------------+
-| network.serv\ | Gauge | vpnser\ | vpn ID     | Notifica\ | Existence of a   |
-| ices.vpn      |       | vice    |            | tion, Po\ | VPN              |
-|               |       |         |            | llster    |                  |
+| network.serv\ | Gauge | vpnser\ | vpn ID     | Pollster  | Existence of a   |
+| ices.vpn      |       | vice    |            |           | VPN              |
 +---------------+-------+---------+------------+-----------+------------------+
-| network.serv\ | Gauge | ipsec\_\| connection | Notifica\ | Existence of an  |
-| ices.vpn.con\ |       | site\_c\| ID         | tion, Po\ | IPSec connection |
-| nections      |       | onnect\ |            | llster    |                  |
+| network.serv\ | Gauge | ipsec\_\| connection | Pollster  | Existence of an  |
+| ices.vpn.con\ |       | site\_c\| ID         |           | IPSec connection |
+| nections      |       | onnect\ |            |           |                  |
 |               |       | ion     |            |           |                  |
 +---------------+-------+---------+------------+-----------+------------------+
-| **Meters added in the Kilo release**                                        |
+| **Meters removed as of Ocata release**                                      |
 +---------------+-------+---------+------------+-----------+------------------+
 | network.serv\ | Delta | vpnser\ | vpn ID     | Notifica\ | VPN was created  |
 | ices.vpn.cre\ |       | vice    |            | tion      |                  |
@@ -1378,17 +1259,16 @@ The following meters are collected for FWaaS:
 +---------------+-------+---------+------------+-----------+------------------+
 | Name          | Type  | Unit    | Resource   | Origin    | Note             |
 +===============+=======+=========+============+===========+==================+
-| **Meters added in the Juno release**                                        |
+| **Meters added in the Mitaka release or earlier**                           |
 +---------------+-------+---------+------------+-----------+------------------+
-| network.serv\ | Gauge | firewall| firewall ID| Notifica\ | Existence of a   |
-| ices.firewall |       |         |            | tion, Po\ | firewall         |
-|               |       |         |            | llster    |                  |
+| network.serv\ | Gauge | firewall| firewall ID| Pollster  | Existence of a   |
+| ices.firewall |       |         |            |           | firewall         |
 +---------------+-------+---------+------------+-----------+------------------+
-| network.serv\ | Gauge | firewa\ | firewall ID| Notifica\ | Existence of a   |
-| ices.firewal\ |       | ll_pol\ |            | tion, Po\ | firewall policy  |
-| l.policy      |       | icy     |            | llster    |                  |
+| network.serv\ | Gauge | firewa\ | firewall ID| Pollster  | Existence of a   |
+| ices.firewal\ |       | ll_pol\ |            |           | firewall policy  |
+| l.policy      |       | icy     |            |           |                  |
 +---------------+-------+---------+------------+-----------+------------------+
-| **Meters added in the Kilo release**                                        |
+| **Meters removed as of Ocata release**                                      |
 +---------------+-------+---------+------------+-----------+------------------+
 | network.serv\ | Delta | firewall| firewall ID| Notifica\ | Firewall was cr\ |
 | ices.firewal\ |       |         |            | tion      | eated            |
@@ -1425,12 +1305,12 @@ The following meters are collected for FWaaS:
 Orchestration service
 ~~~~~~~~~~~~~~~~~~~~~
 
-The following meters are collected for the Orchestration service:
+The following meters were previously collected for the Orchestration service:
 
 +----------------+-------+------+----------+--------------+-------------------+
 | Name           | Type  | Unit | Resource | Origin       | Note              |
 +================+=======+======+==========+==============+===================+
-| **Meters added in the Icehouse release or earlier**                         |
+| **Meters removed as of Ocata release**                                      |
 +----------------+-------+------+----------+--------------+-------------------+
 | stack.create   | Delta | stack| stack ID | Notification | Stack was success\|
 |                |       |      |          |              | fully created     |
@@ -1447,19 +1327,17 @@ The following meters are collected for the Orchestration service:
 | stack.suspend  | Delta | stack| stack ID | Notification | Stack was success\|
 |                |       |      |          |              | fully suspended   |
 +----------------+-------+------+----------+--------------+-------------------+
-| **All meters thoroughly deprecated in the Liberty release**                 |
-+------------------+-------+------+----------+-------------+------------------+
 
 Data processing service for OpenStack
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The following meters are collected for the Data processing service for
-OpenStack:
+The following meters were previously collected for the Data processing service
+for OpenStack:
 
 +----------------+-------+---------+-----------+-------------+----------------+
 | Name           | Type  | Unit    | Resource  | Origin      | Note           |
 +================+=======+=========+===========+=============+================+
-| **Meters added in the Juno release**                                        |
+| **Meters removed as of Ocata release**                                      |
 +----------------+-------+---------+-----------+-------------+----------------+
 | cluster.create | Delta | cluster | cluster ID| Notification| Cluster was    |
 |                |       |         |           |             | successfully   |
@@ -1474,18 +1352,16 @@ OpenStack:
 |                |       |         |           |             | successfully   |
 |                |       |         |           |             | deleted        |
 +----------------+-------+---------+-----------+-------------+----------------+
-| **All meters thoroughly deprecated in the Liberty release**                 |
-+------------------+-------+------+----------+-------------+------------------+
 
 Key Value Store module
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The following meters are collected for the Key Value Store module:
+The following meters were previously collected for the Key Value Store module:
 
 +------------------+-------+------+----------+-------------+------------------+
 | Name             | Type  | Unit | Resource | Origin      | Note             |
 +==================+=======+======+==========+=============+==================+
-| **Meters added in the Kilo release**                                        |
+| **Meters removed as of Newton release**                                     |
 +------------------+-------+------+----------+-------------+------------------+
 | magnetodb.table.\| Gauge | table| table ID | Notification| Table was succe\ |
 | create           |       |      |          |             | ssfully created  |
@@ -1498,22 +1374,16 @@ The following meters are collected for the Key Value Store module:
 |                  |       |      |          |             | table            |
 +------------------+-------+------+----------+-------------+------------------+
 
-|
-
-.. note::
-
-   The Key Value Store meters are not supported in the Newton release and
-   later.
 
 Energy
 ~~~~~~
 
-The following energy related meters are available:
+The following energy related meters were previously available:
 
 +---------------+------------+------+----------+----------+-------------------+
 | Name          | Type       | Unit | Resource | Origin   | Note              |
 +===============+============+======+==========+==========+===================+
-| **Meters added in the Icehouse release or earlier**                         |
+| **Meters deprecated as of Newton release**                                  |
 +---------------+------------+------+----------+----------+-------------------+
 | energy        | Cumulative | kWh  | probe ID | Pollster | Amount of energy  |
 +---------------+------------+------+----------+----------+-------------------+
