@@ -14,10 +14,14 @@ Prerequisites
 Before you install and configure the Identity service, you must
 create a database.
 
-.. note::
+.. only:: obs
 
-   Before you begin, ensure you have the most recent version of
-   ``python-pyasn1`` `installed <https://pypi.python.org/pypi/pyasn1>`_.
+   .. note::
+
+      Before you begin, ensure you have the most recent version of
+      ``python-pyasn1`` `installed <https://pypi.python.org/pypi/pyasn1>`_.
+
+.. endonly
 
 .. only:: ubuntu
 
