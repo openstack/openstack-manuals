@@ -64,6 +64,9 @@ Create a snapshot of the instance
       $ nova image-create --poll myInstance myInstanceSnapshot
       Instance snapshotting... 50% complete
 
+   The above command creates the image ``myInstance`` by taking a snapshot
+   of a running server.
+
 #. Use the :command:`openstack image list` command to check the status
    until the status is ``active``:
 
