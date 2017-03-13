@@ -181,7 +181,7 @@ types by each OpenStack service that Telemetry transforms into samples.
        \*
      - The required configuration for Block Storage service can be found in the
        `Add the Block Storage service agent for Telemetry
-       <https://docs.openstack.org/project-install-guide/telemetry/ocata/configure_services/cinder/install-cinder-ubuntu.html>`__
+       <https://docs.openstack.org/project-install-guide/telemetry/ocata/cinder/install-cinder-ubuntu.html>`__
        section in the Installation Tutorials and Guides.
 
 .. note::
@@ -195,9 +195,8 @@ Specific notifications from the Compute service are important for
 administrators and users. Configuring ``nova_notifications`` in the
 ``nova.conf`` file allows administrators to respond to events
 rapidly. For more information on configuring notifications for the
-compute service, see
-`Telemetry services <https://docs.openstack.org/project-install-guide/
-telemetry/ocata/configure_services/nova/install-nova-ubuntu.html>`__ in the
+compute service, see `Telemetry services
+<https://docs.openstack.org/project-install-guide/telemetry/ocata/install-compute-ubuntu.html>`__ in the
 Installation Tutorials and Guides.
 
 Meter definitions
@@ -368,8 +367,7 @@ information locally.
 A Compute agent instance has to be installed on each and every compute
 node, installation instructions can be found in the `Install the Compute
 agent for Telemetry
-<https://docs.openstack.org/project-install-guide/
-telemetry/ocata/configure_services/nova/install-nova-ubuntu.html>`__
+<https://docs.openstack.org/project-install-guide/telemetry/ocata/install-compute-ubuntu.html>`__
 section in the Installation Tutorials and Guides.
 
 The compute agent does not need direct database connection. The samples
