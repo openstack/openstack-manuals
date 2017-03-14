@@ -135,7 +135,7 @@ create databases, service credentials, and API endpoints.
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
-        compute public http://controller:8774/v2.1/%\(tenant_id\)s
+        compute public http://controller:8774/v2.1
 
       +--------------+-------------------------------------------+
       | Field        | Value                                     |
@@ -148,11 +148,11 @@ create databases, service credentials, and API endpoints.
       | service_id   | 060d59eac51b4594815603d75a00aba2          |
       | service_name | nova                                      |
       | service_type | compute                                   |
-      | url          | http://controller:8774/v2.1/%(tenant_id)s |
+      | url          | http://controller:8774/v2.1               |
       +--------------+-------------------------------------------+
 
       $ openstack endpoint create --region RegionOne \
-        compute internal http://controller:8774/v2.1/%\(tenant_id\)s
+        compute internal http://controller:8774/v2.1
 
       +--------------+-------------------------------------------+
       | Field        | Value                                     |
@@ -165,11 +165,11 @@ create databases, service credentials, and API endpoints.
       | service_id   | 060d59eac51b4594815603d75a00aba2          |
       | service_name | nova                                      |
       | service_type | compute                                   |
-      | url          | http://controller:8774/v2.1/%(tenant_id)s |
+      | url          | http://controller:8774/v2.1               |
       +--------------+-------------------------------------------+
 
       $ openstack endpoint create --region RegionOne \
-        compute admin http://controller:8774/v2.1/%\(tenant_id\)s
+        compute admin http://controller:8774/v2.1
 
       +--------------+-------------------------------------------+
       | Field        | Value                                     |
@@ -182,7 +182,7 @@ create databases, service credentials, and API endpoints.
       | service_id   | 060d59eac51b4594815603d75a00aba2          |
       | service_name | nova                                      |
       | service_type | compute                                   |
-      | url          | http://controller:8774/v2.1/%(tenant_id)s |
+      | url          | http://controller:8774/v2.1               |
       +--------------+-------------------------------------------+
 
    .. end
