@@ -48,6 +48,8 @@ and their associated references in the guide.
      - Password of Image service user ``glance``
    * - ``KEYSTONE_DBPASS``
      - Database password of Identity service
+   * - ``METADATA_SECRET``
+     - Secret for the metadata proxy
    * - ``NEUTRON_DBPASS``
      - Database password for the Networking service
    * - ``NEUTRON_PASS``
