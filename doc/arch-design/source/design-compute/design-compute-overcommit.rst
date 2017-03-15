@@ -1,11 +1,11 @@
-==============
-Overcommitting
-==============
+==========================
+Overcommitting CPU and RAM
+==========================
 
 OpenStack allows you to overcommit CPU and RAM on compute nodes. This
-allows you to increase the number of instances you can have running on
-your cloud, at the cost of reducing the performance of the instances.
-OpenStack Compute uses the following ratios by default:
+allows you to increase the number of instances running on your cloud at the
+cost of reducing the performance of the instances. The Compute service uses the
+following ratios by default:
 
 * CPU allocation ratio: 16:1
 * RAM allocation ratio: 1.5:1
@@ -20,13 +20,13 @@ The formula for the number of virtual instances on a compute node is
 ``(OR*PC)/VC``, where:
 
 OR
-    CPU overcommit ratio (virtual cores per physical core)
+ CPU overcommit ratio (virtual cores per physical core)
 
 PC
-    Number of physical cores
+ Number of physical cores
 
 VC
-    Number of virtual cores per instance
+ Number of virtual cores per instance
 
 Similarly, the default RAM allocation ratio of 1.5:1 means that the
 scheduler allocates instances to a physical node as long as the total
@@ -39,6 +39,7 @@ with the instances reaches 72 GB (such as nine instances, in the case
 where each instance has 8 GB of RAM).
 
 .. note::
+
    Regardless of the overcommit ratio, an instance can not be placed
    on any physical node with fewer raw (pre-overcommit) resources than
    the instance flavor requires.

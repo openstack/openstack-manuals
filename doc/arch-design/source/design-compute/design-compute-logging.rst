@@ -5,12 +5,13 @@ Compute server logging
 The logs on the compute nodes, or any server running nova-compute (for example
 in a hyperconverged architecture), are the primary points for troubleshooting
 issues with the hypervisor and compute services. Additionally, operating system
-logs can also provide useful information. However, as environments grow, the
-amount of log data increases exponentially. Enabling debugging on either the
-OpenStack services or the operating system logging further compounds the data
-issues.
+logs can also provide useful information.
 
-Logging is detailed more fully in the `Operations Guide
+As the cloud environment grows, the amount of log data increases exponentially.
+Enabling debugging on either the OpenStack services or the operating system
+further compounds the data issues.
+
+Logging is described in more detail in the `Operations Guide
 <http://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_. However,
 it is an important design consideration to take into account before commencing
 operations of your cloud.
@@ -18,7 +19,7 @@ operations of your cloud.
 OpenStack produces a great deal of useful logging information, but for
 the information to be useful for operations purposes, you should consider
 having a central logging server to send logs to, and a log parsing/analysis
-system (such as Elastic Stack [formerly known as ELK]).
+system such as Elastic Stack [formerly known as ELK].
 
 Elastic Stack consists of mainly three components: Elasticsearch (log search
 and analysis), Logstash (log intake, processing and output) and Kibana (log
@@ -35,28 +36,28 @@ Redis and Memcached. In newer versions of Elastic Stack, a file buffer called
 similar purpose but adds a "backpressure-sensitive" protocol when sending data
 to Logstash or Elasticsearch.
 
-Many times, log analysis requires disparate logs of differing formats, Elastic
-Stack (namely logstash) was created to take many different log inputs and then
-transform them into a consistent format that elasticsearch can catalog and
+Log analysis often requires disparate logs of differing formats. Elastic
+Stack (namely Logstash) was created to take many different log inputs and
+transform them into a consistent format that Elasticsearch can catalog and
 analyze. As seen in the image above, the process of ingestion starts on the
-servers by logstash, is forwarded to the elasticsearch server for storage and
-searching and then displayed via Kibana for visual analysis and interaction.
+servers by Logstash, is forwarded to the Elasticsearch server for storage and
+searching, and then displayed through Kibana for visual analysis and
+interaction.
 
-For instructions on installing Logstash, Elasticsearch and Kibana see `the
-elastic stack documentation.
+For instructions on installing Logstash, Elasticsearch and Kibana, see the
+`Elasticsearch reference
 <https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html>`_.
 
 There are some specific configuration parameters that are needed to
-configure logstash for OpenStack. For example, in order to get logstash to
-collect, parse and send the correct portions of log files and send them to the
-elasticsearch server, you need to format the configuration file properly. There
-are input, output and filter configurations. Input configurations tell logstash
-who and what to recieve data from (log files/
-forwarders/filebeats/StdIn/Eventlog/etc.), output specifies where to put the
-data, and filter configurations define the input contents to forward to the
-output.
+configure Logstash for OpenStack. For example, in order to get Logstash to
+collect, parse, and send the correct portions of log files to the Elasticsearch
+server, you need to format the configuration file properly. There
+are input, output and filter configurations. Input configurations tell Logstash
+where to recieve data from (log files/forwarders/filebeats/StdIn/Eventlog),
+output configurations specify where to put the data, and filter configurations
+define the input contents to forward to the output.
 
-The logstash filter performs intermediary processing on each event. Conditional
+The Logstash filter performs intermediary processing on each event. Conditional
 filters are applied based on the characteristics of the input and the event.
 Some examples of filtering are:
 
@@ -88,16 +89,15 @@ representation of events such as:
 
 These input, output and filter configurations are typically stored in
 :file:`/etc/logstash/conf.d` but may vary by linux distribution. Separate
-configuration files should be created for different logging systems(syslog,
-apache, OpenStack, etc.)
+configuration files should be created for different logging systems such as
+syslog, Apache, and OpenStack.
 
 General examples and configuration guides can be found on the Elastic `Logstash
 Configuration page
-<https://www.elastic.co/guide/en/logstash/current/configuration-file-structure.html>`_
+<https://www.elastic.co/guide/en/logstash/current/configuration-file-structure.html>`_.
 
 OpenStack input, output and filter examples can be found at
-`https://github.com/sorantis/elkstack/tree/master/elk/logstash
-<https://github.com/sorantis/elkstack/tree/master/elk/logstash>`_
+https://github.com/sorantis/elkstack/tree/master/elk/logstash.
 
 Once a configuration is complete, Kibana can be used as a visualization tool
 for OpenStack and system logging. This will allow operators to configure custom

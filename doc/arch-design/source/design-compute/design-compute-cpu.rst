@@ -1,3 +1,5 @@
+.. _choosing-a-cpu:
+
 ==============
 Choosing a CPU
 ==============
@@ -9,9 +11,10 @@ and *AMD-v* for AMD chips.
 .. tip::
 
    Consult the vendor documentation to check for virtualization support. For
-   Intel, read `“Does my processor support Intel® Virtualization Technology?”
-   <http://www.intel.com/support/processors/sb/cs-030729.htm>`_. For AMD, read
-   `AMD Virtualization
+   Intel CPUs, see
+   `Does my processor support Intel® Virtualization Technology?
+   <http://www.intel.com/support/processors/sb/cs-030729.htm>`_. For AMD CPUs,
+   see `AMD Virtualization
    <http://www.amd.com/en-us/innovations/software-technologies/server-solution/virtualization>`_.
    Your CPU may support virtualization but it may be disabled. Consult your
    BIOS documentation for how to enable CPU features.
@@ -23,16 +26,17 @@ purchase a server that supports multiple CPUs, the number of cores is further
 multiplied.
 
 As of the Kilo release, key enhancements have been added to the
-OpenStack code to improve guest performance. These improvements allow OpenStack
-nova to take advantage of greater insight into a Compute host's physical layout
-and therefore make smarter decisions regarding workload placement.
-Administrators can use this functionality to enable smarter planning choices
-for use cases like NFV (Network Function Virtualization) and HPC (High
+OpenStack code to improve guest performance. These improvements allow the
+Compute service to take advantage of greater insight into a compute host's
+physical layout and therefore make smarter decisions regarding workload
+placement. Administrators can use this functionality to enable smarter planning
+choices for use cases like NFV (Network Function Virtualization) and HPC (High
 Performance Computing).
 
-Considering NUMA is important when selecting CPU sizes and types, there are use
-cases that use NUMA pinning to reserve host cores for OS processes. These
-reduce the available CPU for workloads and protects the OS.
+Considering non-uniform memory access (NUMA) is important when selecting CPU
+sizes and types, as there are use cases that use NUMA pinning to reserve host
+cores for operating system processes. These reduce the available CPU for
+workloads and protects the operating system.
 
 .. tip::
 
@@ -55,11 +59,12 @@ reduce the available CPU for workloads and protects the OS.
 Additionally, CPU selection may not be one-size-fits-all across enterprises,
 but more of a list of SKUs that are tuned for the enterprise workloads.
 
-A deeper discussion about NUMA can be found in `CPU topologies in the Admin
-Guide <https://docs.openstack.org/admin-guide/compute-cpu-topologies.html>`_.
+For more information about NUMA, see `CPU topologies
+<https://docs.openstack.org/admin-guide/compute-cpu-topologies.html>`_ in
+the Administrator Guide.
 
-In order to take advantage of these new enhancements in OpenStack nova, Compute
-hosts must be using NUMA capable CPUs.
+In order to take advantage of these new enhancements in the Compute service,
+compute hosts must be using NUMA capable CPUs.
 
 .. tip::
 

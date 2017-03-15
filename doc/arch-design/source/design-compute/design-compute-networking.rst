@@ -1,6 +1,6 @@
-=====================
+====================
 Network connectivity
-=====================
+====================
 
 The selected server hardware must have the appropriate number of network
 connections, as well as the right type of network connections, in order to
