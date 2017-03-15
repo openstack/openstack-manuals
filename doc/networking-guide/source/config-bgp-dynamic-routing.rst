@@ -112,7 +112,7 @@ Verify service operation
 
    .. code-block:: console
 
-      $ neutron agent-list --agent-type=="BGP dynamic routing agent"
+      $ neutron agent-list --agent-type="BGP dynamic routing agent"
       +--------------------------------------+---------------------------+------------+-------------------+-------+----------------+---------------------------+
       | id                                   | agent_type                | host       | availability_zone | alive | admin_state_up | binary                    |
       +--------------------------------------+---------------------------+------------+-------------------+-------+----------------+---------------------------+
@@ -839,7 +839,7 @@ more operational agents.
 
    .. code-block:: console
 
-      $ neutron agent-list --agent-type=="BGP dynamic routing agent"
+      $ neutron agent-list --agent-type="BGP dynamic routing agent"
       +--------------------------------------+---------------------------+----------+-------------------+-------+----------------+---------------------------+
       | id                                   | agent_type                | host     | availability_zone | alive | admin_state_up | binary                    |
       +--------------------------------------+---------------------------+----------+-------------------+-------+----------------+---------------------------+
