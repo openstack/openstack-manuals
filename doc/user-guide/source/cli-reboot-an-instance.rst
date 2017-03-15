@@ -68,8 +68,8 @@ command:
    $ openstack server unrescue SERVER
 
 If you want to rescue an instance with a specific image, rather than the
-default one, use the ``--rescue_image_ref`` parameter:
+default one, use the ``--image`` parameter:
 
 .. code-block:: console
 
-   $ nova rescue --rescue_image_ref IMAGE_ID SERVER
+   $ nova rescue --image IMAGE_ID SERVER
