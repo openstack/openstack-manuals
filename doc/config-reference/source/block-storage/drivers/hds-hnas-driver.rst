@@ -1,8 +1,8 @@
 ==========================================
-Hitachi NAS Platform iSCSI and NFS drivers
+Hitachi NAS Platform NFS driver
 ==========================================
 
-This OpenStack Block Storage volume drivers provides iSCSI and NFS support
+This OpenStack Block Storage volume drivers provides NFS support
 for `Hitachi NAS Platform (HNAS) <http://www.hds.com/products/file-and-content/
 network-attached-storage/>`_ Models 3080, 3090, 4040, 4060, 4080, and 4100
 with NAS OS 12.2 or higher.
@@ -10,7 +10,7 @@ with NAS OS 12.2 or higher.
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
 
-The NFS and iSCSI drivers support these operations:
+The NFS driver support these operations:
 
 * Create, delete, attach, and detach volumes.
 * Create, list, and delete volume snapshots.
@@ -27,7 +27,7 @@ The NFS and iSCSI drivers support these operations:
 HNAS storage requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before using iSCSI and NFS services, use the HNAS configuration and management
+Before using NFS services, use the HNAS configuration and management
 GUI (SMU) or SSC CLI to configure HNAS to work with the drivers. Additionally:
 
 1. General:
@@ -56,10 +56,6 @@ GUI (SMU) or SSC CLI to configure HNAS to work with the drivers. Additionally:
 * In order to use the hardware accelerated features of HNAS NFS, we
   recommend setting ``max-nfs-version`` to 3. Refer to Hitachi NAS Platform
   command line reference to see how to configure this option.
-
-3. For iSCSI:
-
-* You must set an iSCSI domain to EVS.
 
 Block Storage host requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,8 +131,8 @@ configurations in the :ref:`configuration_example` section.
   deprecated as of Newton Release.
 
 .. note::
-  We do not recommend the use of the same NFS export or file system (iSCSI
-  driver) for different back ends. If possible, configure each back end to
+  We do not recommend the use of the same NFS export for different back ends.
+  If possible, configure each back end to
   use a different NFS export/file system.
 
 The following is the definition of each configuration option that can be used
@@ -160,9 +156,7 @@ in a HNAS back-end section in the ``cinder.conf`` file:
      - N/A
      - The python module path to the HNAS volume driver python class. When
        installing through the rpm or deb packages, you should configure this
-       to `cinder.volume.drivers.hitachi.hnas_iscsi.HNASISCSIDriver` for the
-       iSCSI back end or `cinder.volume.drivers.hitachi.hnas_nfs.HNASNFSDriver`
-       for the NFS back end.
+       to `cinder.volume.drivers.hitachi.hnas_nfs.HNASNFSDriver`.
    * - ``nfs_shares_config``
      - Required (only for NFS)
      - /etc/cinder/nfs_shares
@@ -177,18 +171,13 @@ in a HNAS back-end section in the ``cinder.conf`` file:
      - HNAS management IP address. Should be the IP address of the `Admin`
        EVS. It is also the IP through which you access the web SMU
        administration frontend of HNAS.
-   * - ``hnas_chap_enabled``
-     - Optional (iSCSI only)
-     - True
-     - Boolean tag used to enable CHAP authentication protocol for iSCSI
-       driver.
    * - ``hnas_username``
      - Required
      - N/A
      - HNAS SSH username
-   * - ``hds_hnas_nfs_config_file | hds_hnas_iscsi_config_file``
+   * - ``hds_hnas_nfs_config_file``
      - Optional (deprecated)
-     - /opt/hds/hnas/cinder_[nfs|iscsi]_conf.xml
+     - /opt/hds/hnas/cinder_nfs_conf.xml
      - Path to the deprecated XML configuration file (only required if using
        the XML file)
    * - ``hnas_cluster_admin_ip0``
@@ -214,15 +203,8 @@ in a HNAS back-end section in the ``cinder.conf`` file:
    * - ``hnas_svcX_hdp`` [1]_
      - Required (at least 1)
      - N/A
-     - HDP (export or file system) where the volumes will be created. Use
-       exports paths for the NFS backend or the file system names for the
-       iSCSI backend (note that when using the file system name, it does not
-       contain the IP addresses of the HDP)
-   * - ``hnas_svcX_iscsi_ip``
-     - Required (only for iSCSI)
-     - N/A
-     - The IP of the EVS that contains the file system specified in
-       hnas_svcX_hdp
+     - HDP (export) where the volumes will be created. Use
+       exports paths to configure this.
    * - ``hnas_svcX_pool_name``
      - Required
      - N/A
@@ -379,8 +361,6 @@ back end, it only adds a link to an existing volume.
   It is an admin only feature and you have to be logged as an user
   with admin rights to be able to use this.
 
-For NFS:
-
 #. Under the :menuselection:`System > Volumes` tab,
    choose the option :guilabel:`Manage Volume`.
 
@@ -395,22 +375,6 @@ For NFS:
    * :guilabel:`Volume Name`: volume_name (*For example:* volume-test)
    * :guilabel:`Volume Type`: choose a type of volume (*For example:* silver)
 
-For iSCSI:
-
-#. Under the :menuselection:`System > Volumes` tab,
-   choose the option :guilabel:`Manage Volume`.
-
-#. Fill the fields :guilabel:`Identifier`, :guilabel:`Host`,
-   :guilabel:`Volume Name`, and :guilabel:`Volume Type` with volume
-   information to be managed:
-
-   * :guilabel:`Identifier`: filesystem-name/volume-name (*For example:*
-     filesystem-test/volume-test)
-   * :guilabel:`Host`: `host@backend-name#pool_name` (*For example:*
-     `ubuntu@hnas-iscsi#test_silver`)
-   * :guilabel:`Volume Name`: volume_name (*For example:* volume-test)
-   * :guilabel:`Volume Type`: choose a type of volume (*For example:* silver)
-
 By CLI:
 
 .. code-block:: console
@@ -421,19 +385,10 @@ By CLI:
 
 Example:
 
-For NFS:
-
 .. code-block:: console
 
   $ cinder manage --name volume-test --volume-type silver
   ubuntu@hnas-nfs#test_silver 172.24.44.34:/silver/volume-test
-
-For iSCSI:
-
-.. code-block:: console
-
-  $ cinder manage --name volume-test --volume-type silver
-  ubuntu@hnas-iscsi#test_silver filesystem-test/volume-test
 
 Managing snapshots
 ~~~~~~~~~~~~~~~~~~
@@ -445,9 +400,9 @@ it is possible to use manage snapshots to import these snapshots and link them
 with their original volume.
 
 .. note::
-  For HNAS NFS cinder driver, the snapshots of volumes
-  are clones of volumes that where created using :command:`file-clone-create`,
-  not the HNAS :command:`snapshot-\*` feature. Check the HNAS users
+  For HNAS NFS cinder driver, the snapshots of volumes are clones of volumes
+  that were created using :command:`file-clone-create`, not the HNAS
+  :command:`snapshot-\*` feature. Check the HNAS users
   documentation to have details about those 2 features.
 
 Currently, the manage snapshots function does not support importing snapshots
@@ -464,9 +419,6 @@ admin rights to be able to use this.
   non-related volumes as parents, it is possible to manage a snapshot using
   any related cloned volume. So, when managing a snapshot, it is extremely
   important to make sure that you are using the correct parent volume.
-
-
-For NFS:
 
 .. code-block:: console
 
@@ -492,7 +444,7 @@ Example:
 Configuration example
 ~~~~~~~~~~~~~~~~~~~~~
 
-Below are configuration examples for both NFS and iSCSI backends:
+Below are configuration examples for NFS backend:
 
 #. HNAS NFS Driver
 
@@ -555,62 +507,6 @@ Below are configuration examples for both NFS and iSCSI backends:
          $ openstack volume type set --property volume_backend_name=hnas_nfs_backend \
            service_label=nfs_bronze hnas_nfs_bronze
 
-#. HNAS iSCSI Driver
-
-   #. For HNAS iSCSI driver, create this section in your ``cinder.conf`` file:
-
-      .. code-block:: ini
-
-        [hnas-iscsi]
-        volume_driver = cinder.volume.drivers.hitachi.hnas_iscsi.HNASISCSIDriver
-        volume_backend_name = hnas_iscsi_backend
-        hnas_username = supervisor
-        hnas_password = supervisor
-        hnas_mgmt_ip0 = 172.24.44.15
-        hnas_chap_enabled = True
-
-        hnas_svc0_pool_name = iscsi_gold
-        hnas_svc0_hdp = FS-gold
-        hnas_svc0_iscsi_ip = 172.24.49.21
-
-        hnas_svc1_pool_name = iscsi_platinum
-        hnas_svc1_hdp = FS-platinum
-        hnas_svc1_iscsi_ip = 172.24.49.21
-
-        hnas_svc2_pool_name = iscsi_silver
-        hnas_svc2_hdp = FS-silver
-        hnas_svc2_iscsi_ip = 172.24.49.22
-
-        hnas_svc3_pool_name = iscsi_bronze
-        hnas_svc3_hdp = FS-bronze
-        hnas_svc3_iscsi_ip = 172.24.49.23
-
-   #. Add it to the ``enabled_backends`` list, under the ``DEFAULT`` section
-      of your ``cinder.conf`` file:
-
-      .. code-block:: ini
-
-        [DEFAULT]
-        enabled_backends = hnas-nfs, hnas-iscsi
-
-   #. Register a volume type with cinder and associate it with
-      this backend:
-
-      .. code-block:: console
-
-         $ openstack volume type create hnas_iscsi_gold
-         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
-           service_label=iscsi_gold hnas_iscsi_gold
-         $ openstack volume type create hnas_iscsi_platinum
-         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
-           service_label=iscsi_platinum hnas_iscsi_platinum
-         $ openstack volume type create hnas_iscsi_silver
-         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
-           service_label=iscsi_silver hnas_iscsi_silver
-         $ openstack volume type create hnas_iscsi_bronze
-         $ openstack volume type set --property volume_backend_name=hnas_iscsi_backend \
-           service_label=iscsi_bronze hnas_iscsi_bronze
-
 Additional notes and limitations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -641,9 +537,6 @@ Additional notes and limitations
   file system at the ``maximum capacity`` or periodically expanding the file
   system manually.
 
-* iSCSI driver limitations: The iSCSI driver has a ``limit of 1024`` volumes
-  attached to instances.
-
 * The ``hnas_svcX_pool_name`` option must be unique for a given back end. It
   is still possible to use the deprecated form ``hnas_svcX_volume_type``, but
   this support will be removed in a future release.
@@ -653,6 +546,3 @@ Additional notes and limitations
   (create, delete and so on) can have some attempts failed and re-tried (
   ``5 attempts`` by default) due to an HNAS connection limitation (
   ``max of 5`` simultaneous connections).
-
-* Hitachi NAS Platform iSCSI driver is now deprecated and will be removed
-  on Pike release.
