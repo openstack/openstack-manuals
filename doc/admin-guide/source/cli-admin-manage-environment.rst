@@ -10,7 +10,7 @@ This section includes tasks specific to the OpenStack environment.
    cli-nova-specify-host.rst
    cli-nova-numa-libvirt.rst
    cli-nova-evacuate.rst
-   cli-nova-migrate.rst
-   cli-nova-migrate-cfg-ssh.rst
+   cli-os-migrate.rst
+   cli-os-migrate-cfg-ssh.rst
    cli-admin-manage-ip-addresses.rst
    cli-admin-manage-stacks.rst

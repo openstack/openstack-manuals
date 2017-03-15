@@ -1,4 +1,4 @@
-.. _clinovamigratecfgssh:
+.. _cli-os-migrate-cfg-ssh:
 
 ===================================
 Configure SSH between compute nodes
@@ -76,4 +76,3 @@ complete the following steps:
 
       # systemctl restart libvirtd.service
       # systemctl restart openstack-nova-compute.service
-

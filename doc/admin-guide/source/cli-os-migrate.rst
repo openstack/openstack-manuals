@@ -9,7 +9,7 @@ not assume that the instance has shared storage available on the
 target host. If you are using SSH tunneling, you must ensure that
 each node is configured with SSH key authentication so that the
 Compute service can use SSH to move disks to other nodes.
-For more information, see :ref:`clinovamigratecfgssh`.
+For more information, see :ref:`cli-os-migrate-cfg-ssh`.
 
 #. To list the VMs you want to migrate, run:
 
@@ -62,8 +62,8 @@ For more information, see :ref:`clinovamigratecfgssh`.
 
 .. note::
 
-   If you see this error, it means you are either
-   trying the command with the wrong credentials,
+   If you see the following error, it means you are either
+   running the command with the wrong credentials,
    such as a non-admin user, or the ``policy.json``
    file prevents migration for your user:
 
@@ -72,12 +72,13 @@ For more information, see :ref:`clinovamigratecfgssh`.
 
 .. note::
 
-   If you see an error similar to this message, SSH tunneling
-   was not set up between the compute nodes:
+   If you see the following error, similar to this message, SSH
+   tunneling was not set up between the compute nodes:
 
    ``ProcessExecutionError: Unexpected error while running command.``
 
    ``Stderr: u Host key verification failed.\r\n``
 
 The instance is booted from a new host, but preserves its configuration
-including its ID, name, any metadata, IP address, and other properties.
+including instance ID, name, IP address, any metadata, and other
+properties.
