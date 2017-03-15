@@ -411,9 +411,10 @@ Manage and unmanage snapshots
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Shared File Systems service also has the ability to manage share
-snapshots. All new share snapshots are created inside a directory
-``/snapshots/share_ID``. Existing HNAS snapshots can also be managed, as long
-as they respect the pre-existing folder structure.
+snapshots. Existing HNAS snapshots can be managed, as long as the snapshot
+directory is located in ``/snapshots/share_ID``. New snapshots created through
+the Shared File Systems service are also created according to this specific
+folder structure.
 
 To **manage** a snapshot, use:
 
