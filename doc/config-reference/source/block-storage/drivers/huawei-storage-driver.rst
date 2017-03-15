@@ -78,45 +78,6 @@ driver, Huawei storage system and OpenStack:
        OceanStor 18500/18800V1R1C00/C20/C30
      - 1.1.1
 
-Block Storage driver installation and deployment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. Before installation, delete all the installation files of Huawei OpenStack
-   Driver. The default path may be:
-   ``/usr/lib/python2.7/disk-packages/cinder/volume/drivers/huawei``.
-
-   .. note::
-
-      In this example, the version of Python is 2.7. If another version is
-      used, make corresponding changes to the driver path.
-
-#. Copy `the Block Storage driver
-   <http://git.openstack.org/cgit/openstack/cinder/tree/cinder/volume/drivers/huawei?h=stable/mitaka>`_
-   to the Block Storage driver installation directory.
-   Refer to step 1 to find the default directory.
-
-#. Refer to chapter :ref:`huawei-driver-configuration` to complete the
-   configuration.
-
-#. After configuration, restart the ``cinder-volume`` service:
-
-#. Check the status of services using the :command:`cinder service-list`
-   command. If the ``State`` of ``cinder-volume`` is ``up``, that means
-   ``cinder-volume`` is okay.
-
-   .. code-block:: console
-
-      # cinder service-list
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-      | Binary          | Host            | Zone | Status  | State | Updated_at                 | Disabled Reason |
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-      | cinderscheduler | controller      | nova | enabled | up    | 2016-02-01T16:26:00.000000 | -               |
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-      | cindervolume    | controller@v3r3 | nova | enabled | up    | 2016-02-01T16:25:53.000000 | -               |
-      +-----------------+-----------------+------+---------+-------+----------------------------+-----------------+
-
-.. _huawei-driver-configuration:
-
 Volume driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -152,19 +113,16 @@ To configure the volume driver, follow the steps below:
          <config>
             <Storage>
                <Product>PRODUCT</Product>
-               <Protocol>iSCSI</Protocol>
-               <ControllerIP1>x.x.x.x</ControllerIP1>
+               <Protocol>PROTOCOL</Protocol>
                <UserName>xxxxxxxx</UserName>
                <UserPassword>xxxxxxxx</UserPassword>
+               <RestURL>https://x.x.x.x:8088/deviceManager/rest/</RestURL>
             </Storage>
             <LUN>
                <LUNType>xxx</LUNType>
-               <StripUnitSize>xxx</StripUnitSize>
                <WriteType>xxx</WriteType>
-               <MirrorSwitch>xxx</MirrorSwitch>
                <Prefetch Type="xxx" Value="xxx" />
-               <StoragePool Name="xxx" />
-               <StoragePool Name="xxx" />
+               <StoragePool>xxx</StoragePool>
             </LUN>
             <iSCSI>
                <DefaultTargetIP>x.x.x.x</DefaultTargetIP>
@@ -175,11 +133,6 @@ To configure the volume driver, follow the steps below:
 
     The corresponding ``Product`` values for each product are as below:
 
-   * **For T series V1**
-
-     .. code-block:: xml
-
-        <Product>T</Product>
 
    * **For T series V2**
 
@@ -217,78 +170,62 @@ To configure the volume driver, follow the steps below:
 
 #. Configure the ``cinder.conf`` file.
 
-   In the ``[default]`` block of ``/etc/cinder/cinder.conf``, add the following
-   contents:
+   In the ``[default]`` block of ``/etc/cinder/cinder.conf``,
+   enable the ``VOLUME_BACKEND``:
+
+   .. code-block:: ini
+
+      enabled_backends = VOLUME_BACKEND
+
+
+   Add a new block ``[VOLUME_BACKEND]``, and add the following contents:
+
+   .. code-block:: ini
+
+      [VOLUME_BACKEND]
+      volume_driver = VOLUME_DRIVER
+      cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml
+      volume_backend_name = Huawei_Storage
 
    * ``volume_driver`` indicates the loaded driver.
 
    * ``cinder_huawei_conf_file`` indicates the specified Huawei-customized
      configuration file.
 
-   * ``hypermetro_devices`` indicates the list of remote storage devices for
-     which Hypermetro is to be used.
+   * ``volume_backend_name`` indicates the name of the backend.
 
-   The added content in the ``[default]`` block of ``/etc/cinder/cinder.conf``
-   with the appropriate ``volume_driver`` and the list of
-   ``remote storage devices`` values for each product is as below:
+   Add information about remote devices in ``/etc/cinder/cinder.conf``
+   in target back-end block for ``Replication``.
 
    .. code-block:: ini
 
+      [VOLUME_BACKEND]
       volume_driver = VOLUME_DRIVER
       cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf.xml
-      hypermetro_devices = {STORAGE_DEVICE1, STORAGE_DEVICE2....}
+      volume_backend_name = Huawei_Storage
+      replication_device =
+          backend_id: xxx,
+          storage_pool :xxx,
+          san_address: https://x.x.x.x:8088/deviceManager/rest/,
+          san_user: xxx,
+          san_passowrd: xxx,
+          iscsi_default_target_ip: x.x.x.x
 
    .. note::
 
-      By default, the value for ``hypermetro_devices`` is ``None``.
+      By default, the value for ``Replication`` is
+      ``None``. For details about the parameters in the configuration file,
+      see the `Configuration file parameters`_ section.
 
+   The ``volume-driver`` value for every product is as below:
 
-   The ``volume-driver`` values for each iSCSI product is as below:
+   .. code-block:: ini
 
-   * **For T series V1**
+      # For iSCSI
+      volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIDriver
 
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTFCDriver
-
-   * **For T series V2**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2ISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiTV2FCDriver
-
-   * **For V3**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiV3ISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiV3FCDriver
-
-   * **For OceanStor 18000 series**
-
-     .. code-block:: ini
-
-        # For iSCSI
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiISCSIDriver
-
-        # For FC
-        volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
-
-     .. note::
-
-        In Mitaka, ``Huawei18000ISCSIDriver`` and ``Huawei18000FCDriver`` have
-        been renamed to ``HuaweiISCSIDriver`` and ``HuaweiFCDriver``.
+      # For FC
+      volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
 
 #. Run the :command:`service cinder-volume restart` command to restart the
    Block Storage service.
@@ -300,13 +237,6 @@ To configure iSCSI multipathing, follow the steps below:
 
 #. Create a port group on the storage device using the ``DeviceManager`` and add
    service links that require multipathing into the port group.
-
-#. Log in to the storage device using CLI commands and enable the multiport
-   discovery switch in the multipathing.
-
-   .. code-block:: console
-
-      developer:/>change iscsi discover_multiport switch=on
 
 #. Add the port group settings in the Huawei-customized driver configuration
    file and configure the port group name needed by an initiator.
@@ -326,6 +256,19 @@ To configure iSCSI multipathing, follow the steps below:
 
    If the version of OpenStack is Juno, Kilo, Liberty or Mitaka, add
    ``iscsi_use_multipath = True`` in ``[libvirt]`` of ``/etc/nova/nova.conf``.
+
+#. Run the :command:`service nova-compute restart` command to restart the
+   ``nova-compute`` service.
+
+Configuring FC Multipathing
+------------------------------
+
+To configure FC Multipathing, follow the steps below:
+
+#. Enable the multipathing switch of the Compute service module.
+
+   Add ``iscsi_use_multipath = True`` in ``[libvirt]`` of
+   ``/etc/nova/nova.conf``.
 
 #. Run the :command:`service nova-compute restart` command to restart the
    ``nova-compute`` service.
@@ -358,15 +301,15 @@ Multiple storage systems configuration example:
 
 .. code-block:: ini
 
-   enabled_backends = t_fc, 18000_fc
-   [t_fc]
-   volume_driver = cinder.volume.drivers.huawei.huawei_t.HuaweiTFCDriver
-   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_t_fc.xml
-   volume_backend_name = HuaweiTFCDriver
+   enabled_backends = v3_fc, 18000_fc
+   [v3_fc]
+   volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
+   cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_v3_fc.xml
+   volume_backend_name = huawei_v3_fc
    [18000_fc]
    volume_driver = cinder.volume.drivers.huawei.huawei_driver.HuaweiFCDriver
    cinder_huawei_conf_file = /etc/cinder/cinder_huawei_conf_18000_fc.xml
-   volume_backend_name = HuaweiFCDriver
+   volume_backend_name = huawei_18000_fc
 
 Configuration file parameters
 -----------------------------
@@ -383,46 +326,34 @@ of the Huawei volume driver.
      - Description
      - Applicable to
    * - Product
-     - -
-     - Type of a storage product. Possible values are ``T``, ``18000`` and
+     - ``-``
+     - Type of a storage product. Possible values are ``TV2``, ``18000`` and
        ``V3``.
      - All
    * - Protocol
-     - -
+     - ``-``
      - Type of a connection protocol. The possible value is either ``'iSCSI'``
        or ``'FC'``.
      - All
-   * - ControllerIP0
-     - -
-     - IP address of the primary controller on an OceanStor T series V100R005
-       storage device.
-     - T series V1
-   * - ControllerIP1
-     - -
-     - IP address of the secondary controller on an OceanStor T series V100R005
-       storage device.
-     - T series V1
    * - RestURL
-     - -
+     - ``-``
      - Access address of the REST interface,
        ``https://x.x.x.x/devicemanager/rest/``. The value ``x.x.x.x`` indicates
        the management IP address. OceanStor 18000 uses the preceding setting,
        and V2 and V3 requires you to add port number ``8088``, for example,
        ``https://x.x.x.x:8088/deviceManager/rest/``. If you need to configure
        multiple RestURL, separate them by semicolons (;).
-     - T series V2
-
-       V3 18000
+     - All
    * - UserName
-     - -
+     - ``-``
      - User name of a storage administrator.
      - All
    * - UserPassword
-     - -
+     - ``-``
      - Password of a storage administrator.
      - All
    * - StoragePool
-     - -
+     - ``-``
      - Name of a storage pool to be used. If you need to configure multiple
        storage pools, separate them by semicolons (``;``).
      - All
@@ -440,65 +371,49 @@ of the Huawei volume driver.
      - Description
      - Applicable to
    * - LUNType
-     - Thin
+     - Thick
      - Type of the LUNs to be created. The value can be ``Thick`` or ``Thin``.
      - All
-   * - StripUnitSize
-     - 64
-     - Stripe depth of a LUN to be created. The unit is KB. This parameter is
-       invalid when a thin LUN is created.
-     - T series V1
    * - WriteType
      - 1
      - Cache write type, possible values are: ``1`` (write back), ``2``
        (write through), and ``3`` (mandatory write back).
      - All
-   * - MirrorSwitch
-     - 1
-     - Cache mirroring or not, possible values are: ``0`` (without mirroring)
-       or ``1`` (with mirroring).
-     - All
    * - Prefetch Type
      - 3
      - Cache prefetch policy, possible values are: ``0`` (no prefetch), ``1``
-       (fixed prefetch), ``2`` (variable prefetch) or ``3``
+       (fixed prefetch), ``2`` (variable prefetch), or ``3``
        (intelligent prefetch).
-     - T series V1
+     - All
    * - Prefetch Value
      - 0
      - Cache prefetch value.
-     - T series V1
+     - All
    * - LUNcopyWaitInterval
      - 5
      - After LUN copy is enabled, the plug-in frequently queries the copy
        progress. You can set a value to specify the query interval.
-     - T series V2 V3
-
-       18000
+     - All
    * - Timeout
      - 432000
      - Timeout interval for waiting LUN copy of a storage device to complete.
        The unit is second.
-     - T series V2 V3
-
-       18000
+     - All
    * - Initiator Name
-     - -
+     - ``-``
      - Name of a compute node initiator.
      - All
    * - Initiator TargetIP
-     - -
+     - ``-``
      - IP address of the iSCSI port provided for compute nodes.
      - All
    * - Initiator TargetPortGroup
-     - -
+     - ``-``
      - IP address of the iSCSI target port that is provided for compute
        nodes.
-     - T series V2 V3
-
-       18000
+     - All
    * - DefaultTargetIP
-     - -
+     - ``-``
      - Default IP address of the iSCSI target port that is provided for
        compute nodes.
      - All
@@ -507,10 +422,33 @@ of the Huawei volume driver.
      - Operating system of the Nova compute node's host.
      - All
    * - HostIP
-     - -
+     - ``-``
      - IP address of the Nova compute node's host.
      - All
-
+   * - backend_id
+     - ``-``
+     - Target device ID.
+     - All
+   * - storage_pool
+     - ``-``
+     - Pool name of target back-end when failover for replication.
+     - All
+   * - san_address
+     - ``-``
+     - Access address of the REST interface, https://x.x.x.x/devicemanager/rest/. The value x.x.x.x indicates the management IP address.
+     - All
+   * - san_user
+     - ``-``
+     - User name of a storage administrator of replication remote device.
+     - All
+   * - san_password
+     - ``-``
+     - Password of a storage administrator of replication remote device.
+     - All
+   * - iscsi_default_target_ip
+     - ``-``
+     - Remote transacton port IP.
+     - All
 .. important::
 
    The ``Initiator Name``, ``Initiator TargetIP``, and
