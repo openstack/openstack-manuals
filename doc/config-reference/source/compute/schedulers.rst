@@ -1070,21 +1070,22 @@ nova aggregate-create <name> [availability-zone]
   An error occurs if you cannot add a particular host to an aggregate zone
   for which it is not intended.
 
-nova aggregate-delete <id>
-  Delete an aggregate with id ``<id>``.
+nova aggregate-delete <aggregate>
+  Delete an aggregate with its ``<id>`` or ``<name>``.
 
-nova aggregate-details <id>
-  Show details of the aggregate with id ``<id>``.
+nova aggregate-show <aggregate>
+  Show details of the aggregate with its ``<id>`` or ``<name>``.
 
-nova aggregate-add-host <id> <host>
-  Add host with name ``<host>`` to aggregate with id ``<id>``.
+nova aggregate-add-host <aggregate> <host>
+  Add host with name ``<host>`` to aggregate with its ``<id>`` or ``<name>``.
 
-nova aggregate-remove-host <id> <host>
-  Remove the host with name ``<host>`` from the aggregate with id ``<id>``.
+nova aggregate-remove-host <aggregate> <host>
+  Remove the host with name ``<host>`` from the aggregate with its ``<id>``
+  or ``<name>``.
 
-nova aggregate-set-metadata <id> <key=value> [<key=value> ...]
+nova aggregate-set-metadata <aggregate> <key=value> [<key=value> ...]
   Add or update metadata (key-value pairs) associated with the aggregate
-  with id ``<id>``.
+  with its ``<id>`` or ``<name>``.
 
 nova aggregate-update <id> <name> [<availability_zone>]
   Update the name and availability zone (optional) for the aggregate.
