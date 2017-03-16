@@ -9,10 +9,10 @@ To complete these tasks, use these parameters on the
 
 .. list-table::
    :header-rows: 1
-   :widths: 30 10 30
+   :widths: 30 15 30
 
    * - Task
-     - nova boot parameter
+     - openstack server create parameter
      - Information
    * - Boot an instance from an image and attach a non-bootable
        volume.
