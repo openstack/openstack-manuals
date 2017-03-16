@@ -20,8 +20,10 @@ on this host.
 
 
    .. note::
-      HOST is an optional parameter. In such cases,
-      use the ``--availability-zone ZONE::NODE``.
+      HOST and NODE are optional parameters. In such cases,
+      use the ``--availability-zone ZONE::NODE``,
+      ``--availability-zone ZONE::HOST`` or
+      ``--availability-zone ZONE``.
 
 
 #. To specify which roles can launch an instance on a
