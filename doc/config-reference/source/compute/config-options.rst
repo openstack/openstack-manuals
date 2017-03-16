@@ -2,10 +2,6 @@
 nova.conf - configuration options
 =================================
 
-For a complete list of all available configuration options for each
-OpenStack Compute service, run
-:command:`nova-<servicename>` ``--help``.
-
 .. include:: ../tables/nova-api_database.rst
 .. include:: ../tables/nova-authentication.rst
 .. include:: ../tables/nova-availabilityzones.rst
