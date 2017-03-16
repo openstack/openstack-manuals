@@ -23,8 +23,9 @@ created on top of share servers and created with share networks.
 The Share service should have the option
 ``driver_handles_share_servers = False`` set in the ``manila.conf`` file.
 
-To unmanage managed share snapshot, run the :command:
-`manila snapshot-unmanage <share_snapshot>` command. Then try to print the
+To unmanage managed share snapshot, run the
+:command:`manila snapshot-unmanage <share_snapshot>`
+command. Then try to print the
 information about the share snapshot. The returned result should indicate that
 Shared File Systems service won't find the share snapshot:
 
