@@ -22,6 +22,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   mitaka.rst
-   newton.rst
+   unreleased
    ocata.rst
+   newton.rst
+   mitaka.rst
