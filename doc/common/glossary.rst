@@ -4097,7 +4097,7 @@ X
 
 .. glossary::
 
-  X.509
+   X.509
 
       X.509 is the most widely used standard for defining digital
       certificates. It is a data structure that contains the subject
