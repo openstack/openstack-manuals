@@ -315,16 +315,16 @@ the volume to boot an instance.
 Attach swap or ephemeral disk to an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the nova ``boot`` ``--swap`` parameter to attach a swap disk on boot
-or the nova ``boot`` ``--ephemeral`` parameter to attach an ephemeral
+Use the ``nova boot`` ``--swap`` parameter to attach a swap disk on boot
+or the ``nova boot`` ``--ephemeral`` parameter to attach an ephemeral
 disk on boot. When you terminate the instance, both disks are deleted.
 
 Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk.
 
 .. code-block:: console
 
-   $ openstack server create --flavor FLAVOR --image IMAGE_ID --swap 512 \
-   --ephemeral size=2 NAME
+   $ nova boot --flavor FLAVOR --image IMAGE_ID --swap 512 \
+     --ephemeral size=2 NAME
 
 .. note::
 
