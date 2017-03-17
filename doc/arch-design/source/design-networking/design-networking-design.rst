@@ -1,62 +1,65 @@
-==============
-Network design
-==============
+==============================
+Designing an OpenStack network
+==============================
 
-There are many reasons for an OpenStack network has complex requirements.
-However, one main factor is that the many components that interact at different
-levels of the system stack, adding complexity. Data flows are also complex.
-Data in an OpenStack cloud moves both between instances across the network
-(also known as East-West), as well as in and out of the system (also known
-as North-South). Physical server nodes have network requirements that are
-independent of instance network requirements and must be isolated to
+There are many reasons an OpenStack network has complex requirements. One main
+factor is that many components interact at different levels of the system
+stack. Data flows are also complex.
+
+Data in an OpenStack cloud moves between instances across the network
+(known as east-west traffic), as well as in and out of the system (known
+as north-south traffic). Physical server nodes have network requirements that
+are independent of instance network requirements and must be isolated to
 account for scalability. We recommend separating the networks for security
 purposes and tuning performance through traffic shaping.
 
-You must consider a number of important general technical and business factors
+You must consider a number of important technical and business requirements
 when planning and designing an OpenStack network:
 
-* A requirement for vendor independence. To avoid hardware or software vendor
-  lock-in, the design should not rely on specific features of a vendors router
-  or switch.
-* A requirement to massively scale the ecosystem to support millions of end
-  users.
-* A requirement to support indeterminate platforms and applications.
-* A requirement to design for cost efficient operations to take advantage of
-  massive scale.
-* A requirement to ensure that there is no single point of failure in the
-  cloud ecosystem.
-* A requirement for high availability architecture to meet customer SLA
-  requirements.
-* A requirement to be tolerant of rack level failure.
-* A requirement to maximize flexibility to architect future production
-  environments.
+* Avoid hardware or software vendor lock-in. The design should not rely on
+  specific features of a vendor's network router or switch.
+* Massively scale the ecosystem to support millions of end users.
+* Support an indeterminate variety of platforms and applications.
+* Design for cost efficient operations to take advantage of massive scale.
+* Ensure that there is no single point of failure in the cloud ecosystem.
+* High availability architecture to meet customer SLA requirements.
+* Tolerant to rack level failure.
+* Maximize flexibility to architect future production environments.
 
-Bearing in mind these considerations, we recommend the following:
+Considering these requirements, we recommend the following:
 
-* Layer-3 designs are preferable to layer-2 architectures.
+* Design a Layer-3 network architecture rather than a layer-2 network
+  architecture.
 * Design a dense multi-path network core to support multi-directional
   scaling and flexibility.
 * Use hierarchical addressing because it is the only viable option to scale
-  network ecosystem.
+  a network ecosystem.
 * Use virtual networking to isolate instance service network traffic from the
   management and internal network traffic.
 * Isolate virtual networks using encapsulation technologies.
 * Use traffic shaping for performance tuning.
-* Use eBGP to connect to the Internet up-link.
-* Use iBGP to flatten the internal traffic on the layer-3 mesh.
+* Use External Border Gateway Protocol (eBGP) to connect to the Internet
+  up-link.
+* Use Internal Border Gateway Protocol (iBGP) to flatten the internal traffic
+  on the layer-3 mesh.
 * Determine the most effective configuration for block storage network.
 
+Additional network design considerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Additional considerations
--------------------------
+There are several other considerations when designing a network-focused
+OpenStack cloud.
 
-There are several further considerations when designing a network-focused
-OpenStack cloud. Redundant networking: ToR switch high availability risk
-analysis. In most cases, it is much more economical to use a single switch
-with a small pool of spare switches to replace failed units than it is to
-outfit an entire data center with redundant switches. Applications should
-tolerate rack level outages without affecting normal operations since network
-and compute resources are easily provisioned and plentiful.
+Redundant networking
+--------------------
+
+You should conduct a high availability risk analysis to determine whether to
+use redundant switches such as Top of Rack (ToR) switches. In most cases, it
+is much more economical to use single switches with a small pool of spare
+switches to replace failed units than it is to outfit an entire data center
+with redundant switches. Applications should tolerate rack level outages
+without affecting normal operations since network and compute resources are
+easily provisioned and plentiful.
 
 Research indicates the mean time between failures (MTBF) on switches is
 between 100,000 and 200,000 hours. This number is dependent on the ambient
@@ -65,19 +68,22 @@ maintained, this translates to between 11 and 22 years before failure. Even
 in the worst case of poor ventilation and high ambient temperatures in the data
 center, the MTBF is still 2-3 years.
 
-.. Legacy networking (nova-network)
-.. OpenStack Networking
-.. Simple, single agent
-.. Complex, multiple agents
-.. Flat or VLAN
-.. Flat, VLAN, Overlays, L2-L3, SDN
-.. No plug-in support
-.. Plug-in support for 3rd parties
-.. No multi-tier topologies
-.. Multi-tier topologies
+.. Link to research findings?
 
-Preparing for the future: IPv6 support
---------------------------------------
+.. TODO Legacy networking (nova-network)
+.. TODO OpenStack Networking
+.. TODO Simple, single agent
+.. TODO Complex, multiple agents
+.. TODO Flat or VLAN
+.. TODO Flat, VLAN, Overlays, L2-L3, SDN
+.. TODO No plug-in support
+.. TODO Plug-in support for 3rd parties
+.. TODO No multi-tier topologies
+.. TODO Multi-tier topologies
+.. What about network security? (DC)
+
+Providing IPv6 support
+----------------------
 
 One of the most important networking topics today is the exhaustion of
 IPv4 addresses. As of late 2015, ICANN announced that the final
@@ -91,8 +97,8 @@ OpenStack Networking, when configured for it, supports IPv6. To enable
 IPv6, create an IPv6 subnet in Networking and use IPv6 prefixes when
 creating security groups.
 
-Asymmetric links
-----------------
+Supporting asymmetric links
+---------------------------
 
 When designing a network architecture, the traffic patterns of an
 application heavily influence the allocation of total bandwidth and
@@ -101,8 +107,8 @@ that provide file storage for customers allocate bandwidth and links to
 favor incoming traffic; whereas video streaming applications allocate
 bandwidth and links to favor outgoing traffic.
 
-Performance
------------
+Optimizing network performance
+------------------------------
 
 It is important to analyze the applications tolerance for latency and
 jitter when designing an environment to support network focused
@@ -122,7 +128,7 @@ You can implement networking in two separate ways. Legacy networking
 (nova-network) provides a flat DHCP network with a single broadcast domain.
 This implementation does not support tenant isolation networks or advanced
 plug-ins, but it is currently the only way to implement a distributed
-layer-3 (L3) agent using the multi-host configuration. OpenStack Networking
+layer-3 (L3) agent using the multi-host configuration. The Networking service
 (neutron) is the official networking implementation and provides a pluggable
 architecture that supports a large variety of network methods. Some of these
 include a layer-2 only provider network model, external device plug-ins, or
@@ -138,15 +144,15 @@ domain.
 
 When selecting network devices, be aware that making a decision based on the
 greatest port density often comes with a drawback. Aggregation switches and
-routers have not all kept pace with Top of Rack switches and may induce
+routers have not all kept pace with ToR switches and may induce
 bottlenecks on north-south traffic. As a result, it may be possible for
 massive amounts of downstream network utilization to impact upstream network
 devices, impacting service to the cloud. Since OpenStack does not currently
 provide a mechanism for traffic shaping or rate limiting, it is necessary to
 implement these features at the network hardware level.
 
-Tunable networking components
------------------------------
+Using tunable networking components
+-----------------------------------
 
 Consider configurable networking components related to an OpenStack
 architecture design when designing for network intensive workloads
@@ -173,8 +179,8 @@ cases where regions within a cloud might be geographically distributed it may
 also be necessary to plan accordingly to implement WAN optimization to combat
 latency or packet loss.
 
-Network hardware selection
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Choosing network hardware
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The network architecture determines which network hardware will be
 used. Networking software is determined by the selected networking
@@ -187,16 +193,6 @@ this; the rise of *open* networking software that supports a range of
 networking hardware means there are instances where the relationship
 between networking hardware and networking software are not as tightly
 defined.
-
-For a compute-focus architecture, we recommend designing the network
-architecture using a scalable network model that makes it easy to add
-capacity and bandwidth. A good example of such a model is the leaf-spline
-model. In this type of network design, you can add additional
-bandwidth as well as scale out to additional racks of gear. It is important to
-select network hardware that supports port count, port speed, and
-port density while allowing for future growth as workload demands
-increase. In the network architecture, it is also important to evaluate
-where to provide redundancy.
 
 Some of the key considerations in the selection of networking hardware
 include:
@@ -219,9 +215,8 @@ Port speed
 
 Redundancy
  User requirements for high availability and cost considerations
- influence the level of network hardware redundancy.
- Network redundancy can be achieved by adding redundant power
- supplies or paired switches.
+ influence the level of network hardware redundancy. Network redundancy
+ can be achieved by adding redundant power supplies or paired switches.
 
  .. note::
 
@@ -271,30 +266,16 @@ Availability
  solution is designed within the network architecture to ensure that the APIs
  and potentially other services in the cloud are highly available.
 
-Networking software selection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Choosing networking software
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack Networking (neutron) provides a wide variety of networking
 services for instances. There are many additional networking software
 packages that can be useful when managing OpenStack components. Some
 examples include:
 
-* Software to provide load balancing
+- Software to provide load balancing
+- Network redundancy protocols
+- Routing daemons.
 
-* Network redundancy protocols
-
-* Routing daemons
-
-Some of these software packages are described in more detail in the
-`OpenStack network nodes chapter <https://docs.openstack.org/ha-guide/networking-ha.html>`_
-in the OpenStack High Availability Guide.
-
-For a general purpose OpenStack cloud, the OpenStack infrastructure
-components need to be highly available. If the design does not include
-hardware load balancing, networking software packages like HAProxy will
-need to be included.
-
-For a compute-focused OpenStack cloud, the OpenStack infrastructure
-components must be highly available. If the design does not include
-hardware load balancing, you must add networking software packages, for
-example, HAProxy.
+.. TODO Provide software examples

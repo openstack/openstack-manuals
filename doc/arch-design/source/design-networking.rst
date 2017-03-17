@@ -1,6 +1,17 @@
-==========
-Networking
-==========
+.. _network-design:
+
+==============
+Network design
+==============
+
+.. toctree::
+   :maxdepth: 2
+
+   design-networking/design-networking-concepts
+   design-networking/design-networking-design
+   design-networking/design-networking-layer2
+   design-networking/design-networking-layer3
+   design-networking/design-networking-services
 
 OpenStack provides a rich networking environment. This chapter
 details the requirements and options to consider when designing your
@@ -20,30 +31,3 @@ services that are essential for stable operation.
    both your guest instances as well as management infrastructure.
    Additionally, you must research and discuss cloud network connectivity
    through proxy servers and firewalls.
-
-See the `OpenStack Security Guide
-<https://docs.openstack.org/security-guide/>`_ for tips
-on securing your network.
-
-Networking (neutron)
-~~~~~~~~~~~~~~~~~~~~
-
-OpenStack Networking (neutron) is the component of OpenStack that provides
-the Networking service API and a reference architecture that implements a
-Software Defined Network (SDN) solution.
-
-The Networking service provides full control over creation of virtual network
-resources to tenants. This is often accomplished in the form of tunneling
-protocols that establish encapsulated communication paths over existing
-network infrastructure in order to segment tenant traffic. This method varies
-depending on the specific implementation, but some of the more common methods
-include tunneling over GRE, encapsulating with VXLAN, and VLAN tags.
-
-.. toctree::
-   :maxdepth: 2
-
-   design-networking/design-networking-concepts
-   design-networking/design-networking-design
-   design-networking/design-networking-layer2
-   design-networking/design-networking-layer3
-   design-networking/design-networking-services

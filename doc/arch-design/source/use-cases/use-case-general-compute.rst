@@ -93,5 +93,25 @@ Requirements
 ~~~~~~~~~~~~
 
 
+Network hardware requirements
+-----------------------------
+
+For a compute-focus architecture, we recommend designing the network
+architecture using a scalable network model that makes it easy to add
+capacity and bandwidth. A good example of such a model is the leaf-spline
+model. In this type of network design, you can add additional
+bandwidth as well as scale out to additional racks of gear. It is important to
+select network hardware that supports port count, port speed, and
+port density while allowing for future growth as workload demands
+increase. In the network architecture, it is also important to evaluate
+where to provide redundancy.
+
+Network software requirements
+-----------------------------
+For a general purpose OpenStack cloud, the OpenStack infrastructure
+components need to be highly available. If the design does not include
+hardware load balancing, networking software packages like HAProxy will
+need to be included.
+
 Component block diagram
 ~~~~~~~~~~~~~~~~~~~~~~~

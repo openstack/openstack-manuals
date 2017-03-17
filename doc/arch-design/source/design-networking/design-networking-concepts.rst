@@ -2,9 +2,11 @@
 Networking concepts
 ===================
 
-Cloud fundementally changes the ways that networking is provided and consumed.
-Understanding the following concepts and decisions is imperative when making
-architectural decisions.
+A cloud environment fundamentally changes the ways that networking is provided
+and consumed. Understanding the following concepts and decisions is imperative
+when making architectural decisions. For detailed information on networking
+concepts, see the `OpenStack Networking Guide
+<https://docs.openstack.org/ocata/networking-guide/>`_.
 
 Network zones
 ~~~~~~~~~~~~~
@@ -40,7 +42,6 @@ The external network is defined as the configuration and components that are
 required to provide access to cloud resources and workloads, the external
 network is defined as all the components outside of the cloud edge gateways.
 
-
 Traffic Flow
 ~~~~~~~~~~~~
 
@@ -57,3 +58,17 @@ North/South - The flow of traffic between the workload and all external
 networks, including clients and remote services. This traffic flow is highly
 dependant on the workload within the cloud and the type of network services
 being offered.
+
+Networking service (neutron)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OpenStack Networking (neutron) is the component of OpenStack that provides
+the Networking service API and a reference architecture that implements a
+Software Defined Network (SDN) solution.
+
+The Networking service provides full control over creation of virtual network
+resources to tenants. This is often accomplished in the form of tunneling
+protocols that establish encapsulated communication paths over existing
+network infrastructure in order to segment tenant traffic. This method varies
+depending on the specific implementation, but some of the more common methods
+include tunneling over GRE, encapsulating with VXLAN, and VLAN tags.
