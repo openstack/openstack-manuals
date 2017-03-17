@@ -218,7 +218,8 @@ the volume to boot an instance.
 
    The parameters are:
 
-   - ``--flavor`` FLAVOR. The flavor ID or name.
+   - ``--flavor``
+     The flavor ID or name.
 
    - ``--block-device``
      source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX
