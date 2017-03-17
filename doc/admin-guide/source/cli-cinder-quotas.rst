@@ -32,13 +32,48 @@ Administrative users can view Block Storage service quotas.
    .. code-block:: console
 
       $ openstack quota show --default $OS_TENANT_ID
-      +-----------+-------+
-      |  Property | Value |
-      +-----------+-------+
-      | gigabytes |  1000 |
-      | snapshots |   10  |
-      |  volumes  |   10  |
-      +-----------+-------+
+      +-----------------------+-------+
+      | Field                 | Value |
+      +-----------------------+-------+
+      | backup-gigabytes      | 1000  |
+      | backups               | 10    |
+      | cores                 | 20    |
+      | fixed-ips             | -1    |
+      | floating-ips          | 50    |
+      | gigabytes             | 1000  |
+      | gigabytes_lvmdriver-1 | -1    |
+      | health_monitors       | None  |
+      | injected-file-size    | 10240 |
+      | injected-files        | 5     |
+      | injected-path-size    | 255   |
+      | instances             | 10    |
+      | key-pairs             | 100   |
+      | l7_policies           | None  |
+      | listeners             | None  |
+      | load_balancers        | None  |
+      | location              | None  |
+      | name                  | None  |
+      | networks              | 10    |
+      | per-volume-gigabytes  | -1    |
+      | pools                 | None  |
+      | ports                 | 50    |
+      | project               | None  |
+      | project_id            | None  |
+      | properties            | 128   |
+      | ram                   | 51200 |
+      | rbac_policies         | 10    |
+      | routers               | 10    |
+      | secgroup-rules        | 100   |
+      | secgroups             | 10    |
+      | server-group-members  | 10    |
+      | server-groups         | 10    |
+      | snapshots             | 10    |
+      | snapshots_lvmdriver-1 | -1    |
+      | subnet_pools          | -1    |
+      | subnets               | 10    |
+      | volumes               | 10    |
+      | volumes_lvmdriver-1   | -1    |
+      +-----------------------+-------+
 
 .. note::
 
@@ -54,26 +89,69 @@ Administrative users can view Block Storage service quotas.
    .. code-block:: console
 
       $ openstack quota show $OS_TENANT_ID
-      +-----------+-------+
-      |  Property | Value |
-      +-----------+-------+
-      | gigabytes |  1000 |
-      | snapshots |   10  |
-      |  volumes  |   10  |
-      +-----------+-------+
+      +-----------------------+-------+
+      | Field                 | Value |
+      +-----------------------+-------+
+      | backup-gigabytes      | 1000  |
+      | backups               | 10    |
+      | cores                 | 20    |
+      | fixed-ips             | -1    |
+      | floating-ips          | 50    |
+      | gigabytes             | 1000  |
+      | gigabytes_lvmdriver-1 | -1    |
+      | health_monitors       | None  |
+      | injected-file-size    | 10240 |
+      | injected-files        | 5     |
+      | injected-path-size    | 255   |
+      | instances             | 10    |
+      | key-pairs             | 100   |
+      | l7_policies           | None  |
+      | listeners             | None  |
+      | load_balancers        | None  |
+      | location              | None  |
+      | name                  | None  |
+      | networks              | 10    |
+      | per-volume-gigabytes  | -1    |
+      | pools                 | None  |
+      | ports                 | 50    |
+      | project               | None  |
+      | project_id            | None  |
+      | properties            | 128   |
+      | ram                   | 51200 |
+      | rbac_policies         | 10    |
+      | routers               | 10    |
+      | secgroup-rules        | 100   |
+      | secgroups             | 10    |
+      | server-group-members  | 10    |
+      | server-groups         | 10    |
+      | snapshots             | 10    |
+      | snapshots_lvmdriver-1 | -1    |
+      | subnet_pools          | -1    |
+      | subnets               | 10    |
+      | volumes               | 10    |
+      | volumes_lvmdriver-1   | -1    |
+      +-----------------------+-------+
+
 
 #. Show the current usage of a per-project quota:
 
    .. code-block:: console
 
       $ cinder quota-usage $project_id
-      +-----------+--------+----------+-------+
-      |    Type   | In_use | Reserved | Limit |
-      +-----------+--------+----------+-------+
-      | gigabytes |   0    |    0     |  1000 |
-      | snapshots |   0    |    0     |   10  |
-      |  volumes  |   0    |    0     |   15  |
-      +-----------+--------+----------+-------+
+      +-----------------------+--------+----------+-------+
+      | Type                  | In_use | Reserved | Limit |
+      +-----------------------+--------+----------+-------+
+      | backup_gigabytes      | 0      | 0        | 1000  |
+      | backups               | 0      | 0        | 10    |
+      | gigabytes             | 0      | 0        | 1000  |
+      | gigabytes_lvmdriver-1 | 0      | 0        | -1    |
+      | per_volume_gigabytes  | 0      | 0        | -1    |
+      | snapshots             | 0      | 0        | 10    |
+      | snapshots_lvmdriver-1 | 0      | 0        | -1    |
+      | volumes               | 0      | 0        | 10    |
+      | volumes_lvmdriver-1   | 0      | 0        | -1    |
+      +-----------------------+--------+----------+-------+
+
 
 Edit and update Block Storage service quotas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -92,7 +170,7 @@ service quotas.
 
    .. code-block:: console
 
-      $ cinder quota-update --QUOTA_NAME QUOTA_VALUE PROJECT_ID
+      $ openstack quota set --QUOTA_NAME QUOTA_VALUE PROJECT_ID
 
    Replace ``QUOTA_NAME`` with the quota that is to be updated,
    ``QUOTA_VALUE`` with the required new value. Use the :command:`openstack quota show`
@@ -102,16 +180,50 @@ service quotas.
 
    .. code-block:: console
 
-      $ cinder quota-update --volumes 15 $project_id
+      $ openstack quota set --volumes 15  $project_id
       $ openstack quota show $project_id
-      +-----------+-------+
-      |  Property | Value |
-      +-----------+-------+
-      | gigabytes |  1000 |
-      | snapshots |   10  |
-      |  volumes  |   15  |
-      +-----------+-------+
-
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 29                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 10                               |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 15                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
 #. To clear per-project quota limits:
 
