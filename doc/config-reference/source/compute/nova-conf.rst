@@ -64,6 +64,8 @@ The Compute configuration file supports the following sections:
   Configures Networking specific options.
 [osapi_v3]
   Configures the OpenStack Compute API v3.
+[placement]
+  Configures the OpenStack Placement API.
 [rdp]
   Configures RDP proxying.
 [serial_console]
