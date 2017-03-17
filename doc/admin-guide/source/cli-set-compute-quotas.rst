@@ -40,7 +40,7 @@ project user, as well as update the quota defaults for a new project.
    * - security-groups
      - Number of security groups per project.
    * - security-group-rules
-     - Number of rules per security group.
+     - Number of security group rules per project.
    * - server-groups
      - Number of server groups per project.
    * - server-group-members
@@ -80,7 +80,7 @@ To view and update default quota values
 
    .. code-block:: console
 
-      $ nova quota-class-update --instances 15 default
+      $ openstack quota set --instances 15 default
 
 To view quota values for an existing project
 --------------------------------------------
@@ -89,7 +89,7 @@ To view quota values for an existing project
 
    .. code-block:: console
 
-      $ openstack quota show TENANT_NAME
+      $ openstack quota show PROJECT_NAME
 
       +-----------------------------+-------+
       | Quota                       | Limit |
@@ -117,20 +117,20 @@ To update quota values for an existing project
 
    .. code-block:: console
 
-      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+      $ project=$(openstack project show -f value -c id PROJECT_NAME)
 
 #. Update a particular quota value.
 
    .. code-block:: console
 
-      $ nova quota-update --QUOTA_NAME QUOTA_VALUE TENANT_ID
+      $ openstack quota set --QUOTA_NAME QUOTA_VALUE PROJECT_OR_CLASS
 
    For example:
 
    .. code-block:: console
 
-      $ nova quota-update --floating-ips 20 TENANT_NAME
-      $ openstack quota show TENANT_NAME
+      $ openstack quota set --floating-ips 20 PROJECT_OR_CLASS
+      $ openstack quota show PROJECT_NAME
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -152,12 +152,12 @@ To update quota values for an existing project
 
    .. note::
 
-      To view a list of options for the :command:`nova quota-update` command,
+      To view a list of options for the :command:`openstack quota set` command,
       run:
 
       .. code-block:: console
 
-         $ nova help quota-update
+         $ openstack help quota set
 
 View and update Compute quotas for a project user
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,25 +169,25 @@ To view quota values for a project user
 
    .. code-block:: console
 
-      $ tenantUser=$(openstack user show -f value -c id USER_NAME)
+      $ projectUser=$(openstack user show -f value -c id USER_NAME)
 
 #. Place the user's project ID in a usable variable, as follows:
 
    .. code-block:: console
 
-      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+      $ project=$(openstack project show -f value -c id PROJECT_NAME)
 
 #. List the currently set quota values for a project user.
 
    .. code-block:: console
 
-      $ nova quota-show --user $tenantUser --tenant $tenant
+      $ nova quota-show --user $projectUser --tenant $project
 
    For example:
 
    .. code-block:: console
 
-      $ nova quota-show --user $tenantUser --tenant $tenant
+      $ nova quota-show --user $projecUser --tenant $project
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -214,26 +214,26 @@ To update quota values for a project user
 
    .. code-block:: console
 
-      $ tenantUser=$(openstack user show -f value -c id USER_NAME)
+      $ projectUser=$(openstack user show -f value -c id USER_NAME)
 
 #. Place the user's project ID in a usable variable, as follows:
 
    .. code-block:: console
 
-      $ tenant=$(openstack project show -f value -c id TENANT_NAME)
+      $ project=$(openstack project show -f value -c id PROJECT_NAME)
 
 #. Update a particular quota value, as follows:
 
    .. code-block:: console
 
-      $ nova quota-update  --user $tenantUser --QUOTA_NAME QUOTA_VALUE $tenant
+      $ nova quota-update  --user $projectUser --QUOTA_NAME QUOTA_VALUE $project
 
    For example:
 
    .. code-block:: console
 
-      $ nova quota-update --user $tenantUser --floating-ips 12 $tenant
-      $ nova quota-show --user $tenantUser --tenant $tenant
+      $ nova quota-update --user $projectUser --floating-ips 12 $project
+      $ nova quota-show --user $projectUser --tenant $project
       +-----------------------------+-------+
       | Quota                       | Limit |
       +-----------------------------+-------+
@@ -265,26 +265,34 @@ To update quota values for a project user
 To display the current quota usage for a project user
 -----------------------------------------------------
 
-Use :command:`nova absolute-limits` to get a list of the
+Use :command:`nova limits` to get a list of the
 current quota values and the current quota usage:
 
 .. code-block:: console
 
-   $ nova absolute-limits --tenant TENANT_NAME
+   $ nova limits --tenant PROJET_NAME
+
+   +------+-----+-------+--------+------+----------------+
+   | Verb | URI | Value | Remain | Unit | Next_Available |
+   +------+-----+-------+--------+------+----------------+
+   +------+-----+-------+--------+------+----------------+
+
    +--------------------+------+-------+
    | Name               | Used | Max   |
    +--------------------+------+-------+
    | Cores              | 0    | 20    |
-   | FloatingIps        | 0    | 10    |
-   | ImageMeta          | -    | 128   |
    | Instances          | 0    | 10    |
    | Keypairs           | -    | 100   |
    | Personality        | -    | 5     |
    | Personality Size   | -    | 10240 |
    | RAM                | 0    | 51200 |
-   | SecurityGroupRules | -    | 20    |
-   | SecurityGroups     | 0    | 10    |
    | Server Meta        | -    | 128   |
    | ServerGroupMembers | -    | 10    |
    | ServerGroups       | 0    | 10    |
    +--------------------+------+-------+
+
+.. note::
+
+   The :command:`nova limits` command generates an empty
+   table as a result of the Compute API, which prints an
+   empty list for backward compatibility purposes.
