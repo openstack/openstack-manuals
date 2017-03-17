@@ -154,5 +154,57 @@ systems as an inline cache.
 Requirements
 ~~~~~~~~~~~~
 
+Storage requirements
+--------------------
+
+Storage-focused OpenStack clouds must address I/O intensive workloads.
+These workloads are not CPU intensive, nor are they consistently network
+intensive. The network may be heavily utilized to transfer storage, but
+they are not otherwise network intensive.
+
+The selection of storage hardware determines the overall performance and
+scalability of a storage-focused OpenStack design architecture. Several
+factors impact the design process, including:
+
+Latency
+ A key consideration in a storage-focused OpenStack cloud is latency.
+ Using solid-state disks (SSDs) to minimize latency and, to reduce CPU
+ delays caused by waiting for the storage, increases performance. Use
+ RAID controller cards in compute hosts to improve the performance of the
+ underlying disk subsystem.
+
+Scale-out solutions
+ Depending on the storage architecture, you can adopt a scale-out
+ solution, or use a highly expandable and scalable centralized storage
+ array. If a centralized storage array meets your requirements, then the
+ array vendor determines the hardware selection. It is possible to build
+ a storage array using commodity hardware with Open Source software, but
+ requires people with expertise to build such a system.
+
+ On the other hand, a scale-out storage solution that uses
+ direct-attached storage (DAS) in the servers may be an appropriate
+ choice. This requires configuration of the server hardware to support
+ the storage solution.
+
+Considerations affecting storage architecture (and corresponding storage
+hardware) of a Storage-focused OpenStack cloud include:
+
+Connectivity
+ Ensure the connectivity matches the storage solution requirements. We
+ recommend confirming that the network characteristics minimize latency
+ to boost the overall performance of the design.
+
+Latency
+ Determine if the use case has consistent or highly variable latency.
+
+Throughput
+ Ensure that the storage solution throughput is optimized for your
+ application requirements.
+
+Server hardware
+ Use of DAS impacts the server hardware choice and affects host
+ density, instance density, power density, OS-hypervisor, and
+ management tools.
+
 Component block diagram
 ~~~~~~~~~~~~~~~~~~~~~~~
