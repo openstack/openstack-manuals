@@ -24,20 +24,20 @@ Possible use cases for data migration include:
 
 *  Free up space in a thinly-provisioned back end.
 
-Migrate a volume with the :command:`cinder migrate` command, as shown in the
-following example:
+Migrate a volume with the :command:`openstack volume migrate` command, as shown
+in the following example:
 
 .. code-block:: console
 
-   $ cinder migrate --force-host-copy <True|False>
-                    --lock-volume <True|False>
-                    <volume> <host>
+   $ openstack volume migrate [-h] --host <host> [--force-host-copy]
+                                     [--lock-volume | --unlock-volume]
+                                     <volume>
 
-In this example, ``--force-host-copy True`` forces the generic
+In this example, ``--force-host-copy`` forces the generic
 host-based migration mechanism and bypasses any driver optimizations.
-``--lock-volume <True|False>`` applies to the available volume.
+``--lock-volume | --unlock-volume`` applies to the available volume.
 To determine whether the termination of volume migration caused by other
-commands. ``True``  locks the volume state and does not allow the
+commands. ``--lock-volume`` locks the volume state and does not allow the
 migration to be aborted.
 
 .. note::
@@ -608,16 +608,17 @@ you can manage and unmanage snapshots.
 Manage a snapshot
 -----------------
 
-Manage a snapshot with the :command:`openstack snapshot set` command:
+Manage a snapshot with the :command:`openstack volume snapshot set` command:
 
 .. code-block:: console
 
-   $ openstack snapshot set \
-     [--name <name>] \
-     [--description <description>] \
-     [--property <key=value> [...] ] \
-     [--state <state>] \
-     <snapshot>
+   $ openstack volume snapshot set [-h]
+                                   [--name <name>]
+                                   [--description <description>]
+                                   [--no-property]
+                                   [--property <key=value>]
+                                   [--state <state>]
+                                   <snapshot>
 
 The arguments to be passed are:
 
@@ -626,6 +627,11 @@ The arguments to be passed are:
 
 ``--description <description>``
  New snapshot description
+
+``--no-property``
+ Remove all properties from <snapshot> (specify both
+ --no-property and --property to remove the current
+ properties before setting new properties.)
 
 ``--property <key=value>``
  Property to add or modify for this snapshot (repeat option to set
@@ -642,24 +648,30 @@ The arguments to be passed are:
 
 .. code-block:: console
 
-   $ openstack snapshot set my-snapshot-id
+   $ openstack volume snapshot set my-snapshot-id
 
 Unmanage a snapshot
 -------------------
 
-Unmanage a snapshot with the :command:`cinder snapshot-unmanage` command:
+Unmanage a snapshot with the :command:`openstack volume snapshot unset`
+command:
 
 .. code-block:: console
 
-   $ cinder snapshot-unmanage SNAPSHOT
+   $ openstack volume snapshot unset [-h]
+                                     [--property <key>]
+                                     <snapshot>
 
 The arguments to be passed are:
 
-SNAPSHOT
- Name or ID of the snapshot to unmanage.
+``--property <key>``
+ Property to remove from snapshot (repeat option to remove multiple properties)
+
+``<snapshot>``
+ Snapshot to modify (name or ID).
 
 The following example unmanages the ``my-snapshot-id`` image:
 
 .. code-block:: console
 
-   $ cinder snapshot-unmanage my-snapshot-id
+   $ openstack volume snapshot unset my-snapshot-id
