@@ -42,7 +42,7 @@ command:
 
 .. note::
 
-   On running the :command:`nova rescue` command,
+   On running the :command:`openstack server rescue` command,
    an instance performs a soft shutdown first. This means that
    the guest operating system has a chance to perform
    a controlled shutdown before the instance is powered off.
