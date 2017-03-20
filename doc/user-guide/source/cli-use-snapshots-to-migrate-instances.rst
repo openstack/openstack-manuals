@@ -57,12 +57,11 @@ Create a snapshot of the instance
       | c41f3074-c82a-4837-8673-fa7e9fea7e11 | myInstance | SHUTOFF | private=10.0.0.3 | cirros     |
       +--------------------------------------+------------+---------+------------------+------------+
 
-#. Use the :command:`nova image-create` command to take a snapshot:
+#. Use the :command:`openstack server image create` command to take a snapshot:
 
    .. code-block:: console
 
-      $ nova image-create --poll myInstance myInstanceSnapshot
-      Instance snapshotting... 50% complete
+      $ openstack server image create myInstance --name myInstanceSnapshot
 
    The above command creates the image ``myInstance`` by taking a snapshot
    of a running server.
@@ -103,12 +102,12 @@ Download the snapshot as an image
 
    .. code-block:: console
 
-      $ glance image-download --file snapshot.raw f30b204e-1ce6-40e7-b8d9-b353d4d84e7d
+      $ openstack image save --file snapshot.raw f30b204e-1ce6-40e7-b8d9-b353d4d84e7d
 
    .. note::
 
-      The :command:`glance image-download` command requires the image ID and
-      cannot use the image name.
+      The :command:`openstack image save` command requires the image ID or
+      the image name.
       Check there is sufficient space on the destination file system for
       the image file.
 
@@ -124,8 +123,8 @@ In the new project or cloud environment, import the snapshot:
 
 .. code-block:: console
 
-   $ glance --os-image-api-version 1 image-create \
-     --container-format bare --disk-format qcow2 --copy-from IMAGE_URL
+   $ openstack image create NEW_IMAGE_NAME \
+     --container-format bare --disk-format qcow2 --file IMAGE_URL
 
 .. _Boot_a_new_instance_from_the_snapshot:
 
