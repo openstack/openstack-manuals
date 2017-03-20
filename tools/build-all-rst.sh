@@ -33,7 +33,7 @@ PDF_TARGETS=( 'arch-design'\
 
 # Note that these guides are only build for master branch
 for guide in admin-guide arch-design cli-reference contributor-guide \
-    ha-guide image-guide ops-guide user-guide; do
+    ha-guide ha-guide-draft image-guide ops-guide user-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target $guide $LINKCHECK $PDF_OPTION
@@ -46,7 +46,7 @@ done
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
-for guide in networking-guide config-reference; do
+for guide in ha-guide-draft networking-guide config-reference; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target "draft/$guide" $LINKCHECK $PDF_OPTION
