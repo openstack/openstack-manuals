@@ -16,4 +16,3 @@ These options can also be set in the ``manila.conf`` file.
 .. include:: ../tables/manila-share.rst
 .. include:: ../tables/manila-tegile.rst
 .. include:: ../tables/manila-winrm.rst
-.. include:: ../tables/manila-zfssa.rst

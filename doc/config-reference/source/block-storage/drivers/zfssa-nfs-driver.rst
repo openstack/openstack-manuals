@@ -68,7 +68,7 @@ the BUI, CLI, and RESTful API.
    .. code-block:: none
 
       scope=svc - allow_administer=true, allow_restart=true, allow_configure=true
-      scope=nas - pool=pool_name, project=project_name, share=share_name, allow_clone=true, allow_createProject=true, allow_createShare=true, allow_changeSpaceProps=true, allow_changeGeneralProps=true, allow_destroy=true, allow_rollback=true, allow_takeSnap=true
+      scope=nas - pool=pool_name, project=project_name, share=share_name, allow_clone=true, allow_createProject=true, allow_createShare=true, allow_changeSpaceProps=true, allow_changeGeneralProps=true, allow_destroy=true, allow_rollback=true, allow_takeSnap=true, allow_changeAccessProps=true, allow_changeProtocolProps=true
 
    The following examples show how to create a role with authorizations.
 
@@ -119,6 +119,8 @@ the BUI, CLI, and RESTful API.
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_destroy=true
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_rollback=true
       zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_takeSnap=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_changeAccessProps=true
+      zfssa:configuration roles OpenStackRole auth (uncommitted)> set allow_changeProtocolProps=true
       zfssa:configuration roles OpenStackRole auth (uncommitted)> commit
 
 #. Create a new user or modify an existing one and assign the new role to
@@ -163,6 +165,15 @@ the BUI, CLI, and RESTful API.
       protocols = http/https
       listen_port = 80
       https_port = 443
+
+   .. note::
+
+      You can also run this `workflow
+      <https://openstackci.oracle.com/openstack_docs/zfssa_cinder_workflow.akwf>`__
+      to automate the above tasks.
+      Refer to `Oracle documentation
+      <https://docs.oracle.com/cd/E37831_01/html/E52872/godgw.html>`__
+      on how to download, view, and execute a workflow.
 
 #. Create a network interface to be used exclusively for data. An existing
    network interface may also be used. The following example illustrates how to
