@@ -1,5 +1,5 @@
 ==================
-Layer 2 Networking
+Layer 2 networking
 ==================
 
 This section describes the concepts and choices to take into
