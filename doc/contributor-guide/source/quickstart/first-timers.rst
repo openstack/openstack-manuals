@@ -202,7 +202,7 @@ Troubleshooting your setup
 git and git review
 ------------------
 
-* Authenticity error.
+* Authenticity error
 
   The first time that you run git review, you might see this error::
 
@@ -210,7 +210,7 @@ git and git review
 
   Type *yes* (all three letters) at the prompt.
 
-* Gerrit connection error.
+* Gerrit connection error
 
   When you connect to gerrit for the first time, you might see this error:
 
@@ -222,7 +222,7 @@ git and git review
   Enter the user name that matches the user name in the :guilabel:`Settings`
   page at review.openstack.org.
 
-* Not a git repository error.
+* Not a git repository error
 
   If you see this error::
 
@@ -231,7 +231,7 @@ git and git review
 
   Change into your local copy of the repository and re-run the command.
 
-* Gerrit location unknown error.
+* Gerrit location unknown error
 
   If you see this error::
 
@@ -243,7 +243,7 @@ git and git review
 
     git remote add gerrit ssh://username_example@review.openstack.org:29418/openstack/openstack-manuals.git
 
-* Remote rejected error.
+* Remote rejected error
 
   If you see this error::
 
@@ -255,7 +255,7 @@ git and git review
   the *Change-Id*. When this happens, run :code:`git commit -a --amend`,
   save the commit message and run :code:`git review -v` again.
 
-* Permission denied error.
+* Permission denied error
 
   If you see this error:
 
@@ -278,6 +278,18 @@ git and git review
 
   On Windows, look for it in the same location.
 
+* Merge conflict, rebase required
+
+  Sometimes your change creates a merge conflict with another patch.
+  In this case, you need to rebase your commit on top of the current
+  state of the repository. In many cases, this can be achieved by pressing
+  the ``Rebase`` button in the gerrit interface. If this fails, you must
+  `rebase manually
+  <https://docs.openstack.org/infra/manual/developers.html#understanding-changes-and-patch-sets>`_.
+
+  For a basic introduction to solving merge conflicts, see the GitHub article
+  `Resolving merge conflicts after a git rebase
+  <https://help.github.com/articles/resolving-merge-conflicts-after-a-git-rebase/>`_.
 
 Network
 -------
