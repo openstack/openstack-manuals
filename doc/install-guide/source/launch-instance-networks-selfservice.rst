@@ -180,7 +180,7 @@ to the existing ``provider`` provider network.
 
    .. end
 
-#. Add the ``router: external`` option to the ``provider`` network:
+#. Add the ``router:external`` option to the ``provider`` network:
 
    .. code-block:: console
 
