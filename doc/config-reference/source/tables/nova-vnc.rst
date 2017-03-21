@@ -10,115 +10,15 @@
 
 .. _nova-vnc:
 
-.. list-table:: Description of VNC configuration options
+.. list-table:: Description of vnc configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``daemon`` = ``False``
-     - (Boolean) Run as a background process.
-   * - ``key`` = ``None``
-     - (String) SSL key file (if separate from cert).
-   * - ``record`` = ``None``
-     - (String) Filename that will be used for storing websocket frames received and sent by a proxy service (like VNC, spice, serial) running on this host. If this is not set, no recording will be done.
-   * - ``source_is_ipv6`` = ``False``
-     - (Boolean) Set to True if source host is addressed with IPv6.
-   * - ``ssl_only`` = ``False``
-     - (Boolean) Disallow non-encrypted connections.
-   * - ``web`` = ``/usr/share/spice-html5``
-     - (String) Path to directory with content which will be served by a web server.
-   * - **[vmware]**
-     -
-   * - ``vnc_port`` = ``5900``
-     - (Port number) This option specifies VNC starting port.
 
-       Every VM created by ESX host has an option of enabling VNC client for remote connection. Above option 'vnc_port' helps you to set default starting port for the VNC client.
-
-       Possible values:
-
-       * Any valid port number within 5900 -(5900 + vnc_port_total)
-
-       Related options: Below options should be set to enable VNC client.
-
-       * vnc.enabled = True
-
-       * vnc_port_total
-   * - ``vnc_port_total`` = ``10000``
-     - (Integer) Total number of VNC ports.
-   * - **[vnc]**
-     -
-   * - ``enabled`` = ``True``
-     - (Boolean) Enable VNC related features.
-
-       Guests will get created with graphical devices to support this. Clients (for example Horizon) can then establish a VNC connection to the guest.
-   * - ``keymap`` = ``en-us``
-     - (String) Keymap for VNC.
-
-       The keyboard mapping (keymap) determines which keyboard layout a VNC session should use by default.
-
-       Possible values:
-
-       * A keyboard layout which is supported by the underlying hypervisor on this node. This is usually an 'IETF language tag' (for example 'en-us'). If you use QEMU as hypervisor, you should find the list of supported keyboard layouts at ``/usr/share/qemu/keymaps``.
-   * - ``novncproxy_base_url`` = ``http://127.0.0.1:6080/vnc_auto.html``
-     - (URI) Public address of noVNC VNC console proxy.
-
-       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
-
-       This option sets the public base URL to which client systems will connect. noVNC clients can use this address to connect to the noVNC instance and, by extension, the VNC sessions.
-
-       Related options:
-
-       * novncproxy_host
-
-       * novncproxy_port
-   * - ``novncproxy_host`` = ``0.0.0.0``
-     - (String) IP address that the noVNC console proxy should bind to.
-
-       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
-
-       This option sets the private address to which the noVNC console proxy service should bind to.
-
-       Related options:
-
-       * novncproxy_port
-
-       * novncproxy_base_url
-   * - ``novncproxy_port`` = ``6080``
-     - (Port number) Port that the noVNC console proxy should bind to.
-
-       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
-
-       This option sets the private port to which the noVNC console proxy service should bind to.
-
-       Related options:
-
-       * novncproxy_host
-
-       * novncproxy_base_url
-   * - ``vncserver_listen`` = ``127.0.0.1``
-     - (String) The IP address or hostname on which an instance should listen to for incoming VNC connection requests on this node.
-   * - ``vncserver_proxyclient_address`` = ``127.0.0.1``
-     - (String) Private, internal IP address or hostname of VNC console proxy.
-
-       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients.
-
-       This option sets the private address to which proxy clients, such as ``nova-xvpvncproxy``, should connect to.
-   * - ``xvpvncproxy_base_url`` = ``http://127.0.0.1:6081/console``
-     - (URI) Public URL address of XVP VNC console proxy.
-
-       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based.
-
-       This option sets the public base URL to which client systems will connect. XVP clients can use this address to connect to the XVP instance and, by extension, the VNC sessions.
-
-       Related options:
-
-       * xvpvncproxy_host
-
-       * xvpvncproxy_port
    * - ``xvpvncproxy_host`` = ``0.0.0.0``
+
      - (String) IP address or hostname that the XVP VNC console proxy should bind to.
 
        The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based.
@@ -130,7 +30,23 @@
        * xvpvncproxy_port
 
        * xvpvncproxy_base_url
+
+   * - ``novncproxy_port`` = ``6080``
+
+     - (Port number) Port that the noVNC console proxy should bind to.
+
+       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
+
+       This option sets the private port to which the noVNC console proxy service should bind to.
+
+       Related options:
+
+       * novncproxy_host
+
+       * novncproxy_base_url
+
    * - ``xvpvncproxy_port`` = ``6081``
+
      - (Port number) Port that the XVP VNC console proxy should bind to.
 
        The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based.
@@ -142,3 +58,73 @@
        * xvpvncproxy_host
 
        * xvpvncproxy_base_url
+
+   * - ``enabled`` = ``True``
+
+     - (Boolean) Enable VNC related features.
+
+       Guests will get created with graphical devices to support this. Clients (for example Horizon) can then establish a VNC connection to the guest.
+
+   * - ``vncserver_listen`` = ``127.0.0.1``
+
+     - (String) The IP address or hostname on which an instance should listen to for incoming VNC connection requests on this node.
+
+   * - ``vncserver_proxyclient_address`` = ``127.0.0.1``
+
+     - (String) Private, internal IP address or hostname of VNC console proxy.
+
+       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients.
+
+       This option sets the private address to which proxy clients, such as ``nova-xvpvncproxy``, should connect to.
+
+   * - ``keymap`` = ``en-us``
+
+     - (String) Keymap for VNC.
+
+       The keyboard mapping (keymap) determines which keyboard layout a VNC session should use by default.
+
+       Possible values:
+
+       * A keyboard layout which is supported by the underlying hypervisor on this node. This is usually an 'IETF language tag' (for example 'en-us'). If you use QEMU as hypervisor, you should find the list of supported keyboard layouts at ``/usr/share/qemu/keymaps``.
+
+   * - ``novncproxy_host`` = ``0.0.0.0``
+
+     - (String) IP address that the noVNC console proxy should bind to.
+
+       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
+
+       This option sets the private address to which the noVNC console proxy service should bind to.
+
+       Related options:
+
+       * novncproxy_port
+
+       * novncproxy_base_url
+
+   * - ``xvpvncproxy_base_url`` = ``http://127.0.0.1:6081/console``
+
+     - (URI) Public URL address of XVP VNC console proxy.
+
+       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based.
+
+       This option sets the public base URL to which client systems will connect. XVP clients can use this address to connect to the XVP instance and, by extension, the VNC sessions.
+
+       Related options:
+
+       * xvpvncproxy_host
+
+       * xvpvncproxy_port
+
+   * - ``novncproxy_base_url`` = ``http://127.0.0.1:6080/vnc_auto.html``
+
+     - (URI) Public address of noVNC VNC console proxy.
+
+       The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. noVNC provides VNC support through a websocket-based client.
+
+       This option sets the public base URL to which client systems will connect. noVNC clients can use this address to connect to the noVNC instance and, by extension, the VNC sessions.
+
+       Related options:
+
+       * novncproxy_host
+
+       * novncproxy_port

@@ -8,15 +8,15 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-fping:
+.. _nova-oslo_versionedobjects:
 
-.. list-table:: Description of fping configuration options
+.. list-table:: Description of oslo_versionedobjects configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``fping_path`` = ``/usr/sbin/fping``
-     - (String) The full path to the fping binary.
+
+   * - ``fatal_exception_format_errors`` = ``False``
+
+     - (Boolean) Make exception message format errors fatal

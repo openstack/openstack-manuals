@@ -10,15 +10,15 @@
 
 .. _nova-rdp:
 
-.. list-table:: Description of RDP configuration options
+.. list-table:: Description of rdp configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[rdp]**
-     -
+
    * - ``enabled`` = ``False``
+
      - (Boolean) Enable Remote Desktop Protocol (RDP) related features.
 
        Hyper-V, unlike the majority of the hypervisors employed on Nova compute nodes, uses RDP instead of VNC and SPICE as a desktop sharing protocol to provide instance console access. This option enables RDP for graphical console access for virtual machines created by Hyper-V.
@@ -28,7 +28,9 @@
        Related options:
 
        * ``compute_driver``: Must be hyperv.
+
    * - ``html5_proxy_base_url`` = ``http://127.0.0.1:6083/``
+
      - (String) The URL an end user would use to connect to the RDP HTML5 console proxy. The console proxy service is called with this token-embedded URL and establishes the connection to the proper instance.
 
        An RDP HTML5 console proxy service will need to be configured to listen on the address configured here. Typically the console proxy service would be run on a controller node. The localhost address used as default would only work in a single node environment i.e. devstack.

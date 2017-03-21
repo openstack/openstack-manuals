@@ -16,399 +16,53 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``aggregate_image_properties_isolation_namespace`` = ``None``
-     - (String) Images and hosts can be configured so that certain images can only be scheduled to hosts in a particular aggregate. This is done with metadata values set on the host aggregate that are identified by beginning with the value of this option. If the host is part of an aggregate with such a metadata key, the image in the request spec must have the value of that metadata in its properties in order for the scheduler to consider the host as acceptable.
 
-       Valid values are strings.
+   * - ``discover_hosts_in_cells_interval`` = ``-1``
 
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'aggregate_image_properties_isolation' filter is enabled.
+     - (Integer) Periodic task interval.
 
-       * Related options:
+       This value controls how often (in seconds) the scheduler should attempt to discover new hosts that have been added to cells. If negative (the default), no automatic discovery will occur.
 
-        aggregate_image_properties_isolation_separator
-   * - ``aggregate_image_properties_isolation_separator`` = ``.``
-     - (String) When using the aggregate_image_properties_isolation filter, the relevant metadata keys are prefixed with the namespace defined in the aggregate_image_properties_isolation_namespace configuration option plus a separator. This option defines the separator to be used. It defaults to a period ('.').
+       Small deployments may want this periodic task enabled, as surveying the cells for new hosts is likely to be lightweight enough to not cause undue burdon to the scheduler. However, larger clouds (and those that are not adding hosts regularly) will likely want to disable this automatic behavior and instead use the `nova-manage cell_v2 discover_hosts` command when hosts have been added to a cell.
 
-       Valid values are strings.
+   * - ``driver`` = ``filter_scheduler``
 
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'aggregate_image_properties_isolation' filter is enabled.
+     - (String) The class of the driver used by the scheduler.
 
-       * Related options:
-
-        aggregate_image_properties_isolation_namespace
-   * - ``baremetal_scheduler_default_filters`` = ``RetryFilter, AvailabilityZoneFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ExactRamFilter, ExactDiskFilter, ExactCoreFilter``
-     - (List) This option specifies the filters used for filtering baremetal hosts. The value should be a list of strings, with each string being the name of a filter class to be used. When used, they will be applied in order, so place your most restrictive filters first to make the filtering process more efficient.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        If the 'scheduler_use_baremetal_filters' option is False, this option has no effect.
-   * - ``cpu_allocation_ratio`` = ``0.0``
-     - (Floating point) This option helps you specify virtual CPU to physical CPU allocation ratio which affects all CPU filters.
-
-       This configuration specifies ratio for CoreFilter which can be set per compute node. For AggregateCoreFilter, it will fall back to this configuration value if no per-aggregate setting is found.
+       The options are chosen from the entry points under the namespace 'nova.scheduler.driver' in 'setup.cfg'.
 
        Possible values:
 
-       * Any valid positive integer or float value
+       * A string, where the string corresponds to the class name of a scheduler driver. There are a number of options available: ** 'caching_scheduler', which aggressively caches the system state for better individual scheduler performance at the risk of more retries when running multiple schedulers ** 'chance_scheduler', which simply picks a host at random ** 'fake_scheduler', which is used for testing ** A custom scheduler driver. In this case, you will be responsible for creating and maintaining the entry point in your 'setup.cfg' file
 
-       * Default value is 0.0
+   * - ``periodic_task_interval`` = ``60``
 
-       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 16.0'.
-   * - ``disk_allocation_ratio`` = ``0.0``
-     - (Floating point) This option helps you specify virtual disk to physical disk allocation ratio used by the disk_filter.py script to determine if a host has sufficient disk space to fit a requested instance.
+     - (Integer) Periodic task interval.
 
-       A ratio greater than 1.0 will result in over-subscription of the available physical disk, which can be useful for more efficiently packing instances created with images that do not use the entire virtual disk, such as sparse or compressed images. It can be set to a value between 0.0 and 1.0 in order to preserve a percentage of the disk for uses other than instances.
-
-       Possible values:
-
-       * Any valid positive integer or float value
-
-       * Default value is 0.0
-
-       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.0'.
-   * - ``disk_weight_multiplier`` = ``1.0``
-     - (Floating point) Multiplier used for weighing free disk space. Negative numbers mean to stack vs spread.
-   * - ``io_ops_weight_multiplier`` = ``-1.0``
-     - (Floating point) This option determines how hosts with differing workloads are weighed. Negative values, such as the default, will result in the scheduler preferring hosts with lighter workloads whereas positive values will prefer hosts with heavier workloads. Another way to look at it is that positive values for this option will tend to schedule instances onto hosts that are already busy, while negative values will tend to distribute the workload across more hosts. The absolute value, whether positive or negative, controls how strong the io_ops weigher is relative to other weighers.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'io_ops' weigher is enabled.
-
-       Valid values are numeric, either integer or float.
-
-       * Related options:
-
-        None
-   * - ``isolated_hosts`` =
-     - (List) If there is a need to restrict some images to only run on certain designated hosts, list those host names here.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'IsolatedHostsFilter' filter is enabled.
-
-       * Related options:
-
-        scheduler/isolated_images scheduler/restrict_isolated_hosts_to_isolated_images
-   * - ``isolated_images`` =
-     - (List) If there is a need to restrict some images to only run on certain designated hosts, list those image UUIDs here.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'IsolatedHostsFilter' filter is enabled.
-
-       * Related options:
-
-        scheduler/isolated_hosts scheduler/restrict_isolated_hosts_to_isolated_images
-   * - ``max_instances_per_host`` = ``50``
-     - (Integer) If you need to limit the number of instances on any given host, set this option to the maximum number of instances you want to allow. The num_instances_filter will reject any host that has at least as many instances as this option's value.
-
-       Valid values are positive integers; setting it to zero will cause all hosts to be rejected if the num_instances_filter is active.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'num_instances_filter' filter is enabled.
-
-       * Related options:
-
-        None
-   * - ``max_io_ops_per_host`` = ``8``
-     - (Integer) This setting caps the number of instances on a host that can be actively performing IO (in a build, resize, snapshot, migrate, rescue, or unshelve task state) before that host becomes ineligible to build new instances.
-
-       Valid values are positive integers: 1 or greater.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'io_ops_filter' filter is enabled.
-
-       * Related options:
-
-        None
-   * - ``ram_allocation_ratio`` = ``0.0``
-     - (Floating point) This option helps you specify virtual RAM to physical RAM allocation ratio which affects all RAM filters.
-
-       This configuration specifies ratio for RamFilter which can be set per compute node. For AggregateRamFilter, it will fall back to this configuration value if no per-aggregate setting found.
-
-       Possible values:
-
-       * Any valid positive integer or float value
-
-       * Default value is 0.0
-
-       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.5.
-   * - ``ram_weight_multiplier`` = ``1.0``
-     - (Floating point) This option determines how hosts with more or less available RAM are weighed. A positive value will result in the scheduler preferring hosts with more available RAM, and a negative number will result in the scheduler preferring hosts with less available RAM. Another way to look at it is that positive values for this option will tend to spread instances across many hosts, while negative values will tend to fill up (stack) hosts as much as possible before scheduling to a less-used host. The absolute value, whether positive or negative, controls how strong the RAM weigher is relative to other weighers.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'ram' weigher is enabled.
-
-       Valid values are numeric, either integer or float.
-
-       * Related options:
-
-        None
-   * - ``reserved_host_disk_mb`` = ``0``
-     - (Integer) Amount of disk resources in MB to make them always available to host. The disk usage gets reported back to the scheduler from nova-compute running on the compute nodes. To prevent the disk resources from being considered as available, this option can be used to reserve disk space for that host.
-
-       Possible values:
-
-       * Any positive integer representing amount of disk in MB to reserve for the host.
-   * - ``reserved_host_memory_mb`` = ``512``
-     - (Integer) Amount of memory in MB to reserve for the host so that it is always available to host processes. The host resources usage is reported back to the scheduler continuously from nova-compute running on the compute node. To prevent the host memory from being considered as available, this option is used to reserve memory for the host.
-
-       Possible values:
-
-       * Any positive integer representing amount of memory in MB to reserve for the host.
-   * - ``reserved_huge_pages`` = ``None``
-     - (Unknown) Reserves a number of huge/large memory pages per NUMA host cells
-
-       Possible values:
-
-       * A list of valid key=value which reflect NUMA node ID, page size (Default unit is KiB) and number of pages to be reserved.
-
-        reserved_huge_pages = node:0,size:2048,count:64 reserved_huge_pages = node:1,size:1GB,count:1
-
-        In this example we are reserving on NUMA node 0 64 pages of 2MiB and on NUMA node 1 1 page of 1GiB.
-   * - ``restrict_isolated_hosts_to_isolated_images`` = ``True``
-     - (Boolean) This setting determines if the scheduler's isolated_hosts filter will allow non-isolated images on a host designated as an isolated host. When set to True (the default), non-isolated images will not be allowed to be built on isolated hosts. When False, non-isolated images can be built on both isolated and non-isolated hosts alike.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'IsolatedHostsFilter' filter is enabled. Even then, this option doesn't affect the behavior of requests for isolated images, which will *always* be restricted to isolated hosts.
-
-       * Related options:
-
-        scheduler/isolated_images scheduler/isolated_hosts
-   * - ``scheduler_available_filters`` = ``['nova.scheduler.filters.all_filters']``
-     - (Multi-valued) This is an unordered list of the filter classes the Nova scheduler may apply. Only the filters specified in the 'scheduler_default_filters' option will be used, but any filter appearing in that option must also be included in this list.
-
-       By default, this is set to all filters that are included with Nova. If you wish to change this, replace this with a list of strings, where each element is the path to a filter.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        scheduler_default_filters
-   * - ``scheduler_default_filters`` = ``RetryFilter, AvailabilityZoneFilter, RamFilter, DiskFilter, ComputeFilter, ComputeCapabilitiesFilter, ImagePropertiesFilter, ServerGroupAntiAffinityFilter, ServerGroupAffinityFilter``
-     - (List) This option is the list of filter class names that will be used for filtering hosts. The use of 'default' in the name of this option implies that other filters may sometimes be used, but that is not the case. These filters will be applied in the order they are listed, so place your most restrictive filters first to make the filtering process more efficient.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        All of the filters in this option *must* be present in the 'scheduler_available_filters' option, or a SchedulerHostFilterNotFound exception will be raised.
-   * - ``scheduler_driver`` = ``filter_scheduler``
-     - (String) The class of the driver used by the scheduler. This should be chosen from one of the entrypoints under the namespace 'nova.scheduler.driver' of file 'setup.cfg'. If nothing is specified in this option, the 'filter_scheduler' is used.
-
-       This option also supports deprecated full Python path to the class to be used. For example, "nova.scheduler.filter_scheduler.FilterScheduler". But note: this support will be dropped in the N Release.
-
-       Other options are:
-
-       * 'caching_scheduler' which aggressively caches the system state for better individual scheduler performance at the risk of more retries when running multiple schedulers.
-
-       * 'chance_scheduler' which simply picks a host at random.
-
-       * 'fake_scheduler' which is used for testing.
-
-       * Related options:
-
-        None
-   * - ``scheduler_driver_task_period`` = ``60``
-     - (Integer) This value controls how often (in seconds) to run periodic tasks in the scheduler. The specific tasks that are run for each period are determined by the particular scheduler being used.
+       This value controls how often (in seconds) to run periodic tasks in the scheduler. The specific tasks that are run for each period are determined by the particular scheduler being used.
 
        If this is larger than the nova-service 'service_down_time' setting, Nova may report the scheduler service as down. This is because the scheduler driver is responsible for sending a heartbeat and it will only do that as often as this option allows. As each scheduler can work a little differently than the others, be sure to test this with your selected scheduler.
 
-       * Related options:
-
-        ``nova-service service_down_time``
-   * - ``scheduler_host_manager`` = ``host_manager``
-     - (String) The scheduler host manager to use, which manages the in-memory picture of the hosts that the scheduler uses.
-
-       The option value should be chosen from one of the entrypoints under the namespace 'nova.scheduler.host_manager' of file 'setup.cfg'. For example, 'host_manager' is the default setting. Aside from the default, the only other option as of the Mitaka release is 'ironic_host_manager', which should be used if you're using Ironic to provision bare-metal instances.
-
-       * Related options:
-
-        None
-   * - ``scheduler_host_subset_size`` = ``1``
-     - (Integer) New instances will be scheduled on a host chosen randomly from a subset of the N best hosts, where N is the value set by this option. Valid values are 1 or greater. Any value less than one will be treated as 1.
-
-       Setting this to a value greater than 1 will reduce the chance that multiple scheduler processes handling similar requests will select the same host, creating a potential race condition. By selecting a host randomly from the N hosts that best fit the request, the chance of a conflict is reduced. However, the higher you set this value, the less optimal the chosen host may be for a given request.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        None
-   * - ``scheduler_instance_sync_interval`` = ``120``
-     - (Integer) Waiting time interval (seconds) between sending the scheduler a list of current instance UUIDs to verify that its view of instances is in sync with nova. If the CONF option `scheduler_tracks_instance_changes` is False, changing this option will have no effect.
-   * - ``scheduler_json_config_location`` =
-     - (String) The absolute path to the scheduler configuration JSON file, if any. This file location is monitored by the scheduler for changes and reloads it if needed. It is converted from JSON to a Python data structure, and passed into the filtering and weighing functions of the scheduler, which can use it for dynamic configuration.
-
-       * Related options:
-
-        None
-   * - ``scheduler_manager`` = ``nova.scheduler.manager.SchedulerManager``
-     - (String) DEPRECATED: Full class name for the Manager for scheduler
-   * - ``scheduler_max_attempts`` = ``3``
-     - (Integer) This is the maximum number of attempts that will be made to schedule an instance before it is assumed that the failures aren't due to normal occasional race conflicts, but rather some other problem. When this is reached a MaxRetriesExceeded exception is raised, and the instance is set to an error state.
-
-       Valid values are positive integers (1 or greater).
-
-       * Related options:
-
-        None
-   * - ``scheduler_topic`` = ``scheduler``
-     - (String) This is the message queue topic that the scheduler 'listens' on. It is used when the scheduler service is started up to configure the queue, and whenever an RPC call to the scheduler is made. There is almost never any reason to ever change this value.
-
-       * Related options:
-
-        None
-   * - ``scheduler_tracks_instance_changes`` = ``True``
-     - (Boolean) The scheduler may need information about the instances on a host in order to evaluate its filters and weighers. The most common need for this information is for the (anti-)affinity filters, which need to choose a host based on the instances already running on a host.
-
-       If the configured filters and weighers do not need this information, disabling this option will improve performance. It may also be disabled when the tracking overhead proves too heavy, although this will cause classes requiring host usage data to query the database on each request instead.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        None
-   * - ``scheduler_use_baremetal_filters`` = ``False``
-     - (Boolean) Set this to True to tell the nova scheduler that it should use the filters specified in the 'baremetal_scheduler_default_filters' option. If you are not scheduling baremetal nodes, leave this at the default setting of False.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        If this option is set to True, then the filters specified in the 'baremetal_scheduler_default_filters' are used instead of the filters specified in 'scheduler_default_filters'.
-   * - ``scheduler_weight_classes`` = ``nova.scheduler.weights.all_weighers``
-     - (List) This is a list of weigher class names. Only hosts which pass the filters are weighed. The weight for any host starts at 0, and the weighers order these hosts by adding to or subtracting from the weight assigned by the previous weigher. Weights may become negative.
-
-       An instance will be scheduled to one of the N most-weighted hosts, where N is 'scheduler_host_subset_size'.
-
-       By default, this is set to all weighers that are included with Nova. If you wish to change this, replace this with a list of strings, where each element is the path to a weigher.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        None
-   * - ``soft_affinity_weight_multiplier`` = ``1.0``
-     - (Floating point) Multiplier used for weighing hosts for group soft-affinity. Only a positive value is meaningful. Negative means that the behavior will change to the opposite, which is soft-anti-affinity.
-   * - ``soft_anti_affinity_weight_multiplier`` = ``1.0``
-     - (Floating point) Multiplier used for weighing hosts for group soft-anti-affinity. Only a positive value is meaningful. Negative means that the behavior will change to the opposite, which is soft-affinity.
-   * - **[cells]**
-     -
-   * - ``ram_weight_multiplier`` = ``10.0``
-     - (Floating point) Ram weight multiplier
-
-       Multiplier used for weighing ram. Negative numbers indicate that Compute should stack VMs on one host instead of spreading out new VMs to more hosts in the cell.
-
        Possible values:
 
-       * Numeric multiplier
-   * - ``scheduler_filter_classes`` = ``nova.cells.filters.all_filters``
-     - (List) Scheduler filter classes
-
-       Filter classes the cells scheduler should use. An entry of "nova.cells.filters.all_filters" maps to all cells filters included with nova. As of the Mitaka release the following filter classes are available:
-
-       Different cell filter: A scheduler hint of 'different_cell' with a value of a full cell name may be specified to route a build away from a particular cell.
-
-       Image properties filter: Image metadata named 'hypervisor_version_requires' with a version specification may be specified to ensure the build goes to a cell which has hypervisors of the required version. If either the version requirement on the image or the hypervisor capability of the cell is not present, this filter returns without filtering out the cells.
-
-       Target cell filter: A scheduler hint of 'target_cell' with a value of a full cell name may be specified to route a build to a particular cell. No error handling is done as there's no way to know whether the full path is a valid.
-
-       As an admin user, you can also add a filter that directs builds to a particular cell.
-   * - ``scheduler_retries`` = ``10``
-     - (Integer) Scheduler retries
-
-       How many retries when no cells are available. Specifies how many times the scheduler tries to launch a new instance when no cells are available.
-
-       Possible values:
-
-       * Positive integer value
+       * An integer, where the integer corresponds to periodic task interval in seconds. 0 uses the default interval (60 seconds). A negative value disables periodic tasks.
 
        Related options:
 
-       * This value is used with the ``scheduler_retry_delay`` value while retrying to find a suitable cell.
-   * - ``scheduler_retry_delay`` = ``2``
-     - (Integer) Scheduler retry delay
+       * ``nova-service service_down_time``
 
-       Specifies the delay (in seconds) between scheduling retries when no cell can be found to place the new instance on. When the instance could not be scheduled to a cell after ``scheduler_retries`` in combination with ``scheduler_retry_delay``, then the scheduling of the instance failed.
+   * - ``host_manager`` = ``host_manager``
+
+     - (String) The scheduler host manager to use.
+
+       The host manager manages the in-memory picture of the hosts that the scheduler uses. The options values are chosen from the entry points under the namespace 'nova.scheduler.host_manager' in 'setup.cfg'.
+
+   * - ``max_attempts`` = ``3``
+
+     - (Integer) Maximum number of schedule attempts for a chosen host.
+
+       This is the maximum number of attempts that will be made to schedule an instance before it is assumed that the failures aren't due to normal occasional race conflicts, but rather some other problem. When this is reached a MaxRetriesExceeded exception is raised, and the instance is set to an error state.
 
        Possible values:
 
-       * Time in seconds.
-
-       Related options:
-
-       * This value is used with the ``scheduler_retries`` value while retrying to find a suitable cell.
-   * - ``scheduler_weight_classes`` = ``nova.cells.weights.all_weighers``
-     - (List) Scheduler weight classes
-
-       Weigher classes the cells scheduler should use. An entry of "nova.cells.weights.all_weighers" maps to all cell weighers included with nova. As of the Mitaka release the following weight classes are available:
-
-       mute_child: Downgrades the likelihood of child cells being chosen for scheduling requests, which haven't sent capacity or capability updates in a while. Options include mute_weight_multiplier (multiplier for mute children; value should be negative).
-
-       ram_by_instance_type: Select cells with the most RAM capacity for the instance type being requested. Because higher weights win, Compute returns the number of available units for the instance type requested. The ram_weight_multiplier option defaults to 10.0 that adds to the weight by a factor of 10. Use a negative number to stack VMs on one host instead of spreading out new VMs to more hosts in the cell.
-
-       weight_offset: Allows modifying the database to weight a particular cell. The highest weight will be the first cell to be scheduled for launching an instance. When the weight_offset of a cell is set to 0, it is unlikely to be picked but it could be picked if other cells have a lower weight, like if they're full. And when the weight_offset is set to a very high value (for example, '999999999999999'), it is likely to be picked if another cell do not have a higher weight.
-   * - **[metrics]**
-     -
-   * - ``required`` = ``True``
-     - (Boolean) This setting determines how any unavailable metrics are treated. If this option is set to True, any hosts for which a metric is unavailable will raise an exception, so it is recommended to also use the MetricFilter to filter out those hosts before weighing.
-
-       When this option is False, any metric being unavailable for a host will set the host weight to 'weight_of_unavailable'.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        weight_of_unavailable
-   * - ``weight_multiplier`` = ``1.0``
-     - (Floating point) When using metrics to weight the suitability of a host, you can use this option to change how the calculated weight influences the weight assigned to a host as follows:
-
-       * Greater than 1.0: increases the effect of the metric on overall weight.
-
-       * Equal to 1.0: No change to the calculated weight.
-
-       * Less than 1.0, greater than 0: reduces the effect of the metric on overall weight.
-
-       * 0: The metric value is ignored, and the value of the 'weight_of_unavailable' option is returned instead.
-
-       * Greater than -1.0, less than 0: the effect is reduced and reversed.
-
-       * -1.0: the effect is reversed
-
-       * Less than -1.0: the effect is increased proportionally and reversed.
-
-       Valid values are numeric, either integer or float.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        weight_of_unavailable
-   * - ``weight_of_unavailable`` = ``-10000.0``
-     - (Floating point) When any of the following conditions are met, this value will be used in place of any actual metric value:
-
-       * One of the metrics named in 'weight_setting' is not available for a host, and the value of 'required' is False.
-
-       * The ratio specified for a metric in 'weight_setting' is 0.
-
-       * The 'weight_multiplier' option is set to 0.
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-        weight_setting required weight_multiplier
-   * - ``weight_setting`` =
-     - (List) This setting specifies the metrics to be weighed and the relative ratios for each metric. This should be a single string value, consisting of a series of one or more 'name=ratio' pairs, separated by commas, where 'name' is the name of the metric to be weighed, and 'ratio' is the relative weight for that metric.
-
-       Note that if the ratio is set to 0, the metric value is ignored, and instead the weight will be set to the value of the 'weight_of_unavailable' option.
-
-       As an example, let's consider the case where this option is set to:
-
-       ``name1=1.0, name2=-1.3``
-
-       The final weight will be:
-
-       ``(name1.value * 1.0) + (name2.value * -1.3)``
-
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
-
-       * Related options:
-
-       weight_of_unavailable
+       * A positive integer, where the integer corresponds to the max number of attempts that can be made when scheduling an instance.

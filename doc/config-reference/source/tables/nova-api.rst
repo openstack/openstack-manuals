@@ -10,73 +10,95 @@
 
 .. _nova-api:
 
-.. list-table:: Description of API configuration options
+.. list-table:: Description of api configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``enable_new_services`` = ``True``
-     - (Boolean) Enable new services on this host automatically.
 
-       When a new service (for example "nova-compute") starts up, it gets registered in the database as an enabled service. Sometimes it can be useful to register new services in disabled state and then enabled them at a later point in time. This option can set this behavior for all services per host.
+   * - ``max_limit`` = ``1000``
 
-       Possible values:
+     - (Integer) As a query can potentially return many thousands of items, you can limit the maximum number of items in a single response by setting this option.
 
-       * ``True``: Each new service is enabled as soon as it registers itself.
+   * - ``vendordata_dynamic_read_timeout`` = ``5``
 
-       * ``False``: Services must be enabled via a REST API call or with the CLI with ``nova service-enable <hostname> <binary>``, otherwise they are not ready to use.
-   * - ``enabled_apis`` = ``osapi_compute, metadata``
-     - (List) A list of APIs to enable by default
-   * - ``enabled_ssl_apis`` =
-     - (List) A list of APIs with enabled SSL
-   * - ``instance_name_template`` = ``instance-%08x``
-     - (String) Template string to be used to generate instance names.
-
-       This template controls the creation of the database name of an instance. This is *not* the display name you enter when creating an instance (via Horizon or CLI). For a new deployment it is advisable to change the default value (which uses the database autoincrement) to another value which makes use of the attributes of an instance, like ``instance-%(uuid)s``. If you already have instances in your deployment when you change this, your deployment will break.
+     - (Integer) Maximum wait time for an external REST service to return data once connected.
 
        Possible values:
 
-       * A string which either uses the instance database ID (like the default)
-
-       * A string with a list of named database columns, for example ``%(id)d`` or ``%(uuid)s`` or ``%(hostname)s``.
+       * Any integer. Note that instance start is blocked during this wait time, so this value should be kept small.
 
        Related options:
 
-       * not to be confused with: ``multi_instance_display_name_template``
-   * - ``multi_instance_display_name_template`` = ``%(name)s-%(count)d``
-     - (String) When creating multiple instances with a single request using the os-multiple-create API extension, this template will be used to build the display name for each instance. The benefit is that the instances end up with different hostnames. Example display names when creating two VM's: name-1, name-2.
+       * vendordata_providers
+
+       * vendordata_dynamic_targets
+
+       * vendordata_dynamic_ssl_certfile
+
+       * vendordata_dynamic_connect_timeout
+
+       * vendordata_dynamic_failure_fatal
+
+   * - ``vendordata_dynamic_ssl_certfile`` =
+
+     - (String) Path to an optional certificate file or CA bundle to verify dynamic vendordata REST services ssl certificates against.
 
        Possible values:
 
-       * Valid keys for the template are: name, uuid, count.
-   * - ``non_inheritable_image_properties`` = ``cache_in_nova, bittorrent``
-     - (List) Image properties that should not be inherited from the instance when taking a snapshot.
+       * An empty string, or a path to a valid certificate file
 
-       This option gives an opportunity to select which image-properties should not be inherited by newly created snapshots.
+       Related options:
+
+       * vendordata_providers
+
+       * vendordata_dynamic_targets
+
+       * vendordata_dynamic_connect_timeout
+
+       * vendordata_dynamic_read_timeout
+
+       * vendordata_dynamic_failure_fatal
+
+   * - ``neutron_default_tenant_id`` = ``default``
+
+     - (String) Tenant ID for getting the default network from Neutron API (also referred in some places as the 'project ID') to use.
+
+       Related options:
+
+       * use_neutron_default_nets
+
+   * - ``config_drive_skip_versions`` = ``1.0 2007-01-19 2007-03-01 2007-08-29 2007-10-10 2007-12-15 2008-02-01 2008-09-01``
+
+     - (String) When gathering the existing metadata for a config drive, the EC2-style metadata is returned for all versions that don't appear in this option. As of the Liberty release, the available versions are:
+
+       * 1.0
+
+       * 2007-01-19
+
+       * 2007-03-01
+
+       * 2007-08-29
+
+       * 2007-10-10
+
+       * 2007-12-15
+
+       * 2008-02-01
+
+       * 2008-09-01
+
+       * 2009-04-04
+
+       The option is in the format of a single string, with each version separated by a space.
 
        Possible values:
 
-       * A list whose item is an image property. Usually only the image properties that are only needed by base images can be included here, since the snapshots that are created from the base images doesn't need them.
+       * Any string that represents zero or more versions, separated by spaces.
 
-       * Default list: ['cache_in_nova', 'bittorrent']
-   * - ``null_kernel`` = ``nokernel``
-     - (String) This option is used to decide when an image should have no external ramdisk or kernel. By default this is set to 'nokernel', so when an image is booted with the property 'kernel_id' with the value 'nokernel', Nova assumes the image doesn't require an external kernel and ramdisk.
-   * - ``osapi_compute_link_prefix`` = ``None``
-     - (String) This string is prepended to the normal URL that is returned in links to the OpenStack Compute API. If it is empty (the default), the URLs are returned unchanged.
+   * - ``hide_server_address_states`` = ``building``
 
-       Possible values:
-
-       * Any string, including an empty string (the default).
-   * - ``osapi_compute_listen`` = ``0.0.0.0``
-     - (String) The IP address on which the OpenStack API will listen.
-   * - ``osapi_compute_listen_port`` = ``8774``
-     - (Port number) The port on which the OpenStack API will listen.
-   * - ``osapi_compute_workers`` = ``None``
-     - (Integer) Number of workers for OpenStack API service. The default will be the number of CPUs available.
-   * - ``osapi_hide_server_address_states`` = ``building``
      - (List) This option is a list of all instance states for which network address information should not be returned from the API.
 
        Possible values:
@@ -106,35 +128,131 @@
        * "shelved"
 
        * "shelved_offloaded"
-   * - ``servicegroup_driver`` = ``db``
-     - (String) This option specifies the driver to be used for the servicegroup service.
 
-       ServiceGroup API in nova enables checking status of a compute node. When a compute worker running the nova-compute daemon starts, it calls the join API to join the compute group. Services like nova scheduler can query the ServiceGroup API to check if a node is alive. Internally, the ServiceGroup client driver automatically updates the compute worker status. There are multiple backend implementations for this service: Database ServiceGroup driver and Memcache ServiceGroup driver.
+   * - ``vendordata_dynamic_connect_timeout`` = ``5``
 
-       Possible Values:
+     - (Integer) Maximum wait time for an external REST service to connect.
 
-       * db : Database ServiceGroup driver
+       Possible values:
 
-       * mc : Memcache ServiceGroup driver
+       * Any integer with a value greater than three (the TCP packet retransmission timeout). Note that instance start may be blocked during this wait time, so this value should be kept small.
 
-       Related Options:
+       Related options:
 
-       * service_down_time (maximum time since last check-in for up service)
-   * - ``snapshot_name_template`` = ``snapshot-%s``
-     - (String) DEPRECATED: Template string to be used to generate snapshot names This is not used anymore and will be removed in the O release.
+       * vendordata_providers
+
+       * vendordata_dynamic_targets
+
+       * vendordata_dynamic_ssl_certfile
+
+       * vendordata_dynamic_read_timeout
+
+       * vendordata_dynamic_failure_fatal
+
+   * - ``fping_path`` = ``/usr/sbin/fping``
+
+     - (String) The full path to the fping binary.
+
+   * - ``allow_instance_snapshots`` = ``True``
+
+     - (Boolean) Operators can turn off the ability for a user to take snapshots of their instances by setting this option to False. When disabled, any attempt to take a snapshot will result in a HTTP 400 response ("Bad Request").
+
+   * - ``compute_link_prefix`` = ``None``
+
+     - (String) This string is prepended to the normal URL that is returned in links to the OpenStack Compute API. If it is empty (the default), the URLs are returned unchanged.
+
+       Possible values:
+
+       * Any string, including an empty string (the default).
+
+   * - ``vendordata_jsonfile_path`` = ``None``
+
+     - (String) Cloud providers may store custom data in vendor data file that will then be available to the instances via the metadata service, and to the rendering of config-drive. The default class for this, JsonFileVendorData, loads this information from a JSON file, whose path is configured by this option. If there is no path set by this option, the class returns an empty dictionary.
+
+       Possible values:
+
+       * Any string representing the path to the data file, or an empty string (default).
+
+   * - ``glance_link_prefix`` = ``None``
+
+     - (String) This string is prepended to the normal URL that is returned in links to Glance resources. If it is empty (the default), the URLs are returned unchanged.
+
+       Possible values:
+
+       * Any string, including an empty string (the default).
+
+   * - ``enable_instance_password`` = ``True``
+
+     - (Boolean) Enables returning of the instance password by the relevant server API calls such as create, rebuild, evacuate, or rescue. If the hypervisor does not support password injection, then the password returned will not be correct, so if your hypervisor does not support password injection, set this to False.
+
+   * - ``vendordata_dynamic_targets`` =
+
+     - (List) A list of targets for the dynamic vendordata provider. These targets are of the form <name>@<url>.
+
+       The dynamic vendordata provider collects metadata by contacting external REST services and querying them for information about the instance. This behaviour is documented in the vendordata.rst file in the nova developer reference.
+
    * - ``use_forwarded_for`` = ``False``
+
      - (Boolean) When True, the 'X-Forwarded-For' header is treated as the canonical remote address. When False (the default), the 'remote_address' header is used.
 
        You should only enable this if you have an HTML sanitizing proxy.
-   * - **[oslo_middleware]**
-     -
-   * - ``enable_proxy_headers_parsing`` = ``False``
-     - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
-   * - ``max_request_body_size`` = ``114688``
-     - (Integer) The maximum body size for each request, in bytes.
-   * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
-   * - **[oslo_versionedobjects]**
-     -
-   * - ``fatal_exception_format_errors`` = ``False``
-     - (Boolean) Make exception message format errors fatal
+
+   * - ``use_neutron_default_nets`` = ``False``
+
+     - (Boolean) When True, the TenantNetworkController will query the Neutron API to get the default networks to use.
+
+       Related options:
+
+       * neutron_default_tenant_id
+
+   * - ``vendordata_dynamic_failure_fatal`` = ``False``
+
+     - (Boolean) Should failures to fetch dynamic vendordata be fatal to instance boot?
+
+       Related options:
+
+       * vendordata_providers
+
+       * vendordata_dynamic_targets
+
+       * vendordata_dynamic_ssl_certfile
+
+       * vendordata_dynamic_connect_timeout
+
+       * vendordata_dynamic_read_timeout
+
+   * - ``vendordata_providers`` =
+
+     - (List) A list of vendordata providers.
+
+       vendordata providers are how deployers can provide metadata via configdrive and metadata that is specific to their deployment. There are currently two supported providers: StaticJSON and DynamicJSON.
+
+       StaticJSON reads a JSON file configured by the flag vendordata_jsonfile_path and places the JSON from that file into vendor_data.json and vendor_data2.json.
+
+       DynamicJSON is configured via the vendordata_dynamic_targets flag, which is documented separately. For each of the endpoints specified in that flag, a section is added to the vendor_data2.json.
+
+       For more information on the requirements for implementing a vendordata dynamic endpoint, please see the vendordata.rst file in the nova developer reference.
+
+       Possible values:
+
+       * A list of vendordata providers, with StaticJSON and DynamicJSON being current options.
+
+       Related options:
+
+       * vendordata_dynamic_targets
+
+       * vendordata_dynamic_ssl_certfile
+
+       * vendordata_dynamic_connect_timeout
+
+       * vendordata_dynamic_read_timeout
+
+       * vendordata_dynamic_failure_fatal
+
+   * - ``metadata_cache_expiration`` = ``15``
+
+     - (Integer) This option is the time (in seconds) to cache metadata. When set to 0, metadata caching is disabled entirely; this is generally not recommended for performance reasons. Increasing this setting should improve response times of the metadata API when under heavy load. Higher values may increase memory usage, and result in longer times for host metadata changes to take effect.
+
+   * - ``auth_strategy`` = ``keystone``
+
+     - (String) This determines the strategy to use for authentication: keystone or noauth2. 'noauth2' is designed for testing only, as it does no actual credential checking. 'noauth2' provides administrative credentials only if 'admin' is specified as the username.

@@ -10,113 +10,65 @@
 
 .. _nova-serial_console:
 
-.. list-table:: Description of serial console configuration options
+.. list-table:: Description of serial_console configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[serial_console]**
-     -
+
+   * - ``serialproxy_port`` = ``6083``
+
+     - (Port number) The port number which is used by the ``nova-serialproxy`` service to listen for incoming requests.
+
+       The ``nova-serialproxy`` service listens on this port number for incoming connection requests to instances which expose serial console.
+
+       Related options:
+
+       * Ensure that this is the same port number which is defined in the option ``base_url`` of this section.
+
+   * - ``enabled`` = ``False``
+
+     - (Boolean) Enable the serial console feature.
+
+       In order to use this feature, the service ``nova-serialproxy`` needs to run. This service is typically executed on the controller node.
+
    * - ``base_url`` = ``ws://127.0.0.1:6083/``
-     - (String) The URL an end user would use to connect to the ``nova-serialproxy`` service.
+
+     - (URI) The URL an end user would use to connect to the ``nova-serialproxy`` service.
 
        The ``nova-serialproxy`` service is called with this token enriched URL and establishes the connection to the proper instance.
 
-       Possible values:
-
-       * <scheme><IP-address><port-number>
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Interdependencies to other options:
+       Related options:
 
        * The IP address must be identical to the address to which the ``nova-serialproxy`` service is listening (see option ``serialproxy_host`` in this section).
 
        * The port must be the same as in the option ``serialproxy_port`` of this section.
 
        * If you choose to use a secured websocket connection, then start this option with ``wss://`` instead of the unsecured ``ws://``. The options ``cert`` and ``key`` in the ``[DEFAULT]`` section have to be set for that.
-   * - ``enabled`` = ``False``
-     - (Boolean) Enable the serial console feature.
 
-       In order to use this feature, the service ``nova-serialproxy`` needs to run. This service is typically executed on the controller node.
-
-       Possible values:
-
-       * True: Enables the feature
-
-       * False: Disables the feature
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Interdependencies to other options:
-
-       * None
    * - ``port_range`` = ``10000:20000``
+
      - (String) A range of TCP ports a guest can use for its backend.
 
        Each instance which gets created will use one port out of this range. If the range is not big enough to provide another port for an new instance, this instance won't get launched.
 
        Possible values:
 
-       Each string which passes the regex ``\d+:\d+`` For example ``10000:20000``. Be sure that the first port number is lower than the second port number.
+       * Each string which passes the regex ``\d+:\d+`` For example ``10000:20000``. Be sure that the first port number is lower than the second port number and that both are in range from 0 to 65535.
 
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Interdependencies to other options:
-
-       * None
    * - ``proxyclient_address`` = ``127.0.0.1``
+
      - (String) The IP address to which proxy clients (like ``nova-serialproxy``) should connect to get the serial console of an instance.
 
        This is typically the IP address of the host of a ``nova-compute`` service.
 
-       Possible values:
-
-       * An IP address
-
-       Services which consume this:
-
-       * ``nova-compute``
-
-       Interdependencies to other options:
-
-       * None
    * - ``serialproxy_host`` = ``0.0.0.0``
+
      - (String) The IP address which is used by the ``nova-serialproxy`` service to listen for incoming requests.
 
        The ``nova-serialproxy`` service listens on this IP address for incoming connection requests to instances which expose serial console.
 
-       Possible values:
-
-       * An IP address
-
-       Services which consume this:
-
-       * ``nova-serialproxy``
-
-       Interdependencies to other options:
+       Related options:
 
        * Ensure that this is the same IP address which is defined in the option ``base_url`` of this section or use ``0.0.0.0`` to listen on all addresses.
-   * - ``serialproxy_port`` = ``6083``
-     - (Port number) The port number which is used by the ``nova-serialproxy`` service to listen for incoming requests.
-
-       The ``nova-serialproxy`` service listens on this port number for incoming connection requests to instances which expose serial console.
-
-       Possible values:
-
-       * A port number
-
-       Services which consume this:
-
-       * ``nova-serialproxy``
-
-       Interdependencies to other options:
-
-       * Ensure that this is the same port number which is defined in the option ``base_url`` of this section.

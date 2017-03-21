@@ -10,35 +10,57 @@
 
 .. _nova-api_database:
 
-.. list-table:: Description of API database configuration options
+.. list-table:: Description of api_database configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[api_database]**
-     -
-   * - ``connection`` = ``None``
-     - (String) No help text available for this option.
-   * - ``connection_debug`` = ``0``
-     - (Integer) No help text available for this option.
-   * - ``connection_trace`` = ``False``
-     - (Boolean) No help text available for this option.
-   * - ``idle_timeout`` = ``3600``
-     - (Integer) No help text available for this option.
-   * - ``max_overflow`` = ``None``
-     - (Integer) No help text available for this option.
-   * - ``max_pool_size`` = ``None``
-     - (Integer) No help text available for this option.
+
    * - ``max_retries`` = ``10``
+
      - (Integer) No help text available for this option.
-   * - ``mysql_sql_mode`` = ``TRADITIONAL``
-     - (String) No help text available for this option.
-   * - ``pool_timeout`` = ``None``
+
+   * - ``max_pool_size`` = ``None``
+
      - (Integer) No help text available for this option.
-   * - ``retry_interval`` = ``10``
+
+   * - ``max_overflow`` = ``None``
+
      - (Integer) No help text available for this option.
+
    * - ``slave_connection`` = ``None``
+
      - (String) No help text available for this option.
+
+   * - ``idle_timeout`` = ``3600``
+
+     - (Integer) No help text available for this option.
+
+   * - ``retry_interval`` = ``10``
+
+     - (Integer) No help text available for this option.
+
+   * - ``connection`` = ``None``
+
+     - (String) No help text available for this option.
+
+   * - ``pool_timeout`` = ``None``
+
+     - (Integer) No help text available for this option.
+
+   * - ``mysql_sql_mode`` = ``TRADITIONAL``
+
+     - (String) No help text available for this option.
+
+   * - ``connection_debug`` = ``0``
+
+     - (Integer) No help text available for this option.
+
+   * - ``connection_trace`` = ``False``
+
+     - (Boolean) No help text available for this option.
+
    * - ``sqlite_synchronous`` = ``True``
+
      - (Boolean) No help text available for this option.

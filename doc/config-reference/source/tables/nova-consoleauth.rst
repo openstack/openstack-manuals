@@ -8,15 +8,17 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-authentication:
+.. _nova-consoleauth:
 
-.. list-table:: Description of authentication configuration options
+.. list-table:: Description of consoleauth configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``auth_strategy`` = ``keystone``
-     - (String) This determines the strategy to use for authentication: keystone or noauth2. 'noauth2' is designed for testing only, as it does no actual credential checking. 'noauth2' provides administrative credentials only if 'admin' is specified as the username.
+
+   * - ``token_ttl`` = ``600``
+
+     - (Integer) The lifetime of a console auth token.
+
+       A console auth token is used in authorizing console access for a user. Once the auth token time to live count has elapsed, the token is considered expired. Expired tokens are then deleted.

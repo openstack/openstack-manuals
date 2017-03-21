@@ -16,9 +16,33 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[crypto]**
-     -
+
+   * - ``user_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s``
+
+     - (String) Subject for certificate for users, %s for project, user, timestamp
+
+   * - ``project_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=project-ca-%.16s-%s``
+
+     - (String) Subject for certificate for projects, %s for project, timestamp
+
+   * - ``crl_file`` = ``crl.pem``
+
+     - (String) Filename of root Certificate Revocation List (CRL). This is a list of certificates that have been revoked, and therefore, entities presenting those (revoked) certificates should no longer be trusted.
+
+       Related options:
+
+       * ca_path
+
+   * - ``ca_path`` = ``$state_path/CA``
+
+     - (String) Directory path where root CA is located.
+
+       Related options:
+
+       * ca_file
+
    * - ``ca_file`` = ``cacert.pem``
+
      - (String) Filename of root CA (Certificate Authority). This is a container format and includes root certificates.
 
        Possible values:
@@ -28,45 +52,23 @@
        Related options:
 
        * ca_path
-   * - ``ca_path`` = ``$state_path/CA``
-     - (String) Directory path where root CA is located.
 
-       Related options:
-
-       * ca_file
-   * - ``crl_file`` = ``crl.pem``
-     - (String) Filename of root Certificate Revocation List (CRL). This is a list of certificates that have been revoked, and therefore, entities presenting those (revoked) certificates should no longer be trusted.
-
-       Related options:
-
-       * ca_path
-   * - ``key_file`` = ``private/cakey.pem``
-     - (String) Filename of a private key.
-
-       Related options:
-
-       * keys_path
    * - ``keys_path`` = ``$state_path/keys``
+
      - (String) Directory path where keys are located.
 
        Related options:
 
        * key_file
-   * - ``project_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=project-ca-%.16s-%s``
-     - (String) Subject for certificate for projects, %s for project, timestamp
+
+   * - ``key_file`` = ``private/cakey.pem``
+
+     - (String) Filename of a private key.
+
+       Related options:
+
+       * keys_path
+
    * - ``use_project_ca`` = ``False``
+
      - (Boolean) Option to enable/disable use of CA for each project.
-   * - ``user_cert_subject`` = ``/C=US/ST=California/O=OpenStack/OU=NovaDev/CN=%.16s-%.16s-%s``
-     - (String) Subject for certificate for users, %s for project, user, timestamp
-   * - **[ssl]**
-     -
-   * - ``ca_file`` = ``None``
-     - (String) CA certificate file to use to verify connecting clients.
-   * - ``cert_file`` = ``None``
-     - (String) Certificate file to use when starting the server securely.
-   * - ``ciphers`` = ``None``
-     - (String) Sets the list of available ciphers. value should be a string in the OpenSSL cipher list format.
-   * - ``key_file`` = ``None``
-     - (String) Private key file to use when starting the server securely.
-   * - ``version`` = ``None``
-     - (String) SSL version to use (valid only if SSL enabled). Valid values are TLSv1 and SSLv23. SSLv2, SSLv3, TLSv1_1, and TLSv1_2 may be available on some distributions.

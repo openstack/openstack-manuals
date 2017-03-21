@@ -16,33 +16,11 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[DEFAULT]**
-     -
-   * - ``console_allowed_origins`` =
+
+   * - ``allowed_origins`` =
+
      - (List) Adds list of allowed origins to the console websocket proxy to allow connections from other origin hostnames. Websocket proxy matches the host header with the origin header to prevent cross-site requests. This list specifies if any there are values other than host are allowed in the origin header.
-
-       Possible values
-
-       * An empty list (default) or list of allowed origin hostnames.
-   * - ``console_public_hostname`` = ``localhost``
-     - (String) Publicly visible name for this console host.
-
-       Possible values
-
-       * Current hostname (default) or any string representing hostname.
-   * - ``console_token_ttl`` = ``600``
-     - (Integer) This option indicates the lifetime of a console auth token. A console auth token is used in authorizing console access for a user. Once the auth token time to live count has elapsed, the token is considered expired. Expired tokens are then deleted.
-   * - ``consoleauth_manager`` = ``nova.consoleauth.manager.ConsoleAuthManager``
-     - (String) DEPRECATED: Manager for console auth
-   * - **[mks]**
-     -
-   * - ``enabled`` = ``False``
-     - (Boolean) Enables graphical console access for virtual machines.
-   * - ``mksproxy_base_url`` = ``http://127.0.0.1:6090/``
-     - (String) Location of MKS web console proxy
-
-       The URL in the response points to a WebMKS proxy which starts proxying between client and corresponding vCenter server where instance runs. In order to use the web based console access, WebMKS proxy should be installed and configured
 
        Possible values:
 
-       * Must be a valid URL of the form:``http://host:port/``
+       * A list where each element is an allowed origin hostnames, else an empty list

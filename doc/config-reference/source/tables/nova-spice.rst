@@ -10,27 +10,93 @@
 
 .. _nova-spice:
 
-.. list-table:: Description of SPICE configuration options
+.. list-table:: Description of spice configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[spice]**
-     -
-   * - ``agent_enabled`` = ``True``
-     - (Boolean) Enable the spice guest agent support.
-   * - ``enabled`` = ``False``
-     - (Boolean) Enable spice related features.
-   * - ``html5proxy_base_url`` = ``http://127.0.0.1:6082/spice_auto.html``
-     - (String) Location of spice HTML5 console proxy, in the form "http://127.0.0.1:6082/spice_auto.html"
-   * - ``html5proxy_host`` = ``0.0.0.0``
-     - (String) Host on which to listen for incoming requests
-   * - ``html5proxy_port`` = ``6082``
-     - (Port number) Port on which to listen for incoming requests
-   * - ``keymap`` = ``en-us``
-     - (String) Keymap for spice
+
    * - ``server_listen`` = ``127.0.0.1``
-     - (String) IP address on which instance spice server should listen
+
+     - (String) The address where the SPICE server running on the instances should listen.
+
+       Typically, the ``nova-spicehtml5proxy`` proxy client runs on the controller node and connects over the private network to this address on the compute node(s).
+
+       Possible values:
+
+       * IP address to listen on.
+
+   * - ``html5proxy_port`` = ``6082``
+
+     - (Port number) Port on which the ``nova-spicehtml5proxy`` service listens for incoming requests.
+
+       Related options:
+
+       * This option depends on the ``html5proxy_base_url`` option. The ``nova-spicehtml5proxy`` service must be listening on a port that is accessible from the HTML5 client.
+
+   * - ``enabled`` = ``False``
+
+     - (Boolean) Enable SPICE related features.
+
+       Related options:
+
+       * VNC must be explicitly disabled to get access to the SPICE console. Set the enabled option to False in the [vnc] section to disable the VNC console.
+
    * - ``server_proxyclient_address`` = ``127.0.0.1``
-     - (String) The address to which proxy clients (like nova-spicehtml5proxy) should connect
+
+     - (String) The address used by ``nova-spicehtml5proxy`` client to connect to instance console.
+
+       Typically, the ``nova-spicehtml5proxy`` proxy client runs on the controller node and connects over the private network to this address on the compute node(s).
+
+       Possible values:
+
+       * Any valid IP address on the compute node.
+
+       Related options:
+
+       * This option depends on the ``server_listen`` option. The proxy client must be able to access the address specified in ``server_listen`` using the value of this option.
+
+   * - ``agent_enabled`` = ``True``
+
+     - (Boolean) Enable the SPICE guest agent support on the instances.
+
+       The Spice agent works with the Spice protocol to offer a better guest console experience. However, the Spice console can still be used without the Spice Agent. With the Spice agent installed the following features are enabled:
+
+       * Copy & Paste of text and images between the guest and client machine
+
+       * Automatic adjustment of resolution when the client screen changes - e.g. if you make the Spice console full screen the guest resolution will adjust to match it rather than letterboxing.
+
+       * Better mouse integration - The mouse can be captured and released without needing to click inside the console or press keys to release it. The performance of mouse movement is also improved.
+
+   * - ``html5proxy_base_url`` = ``http://127.0.0.1:6082/spice_auto.html``
+
+     - (URI) Location of the SPICE HTML5 console proxy.
+
+       End user would use this URL to connect to the `nova-spicehtml5proxy`` service. This service will forward request to the console of an instance.
+
+       In order to use SPICE console, the service ``nova-spicehtml5proxy`` should be running. This service is typically launched on the controller node.
+
+       Possible values:
+
+       * Must be a valid URL of the form: ``http://host:port/spice_auto.html`` where host is the node running ``nova-spicehtml5proxy`` and the port is typically 6082. Consider not using default value as it is not well defined for any real deployment.
+
+       Related options:
+
+       * This option depends on ``html5proxy_host`` and ``html5proxy_port`` options. The access URL returned by the compute node must have the host and port where the ``nova-spicehtml5proxy`` service is listening.
+
+   * - ``html5proxy_host`` = ``0.0.0.0``
+
+     - (String) IP address or a hostname on which the ``nova-spicehtml5proxy`` service listens for incoming requests.
+
+       Related options:
+
+       * This option depends on the ``html5proxy_base_url`` option. The ``nova-spicehtml5proxy`` service must be listening on a host that is accessible from the HTML5 client.
+
+   * - ``keymap`` = ``en-us``
+
+     - (String) A keyboard layout which is supported by the underlying hypervisor on this node.
+
+       Possible values:
+
+       * This is usually an 'IETF language tag' (default is 'en-us'). If you use QEMU as hypervisor, you should find the list of supported keyboard layouts at /usr/share/qemu/keymaps.

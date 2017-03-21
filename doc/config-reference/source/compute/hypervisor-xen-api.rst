@@ -401,4 +401,4 @@ XenAPI configuration reference
 ------------------------------
 
 To customize the XenAPI driver, use the configuration option settings
-documented in :ref:`nova-xen`.
+documented in :ref:`nova-xenserver`.

@@ -16,9 +16,31 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[cloudpipe]**
-     -
+
+   * - ``vpn_flavor`` = ``m1.tiny``
+
+     - (String) Flavor for VPN instances.
+
+       Possible values:
+
+       * Any valid flavor name
+
+   * - ``dmz_net`` = ``10.0.0.0``
+
+     - (IP) Network to push into OpenVPN config.
+
+       Note: Above mentioned OpenVPN config can be found at /etc/openvpn/server.conf.
+
+       Possible values:
+
+       * Any valid IPv4/IPV6 address
+
+       Related options:
+
+       * boot_script_template - dmz_net is pushed into bootscript.template to configure cloudpipe-managed OpenVPN server
+
    * - ``boot_script_template`` = ``$pybasedir/nova/cloudpipe/bootscript.template``
+
      - (String) Template for cloudpipe instance boot script.
 
        Possible values:
@@ -34,7 +56,9 @@
        * dmz_mask
 
        * cnt_vpn_clients
+
    * - ``dmz_mask`` = ``255.255.255.0``
+
      - (IP) Netmask to push into OpenVPN config.
 
        Possible values:
@@ -46,25 +70,17 @@
        * dmz_net - dmz_net and dmz_mask is pushed into bootscript.template to configure cloudpipe-managed OpenVPN server
 
        * boot_script_template
-   * - ``dmz_net`` = ``10.0.0.0``
-     - (IP) Network to push into OpenVPN config.
 
-       Note: Above mentioned OpenVPN config can be found at /etc/openvpn/server.conf.
+   * - ``vpn_key_suffix`` = ``-vpn``
 
-       Possible values:
-
-       * Any valid IPv4/IPV6 address
-
-       Related options:
-
-       * boot_script_template - dmz_net is pushed into bootscript.template to configure cloudpipe-managed OpenVPN server
-   * - ``vpn_flavor`` = ``m1.tiny``
-     - (String) Flavor for VPN instances.
+     - (String) Suffix to add to project name for VPN key and secgroups
 
        Possible values:
 
-       * Any valid flavor name
+       * Any string value representing the VPN key suffix
+
    * - ``vpn_image_id`` = ``0``
+
      - (String) Image ID used when starting up a cloudpipe VPN client.
 
        An empty instance is created and configured with OpenVPN using boot_script_template. This instance would be snapshotted and stored in glance. ID of the stored image is used in 'vpn_image_id' to create cloudpipe VPN client.
@@ -72,9 +88,3 @@
        Possible values:
 
        * Any valid ID of a VPN image
-   * - ``vpn_key_suffix`` = ``-vpn``
-     - (String) Suffix to add to project name for VPN key and secgroups
-
-       Possible values:
-
-       * Any string value representing the VPN key suffix

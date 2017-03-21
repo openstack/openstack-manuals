@@ -10,25 +10,29 @@
 
 .. _nova-ephemeral_storage_encryption:
 
-.. list-table:: Description of ephemeral storage encryption configuration options
+.. list-table:: Description of ephemeral_storage_encryption configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[ephemeral_storage_encryption]**
-     -
+
    * - ``cipher`` = ``aes-xts-plain64``
-     - (String) Cipher-mode string to be used
+
+     - (String) Cipher-mode string to be used.
 
        The cipher and mode to be used to encrypt ephemeral storage. The set of cipher-mode combinations available depends on kernel support.
 
        Possible values:
 
-       * aes-xts-plain64 (Default), see /proc/crypto for available options.
-   * - ``enabled`` = ``False``
-     - (Boolean) Enables/disables LVM ephemeral storage encryption.
-   * - ``key_size`` = ``512``
-     - (Integer) Encryption key length in bits
+       * Any crypto option listed in ``/proc/crypto``.
 
-       The bit length of the encryption key to be used to encrypt ephemeral storage (in XTS mode only half of the bits are used for encryption key).
+   * - ``enabled`` = ``False``
+
+     - (Boolean) Enables/disables LVM ephemeral storage encryption.
+
+   * - ``key_size`` = ``512``
+
+     - (Integer) Encryption key length in bits.
+
+       The bit length of the encryption key to be used to encrypt ephemeral storage. In XTS mode only half of the bits are used for encryption key.

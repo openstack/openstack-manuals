@@ -8,17 +8,19 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _nova-quobyte:
+.. _nova-image_file_url:
 
-.. list-table:: Description of Quobyte USP volume driver configuration options
+.. list-table:: Description of image_file_url configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
-   * - **[libvirt]**
-     -
-   * - ``quobyte_client_cfg`` = ``None``
-     - (String) Path to a Quobyte Client configuration file.
-   * - ``quobyte_mount_point_base`` = ``$state_path/mnt``
-     - (String) Directory where the Quobyte volume is mounted on the compute node
+
+   * - ``filesystems`` =
+
+     - (List) List of file systems that are configured in this file in the image_file_url:<list entry name> sections
+
+       - **Deprecated**
+
+         The feature to download images from glance via filesystem is not used and will be removed in the future.
