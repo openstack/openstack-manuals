@@ -77,7 +77,7 @@ Create a bootable volume for the instance to reside on after shutdown.
 
    You need the Block Storage service to preserve the instance after
    shutdown. The ``--block-device`` argument, used with the
-   legacy :command:`nova-boot`, will not work with the OpenStack
+   legacy :command:`nova boot`, will not work with the OpenStack
    :command:`openstack server create` command. Instead, the
    :command:`openstack volume create` and
    :command:`openstack server add volume` commands create persistent storage.
@@ -136,7 +136,7 @@ using ISO image actually functional.
       | 74303284-f802-... | IMAGE_NAME | active |
       +-------------------+------------+--------+
 
-   The ``VOLUME_UUID`` is the uuid of the volume that is attached to
+   The ``SOURCE_VOLUME`` is the UUID or a name of the volume that is attached to
    your ISO created instance, and the ``IMAGE_NAME`` is the name that
    you give to your new image.
 
