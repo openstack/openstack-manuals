@@ -20,10 +20,11 @@
 Block Storage service (cinder) command-line client
 ==================================================
 
-The cinder client is the command-line interface (CLI) for
-the Block Storage service (cinder) API and its extensions.
+The cinder client is the command-line interface (CLI) for the
+Block Storage service (cinder) API
+and its extensions.
 
-This chapter documents :command:`cinder` version ``1.11.0``.
+This chapter documents :command:`cinder` version ``2.0.1``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -66,6 +67,106 @@ cinder usage
 ``absolute-limits``
   Lists absolute limits for a user.
 
+``api-version``
+  Display the server API version information. (Supported
+  by
+  API
+  versions
+  3.0
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper version]
+
+``attachment-create``
+  Create an attachment for a cinder volume. (Supported
+  by
+  API
+  versions
+  3.27
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper version]
+
+``attachment-delete``
+  Delete an attachment for a cinder volume. (Supported
+  by
+  API
+  versions
+  3.27
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper version]
+
+``attachment-list``
+  Lists all attachments. (Supported by API versions 3.27
+  - 3.latest) [hint: use '--os-volume-api-version' flag
+  to show help message for proper version]
+
+``attachment-show``
+  Show detailed information for attachment. (Supported
+  by
+  API
+  versions
+  3.27
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper version]
+
+``attachment-update``
+  Update an attachment for a cinder volume. (Supported
+  by
+  API
+  versions
+  3.27
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper version]
+
 ``availability-zone-list``
   Lists all availability zones.
 
@@ -93,6 +194,23 @@ cinder usage
 ``backup-show``
   Shows backup details.
 
+``backup-update``
+  Renames
+  a
+  backup.
+  (Supported
+  by
+  API
+  versions
+  3.9
+  -3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show help message for proper version]
+
 ``cgsnapshot-create``
   Creates a cgsnapshot.
 
@@ -104,6 +222,41 @@ cinder usage
 
 ``cgsnapshot-show``
   Shows cgsnapshot details.
+
+``cluster-disable``
+  Disables clustered services. (Supported by API
+  versions
+  3.7
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``cluster-enable``
+  Enables clustered services. (Supported by API versions
+  3.7 - 3.latest) [hint: use '--os-volume-api-version'
+  flag to show help message for proper version]
+
+``cluster-list``
+  Lists clustered services with optional filtering.
+  (Supported by API versions 3.7 - 3.latest) [hint: use
+  '--os-volume-api-version' flag to show help message
+  for proper version]
+
+``cluster-show``
+  Show detailed information on a clustered service.
+  (Supported by API versions 3.7 - 3.latest) [hint: use
+  '--os-volume-api-version' flag to show help message
+  for proper version]
 
 ``consisgroup-create``
   Creates a consistency group.
@@ -176,8 +329,224 @@ cinder usage
 ``get-pools``
   Show pool information for backends. Admin only.
 
+``group-create``
+  Creates
+  a
+  group.
+  (Supported
+  by
+  API
+  versions
+  3.13
+  -3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show help message for proper version]
+
+``group-create-from-src``
+  Creates a group from a group snapshot or a source
+  group. (Supported by API versions 3.14 - 3.latest)
+  [hint: use '--os-volume-api-version' flag to show help
+  message for proper version]
+
+``group-delete``
+  Removes one or more groups. (Supported by API versions
+  3.13 - 3.latest) [hint: use '--os-volume-api-version'
+  flag to show help message for proper version]
+
+``group-list``
+  Lists
+  all
+  groups.
+  (Supported
+  by
+  API
+  versions
+  3.13
+  -3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show help message for proper version]
+
 ``group-show``
-  Shows details of a group.
+  Shows details of a group. (Supported by API versions
+  3.13 - 3.latest) [hint: use '--os-volume-api-version'
+  flag to show help message for proper version]
+
+``group-snapshot-create``
+  Creates a group snapshot. (Supported by API versions
+  3.14 - 3.latest) [hint: use '--os-volume-api-version'
+  flag to show help message for proper version]
+
+``group-snapshot-delete``
+  Removes one or more group snapshots. (Supported by API
+  versions
+  3.14
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``group-snapshot-list``
+  Lists all group snapshots. (Supported by API versions
+  3.14 - 3.latest) [hint: use '--os-volume-api-version'
+  flag to show help message for proper version]
+
+``group-snapshot-show``
+  Shows group snapshot details. (Supported by API
+  versions
+  3.14
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``group-specs-list``
+  Lists current group types and specs. (Supported by API
+  versions
+  3.11
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``group-type-create``
+  Creates a group type. (Supported by API versions 3.11
+  - 3.latest) [hint: use '--os-volume-api-version' flag
+  to show help message for proper version]
+
+``group-type-default``
+  List the default group type. (Supported by API
+  versions
+  3.11
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``group-type-delete``
+  Deletes group type or types. (Supported by API
+  versions
+  3.11
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``group-type-key``
+  Sets or unsets group_spec for a group type. (Supported
+  by
+  API
+  versions
+  3.11
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper version]
+
+``group-type-list``
+  Lists available 'group types'. (Admin only will see
+  private
+  types)
+  (Supported
+  by
+  API
+  versions
+  3.11
+  -3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show help message for proper version]
+
+``group-type-show``
+  Show group type details. (Supported by API versions
+  3.11 - 3.latest) [hint: use '--os-volume-api-version'
+  flag to show help message for proper version]
+
+``group-type-update``
+  Updates group type name, description, and/or
+  is_public. (Supported by API versions 3.11 - 3.latest)
+  [hint: use '--os-volume-api-version' flag to show help
+  message for proper version]
+
+``group-update``
+  Updates
+  a
+  group.
+  (Supported
+  by
+  API
+  versions
+  3.13
+  -3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show help message for proper version]
 
 ``image-metadata``
   Sets or deletes volume image metadata.
@@ -192,7 +561,62 @@ cinder usage
   Manage an existing volume.
 
 ``manageable-list``
-  Lists all manageable volumes.
+  Lists all manageable volumes. (Supported by API
+  versions
+  3.8
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``message-delete``
+  Removes one or more messages. (Supported by API
+  versions
+  3.3
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
+
+``message-list``
+  Lists
+  all
+  messages.
+  (Supported
+  by
+  API
+  versions
+  3.3
+  -3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show help message for proper version]
+
+``message-show``
+  Shows message details. (Supported by API versions 3.3
+  - 3.latest) [hint: use '--os-volume-api-version' flag
+  to show help message for proper version]
 
 ``metadata``
   Sets or deletes volume metadata.
@@ -286,6 +710,9 @@ cinder usage
 
 ``service-list``
   Lists all services. Filter by host and service binary.
+  (Supported by API versions 3.0 - 3.latest) [hint: use
+  '--os-volume-api-version' flag to show help message
+  for proper version]
 
 ``set-bootable``
   Update bootable status of a volume.
@@ -306,7 +733,22 @@ cinder usage
   Manage an existing snapshot.
 
 ``snapshot-manageable-list``
-  Lists all manageable snapshots.
+  Lists all manageable snapshots. (Supported by API
+  versions
+  3.8
+  -
+  3.latest)
+  [hint:
+  use
+  '--os-volume-api-version'
+  flag
+  to
+  show
+  help
+  message
+  for
+  proper
+  version]
 
 ``snapshot-metadata``
   Sets or deletes snapshot metadata.
@@ -383,6 +825,11 @@ cinder usage
 
 ``upload-to-image``
   Uploads volume to Image Service as an image.
+
+``version-list``
+  List all API versions. (Supported by API versions 3.0
+  - 3.latest) [hint: use '--os-volume-api-version' flag
+  to show help message for proper version]
 
 ``bash-completion``
   Prints arguments for bash_completion.
@@ -516,6 +963,189 @@ Lists absolute limits for a user.
 
 ``<tenant_id>``
   Display information for a single tenant (Admin only).
+
+.. _cinder_api-version:
+
+cinder api-version
+------------------
+
+.. code-block:: console
+
+   usage: cinder api-version
+
+Display the server API version information.
+
+.. _cinder_attachment-create:
+
+cinder attachment-create
+------------------------
+
+.. code-block:: console
+
+   usage: cinder attachment-create [--instance <instance>] [--connect <connect>]
+                                   [--initiator <initiator>] [--ip <ip>]
+                                   [--host <host>] [--platform <platform>]
+                                   [--ostype <ostype>] [--multipath <multipath>]
+                                   [--mountpoint <mountpoint>]
+                                   <volume>
+
+Create an attachment for a cinder volume.
+
+**Positional arguments:**
+
+``<volume>``
+  Name or ID of volume or volumes to attach.
+
+**Optional arguments:**
+
+``--instance <instance>``
+  UUID of Instance attaching to. Default=None.
+
+``--connect <connect>``
+  Make an active connection using provided connector
+  info (True or False).
+
+``--initiator <initiator>``
+  iqn of the initiator attaching to. Default=None.
+
+``--ip <ip>``
+  ip of the system attaching to. Default=None.
+
+``--host <host>``
+  Name of the host attaching to. Default=None.
+
+``--platform <platform>``
+  Platform type. Default=x86_64.
+
+``--ostype <ostype>``
+  OS type. Default=linux2.
+
+``--multipath <multipath>``
+  OS type. Default=False.
+
+``--mountpoint <mountpoint>``
+  Mountpoint volume will be attached at. Default=None.
+
+.. _cinder_attachment-delete:
+
+cinder attachment-delete
+------------------------
+
+.. code-block:: console
+
+   usage: cinder attachment-delete <attachment> [<attachment> ...]
+
+Delete an attachment for a cinder volume.
+
+**Positional arguments:**
+
+``<attachment>``
+  ID of attachment or attachments to delete.
+
+.. _cinder_attachment-list:
+
+cinder attachment-list
+----------------------
+
+.. code-block:: console
+
+   usage: cinder attachment-list [--all-tenants [<0|1>]]
+                                 [--volume-id <volume-id>] [--status <status>]
+                                 [--marker <marker>] [--limit <limit>]
+                                 [--sort <key>[:<direction>]]
+                                 [--tenant [<tenant>]]
+
+Lists all attachments.
+
+**Optional arguments:**
+
+``--all-tenants [<0|1>]``
+  Shows details for all tenants. Admin only.
+
+``--volume-id <volume-id>``
+  Filters results by a volume ID. Default=None.
+
+``--status <status>``
+  Filters results by a status. Default=None.
+
+``--marker <marker>``
+  Begin returning attachments that appear later in
+  attachment list than that represented by this id.
+  Default=None.
+
+``--limit <limit>``
+  Maximum number of attachemnts to return. Default=None.
+
+``--sort <key>[:<direction>]``
+  Comma-separated list of sort keys and directions in
+  the form of <key>[:<asc|desc>]. Valid keys: id,
+  status, size, availability_zone, name, bootable,
+  created_at, reference. Default=None.
+
+``--tenant [<tenant>]``
+  Display information from single tenant (Admin only).
+
+.. _cinder_attachment-show:
+
+cinder attachment-show
+----------------------
+
+.. code-block:: console
+
+   usage: cinder attachment-show <attachment>
+
+Show detailed information for attachment.
+
+**Positional arguments:**
+
+``<attachment>``
+  ID of attachment.
+
+.. _cinder_attachment-update:
+
+cinder attachment-update
+------------------------
+
+.. code-block:: console
+
+   usage: cinder attachment-update [--initiator <initiator>] [--ip <ip>]
+                                   [--host <host>] [--platform <platform>]
+                                   [--ostype <ostype>] [--multipath <multipath>]
+                                   [--mountpoint <mountpoint>]
+                                   <attachment>
+
+Update an attachment for a cinder volume. This call is designed to be more of
+an attachment completion than anything else. It expects the value of a
+connector object to notify the driver that the volume is going to be connected
+and where it's being connected to.
+
+**Positional arguments:**
+
+``<attachment>``
+  ID of attachment.
+
+**Optional arguments:**
+
+``--initiator <initiator>``
+  iqn of the initiator attaching to. Default=None.
+
+``--ip <ip>``
+  ip of the system attaching to. Default=None.
+
+``--host <host>``
+  Name of the host attaching to. Default=None.
+
+``--platform <platform>``
+  Platform type. Default=x86_64.
+
+``--ostype <ostype>``
+  OS type. Default=linux2.
+
+``--multipath <multipath>``
+  OS type. Default=False.
+
+``--mountpoint <mountpoint>``
+  Mountpoint volume will be attached at. Default=None.
 
 .. _cinder_availability-zone-list:
 
@@ -753,6 +1383,31 @@ Shows backup details.
 ``<backup>``
   Name or ID of backup.
 
+.. _cinder_backup-update:
+
+cinder backup-update
+--------------------
+
+.. code-block:: console
+
+   usage: cinder backup-update [--name [<name>]] [--description <description>]
+                               <backup>
+
+Renames a backup.
+
+**Positional arguments:**
+
+``<backup>``
+  Name or ID of backup to rename.
+
+**Optional arguments:**
+
+``--name [<name>]``
+  New name for backup.
+
+``--description <description>``
+  Backup description. Default=None.
+
 .. _cinder_cgsnapshot-create:
 
 cinder cgsnapshot-create
@@ -833,6 +1488,109 @@ Shows cgsnapshot details.
 
 ``<cgsnapshot>``
   Name or ID of cgsnapshot.
+
+.. _cinder_cluster-disable:
+
+cinder cluster-disable
+----------------------
+
+.. code-block:: console
+
+   usage: cinder cluster-disable [--reason <reason>] [<binary>] <cluster-name>
+
+Disables clustered services.
+
+**Positional arguments:**
+
+``<binary>``
+  Binary to filter by. Default: cinder-volume.
+
+``<cluster-name>``
+  Name of the clustered services to update.
+
+**Optional arguments:**
+
+``--reason <reason>``
+  Reason for disabling clustered service.
+
+.. _cinder_cluster-enable:
+
+cinder cluster-enable
+---------------------
+
+.. code-block:: console
+
+   usage: cinder cluster-enable [<binary>] <cluster-name>
+
+Enables clustered services.
+
+**Positional arguments:**
+
+``<binary>``
+  Binary to filter by. Default: cinder-volume.
+
+``<cluster-name>``
+  Name of the clustered services to update.
+
+.. _cinder_cluster-list:
+
+cinder cluster-list
+-------------------
+
+.. code-block:: console
+
+   usage: cinder cluster-list [--name <name>] [--binary <binary>]
+                              [--is-up <True|true|False|false>]
+                              [--disabled <True|true|False|false>]
+                              [--num-hosts <num-hosts>]
+                              [--num-down-hosts <num-down-hosts>] [--detailed]
+
+Lists clustered services with optional filtering.
+
+**Optional arguments:**
+
+``--name <name>``
+  Filter by cluster name, without backend will list all
+  clustered services from the same cluster.
+  Default=None.
+
+``--binary <binary>``
+  Cluster binary. Default=None.
+
+``--is-up <True|true|False|false>``
+  Filter by up/dow status. Default=None.
+
+``--disabled <True|true|False|false>``
+  Filter by disabled status. Default=None.
+
+``--num-hosts <num-hosts>``
+  Filter by number of hosts in the cluster.
+
+``--num-down-hosts <num-down-hosts>``
+  Filter by number of hosts that are down.
+
+``--detailed``
+  Get detailed clustered service information
+  (Default=False).
+
+.. _cinder_cluster-show:
+
+cinder cluster-show
+-------------------
+
+.. code-block:: console
+
+   usage: cinder cluster-show [<binary>] <cluster-name>
+
+Show detailed information on a clustered service.
+
+**Positional arguments:**
+
+``<binary>``
+  Binary to filter by. Default: cinder-volume.
+
+``<cluster-name>``
+  Name of the clustered service to show.
 
 .. _cinder_consisgroup-create:
 
@@ -992,7 +1750,7 @@ cinder create
 .. code-block:: console
 
    usage: cinder create [--consisgroup-id <consistencygroup-id>]
-                        [--snapshot-id <snapshot-id>]
+                        [--group-id <group-id>] [--snapshot-id <snapshot-id>]
                         [--source-volid <source-volid>]
                         [--source-replica <source-replica>]
                         [--image-id <image-id>] [--image <image>] [--name <name>]
@@ -1016,6 +1774,11 @@ Creates a volume.
 ``--consisgroup-id <consistencygroup-id>``
   ID of a consistency group where the new volume belongs
   to. Default=None.
+
+``--group-id <group-id>``
+  ID of a group where the new volume belongs to.
+  Default=None. (Supported by API version 3.13 and
+  later)
 
 ``--snapshot-id <snapshot-id>``
   Creates volume from snapshot ID. Default=None.
@@ -1355,6 +2118,107 @@ Show pool information for backends. Admin only.
 ``--detail``
   Show detailed information about pools.
 
+.. _cinder_group-create:
+
+cinder group-create
+-------------------
+
+.. code-block:: console
+
+   usage: cinder group-create [--name <name>] [--description <description>]
+                              [--availability-zone <availability-zone>]
+                              <group-type> <volume-types>
+
+Creates a group.
+
+**Positional arguments:**
+
+``<group-type>``
+  Group type.
+
+``<volume-types>``
+  Comma-separated list of volume types.
+
+**Optional arguments:**
+
+``--name <name>``
+  Name of a group.
+
+``--description <description>``
+  Description of a group. Default=None.
+
+``--availability-zone <availability-zone>``
+  Availability zone for group. Default=None.
+
+.. _cinder_group-create-from-src:
+
+cinder group-create-from-src
+----------------------------
+
+.. code-block:: console
+
+   usage: cinder group-create-from-src [--group-snapshot <group-snapshot>]
+                                       [--source-group <source-group>]
+                                       [--name <name>]
+                                       [--description <description>]
+
+Creates a group from a group snapshot or a source group.
+
+**Optional arguments:**
+
+``--group-snapshot <group-snapshot>``
+  Name or ID of a group snapshot. Default=None.
+
+``--source-group <source-group>``
+  Name or ID of a source group. Default=None.
+
+``--name <name>``
+  Name of a group. Default=None.
+
+``--description <description>``
+  Description of a group. Default=None.
+
+.. _cinder_group-delete:
+
+cinder group-delete
+-------------------
+
+.. code-block:: console
+
+   usage: cinder group-delete [--delete-volumes] <group> [<group> ...]
+
+Removes one or more groups.
+
+**Positional arguments:**
+
+``<group>``
+  Name or ID of one or more groups to be deleted.
+
+**Optional arguments:**
+
+``--delete-volumes``
+  Allows or disallows groups to be deleted if they are not
+  empty. If the group is empty, it can be deleted without
+  the delete-volumes flag. If the group is not empty, the
+  delete-volumes flag is required for it to be deleted. If
+  True, all volumes in the group will also be deleted.
+
+.. _cinder_group-list:
+
+cinder group-list
+-----------------
+
+.. code-block:: console
+
+   usage: cinder group-list [--all-tenants [<0|1>]]
+
+Lists all groups.
+
+**Optional arguments:**
+
+``--all-tenants [<0|1>]``
+  Shows details for all tenants. Admin only.
+
 .. _cinder_group-show:
 
 cinder group-show
@@ -1370,6 +2234,265 @@ Shows details of a group.
 
 ``<group>``
   Name or ID of a group.
+
+.. _cinder_group-snapshot-create:
+
+cinder group-snapshot-create
+----------------------------
+
+.. code-block:: console
+
+   usage: cinder group-snapshot-create [--name <name>]
+                                       [--description <description>]
+                                       <group>
+
+Creates a group snapshot.
+
+**Positional arguments:**
+
+``<group>``
+  Name or ID of a group.
+
+**Optional arguments:**
+
+``--name <name>``
+  Group snapshot name. Default=None.
+
+``--description <description>``
+  Group snapshot description. Default=None.
+
+.. _cinder_group-snapshot-delete:
+
+cinder group-snapshot-delete
+----------------------------
+
+.. code-block:: console
+
+   usage: cinder group-snapshot-delete <group_snapshot> [<group_snapshot> ...]
+
+Removes one or more group snapshots.
+
+**Positional arguments:**
+
+``<group_snapshot>``
+  Name or ID of one or more group snapshots to be deleted.
+
+.. _cinder_group-snapshot-list:
+
+cinder group-snapshot-list
+--------------------------
+
+.. code-block:: console
+
+   usage: cinder group-snapshot-list [--all-tenants [<0|1>]] [--status <status>]
+                                     [--group-id <group_id>]
+
+Lists all group snapshots.
+
+**Optional arguments:**
+
+``--all-tenants [<0|1>]``
+  Shows details for all tenants. Admin only.
+
+``--status <status>``
+  Filters results by a status. Default=None.
+
+``--group-id <group_id>``
+  Filters results by a group ID. Default=None.
+
+.. _cinder_group-snapshot-show:
+
+cinder group-snapshot-show
+--------------------------
+
+.. code-block:: console
+
+   usage: cinder group-snapshot-show <group_snapshot>
+
+Shows group snapshot details.
+
+**Positional arguments:**
+
+``<group_snapshot>``
+  Name or ID of group snapshot.
+
+.. _cinder_group-specs-list:
+
+cinder group-specs-list
+-----------------------
+
+.. code-block:: console
+
+   usage: cinder group-specs-list
+
+Lists current group types and specs.
+
+.. _cinder_group-type-create:
+
+cinder group-type-create
+------------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-create [--description <description>]
+                                   [--is-public <is-public>]
+                                   <name>
+
+Creates a group type.
+
+**Positional arguments:**
+
+``<name>``
+  Name of new group type.
+
+**Optional arguments:**
+
+``--description <description>``
+  Description of new group type.
+
+``--is-public <is-public>``
+  Make type accessible to the public (default true).
+
+.. _cinder_group-type-default:
+
+cinder group-type-default
+-------------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-default
+
+List the default group type.
+
+.. _cinder_group-type-delete:
+
+cinder group-type-delete
+------------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-delete <group_type> [<group_type> ...]
+
+Deletes group type or types.
+
+**Positional arguments:**
+
+``<group_type>``
+  Name or ID of group type or types to delete.
+
+.. _cinder_group-type-key:
+
+cinder group-type-key
+---------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-key <gtype> <action> <key=value> [<key=value> ...]
+
+Sets or unsets group_spec for a group type.
+
+**Positional arguments:**
+
+``<gtype>``
+  Name or ID of group type.
+
+``<action>``
+  The action. Valid values are "set" or "unset."
+
+``<key=value>``
+  The group specs key and value pair to set or unset. For unset,
+  specify only the key.
+
+.. _cinder_group-type-list:
+
+cinder group-type-list
+----------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-list
+
+Lists available 'group types'. (Admin only will see private types)
+
+.. _cinder_group-type-show:
+
+cinder group-type-show
+----------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-show <group_type>
+
+Show group type details.
+
+**Positional arguments:**
+
+``<group_type>``
+  Name or ID of the group type.
+
+.. _cinder_group-type-update:
+
+cinder group-type-update
+------------------------
+
+.. code-block:: console
+
+   usage: cinder group-type-update [--name <name>] [--description <description>]
+                                   [--is-public <is-public>]
+                                   <id>
+
+Updates group type name, description, and/or is_public.
+
+**Positional arguments:**
+
+``<id>``
+  ID of the group type.
+
+**Optional arguments:**
+
+``--name <name>``
+  Name of the group type.
+
+``--description <description>``
+  Description of the group type.
+
+``--is-public <is-public>``
+  Make type accessible to the public or not.
+
+.. _cinder_group-update:
+
+cinder group-update
+-------------------
+
+.. code-block:: console
+
+   usage: cinder group-update [--name <name>] [--description <description>]
+                              [--add-volumes <uuid1,uuid2,......>]
+                              [--remove-volumes <uuid3,uuid4,......>]
+                              <group>
+
+Updates a group.
+
+**Positional arguments:**
+
+``<group>``
+  Name or ID of a group.
+
+**Optional arguments:**
+
+``--name <name>``
+  New name for group. Default=None.
+
+``--description <description>``
+  New description for group. Default=None.
+
+``--add-volumes <uuid1,uuid2,......>``
+  UUID of one or more volumes to be added to the group,
+  separated by commas. Default=None.
+
+``--remove-volumes <uuid3,uuid4,......>``
+  UUID of one or more volumes to be removed from the
+  group, separated by commas. Default=None.
 
 .. _cinder_image-metadata:
 
@@ -1417,9 +2540,11 @@ cinder list
 
 .. code-block:: console
 
-   usage: cinder list [--all-tenants [<0|1>]] [--name <name>] [--status <status>]
+   usage: cinder list [--group_id <group_id>] [--all-tenants [<0|1>]]
+                      [--name <name>] [--status <status>]
                       [--bootable [<True|true|False|false>]]
                       [--migration_status <migration_status>]
+                      [--metadata [<key=value> [<key=value> ...]]]
                       [--image_metadata [<key=value> [<key=value> ...]]]
                       [--marker <marker>] [--limit <limit>] [--fields <fields>]
                       [--sort <key>[:<direction>]] [--tenant [<tenant>]]
@@ -1427,6 +2552,10 @@ cinder list
 Lists all volumes.
 
 **Optional arguments:**
+
+``--group_id <group_id>``
+  Filters results by a group_id. Default=None.
+  (Supported by API version 3.10 and later)
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
@@ -1444,9 +2573,14 @@ Lists all volumes.
   Filters results by a migration status. Default=None.
   Admin only.
 
+``--metadata [<key=value> [<key=value> ...]]``
+  Filters results by a metadata key and value pair.
+  Default=None.
+
 ``--image_metadata [<key=value> [<key=value> ...]]``
   Filters results by a image metadata key and value
-  pair. Default=None.
+  pair. Require volume api version >=3.4. Default=None.
+  (Supported by API version 3.4 and later)
 
 ``--marker <marker>``
   Begin returning volumes that appear later in the
@@ -1569,9 +2703,88 @@ Lists all manageable volumes.
 
 ``--sort <key>[:<direction>]``
   Comma-separated list of sort keys and directions in
+  the form of <key>[:<asc|desc>]. Valid keys: size,
+  reference. Default=None.
+
+.. _cinder_message-delete:
+
+cinder message-delete
+---------------------
+
+.. code-block:: console
+
+   usage: cinder message-delete <message> [<message> ...]
+
+Removes one or more messages.
+
+**Positional arguments:**
+
+``<message>``
+  ID of one or more message to be deleted.
+
+.. _cinder_message-list:
+
+cinder message-list
+-------------------
+
+.. code-block:: console
+
+   usage: cinder message-list [--marker <marker>] [--limit <limit>]
+                              [--sort <key>[:<direction>]]
+                              [--resource_uuid <resource_uuid>]
+                              [--resource_type <type>] [--event_id <id>]
+                              [--request_id <request_id>] [--level <level>]
+
+Lists all messages.
+
+**Optional arguments:**
+
+``--marker <marker>``
+  Begin returning message that appear later in the
+  message list than that represented by this id.
+  Default=None. (Supported by API version 3.5 and later)
+
+``--limit <limit>``
+  Maximum number of messages to return. Default=None.
+  (Supported by API version 3.5 and later)
+
+``--sort <key>[:<direction>]``
+  Comma-separated list of sort keys and directions in
   the form of <key>[:<asc|desc>]. Valid keys: id,
   status, size, availability_zone, name, bootable,
-  created_at, reference. Default=None.
+  created_at, reference. Default=None. (Supported by API
+  version 3.5 and later)
+
+``--resource_uuid <resource_uuid>``
+  Filters results by a resource uuid. Default=None.
+
+``--resource_type <type>``
+  Filters results by a resource type. Default=None.
+
+``--event_id <id>``
+  Filters results by event id. Default=None.
+
+``--request_id <request_id>``
+  Filters results by request id. Default=None.
+
+``--level <level>``
+  Filters results by the message level. Default=None.
+
+.. _cinder_message-show:
+
+cinder message-show
+-------------------
+
+.. code-block:: console
+
+   usage: cinder message-show <message>
+
+Shows message details.
+
+**Positional arguments:**
+
+``<message>``
+  ID of message.
 
 .. _cinder_metadata:
 
@@ -1594,7 +2807,8 @@ Sets or deletes volume metadata.
 
 ``<key=value>``
   Metadata key and value pair to set or unset. For unset, specify
-  only the key.
+  only the key(s): <key key> (Supported by API version 3.15 and
+  later)
 
 .. _cinder_metadata-show:
 
@@ -1949,6 +3163,7 @@ cinder quota-update
                               [--gigabytes <gigabytes>] [--backups <backups>]
                               [--backup-gigabytes <backup_gigabytes>]
                               [--consistencygroups <consistencygroups>]
+                              [--groups <groups>]
                               [--volume-type <volume_type_name>]
                               [--per-volume-gigabytes <per_volume_gigabytes>]
                               <tenant_id>
@@ -1979,6 +3194,10 @@ Updates quotas for a tenant.
 
 ``--consistencygroups <consistencygroups>``
   The new "consistencygroups" quota value. Default=None.
+
+``--groups <groups>``
+  The new "groups" quota value. Default=None. (Supported
+  by API version 3.13 and later)
 
 ``--volume-type <volume_type_name>``
   Volume type. Default=None.
@@ -2254,7 +3473,8 @@ Lists all services. Filter by host and service binary.
 
 ``--withreplication [<True|False>]``
   Enables or disables display of Replication info for
-  c-vol services. Default=False.
+  c-vol services. Default=False. (Supported by API
+  version 3.7 and later)
 
 .. _cinder_set-bootable:
 
@@ -2361,6 +3581,7 @@ cinder snapshot-list
                                [--status <status>] [--volume-id <volume-id>]
                                [--marker <marker>] [--limit <limit>]
                                [--sort <key>[:<direction>]] [--tenant [<tenant>]]
+                               [--metadata [<key=value> [<key=value> ...]]]
 
 Lists all snapshots.
 
@@ -2394,6 +3615,11 @@ Lists all snapshots.
 
 ``--tenant [<tenant>]``
   Display information from single tenant (Admin only).
+
+``--metadata [<key=value> [<key=value> ...]]``
+  Filters results by a metadata key and value pair.
+  Require volume api version >=3.22. Default=None.
+  (Supported by API version 3.22 and later)
 
 .. _cinder_snapshot-manage:
 
@@ -2471,9 +3697,8 @@ Lists all manageable snapshots.
 
 ``--sort <key>[:<direction>]``
   Comma-separated list of sort keys and directions in
-  the form of <key>[:<asc|desc>]. Valid keys: id,
-  status, size, availability_zone, name, bootable,
-  created_at, reference. Default=None.
+  the form of <key>[:<asc|desc>]. Valid keys: size,
+  reference. Default=None.
 
 .. _cinder_snapshot-metadata:
 
@@ -2940,6 +4165,8 @@ cinder upload-to-image
    usage: cinder upload-to-image [--force [<True|False>]]
                                  [--container-format <container-format>]
                                  [--disk-format <disk-format>]
+                                 [--visibility <public|private>]
+                                 [--protected <True|False>]
                                  <volume> <image-name>
 
 Uploads volume to Image Service as an image.
@@ -2964,4 +4191,24 @@ Uploads volume to Image Service as an image.
 
 ``--disk-format <disk-format>``
   Disk format type. Default is raw.
+
+``--visibility <public|private>``
+  Set image visibility to either public or private.
+  Default=private. (Supported by API version 3.1 and
+  later)
+
+``--protected <True|False>``
+  Prevents image from being deleted. Default=False.
+  (Supported by API version 3.1 and later)
+
+.. _cinder_version-list:
+
+cinder version-list
+-------------------
+
+.. code-block:: console
+
+   usage: cinder version-list
+
+List all API versions.
 
