@@ -122,7 +122,7 @@ Create a subnet:
    | ipv6_address_mode | None                                 |
    | ipv6_ra_mode      | None                                 |
    | name              | subnet1                              |
-   | network_id        | 9db55b7f-e803-4e1b-9bba-6262f60b96cb |
+   | network_id        | 180620e3-9eae-4ba7-9739-c5847966e1f0 |
    | project_id        | e17431afc0524e0690484889a04b7fa0     |
    | revision_number   | 2                                    |
    | service_types     |                                      |
@@ -234,7 +234,7 @@ Create ports
       | id                    | 031ddba8-3e3f-4c3c-ae26-7776905eb24f    |
       | mac_address           | fa:16:3e:df:3d:c7                       |
       | name                  | port1                                   |
-      | network_id            | 9db55b7f-e803-4e1b-9bba-6262f60b96cb    |
+      | network_id            | 180620e3-9eae-4ba7-9739-c5847966e1f0    |
       | port_security_enabled | True                                    |
       | project_id            | e17431afc0524e0690484889a04b7fa0        |
       | revision_number       | 5                                       |
@@ -279,7 +279,7 @@ Create ports
       | id                    | eac47fcd-07ac-42dd-9993-5b36ac1f201b    |
       | mac_address           | fa:16:3e:96:ae:6e                       |
       | name                  | port2                                   |
-      | network_id            | 9db55b7f-e803-4e1b-9bba-6262f60b96cb    |
+      | network_id            | 180620e3-9eae-4ba7-9739-c5847966e1f0    |
       | port_security_enabled | True                                    |
       | project_id            | e17431afc0524e0690484889a04b7fa0        |
       | revision_number       | 5                                       |
