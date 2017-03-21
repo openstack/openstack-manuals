@@ -240,13 +240,13 @@ you build your use case and your deployment plan.
     For further research about OpenStack deployment, investigate the
     supported and documented preconfigured, prepackaged installers for
     OpenStack from companies such as
-    `Canonical <http://www.ubuntu.com/cloud/openstack>`_,
-    `Cisco <http://www.cisco.com/web/solutions/openstack/index.html>`_,
-    `Cloudscaling <http://www.cloudscaling.com/>`_,
+    `Canonical <https://www.ubuntu.com/cloud/openstack>`_,
+    `Cisco <http://www.cisco.com/c/en/us/solutions/data-center-virtualization/openstack-at-cisco/index.html>`_,
+    `Cloudscaling <http://www.cloudscaling.com>`_,
     `IBM <http://www-03.ibm.com/software/products/en/ibm-cloud-orchestrator>`_,
-    `Metacloud <http://www.metacloud.com/>`_,
-    `Mirantis <https://www.mirantis.com/>`_,
-    `Rackspace <http://www.rackspace.com/cloud/private>`_,
-    `Red Hat <http://www.redhat.com/openstack/>`_,
-    `SUSE <https://www.suse.com/products/suse-openstack-cloud/>`_,
-    and `SwiftStack <https://www.swiftstack.com/>`_.
+    `Metacloud <http://www.cisco.com/c/en/us/products/cloud-systems-management/metacloud/index.html>`_,
+    `Mirantis <https://www.mirantis.com>`_,
+    `Rackspace <https://www.rackspace.com/cloud/private>`_,
+    `Red Hat <https://www.redhat.com/openstack>`_,
+    `SUSE <https://www.suse.com/products/suse-openstack-cloud>`_,
+    and `SwiftStack <https://www.swiftstack.com>`_.

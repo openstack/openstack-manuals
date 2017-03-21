@@ -39,7 +39,7 @@ In particular, all volumes stored on an LVM node can be lost.
 Ceph
 ----
 
-`Ceph RBD <http://ceph.com/>`_ is an innately high availability storage back
+`Ceph RBD <https://ceph.com/>`_ is an innately high availability storage back
 end. It creates a storage cluster with multiple nodes that communicate with
 each other to replicate and redistribute data dynamically.
 A Ceph RBD storage cluster provides a single shared set of storage nodes that
