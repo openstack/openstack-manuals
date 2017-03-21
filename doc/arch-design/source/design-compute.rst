@@ -1,11 +1,11 @@
-=============
-Compute nodes
-=============
+===================
+Compute node design
+===================
 
 .. toctree::
   :maxdepth: 3
 
-  design-compute/design-compute-concepts
+  design-compute/design-compute-arch
   design-compute/design-compute-cpu
   design-compute/design-compute-hypervisor
   design-compute/design-compute-hardware

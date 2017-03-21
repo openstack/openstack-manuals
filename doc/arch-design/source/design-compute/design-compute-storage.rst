@@ -2,7 +2,7 @@
 Instance storage solutions
 ==========================
 
-As part of the architecture design for a compute cluster, you must specify some
+As part of the architecture design for a compute cluster, you must specify
 storage for the disk on which the instantiated instance runs. There are three
 main approaches to providing temporary storage:
 
@@ -122,7 +122,7 @@ from one physical host to another, a necessity for performing upgrades
 that require reboots of the compute hosts, but only works well with
 shared storage.
 
-Live migration can also be done with nonshared storage, using a feature
+Live migration can also be done with non-shared storage, using a feature
 known as *KVM live block migration*. While an earlier implementation of
 block-based migration in KVM and QEMU was considered unreliable, there
 is a newer, more reliable implementation of block-based live migration

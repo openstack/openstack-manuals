@@ -21,22 +21,20 @@ parity, documentation, and the level of community experience.
 
 As per the recent OpenStack user survey, KVM is the most widely adopted
 hypervisor in the OpenStack community. Besides KVM, there are many deployments
-that run other hypervisors such as LXC, VMware, Xen and Hyper-V. However, these
-hypervisors are either less used, are niche hypervisors, or have limited
-functionality based on the more commonly used hypervisors. This is due to gaps
-in feature parity.
-
-In addition, the nova configuration reference below details feature support for
-hypervisors as well as ironic and Virtuozzo (formerly Parallels).
-
-The best information available to support your choice is found on the
-`Hypervisor Support Matrix
-<https://docs.openstack.org/developer/nova/support-matrix.html>`_
-and in the `configuration reference
-<https://docs.openstack.org/ocata/config-reference/compute/hypervisors.html>`_.
+that run other hypervisors such as LXC, VMware, Xen, and Hyper-V. However,
+these hypervisors are either less used, are niche hypervisors, or have limited
+functionality compared to more commonly used hypervisors.
 
 .. note::
 
    It is also possible to run multiple hypervisors in a single
    deployment using host aggregates or cells. However, an individual
    compute node can run only a single hypervisor at a time.
+
+For more information about feature support for
+hypervisors as well as ironic and Virtuozzo (formerly Parallels), see
+`Hypervisor Support Matrix
+<https://docs.openstack.org/developer/nova/support-matrix.html>`_
+and `Hypervisors
+<https://docs.openstack.org/ocata/config-reference/compute/hypervisors.html>`_
+in the Configuration Reference.

@@ -1,5 +1,5 @@
 ====================================
-Compute Server Architecture Overview
+Compute server architecture overview
 ====================================
 
 When designing compute resource pools, consider the number of processors,
@@ -7,11 +7,12 @@ amount of memory, network requirements, the quantity of storage required for
 each hypervisor, and any requirements for bare metal hosts provisioned
 through ironic.
 
-When architecting an OpenStack cloud, as part of the planning process, the
-architect must not only determine what hardware to utilize but whether compute
+When architecting an OpenStack cloud, as part of the planning process, you
+must not only determine what hardware to utilize but whether compute
 resources will be provided in a single pool or in multiple pools or
-availability zones. Will the cloud provide distinctly different profiles for
-compute?
+availability zones. You should consider if the cloud will provide distinctly
+different profiles for compute.
+
 For example, CPU, memory or local storage based compute nodes. For NFV
 or HPC based clouds, there may even be specific network configurations that
 should be reserved for those specific workloads on specific compute nodes. This
@@ -83,7 +84,7 @@ the hardware layout of your compute nodes.
    and cause a potential increase in a noisy neighbor.
 
 Insufficient disk capacity could also have a negative effect on overall
-performance including CPU and memory usage. Depending on the back-end
+performance including CPU and memory usage. Depending on the back end
 architecture of the OpenStack Block Storage layer, capacity includes
 adding disk shelves to enterprise storage systems or installing
 additional Block Storage nodes. Upgrading directly attached storage
