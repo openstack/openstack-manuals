@@ -20,11 +20,11 @@
 Backup, Restore, and Disaster Recovery service (freezer) command-line client
 ============================================================================
 
-The freezer client is the command-line interface (CLI) for
-the Backup, Restore, and Disaster Recovery service (freezer) API and its
-extensions.
+The freezer client is the command-line interface (CLI) for the
+Backup, Restore, and Disaster Recovery service (freezer) API
+and its extensions.
 
-This chapter documents :command:`freezer` version ``1.2.0``.
+This chapter documents :command:`freezer` version ``1.3.0``.
 
 For help on a specific :command:`freezer` command, enter:
 
@@ -264,14 +264,14 @@ freezer backup-delete
 
 .. code-block:: console
 
-   usage: freezer backup-delete [-h] backup_id
+   usage: freezer backup-delete [-h] backup_uuid
 
 Delete a backup from the api
 
 **Positional arguments:**
 
-``backup_id``
-  ID of the backup
+``backup_uuid``
+  UUID of the backup
 
 **Optional arguments:**
 
@@ -316,13 +316,13 @@ freezer backup-show
    usage: freezer backup-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent] [--prefix PREFIX]
-                              backup_id
+                              backup_uuid
 
 Show the metadata of a single backup
 
 **Positional arguments:**
 
-``backup_id``
+``backup_uuid``
   ID of the backup
 
 **Optional arguments:**
@@ -450,7 +450,7 @@ freezer job-create
 
 .. code-block:: console
 
-   usage: freezer job-create [-h] --file FILE
+   usage: freezer job-create [-h] --file FILE --client CLIENT_ID
 
 Create a new job from a file
 
@@ -461,6 +461,10 @@ Create a new job from a file
 
 ``--file FILE``
   Path to json file with the job
+
+``--client CLIENT_ID, -C``
+  CLIENT_ID
+  Select a client for this job
 
 .. _freezer_job-delete:
 
@@ -765,6 +769,32 @@ Show a single session
 
 ``-h, --help``
   show this help message and exit
+
+.. _freezer_session-start:
+
+freezer session-start
+---------------------
+
+.. code-block:: console
+
+   usage: freezer session-start [-h] --session-id SESSION_ID --job-id JOB_ID
+                                --job-tag JOB_TAG
+
+Start a session
+
+**Optional arguments:**
+
+``-h, --help``
+  show this help message and exit
+
+``--session-id SESSION_ID``
+  ID of the session
+
+``--job-id JOB_ID``
+  ID of the job
+
+``--job-tag JOB_TAG``
+  Job tag value
 
 .. _freezer_session-update:
 
