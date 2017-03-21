@@ -65,7 +65,7 @@ You can run the following shelving tasks:
    instance is powered off. The shutdown behavior is configured by the
    ``shutdown_timeout`` parameter that can be set in the
    :file:`nova.conf` file. Its value stands for the overall
-   period (in seconds) a guest operation system is allowed
+   period (in seconds) a guest operating system is allowed
    to complete the shutdown. The default timeout is 60 seconds.
    See `Description of Compute configuration options
    <https://docs.openstack.org/ocata/config-reference/compute/config-options.html>`_

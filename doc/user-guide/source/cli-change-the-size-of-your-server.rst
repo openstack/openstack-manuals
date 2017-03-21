@@ -71,13 +71,14 @@ Change the size of a server by changing its flavor.
 
    .. note::
 
-      By default, the :command:`openstack server resize` command gives the guest operating
+      By default, the :command:`openstack server resize` command gives
+      the guest operating
       system a chance to perform a controlled shutdown before the instance
       is powered off and the instance is resized.
       The shutdown behavior is configured by the
       ``shutdown_timeout`` parameter that can be set in the
       ``nova.conf`` file. Its value stands for the overall
-      period (in seconds) a guest operation system is allowed
+      period (in seconds) a guest operating system is allowed
       to complete the shutdown. The default timeout is 60 seconds.
       See `Description of Compute configuration options
       <https://docs.openstack.org/ocata/config-reference/compute/config-options.html>`_
