@@ -4,7 +4,8 @@ OpenStack Documentation Contributor Guide
 
 .. figure:: figures/doc-logo-fox.jpg
    :alt: Documentation Logo
-   :width: 50%
+   :scale: 40%
+   :align: center
 
 Abstract
 ~~~~~~~~
