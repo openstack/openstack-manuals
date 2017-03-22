@@ -40,7 +40,7 @@ project user, as well as update the quota defaults for a new project.
    * - security-groups
      - Number of security groups per project.
    * - security-group-rules
-     - Number of rules per security group.
+     - Number of security group rules per project.
    * - server-groups
      - Number of server groups per project.
    * - server-group-members
