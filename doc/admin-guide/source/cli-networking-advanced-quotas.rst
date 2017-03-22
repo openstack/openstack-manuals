@@ -329,7 +329,7 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ openstack quota show PROJECT_ID 6f88036c45344d9999a1f971e4882723
+      $ openstack quota show 6f88036c45344d9999a1f971e4882723
       +---------------------+-------+
       | Field               | Value |
       +---------------------+-------+
