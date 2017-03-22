@@ -60,8 +60,8 @@ The following table describes the Compute and Block Storage service quotas:
 | Security Groups    | Security groups allowed for each   | Compute       |
 |                    | project.                           |               |
 +--------------------+------------------------------------+---------------+
-| Security Group     | Rules allowed for each security    | Compute       |
-| Rules              | group.                             |               |
+| Security Group     | Security group rules allowed for   | Compute       |
+| Rules              | each project.                      |               |
 +--------------------+------------------------------------+---------------+
 | Snapshots          | Volume snapshots allowed for       | Block Storage |
 |                    | each project.                      |               |
