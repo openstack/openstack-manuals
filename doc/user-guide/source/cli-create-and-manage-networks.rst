@@ -104,17 +104,17 @@ Create a subnet:
 .. code-block:: console
 
    $ openstack subnet create subnet1 --network net1
-     --subnet-range 192.168.2.0/24
+     --subnet-range 192.0.2.0/24
    +-------------------+--------------------------------------+
    | Field             | Value                                |
    +-------------------+--------------------------------------+
-   | allocation_pools  | 192.168.2.2-192.168.2.254            |
-   | cidr              | 192.168.2.0/24                       |
+   | allocation_pools  | 192.0.2.2-192.0.2.254                |
+   | cidr              | 192.0.2.0/24                         |
    | created_at        | 2016-12-22T18:47:52Z                 |
    | description       |                                      |
    | dns_nameservers   |                                      |
    | enable_dhcp       | True                                 |
-   | gateway_ip        | 192.168.2.1                          |
+   | gateway_ip        | 192.0.2.1                            |
    | headers           |                                      |
    | host_routes       |                                      |
    | id                | a394689c-f547-4834-9778-3e0bb22130dc |
@@ -141,7 +141,7 @@ parameters:
 
 -  The CIDR of the subnet.
 
-   In this example, ``192.168.2.0/24`` is a positional argument that
+   In this example, ``192.0.2.0/24`` is a positional argument that
    specifies the CIDR.
 
 -  The subnet name, which is optional.
@@ -212,7 +212,7 @@ Create ports
 
    .. code-block:: console
 
-      $ openstack port create --network net1 --fixed-ip subnet=subnet1,ip-address=192.168.2.40 port1
+      $ openstack port create --network net1 --fixed-ip subnet=subnet1,ip-address=192.0.2.40 port1
       +-----------------------+-----------------------------------------+
       | Field                 | Value                                   |
       +-----------------------+-----------------------------------------+
@@ -228,7 +228,7 @@ Create ports
       | device_id             |                                         |
       | device_owner          |                                         |
       | extra_dhcp_opts       |                                         |
-      | fixed_ips             | ip_address='192.168.2.40', subnet_id='a |
+      | fixed_ips             | ip_address='192.0.2.40', subnet_id='a   |
       |                       | 394689c-f547-4834-9778-3e0bb22130dc'    |
       | headers               |                                         |
       | id                    | 031ddba8-3e3f-4c3c-ae26-7776905eb24f    |
@@ -244,7 +244,7 @@ Create ports
       +-----------------------+-----------------------------------------+
 
    In the previous command, ``net1`` is the network name, which is a
-   positional argument. ``--fixed-ip subnet<subnet>,ip-address=192.168.2.40`` is
+   positional argument. ``--fixed-ip subnet<subnet>,ip-address=192.0.2.40`` is
    an option which specifies the port's fixed IP address we wanted.
 
    .. note::
@@ -273,7 +273,7 @@ Create ports
       | device_id             |                                         |
       | device_owner          |                                         |
       | extra_dhcp_opts       |                                         |
-      | fixed_ips             | ip_address='192.168.2.10', subnet_id='a |
+      | fixed_ips             | ip_address='192.0.2.10', subnet_id='a   |
       |                       | 394689c-f547-4834-9778-3e0bb22130dc'    |
       | headers               |                                         |
       | id                    | eac47fcd-07ac-42dd-9993-5b36ac1f201b    |
@@ -303,11 +303,11 @@ Create ports
 
    .. code-block:: console
 
-      $ neutron port-list --fixed-ips ip_address=192.168.2.2 \
-        ip_address=192.168.2.40
+      $ neutron port-list --fixed-ips ip_address=192.0.2.2 \
+        ip_address=192.0.2.40
       +----------------+------+-------------------+-------------------------------------------------+
       | id             | name | mac_address       | fixed_ips                                       |
       +----------------+------+-------------------+-------------------------------------------------+
-      | baf13412-26... |      | fa:16:3e:f6:ec:c7 | {"subnet_id"... ..."ip_address": "192.168.2.2"} |
-      | f7a08fe4-e7... |      | fa:16:3e:97:e0:fc | {"subnet_id"... ..."ip_address": "192.168.2.40"}|
+      | baf13412-26... |      | fa:16:3e:f6:ec:c7 | {"subnet_id"... ..."ip_address": "192.0.2.2"}   |
+      | f7a08fe4-e7... |      | fa:16:3e:97:e0:fc | {"subnet_id"... ..."ip_address": "192.0.2.40"}  |
       +----------------+------+-------------------+-------------------------------------------------+
