@@ -73,6 +73,12 @@ def nova_spice():
     import nova.cmd.spicehtml5proxy  # noqa
 
 
+def sahara_init():
+    from sahara.plugins import base as plugins_base
+
+    plugins_base.setup_plugins()
+
+
 def zaqar_config():
     # Zaqar registers most of its options in lazy way
     # Let's find all these options and manually register them
@@ -102,4 +108,5 @@ HOOKS = {'aodh': aodh_config,
          'keystone.common.config': keystone_config,
          'neutron': neutron_misc,
          'nova.spice': nova_spice,
+         'sahara': sahara_init,
          'zaqar': zaqar_config}
