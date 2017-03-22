@@ -51,31 +51,38 @@ Verify operation of the Compute service.
 
       $ openstack catalog list
 
-      +----------+----------+-----------------------------------------+
-      | Name     | Type     | Endpoints                               |
-      +----------+----------+-----------------------------------------+
-      | keystone | identity | RegionOne                               |
-      |          |          |   public: http://controller:5000/v3/    |
-      |          |          | RegionOne                               |
-      |          |          |   internal: http://controller:5000/v3/  |
-      |          |          | RegionOne                               |
-      |          |          |   admin: http://controller:35357/v3/    |
-      |          |          |                                         |
-      | glance   | image    | RegionOne                               |
-      |          |          |   admin: http://controller:9292         |
-      |          |          | RegionOne                               |
-      |          |          |   public: http://controller:9292        |
-      |          |          | RegionOne                               |
-      |          |          |   internal: http://controller:9292      |
-      |          |          |                                         |
-      | nova     | compute  | RegionOne                               |
-      |          |          |   admin: http://controller:8774/v2.1    |
-      |          |          | RegionOne                               |
-      |          |          |   internal: http://controller:8774/v2.1 |
-      |          |          | RegionOne                               |
-      |          |          |   public: http://controller:8774/v2.1   |
-      |          |          |                                         |
-      +----------+----------+-----------------------------------------+
+      +-----------+-----------+-----------------------------------------+
+      | Name      | Type      | Endpoints                               |
+      +-----------+-----------+-----------------------------------------+
+      | keystone  | identity  | RegionOne                               |
+      |           |           |   public: http://controller:5000/v3/    |
+      |           |           | RegionOne                               |
+      |           |           |   internal: http://controller:5000/v3/  |
+      |           |           | RegionOne                               |
+      |           |           |   admin: http://controller:35357/v3/    |
+      |           |           |                                         |
+      | glance    | image     | RegionOne                               |
+      |           |           |   admin: http://controller:9292         |
+      |           |           | RegionOne                               |
+      |           |           |   public: http://controller:9292        |
+      |           |           | RegionOne                               |
+      |           |           |   internal: http://controller:9292      |
+      |           |           |                                         |
+      | nova      | compute   | RegionOne                               |
+      |           |           |   admin: http://controller:8774/v2.1    |
+      |           |           | RegionOne                               |
+      |           |           |   internal: http://controller:8774/v2.1 |
+      |           |           | RegionOne                               |
+      |           |           |   public: http://controller:8774/v2.1   |
+      |           |           |                                         |
+      | placement | placement | RegionOne                               |
+      |           |           |   public: http://controller:8778        |
+      |           |           | RegionOne                               |
+      |           |           |   admin: http://controller:8778         |
+      |           |           | RegionOne                               |
+      |           |           |   internal: http://controller:8778      |
+      |           |           |                                         |
+      +-----------+-----------+-----------------------------------------+
 
    .. note::
 

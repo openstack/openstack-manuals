@@ -296,6 +296,27 @@ Install and configure components
 
    .. endonly
 
+
+   *  In the ``[placement]`` section, configure the Placement API:
+
+      .. path /etc/nova/nova.conf
+      .. code-block:: ini
+
+         [placement]
+         # ...
+         os_region_name = RegionOne
+         project_domain_name = Default
+         project_name = service
+         auth_type = password
+         user_domain_name = Default
+         auth_url = http://controller:35357/v3
+         username = placement
+         password = PLACEMENT_PASS
+
+      Replace ``PLACEMENT_PASS`` with the password you choose for the
+      ``placement`` user in the Identity service. Comment out any other options
+      in the ``[placement]`` section.
+
 .. only:: obs or debian
 
    3. Ensure the kernel module ``nbd`` is loaded.
@@ -411,3 +432,43 @@ Finalize installation
    the firewall on the controller node is preventing access to port 5672.
    Configure the firewall to open port 5672 on the controller node and
    restart ``nova-compute`` service on the compute node.
+
+Add the compute node to the cell database
+-----------------------------------------
+
+.. important::
+
+   Run the following commands on the **controller** node.
+
+#. Source the admin credentials to enable admin-only CLI commands, then
+   confirm there are compute hosts in the database:
+
+   .. code-block:: console
+
+      $ . admin-openrc
+
+      $ openstack hypervisor list
+      +----+---------------------+-----------------+-----------+-------+
+      | ID | Hypervisor Hostname | Hypervisor Type | Host IP   | State |
+      +----+---------------------+-----------------+-----------+-------+
+      |  1 | compute1            | QEMU            | 10.0.0.31 | up    |
+      +----+---------------------+-----------------+-----------+-------+
+
+#. Discover compute hosts:
+
+   .. code-block:: console
+
+      # su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+
+      Found 2 cell mappings.
+      Skipping cell0 since it does not contain hosts.
+      Getting compute nodes from cell 'cell1': ad5a5985-a719-4567-98d8-8d148aaae4bc
+      Found 1 computes in cell: ad5a5985-a719-4567-98d8-8d148aaae4bc
+      Checking host mapping for compute host 'compute': fe58ddc1-1d65-4f87-9456-bc040dc106b3
+      Creating host mapping for compute host 'compute': fe58ddc1-1d65-4f87-9456-bc040dc106b3
+
+   .. note::
+
+      When you add new compute nodes, you must run ``nova-manage cell_v2
+      discover_hosts`` on the controller node to register those new compute
+      nodes.

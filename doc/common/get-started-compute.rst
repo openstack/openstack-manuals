@@ -44,6 +44,10 @@ OpenStack Compute consists of the following areas and their components:
   from the queue and performs a series of system commands such as
   launching a KVM instance and updating its state in the database.
 
+``nova-placement-api`` service
+  Tracks the inventory and usage of each provider. For details, see
+  `Placement API <https://docs.openstack.org/developer/nova/placement.html>`__.
+
 ``nova-scheduler`` service
   Takes a virtual machine instance request from the queue and
   determines on which compute server host it runs.

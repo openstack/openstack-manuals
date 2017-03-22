@@ -44,6 +44,7 @@ create databases, service credentials, and API endpoints.
 
         MariaDB [(none)]> CREATE DATABASE nova_api;
         MariaDB [(none)]> CREATE DATABASE nova;
+        MariaDB [(none)]> CREATE DATABASE nova_cell0;
 
      .. end
 
@@ -55,9 +56,15 @@ create databases, service credentials, and API endpoints.
           IDENTIFIED BY 'NOVA_DBPASS';
         MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
+
         MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
           IDENTIFIED BY 'NOVA_DBPASS';
         MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+          IDENTIFIED BY 'NOVA_DBPASS';
+
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'localhost' \
+          IDENTIFIED BY 'NOVA_DBPASS';
+        MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' \
           IDENTIFIED BY 'NOVA_DBPASS';
 
      .. end
@@ -75,14 +82,13 @@ create databases, service credentials, and API endpoints.
 
    .. end
 
-#. To create the service credentials, complete these steps:
+#. Create the Compute service credentials:
 
    * Create the ``nova`` user:
 
      .. code-block:: console
 
-        $ openstack user create --domain default \
-          --password-prompt nova
+        $ openstack user create --domain default --password-prompt nova
 
         User Password:
         Repeat User Password:
@@ -130,7 +136,7 @@ create databases, service credentials, and API endpoints.
 
      .. end
 
-#. Create the Compute service API endpoints:
+#. Create the Compute API service endpoints:
 
    .. code-block:: console
 
@@ -187,6 +193,99 @@ create databases, service credentials, and API endpoints.
 
    .. end
 
+#. Create a Placement service user using your chosen ``PLACEMENT_PASS``:
+
+   .. code-block:: console
+
+      $ openstack user create --domain default --password-prompt placement
+
+      User Password:
+      Repeat User Password:
+      +---------------------+----------------------------------+
+      | Field               | Value                            |
+      +---------------------+----------------------------------+
+      | domain_id           | default                          |
+      | enabled             | True                             |
+      | id                  | fa742015a6494a949f67629884fc7ec8 |
+      | name                | placement                        |
+      | options             | {}                               |
+      | password_expires_at | None                             |
+      +---------------------+----------------------------------+
+
+#. Add the Placement user to the service project with the admin role:
+
+   .. code-block:: console
+
+      $ openstack role add --project service --user placement admin
+
+   .. note::
+
+      This command provides no output.
+
+#. Create the Placement API entry in the service catalog:
+
+   .. code-block:: console
+
+      $ openstack service create --name placement --description "Placement API" placement
+      +-------------+----------------------------------+
+      | Field       | Value                            |
+      +-------------+----------------------------------+
+      | description | Placement API                    |
+      | enabled     | True                             |
+      | id          | 2d1a27022e6e4185b86adac4444c495f |
+      | name        | placement                        |
+      | type        | placement                        |
+      +-------------+----------------------------------+
+
+#. Create the Placement API service endpoints:
+
+   .. code-block:: console
+
+      $ openstack endpoint create --region RegionOne placement public http://controller:8778
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 2b1b2637908b4137a9c2e0470487cbc0 |
+      | interface    | public                           |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 2d1a27022e6e4185b86adac4444c495f |
+      | service_name | placement                        |
+      | service_type | placement                        |
+      | url          | http://controller:8778           |
+      +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne placement internal http://controller:8778
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 02bcda9a150a4bd7993ff4879df971ab |
+      | interface    | internal                         |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 2d1a27022e6e4185b86adac4444c495f |
+      | service_name | placement                        |
+      | service_type | placement                        |
+      | url          | http://controller:8778           |
+      +--------------+----------------------------------+
+
+      $ openstack endpoint create --region RegionOne placement admin http://controller:8778
+      +--------------+----------------------------------+
+      | Field        | Value                            |
+      +--------------+----------------------------------+
+      | enabled      | True                             |
+      | id           | 3d71177b9e0f406f98cbff198d74b182 |
+      | interface    | admin                            |
+      | region       | RegionOne                        |
+      | region_id    | RegionOne                        |
+      | service_id   | 2d1a27022e6e4185b86adac4444c495f |
+      | service_name | placement                        |
+      | service_type | placement                        |
+      | url          | http://controller:8778           |
+      +--------------+----------------------------------+
+
 Install and configure components
 --------------------------------
 
@@ -200,7 +299,8 @@ Install and configure components
 
          # zypper install openstack-nova-api openstack-nova-scheduler \
            openstack-nova-conductor openstack-nova-consoleauth \
-           openstack-nova-novncproxy iptables
+           openstack-nova-novncproxy openstack-nova-placement-api \
+           iptables
 
       .. end
 
@@ -214,7 +314,7 @@ Install and configure components
 
          # yum install openstack-nova-api openstack-nova-conductor \
            openstack-nova-console openstack-nova-novncproxy \
-           openstack-nova-scheduler
+           openstack-nova-scheduler openstack-nova-placement-api
 
       .. end
 
@@ -227,7 +327,7 @@ Install and configure components
       .. code-block:: console
 
          # apt install nova-api nova-conductor nova-consoleauth \
-           nova-novncproxy nova-scheduler
+           nova-novncproxy nova-scheduler nova-placement-api
 
       .. end
 
@@ -476,20 +576,98 @@ Install and configure components
 
 .. endonly
 
-.. only:: rdo or ubuntu or debian
+*  In the ``[placement]`` section, configure the Placement API:
 
-   3. Populate the Compute databases:
+   .. path /etc/nova/nova.conf
+   .. code-block:: ini
+
+      [placement]
+      # ...
+      os_region_name = RegionOne
+      project_domain_name = Default
+      project_name = service
+      auth_type = password
+      user_domain_name = Default
+      auth_url = http://controller:35357/v3
+      username = placement
+      password = PLACEMENT_PASS
+
+   Replace ``PLACEMENT_PASS`` with the password you choose for the
+   ``placement`` user in the Identity service. Comment out any other options in
+   the ``[placement]`` section.
+
+.. only:: rdo
+
+   *  Due to a `packaging bug
+      <https://bugzilla.redhat.com/show_bug.cgi?id=1430540>`_, you must enable
+      access to the Placement API by adding the following configuration to
+      ``/etc/httpd/conf.d/00-nova-placement-api.conf``:
+
+      .. path /etc/httpd/conf.d/00-nova-placement-api.conf
+      .. code-block:: ini
+
+         <Directory /usr/bin>
+            <IfVersion >= 2.4>
+               Require all granted
+            </IfVersion>
+            <IfVersion < 2.4>
+               Order allow,deny
+               Allow from all
+            </IfVersion>
+         </Directory>
+
+.. endonly
+
+.. only:: rdo or ubuntu or debian or obs
+
+   3. Populate the nova-api database:
 
       .. code-block:: console
 
          # su -s /bin/sh -c "nova-manage api_db sync" nova
-         # su -s /bin/sh -c "nova-manage db sync" nova
 
       .. end
 
       .. note::
 
          Ignore any deprecation messages in this output.
+
+   4. Register the ``cell0`` database:
+
+      .. code-block:: console
+
+         # su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
+
+      .. end
+
+   5. Create the ``cell1`` cell:
+
+      .. code-block:: console
+
+         # su -s /bin/sh -c "nova-manage cell_v2 create_cell --name=cell1 --verbose" nova
+         109e1d4b-536a-40d0-83c6-5f121b82b650
+
+      .. end
+
+   6. Populate the nova database:
+
+      .. code-block:: console
+
+         # su -s /bin/sh -c "nova-manage db sync" nova
+
+   7. Verify nova cell0 and cell1 are registered correctly:
+
+      .. code-block:: console
+
+         # nova-manage cell_v2 list_cells
+         +-------+--------------------------------------+
+         | Name  | UUID                                 |
+         +-------+--------------------------------------+
+         | cell1 | 109e1d4b-536a-40d0-83c6-5f121b82b650 |
+         | cell0 | 00000000-0000-0000-0000-000000000000 |
+         +-------+--------------------------------------+
+
+      .. end
 
 .. endonly
 
