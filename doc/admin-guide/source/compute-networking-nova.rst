@@ -10,6 +10,13 @@ OpenStack Networking service (neutron). This section contains a brief
 overview of ``nova-network``. For more information about OpenStack
 Networking, see :ref:`networking`.
 
+.. note::
+
+   ``nova-network`` was deprecated in the OpenStack Newton release.
+   In Ocata and future releases, you can start ``nova-network`` only with
+   a cells v1 configuration. This is not a recommended configuration for
+   deployment.
+
 Networking concepts
 ~~~~~~~~~~~~~~~~~~~
 
