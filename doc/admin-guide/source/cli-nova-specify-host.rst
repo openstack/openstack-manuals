@@ -22,7 +22,7 @@ on this host.
    .. note::
       HOST and NODE are optional parameters. In such cases,
       use the ``--availability-zone ZONE::NODE``,
-      ``--availability-zone ZONE::HOST`` or
+      ``--availability-zone ZONE:HOST`` or
       ``--availability-zone ZONE``.
 
 
