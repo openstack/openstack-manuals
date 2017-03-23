@@ -8,6 +8,17 @@ deployment guide, based on a standard template, in their own repository.
 These guides are then centrally published to
 `Deployment Guides <https://docs.openstack.org/project-deploy-guide/newton/>`_.
 
+.. note::
+
+   This set up is designed for deployment projects to make their
+   installation information public. This does not include further
+   content for end users. For example, configuration content,
+   troubleshooting, or administration procedures.
+
+   If you would like to refer users to more content, use
+   cross reference links to your developer documentation
+   within the guide.
+
 Setting up
 ~~~~~~~~~~
 
