@@ -45,7 +45,7 @@ Appendix
    policy-yaml-file.rst
    policy-json-file.rst
 
-Search in this guide
-~~~~~~~~~~~~~~~~~~~~
+Search
+~~~~~~
 
 * :ref:`search`

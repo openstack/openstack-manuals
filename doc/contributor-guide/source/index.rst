@@ -47,7 +47,7 @@ Glossary
 
    common/glossary.rst
 
-Search in this guide
-~~~~~~~~~~~~~~~~~~~~
+Search
+~~~~~~
 
 * :ref:`search`

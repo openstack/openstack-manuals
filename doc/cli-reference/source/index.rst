@@ -59,7 +59,7 @@ Contents
    gnocchi
    mistral
 
-Search in this guide
-~~~~~~~~~~~~~~~~~~~~
+Search
+~~~~~~
 
 * :ref:`search`

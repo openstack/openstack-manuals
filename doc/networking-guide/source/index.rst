@@ -45,7 +45,7 @@ Glossary
 
    common/glossary
 
-Search in this guide
-~~~~~~~~~~~~~~~~~~~~
+Search
+~~~~~~
 
 * :ref:`search`
