@@ -48,7 +48,7 @@ Host networking
    distribution, see the `SLES 12
    <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
    or `openSUSE
-   <http://activedoc.opensuse.org/book/opensuse-reference/chapter-13-basic-networking>`__
+   <https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.basicnet.html>`__
    documentation.
 
 .. endonly

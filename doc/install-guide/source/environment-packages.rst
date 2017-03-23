@@ -159,7 +159,7 @@ these procedures on all nodes.
    The Newton release is available directly through the official
    Debian backports repository. To use this repository, follow
    the instruction from the official
-   `Debian website <http://backports.debian.org/Instructions/>`_,
+   `Debian website <https://backports.debian.org/Instructions/>`_,
    which basically suggest doing the following steps:
 
    #. On all nodes, adding the Debian 8 (Jessie) backport repository to

@@ -8,7 +8,7 @@ database server and message broker support password security.
 To ease the installation process, this guide only covers password
 security where applicable. You can create secure passwords manually,
 generate them using a tool such as
-`pwgen <http://sourceforge.net/projects/pwgen/>`_, or by running the
+`pwgen <https://sourceforge.net/projects/pwgen/>`_, or by running the
 following command:
 
 .. code-block:: console
