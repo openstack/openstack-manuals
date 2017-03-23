@@ -367,6 +367,12 @@ Install and configure components
 
          Ignore any deprecation messages in this output.
 
+      .. note::
+
+         Change owner and group to glance if image directory is not default.
+         ``chown -R glance:glance /your/glance/image/dir/``
+
+
 .. endonly
 
 Finalize installation
