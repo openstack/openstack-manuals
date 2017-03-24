@@ -522,21 +522,6 @@ projects have a "default" security group, which is applied to instances
 that have no other security group defined. Unless changed, this security
 group denies all incoming traffic.
 
-General Security Groups Configuration
--------------------------------------
-
-The ``nova.conf`` option ``allow_same_net_traffic`` (which defaults to
-``true``) globally controls whether the rules apply to hosts that share
-a network. When set to ``true``, hosts on the same subnet are not
-filtered and are allowed to pass all types of traffic between them. On a
-flat network, this allows all instances from all projects unfiltered
-communication. With VLAN networking, this allows access between
-instances within the same project. If ``allow_same_net_traffic`` is set
-to ``false``, security groups are enforced for all connections. In this
-case, it is possible for projects to simulate ``allow_same_net_traffic``
-by configuring their default security group to allow all traffic from
-their subnet.
-
 .. tip::
 
    As noted in the previous chapter, the number of rules per security
