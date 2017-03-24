@@ -58,7 +58,7 @@ master_doc = 'index'
 project = u'Contributor Guide'
 bug_tag = u'contributor-guide'
 
-copyright = u'2015-2016, OpenStack contributors'
+copyright = u'2015-2017, OpenStack contributors'
 
 
 # The version info for the project you're documenting, acts as replacement for

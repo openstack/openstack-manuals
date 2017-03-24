@@ -57,7 +57,7 @@ master_doc = 'index'
 project = u'Common documents'
 bug_tag = u'common'
 
-copyright = u'2015-2016, OpenStack contributors'
+copyright = u'2015-2017, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
