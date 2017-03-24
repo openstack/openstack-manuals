@@ -14,12 +14,6 @@ covers topics that relate to managing users, projects, and quotas. This
 chapter describes users and projects as described by version 2 of the
 OpenStack Identity API.
 
-.. warning::
-
-   While version 3 of the Identity API is available, the client tools
-   do not yet implement those calls, and most OpenStack clouds are
-   still implementing Identity API v2.0.
-
 Projects or Tenants?
 ~~~~~~~~~~~~~~~~~~~~
 
