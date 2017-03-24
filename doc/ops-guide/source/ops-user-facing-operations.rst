@@ -42,15 +42,6 @@ large Windows images). To view these options, run:
 
    $ openstack help image create
 
-The ``location`` option is important to note. It does not copy the
-entire image into the Image service, but references an original location
-where the image can be found. Upon launching an instance of that image,
-the Image service accesses the image from the location specified.
-
-The ``copy-from`` option copies the image from the location specified
-into the ``/var/lib/glance/images`` directory. The same thing is done
-when using the STDIN redirection with <, as shown in the example.
-
 Run the following command to view the properties of existing images:
 
 .. code-block:: console
