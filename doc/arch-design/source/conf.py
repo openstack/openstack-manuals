@@ -234,7 +234,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'ArchGuideRst.tex', u'Architecture Design Guide',
+    ('index', 'ArchGuide.tex', u'Architecture Design Guide',
      u'OpenStack contributors', 'manual'),
 ]
 
@@ -264,7 +264,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ArchDesignRst', u'Architecture Design Guide',
+    ('index', 'ArchDesign', u'Architecture Design Guide',
      [u'OpenStack contributors'], 1)
 ]
 
@@ -278,8 +278,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'ArchDesignRst', u'Architecture Design Guide',
-     u'OpenStack contributors', 'ArchDesignRst',
+    ('index', 'ArchDesign', u'Architecture Design Guide',
+     u'OpenStack contributors', 'ArchDesign',
      'To reap the benefits of OpenStack, you should plan, design,'
      'and architect your cloud properly, taking user needs into'
      'account and understanding the use cases.'
@@ -300,3 +300,10 @@ texinfo_documents = [
 
 # -- Options for Internationalization output ------------------------------
 locale_dirs = ['locale/']
+
+# -- Options for PDF output --------------------------------------------------
+
+pdf_documents = [
+    ('index', u'ArchDesignGuide', u'Architecture Design Guide',
+     u'OpenStack contributors')
+]

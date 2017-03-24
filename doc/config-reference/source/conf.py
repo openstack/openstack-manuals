@@ -240,7 +240,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'ConfigRefRst.tex', u'Configuration Reference',
+    ('index', 'ConfigRef.tex', u'Configuration Reference',
      u'OpenStack contributors', 'manual'),
 ]
 
@@ -270,7 +270,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ConfigRefRst', u'Configuration Reference',
+    ('index', 'ConfigRef', u'Configuration Reference',
      [u'OpenStack contributors'], 1)
 ]
 
@@ -284,8 +284,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'ConfigRefRst', u'Configuration Reference',
-     u'OpenStack contributors', 'ConfigRefRst',
+    ('index', 'ConfigRef', u'Configuration Reference',
+     u'OpenStack contributors', 'ConfigRef',
      'This document is for system administrators who want to look up'
      'configuration options. It contains lists of configuration options'
      'available with OpenStack and uses auto-generation to generate options'

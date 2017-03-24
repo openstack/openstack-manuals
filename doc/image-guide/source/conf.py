@@ -235,7 +235,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'ImageGuideRst.tex', u'Virtual Machine Image Guide',
+    ('index', 'ImageGuide.tex', u'Virtual Machine Image Guide',
      u'OpenStack contributors', 'manual'),
 ]
 
@@ -265,7 +265,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ImageGuideRst', u'Virtual Machine Image Guide',
+    ('index', 'ImageGuide', u'Virtual Machine Image Guide',
      [u'OpenStack contributors'], 1)
 ]
 
@@ -279,8 +279,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'ImageGuideRst', u'Virtual Machine Image Guide',
-     u'OpenStack contributors', 'ImageGuideRst',
+    ('index', 'ImageGuide', u'Virtual Machine Image Guide',
+     u'OpenStack contributors', 'ImageGuide',
      'This document is for system administrators who want to look up'
      'how to create a virtual machine image.', 'Miscellaneous'),
 ]
@@ -299,3 +299,10 @@ texinfo_documents = [
 
 # -- Options for Internationalization output ------------------------------
 locale_dirs = ['locale/']
+
+# -- Options for PDF output --------------------------------------------------
+
+pdf_documents = [
+    ('index', u'ImageGuide', u'Virtual Machine Image Guide',
+     u'OpenStack contributors')
+]
