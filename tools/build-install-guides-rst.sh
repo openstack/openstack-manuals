@@ -50,7 +50,7 @@ fi
 MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
 
 for tag in $TAGS; do
-    TARGET="draft/install-guide-${tag}"
+    TARGET="ocata/install-guide-${tag}"
     if [[ "$tag" == "debconf" ]]; then
         # Build the guide with debconf
         # To use debian only contents, use "debian" tag.

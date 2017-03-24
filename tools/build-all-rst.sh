@@ -31,28 +31,28 @@ PDF_TARGETS=( 'arch-design'\
               'ha-guide' 'image-guide' 'networking-guide'\
               'ops-guide' 'user-guide' )
 
-# Note that these guides are only build for master branch
-for guide in admin-guide arch-design cli-reference contributor-guide \
-    ha-guide ha-guide-draft image-guide ops-guide user-guide; do
-    if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
-        tools/build-rst.sh doc/$guide --build build \
-            --target $guide $LINKCHECK $PDF_OPTION
-    else
-        tools/build-rst.sh doc/$guide --build build \
-            --target $guide $LINKCHECK
-    fi
-done
+# Note that these guides are only build for master branch, donot build for stable/ocata
+#for guide in admin-guide arch-design cli-reference contributor-guide \
+#    ha-guide ha-guide-draft image-guide ops-guide user-guide; do
+#    if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
+#        tools/build-rst.sh doc/$guide --build build \
+#            --target $guide $LINKCHECK $PDF_OPTION
+#    else
+#        tools/build-rst.sh doc/$guide --build build \
+#            --target $guide $LINKCHECK
+#    fi
+# done
 
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
-for guide in ha-guide-draft networking-guide config-reference; do
+for guide in networking-guide config-reference; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
-            --target "draft/$guide" $LINKCHECK $PDF_OPTION
+            --target "ocata/$guide" $LINKCHECK $PDF_OPTION
     else
         tools/build-rst.sh doc/$guide --build build \
-            --target "draft/$guide" $LINKCHECK
+            --target "ocata/$guide" $LINKCHECK
     fi
     # For stable branches, we need to mark the specific guides.
     if [ "$ZUUL_REFNAME" != "master" ] ; then

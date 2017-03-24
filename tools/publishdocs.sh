@@ -51,27 +51,28 @@ tools/build-all-rst.sh --pdf
 
 # Build the www pages so that openstack-indexpage creates a link to
 # www/www-index.html.
-if [ "$PUBLISH" = "build" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs/www/
-    rsync -a www/static/ publish-docs/www/
-    # publish-docs/www-index.html is the trigger for openstack-indexpage
-    # to include the file.
-    mv publish-docs/www/www-index.html publish-docs/www-index.html
-fi
-if [ "$PUBLISH" = "publish" ] ; then
-    python tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs
-    rsync -a www/static/ publish-docs/
-    # Don't publish this file
-    rm publish-docs/www-index.html
-fi
+# Disabled for stable/ocata
+# if [ "$PUBLISH" = "build" ] ; then
+#    python tools/www-generator.py --source-directory www/ \
+#        --output-directory publish-docs/www/
+#    rsync -a www/static/ publish-docs/www/
+#    # publish-docs/www-index.html is the trigger for openstack-indexpage
+#    # to include the file.
+#    mv publish-docs/www/www-index.html publish-docs/www-index.html
+# fi
+# if [ "$PUBLISH" = "publish" ] ; then
+#    python tools/www-generator.py --source-directory www/ \
+#        --output-directory publish-docs
+#    rsync -a www/static/ publish-docs/
+#    # Don't publish this file
+#    rm publish-docs/www-index.html
+# fi
 
-# For publishing to both /draft and /BRANCH
-if [ "$PUBLISH" = "publish" ] ; then
-    # For publishing to both /draft and /BRANCH
-    copy_to_branch ocata
-fi
+# # For publishing to both /draft and /BRANCH
+# if [ "$PUBLISH" = "publish" ] ; then
+#    # For publishing to both /draft and /BRANCH
+#    copy_to_branch ocata
+# fi
 
 if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
