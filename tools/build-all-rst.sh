@@ -56,7 +56,7 @@ for guide in networking-guide config-reference; do
     fi
     # For stable branches, we need to mark the specific guides.
     if [ "$ZUUL_REFNAME" != "master" ] ; then
-        echo $MARKER_TEXT > publish-docs/draft/$guide/.root-marker
+        echo $MARKER_TEXT > publish-docs/ocata/$guide/.root-marker
     fi
 done
 
