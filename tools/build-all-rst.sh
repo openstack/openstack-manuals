@@ -33,7 +33,7 @@ PDF_TARGETS=( 'arch-design'\
 
 # Note that these guides are only build for master branch
 for guide in admin-guide arch-design cli-reference contributor-guide \
-    ha-guide ha-guide-draft image-guide ops-guide user-guide; do
+    ha-guide image-guide ops-guide user-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target $guide $LINKCHECK $PDF_OPTION
