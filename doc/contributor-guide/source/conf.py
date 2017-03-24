@@ -66,9 +66,9 @@ copyright = u'2015-2017, OpenStack contributors'
 # built documents.
 #
 # The short X.Y version.
-version = '1.0.0'
+version = '15.0'
 # The full version, including alpha/beta/rc tags.
-release = '1.0.0'
+release = '15.0.0'
 
 # A few variables have to be set for the log-a-bug feature.
 #   giturl: The location of conf.py on Git. Must be set manually.
