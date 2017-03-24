@@ -328,4 +328,4 @@ pdf_documents = [
 sphinxmark_enable = True
 sphinxmark_div = 'docs-body'
 sphinxmark_image = 'text'
-sphinxmark_text = 'Ocata'
+sphinxmark_text = 'Pike'
