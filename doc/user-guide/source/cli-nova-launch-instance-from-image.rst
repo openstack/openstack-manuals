@@ -67,7 +67,7 @@ Follow the steps below to launch an instance from an image.
       | flavor                               | m1.tiny                                       |
       | hostId                               |                                               |
       | id                                   | 89015cc9-bdf1-458a-8518-fdca2b4a5785          |
-      | image                                | cirros (9fef3b2d-c35d-4b61-bea8-09cc6dc41829) |
+      | image                                | cirros (397e713c-b95b-4186-ad46-6126863ea0a9) |
       | key_name                             | KeyPair01                                     |
       | name                                 | myCirrosServer                                |
       | os-extended-volumes:volumes_attached | []                                            |
