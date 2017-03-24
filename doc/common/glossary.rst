@@ -1681,9 +1681,8 @@ H
 
    HAProxy
 
-      Provides a high availability load balancer and proxy server for
-      TCP and HTTP-based applications that spreads requests across
-      multiple servers.
+      Provides a load balancer for TCP and HTTP-based applications that
+      spreads requests across multiple servers.
 
    hard reboot
 
@@ -2253,7 +2252,7 @@ L
 
    Load-balancing service (octavia)
 
-      The project that aims to rovide scalable, on demand, self service
+      The project that aims to provide scalable, on demand, self service
       access to load-balancer services, in technology-agnostic manner.
 
    Logical Volume Manager (LVM)
