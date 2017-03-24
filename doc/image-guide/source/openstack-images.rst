@@ -358,6 +358,7 @@ For information about the libvirt images in OpenStack, see
 `The life of an OpenStack libvirt image from Pádraig Brady
 <http://www.pixelbeat.org/docs/openstack_libvirt_images/>`_.
 
+.. tabularcolumns:: |l|p{0.4\textwidth}|
 .. list-table:: Image cache management configuration options
    :widths: 50 50
    :header-rows: 1

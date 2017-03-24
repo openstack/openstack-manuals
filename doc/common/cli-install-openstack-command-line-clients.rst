@@ -16,7 +16,9 @@ If you need to install the source package for the command-line package,
 the following table lists the software needed to run the
 command-line clients, and provides installation instructions as needed.
 
+.. tabularcolumns:: |p{0.2\textwidth}|p{0.75\textwidth}|
 .. list-table:: OpenStack command-line clients prerequisites
+   :class: longtable
    :header-rows: 1
    :widths: 20 80
 

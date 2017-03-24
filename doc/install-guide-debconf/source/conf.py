@@ -221,27 +221,31 @@ htmlhelp_basename = 'install-guide'
 html_copy_source = False
 
 # -- Options for LaTeX output ---------------------------------------------
+pdf_theme_path = openstackdocstheme.get_pdf_theme_path()
+openstack_logo = openstackdocstheme.get_openstack_logo_path()
+
+latex_custom_template = r"""
+\newcommand{\openstacklogo}{%s}
+\usepackage{%s}
+""" % (openstack_logo, pdf_theme_path)
 
 latex_engine = 'xelatex'
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    # 'papersize': 'letterpaper',
-
-    # set font (TODO: different fonts for translated PDF document builds)
-    'fontenc': '\\usepackage{fontspec}',
-    'fontpkg': '''\
-\defaultfontfeatures{Scale=MatchLowercase}
-\setmainfont{Liberation Serif}
-\setsansfont{Liberation Sans}
-\setmonofont[SmallCapsFont={Liberation Mono}]{Liberation Mono}
-''',
+    'papersize': 'a4paper',
 
     # The font size ('10pt', '11pt' or '12pt').
-    # 'pointsize': '10pt',
+    'pointsize': '11pt',
+
+    #Default figure align
+    'figure_align': 'H',
+
+    # Not to generate blank page after chapter
+    'classoptions': ',openany',
 
     # Additional stuff for the LaTeX preamble.
-    # 'preamble': '',
+    'preamble': latex_custom_template,
 }
 
 # Grouping the document tree into LaTeX files. List of tuples

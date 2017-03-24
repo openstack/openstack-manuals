@@ -7,6 +7,7 @@ You can boot instances from a volume instead of an image.
 To complete these tasks, use these parameters on the
 :command:`openstack server create` command:
 
+.. tabularcolumns:: |p{0.3\textwidth}|p{0.25\textwidth}|p{0.4\textwidth}|
 .. list-table::
    :header-rows: 1
    :widths: 30 15 30

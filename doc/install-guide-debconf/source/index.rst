@@ -62,7 +62,9 @@ Glossary
 
    common/glossary.rst
 
-Search
-~~~~~~
+.. only:: html
 
-* :ref:`search`
+   Search
+   ~~~~~~
+
+   * :ref:`search`
