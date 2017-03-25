@@ -26,12 +26,6 @@ To complete these tasks, use these parameters on the
    * - Boot from an existing source image, volume, or snapshot.
      - ``--block-device``
      - :ref:`Create_volume_from_image_and_boot_instance`
-   * - Attach a swap disk to an instance.
-     - ``--swap``
-     - :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`
-   * - Attach an ephemeral disk to an instance.
-     - ``--ephemeral``
-     - :ref:`Attach_swap_or_ephemeral_disk_to_an_instance`
 
 .. note::
 
@@ -317,18 +311,26 @@ the volume to boot an instance.
 Attach swap or ephemeral disk to an instance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``nova boot`` ``--swap`` parameter to attach a swap disk on boot
-or the ``nova boot`` ``--ephemeral`` parameter to attach an ephemeral
-disk on boot. When you terminate the instance, both disks are deleted.
+To attach swap or ephemeral disk to an instance, you need create new
+flavor first. This procedure shows you how to boot an instance with
+a 512 MB swap disk and 2 GB ephemeral disk.
 
-Boot an instance with a 512 MB swap disk and 2 GB ephemeral disk.
+#. Create a new flavor.
 
-.. code-block:: console
+   .. code-block:: console
 
-   $ nova boot --flavor FLAVOR --image IMAGE_ID --swap 512 \
-     --ephemeral size=2 NAME
+      $ openstack flavor create --vcpus 1 --ram 64 --disk 1 \
+        --swap 512 --ephemeral 2 my_flavor
 
 .. note::
 
    The flavor defines the maximum swap and ephemeral disk size. You
    cannot exceed these maximum values.
+
+#. Create a server with 512 MB swap disk and 2 GB ephemeral disk.
+
+   .. code-block:: console
+
+      $ openstack server create --image IMAGE_ID --flavor \
+        my_flavor NAME
+
