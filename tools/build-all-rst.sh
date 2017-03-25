@@ -47,17 +47,20 @@ done
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
 for guide in ha-guide-draft networking-guide config-reference; do
+    TARGET="draft/$guide"
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
-            --target "draft/$guide" $LINKCHECK $PDF_OPTION
+            --target "$TARGET" $LINKCHECK $PDF_OPTION
     else
         tools/build-rst.sh doc/$guide --build build \
-            --target "draft/$guide" $LINKCHECK
+            --target "$TARGET" $LINKCHECK
     fi
     # For stable branches, we need to mark the specific guides.
-    if [ "$ZUUL_REFNAME" != "master" ] ; then
-        echo $MARKER_TEXT > publish-docs/draft/$guide/.root-marker
-    fi
+    # TODO(jaegerandi): Enable for stable branches after branch is
+    # created:
+    #if [ "$ZUUL_REFNAME" != "master" ] ; then
+    #    echo $MARKER_TEXT > publish-docs/draft/$TARGET/.root-marker
+    #fi
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK $PDF_OPTION

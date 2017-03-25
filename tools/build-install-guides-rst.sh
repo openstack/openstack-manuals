@@ -71,7 +71,9 @@ for tag in $TAGS; do
             --tag ${tag} --target "$TARGET" $LINKCHECK $PDF_OPTION
     fi
     # Add this for stable branches
-    if [ "$ZUUL_REFNAME" != "master" ] ; then
-        echo $MARKER_TEXT > publish-docs/$TARGET/.root-marker
-    fi
+    # TODO(jaegerandi): Enable for stable branches after branch is
+    # created:
+    # if [ "$ZUUL_REFNAME" != "master" ] ; then
+    #    echo $MARKER_TEXT > publish-docs/$TARGET/.root-marker
+    # fi
 done
