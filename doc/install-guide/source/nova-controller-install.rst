@@ -38,7 +38,7 @@ create databases, service credentials, and API endpoints.
 
    .. endonly
 
-   * Create the ``nova_api`` and ``nova`` databases:
+   * Create the ``nova_api``, ``nova``, and ``nova_cell0`` databases:
 
      .. code-block:: console
 
