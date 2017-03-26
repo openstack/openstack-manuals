@@ -322,10 +322,10 @@ a 512 MB swap disk and 2 GB ephemeral disk.
       $ openstack flavor create --vcpus 1 --ram 64 --disk 1 \
         --swap 512 --ephemeral 2 my_flavor
 
-.. note::
+   .. note::
 
-   The flavor defines the maximum swap and ephemeral disk size. You
-   cannot exceed these maximum values.
+      The flavor defines the maximum swap and ephemeral disk size. You
+      cannot exceed these maximum values.
 
 #. Create a server with 512 MB swap disk and 2 GB ephemeral disk.
 
