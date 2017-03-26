@@ -50,7 +50,7 @@ confident that those services are in working condition:
 .. code-block:: console
 
    # . openrc
-   # glance index
+   # openstack image list
    # openstack server list
    # openstack project list
 
