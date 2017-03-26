@@ -17,21 +17,23 @@ the database. These tricks are discussed throughout this book.
 Database Connectivity
 ~~~~~~~~~~~~~~~~~~~~~
 
-Review the component's configuration file to see how each OpenStack
-component accesses its corresponding database. Look for either
-``sql_connection`` or simply ``connection``. The following command uses
-``grep`` to display the SQL connection string for nova, glance, cinder,
-and keystone:
+Review the component's configuration file to see how each OpenStack component
+accesses its corresponding database. Look for a ``connection`` option. The
+following command uses ``grep`` to display the SQL connection string for nova,
+glance, cinder, and keystone:
 
 .. code-block:: console
 
-   # grep -hE "connection ?=" /etc/nova/nova.conf /etc/glance/glance-*.conf \
-     /etc/cinder/cinder.conf /etc/keystone/keystone.conf
-   sql_connection = mysql+pymysql://nova:nova@cloud.alberta.sandbox.cybera.ca/nova
-   sql_connection = mysql+pymysql://glance:password@cloud.example.com/glance
-   sql_connection = mysql+pymysql://glance:password@cloud.example.com/glance
-   sql_connection = mysql+pymysql://cinder:password@cloud.example.com/cinder
-       connection = mysql+pymysql://keystone_admin:password@cloud.example.com/keystone
+   # grep -hE "connection ?=" \
+     /etc/nova/nova.conf /etc/glance/glance-*.conf \
+     /etc/cinder/cinder.conf /etc/keystone/keystone.conf \
+     /etc/neutron/neutron.conf
+   connection = mysql+pymysql://nova:password@cloud.example.com/nova
+   connection = mysql+pymysql://glance:password@cloud.example.com/glance
+   connection = mysql+pymysql://glance:password@cloud.example.com/glance
+   connection = mysql+pymysql://cinder:password@cloud.example.com/cinder
+   connection = mysql+pymysql://keystone:password@cloud.example.com/keystone
+   connection = mysql+pymysql://neutron:password@cloud.example.com/neutron
 
 The connection strings take this format:
 
