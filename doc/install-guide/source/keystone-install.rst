@@ -336,12 +336,11 @@ Finalize the installation
 
 .. only:: ubuntu
 
-   #. Restart the Apache service and remove the default SQLite database:
+   #. Restart the Apache service:
 
       .. code-block:: console
 
          # service apache2 restart
-         # rm -f /var/lib/keystone/keystone.db
 
       .. end
 
