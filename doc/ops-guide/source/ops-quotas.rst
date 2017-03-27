@@ -113,7 +113,7 @@ tenant. See :ref:`table_compute_quota`.
      - Megabytes of instance RAM allowed per project.
      - ``ram``
    * - Security group rules
-     - Number of rules per security group.
+     - Number of security group rules per project.
      - ``security-group-rules``
    * - Security groups
      - Number of security groups per project.
