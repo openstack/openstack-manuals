@@ -75,7 +75,7 @@ and resolve the issue:
 #. Attempt to boot a nova instance in the affected environment.
 #. If you cannot launch an instance, continue to troubleshoot the issue.
 #. Log in to each of the controller nodes for the affected environment, and
-   check the :file:`/var/log/rabbitmq` log files for any reported issues.
+   check the ``/var/log/rabbitmq`` log files for any reported issues.
 #. Look for connection issues identified in the log files.
 #. For each controller node in your environment, view the ``/etc/init.d``
    directory to check it contains nova*, cinder*, neutron*, or
@@ -89,7 +89,7 @@ and resolve the issue:
    OpenStack services.
 #. Open OpenStack Dashboard and launch an instance. If the instance launches,
    the issue is resolved.
-#. If you cannot launch an instance, check the :file:`/var/log/rabbitmq` log
+#. If you cannot launch an instance, check the ``/var/log/rabbitmq`` log
    files for reported connection issues.
 #. Restart the RabbitMQ service on all of the controller nodes:
 
@@ -122,7 +122,7 @@ To address this issue:
 
       # rabbitmqctl status
 
-#. Edit the file:`/etc/rabbitmq/rabbitmq.config` configuration file, and change
+#. Edit the ``/etc/rabbitmq/rabbitmq.config`` configuration file, and change
    the ``collect_statistics_interval`` parameter between 30000-60000
    milliseconds. Alternatively you can turn off statistics collection by
    setting ``collect_statistics`` parameter to "none".
@@ -145,4 +145,4 @@ limits:
          {sockets_used,133}]},"
 
 Adjust the appropriate limits in the
-:file:`/etc/security/limits.conf` configuration file.
+``/etc/security/limits.conf`` configuration file.
