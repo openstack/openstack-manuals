@@ -1,6 +1,6 @@
-=====================
-Operator requirements
-=====================
+========================
+Operational requirements
+========================
 
 This section describes operational factors affecting the design of an
 OpenStack cloud.
@@ -134,9 +134,9 @@ third parties involved.
 Support and maintenance
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-An operations staff supports, manages, and maintains an OpenStack
-environment. Their skills may be specialised or varied depending
-on the size and purpose of the installation.
+An operations staff supports, manages, and maintains an OpenStack environment.
+Their skills may be specialized or varied depending on the size and purpose of
+the installation.
 
 The maintenance function of an operator should be taken into consideration:
 
@@ -156,8 +156,7 @@ Reliability and availability
 
 For more information on
 managing and maintaining your OpenStack environment, see the
-`Operations chapter <https://docs.openstack.org/ops-guide/operations.html>`_
-in the OpenStack Operations Guide.
+`OpenStack Operations Guide <https://docs.openstack.org/ops-guide/index.html>`_.
 
 Logging and monitoring
 ----------------------
@@ -177,8 +176,8 @@ Specific meters that are critically important to capture include:
 * Response time to the Compute API
 
 Logging and monitoring does not significantly differ for a multi-site OpenStack
-cloud. The tools described in the `Logging and monitoring chapter
-<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__ of
+cloud. The tools described in the `Logging and monitoring
+<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__ in
 the Operations Guide remain applicable. Logging and monitoring can be provided
 on a per-site basis, and in a common centralized location.
 
@@ -258,22 +257,3 @@ prepare for situations where it may not be possible to make changes.
 Additionally, cloud providers may differ on how infrastructure must be managed
 and exposed. This can lead to delays in root cause analysis where a provider
 insists the blame lies with the other provider.
-
-Quota management
-~~~~~~~~~~~~~~~~
-
-Quotas are used to set operational limits to prevent system capacities
-from being exhausted without notification. For more
-information on managing quotas refer to the `Managing projects and users
-chapter <https://docs.openstack.org/ops-guide/ops-projects-users.html>`__
-of the OpenStack Operations Guide.
-
-Policy management
-~~~~~~~~~~~~~~~~~
-
-OpenStack provides a default set of Role Based Access Control (RBAC)
-policies, defined in a ``policy.json`` file, for each service. If consistent
-RBAC policies across sites is a requirement, ensure proper synchronization of
-the ``policy.json`` files to all installations using system administration
-tools such as rsync.
-

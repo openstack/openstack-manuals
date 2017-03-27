@@ -1,9 +1,9 @@
-=====================
-Customer requirements
-=====================
+=======================
+Enterprise requirements
+=======================
 
 The following sections describe business, usage, and performance
-considerations for customers which will impact cloud design.
+considerations for customers which will impact cloud architecture design.
 
 Cost
 ~~~~
@@ -23,6 +23,8 @@ need for more sophisticated orchestration and brokerage tools than in other
 architectures. However, overall operational costs might be lower by virtue of
 using a cloud brokerage tool to deploy the workloads to the most cost effective
 platform.
+
+.. TODO Replace examples with the proposed example use cases in this guide.
 
 Consider the following costs categories when designing a cloud:
 
@@ -45,11 +47,8 @@ capital expenditure (CapEx) at all layers of the stack. Operators of massively
 scalable OpenStack clouds require the use of dependable commodity hardware and
 freely available open source software components to reduce deployment costs and
 operational expenses. Initiatives like Open Compute (more information available
-in the `Open Compute Project <http://www.opencompute.org>`_)
-provide additional information and pointers.
-Factors to consider include power, cooling, and the physical design of the
-chassis. Through customization, it is possible to optimize your hardware and
-systems for specific types of workloads when working at scale.
+in the `Open Compute Project <http://www.opencompute.org>`_) provide additional
+information.
 
 Time-to-market
 ~~~~~~~~~~~~~~
@@ -80,9 +79,7 @@ Capacity planning and scalability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Capacity and the placement of workloads are key design considerations
-for clouds. One of the primary reasons many organizations use a hybrid cloud
-is to increase capacity without making large capital investments.
-The long-term capacity plan for these designs must
+for clouds. A long-term capacity plan for these designs must
 incorporate growth over time to prevent permanent consumption of more
 expensive external clouds. To avoid this scenario, account for future
 applications' capacity requirements and plan growth appropriately.
@@ -104,6 +101,10 @@ However, some hosts take oversubscription to extremes and,
 as a result, performance can be inconsistent.
 If at all possible, determine what the oversubscription rates
 of each host are and plan capacity accordingly.
+
+.. TODO Considerations when building your cloud, racks, CPUs, compute node
+   density. For ongoing capacity planning refer to the Ops Guide.
+
 
 Performance
 ~~~~~~~~~~~
@@ -288,7 +289,6 @@ data centers. Considerations include:
 - environmental considerations
 - power usage and power usage efficiency (PUE)
 - physical security
-
 
 Auditing
 ~~~~~~~~

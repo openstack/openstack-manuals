@@ -39,6 +39,9 @@ Contents
    acknowledgements.rst
    preface.rst
    common/conventions.rst
+   ops-deployment-factors.rst
+   ops-planning.rst
+   ops-capacity-planning-scaling.rst
    ops-lay-of-the-land.rst
    ops-projects-users.rst
    ops-user-facing-operations.rst
@@ -49,30 +52,4 @@ Contents
    ops-customize.rst
    ops-advanced-configuration.rst
    ops-upgrades.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   app-usecases.rst
-   app-crypt.rst
-   app-roadmaps.rst
-   app-resources.rst
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-.. only:: html
-
-   Search
-   ~~~~~~
-
-   * :ref:`search`
+   appendix.rst

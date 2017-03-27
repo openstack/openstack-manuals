@@ -4,9 +4,9 @@
 Capacity planning and scaling
 =============================
 
-Whereas traditional applications required larger hardware to scale
-(vertical scaling), cloud-based applications typically request more,
-discrete hardware (horizontal scaling).
+Cloud-based applications typically request more discrete hardware (horizontal
+scaling) as opposed to traditional applications, which require larger hardware
+to scale (vertical scaling).
 
 OpenStack is designed to be horizontally scalable. Rather than switching
 to larger servers, you procure more servers and simply install identically
@@ -14,16 +14,16 @@ configured services. Ideally, you scale out and load balance among groups of
 functionally identical services (for example, compute nodes or ``nova-api``
 nodes), that communicate on a message bus.
 
-The Starting Point
-~~~~~~~~~~~~~~~~~~
+Determining cloud scalability
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Determining the scalability of your cloud and how to improve it requires
 balancing many variables. No one solution meets everyone's scalability goals.
-However, it is helpful to track a number of metrics. Since you can define
-virtual hardware templates, called "flavors" in OpenStack, you can start to
-make scaling decisions based on the flavors you'll provide. These templates
-define sizes for memory in RAM, root disk size, amount of ephemeral data disk
-space available, and number of cores for starters.
+However, it is helpful to track a number of metrics. You can define
+virtual hardware templates called "flavors" in OpenStack, which will impact
+your cloud scaling decisions. These templates define sizes for memory in RAM,
+root disk size, amount of ephemeral data disk space available, and the number
+of CPU cores.
 
 The default OpenStack flavors are shown in :ref:`table_default_flavors`.
 
@@ -85,8 +85,8 @@ and require 80 TB of storage for ``/var/lib/nova/instances``:
 -  Most instances are size m1.medium (two virtual cores, 50 GB of
    storage).
 
--  Default CPU overcommit ratio (``cpu_allocation_ratio`` in nova.conf)
-   of 16:1.
+-  Default CPU overcommit ratio (``cpu_allocation_ratio`` in the ``nova.conf``
+   file) of 16:1.
 
 .. note::
    Regardless of the overcommit ratio, an instance can not be placed
@@ -104,8 +104,6 @@ the heavy work of creating a VM happens only every few months, whereas
 the latter puts constant heavy load on the cloud controller. You must
 consider your average VM lifetime, as a larger number generally means
 less load on the cloud controller.
-
-.. TODO Perhaps relocate the above paragraph under the web scale use case?
 
 Aside from the creation and termination of VMs, you must consider the
 impact of users accessing the service particularly on ``nova-api`` and
@@ -133,7 +131,7 @@ CPU performance (CPU/core).
    metrics from your cloud, see the `OpenStack Operations Guide
    <https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_.
 
-Adding Cloud Controller Nodes
+Adding cloud controller nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can facilitate the horizontal expansion of your cloud by adding
@@ -164,18 +162,16 @@ the one machine.
    Several options are available for MySQL load balancing, and the
    supported AMQP brokers have built-in clustering support. Information
    on how to configure these and many of the other services can be
-   found in the `operations chapter
-   <https://docs.openstack.org/ops-guide/operations.html>`_ in the Operations
-   Guide.
+   found in the `Operations Guide
+   <https://docs.openstack.org/ops-guide/operations.html>`_.
 
-Segregating Your Cloud
+Segregating your cloud
 ~~~~~~~~~~~~~~~~~~~~~~
 
-When you want to offer users different regions to provide legal
-considerations for data storage, redundancy across earthquake fault
-lines, or for low-latency API calls, you segregate your cloud. Use one
-of the following OpenStack methods to segregate your cloud: *cells*,
-*regions*, *availability zones*, or *host aggregates*.
+Segregating your cloud is needed when users require different regions for legal
+considerations for data storage, redundancy across earthquake fault lines, or
+for low-latency API calls. It can be segregated by *cells*, *regions*,
+*availability zones*, or *host aggregates*.
 
 Each method provides different functionality and can be best divided
 into two groups:
@@ -228,7 +224,7 @@ segregation method currently provided by OpenStack Compute.
      - Keystone, All nova services
      - Keystone, All nova services
 
-Cells and Regions
+Cells and regions
 -----------------
 
 OpenStack Compute cells are designed to allow running the cloud in a
@@ -258,16 +254,12 @@ The OpenStack dashboard (horizon) can be configured to use multiple
 regions. This can be configured through the ``AVAILABLE_REGIONS``
 parameter.
 
-Availability Zones and Host Aggregates
+Availability zones and host aggregates
 --------------------------------------
 
 You can use availability zones, host aggregates, or both to partition a
-nova deployment.
-
-Availability zones are implemented through and configured in a similar
-way to host aggregates.
-
-However, you can use them for different reasons.
+nova deployment. Both methods are configured and implemented in a similar
+way.
 
 Availability zone
 ^^^^^^^^^^^^^^^^^
@@ -429,4 +421,3 @@ while in production can be avoided by appropriate burn-in testing to
 attempt to trigger the early-stage failures. The general principle is to
 stress the hardware to its limits. Examples of burn-in tests include
 running a CPU or disk benchmark for several days.
-
