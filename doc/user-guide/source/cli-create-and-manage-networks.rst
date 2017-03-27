@@ -123,7 +123,7 @@ Create a subnet:
    | ipv6_ra_mode      | None                                 |
    | name              | subnet1                              |
    | network_id        | 180620e3-9eae-4ba7-9739-c5847966e1f0 |
-   | project_id        | e17431afc0524e0690484889a04b7fa0     |
+   | project_id        | c961a8f6d3654657885226378ade8220     |
    | revision_number   | 2                                    |
    | service_types     |                                      |
    | subnetpool_id     | None                                 |
@@ -236,7 +236,7 @@ Create ports
       | name                  | port1                                   |
       | network_id            | 180620e3-9eae-4ba7-9739-c5847966e1f0    |
       | port_security_enabled | True                                    |
-      | project_id            | e17431afc0524e0690484889a04b7fa0        |
+      | project_id            | c961a8f6d3654657885226378ade8220        |
       | revision_number       | 5                                       |
       | security_groups       | 84abb9eb-dc59-40c1-802c-4e173c345b6a    |
       | status                | DOWN                                    |
@@ -281,7 +281,7 @@ Create ports
       | name                  | port2                                   |
       | network_id            | 180620e3-9eae-4ba7-9739-c5847966e1f0    |
       | port_security_enabled | True                                    |
-      | project_id            | e17431afc0524e0690484889a04b7fa0        |
+      | project_id            | c961a8f6d3654657885226378ade8220        |
       | revision_number       | 5                                       |
       | security_groups       | 84abb9eb-dc59-40c1-802c-4e173c345b6a    |
       | status                | DOWN                                    |
