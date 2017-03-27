@@ -12,16 +12,18 @@ configuration options) in a version-controlled repository.
 
 .. note::
 
-   Several configuration-management tools are available, and this guide
-   does not recommend a specific one. The two most popular ones in the
-   OpenStack community are `Puppet <https://puppetlabs.com/>`_, with
-   available `OpenStack Puppet
-   modules <https://github.com/puppetlabs/puppetlabs-openstack>`_; and
-   `Chef <http://www.getchef.com/chef/>`_, with available `OpenStack
-   Chef recipes <https://github.com/opscode/openstack-chef-repo>`_.
-   Other newer configuration tools include
-   `Juju <https://juju.ubuntu.com/>`_,
-   `Ansible <https://www.ansible.com/>`_, and
-   `Salt <http://www.saltstack.com/>`_; and more mature configuration
-   management tools include `CFEngine <http://cfengine.com/>`_ and
-   `Bcfg2 <http://bcfg2.org/>`_.
+   Several configuration-management tools are available, and this guide does
+   not recommend a specific one. The most popular ones in the OpenStack
+   community are:
+
+   * `Puppet <https://puppetlabs.com/>`_, with available `OpenStack
+     Puppet modules <https://github.com/puppetlabs/puppetlabs-openstack>`_
+   * `Ansible <https://www.ansible.com/>`_, with `OpenStack Ansible
+     <https://github.com/openstack/openstack-ansible>`_
+   * `Chef <http://www.getchef.com/chef/>`_, with available `OpenStack Chef
+     recipes <https://github.com/openstack/openstack-chef-repo>`_
+
+   Other newer configuration tools include `Juju <https://juju.ubuntu.com/>`_
+   and `Salt <http://www.saltstack.com/>`_; and more mature configuration
+   management tools include `CFEngine <http://cfengine.com/>`_ and `Bcfg2
+   <http://bcfg2.org/>`_.
