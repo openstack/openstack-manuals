@@ -53,8 +53,8 @@ Set up clustering
    .. code-block:: console
 
       $ trove cluster-create cluster1 mongodb "2.4" \
-        --instance flavor_id=7,volume=2 --instance flavor_id=7,volume=2 \
-        --instance flavor_id=7,volume=2
+        --instance flavor=7,volume=2 --instance flavor=7,volume=2 \
+        --instance flavor=7,volume=2
        +-------------------+--------------------------------------+
        | Property          | Value                                |
        +-------------------+--------------------------------------+
