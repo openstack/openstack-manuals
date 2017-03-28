@@ -249,7 +249,7 @@ Building an LBaaS v2 load balancer
        |                     | {"id": "7e0d084d-6d67-47e6-9f77-0115e6cf9ba8"} |
        | name                | test-lb                                        |
        | operating_status    | ONLINE                                         |
-       | provider            | haproxy                                        |
+       | provider            | octavia                                        |
        | provisioning_status | ACTIVE                                         |
        | tenant_id           | fbfce4cb346c4f9097a977c54904cafd               |
        | vip_address         | 192.0.2.22                                     |
