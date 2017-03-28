@@ -179,7 +179,7 @@ that API users can dynamically provision and configure. These Networking
 routers can connect multiple L2 Networking networks and can also provide
 a gateway that connects one or more private L2 networks to a shared
 external network. For example, a public network for access to the
-Internet. See the `OpenStack Configuration Reference <http://docs.
+Internet. See the `OpenStack Configuration Reference <https://docs.
 openstack.org/ocata/config-reference/>`_ for details on common
 models of deploying Networking L3 routers.
 
