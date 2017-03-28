@@ -10,7 +10,7 @@ scalability and HA.
 
 .. note::
 
-   Use the :command:`neutron ext-list` client command to check if these
+   Use the :command:`openstack extension list` command to check if these
    extensions are enabled. Check ``agent`` and ``agent_scheduler``
    are included in the output.
 
