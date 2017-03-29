@@ -32,25 +32,4 @@ Contents
    massively-scalable.rst
    specialized.rst
    references.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-Search in this guide
-~~~~~~~~~~~~~~~~~~~~
-
-* :ref:`search`
-
+   common/appendix.rst

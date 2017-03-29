@@ -34,5 +34,4 @@ This guide documents OpenStack Ocata, Newton, and Mitaka releases.
    testing.rst
    ref-arch-examples.rst
    ha-community.rst
-   common/app-support.rst
-   common/glossary.rst
+   common/appendix.rst

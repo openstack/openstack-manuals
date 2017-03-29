@@ -58,8 +58,3 @@ Contents
    ceilometer
    gnocchi
    mistral
-
-Search
-~~~~~~
-
-* :ref:`search`

@@ -23,26 +23,4 @@ Contents
    create-images-automatically.rst
    convert-images.rst
    share-images.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-.. only:: html
-
-   Search
-   ~~~~~~
-
-   * :ref:`search`
+   common/appendix.rst

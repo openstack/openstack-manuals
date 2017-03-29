@@ -90,6 +90,7 @@ html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['common/cli*', 'common/nova*',
+                    'common/appendix.rst',
                     'common/get-started*', 'common/dashboard*']
 
 # The reST default role (used for this markup: `text`) to use for all
