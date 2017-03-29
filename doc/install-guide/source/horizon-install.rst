@@ -519,6 +519,20 @@ Install and configure components
 
 .. endonly
 
+.. only:: ubuntu
+
+   3. Due to a package bug, change the ownership and user permissions
+      for Dashboard and the ``secret_key`` directory:
+
+      .. code-block:: console
+
+         # chown www-data:www-data /var/lib/openstack-dashboard
+         # chown www-data:www-data /var/lib/openstack-dashboard/secret_key
+         # chmod 700 /var/lib/openstack-dashboard
+         # chmod 600 /var/lib/openstack-dashboard/secret_key
+
+.. endonly
+
 Finalize installation
 ---------------------
 
