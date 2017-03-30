@@ -177,7 +177,7 @@ Network hardware requirements
 
 For a compute-focus architecture, we recommend designing the network
 architecture using a scalable network model that makes it easy to add
-capacity and bandwidth. A good example of such a model is the leaf-spline
+capacity and bandwidth. A good example of such a model is the leaf-spine
 model. In this type of network design, you can add additional
 bandwidth as well as scale out to additional racks of gear. It is important to
 select network hardware that supports port count, port speed, and
