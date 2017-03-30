@@ -81,20 +81,19 @@ You can assign a floating IP address to a project and to an instance.
       +---------------------+--------------------------------------+
       | Field               | Value                                |
       +---------------------+--------------------------------------+
-      | created_at          | 2016-11-30T15:02:05Z                 |
+      | created_at          | 2017-03-30T12:35:25Z                 |
       | description         |                                      |
       | fixed_ip_address    | None                                 |
-      | floating_ip_address | 172.24.4.236                         |
-      | floating_network_id | 0bf90de6-fc0f-4dba-b80d-96670dfb331a |
-      | headers             |                                      |
-      | id                  | c70ad74b-2f64-4e60-965e-f24fc12b3194 |
+      | floating_ip_address | 172.24.4.230                        |
+      | floating_network_id | c213f520-aade-42eb-8bf1-6826505d74bb |
+      | id                  | 1e777f9e-4fc8-4df8-be6f-89f5caba3c0f |
+      | name                | None                                 |
       | port_id             | None                                 |
-      | project_id          | 5669caad86a04256994cdf755df4d3c1     |
-      | project_id          | 5669caad86a04256994cdf755df4d3c1     |
+      | project_id          | b3abf186ac64462e85741315376e9ca7     |
       | revision_number     | 1                                    |
       | router_id           | None                                 |
       | status              | DOWN                                 |
-      | updated_at          | 2016-11-30T15:02:05Z                 |
+      | updated_at          | 2017-03-30T12:35:25Z                 |
       +---------------------+--------------------------------------+
 
 #. List all project instances with which a floating IP address could be
