@@ -25,11 +25,6 @@ Steps to update ``cinder-api`` servers:
 
         api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
 
-     .. note::
-
-        Use a '#' prefix to comment out the line in this section that
-        begins with 'fixed_key'.
-
 #. Restart ``cinder-api``.
 
 Update ``nova-compute`` servers:
@@ -43,6 +38,11 @@ Update ``nova-compute`` servers:
 
       [key_manager]
       api_class = castellan.key_manager.barbican_key_manager.BarbicanKeyManager
+
+     .. note::
+
+        Use a '#' prefix to comment out the line in this section that
+        begins with 'fixed_key'.
 
 #. Restart ``nova-compute``.
 
