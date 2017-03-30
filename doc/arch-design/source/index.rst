@@ -9,16 +9,26 @@ OpenStack Architecture Design Guide
 
 .. note::
 
-   Parts of this guide is a work in progress. Contributions are welcome.
+   This guide is a work in progress. Contributions are welcome.
 
 Abstract
 ~~~~~~~~
 
-This guide provides information on planning and designing an OpenStack
-cloud. It describes common use cases, high availability, and considerations
-when changing capacity and scaling your cloud environment. A breakdown of the
-major OpenStack components is also described in relation to cloud architecture
-design.
+The Architecture Design Guide provides information on planning and designing
+an OpenStack cloud. It explains core concepts, cloud architecture design
+requirements, and the design criteria of key components and services in an
+OpenStack cloud. The guide also describes five common cloud use cases.
+
+Before reading this book, we recommend:
+
+* Prior knowledge of cloud architecture and principles.
+* Linux and virtualization experience.
+* A basic understanding of networking principles and protocols.
+
+For information about deploying and operating OpenStack, see the
+`Installation Tutorials and Guides <https://docs.openstack.org/project-install-guide/ocata/>`_,
+`Deployment Guides <https://docs.openstack.org/project-deploy-guide/ocata/>`_,
+and the `OpenStack Operations Guide <https://docs.openstack.org/ops-guide/>`_.
 
 Contents
 ~~~~~~~~
@@ -27,31 +37,7 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-   overview.rst
-   use-cases.rst
-   high-availability.rst
-   capacity-planning-scaling.rst
+   arch-requirements.rst
    design.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-.. only:: html
-
-   Search
-   ~~~~~~
-
-   * :ref:`search`
+   use-cases.rst
+   appendix.rst

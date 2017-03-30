@@ -19,10 +19,10 @@ operations, metering, monitoring, and so on, are often referred to as the
 Control Plane. The SLA is likely to dictate a lower uptime requirement for
 these services.
 
-The services comprising an OpenStack cloud have a number of requirements which
-the architect needs to understand in order to be able to meet SLA terms. For
-example, in order to provide the Compute service a minimum of storage, message
-queueing, and database services are necessary as well as the networking between
+The services comprising an OpenStack cloud have a number of requirements that
+you need to understand in order to be able to meet SLA terms. For example, in
+order to provide the Compute service a minimum of storage, message queueing and
+database services are necessary as well as the networking between
 them.
 
 Ongoing maintenance operations are made much simpler if there is logical and
@@ -32,13 +32,8 @@ If one service failure affects the operation of an entire server (``noisy
 neighbor``), the separation between Control and Data Planes enables rapid
 maintenance with a limited effect on customer operations.
 
-Eliminating single points of failure
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. TODO Add introduction
-
-Within each site
-----------------
+Eliminating single points of failure within each site
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack lends itself to deployment in a highly available manner where it is
 expected that at least 2 servers be utilized. These can run all the services
@@ -102,8 +97,8 @@ If using a storage design that includes shared access to centralized storage,
 ensure that this is also designed without single points of failure and the SLA
 for the solution matches or exceeds the expected SLA for the Data Plane.
 
-Between sites in a multi-region design
---------------------------------------
+Eliminating single points of failure in a multi-region design
+-------------------------------------------------------------
 
 Some services are commonly shared between multiple regions, including the
 Identity service and the Dashboard. In this case, it is necessary to ensure
@@ -162,7 +157,7 @@ should be implemented to understand and plan for recovery scenarios.
    avoid race conditions.
 
 
-Inter-site replication data
+Replicating inter-site data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Traditionally, replication has been the best method of protecting object store
