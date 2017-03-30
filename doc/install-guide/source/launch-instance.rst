@@ -60,6 +60,7 @@ purposes.
    | id                         | 0       |
    | name                       | m1.nano |
    | os-flavor-access:is_public | True    |
+   | properties                 |         |
    | ram                        | 64      |
    | rxtx_factor                | 1.0     |
    | swap                       |         |
@@ -138,22 +139,21 @@ secure shell (SSH).
        +-------------------+--------------------------------------+
        | Field             | Value                                |
        +-------------------+--------------------------------------+
-       | created_at        | 2016-10-05T09:52:31Z                 |
+       | created_at        | 2017-03-30T00:46:43Z                 |
        | description       |                                      |
        | direction         | ingress                              |
-       | ethertype         | IPv4                                 |
-       | headers           |                                      |
-       | id                | 6ee8d630-9803-4d3d-9aea-8c795abbedc2 |
+       | ether_type        | IPv4                                 |
+       | id                | 1946be19-54ab-4056-90fb-4ba606f19e66 |
+       | name              | None                                 |
        | port_range_max    | None                                 |
        | port_range_min    | None                                 |
-       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
-       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
+       | project_id        | 3f714c72aed7442681cbfa895f4a68d3     |
        | protocol          | icmp                                 |
        | remote_group_id   | None                                 |
        | remote_ip_prefix  | 0.0.0.0/0                            |
        | revision_number   | 1                                    |
-       | security_group_id | 4ceee3d4-d2fe-46c1-895c-382033e87b0d |
-       | updated_at        | 2016-10-05T09:52:31Z                 |
+       | security_group_id | 89ff5c84-e3d1-46bb-b149-e621689f0696 |
+       | updated_at        | 2017-03-30T00:46:43Z                 |
        +-------------------+--------------------------------------+
 
     .. end
@@ -167,22 +167,21 @@ secure shell (SSH).
        +-------------------+--------------------------------------+
        | Field             | Value                                |
        +-------------------+--------------------------------------+
-       | created_at        | 2016-10-05T09:54:50Z                 |
+       | created_at        | 2017-03-30T00:43:35Z                 |
        | description       |                                      |
        | direction         | ingress                              |
-       | ethertype         | IPv4                                 |
-       | headers           |                                      |
-       | id                | 3cd0a406-43df-4741-ab29-b5e7dcb7469d |
+       | ether_type        | IPv4                                 |
+       | id                | 42bc2388-ae1a-4208-919b-10cf0f92bc1c |
+       | name              | None                                 |
        | port_range_max    | 22                                   |
        | port_range_min    | 22                                   |
-       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
-       | project_id        | 77ae8d7104024123af342ffb0a6f1d88     |
+       | project_id        | 3f714c72aed7442681cbfa895f4a68d3     |
        | protocol          | tcp                                  |
        | remote_group_id   | None                                 |
        | remote_ip_prefix  | 0.0.0.0/0                            |
        | revision_number   | 1                                    |
-       | security_group_id | 4ceee3d4-d2fe-46c1-895c-382033e87b0d |
-       | updated_at        | 2016-10-05T09:54:50Z                 |
+       | security_group_id | 89ff5c84-e3d1-46bb-b149-e621689f0696 |
+       | updated_at        | 2017-03-30T00:43:35Z                 |
        +-------------------+--------------------------------------+
 
     .. end

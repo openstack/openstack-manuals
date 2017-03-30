@@ -114,36 +114,37 @@ Launch the instance
         --nic net-id=PROVIDER_NET_ID --security-group default \
         --key-name mykey provider-instance
 
-      +--------------------------------------+-----------------------------------------------+
-      | Property                             | Value                                         |
-      +--------------------------------------+-----------------------------------------------+
-      | OS-DCF:diskConfig                    | MANUAL                                        |
-      | OS-EXT-AZ:availability_zone          | nova                                          |
-      | OS-EXT-STS:power_state               | 0                                             |
-      | OS-EXT-STS:task_state                | scheduling                                    |
-      | OS-EXT-STS:vm_state                  | building                                      |
-      | OS-SRV-USG:launched_at               | -                                             |
-      | OS-SRV-USG:terminated_at             | -                                             |
-      | accessIPv4                           |                                               |
-      | accessIPv6                           |                                               |
-      | adminPass                            | hdF4LMQqC5PB                                  |
-      | config_drive                         |                                               |
-      | created                              | 2015-09-17T21:58:18Z                          |
-      | flavor                               | m1.nano                                       |
-      | hostId                               |                                               |
-      | id                                   | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf          |
-      | image                                | cirros (38047887-61a7-41ea-9b49-27987d5e8bb9) |
-      | key_name                             | mykey                                         |
-      | metadata                             | {}                                            |
-      | name                                 | provider-instance                             |
-      | os-extended-volumes:volumes_attached | []                                            |
-      | progress                             | 0                                             |
-      | security_groups                      | default                                       |
-      | status                               | BUILD                                         |
-      | tenant_id                            | f5b2ccaa75ac413591f12fcaa096aa5c              |
-      | updated                              | 2015-09-17T21:58:18Z                          |
-      | user_id                              | 684286a9079845359882afc3aa5011fb              |
-      +--------------------------------------+-----------------------------------------------+
+      +-----------------------------+-----------------------------------------------+
+      | Field                       | Value                                         |
+      +-----------------------------+-----------------------------------------------+
+      | OS-DCF:diskConfig           | MANUAL                                        |
+      | OS-EXT-AZ:availability_zone |                                               |
+      | OS-EXT-STS:power_state      | NOSTATE                                       |
+      | OS-EXT-STS:task_state       | scheduling                                    |
+      | OS-EXT-STS:vm_state         | building                                      |
+      | OS-SRV-USG:launched_at      | None                                          |
+      | OS-SRV-USG:terminated_at    | None                                          |
+      | accessIPv4                  |                                               |
+      | accessIPv6                  |                                               |
+      | addresses                   |                                               |
+      | adminPass                   | PwkfyQ42K72h                                  |
+      | config_drive                |                                               |
+      | created                     | 2017-03-30T00:59:44Z                          |
+      | flavor                      | m1.nano (0)                                   |
+      | hostId                      |                                               |
+      | id                          | 36f3130e-cf1b-42f8-a80b-ebd63968940e          |
+      | image                       | cirros (97e06b44-e9ed-4db4-ba67-6e9fc5d0a203) |
+      | key_name                    | mykey                                         |
+      | name                        | provider-instance                             |
+      | progress                    | 0                                             |
+      | project_id                  | 3f714c72aed7442681cbfa895f4a68d3              |
+      | properties                  |                                               |
+      | security_groups             | name='default'                                |
+      | status                      | BUILD                                         |
+      | updated                     | 2017-03-30T00:59:44Z                          |
+      | user_id                     | 1a421c69342348248c7696e3fd6d4366              |
+      | volumes_attached            |                                               |
+      +-----------------------------+-----------------------------------------------+
 
    .. end
 

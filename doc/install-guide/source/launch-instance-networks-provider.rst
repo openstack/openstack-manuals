@@ -149,24 +149,24 @@ Create the provider network
       +-------------------+--------------------------------------+
       | allocation_pools  | 203.0.113.101-203.0.113.250          |
       | cidr              | 203.0.113.0/24                       |
-      | created_at        | 2016-11-02T20:45:04Z                 |
+      | created_at        | 2017-03-29T05:48:29Z                 |
       | description       |                                      |
       | dns_nameservers   | 8.8.4.4                              |
       | enable_dhcp       | True                                 |
       | gateway_ip        | 203.0.113.1                          |
-      | headers           |                                      |
       | host_routes       |                                      |
-      | id                | 2c65ef8c-a5f3-4f51-94c1-4df0daaaab5c |
+      | id                | e84b4972-c7fc-4ce9-9742-fdc845196ac5 |
       | ip_version        | 4                                    |
       | ipv6_address_mode | None                                 |
       | ipv6_ra_mode      | None                                 |
       | name              | provider                             |
-      | network_id        | 9793a02d-4f05-40d2-a280-407c48db0161 |
-      | project_id        | 7e188c33604d4b02ae0a99b5da68cae0     |
+      | network_id        | 1f816a46-7c3f-4ccf-8bf3-fe0807ddff8d |
+      | project_id        | 496efd248b0c46d3b80de60a309177b5     |
       | revision_number   | 2                                    |
-      | service_types     | []                                   |
+      | segment_id        | None                                 |
+      | service_types     |                                      |
       | subnetpool_id     | None                                 |
-      | updated_at        | 2016-11-02T20:45:04Z                 |
+      | updated_at        | 2017-03-29T05:48:29Z                 |
       +-------------------+--------------------------------------+
 
    .. end
