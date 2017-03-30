@@ -139,16 +139,15 @@ the default set of quotas are enforced for all projects, so no
    .. code-block:: console
 
       $ neutron ext-show quotas
-      +-------------+------------------------------------------------------------+
-      | Field       | Value                                                      |
-      +-------------+------------------------------------------------------------+
-      | alias       | quotas                                                     |
-      | description | Expose functions for quotas management per tenant          |
-      | links       |                                                            |
-      | name        | Quota management support                                   |
-      | namespace   | https://docs.openstack.org/network/ext/quotas-sets/api/v2.0 |
-      | updated     | 2012-07-29T10:00:00-00:00                                  |
-      +-------------+------------------------------------------------------------+
+      +-------------+---------------------------------------------------+
+      | Field       | Value                                             |
+      +-------------+---------------------------------------------------+
+      | alias       | quotas                                            |
+      | description | Expose functions for quotas management per tenant |
+      | links       |                                                   |
+      | name        | Quota management support                          |
+      | updated     | 2012-07-29T10:00:00-00:00                         |
+      +-------------+---------------------------------------------------+
 
    .. note::
 
@@ -158,31 +157,65 @@ the default set of quotas are enforced for all projects, so no
       bring additional functionality. See the documentation for
       each plug-in.
 
-#. List projects who have per-project quota support.
+#. List project's default quotas.
 
-   The :command:`neutron quota-list` command lists projects for which the
-   per-project quota is enabled. The command does not list projects with
-   default quota support. You must be an administrative user to run this
-   command:
+   The :command:`openstack quota show` command lists quotas for the current
+   project.
 
    .. code-block:: console
 
-      $ neutron quota-list
-      +------------+---------+------+--------+--------+----------------------------------+
-      | floatingip | network | port | router | subnet | tenant_id                        |
-      +------------+---------+------+--------+--------+----------------------------------+
-      |         20 |       5 |   20 |     10 |      5 | 6f88036c45344d9999a1f971e4882723 |
-      |         25 |      10 |   30 |     10 |     10 | bff5c9455ee24231b5bc713c1b96d422 |
-      +------------+---------+------+--------+--------+----------------------------------+
+      $ openstack quota show
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 50                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 10                               |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
 #. Show per-project quota values.
 
-   The :command:`neutron quota-show` command reports the current
-   set of quota limits for the specified project.
-   Non-administrative users can run this command without the
-   ``--tenant_id`` parameter. If per-project quota limits are
-   not enabled for the project, the command shows the default
-   set of quotas.
+   The :command:`openstack quota show` command reports the current
+   set of quota limits. Administrators can provide the project ID of a
+   specific project with the :command:`openstack quota show` command
+   to view quotas for the specific project. If per-project quota
+   limits are not enabled for the project, the command shows
+   the default set of quotas:
 
    .. note::
 
@@ -191,82 +224,151 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron quota-show --tenant_id 6f88036c45344d9999a1f971e4882723
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 50    |
-      | network             | 10    |
-      | port                | 50    |
-      | rbac_policy         | 10    |
-      | router              | 10    |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 10    |
-      | subnetpool          | -1    |
-      +---------------------+-------+
-
-   The following command shows the command output for a
-   non-administrative user.
-
-   .. code-block:: console
-
-      $ neutron quota-show
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 50    |
-      | network             | 10    |
-      | port                | 50    |
-      | rbac_policy         | 10    |
-      | router              | 10    |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 10    |
-      | subnetpool          | -1    |
-      +---------------------+-------+
+      $ openstack quota show e436339c7f9c476cb3120cf3b9667377
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 50                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 10                               |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
 #. Update quota values for a specified project.
 
-   Use the :command:`neutron quota-update` command to
+   Use the :command:`openstack quota set` command to
    update a quota for a specified project.
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --network 5
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 50    |
-      | network             | 5     |
-      | port                | 50    |
-      | rbac_policy         | 10    |
-      | router              | 10    |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 10    |
-      | subnetpool          | -1    |
-      +---------------------+-------+
+      $ openstack quota set --networks 5 e436339c7f9c476cb3120cf3b9667377
+      $ openstack quota show e436339c7f9c476cb3120cf3b9667377
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 50                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 5                                |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
    You can update quotas for multiple resources through one
    command.
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --subnet 5 --port 20
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 50    |
-      | network             | 5     |
-      | port                | 20    |
-      | rbac_policy         | 10    |
-      | router              | 10    |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 5     |
-      | subnetpool          | -1    |
-      +---------------------+-------+
+      $ openstack quota set --subnets 5 --ports 20 e436339c7f9c476cb3120cf3b9667377
+      $ openstack quota show e436339c7f9c476cb3120cf3b9667377
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 50                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 5                                |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
    To update the limits for an L3 resource such as, router
    or floating IP, you must define new values for the quotas
@@ -277,20 +379,50 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 --floatingip 20
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 20    |
-      | network             | 5     |
-      | port                | 20    |
-      | rbac_policy         | 10    |
-      | router              | 10    |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 5     |
-      | subnetpool          | -1    |
-      +---------------------+-------+
+      $ openstack quota set --floating-ips 20 e436339c7f9c476cb3120cf3b9667377
+      $ openstack quota show e436339c7f9c476cb3120cf3b9667377
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 20                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 5                                |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
    You can update the limits of multiple resources by
    including L2 resources and L3 resource through one
@@ -298,21 +430,51 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron quota-update --tenant_id 6f88036c45344d9999a1f971e4882723 \
-        --network 3 --subnet 3 --port 3 --floatingip 3 --router 3
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 3     |
-      | network             | 3     |
-      | port                | 3     |
-      | rbac_policy         | 10    |
-      | router              | 3     |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 3     |
-      | subnetpool          | -1    |
-      +---------------------+-------+
+      $ openstack quota set --networks 3 --subnets 3 --ports 3 \
+        --floating-ips 3 --routers 3 e436339c7f9c476cb3120cf3b9667377
+      $ openstack quota show e436339c7f9c476cb3120cf3b9667377
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 3                                |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 3                                |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 3                                |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 3                                |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
 #. Delete per-project quota values.
 
@@ -321,28 +483,57 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron quota-delete --tenant_id 6f88036c45344d9999a1f971e4882723
-       Deleted quota: 6f88036c45344d9999a1f971e4882723
+      $ neutron quota-delete --tenant_id e436339c7f9c476cb3120cf3b9667377
+       Deleted quota: e436339c7f9c476cb3120cf3b9667377
 
    After you run this command, you can see that quota
    values for the project are reset to the default values.
 
    .. code-block:: console
 
-      $ openstack quota show 6f88036c45344d9999a1f971e4882723
-      +---------------------+-------+
-      | Field               | Value |
-      +---------------------+-------+
-      | floatingip          | 50    |
-      | network             | 10    |
-      | port                | 50    |
-      | rbac_policy         | 10    |
-      | router              | 10    |
-      | security_group      | 10    |
-      | security_group_rule | 100   |
-      | subnet              | 10    |
-      | subnetpool          | -1    |
-      +---------------------+-------+
+      $ openstack quota show e436339c7f9c476cb3120cf3b9667377
+      +-----------------------+----------------------------------+
+      | Field                 | Value                            |
+      +-----------------------+----------------------------------+
+      | backup-gigabytes      | 1000                             |
+      | backups               | 10                               |
+      | cores                 | 20                               |
+      | fixed-ips             | -1                               |
+      | floating-ips          | 50                               |
+      | gigabytes             | 1000                             |
+      | gigabytes_lvmdriver-1 | -1                               |
+      | health_monitors       | None                             |
+      | injected-file-size    | 10240                            |
+      | injected-files        | 5                                |
+      | injected-path-size    | 255                              |
+      | instances             | 10                               |
+      | key-pairs             | 100                              |
+      | l7_policies           | None                             |
+      | listeners             | None                             |
+      | load_balancers        | None                             |
+      | location              | None                             |
+      | name                  | None                             |
+      | networks              | 10                               |
+      | per-volume-gigabytes  | -1                               |
+      | pools                 | None                             |
+      | ports                 | 50                               |
+      | project               | e436339c7f9c476cb3120cf3b9667377 |
+      | project_id            | None                             |
+      | properties            | 128                              |
+      | ram                   | 51200                            |
+      | rbac_policies         | 10                               |
+      | routers               | 10                               |
+      | secgroup-rules        | 100                              |
+      | secgroups             | 10                               |
+      | server-group-members  | 10                               |
+      | server-groups         | 10                               |
+      | snapshots             | 10                               |
+      | snapshots_lvmdriver-1 | -1                               |
+      | subnet_pools          | -1                               |
+      | subnets               | 10                               |
+      | volumes               | 10                               |
+      | volumes_lvmdriver-1   | -1                               |
+      +-----------------------+----------------------------------+
 
 .. note::
 
