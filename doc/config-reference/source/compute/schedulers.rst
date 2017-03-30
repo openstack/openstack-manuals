@@ -459,52 +459,6 @@ ExactRamFilter
 Only schedules instances on hosts if host has the exact number of RAM
 available.
 
-.. _GroupAffinityFilter:
-
-GroupAffinityFilter
--------------------
-
-.. note::
-
-   This filter is deprecated in favor of :ref:`ServerGroupAffinityFilter`.
-
-The GroupAffinityFilter ensures that an instance is scheduled on to a host
-from a set of group hosts. To take advantage of this filter, the requester
-must pass a scheduler hint, using ``group`` as the key and an arbitrary name
-as the value. Using the :command:`openstack server create` command, use the
-``--hint`` flag. For example:
-
-.. code-block:: console
-
-   $ openstack server create --image IMAGE_ID --flavor 1 \
-     --hint group=foo server-1
-
-This filter should not be enabled at the same time as
-:ref:`GroupAntiAffinityFilter` or neither filter will work properly.
-
-.. _GroupAntiAffinityFilter:
-
-GroupAntiAffinityFilter
------------------------
-
-.. note::
-
-   This filter is deprecated in favor of :ref:`ServerGroupAntiAffinityFilter`.
-
-The GroupAntiAffinityFilter ensures that each instance in a group is on
-a different host. To take advantage of this filter, the requester must
-pass a scheduler hint, using ``group`` as the key and an arbitrary name
-as the value. Using the :command:`openstack server create` command,
-use the ``--hint`` flag. For example:
-
-.. code-block:: console
-
-   $ openstack server create --image IMAGE_ID --flavor 1 \
-     --hint group=foo server-1
-
-This filter should not be enabled at the same time as
-:ref:`GroupAffinityFilter` or neither filter will work properly.
-
 .. _ImagePropertiesFilter:
 
 ImagePropertiesFilter
