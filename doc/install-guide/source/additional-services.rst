@@ -7,6 +7,16 @@ Additional services
 Installation and configuration of additional OpenStack services is documented
 in separate, project-specific installation guides.
 
+Application Catalog service (murano)
+====================================
+
+The Application Catalog service (murano) combines an application catalog with
+versatile tooling to simplify and accelerate packaging and deployment.
+
+Installation and configuration is documented in the
+`Application Catalog installation guide
+<https://docs.openstack.org/project-install-guide/application-catalog/draft/>`_.
+
 Bare Metal service (ironic)
 ===========================
 
