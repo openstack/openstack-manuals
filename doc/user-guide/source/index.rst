@@ -26,26 +26,4 @@ Contents
    sdk.rst
    hot.rst
    cli-cheat-sheet.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-.. only:: html
-
-   Search
-   ~~~~~~
-
-   * :ref:`search`
+   common/appendix.rst

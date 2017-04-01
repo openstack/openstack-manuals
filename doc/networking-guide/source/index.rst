@@ -28,26 +28,4 @@ Contents
    ops
    migration
    misc
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary
-
-.. only:: html
-
-   Search
-   ~~~~~~
-
-   * :ref:`search`
+   common/appendix.rst

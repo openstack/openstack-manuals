@@ -35,17 +35,4 @@ Contents
    orchestration.rst
    shared-file-systems.rst
    telemetry.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   policy-yaml-file.rst
-   policy-json-file.rst
-
-Search
-~~~~~~
-
-* :ref:`search`
+   appendix.rst

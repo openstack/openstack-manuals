@@ -94,6 +94,7 @@ html_context = {"gitsha": gitsha, "bug_tag": bug_tag,
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = ['common/app-support.rst', 'common/cli*', 'common/nova*',
+                    'common/appendix.rst',
                     'common/get-started*', 'common/dashboard*',
                     'common/conventions.rst']
 

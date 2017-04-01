@@ -119,6 +119,7 @@ Contents
    cinder.rst
    additional-services.rst
    launch-instance.rst
+   common/appendix.rst
 
 .. Pseudo only directive for each distribution used by the build tool.
    This pseudo only directive for toctree only works fine with Tox.
@@ -129,26 +130,3 @@ Contents
 .. only:: obs or rdo or ubuntu
 .. only:: debian
 .. end of contents
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-.. only:: html
-
-   Search
-   ~~~~~~
-
-   * :ref:`search`

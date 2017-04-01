@@ -31,25 +31,5 @@ Contents
    orchestration.rst
    cli.rst
    cross-project.rst
-
-Appendix
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   firewalls-default-ports.rst
+   appendix.rst
    common/app-support.rst
-
-Glossary
-~~~~~~~~
-
-.. toctree::
-   :maxdepth: 1
-
-   common/glossary.rst
-
-Search
-~~~~~~
-
-* :ref:`search`

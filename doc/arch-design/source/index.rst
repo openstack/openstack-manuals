@@ -40,4 +40,4 @@ Contents
    arch-requirements.rst
    design.rst
    use-cases.rst
-   appendix.rst
+   common/appendix.rst
