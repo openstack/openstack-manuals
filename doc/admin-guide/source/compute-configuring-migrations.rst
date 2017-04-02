@@ -362,7 +362,7 @@ of memory-intensive instances succeed.
 
 The full list of live migration configuration parameters is documented
 in the `OpenStack Configuration Reference Guide
-<https://docs.openstack.org/ocata/config-reference/compute/config-options.html#id24>`_
+<https://docs.openstack.org/ocata/config-reference/compute/config-options.html>`_
 
 .. _configuring-migrations-xenserver:
 
