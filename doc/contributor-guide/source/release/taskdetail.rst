@@ -16,7 +16,6 @@ You will need to locate pre-release packages for each distribution, and
 disseminate information about obtaining the packages for testing purposes.
 The current list of packaging contacts:
 
-* Debian: Thomas Goirand (zigo)
 * openSUSE/SLES: Pranav Salunke (dguitarbite)
 * RDO/CentOS: Petr Kovar and Haïkel Guémar
 * Ubuntu: James Page
@@ -110,11 +109,17 @@ Update links in all books
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every book maintained by OpenStack Manuals must be checked for links
-referencing the old release. Do one patch per book, record the review number in
-the release etherpad so that release managers can review easily. For versioned
-books, these patches should have a core -2 review on them until they are ready
-to be published at release time. For continuously released books, these patches
-can be merged immediately.
+referencing the old release. Do one patch per book, and record the review
+number in the release etherpad so that release managers can review easily.
+For versioned books, these patches should have a core -2 review on them until
+they are ready to be published at release time. For continuously released
+books, these patches can be merged immediately.
+
+In some versioned guides, the master branch links to draft books in some
+locations. Most notably, the basic Installation Tutorial links to the
+additional services Installation Guides in
+``doc/install-guide/source/additional-services.rst``. Update these links to
+the correct version before publishing the book.
 
 Run scripts for Configuration and CLI Reference Guides
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
