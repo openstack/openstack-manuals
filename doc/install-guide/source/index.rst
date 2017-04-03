@@ -95,13 +95,6 @@ are included.
 
 This guide documents the OpenStack Ocata release.
 
-.. warning::
-
-   This guide is a work-in-progress and is subject to updates frequently.
-   Pre-release packages have been used for testing, and some instructions
-   may not work with final versions. Please help us make this guide better
-   by reporting any errors you encounter.
-
 Contents
 ~~~~~~~~
 
