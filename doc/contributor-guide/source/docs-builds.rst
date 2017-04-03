@@ -213,6 +213,8 @@ To build a patch locally:
 
 #. Find the build result in ``publish-docs/index.html``.
 
+.. _build_jobs:
+
 Build jobs
 ~~~~~~~~~~
 
