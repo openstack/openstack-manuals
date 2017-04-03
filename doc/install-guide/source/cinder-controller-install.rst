@@ -109,24 +109,7 @@ must create a database, service credentials, and API endpoints.
 
         This command provides no output.
 
-   * Create the ``cinder`` and ``cinderv2`` service entities:
-
-     .. code-block:: console
-
-        $ openstack service create --name cinder \
-          --description "OpenStack Block Storage" volume
-
-        +-------------+----------------------------------+
-        | Field       | Value                            |
-        +-------------+----------------------------------+
-        | description | OpenStack Block Storage          |
-        | enabled     | True                             |
-        | id          | ab3bbbef780845a1a283490d281e7fda |
-        | name        | cinder                           |
-        | type        | volume                           |
-        +-------------+----------------------------------+
-
-     .. end
+   * Create the ``cinderv2`` and ``cinderv3`` service entities:
 
      .. code-block:: console
 
@@ -145,6 +128,23 @@ must create a database, service credentials, and API endpoints.
 
      .. end
 
+     .. code-block:: console
+
+        $ openstack service create --name cinderv3 \
+          --description "OpenStack Block Storage" volumev3
+
+        +-------------+----------------------------------+
+        | Field       | Value                            |
+        +-------------+----------------------------------+
+        | description | OpenStack Block Storage          |
+        | enabled     | True                             |
+        | id          | ab3bbbef780845a1a283490d281e7fda |
+        | name        | cinderv3                         |
+        | type        | volumev3                         |
+        +-------------+----------------------------------+
+
+     .. end
+
    .. note::
 
       The Block Storage services require two service entities.
@@ -154,110 +154,110 @@ must create a database, service credentials, and API endpoints.
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
-        volume public http://controller:8776/v1/%\(tenant_id\)s
+        volumev2 public http://controller:8776/v2/%\(project_id\)s
 
-        +--------------+-----------------------------------------+
-        | Field        | Value                                   |
-        +--------------+-----------------------------------------+
-        | enabled      | True                                    |
-        | id           | 03fa2c90153546c295bf30ca86b1344b        |
-        | interface    | public                                  |
-        | region       | RegionOne                               |
-        | region_id    | RegionOne                               |
-        | service_id   | ab3bbbef780845a1a283490d281e7fda        |
-        | service_name | cinder                                  |
-        | service_type | volume                                  |
-        | url          | http://controller:8776/v1/%(tenant_id)s |
-        +--------------+-----------------------------------------+
-
-      $ openstack endpoint create --region RegionOne \
-        volume internal http://controller:8776/v1/%\(tenant_id\)s
-
-        +--------------+-----------------------------------------+
-        | Field        | Value                                   |
-        +--------------+-----------------------------------------+
-        | enabled      | True                                    |
-        | id           | 94f684395d1b41068c70e4ecb11364b2        |
-        | interface    | internal                                |
-        | region       | RegionOne                               |
-        | region_id    | RegionOne                               |
-        | service_id   | ab3bbbef780845a1a283490d281e7fda        |
-        | service_name | cinder                                  |
-        | service_type | volume                                  |
-        | url          | http://controller:8776/v1/%(tenant_id)s |
-        +--------------+-----------------------------------------+
+      +--------------+------------------------------------------+
+      | Field        | Value                                    |
+      +--------------+------------------------------------------+
+      | enabled      | True                                     |
+      | id           | 513e73819e14460fb904163f41ef3759         |
+      | interface    | public                                   |
+      | region       | RegionOne                                |
+      | region_id    | RegionOne                                |
+      | service_id   | eb9fd245bdbc414695952e93f29fe3ac         |
+      | service_name | cinderv2                                 |
+      | service_type | volumev2                                 |
+      | url          | http://controller:8776/v2/%(project_id)s |
+      +--------------+------------------------------------------+
 
       $ openstack endpoint create --region RegionOne \
-        volume admin http://controller:8776/v1/%\(tenant_id\)s
+        volumev2 internal http://controller:8776/v2/%\(project_id\)s
 
-        +--------------+-----------------------------------------+
-        | Field        | Value                                   |
-        +--------------+-----------------------------------------+
-        | enabled      | True                                    |
-        | id           | 4511c28a0f9840c78bacb25f10f62c98        |
-        | interface    | admin                                   |
-        | region       | RegionOne                               |
-        | region_id    | RegionOne                               |
-        | service_id   | ab3bbbef780845a1a283490d281e7fda        |
-        | service_name | cinder                                  |
-        | service_type | volume                                  |
-        | url          | http://controller:8776/v1/%(tenant_id)s |
-        +--------------+-----------------------------------------+
+      +--------------+------------------------------------------+
+      | Field        | Value                                    |
+      +--------------+------------------------------------------+
+      | enabled      | True                                     |
+      | id           | 6436a8a23d014cfdb69c586eff146a32         |
+      | interface    | internal                                 |
+      | region       | RegionOne                                |
+      | region_id    | RegionOne                                |
+      | service_id   | eb9fd245bdbc414695952e93f29fe3ac         |
+      | service_name | cinderv2                                 |
+      | service_type | volumev2                                 |
+      | url          | http://controller:8776/v2/%(project_id)s |
+      +--------------+------------------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        volumev2 admin http://controller:8776/v2/%\(project_id\)s
+
+      +--------------+------------------------------------------+
+      | Field        | Value                                    |
+      +--------------+------------------------------------------+
+      | enabled      | True                                     |
+      | id           | e652cf84dd334f359ae9b045a2c91d96         |
+      | interface    | admin                                    |
+      | region       | RegionOne                                |
+      | region_id    | RegionOne                                |
+      | service_id   | eb9fd245bdbc414695952e93f29fe3ac         |
+      | service_name | cinderv2                                 |
+      | service_type | volumev2                                 |
+      | url          | http://controller:8776/v2/%(project_id)s |
+      +--------------+------------------------------------------+
 
    .. end
 
    .. code-block:: console
 
       $ openstack endpoint create --region RegionOne \
-        volumev2 public http://controller:8776/v2/%\(tenant_id\)s
+        volumev3 public http://controller:8776/v3/%\(project_id\)s
 
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | 513e73819e14460fb904163f41ef3759        |
-      | interface    | public                                  |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
-      | service_name | cinderv2                                |
-      | service_type | volumev2                                |
-      | url          | http://controller:8776/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
-
-      $ openstack endpoint create --region RegionOne \
-        volumev2 internal http://controller:8776/v2/%\(tenant_id\)s
-
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | 6436a8a23d014cfdb69c586eff146a32        |
-      | interface    | internal                                |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
-      | service_name | cinderv2                                |
-      | service_type | volumev2                                |
-      | url          | http://controller:8776/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+      +--------------+------------------------------------------+
+      | Field        | Value                                    |
+      +--------------+------------------------------------------+
+      | enabled      | True                                     |
+      | id           | 03fa2c90153546c295bf30ca86b1344b         |
+      | interface    | public                                   |
+      | region       | RegionOne                                |
+      | region_id    | RegionOne                                |
+      | service_id   | ab3bbbef780845a1a283490d281e7fda         |
+      | service_name | cinderv3                                 |
+      | service_type | volumev3                                 |
+      | url          | http://controller:8776/v3/%(project_id)s |
+      +--------------+------------------------------------------+
 
       $ openstack endpoint create --region RegionOne \
-        volumev2 admin http://controller:8776/v2/%\(tenant_id\)s
+        volumev3 internal http://controller:8776/v3/%\(project_id\)s
 
-      +--------------+-----------------------------------------+
-      | Field        | Value                                   |
-      +--------------+-----------------------------------------+
-      | enabled      | True                                    |
-      | id           | e652cf84dd334f359ae9b045a2c91d96        |
-      | interface    | admin                                   |
-      | region       | RegionOne                               |
-      | region_id    | RegionOne                               |
-      | service_id   | eb9fd245bdbc414695952e93f29fe3ac        |
-      | service_name | cinderv2                                |
-      | service_type | volumev2                                |
-      | url          | http://controller:8776/v2/%(tenant_id)s |
-      +--------------+-----------------------------------------+
+      +--------------+------------------------------------------+
+      | Field        | Value                                    |
+      +--------------+------------------------------------------+
+      | enabled      | True                                     |
+      | id           | 94f684395d1b41068c70e4ecb11364b2         |
+      | interface    | internal                                 |
+      | region       | RegionOne                                |
+      | region_id    | RegionOne                                |
+      | service_id   | ab3bbbef780845a1a283490d281e7fda         |
+      | service_name | cinderv3                                 |
+      | service_type | volumev3                                 |
+      | url          | http://controller:8776/v3/%(project_id)s |
+      +--------------+------------------------------------------+
+
+      $ openstack endpoint create --region RegionOne \
+        volumev3 admin http://controller:8776/v3/%\(project_id\)s
+
+      +--------------+------------------------------------------+
+      | Field        | Value                                    |
+      +--------------+------------------------------------------+
+      | enabled      | True                                     |
+      | id           | 4511c28a0f9840c78bacb25f10f62c98         |
+      | interface    | admin                                    |
+      | region       | RegionOne                                |
+      | region_id    | RegionOne                                |
+      | service_id   | ab3bbbef780845a1a283490d281e7fda         |
+      | service_name | cinderv3                                 |
+      | service_type | volumev3                                 |
+      | url          | http://controller:8776/v3/%(project_id)s |
+      +--------------+------------------------------------------+
 
    .. end
 
