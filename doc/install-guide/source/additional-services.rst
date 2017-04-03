@@ -15,7 +15,7 @@ support to manage and provision physical machines.
 
 Installation and configuration is documented in the
 `Bare Metal installation guide
-<https://docs.openstack.org/project-install-guide/baremetal/draft/>`_.
+<https://docs.openstack.org/project-install-guide/baremetal/ocata>`_.
 
 Container Infrastructure Management service (magnum)
 ====================================================
@@ -26,7 +26,7 @@ Kubernetes and Mesos available as first class resources in OpenStack.
 
 Installation and configuration is documented in the
 `Container Infrastructure Management installation guide
-<https://docs.openstack.org/project-install-guide/container-infrastructure-management/draft/>`_.
+<https://docs.openstack.org/project-install-guide/container-infrastructure-management/ocata>`_.
 
 Database service (trove)
 ========================
@@ -36,7 +36,7 @@ database engines.
 
 Installation and configuration is documented in the
 `Database installation guide
-<https://docs.openstack.org/project-install-guide/database/draft/>`_.
+<https://docs.openstack.org/project-install-guide/database/ocata>`_.
 
 DNS service (designate)
 ========================
@@ -46,7 +46,7 @@ DNS Zones and Recordsets.
 
 Installation and configuration is documented in the
 `DNS installation guide
-<https://docs.openstack.org/project-install-guide/dns/draft/>`_.
+<https://docs.openstack.org/project-install-guide/dns/ocata>`_.
 
 Key Manager service (barbican)
 ==============================
@@ -56,7 +56,7 @@ of secret data such as passphrases, encryption keys, and X.509 certificates.
 
 Installation and configuration is documented in the
 `Key Manager installation guide
-<https://docs.openstack.org/project-install-guide/key-manager/draft/>`_.
+<https://docs.openstack.org/project-install-guide/key-manager/ocata>`_.
 
 Messaging service (zaqar)
 =========================
@@ -67,7 +67,7 @@ requiring each component to be always available.
 
 Installation and configuration is documented in the
 `Messaging installation guide
-<https://docs.openstack.org/project-install-guide/messaging/draft/>`_.
+<https://docs.openstack.org/project-install-guide/messaging/ocata>`_.
 
 Object Storage services (swift)
 ===============================
@@ -77,7 +77,7 @@ retrieval through a REST API.
 
 Installation and configuration is documented in the
 `Object Storage installation guide
-<https://docs.openstack.org/project-install-guide/object-storage/draft/>`_.
+<https://docs.openstack.org/project-install-guide/object-storage/ocata>`_.
 
 Orchestration service (heat)
 ============================
@@ -89,7 +89,7 @@ to create and manage cloud resources.
 
 Installation and configuration is documented in the
 `Orchestration installation guide
-<https://docs.openstack.org/project-install-guide/orchestration/draft/>`_.
+<https://docs.openstack.org/project-install-guide/orchestration/ocata>`_.
 
 Shared File Systems service (manila)
 ====================================
@@ -99,7 +99,7 @@ or distributed file systems.
 
 Installation and configuration is documented in the
 `Shared File Systems installation guide
-<https://docs.openstack.org/project-install-guide/shared-file-systems/draft/>`_.
+<https://docs.openstack.org/project-install-guide/shared-file-systems/ocata>`_.
 
 Telemetry Alarming services (aodh)
 ==================================
@@ -109,7 +109,7 @@ event data break the defined rules.
 
 Installation and configuration is documented in the
 `Telemetry Alarming installation guide
-<https://docs.openstack.org/project-install-guide/telemetry-alarming/draft/>`_.
+<https://docs.openstack.org/project-install-guide/telemetry-alarming/ocata>`_.
 
 Telemetry Data Collection service (ceilometer)
 ==============================================
@@ -124,4 +124,4 @@ The Telemetry Data Collection services provide the following functions:
 
 Installation and configuration is documented in the
 `Telemetry Data Collection installation guide
-<https://docs.openstack.org/project-install-guide/telemetry/draft/>`_.
+<https://docs.openstack.org/project-install-guide/telemetry/ocata>`_.
