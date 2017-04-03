@@ -115,6 +115,10 @@ Verify operation
 
       Actual output may differ slightly from this example.
 
+
+You can perform further testing of your networking using the
+`neutron-sanity-check command line client <https://docs.openstack.org/cli-reference/neutron-sanity-check.html>`_.
+
 Use the verification section for the networking option that you chose to
 deploy.
 
