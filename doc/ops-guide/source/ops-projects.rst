@@ -42,29 +42,3 @@ description string by appending ``--description PROJECT_DESCRIPTION``,
 which can be very useful. You can also
 create a project in a disabled state by appending ``--disable`` to the
 command. By default, projects are created in an enabled state.
-
-
-Assign a lost IPv4 address back to a project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-#. Using administrator credentials, confirm the lost IP address is still available:
-
-   .. code-block:: console
-
-      # openstack server list --all-project | grep 'IP-ADDRESS'
-
-#. Inform the user to create a port:
-
-   .. code-block:: console
-
-      $ openstack port create --network NETWORK_ID PORT_NAME
-
-#. Update the new port with the IPv4 address:
-
-   .. code-block:: console
-
-      # openstack subnet list
-      # neutron port-update PORT_NAME --request-format=json --fixed-ips \
-      type=dict list=true subnet_id=NETWORK_ID_IPv4_SUBNET_ID \
-      ip_address=IP_ADDRESS  subnet_id=NETWORK_ID_IPv6_SUBNET_ID
-      # openstack port show PORT-NAME

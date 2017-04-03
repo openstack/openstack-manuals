@@ -9,8 +9,8 @@ This chapter aims to give you the information you need to identify any
 issues for ``nova-network`` or OpenStack Networking (neutron) with Linux
 Bridge or Open vSwitch.
 
-Using "ip a" to Check Interface States
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using ip a to Check Interface States
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On compute nodes and nodes running ``nova-network``, use the following
 command to see information about interfaces, including information about
@@ -1052,12 +1052,27 @@ It is also possible to run a shell, such as ``bash``, and have an
 interactive session within the namespace. In the latter case,
 exiting the shell returns you to the top-level default namespace.
 
-Summary
-~~~~~~~
+Assign a lost IPv4 address back to a project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The authors have spent too much time looking at packet dumps in order to
-distill this information for you. We trust that, following the methods
-outlined in this chapter, you will have an easier time. Aside from
-working with the tools and steps above, don't forget that sometimes an
-extra pair of eyes goes a long way to assist.
+#. Using administrator credentials, confirm the lost IP address is still available:
 
+   .. code-block:: console
+
+      # openstack server list --all-project | grep 'IP-ADDRESS'
+
+#. Create a port:
+
+   .. code-block:: console
+
+      $ openstack port create --network NETWORK_ID PORT_NAME
+
+#. Update the new port with the IPv4 address:
+
+   .. code-block:: console
+
+      # openstack subnet list
+      # neutron port-update PORT_NAME --request-format=json --fixed-ips \
+      type=dict list=true subnet_id=NETWORK_ID_IPv4_SUBNET_ID \
+      ip_address=IP_ADDRESS  subnet_id=NETWORK_ID_IPv6_SUBNET_ID
+      # openstack port show PORT-NAME
