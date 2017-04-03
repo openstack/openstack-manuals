@@ -44,7 +44,7 @@ Currently the only available implementation uses iptables for metering.
 
 .. code-block:: ini
 
-   driver = neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver
+   driver = iptables
 
 L3 metering service driver
 --------------------------
