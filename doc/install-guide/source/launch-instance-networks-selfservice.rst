@@ -168,9 +168,9 @@ on at least one self-service network and a gateway on a provider network.
 The provider network must include the ``router:external`` option to
 enable self-service routers to use it for connectivity to external networks
 such as the Internet. The ``admin`` or other privileged user must include this
-option during network creation or add it later. In this case, we already
-did that by providing the ``--external`` parameter when we created the
-``provider`` provider network.
+option during network creation or add it later. In this case, the
+``router:external`` option was set by using the ``--external`` parameter
+when creating the ``provider`` network.
 
 #. On the controller node, source the ``admin`` credentials to gain access to
    admin-only CLI commands:
