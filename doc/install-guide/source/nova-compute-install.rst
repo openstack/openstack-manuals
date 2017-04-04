@@ -471,4 +471,10 @@ Add the compute node to the cell database
 
       When you add new compute nodes, you must run ``nova-manage cell_v2
       discover_hosts`` on the controller node to register those new compute
-      nodes.
+      nodes. Alternatively, you can set an appropriate interval in
+      ``/etc/nova/nova.conf``:
+
+      .. code-block:: ini
+
+         [scheduler]
+         discover_hosts_in_cells_interval = 300
