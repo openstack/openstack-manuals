@@ -43,7 +43,7 @@ Create the provider network
 
    .. code-block:: console
 
-      $ openstack network create  --share \
+      $ openstack network create  --share --external \
         --provider-physical-network provider \
         --provider-network-type flat provider
 
@@ -69,7 +69,7 @@ Create the provider network
       | provider:physical_network | provider                             |
       | provider:segmentation_id  | None                                 |
       | revision_number           | 3                                    |
-      | router:external           | Internal                             |
+      | router:external           | External                             |
       | shared                    | True                                 |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
@@ -80,6 +80,10 @@ Create the provider network
    .. end
 
    The ``--share`` option allows all projects to use the virtual network.
+
+   The ``--external`` option defines the virtual network to be external. If
+   you wish to create an internal network, you can use ``--internal`` instead.
+   Default value is ``internal``.
 
    The ``--provider-physical-network provider`` and
    ``--provider-network-type flat`` options connect the flat virtual network
