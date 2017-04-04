@@ -156,8 +156,12 @@ Committing a change
 
      https://review.openstack.org/<COMMIT-NUMBER>
 
+#. In Gerrit, wait for the automatic Jenkins checks to succeed.
+
 Celebrate and wait for reviews!
 
+.. seealso:: * :ref:`troubleshoot_setup`
+             * :ref:`docs_builds`
 
 Responding to requests
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -290,6 +294,21 @@ git and git review
   For a basic introduction to solving merge conflicts, see the GitHub article
   `Resolving merge conflicts after a git rebase
   <https://help.github.com/articles/resolving-merge-conflicts-after-a-git-rebase/>`_.
+
+* ``FAILURE`` in the ``Jenkins check`` section of your commit in Gerrit
+
+  #. Click the link next to the ``FAILURE`` test.
+  #. Verify the output of the :file:`console.html`:
+
+     * If it contains errors or warnings related to your commit with
+       a problematic file name and line in question, fix the issues and
+       push the new changes on review.
+     * If the issue is not related to your commit, re-run the gate jobs by
+       leaving the word *recheck* in the comments section of your
+       Gerrit review.
+
+  .. seealso:: * `Automated Testing <https://docs.openstack.org/infra/manual/developers.html#automated-testing>`_
+               * :ref:`build_jobs`
 
 Network
 -------
