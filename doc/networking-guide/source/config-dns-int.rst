@@ -560,7 +560,7 @@ In this example, notice that the data is published in the DNS service when the
 floating IP is associated to the port.
 
 Following are the PTR records created for this example. Note that for
-IPv4, the value of ipv4_ptr_zone_prefix_size is 24. For more details, see
+IPv4, the value of ``ipv4_ptr_zone_prefix_size`` is 24. For more details, see
 :ref:`config-dns-int-ext-serv`:
 
 .. code-block:: console
@@ -797,6 +797,16 @@ Once this is done, the user has to take the following steps and restart
    * ``insecure``: Disable SSL certificate validation. By default, certificates
      are validated.
    * ``cafile``: Path to a valid Certificate Authority (CA) certificate.
+   * ``auth_uri``: the unversioned public endpoint of the Identity service.
+   * ``project_domain_id``: the domain ID of the admin user's project.
+   * ``user_domain_id``: the domain ID of the admin user to be used by the
+     Networking service.
+   * ``project_name``: the project of the admin user to be used by the
+     Networking service.
+   * ``username``: the admin user to be used by the Networking service to
+     create and update reverse lookup (PTR) zones.
+   * ``password``: the password of the admin user to be used by
+     Networking service.
 
    The following is an example:
 
@@ -804,10 +814,16 @@ Once this is done, the user has to take the following steps and restart
 
       [designate]
       url = http://55.114.111.93:9001/v2
-      admin_auth_url = http://55.114.111.93:35357/v2.0
+      auth_uri = http://55.114.111.93:5000
+      admin_auth_url = http://55.114.111.93:35357
       admin_username = neutron
-      admin_password = x5G90074
+      admin_password = PASSWORD
       admin_tenant_name = service
+      project_domain_id = default
+      user_domain_id = default
+      project_name = service
+      username = neutron
+      password = PASSWORD
       allow_reverse_dns_lookup = True
       ipv4_ptr_zone_prefix_size = 24
       ipv6_ptr_zone_prefix_size = 116
