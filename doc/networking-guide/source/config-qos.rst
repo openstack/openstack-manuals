@@ -268,8 +268,9 @@ Ports can be created with a policy attached to them too.
 
 You can attach networks to a QoS policy. The meaning of this is that
 any compute port connected to the network will use the network policy by
-default unless the port has a specific policy attached to it. Network owned
-ports like DHCP and router ports are excluded from network policy application.
+default unless the port has a specific policy attached to it. Internal network
+owned ports like DHCP and internal router ports are excluded from network
+policy application.
 
 In order to attach a QoS policy to a network, update an existing
 network, or initially create the network attached to the policy.
