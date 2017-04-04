@@ -19,4 +19,5 @@ location, explains how to install, configure, use, and contribute to them.
    doc-tools/scripts.rst
    doc-tools/installation.rst
    doc-tools/cli-reference.rst
+   doc-tools/config-reference.rst
    doc-tools/contributing.rst
