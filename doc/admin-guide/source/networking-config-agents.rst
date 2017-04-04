@@ -332,7 +332,7 @@ The Neutron Metering agent resides beside neutron-l3-agent.
 
    .. code-block:: ini
 
-      driver = neutron.services.metering.drivers.iptables.iptables_driver.IptablesMeteringDriver
+      driver = iptables
 
 #. Set the ``service_plugins`` option in the ``/etc/neutron/neutron.conf``
    file on the host that runs ``neutron-server``:
