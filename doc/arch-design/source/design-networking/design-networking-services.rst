@@ -27,3 +27,13 @@ consider providing a dynamic DNS service to allow instances to update a
 DNS entry with new IP addresses. You can also consider making a generic
 forward and reverse DNS mapping for instances' IP addresses, such as
 ``vm-203-0-113-123.example.com.``
+
+DHCP
+~~~~
+
+.. TODO
+
+LBaaS
+~~~~~
+
+.. TODO

@@ -9,8 +9,6 @@ Networking
 
    design-networking/design-networking-concepts
    design-networking/design-networking-design
-   design-networking/design-networking-layer2
-   design-networking/design-networking-layer3
    design-networking/design-networking-services
 
 OpenStack provides a rich networking environment. This chapter
