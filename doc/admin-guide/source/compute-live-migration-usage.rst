@@ -26,37 +26,37 @@ Manual selection of the destination host
 
 #. Obtain the ID of the instance you want to migrate:
 
-   ..  code-block:: console
+   .. code-block:: console
 
-       $ openstack server list
+      $ openstack server list
 
-       +--------------------------------------+------+--------+-----------------+------------+
-       | ID                                   | Name | Status | Networks        | Image Name |
-       +--------------------------------------+------+--------+-----------------+------------+
-       | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d | ...        |
-       | d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h | ...        |
-       +--------------------------------------+------+--------+-----------------+------------+
+      +--------------------------------------+------+--------+-----------------+------------+
+      | ID                                   | Name | Status | Networks        | Image Name |
+      +--------------------------------------+------+--------+-----------------+------------+
+      | d1df1b5a-70c4-4fed-98b7-423362f2c47c | vm1  | ACTIVE | private=a.b.c.d | ...        |
+      | d693db9e-a7cf-45ef-a7c9-b3ecb5f22645 | vm2  | ACTIVE | private=e.f.g.h | ...        |
+      +--------------------------------------+------+--------+-----------------+------------+
 
 #. Determine on which host the instance is currently running. In this example,
    ``vm1`` is running on ``HostB``:
 
-   ..  code-block:: console
+   .. code-block:: console
 
-       $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
+      $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
 
-       +----------------------+--------------------------------------+
-       | Field                | Value                                |
-       +----------------------+--------------------------------------+
-       | ...                  | ...                                  |
-       | OS-EXT-SRV-ATTR:host | HostB                                |
-       | ...                  | ...                                  |
-       | addresses            | a.b.c.d                              |
-       | flavor               | m1.tiny                              |
-       | id                   | d1df1b5a-70c4-4fed-98b7-423362f2c47c |
-       | name                 | vm1                                  |
-       | status               | ACTIVE                               |
-       | ...                  | ...                                  |
-       +----------------------+--------------------------------------+
+      +----------------------+--------------------------------------+
+      | Field                | Value                                |
+      +----------------------+--------------------------------------+
+      | ...                  | ...                                  |
+      | OS-EXT-SRV-ATTR:host | HostB                                |
+      | ...                  | ...                                  |
+      | addresses            | a.b.c.d                              |
+      | flavor               | m1.tiny                              |
+      | id                   | d1df1b5a-70c4-4fed-98b7-423362f2c47c |
+      | name                 | vm1                                  |
+      | status               | ACTIVE                               |
+      | ...                  | ...                                  |
+      +----------------------+--------------------------------------+
 
 #. Select the compute node the instance will be migrated to. In this
    example, we will migrate the instance to ``HostC``, because
@@ -64,39 +64,39 @@ Manual selection of the destination host
 
    .. code-block:: console
 
-       $ openstack compute service list
+      $ openstack compute service list
 
-       +----+------------------+-------+----------+---------+-------+----------------------------+
-       | ID | Binary           | Host  | Zone     | Status  | State | Updated At                 |
-       +----+------------------+-------+----------+---------+-------+----------------------------+
-       |  3 | nova-conductor   | HostA | internal | enabled | up    | 2017-02-18T09:42:29.000000 |
-       |  4 | nova-scheduler   | HostA | internal | enabled | up    | 2017-02-18T09:42:26.000000 |
-       |  5 | nova-consoleauth | HostA | internal | enabled | up    | 2017-02-18T09:42:29.000000 |
-       |  6 | nova-compute     | HostB | nova     | enabled | up    | 2017-02-18T09:42:29.000000 |
-       |  7 | nova-compute     | HostC | nova     | enabled | up    | 2017-02-18T09:42:29.000000 |
-       +----+------------------+-------+----------+---------+-------+----------------------------+
+      +----+------------------+-------+----------+---------+-------+----------------------------+
+      | ID | Binary           | Host  | Zone     | Status  | State | Updated At                 |
+      +----+------------------+-------+----------+---------+-------+----------------------------+
+      |  3 | nova-conductor   | HostA | internal | enabled | up    | 2017-02-18T09:42:29.000000 |
+      |  4 | nova-scheduler   | HostA | internal | enabled | up    | 2017-02-18T09:42:26.000000 |
+      |  5 | nova-consoleauth | HostA | internal | enabled | up    | 2017-02-18T09:42:29.000000 |
+      |  6 | nova-compute     | HostB | nova     | enabled | up    | 2017-02-18T09:42:29.000000 |
+      |  7 | nova-compute     | HostC | nova     | enabled | up    | 2017-02-18T09:42:29.000000 |
+      +----+------------------+-------+----------+---------+-------+----------------------------+
 
 #. Check that ``HostC`` has enough resources for migration:
 
-   ..  code-block:: console
+   .. code-block:: console
 
-       # openstack host show HostC
+      $ openstack host show HostC
 
-       +-------+------------+-----+-----------+---------+
-       | Host  | Project    | CPU | Memory MB | Disk GB |
-       +-------+------------+-----+-----------+---------+
-       | HostC | (total)    |  16 |     32232 |     878 |
-       | HostC | (used_now) |  22 |     21284 |     422 |
-       | HostC | (used_max) |  22 |     21284 |     422 |
-       | HostC | p1         |  22 |     21284 |     422 |
-       | HostC | p2         |  22 |     21284 |     422 |
-       +-------+------------+-----+-----------+---------+
+      +-------+------------+-----+-----------+---------+
+      | Host  | Project    | CPU | Memory MB | Disk GB |
+      +-------+------------+-----+-----------+---------+
+      | HostC | (total)    |  16 |     32232 |     878 |
+      | HostC | (used_now) |  22 |     21284 |     422 |
+      | HostC | (used_max) |  22 |     21284 |     422 |
+      | HostC | p1         |  22 |     21284 |     422 |
+      | HostC | p2         |  22 |     21284 |     422 |
+      +-------+------------+-----+-----------+---------+
 
-   -  ``cpu``: Number of CPUs
+   - ``cpu``: Number of CPUs
 
-   -  ``memory_mb``: Total amount of memory, in MB
+   - ``memory_mb``: Total amount of memory, in MB
 
-   -  ``disk_gb``: Total amount of space for NOVA-INST-DIR/instances, in GB
+   - ``disk_gb``: Total amount of space for NOVA-INST-DIR/instances, in GB
 
    In this table, the first row shows the total amount of resources
    available on the physical server. The second line shows the currently
@@ -111,17 +111,17 @@ Manual selection of the destination host
 
 #. Confirm that the instance has been migrated successfully:
 
-   ..  code-block:: console
+   .. code-block:: console
 
-       $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
+      $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
 
-       +----------------------+--------------------------------------+
-       | Field                | Value                                |
-       +----------------------+--------------------------------------+
-       | ...                  | ...                                  |
-       | OS-EXT-SRV-ATTR:host | HostC                                |
-       | ...                  | ...                                  |
-       +----------------------+--------------------------------------+
+      +----------------------+--------------------------------------+
+      | Field                | Value                                |
+      +----------------------+--------------------------------------+
+      | ...                  | ...                                  |
+      | OS-EXT-SRV-ATTR:host | HostC                                |
+      | ...                  | ...                                  |
+      +----------------------+--------------------------------------+
 
    If the instance is still running on ``HostB``, the migration failed. The
    ``nova-scheduler`` and ``nova-conductor`` log files on the controller
@@ -152,17 +152,17 @@ Monitoring the migration
 
 #. Confirm that the instance is migrating:
 
-   ..  code-block:: console
+   .. code-block:: console
 
-       $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
+      $ openstack server show d1df1b5a-70c4-4fed-98b7-423362f2c47c
 
-       +----------------------+--------------------------------------+
-       | Field                | Value                                |
-       +----------------------+--------------------------------------+
-       | ...                  | ...                                  |
-       | status               | MIGRATING                            |
-       | ...                  | ...                                  |
-       +----------------------+--------------------------------------+
+      +----------------------+--------------------------------------+
+      | Field                | Value                                |
+      +----------------------+--------------------------------------+
+      | ...                  | ...                                  |
+      | status               | MIGRATING                            |
+      | ...                  | ...                                  |
+      +----------------------+--------------------------------------+
 
 #. Check progress
 
@@ -264,7 +264,7 @@ network and disks, you may opt to cancel it manually.
 
 .. code-block:: console
 
-     $ nova live-migration-abort INSTANCE_ID MIGRATION_ID
+   $ nova live-migration-abort INSTANCE_ID MIGRATION_ID
 
 To make live-migration succeed, you have several options:
 
@@ -278,9 +278,10 @@ To make live-migration succeed, you have several options:
 
   .. caution::
 
-    Since the pause impacts
-    time keeping on the instance and not all applications tolerate incorrect
-    time settings, use this approach with caution.
+     Since the pause impacts
+     time keeping on the instance and not all applications
+     tolerate incorrect time settings, use this approach
+     with caution.
 
 - **Enable auto-convergence**
 
@@ -294,8 +295,8 @@ To make live-migration succeed, you have several options:
 
   .. caution::
 
-    One possible downside of auto-convergence is the slowing down of the
-    instance.
+     One possible downside of auto-convergence is the slowing
+     down of the instance.
 
 - **Enable post-copy**
 
