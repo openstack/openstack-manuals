@@ -318,6 +318,28 @@ The following meters are collected for OpenStack Compute.
 |           |       | ance | ID       | ation,   | Hyper-V,| instance         |
 |           |       |      |          | Pollster | vSphere |                  |
 +-----------+-------+------+----------+----------+---------+------------------+
+| **Meters added in the Ocata release**                                       |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Cumul\| pack\| interface| Pollster | Libvirt | Number of        |
+| incoming\ | ative | et   | ID       |          |         | incoming dropped |
+| .packets\ |       |      |          |          |         | packets          |
+| .drop     |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Cumul\| pack\| interface| Pollster | Libvirt | Number of        |
+| outgoing\ | ative | et   | ID       |          |         | outgoing dropped |
+| .packets\ |       |      |          |          |         | packets          |
+| .drop     |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Cumul\| pack\| interface| Pollster | Libvirt | Number of        |
+| incoming\ | ative | et   | ID       |          |         | incoming error   |
+| .packets\ |       |      |          |          |         | packets          |
+| .error    |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
+| network.\ | Cumul\| pack\| interface| Pollster | Libvirt | Number of        |
+| outgoing\ | ative | et   | ID       |          |         | outgoing error   |
+| .packets\ |       |      |          |          |         | packets          |
+| .error    |       |      |          |          |         |                  |
++-----------+-------+------+----------+----------+---------+------------------+
 
 The Telemetry service supports to create new meters by using
 transformers. For more details about transformers see
