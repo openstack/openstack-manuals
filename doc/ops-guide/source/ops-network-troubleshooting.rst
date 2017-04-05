@@ -1076,3 +1076,19 @@ Assign a lost IPv4 address back to a project
       type=dict list=true subnet_id=NETWORK_ID_IPv4_SUBNET_ID \
       ip_address=IP_ADDRESS  subnet_id=NETWORK_ID_IPv6_SUBNET_ID
       # openstack port show PORT-NAME
+
+Tools for automated neutron diagnosis
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`easyOVS <https://github.com/yeasy/easyOVS>`_ is a useful tool when it comes
+to operating your OpenvSwitch bridges and iptables on your OpenStack platform.
+It automatically associates the virtual ports with the VM MAC/IP, VLAN tag
+and namespace information, as well as the iptables rules for VMs.
+
+`Don <https://github.com/openstack/python-don>`_ is another convenient network
+analysis and diagnostic syetem that provides a completely automated service
+for verifying and diagnosing the networking functionality provided by OVS.
+
+Additionally, you can refer to
+`neutron debug <https://docs.openstack.org/cli-reference/neutron-debug.html>`_
+for more options.
