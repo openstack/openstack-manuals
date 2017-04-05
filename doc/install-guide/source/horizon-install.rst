@@ -181,13 +181,13 @@ Install and configure components
 
         .. end
 
-      * Configure ``default`` as the default domain for users that you create
+      * Configure ``Default`` as the default domain for users that you create
         via the dashboard:
 
         .. path /srv/www/openstack-dashboard/openstack_dashboard/local/local_settings.py
         .. code-block:: python
 
-           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"
 
         .. end
 
@@ -320,13 +320,13 @@ Install and configure components
 
         .. end
 
-      * Configure ``default`` as the default domain for users that you create
+      * Configure ``Default`` as the default domain for users that you create
         via the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings
         .. code-block:: python
 
-           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"
 
         .. end
 
@@ -463,13 +463,13 @@ Install and configure components
 
         .. end
 
-      * Configure ``default`` as the default domain for users that you create
+      * Configure ``Default`` as the default domain for users that you create
         via the dashboard:
 
         .. path /etc/openstack-dashboard/local_settings.py
         .. code-block:: python
 
-           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "default"
+           OPENSTACK_KEYSTONE_DEFAULT_DOMAIN = "Default"
 
         .. end
 
