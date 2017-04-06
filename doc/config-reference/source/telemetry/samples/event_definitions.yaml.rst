@@ -11,4 +11,4 @@ traits that operators may find useful.
 
 .. remote-code-block:: yaml
 
-   https://git.openstack.org/cgit/openstack/ceilometer/plain/etc/ceilometer/event_definitions.yaml?h=stable/newton
+   https://git.openstack.org/cgit/openstack/ceilometer/plain/etc/ceilometer/event_definitions.yaml?h=stable/ocata
