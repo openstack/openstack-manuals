@@ -35,7 +35,7 @@ drives by specifying different flavors.
 For example, if your image was created with a 5 GB disk, and you
 launch an instance with a flavor of ``m1.small``.
 The resulting virtual machine instance has, by default,
-a primary disk size of 10 GB. When the disk for an instance is
+a primary disk size of 20 GB. When the disk for an instance is
 resized up, zeros are just added to the end.
 
 Your image must be able to resize its partitions on boot to
