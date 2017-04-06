@@ -7,4 +7,4 @@ service.
 
 .. remote-code-block:: none
 
-   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/api-paste.ini?h=stable/newton
+   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/api-paste.ini?h=stable/ocata
