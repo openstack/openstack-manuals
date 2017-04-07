@@ -23,7 +23,7 @@ Bare Metal service (ironic) command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service (ironic) API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.11.1``.
+This chapter documents :command:`ironic` version ``1.12.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -635,8 +635,15 @@ ironic node-create
 
    usage: ironic node-create [-c <chassis>] -d <driver> [-i <key=value>]
                              [-p <key=value>] [-e <key=value>] [-u <uuid>]
-                             [-n <name>]
+                             [-n <name>] [--boot-interface <boot-interface>]
+                             [--console-interface <console-interface>]
+                             [--deploy-interface <deploy-interface>]
+                             [--inspect-interface <inspect-interface>]
+                             [--management-interface <management-interface>]
                              [--network-interface <network_interface>]
+                             [--power-interface <power-interface>]
+                             [--raid-interface <raid-interface>]
+                             [--vendor-interface <vendor-interface>]
                              [--resource-class <resource_class>]
 
 Register a new node with the Ironic service.
@@ -666,9 +673,49 @@ Register a new node with the Ironic service.
 ``-n <name>, --name <name>``
   Unique name for the node.
 
+``--boot-interface <boot-interface>``
+  Boot interface used by the node's driver. This is only
+  applicable when the specified --driver is a hardware
+  type.
+
+``--console-interface <console-interface>``
+  Console interface used by the node's driver. This is
+  only applicable when the specified --driver is a
+  hardware type.
+
+``--deploy-interface <deploy-interface>``
+  Deploy interface used by the node's driver. This is
+  only applicable when the specified --driver is a
+  hardware type.
+
+``--inspect-interface <inspect-interface>``
+  Inspect interface used by the node's driver. This is
+  only applicable when the specified --driver is a
+  hardware type.
+
+``--management-interface <management-interface>``
+  Management interface used by the node's driver. This
+  is only applicable when the specified --driver is a
+  hardware type.
+
 ``--network-interface <network_interface>``
   Network interface used for switching node to
   cleaning/provisioning networks.
+
+``--power-interface <power-interface>``
+  Power interface used by the node's driver. This is
+  only applicable when the specified --driver is a
+  hardware type.
+
+``--raid-interface <raid-interface>``
+  RAID interface used by the node's driver. This is only
+  applicable when the specified --driver is a hardware
+  type.
+
+``--vendor-interface <vendor-interface>``
+  Vendor interface used by the node's driver. This is
+  only applicable when the specified --driver is a
+  hardware type.
 
 ``--resource-class <resource_class>``
   Resource class for classifying or grouping nodes.
