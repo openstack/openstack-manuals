@@ -1055,7 +1055,8 @@ exiting the shell returns you to the top-level default namespace.
 Assign a lost IPv4 address back to a project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Using administrator credentials, confirm the lost IP address is still available:
+#. Using administrator credentials, confirm the lost IP address is still
+   available:
 
    .. code-block:: console
 
@@ -1086,7 +1087,7 @@ It automatically associates the virtual ports with the VM MAC/IP, VLAN tag
 and namespace information, as well as the iptables rules for VMs.
 
 `Don <https://github.com/openstack/python-don>`_ is another convenient network
-analysis and diagnostic syetem that provides a completely automated service
+analysis and diagnostic system that provides a completely automated service
 for verifying and diagnosing the networking functionality provided by OVS.
 
 Additionally, you can refer to
