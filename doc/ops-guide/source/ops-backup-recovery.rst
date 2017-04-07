@@ -177,7 +177,6 @@ full recovery of ``nova`` on the cloud controller, first stop all
 .. code-block:: console
 
    # stop nova-api
-   # stop nova-cert
    # stop nova-consoleauth
    # stop nova-novncproxy
    # stop nova-objectstore
@@ -201,7 +200,7 @@ Once the files are restored, start everything back up:
 .. code-block:: console
 
    # start mysql
-   # for i in nova-api nova-cert nova-consoleauth nova-novncproxy \
+   # for i in nova-api nova-consoleauth nova-novncproxy \
      nova-objectstore nova-scheduler
    > do
    > start $i
