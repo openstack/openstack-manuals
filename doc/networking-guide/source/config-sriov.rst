@@ -40,8 +40,9 @@ SR-IOV agent
 ------------
 
 The SR-IOV agent allows you to set the admin state of ports, configure port
-security (enable and disable spoof checking), and configure QoS rate limiting.
-You must include the SR-IOV agent on each compute node using SR-IOV ports.
+security (enable and disable spoof checking), and configure QoS rate limiting
+and minimum bandwidth. You must include the SR-IOV agent on each compute node
+using SR-IOV ports.
 
 .. note::
 
