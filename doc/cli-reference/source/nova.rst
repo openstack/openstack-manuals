@@ -23,7 +23,7 @@ Compute service (nova) command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service (nova) API and its extensions.
 
-This chapter documents :command:`nova` version ``7.1.0``.
+This chapter documents :command:`nova` version ``8.0.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -152,41 +152,8 @@ nova usage
 ``diagnostics``
   Retrieve server diagnostics.
 
-``dns-create``
-  **DEPRECATED**: Create a DNS entry for domain,
-  name, and IP.
-
-``dns-create-private-domain``
-  **DEPRECATED**: Create the specified DNS domain.
-
-``dns-create-public-domain``
-  **DEPRECATED**: Create the specified DNS domain.
-
-``dns-delete``
-  **DEPRECATED**: Delete the specified DNS entry.
-
-``dns-delete-domain``
-  **DEPRECATED**: Delete the specified DNS domain.
-
-``dns-domains``
-  **DEPRECATED**: Print a list of available dns
-  domains.
-
-``dns-list``
-  **DEPRECATED**: List current DNS entries for
-  domain and IP or domain and name.
-
 ``evacuate``
   Evacuate server from failed host.
-
-``fixed-ip-get``
-  **DEPRECATED**: Retrieve info on a fixed IP.
-
-``fixed-ip-reserve``
-  **DEPRECATED**: Reserve a fixed IP.
-
-``fixed-ip-unreserve``
-  **DEPRECATED**: Unreserve a fixed IP.
 
 ``flavor-access-add``
   Add flavor access for the given tenant.
@@ -217,33 +184,9 @@ nova usage
 ``floating-ip-associate``
   Associate a floating IP address to a server.
 
-``floating-ip-bulk-create``
-  **DEPRECATED**: Bulk create floating IPs by range
-  (nova-network only).
-
-``floating-ip-bulk-delete``
-  **DEPRECATED**: Bulk delete floating IPs by range
-  (nova-network only).
-
-``floating-ip-bulk-list``
-  **DEPRECATED**: List all floating IPs (nova-network only).
-
-``floating-ip-create``
-  **DEPRECATED**: Allocate a floating IP for the
-  current tenant.
-
-``floating-ip-delete``
-  **DEPRECATED**: De-allocate a floating IP.
-
 ``floating-ip-disassociate``
   Disassociate a floating IP address from a
   server.
-
-``floating-ip-list``
-  **DEPRECATED**: List floating IPs.
-
-``floating-ip-pool-list``
-  **DEPRECATED**: List all floating IP pools.
 
 ``force-delete``
   Force delete a server.
@@ -334,21 +277,6 @@ nova usage
 ``image-create``
   Create a new image by taking a snapshot of a
   running server.
-
-``image-delete``
-  **DEPRECATED**: Delete specified image(s).
-
-``image-list``
-  **DEPRECATED**: Print a list of available images
-  to boot from.
-
-``image-meta``
-  **DEPRECATED**: Set or delete metadata on an
-  image.
-
-``image-show``
-  **DEPRECATED**: Show details about the given
-  image.
 
 ``instance-action``
   Show an action.
@@ -443,30 +371,6 @@ nova usage
 ``migration-list``
   Print a list of migrations.
 
-``network-associate-host``
-  **DEPRECATED**: Associate host with network.
-
-``network-associate-project``
-  **DEPRECATED**: Associate project with network.
-
-``network-create``
-  **DEPRECATED**: Create a network.
-
-``network-delete``
-  **DEPRECATED**: Delete network by label or id.
-
-``network-disassociate``
-  **DEPRECATED**: Disassociate host and/or project
-  from the given network.
-
-``network-list``
-  **DEPRECATED**: Print a list of available
-  networks.
-
-``network-show``
-  **DEPRECATED**: Show details about the given
-  network.
-
 ``pause``
   Pause a server.
 
@@ -537,56 +441,6 @@ nova usage
 
 ``resume``
   Resume a server.
-
-``scrub``
-  **DEPRECATED**: Delete networks and security
-  groups associated with a project.
-
-``secgroup-add-default-rule``
-  **DEPRECATED**: Add a rule to the set of rules
-  that will be added to the 'default' security
-  group for new tenants (nova-network only).
-
-``secgroup-add-group-rule``
-  **DEPRECATED**: Add a source group rule to a
-  security group.
-
-``secgroup-add-rule``
-  **DEPRECATED**: Add a rule to a security group.
-
-``secgroup-create``
-  **DEPRECATED**: Create a security group.
-
-``secgroup-delete``
-  **DEPRECATED**: Delete a security group.
-
-``secgroup-delete-default-rule``
-  **DEPRECATED**: Delete a rule from the set of
-  rules that will be added to the 'default'
-  security group for new tenants (nova-network
-  only).
-
-``secgroup-delete-group-rule``
-  **DEPRECATED**: Delete a source group rule from a
-  security group.
-
-``secgroup-delete-rule``
-  **DEPRECATED**: Delete a rule from a security
-  group.
-
-``secgroup-list``
-  **DEPRECATED**: List security groups for the
-  current tenant.
-
-``secgroup-list-default-rules``
-  **DEPRECATED**: List rules that will be added to
-  the 'default' security group for new tenants.
-
-``secgroup-list-rules``
-  **DEPRECATED**: List rules for a security group.
-
-``secgroup-update``
-  **DEPRECATED**: Update a security group.
 
 ``server-group-create``
   Create a new server group with the specified
@@ -790,42 +644,6 @@ nova usage
 ``help``
   Display help about this program or one of its
   subcommands.
-
-``baremetal-interface-list``
-  **DEPRECATED**: List network interfaces associated
-  with a baremetal node.
-
-``baremetal-node-list``
-  **DEPRECATED**: Print list of available baremetal
-  nodes.
-
-``baremetal-node-show``
-  **DEPRECATED**: Show information about a baremetal
-  node.
-
-``net``
-  **DEPRECATED**, use tenant-network-show instead.
-
-``net-create``
-  **DEPRECATED**, use tenant-network-create instead.
-
-``net-delete``
-  **DEPRECATED**, use tenant-network-delete instead.
-
-``net-list``
-  **DEPRECATED**, use tenant-network-list instead.
-
-``tenant-network-create``
-  **DEPRECATED**: Create a tenant network.
-
-``tenant-network-delete``
-  **DEPRECATED**: Delete a tenant network.
-
-``tenant-network-list``
-  **DEPRECATED**: List tenant networks.
-
-``tenant-network-show``
-  **DEPRECATED**: Show a tenant network.
 
 .. _nova_command_options:
 
@@ -2779,6 +2597,8 @@ Print a list of migrations.
 
 ``--cell_name <cell_name>``
   Fetch migrations for the given cell_name.
+  (Deprecated; this option is not supported, and will
+  be removed after version 8.0.0.)
 
 .. _nova_pause:
 
