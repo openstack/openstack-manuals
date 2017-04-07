@@ -98,7 +98,9 @@ names as arguments:
 .. code-block:: console
 
    $ ./autohelp-wrapper update cinder heat
-   $ # edit the mappings files
+
+   // edit the mappings files
+
    $ ./autohelp-wrapper rst cinder heat
 
 Flagmappings files
@@ -110,9 +112,9 @@ the openstack-manuals project. Not all projects use flagmapping files. These
 projects disabled by a ``$project.disable`` file in that folder. Flag mapping
 files use the following format:
 
-   .. code-block:: ini
+.. code-block:: ini
 
-      OPTION_SECTION/OPTION_NAME group1 [group2, ...]
+   OPTION_SECTION/OPTION_NAME group1 [group2, ...]
 
 Groups need to be defined manually to organize the configuration tables.
 
