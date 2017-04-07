@@ -8,4 +8,4 @@ deleted. Its configuration is stored in the ``glance-scrubber.conf`` file.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-scrubber.conf?h=stable/newton
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-scrubber.conf?h=stable/ocata
