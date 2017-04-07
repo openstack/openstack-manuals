@@ -79,16 +79,16 @@ Use these commands to manage per-project quotas:
 neutron quota-delete
     Delete defined quotas for a specified project
 
-neutron quota-list
+openstack quota show
     Lists defined quotas for all projects
 
-neutron quota-show
+openstack quota show PROJECT_ID
     Shows quotas for a specified project
 
 neutron quota-default-show
-    Show default quotas for a specified tenant
+    Show default quotas for a specified project
 
-neutron quota-update
+openstack quota set
     Updates quotas for a specified project
 
 Only users with the ``admin`` role can change a quota value. By default,
