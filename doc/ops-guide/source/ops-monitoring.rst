@@ -40,7 +40,6 @@ configuration of the environment, but can include:
 * nova-scheduler
 * nova-conductor
 * nova-novncproxy
-* nova-cert
 * nova-compute
 
 **Block Storage service (cinder)**

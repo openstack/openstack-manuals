@@ -447,7 +447,6 @@ production environment, but they might not work for all environments.
          neutron-plugin-openvswitch-agent                install
          neutron-server                                  install
          nova-api                                        install
-         nova-cert                                       install
          nova-common                                     install
          nova-conductor                                  install
          nova-consoleauth                                install
@@ -523,7 +522,6 @@ production environment, but they might not work for all environments.
          neutron-metadata-agent=2:9.0.0-0ubuntu1~cloud0
          neutron-server=2:9.0.0-0ubuntu1~cloud0
          nova-api=2:14.0.1-0ubuntu1~cloud0
-         nova-cert=2:14.0.1-0ubuntu1~cloud0
          nova-common=2:14.0.1-0ubuntu1~cloud0
          nova-conductor=2:14.0.1-0ubuntu1~cloud0
          nova-consoleauth=2:14.0.1-0ubuntu1~cloud0
