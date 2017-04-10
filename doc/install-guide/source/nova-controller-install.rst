@@ -676,6 +676,13 @@ Finalize installation
 
 .. only:: obs
 
+   * Enable the placement API Apache vhost:
+
+     .. code-block:: console
+
+        # mv /etc/apache2/vhosts.d/nova-placement-api.conf.sample /etc/apache2/vhosts.d/nova-placement-api.conf
+        # systemctl reload apache2.service
+
    * Start the Compute services and configure them to start
      when the system boots:
 
