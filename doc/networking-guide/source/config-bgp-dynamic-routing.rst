@@ -36,7 +36,7 @@ The example configuration involves the following components:
 * One BGP agent.
 
 * One address scope containing IP address range 203.0.113.0/24 for
-  provider networks, and IP address ranges 10.0.1.0/24 and 10.0.2.0/24
+  provider networks, and IP address ranges 192.0.2.0/25 and 192.0.2.128/25
   for self-service networks.
 
 * One provider network using IP address range 203.0.113.0/24.
@@ -46,18 +46,18 @@ The example configuration involves the following components:
   * Self-service networks 1 and 2 use IP address ranges inside of
     the address scope.
 
-  * Self-service network 3 uses a unique IP address range 10.0.3.0/24 to
+  * Self-service network 3 uses a unique IP address range 198.51.100.0/24 to
     demonstrate that the BGP speaker does not advertise prefixes outside
     of address scopes.
 
 * Three routers. Each router connects one self-service network to the
   provider network.
 
-  * Router 1 contains IP addresses 203.0.113.11 and 10.0.1.1.
+  * Router 1 contains IP addresses 203.0.113.11 and 192.0.2.1
 
-  * Router 2 contains IP addresses 203.0.113.12 and 10.0.2.1.
+  * Router 2 contains IP addresses 203.0.113.12 and 192.0.2.129
 
-  * Router 3 contains IP addresses 203.0.113.13 and 10.0.3.1.
+  * Router 3 contains IP addresses 203.0.113.13 and 198.51.100.1
 
 .. note::
 
@@ -177,8 +177,8 @@ Create the address scope and subnet pools
 
      .. code-block:: console
 
-        $ openstack subnet pool create --pool-prefix 10.0.1.0/24 \
-          --pool-prefix 10.0.2.0/24 --address-scope bgp \
+        $ openstack subnet pool create --pool-prefix 192.0.2.0/25 \
+          --pool-prefix 192.0.2.128/25 --address-scope bgp \
           --share selfservice
 
         +-------------------+--------------------------------------+
@@ -196,7 +196,7 @@ Create the address scope and subnet pools
         | max_prefixlen     | 32                                   |
         | min_prefixlen     | 8                                    |
         | name              | selfservice                          |
-        | prefixes          | 10.0.1.0/24, 10.0.2.0/24             |
+        | prefixes          | 192.0.2.0/25, 192.0.2.128/25         |
         | project_id        | 86acdbd1d72745fd8e8320edd7543400     |
         | revision_number   | 1                                    |
         | shared            | True                                 |
@@ -378,83 +378,83 @@ Create the provider and self-service networks
    .. code-block:: console
 
       $ neutron subnet-create --name selfservice1 --subnetpool selfservice \
-        --prefixlen 24 selfservice1
+        --prefixlen 25 selfservice1
       Created a new subnet:
-      +-------------------+--------------------------------------------+
-      | Field             | Value                                      |
-      +-------------------+--------------------------------------------+
-      | allocation_pools  | {"start": "10.0.1.2", "end": "10.0.1.254"} |
-      | cidr              | 10.0.1.0/24                                |
-      | created_at        | 2016-03-17T23:20:20                        |
-      | description       |                                            |
-      | dns_nameservers   |                                            |
-      | enable_dhcp       | True                                       |
-      | gateway_ip        | 10.0.1.1                                   |
-      | host_routes       |                                            |
-      | id                | 8edd3dc2-df40-4d71-816e-a4586d61c809       |
-      | ip_version        | 4                                          |
-      | ipv6_address_mode |                                            |
-      | ipv6_ra_mode      |                                            |
-      | name              | selfservice1                               |
-      | network_id        | be79de1e-5f56-11e6-9dfb-233e41cec48c       |
-      | subnetpool_id     | c7e9737a-cfd3-45b5-a861-d1cee1135a92       |
-      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d           |
-      | updated_at        | 2016-03-17T23:20:20                        |
-      +-------------------+--------------------------------------------+
+      +-------------------+----------------------------------------------------+
+      | Field             | Value                                              |
+      +-------------------+----------------------------------------------------+
+      | allocation_pools  | {"start": "192.0.2.2", "end": "192.0.2.127"}       |
+      | cidr              | 192.0.2.0/25                                       |
+      | created_at        | 2016-03-17T23:20:20                                |
+      | description       |                                                    |
+      | dns_nameservers   |                                                    |
+      | enable_dhcp       | True                                               |
+      | gateway_ip        | 198.51.100.1                                       |
+      | host_routes       |                                                    |
+      | id                | 8edd3dc2-df40-4d71-816e-a4586d61c809               |
+      | ip_version        | 4                                                  |
+      | ipv6_address_mode |                                                    |
+      | ipv6_ra_mode      |                                                    |
+      | name              | selfservice1                                       |
+      | network_id        | be79de1e-5f56-11e6-9dfb-233e41cec48c               |
+      | subnetpool_id     | c7e9737a-cfd3-45b5-a861-d1cee1135a92               |
+      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d                   |
+      | updated_at        | 2016-03-17T23:20:20                                |
+      +-------------------+----------------------------------------------------+
 
       $ neutron subnet-create --name selfservice2 --subnetpool selfservice \
-        --prefixlen 24 selfservice2
+        --prefixlen 25 selfservice2
       Created a new subnet:
-      +-------------------+--------------------------------------------+
-      | Field             | Value                                      |
-      +-------------------+--------------------------------------------+
-      | allocation_pools  | {"start": "10.0.2.2", "end": "10.0.2.254"} |
-      | cidr              | 10.0.2.0/24                                |
-      | created_at        | 2016-03-17T23:20:20                        |
-      | description       |                                            |
-      | dns_nameservers   |                                            |
-      | enable_dhcp       | True                                       |
-      | gateway_ip        | 10.0.2.1                                   |
-      | host_routes       |                                            |
-      | id                | 8edd3dc2-df40-4d71-816e-a4586d61c809       |
-      | ip_version        | 4                                          |
-      | ipv6_address_mode |                                            |
-      | ipv6_ra_mode      |                                            |
-      | name              | selfservice2                               |
-      | network_id        | c1fd9846-5f56-11e6-a8ac-0f998d9cc0a2       |
-      | subnetpool_id     | c7e9737a-cfd3-45b5-a861-d1cee1135a92       |
-      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d           |
-      | updated_at        | 2016-03-17T23:20:20                        |
-      +-------------------+--------------------------------------------+
+      +-------------------+------------------------------------------------+
+      | Field             | Value                                          |
+      +-------------------+------------------------------------------------+
+      | allocation_pools  | {"start": "192.0.2.130", "end": "192.0.2.254"} |
+      | cidr              | 192.0.2.128/25                                 |
+      | created_at        | 2016-03-17T23:20:20                            |
+      | description       |                                                |
+      | dns_nameservers   |                                                |
+      | enable_dhcp       | True                                           |
+      | gateway_ip        | 192.0.2.129                                    |
+      | host_routes       |                                                |
+      | id                | 8edd3dc2-df40-4d71-816e-a4586d61c809           |
+      | ip_version        | 4                                              |
+      | ipv6_address_mode |                                                |
+      | ipv6_ra_mode      |                                                |
+      | name              | selfservice2                                   |
+      | network_id        | c1fd9846-5f56-11e6-a8ac-0f998d9cc0a2           |
+      | subnetpool_id     | c7e9737a-cfd3-45b5-a861-d1cee1135a92           |
+      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d               |
+      | updated_at        | 2016-03-17T23:20:20                            |
+      +-------------------+------------------------------------------------+
 
 #. Create a subnet on the last self-service network using an IP address
    range outside of the address scope.
 
    .. code-block:: console
 
-      $ neutron subnet-create --name subnet3 selfservice3 10.0.3.0/24
+      $ neutron subnet-create --name subnet3 selfservice3 198.51.100.0/24
       Created a new subnet:
-      +-------------------+--------------------------------------------+
-      | Field             | Value                                      |
-      +-------------------+--------------------------------------------+
-      | allocation_pools  | {"start": "10.0.3.2", "end": "10.0.3.254"} |
-      | cidr              | 10.0.3.0/24                                |
-      | created_at        | 2016-03-17T23:20:20                        |
-      | description       |                                            |
-      | dns_nameservers   |                                            |
-      | enable_dhcp       | True                                       |
-      | gateway_ip        | 10.0.3.1                                   |
-      | host_routes       |                                            |
-      | id                | cd9f9156-5f59-11e6-aeec-172ec7ee939a       |
-      | ip_version        | 4                                          |
-      | ipv6_address_mode |                                            |
-      | ipv6_ra_mode      |                                            |
-      | name              | selfservice3                               |
-      | network_id        | c283dc1c-5f56-11e6-bfb6-efc30e1eb73b       |
-      | subnetpool_id     |                                            |
-      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d           |
-      | updated_at        | 2016-03-17T23:20:20                        |
-      +-------------------+--------------------------------------------+
+      +-------------------+----------------------------------------------------+
+      | Field             | Value                                              |
+      +-------------------+----------------------------------------------------+
+      | allocation_pools  | {"start": "198.51.100.2", "end": "198.51.100.254"} |
+      | cidr              | 198.51.100.0/24                                    |
+      | created_at        | 2016-03-17T23:20:20                                |
+      | description       |                                                    |
+      | dns_nameservers   |                                                    |
+      | enable_dhcp       | True                                               |
+      | gateway_ip        | 198.51.100.1                                       |
+      | host_routes       |                                                    |
+      | id                | cd9f9156-5f59-11e6-aeec-172ec7ee939a               |
+      | ip_version        | 4                                                  |
+      | ipv6_address_mode |                                                    |
+      | ipv6_ra_mode      |                                                    |
+      | name              | selfservice3                                       |
+      | network_id        | c283dc1c-5f56-11e6-bfb6-efc30e1eb73b               |
+      | subnetpool_id     |                                                    |
+      | tenant_id         | b3ac05ef10bf441fbf4aa17f16ae1e6d                   |
+      | updated_at        | 2016-03-17T23:20:20                                |
+      +-------------------+----------------------------------------------------+
 
 Create and configure the routers
 --------------------------------
@@ -625,12 +625,12 @@ networks and floating IP addresses for instances using those networks.
    .. code-block:: console
 
       $ neutron bgp-speaker-advertiseroute-list bgpspeaker
-      +-------------+--------------+
-      | destination | next_hop     |
-      +-------------+--------------+
-      | 10.0.1.0/24 | 203.0.113.11 |
-      | 10.0.2.0/24 | 203.0.113.12 |
-      +-------------+--------------+
+      +-----------------+--------------+
+      | destination     | next_hop     |
+      +-----------------+--------------+
+      | 192.0.2.0/25    | 203.0.113.11 |
+      | 192.0.2.128/25  | 203.0.113.12 |
+      +-----------------+--------------+
 
 #. Create a BGP peer.
 
@@ -770,7 +770,7 @@ For example, consider the following components:
 #. A provider network using IP address range 203.0.113.0/24, and supporting
    floating IP addresses 203.0.113.101, 203.0.113.102, and 203.0.113.103.
 
-#. A self-service network using IP address range 10.0.1.0/24.
+#. A self-service network using IP address range 198.51.100.0/24.
 
 #. The SNAT gateway resides on 203.0.113.11.
 
@@ -786,7 +786,7 @@ For example, consider the following components:
     +------------------+--------------+
     | destination      | next_hop     |
     +------------------+--------------+
-    | 10.0.1.0/24      | 203.0.113.11 |
+    | 198.51.100.0/24  | 203.0.113.11 |
     | 203.0.113.101/32 | 203.0.113.12 |
     | 203.0.113.102/32 | 203.0.113.13 |
     | 203.0.113.103/32 | 203.0.113.14 |
