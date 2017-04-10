@@ -229,6 +229,21 @@ Ceph's advantages include:
 You should consider Ceph if you want to manage your object and block storage
 within a single system, or if you want to support fast boot-from-volume.
 
+Gluster
+-------
+
+A distributed shared file system. As of Gluster version 3.3, you
+can use Gluster to consolidate your object storage and file storage
+into one unified file and object storage solution, which is called
+Gluster For OpenStack (GFO). GFO uses a customized version of swift
+that enables Gluster to be used as the back-end storage.
+
+The main reason to use GFO rather than swift is if you also
+want to support a distributed file system, either to support shared
+storage live migration or to provide it as a separate service to
+your end users. If you want to manage your object and file storage
+within a single system, you should consider GFO.
+
 LVM
 ---
 
@@ -249,6 +264,51 @@ Blocks are created from LVM logical volumes.
    However, RAID does not protect against a failure of the entire
    host.
 
+iSCSI
+-----
+
+Internet Small Computer Systems Interface (iSCSI) is a network protocol that
+operates on top of the Transport Control Protocol (TCP) for linking data
+storage devices. It transports data between an iSCSI initiator on a server
+and iSCSI target on a storage device.
+
+iSCSI is suitable for cloud environments with Block Storage service to support
+applications or for file sharing systems. Network connectivity can be
+achieved at a lower cost compared to other storage back end technologies since
+iSCSI does not require host bus adaptors (HBA) or storage-specific network
+devices.
+
+.. Add tips? iSCSI traffic on a separate network or virtual vLAN?
+
+NFS
+---
+
+Network File System (NFS) is a file system protocol that allows a user or
+administrator to mount a file system on a server. File clients can access
+mounted file systems through Remote Procedure Calls (RPC).
+
+The benefits of NFS is low implementation cost due to shared NICs and
+traditional network components, and a simpler configuration and setup process.
+
+For more information on configuring Block Storage to use NFS storage, see
+`Configure an NFS storage back end
+<https://docs.openstack.org/admin-guide/blockstorage-nfs-backend.html>`_ in the
+OpenStack Administrator Guide.
+
+Sheepdog
+--------
+
+Sheepdog is a userspace distributed storage system. Sheepdog scales
+to several hundred nodes, and has powerful virtual disk management
+features like snapshot, cloning, rollback and thin provisioning.
+
+It is essentially an object storage system that manages disks and
+aggregates the space and performance of disks linearly in hyper
+scale on commodity hardware in a smart way. On top of its object store,
+Sheepdog provides elastic volume service and http service.
+Sheepdog does require a specific kernel version and can work
+nicely with xattr-supported file systems.
+
 ZFS
 ---
 
@@ -266,42 +326,3 @@ distributions, and it has not been tested with OpenStack Block
 Storage. As with LVM, ZFS does not provide replication across hosts
 on its own, you need to add a replication solution on top of ZFS if
 your cloud needs to be able to handle storage-node failures.
-
-Gluster
--------
-
-A distributed shared file system. As of Gluster version 3.3, you
-can use Gluster to consolidate your object storage and file storage
-into one unified file and object storage solution, which is called
-Gluster For OpenStack (GFO). GFO uses a customized version of swift
-that enables Gluster to be used as the back-end storage.
-
-The main reason to use GFO rather than swift is if you also
-want to support a distributed file system, either to support shared
-storage live migration or to provide it as a separate service to
-your end users. If you want to manage your object and file storage
-within a single system, you should consider GFO.
-
-Sheepdog
---------
-
-Sheepdog is a userspace distributed storage system. Sheepdog scales
-to several hundred nodes, and has powerful virtual disk management
-features like snapshot, cloning, rollback and thin provisioning.
-
-It is essentially an object storage system that manages disks and
-aggregates the space and performance of disks linearly in hyper
-scale on commodity hardware in a smart way. On top of its object store,
-Sheepdog provides elastic volume service and http service.
-Sheepdog does require a specific kernel version and can work
-nicely with xattr-supported file systems.
-
-NFS
----
-
-.. TODO
-
-ISCSI
------
-
-.. TODO
