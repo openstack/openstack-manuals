@@ -7,7 +7,7 @@ using a driver architecture. You can write a driver that conforms to a
 particular interface and plug it in through configuration. For example,
 you can easily plug in a new scheduler for Compute. The existing
 schedulers for Compute are feature full and well documented at `Scheduling
-<https://docs.openstack.org/ocata/config-reference/compute/scheduler.html>`_.
+<https://docs.openstack.org/ocata/config-reference/compute/schedulers.html>`_.
 However, depending on your user's use cases, the existing schedulers
 might not meet your requirements. You might need to create a new scheduler.
 
