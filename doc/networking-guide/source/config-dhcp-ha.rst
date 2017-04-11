@@ -197,7 +197,7 @@ To experiment, you need VMs and a neutron network:
    +--------------------------------------+------+--------------------------------------+
    | ID                                   | Name | Subnets                              |
    +--------------------------------------+------+--------------------------------------+
-   | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
+   | ad88e059-e7fa-4cf7-8857-6731a2a3a554 | net1 | 8086db87-3a7a-4cad-88c9-7bab9bc69258 |
    +--------------------------------------+------+--------------------------------------+
 
 Managing agents in neutron deployment
@@ -211,30 +211,30 @@ Managing agents in neutron deployment
       +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
       | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
       +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
-      | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-metering-agent    |
-      | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | DHCP agent         | HostA | None              | True  | UP    | neutron-openvswitch-agent |
-      | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-l3-agent          |
-      | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-l3-agent          |
+      | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-linuxbridge-agent |
+      | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | DHCP agent         | HostA | None              | True  | UP    | neutron-dhcp-agent        |
+      | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-linuxbridge-agent |
+      | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-dhcp-agent        |
       +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
 
    Every agent that supports these extensions will register itself with the
    neutron server when it starts up.
 
    The output shows information for four agents. The ``alive`` field shows
-   ``:-)`` if the agent reported its state within the period defined by the
+   ``True`` if the agent reported its state within the period defined by the
    ``agent_down_time`` option in the ``neutron.conf`` file. Otherwise the
-   ``alive`` is ``xxx``.
+   ``alive`` is ``False``.
 
 #. List DHCP agents that host a specified network:
 
    .. code-block:: console
 
-      $ neutron dhcp-agent-list-hosting-net net1
-      +--------------------------------------+-------+----------------+-------+
-      | id                                   | host  | admin_state_up | alive |
-      +--------------------------------------+-------+----------------+-------+
-      | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
-      +--------------------------------------+-------+----------------+-------+
+      $ openstack network agent list --network net1
+      +--------------------------------------+---------------+----------------+-------+
+      | ID                                   | Host          | Admin State Up | Alive |
+      +--------------------------------------+---------------+----------------+-------+
+      | 22467163-01ea-4231-ba45-3bd316f425e6 | HostA         | UP             | True  |
+      +--------------------------------------+---------------+----------------+-------+
 
 #. List the networks hosted by a given DHCP agent:
 
@@ -242,41 +242,45 @@ Managing agents in neutron deployment
 
    .. code-block:: console
 
-      $ neutron net-list-on-dhcp-agent a0c1c21c-d4f4-4577-9ec7-908f2d48622d
-      +--------------------------------------+------+---------------------------------------------------+
-      | id                                   | name | subnets                                           |
-      +--------------------------------------+------+---------------------------------------------------+
-      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 192.0.2.0/24 |
-      +--------------------------------------+------+---------------------------------------------------+
+      $ openstack network list --agent 22467163-01ea-4231-ba45-3bd316f425e6
+      +--------------------------------+------------------------+---------------------------------+
+      | ID                             | Name                   | Subnets                         |
+      +--------------------------------+------------------------+---------------------------------+
+      | ad88e059-e7fa-                 | net1                   | 8086db87-3a7a-4cad-             |
+      | 4cf7-8857-6731a2a3a554         |                        | 88c9-7bab9bc69258               |
+      +--------------------------------+------------------------+---------------------------------+
 
 #. Show agent details.
 
-   The :command:`openstack network agent show` command shows details
-   for a specified agent:
+   The :command:`openstack network agent show` command shows details for a
+   specified agent:
 
    .. code-block:: console
 
-      $ openstack network agent show 22467163-01ea-4231-ba45-3bd316f425e6
-      +---------------------+-------------------------------------------------------------------------+
-      | Field               | Value                                                                   |
-      +---------------------+-------------------------------------------------------------------------+
-      | admin_state_up      | UP                                                                      |
-      | agent_type          | Metering agent                                                          |
-      | alive               | False                                                                   |
-      | availability_zone   | None                                                                    |
-      | binary              | neutron-metering-agent                                                  |
-      | configurations      | measure_interval='30', metering_driver='neutron.services.metering.drive |
-      |                     | rs.noop.noop_driver.NoopMeteringDriver', report_interval='300'          |
-      | created_at          | 2016-10-08 15:17:14                                                     |
-      | description         | None                                                                    |
-      | heartbeat_timestamp | 2016-10-24 13:53:35                                                     |
-      | host                | HostA                                                                   |
-      | id                  | 22467163-01ea-4231-ba45-3bd316f425e6                                    |
-      | started_at          | 2016-10-08 15:17:14                                                     |
-      | topic               | dhcp_agent                                                              |
-      +---------------------+-------------------------------------------------------------------------+
+      $ openstack network agent show 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b
+      +---------------------+--------------------------------------------------+
+      | Field               | Value                                            |
+      +---------------------+--------------------------------------------------+
+      | admin_state_up      | UP                                               |
+      | agent_type          | DHCP agent                                       |
+      | alive               | True                                             |
+      | availability_zone   | nova                                             |
+      | binary              | neutron-dhcp-agent                               |
+      | configurations      | dhcp_driver='neutron.agent.linux.dhcp.Dnsmasq',  |
+      |                     | dhcp_lease_duration='86400',                     |
+      |                     | log_agent_heartbeats='False', networks='1',      |
+      |                     | notifies_port_ready='True', ports='3',           |
+      |                     | subnets='1'                                      |
+      | created_at          | 2016-12-14 00:25:54                              |
+      | description         | None                                             |
+      | last_heartbeat_at   | 2016-12-14 06:53:24                              |
+      | host                | HostA                                            |
+      | id                  | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b             |
+      | started_at          | 2016-12-14 00:25:54                              |
+      | topic               | dhcp_agent                                       |
+      +---------------------+--------------------------------------------------+
 
-   In this output, ``heartbeat_timestamp`` is the time on the neutron
+   In this output, ``last_heartbeat_at`` is the time on the neutron
    server. You do not need to synchronize all agents to this time for this
    extension to run correctly. ``configurations`` describes the static
    configuration for the agent or run time data. This agent is a DHCP agent
@@ -288,24 +292,26 @@ Managing agents in neutron deployment
    .. code-block:: console
 
       $ openstack network agent show 22467163-01ea-4231-ba45-3bd316f425e6
-      +---------------------+-------------------------------------------------------------------------+
-      | Field               | Value                                                                   |
-      +---------------------+-------------------------------------------------------------------------+
-      | admin_state_up      | UP                                                                      |
-      | agent_type          | Metering agent                                                          |
-      | alive               | False                                                                   |
-      | availability_zone   | None                                                                    |
-      | binary              | neutron-linuxbridge-agent                                               |
-      | configurations      | measure_interval='30', metering_driver='neutron.services.metering.drive |
-      |                     | rs.noop.noop_driver.NoopMeteringDriver', report_interval='300'          |
-      | created_at          | 2016-10-08 15:17:14                                                     |
-      | description         | None                                                                    |
-      | heartbeat_timestamp | 2016-10-24 13:53:35                                                     |
-      | host                | HostB                                                                   |
-      | id                  | 22467163-01ea-4231-ba45-3bd316f425e6                                    |
-      | started_at          | 2016-10-08 15:17:14                                                     |
-      | topic               | dhcp_agent                                                              |
-      +---------------------+-------------------------------------------------------------------------+
+      +---------------------+--------------------------------------+
+      | Field               | Value                                |
+      +---------------------+--------------------------------------+
+      | admin_state_up      | UP                                   |
+      | agent_type          | Linux bridge agent                   |
+      | alive               | True                                 |
+      | availability_zone   | nova                                 |
+      | binary              | neutron-linuxbridge-agent            |
+      | configurations      | {                                    |
+      |                     |      "physnet1": "eth0",             |
+      |                     |      "devices": "4"                  |
+      |                     | }                                    |
+      | created_at          | 2016-12-14 00:26:54                  |
+      | description         | None                                 |
+      | last_heartbeat_at   | 2016-12-14 06:53:24                  |
+      | host                | HostA                                |
+      | id                  | 22467163-01ea-4231-ba45-3bd316f425e6 |
+      | started_at          | 2016-12-14T06:48:39.000000           |
+      | topic               | N/A                                  |
+      +---------------------+--------------------------------------+
 
    The output shows ``bridge-mapping`` and the number of virtual network
    devices on this L2 agent.
@@ -326,15 +332,15 @@ You can add a network to a DHCP agent and remove one from it.
 
    .. code-block:: console
 
-      $ neutron net-create net2
-      $ neutron subnet-create net2 198.51.100.0/24 --name subnet2
-      $ neutron port-create net2
-      $ openstack network agent list --agent-type dhcp --host qiaomin-free
-      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
-      | ID                                   | Agent Type | Host  | Availability Zone | Alive | State | Binary             |
-      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
-      | e838ef5c-75b1-4b12-84da-7bdbd62f1040 | DHCP agent | HostA | nova              | True  | UP    | neutron-dhcp-agent |
-      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
+      $ openstack network create net2
+      $ openstack subnet create --network net2 --subnet-range 198.51.100.0/24 subnet2
+      $ openstack port create port2 --network net2
+      $ openstack network agent list --network net2
+      +--------------------------------------+---------------+----------------+-------+
+      | ID                                   | Host          | Admin State Up | Alive |
+      +--------------------------------------+---------------+----------------+-------+
+      | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | HostA         | UP             | True  |
+      +--------------------------------------+---------------+----------------+-------+
 
    It is allocated to DHCP agent on HostA. If you want to validate the
    behavior through the :command:`dnsmasq` command, you must create a subnet for
@@ -347,15 +353,15 @@ You can add a network to a DHCP agent and remove one from it.
 
    .. code-block:: console
 
-      $ neutron dhcp-agent-network-add f28aa126-6edb-4ea5-a81e-8850876bc0a8 net2
-      Added network net2 to dhcp agent
-      $ openstack network agent list --agent-type dhcp --host qiaomin-free
-      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
-      | ID                                   | Agent Type | Host  | Availability Zone | Alive | State | Binary             |
-      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
-      | e838ef5c-75b1-4b12-84da-7bdbd62f1040 | DHCP agent | HostA | nova              | True  | UP    | neutron-dhcp-agent |
-      | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | DHCP agent | HostB | nova              | True  | UP    | neutron-dhcp-agent |
-      +--------------------------------------+------------+-------+-------------------+-------+-------+--------------------+
+      $ openstack network agent add network --dhcp \
+        55569f4e-6f31-41a6-be9d-526efce1f7fe net2
+      $ openstack network agent list --network net2
+      +--------------------------------------+-------+----------------+--------+
+      | ID                                   | Host  | Admin State Up | Alive  |
+      +--------------------------------------+-------+----------------+--------+
+      | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | HostA | UP             | True   |
+      | 55569f4e-6f31-41a6-be9d-526efce1f7fe | HostB | UP             | True   |
+      +--------------------------------------+-------+----------------+--------+
 
    Both DHCP agents host the ``net2`` network.
 
@@ -366,14 +372,13 @@ You can add a network to a DHCP agent and remove one from it.
 
    .. code-block:: console
 
-      $ neutron dhcp-agent-network-remove a0c1c21c-d4f4-4577-9ec7-908f2d48622d \
-        net2
-      Removed network net2 to dhcp agent
-      $ neutron dhcp-agent-list-hosting-net net2
+      $ openstack network agent remove network --dhcp \
+        2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b net2
+      $ openstack network agent list --network net2
       +--------------------------------------+-------+----------------+-------+
-      | id                                   | host  | admin_state_up | alive |
+      | ID                                   | Host  | Admin State Up | Alive |
       +--------------------------------------+-------+----------------+-------+
-      | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
+      | 55569f4e-6f31-41a6-be9d-526efce1f7fe | HostB | UP             | True  |
       +--------------------------------------+-------+----------------+-------+
 
    You can see that only the DHCP agent for HostB is hosting the ``net2``
@@ -393,7 +398,7 @@ in turn to see if the VM can still get the desired IP.
       +--------------------------------------+------+--------------------------------------+
       | ID                                   | Name | Subnets                              |
       +--------------------------------------+------+--------------------------------------+
-      | 89dca1c6-c7d4-4f7a-b730-549af0fb6e34 | net1 | f6c832e3-9968-46fd-8e45-d5cf646db9d1 |
+      | ad88e059-e7fa-4cf7-8857-6731a2a3a554 | net1 | 8086db87-3a7a-4cad-88c9-7bab9bc69258 |
       | 9b96b14f-71b8-4918-90aa-c5d705606b1a | net2 | 6979b71a-0ae8-448c-aa87-65f68eedcaaa |
       +--------------------------------------+------+--------------------------------------+
       $ openstack server create --image tty  --flavor 1 myserver4 \
@@ -415,12 +420,12 @@ in turn to see if the VM can still get the desired IP.
 
    .. code-block:: console
 
-      $ neutron dhcp-agent-list-hosting-net net2
+      $ openstack network agent list --network net2
       +--------------------------------------+-------+----------------+-------+
-      | id                                   | host  | admin_state_up | alive |
+      | ID                                   | Host  | Admin State Up | Alive |
       +--------------------------------------+-------+----------------+-------+
-      | a0c1c21c-d4f4-4577-9ec7-908f2d48622d | HostA | True           | :-)   |
-      | f28aa126-6edb-4ea5-a81e-8850876bc0a8 | HostB | True           | :-)   |
+      | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | HostA | UP             | True  |
+      | 55569f4e-6f31-41a6-be9d-526efce1f7fe | HostB | UP             | True  |
       +--------------------------------------+-------+----------------+-------+
 
 To test the HA of DHCP agent:
@@ -456,16 +461,15 @@ Disable the DHCP agent on HostA before you stop it:
 
 .. code-block:: console
 
-   $ neutron agent-update a0c1c21c-d4f4-4577-9ec7-908f2d48622d --admin-state-up False
-   $ neutron agent-list
+   $ openstack network agent set 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b --disable
    $ openstack network agent list
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
    | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
-   | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-metering-agent    |
-   | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | DHCP agent         | HostA | None              | True  | UP    | neutron-openvswitch-agent |
-   | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-l3-agent          |
-   | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-l3-agent          |
+   | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-linuxbridge-agent |
+   | 2444c54d-0d28-460c-ab0f-cd1e6b5d3c7b | DHCP agent         | HostA | None              | True  | DOWN  | neutron-dhcp-agent        |
+   | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-linuxbridge-agent |
+   | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-dhcp-agent        |
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
 
 After you stop the DHCP agent on HostA, you can delete it by the following
@@ -478,9 +482,9 @@ command:
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
    | ID                                   | Agent Type         | Host  | Availability Zone | Alive | State | Binary                    |
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
-   | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-metering-agent    |
-   | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-l3-agent          |
-   | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-l3-agent          |
+   | 22467163-01ea-4231-ba45-3bd316f425e6 | Linux bridge agent | HostA | None              | True  | UP    | neutron-linuxbridge-agent |
+   | 3066d20c-9f8f-440c-ae7c-a40ffb4256b6 | Linux bridge agent | HostB | nova              | True  | UP    | neutron-linuxbridge-agent |
+   | 55569f4e-6f31-41a6-be9d-526efce1f7fe | DHCP agent         | HostB | nova              | True  | UP    | neutron-dhcp-agent        |
    +--------------------------------------+--------------------+-------+-------------------+-------+-------+---------------------------+
 
 After deletion, if you restart the DHCP agent, it appears on the agent
