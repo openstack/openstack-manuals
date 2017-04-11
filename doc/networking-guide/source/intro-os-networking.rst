@@ -180,6 +180,7 @@ GRE and VXLAN
     from an external network using floating IP addresses.
 
 .. image:: figures/NetworkTypes.png
+   :width: 100%
    :alt: Project and provider networks
 
 Subnets
