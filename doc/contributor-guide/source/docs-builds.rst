@@ -124,7 +124,7 @@ of repository:
 
    $ tox
 
-The following individual checks are also availableː
+The following individual checks are also available:
 
 * :command:`tox -e checkniceness` - to run the niceness tests (for example,
   to see extra whitespaces)
