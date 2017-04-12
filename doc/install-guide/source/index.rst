@@ -63,7 +63,13 @@ or as connected entities.
 Explanations of configuration options and sample configuration files
 are included.
 
-This guide documents OpenStack Mitaka release.
+.. warning::
+
+   This guide documents OpenStack Mitaka release and is frozen
+   since OpenStack Mitaka has reached its official end-of-life
+   and will not get any updates by the OpenStack project anymore.
+   Check the `OpenStack Documentation page
+   <http://docs.openstack.org>`_ for newer documents.
 
 Contents
 ~~~~~~~~
