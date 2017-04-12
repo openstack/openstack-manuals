@@ -38,47 +38,6 @@ The database contains data that is both transient (such as whether the
 node is alive) and persistent (such as entries for VM owners). With the
 ServiceGroup abstraction, Compute can treat each type separately.
 
-.. _zookeeper-servicegroup-driver:
-
-ZooKeeper ServiceGroup driver
------------------------------
-
-The ZooKeeper ServiceGroup driver works by using ZooKeeper ephemeral
-nodes. ZooKeeper, unlike databases, is a distributed system, with its
-load divided among several servers. On a compute worker node, the driver
-can establish a ZooKeeper session, then create an ephemeral znode in the
-group directory. Ephemeral znodes have the same lifespan as the session.
-If the worker node or the nova-compute daemon crashes, or a network
-partition is in place between the worker and the ZooKeeper server
-quorums, the ephemeral znodes are removed automatically. The driver
-can be given group membership by running the :command:`ls` command in the
-group directory.
-
-The ZooKeeper driver requires the ZooKeeper servers and client
-libraries. Setting up ZooKeeper servers is outside the scope of this
-guide (for more information, see `Apache Zookeeper <http://zookeeper.apache.org/>`_). These client-side
-Python libraries must be installed on every compute node:
-
-**python-zookeeper**
-  The official Zookeeper Python binding
-
-**evzookeeper**
-  This library makes the binding work with the eventlet threading model.
-
-This example assumes the ZooKeeper server addresses and ports are
-``192.168.2.1:2181``, ``192.168.2.2:2181``, and ``192.168.2.3:2181``.
-
-These values in the ``/etc/nova/nova.conf`` file are required on every
-node for the ZooKeeper driver:
-
-.. code-block:: ini
-
-   # Driver for the ServiceGroup service
-   servicegroup_driver="zk"
-
-   [zookeeper]
-   address="192.168.2.1:2181,192.168.2.2:2181,192.168.2.3:2181"
-
 .. _memcache-servicegroup-driver:
 
 Memcache ServiceGroup driver
