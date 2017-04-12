@@ -55,26 +55,28 @@ Create the provider network
       | admin_state_up            | UP                                   |
       | availability_zone_hints   |                                      |
       | availability_zones        |                                      |
-      | created_at                | 2016-11-02T20:36:18Z                 |
+      | created_at                | 2017-03-14T14:37:39Z                 |
       | description               |                                      |
-      | headers                   |                                      |
-      | id                        | 9793a02d-4f05-40d2-a280-407c48db0161 |
+      | dns_domain                | None                                 |
+      | id                        | 54adb94a-4dce-437f-a33b-e7e2e7648173 |
       | ipv4_address_scope        | None                                 |
       | ipv6_address_scope        | None                                 |
+      | is_default                | None                                 |
       | mtu                       | 1500                                 |
       | name                      | provider                             |
       | port_security_enabled     | True                                 |
-      | project_id                | 7e188c33604d4b02ae0a99b5da68cae0     |
+      | project_id                | 4c7f48f1da5b494faaa66713686a7707     |
       | provider:network_type     | flat                                 |
       | provider:physical_network | provider                             |
       | provider:segmentation_id  | None                                 |
+      | qos_policy_id             | None                                 |
       | revision_number           | 3                                    |
       | router:external           | External                             |
+      | segments                  | None                                 |
       | shared                    | True                                 |
       | status                    | ACTIVE                               |
       | subnets                   |                                      |
-      | tags                      | []                                   |
-      | updated_at                | 2016-11-02T20:36:18Z                 |
+      | updated_at                | 2017-03-14T14:37:39Z                 |
       +---------------------------+--------------------------------------+
 
    .. end
