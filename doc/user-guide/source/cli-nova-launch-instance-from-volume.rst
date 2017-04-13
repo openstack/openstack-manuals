@@ -91,7 +91,8 @@ system.
    .. code-block:: console
 
       $ openstack server create --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
-        --block-device source=volume,id=b8f7bbec-6274-4cd7-90e7-60916a5e75d4,dest=volume,shutdown=preserve \
+        --block-device-mapping \
+        myVolumeAttach=b8f7bbec-6274-4cd7-90e7-60916a5e75d4:volume:8:false \
         myInstanceWithVolume
       +--------------------------------------+--------------------------------------------+
       | Field                                | Value                                      |
