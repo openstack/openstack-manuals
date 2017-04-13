@@ -2,6 +2,25 @@
 Storage architecture
 ====================
 
+There are many different storage architectures available when designing an
+OpenStack cloud. The convergence of orchestration and automation within the
+OpenStack platform enables rapid storage provisioning without the hassle of
+the traditional manual processes like volume creation and
+attachment.
+
+However, before choosing a storage architecture, a few generic questions should
+be answered:
+
+* Will the storage architecture scale linearly as the cloud grows and what are
+  its limits?
+* What is the desired attachment method: NFS, iSCSI, FC, or other?
+* Is the storage proven with the OpenStack platform?
+* What is the level of support provided by the vendor within the community?
+* What OpenStack features and enhancements does the cinder driver enable?
+* Does it include tools to help troubleshoot and resolve performance issues?
+* Is it interoperable with all of the projects you are planning on using
+  in your cloud?
+
 Choosing storage back ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -17,32 +36,56 @@ ephemeral storage is the preferred choice. When you select
 :term:`storage back ends <storage back end>`,
 consider the following questions from user's perspective:
 
+First and foremost:
+
 * Do I need block storage?
 * Do I need object storage?
+* Do I need file-based storage?
+
+Next answer the following:
+
 * Do I need to support live migration?
 * Should my persistent storage drives be contained in my compute nodes,
   or should I use external storage?
-* What is the platter count I can achieve? Do more spindles result in
-  better I/O despite network access?
-* Which one results in the best cost-performance scenario I'm aiming for?
+* What type of performance do I need in regards to IOPS? Total IOPS and IOPS
+  per instance? Do I have applications with IOPS SLAs?
+* Are my storage needs mostly read, or write, or mixed?
+* Which storage choices result in the best cost-performance scenario I am
+  aiming for?
 * How do I manage the storage operationally?
 * How redundant and distributed is the storage? What happens if a
-  storage node fails? To what extent can it mitigate my data-loss
-  disaster scenarios?
+  storage node fails? To what extent can it mitigate my data-loss disaster
+  scenarios?
+* What is my company currently using and can I use it with OpenStack?
+* Do I need more than one storage choice? Do I need tiered performance storage?
 
-A wide variety of operator-specific requirements dictates the nature of the
-storage back end. Examples of such requirements are as follows:
+While this is not a definitive list of all the questions possible, the list
+above will hopefully help narrow the list of possible storage choices down.
 
-* Public, private or a hybrid cloud, and associated SLA requirements
-* The need for encryption-at-rest, for data on storage nodes
-* Whether live migration will be offered
+A wide variety of use case requirements dictate the nature of the storage
+back end. Examples of such requirements are as follows:
 
-We recommend that data be encrypted both in transit and at-rest.
-If you plan to use live migration, a shared storage configuration is highly
-recommended.
+* Public, private, or a hybrid cloud (performance profiles, shared storage,
+  replication options)
+* Storage-intensive use cases like HPC and Big Data clouds
+* Web-scale or development clouds where storage is typically ephemeral in
+  nature
+
+Data security recommendations:
+
+* We recommend that data be encrypted both in transit and at-rest.
+  To this end, carefully select disks, appliances, and software.
+  Do not assume these features are included with all storage solutions.
+* Determine the security policy of your organization and understand
+  the data sovereignty of your cloud geography and plan accordingly.
+
+If you plan to use live migration, we highly recommend a shared storage
+configuration. This allows the operating system and application volumes
+for instances to reside outside of the compute nodes and adds significant
+performance increases when live migrating.
 
 To deploy your storage by using only commodity hardware, you can use a number
-of open-source packages, as shown in :ref:`table_persistent_file_storage`.
+of open-source packages, as described in :ref:`table_persistent_file_storage`.
 
 .. _table_persistent_file_storage:
 
@@ -113,8 +156,9 @@ Also, you need to decide whether you want to support object storage in
 your cloud. The two common use cases for providing object storage in a
 compute cloud are to provide:
 
-* users with a persistent storage mechanism.
-* a scalable, reliable data store for virtual machine images.
+* Users with a persistent storage mechanism for objects like images and video.
+* A scalable, reliable data store for OpenStack virtual machine images.
+* An API driven S3 compatible object store for application use.
 
 Selecting storage hardware
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
