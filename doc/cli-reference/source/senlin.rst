@@ -23,7 +23,7 @@ Clustering service (senlin) command-line client
 The senlin client is the command-line interface (CLI) for
 the Clustering service (senlin) API and its extensions.
 
-This chapter documents :command:`senlin` version ``1.2.0``.
+This chapter documents :command:`senlin` version ``1.3.0``.
 
 For help on a specific :command:`senlin` command, enter:
 
@@ -580,7 +580,7 @@ senlin cluster-node-del
 
 .. code-block:: console
 
-   usage: senlin cluster-node-del -n <NODES> <CLUSTER>
+   usage: senlin cluster-node-del -n <NODES> [-d <BOOLEAN>] <CLUSTER>
 
 Delete specified nodes from cluster.
 
@@ -594,6 +594,10 @@ Delete specified nodes from cluster.
 ``-n <NODES>, --nodes <NODES>``
   ID of nodes to be deleted; multiple nodes can be
   separated with ",".
+
+``-d <BOOLEAN>, --destroy-after-deletion <BOOLEAN>``
+  Whether nodes should be destroyed after deleted.
+  Default is False.
 
 .. _senlin_cluster-node-list:
 
@@ -959,7 +963,7 @@ senlin cluster-update
 
 .. code-block:: console
 
-   usage: senlin cluster-update [-p <PROFILE>] [-t <TIMEOUT>]
+   usage: senlin cluster-update [-p <PROFILE>] [-P <BOOLEAN>] [-t <TIMEOUT>]
                                 [-M <"KEY1=VALUE1;KEY2=VALUE2...">] [-n <NAME>]
                                 <CLUSTER>
 
@@ -974,6 +978,13 @@ Update the cluster.
 
 ``-p <PROFILE>, --profile <PROFILE>``
   ID or name of new profile to use.
+
+``-P <BOOLEAN>, --profile-only <BOOLEAN>``
+  Whether the cluster should be updated profile only. If
+  false, it will be applied to all existing nodes. If
+  true, any newly created nodes will use the new
+  profile, but existing nodes will not be changed.
+  Default is False.
 
 ``-t <TIMEOUT>, --timeout <TIMEOUT>``
   New timeout (in seconds) value for the cluster.
@@ -1172,7 +1183,7 @@ senlin node-recover
 
 .. code-block:: console
 
-   usage: senlin node-recover <NODE> [<NODE> ...]
+   usage: senlin node-recover [-c <BOOLEAN>] <NODE> [<NODE> ...]
 
 Recover the node(s).
 
@@ -1180,6 +1191,12 @@ Recover the node(s).
 
 ``<NODE>``
   ID or name of node(s) to recover.
+
+**Optional arguments:**
+
+``-c <BOOLEAN>, --check <BOOLEAN>``
+  Whether the node(s) should check physical resource
+  status before doing node recover.Default is false
 
 .. _senlin_node-show:
 
