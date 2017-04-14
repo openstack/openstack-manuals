@@ -23,7 +23,7 @@ Networking service (neutron) command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service (neutron) API and its extensions.
 
-This chapter documents :command:`neutron` version ``6.1.0``.
+This chapter documents :command:`neutron` version ``6.2.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -762,7 +762,7 @@ neutron API v2.0 commands
   Show quotas for a given tenant.
 
 ``quota-update``
-  Define tenant's quotas not to use defaults.
+  Update a given tenant's quotas.
 
 ``rbac-create``
   Create a RBAC policy for a given tenant.
@@ -7418,7 +7418,7 @@ neutron port-create
                               [--security-group SECURITY_GROUP | --no-security-groups]
                               [--extra-dhcp-opt EXTRA_DHCP_OPTS]
                               [--qos-policy QOS_POLICY]
-                              [--allowed-address-pair ip_address=IP_ADDR[,mac_address=MAC_ADDR]
+                              [--allowed-address-pair ip_address=IP_ADDR|CIDR[,mac_address=MAC_ADDR]
                               | --no-allowed-address-pairs] [--dns-name DNS_NAME]
                               NETWORK
 
@@ -7487,9 +7487,11 @@ Create a port for a given tenant.
   the resource.
 
 ``--allowed-address-pair``
-  ip_address=IP_ADDR[,mac_address=MAC_ADDR]
-  Allowed address pair associated with the port. You can
-  repeat this option.
+  ip_address=IP_ADDR|CIDR[,mac_address=MAC_ADDR]
+  Allowed address pair associated with the port.
+  "ip_address" parameter is required. IP address or CIDR
+  can be specified for "ip_address". "mac_address"
+  parameter is optional. You can repeat this option.
 
 ``--no-allowed-address-pairs``
   Associate no allowed address pairs with the port.
@@ -7618,7 +7620,7 @@ neutron port-update
                               [--security-group SECURITY_GROUP | --no-security-groups]
                               [--extra-dhcp-opt EXTRA_DHCP_OPTS]
                               [--qos-policy QOS_POLICY | --no-qos-policy]
-                              [--allowed-address-pair ip_address=IP_ADDR[,mac_address=MAC_ADDR]
+                              [--allowed-address-pair ip_address=IP_ADDR|CIDR[,mac_address=MAC_ADDR]
                               | --no-allowed-address-pairs]
                               [--dns-name DNS_NAME | --no-dns-name]
                               PORT
@@ -7679,9 +7681,11 @@ Update port's information.
   Detach QoS policy from the resource.
 
 ``--allowed-address-pair``
-  ip_address=IP_ADDR[,mac_address=MAC_ADDR]
-  Allowed address pair associated with the port. You can
-  repeat this option.
+  ip_address=IP_ADDR|CIDR[,mac_address=MAC_ADDR]
+  Allowed address pair associated with the port.
+  "ip_address" parameter is required. IP address or CIDR
+  can be specified for "ip_address". "mac_address"
+  parameter is optional. You can repeat this option.
 
 ``--no-allowed-address-pairs``
   Associate no allowed address pairs with the port.
@@ -8693,7 +8697,7 @@ neutron quota-update
                                [--listener listeners]
                                [--rbac-policy rbac_policies]
 
-Define tenant's quotas not to use defaults.
+Update a given tenant's quotas.
 
 **Optional arguments:**
 
