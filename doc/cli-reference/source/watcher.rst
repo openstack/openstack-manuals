@@ -23,7 +23,7 @@ Infrastructure Optimization service (watcher) command-line client
 The watcher client is the command-line interface (CLI) for
 the Infrastructure Optimization service (watcher) API and its extensions.
 
-This chapter documents :command:`watcher` version ``1.0.0``.
+This chapter documents :command:`watcher` version ``1.1.0``.
 
 For help on a specific :command:`watcher` command, enter:
 
@@ -230,11 +230,11 @@ Create new audit.
   show this help message and exit
 
 ``-a <audit_template>, --audit-template <audit_template>``
-  ActionPlan template used for this audit (name or
-  uuid).
+  Audit template used for this audit (name or uuid).
 
 ``-t <audit_type>, --audit_type <audit_type>``
-  ActionPlan type.
+  Audit type. It must be ONESHOT or CONTINUOUS. Default
+  is ONESHOT.
 
 .. _watcher_actionplan_delete:
 
