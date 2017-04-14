@@ -447,12 +447,12 @@ Add the compute node to the cell database
 
       $ . admin-openrc
 
-      $ openstack hypervisor list
-      +----+---------------------+-----------------+-----------+-------+
-      | ID | Hypervisor Hostname | Hypervisor Type | Host IP   | State |
-      +----+---------------------+-----------------+-----------+-------+
-      |  1 | compute1            | QEMU            | 10.0.0.31 | up    |
-      +----+---------------------+-----------------+-----------+-------+
+      $ openstack compute service list --service nova-compute
+      +----+-------+--------------+------+-------+---------+----------------------------+
+      | ID | Host  | Binary       | Zone | State | Status  | Updated At                 |
+      +----+-------+--------------+------+-------+---------+----------------------------+
+      | 1  | node1 | nova-compute | nova | up    | enabled | 2017-04-14T15:30:44.000000 |
+      +----+-------+--------------+------+-------+---------+----------------------------+
 
 #. Discover compute hosts:
 
