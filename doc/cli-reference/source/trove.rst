@@ -23,7 +23,7 @@ Database service (trove) command-line client
 The trove client is the command-line interface (CLI) for
 the Database service (trove) API and its extensions.
 
-This chapter documents :command:`trove` version ``2.8.0``.
+This chapter documents :command:`trove` version ``2.9.0``.
 
 For help on a specific :command:`trove` command, enter:
 
@@ -400,6 +400,12 @@ trove usage
 
 ``user-update-attributes``
   Updates a user's attributes on an instance.
+
+``volume-type-list``
+  Lists available volume types.
+
+``volume-type-show``
+  Shows details of a volume type.
 
 ``bash-completion``
   Prints arguments for bash_completion.
@@ -2879,4 +2885,40 @@ must be provided.
 
 ``--new_host <new_host>``
   Optional new host of user.
+
+.. _trove_volume-type-list:
+
+trove volume-type-list
+----------------------
+
+.. code-block:: console
+
+   usage: trove volume-type-list [--datastore_type <datastore_type>]
+                                 [--datastore_version_id <datastore_version_id>]
+
+Lists available volume types.
+
+**Optional arguments:**
+
+``--datastore_type <datastore_type>``
+  Type of the datastore. For eg: mysql.
+
+``--datastore_version_id <datastore_version_id>``
+  ID of the datastore version.
+
+.. _trove_volume-type-show:
+
+trove volume-type-show
+----------------------
+
+.. code-block:: console
+
+   usage: trove volume-type-show <volume_type>
+
+Shows details of a volume type.
+
+**Positional arguments:**
+
+``<volume_type>``
+  ID or name of the volume type.
 
