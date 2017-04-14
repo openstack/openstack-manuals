@@ -23,7 +23,7 @@ Shared File Systems service (manila) command-line client
 The manila client is the command-line interface (CLI) for
 the Shared File Systems service (manila) API and its extensions.
 
-This chapter documents :command:`manila` version ``1.14.0``.
+This chapter documents :command:`manila` version ``1.15.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -1782,7 +1782,7 @@ Creates a new share group (Experimental).
 
 ``--availability-zone <availability-zone>, --availability_zone <availability-zone>, --az <availability-zone>``
   Optional availability zone in which group should be
-  created. (Default=None
+  created. (Default=None)
 
 .. _manila_share-group-delete:
 
