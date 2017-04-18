@@ -306,8 +306,8 @@ verbs.
 | pop up                  | appear                 |
 +-------------------------+------------------------+
 
-Do no overuse this, that, these, and it
----------------------------------------
+Do not overuse this, that, these, and it
+----------------------------------------
 
 Use these pronouns sparingly. Overuse contributes to readers'
 confusion. To fix the ambiguity, rephrase the sentence.
