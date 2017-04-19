@@ -41,7 +41,7 @@ ServiceGroup abstraction, Compute can treat each type separately.
 .. _memcache-servicegroup-driver:
 
 Memcache ServiceGroup driver
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The memcache ServiceGroup driver uses memcached, a distributed memory
 object caching system that is used to increase site performance. For
