@@ -29,13 +29,13 @@ default quota values:
 
    [quotas]
    # number of networks allowed per tenant, and minus means unlimited
-   quota_network = 10
+   quota_network = 100
 
    # number of subnets allowed per tenant, and minus means unlimited
-   quota_subnet = 10
+   quota_subnet = 100
 
    # number of ports allowed per tenant, and minus means unlimited
-   quota_port = 50
+   quota_port = 500
 
    # default driver to use for quota checks
    quota_driver = neutron.quota.ConfDriver
@@ -186,10 +186,10 @@ the default set of quotas are enforced for all projects, so no
       | load_balancers        | None                             |
       | location              | None                             |
       | name                  | None                             |
-      | networks              | 10                               |
+      | networks              | 100                              |
       | per-volume-gigabytes  | -1                               |
       | pools                 | None                             |
-      | ports                 | 50                               |
+      | ports                 | 500                              |
       | project               | e436339c7f9c476cb3120cf3b9667377 |
       | project_id            | None                             |
       | properties            | 128                              |
@@ -203,7 +203,7 @@ the default set of quotas are enforced for all projects, so no
       | snapshots             | 10                               |
       | snapshots_lvmdriver-1 | -1                               |
       | subnet_pools          | -1                               |
-      | subnets               | 10                               |
+      | subnets               | 100                              |
       | volumes               | 10                               |
       | volumes_lvmdriver-1   | -1                               |
       +-----------------------+----------------------------------+
@@ -246,10 +246,10 @@ the default set of quotas are enforced for all projects, so no
       | load_balancers        | None                             |
       | location              | None                             |
       | name                  | None                             |
-      | networks              | 10                               |
+      | networks              | 100                              |
       | per-volume-gigabytes  | -1                               |
       | pools                 | None                             |
-      | ports                 | 50                               |
+      | ports                 | 500                              |
       | project               | e436339c7f9c476cb3120cf3b9667377 |
       | project_id            | None                             |
       | properties            | 128                              |
@@ -263,7 +263,7 @@ the default set of quotas are enforced for all projects, so no
       | snapshots             | 10                               |
       | snapshots_lvmdriver-1 | -1                               |
       | subnet_pools          | -1                               |
-      | subnets               | 10                               |
+      | subnets               | 100                              |
       | volumes               | 10                               |
       | volumes_lvmdriver-1   | -1                               |
       +-----------------------+----------------------------------+
@@ -301,7 +301,7 @@ the default set of quotas are enforced for all projects, so no
       | networks              | 5                                |
       | per-volume-gigabytes  | -1                               |
       | pools                 | None                             |
-      | ports                 | 50                               |
+      | ports                 | 500                              |
       | project               | e436339c7f9c476cb3120cf3b9667377 |
       | project_id            | None                             |
       | properties            | 128                              |
@@ -315,7 +315,7 @@ the default set of quotas are enforced for all projects, so no
       | snapshots             | 10                               |
       | snapshots_lvmdriver-1 | -1                               |
       | subnet_pools          | -1                               |
-      | subnets               | 10                               |
+      | subnets               | 100                              |
       | volumes               | 10                               |
       | volumes_lvmdriver-1   | -1                               |
       +-----------------------+----------------------------------+
@@ -405,7 +405,7 @@ the default set of quotas are enforced for all projects, so no
       | networks              | 5                                |
       | per-volume-gigabytes  | -1                               |
       | pools                 | None                             |
-      | ports                 | 50                               |
+      | ports                 | 500                              |
       | project               | e436339c7f9c476cb3120cf3b9667377 |
       | project_id            | None                             |
       | properties            | 128                              |
@@ -419,7 +419,7 @@ the default set of quotas are enforced for all projects, so no
       | snapshots             | 10                               |
       | snapshots_lvmdriver-1 | -1                               |
       | subnet_pools          | -1                               |
-      | subnets               | 10                               |
+      | subnets               | 100                              |
       | volumes               | 10                               |
       | volumes_lvmdriver-1   | -1                               |
       +-----------------------+----------------------------------+
@@ -513,10 +513,10 @@ the default set of quotas are enforced for all projects, so no
       | load_balancers        | None                             |
       | location              | None                             |
       | name                  | None                             |
-      | networks              | 10                               |
+      | networks              | 100                              |
       | per-volume-gigabytes  | -1                               |
       | pools                 | None                             |
-      | ports                 | 50                               |
+      | ports                 | 500                              |
       | project               | e436339c7f9c476cb3120cf3b9667377 |
       | project_id            | None                             |
       | properties            | 128                              |
@@ -530,7 +530,7 @@ the default set of quotas are enforced for all projects, so no
       | snapshots             | 10                               |
       | snapshots_lvmdriver-1 | -1                               |
       | subnet_pools          | -1                               |
-      | subnets               | 10                               |
+      | subnets               | 100                              |
       | volumes               | 10                               |
       | volumes_lvmdriver-1   | -1                               |
       +-----------------------+----------------------------------+
