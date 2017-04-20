@@ -16,7 +16,6 @@ web-based API.
    :maxdepth: 2
 
    compute-arch.rst
-   compute-images-instances.rst
    compute-networking-nova.rst
    compute-system-admin.rst
    support-compute.rst

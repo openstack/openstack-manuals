@@ -21,6 +21,7 @@ Contents
    identity-management.rst
    dashboard.rst
    compute.rst
+   image.rst
    objectstorage.rst
    blockstorage.rst
    shared-file-systems.rst
