@@ -3660,7 +3660,7 @@ S
 
    suspend
 
-      Alternative term for a paused VM instance.
+      The VM instance is paused and its state is saved to disk of the host.
 
    swap
 
