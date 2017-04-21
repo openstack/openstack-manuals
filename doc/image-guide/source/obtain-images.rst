@@ -60,7 +60,7 @@ Fedora
 ~~~~~~
 
 The Fedora project maintains a list of official cloud images at
-`Fedora download page <https://getfedora.org/cloud/download/>`_.
+`Fedora download page <https://alt.fedoraproject.org/cloud/>`_.
 
 .. note::
 
@@ -116,14 +116,13 @@ be built with a web-based tool called `SUSE Studio <https://susestudio.com>`_.
 Red Hat Enterprise Linux
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Red Hat maintains official Red Hat Enterprise Linux cloud images.
-A valid Red Hat Enterprise Linux subscription is required to
-download these images.
+Red Hat maintains official Red Hat Enterprise Linux cloud images. A valid Red
+Hat Enterprise Linux subscription is required to download these images.
 
 * `Red Hat Enterprise Linux 7 KVM Guest Image
   <https://access.redhat.com/downloads/content/69/ver=/rhel---7/x86_64/product-downloads>`_
 * `Red Hat Enterprise Linux 6 KVM Guest Image
-  <https://rhn.redhat.com/rhn/software/channel/downloads/Download.do?cid=16952>`_
+  <https://access.redhat.com/downloads/content/69/ver=/rhel---6/x86_64/product-downloads>`_
 
 .. note::
 
