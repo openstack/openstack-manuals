@@ -77,6 +77,27 @@ Install and configure components
 
 .. endonly
 
+.. only:: obs
+
+   2. Edit the ``/etc/sysconfig/memcached`` file and complete the
+      following actions:
+
+      * Configure the service to use the management IP address of the
+        controller node. This is to enable access by other nodes via
+        the management network:
+
+        .. code-block:: none
+
+           MEMCACHED_PARAMS="-l 127.0.0.1"
+
+        .. end
+
+        .. note::
+
+           Change the existing line ``MEMCACHED_PARAMS="-l 127.0.0.1,::1"``.
+
+.. endonly
+
 Finalize installation
 ---------------------
 
