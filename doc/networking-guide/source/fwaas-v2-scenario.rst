@@ -20,7 +20,7 @@ Enable FWaaS v2
 
    .. note::
 
-      On Ubuntu, modify the ``[fwaas]`` section in the
+      On Ubuntu and Centos, modify the ``[fwaas]`` section in the
       ``/etc/neutron/fwaas_driver.ini`` file instead of
       ``/etc/neutron/neutron.conf``.
 
