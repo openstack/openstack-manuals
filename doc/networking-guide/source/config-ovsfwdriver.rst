@@ -19,6 +19,15 @@ agent includes an optional firewall driver that natively implements security
 groups as flows in OVS rather than Linux bridge and *iptables*, thus
 increasing scalability and performance.
 
+Configuring heterogeneous firewall drivers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+L2 agents can be configured to use differing firewall drivers. There is no
+requirement that they all be the same. If an agent lacks a firewall driver
+configuration, it will default to what is configured on its server. This also
+means there is no requirement that the server has any firewall driver
+configured at all, as long as the agents are configured correctly.
+
 Prerequisites
 ~~~~~~~~~~~~~
 
