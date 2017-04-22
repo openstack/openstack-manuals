@@ -7,6 +7,7 @@ Configuration
 .. toctree::
    :maxdepth: 2
 
+   config-services-agent
    config-ml2
    config-address-scopes
    config-auto-allocation
