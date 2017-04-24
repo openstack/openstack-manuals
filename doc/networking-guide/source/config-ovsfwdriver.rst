@@ -16,8 +16,8 @@ the *iptables* rules pertaining to the instance. In general, additional
 components between instances and physical network infrastructure cause
 scalability and performance problems. To alleviate such problems, the OVS
 agent includes an optional firewall driver that natively implements security
-groups as flows in OVS rather than Linux bridge and *iptables*, thus
-increasing scalability and performance.
+groups as flows in OVS rather than the Linux bridge device and *iptables*.
+This increases scalability and performance.
 
 Prerequisites
 ~~~~~~~~~~~~~
@@ -41,6 +41,6 @@ Enable the native OVS firewall driver
      [securitygroup]
      firewall_driver = openvswitch
 
-For more information, see the `developer documentation
+For more information, see the `Open vSwitch Firewall Driver
 <https://docs.openstack.org/developer/neutron/devref/openvswitch_firewall.html>`_
 and the `video <https://www.youtube.com/watch?v=SOHeZ3g9yxM>`_.
