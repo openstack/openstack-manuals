@@ -1,6 +1,14 @@
-=====
-Cells
-=====
+==========
+Cells (v1)
+==========
+
+.. warning::
+
+   Configuring and implementing Cells v1 is not recommended for new deployments
+   of the Compute service (nova). Cells v2 replaces cells v1, and v2 is
+   required to install or upgrade the Compute service to the 15.0.0 Ocata
+   release. More information on cells v2 can be found on the
+   `Cells <https://docs.openstack.org/developer/nova/cells.html>`_ page.
 
 ``Cells`` functionality enables you to scale an OpenStack Compute
 cloud in a more distributed fashion without having to use complicated
@@ -26,10 +34,6 @@ Cells scheduling is separate from host scheduling.
 new build request reaches its ``nova-cells`` service, it is sent
 over to the host scheduler in that cell and the build proceeds as
 it would have without cells.
-
-.. warning::
-
-   Cell functionality is currently considered experimental.
 
 Cell configuration options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
