@@ -43,19 +43,10 @@ Oz
 that automates the process of creating a virtual machine image file.
 Oz is a Python app that interacts with KVM to step through the process
 of installing a virtual machine.
+
 It uses a predefined set of kickstart (Red Hat-based systems) and
 preseed files (Debian-based systems) for operating systems that it
 supports, and it can also be used to create Microsoft Windows images.
-On Fedora, install Oz with yum:
-
-.. code-block:: console
-
-   # yum install oz
-
-.. note::
-
-   As of this writing, there are no Oz packages for Ubuntu, so you will
-   need to either install from the source or build your own .deb file.
 
 A full treatment of Oz is beyond the scope of this document,
 but we will provide an example. You can find additional examples of
@@ -63,7 +54,7 @@ Oz template files on GitHub at `rcbops/oz-image-build/tree/master/templates
 <https://github.com/rcbops/oz-image-build/tree/master/templates>`_.
 Here's how you would create a CentOS 6.4 image with Oz.
 
-Create a template file (we'll call it ``centos64.tdl``) with
+Create a template file called ``centos64.tdl`` with
 the following contents. The only entry you will need to
 change is the ``<rootpw>`` contents.
 

@@ -19,7 +19,7 @@ Download a CentOS install ISO
 #. Click the ``isos/`` folder link.
 #. Click the ``x86_64/`` folder link for 64-bit images.
 #. Click the netinstall ISO image that you want to download.
-   For example, ``CentOS-7-x86_64-NetInstall-1511.iso`` is a good
+   For example, ``CentOS-7-x86_64-NetInstall-1611.iso`` is a good
    choice because it is a smaller image that downloads missing
    packages from the Internet during installation.
 
@@ -27,7 +27,7 @@ Start the installation process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Start the installation process using either the :command:`virt-manager`
-or the :command:`virt-install` command as described in the previous section.
+or the :command:`virt-install` command as described previously.
 If you use the :command:`virt-install` command, do not forget to connect your
 VNC client to the virtual machine.
 
@@ -48,15 +48,16 @@ something like this:
      --disk /tmp/centos.qcow2,format=qcow2 \
      --network network=default \
      --graphics vnc,listen=0.0.0.0 --noautoconsole \
-     --os-type=linux --os-variant=rhel7 \
-     --location=/data/isos/CentOS-7-x86_64-NetInstall-1511.iso
+     --os-type=linux --os-variant=centos7.0 \
+     --location=/data/isos/CentOS-7-x86_64-NetInstall-1611.iso
 
 Step through the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At the initial Installer boot menu, choose the
-:guilabel:`Install CentOS 7` option.
-Step through the installation prompts. Accept the defaults.
+:guilabel:`Install CentOS 7` option. After the installation program starts,
+choose your preferred language and click :guilabel:`Continue` to get to the
+installation summary. Accept the defaults.
 
 .. figure:: figures/centos-install.png
    :width: 100%
@@ -71,6 +72,15 @@ default.
 
 .. figure:: figures/centos-tcpip.png
    :width: 100%
+
+Hostname
+--------
+
+The installer allows you to choose a host name.
+The default (``localhost.localdomain``) is fine.
+You install the ``cloud-init`` package later,
+which sets the host name on boot when a new instance
+is provisioned using this image.
 
 Point the installer to a CentOS web server
 ------------------------------------------
@@ -104,15 +114,6 @@ Storage devices
 If prompted about which type of devices your installation uses,
 choose :guilabel:`Virtio Block Device`.
 
-Hostname
---------
-
-The installer may ask you to choose a host name.
-The default (``localhost.localdomain``) is fine.
-You install the ``cloud-init`` package later,
-which sets the host name on boot when a new instance
-is provisioned using this image.
-
 Partition the disks
 -------------------
 
@@ -135,19 +136,22 @@ Step through the installation, using the default options.
 The simplest thing to do is to choose the ``Minimal Install``
 install, which installs an SSH server.
 
+Set the root password
+---------------------
+
+During the installation, remember to set the root password when prompted.
+
 Detach the CD-ROM and reboot
 ----------------------------
 
-When the installation has completed, the
-:guilabel:`Congratulations, your CentOS installation is complete`
-screen appears.
+Wait until the installation is complete.
 
 .. figure:: figures/centos-complete.png
    :width: 100%
 
 To eject a disk by using the :command:`virsh` command,
 libvirt requires that you attach an empty disk at the same target
-that the CDROM was previously attached, which should be ``hdc``.
+that the CD-ROM was previously attached, which may be ``hda``.
 You can confirm the appropriate target using the
 :command:`virsh dumpxml vm-image` command.
 
@@ -159,7 +163,7 @@ You can confirm the appropriate target using the
    ...
        <disk type='block' device='cdrom'>
          <driver name='qemu' type='raw'/>
-         <target dev='hdc' bus='ide'/>
+         <target dev='hda' bus='ide'/>
          <readonly/>
          <address type='drive' controller='0' bus='1' target='0' unit='0'/>
        </disk>
@@ -173,15 +177,8 @@ and reboot it by manually stopping and starting.
 
 .. code-block:: console
 
-   # virsh attach-disk --type cdrom --mode readonly centos "" hdc
+   # virsh attach-disk --type cdrom --mode readonly centos "" hda
    # virsh reboot centos
-
-Log in to newly created image
------------------------------
-
-When you boot for the first time after installation,
-you might be prompted about authentication tools.
-Select :guilabel:`Exit`. Then, log in as root.
 
 Install the ACPI service
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,8 +186,9 @@ Install the ACPI service
 To enable the hypervisor to reboot or shutdown an instance,
 you must install and run the ``acpid`` service on the guest system.
 
-Run the following commands inside the CentOS guest to install the
-ACPI service and configure it to start when the system boots:
+Log in as root to the CentOS guest and run the following commands
+to install the ACPI service and configure it to start when the
+system boots:
 
 .. code-block:: console
 
@@ -216,39 +214,38 @@ Use cloud-init to fetch the public key
 
 The ``cloud-init`` package automatically fetches the public key
 from the metadata server and places the key in an account.
-You can install ``cloud-init`` inside the CentOS guest by
-adding the EPEL repo:
+Install ``cloud-init`` inside the CentOS guest by
+running:
 
 .. code-block:: console
 
-   # yum install epel-release.noarch
    # yum install cloud-init
 
-The account varies by distribution. On Ubuntu-based virtual machines,
-the account is called ``ubuntu``. On Fedora-based virtual machines,
-the account is called ``ec2-user``.
+The account varies by distribution. On CentOS-based virtual machines,
+the account is called ``centos``.
 
 You can change the name of the account used by ``cloud-init``
 by editing the ``/etc/cloud/cloud.cfg`` file and adding a line
 with a different user. For example, to configure ``cloud-init``
-to put the key in an account named ``admin``, add this line
-to the configuration file:
+to put the key in an account named ``admin``, use the following
+syntax in the configuration file:
 
 .. code-block:: console
 
-   user: admin
+   users:
+     - name: admin
+       (...)
 
 Install cloud-utils-growpart to allow partitions to resize
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order for the root partition to properly resize one must
-install cloud-utils-growpart which contains the proper tools
+In order for the root partition to properly resize, install the
+``cloud-utils-growpart`` package, which contains the proper tools
 to allow the disk to resize using cloud-init.
 
 .. code-block:: console
 
    # yum install cloud-utils-growpart
-
 
 Write a script to fetch the public key (if no cloud-init)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -319,16 +316,18 @@ Configure console
 ~~~~~~~~~~~~~~~~~
 
 For the :command:`nova console-log` command to work properly
-on CentOS 7.``x``, you might need to do the following steps:
+on CentOS 7, you might need to do the following steps:
 
 #. Edit the ``/etc/default/grub`` file and configure the
    ``GRUB_CMDLINE_LINUX`` option. Delete the ``rhgb quiet``
-   and add the ``console=tty0 console=ttyS0,115200n8`` to the option:
+   and add ``console=tty0 console=ttyS0,115200n8`` to the option.
+
+   For example:
 
    .. code-block:: none
 
      ...
-     GRUB_CMDLINE_LINUX="crashkernel=auto console=tty0 console=ttyS0,115200n8"
+     GRUB_CMDLINE_LINUX="crashkernel=auto rd.lvm.lv=cl/root rd.lvm.lv=cl/swap console=tty0 console=ttyS0,115200n8"
 
 #. Run the following command to save the changes:
 
@@ -349,20 +348,19 @@ on CentOS 7.``x``, you might need to do the following steps:
 Shut down the instance
 ~~~~~~~~~~~~~~~~~~~~~~
 
-From inside the instance, as root:
+From inside the instance, run as root:
 
 .. code-block:: console
 
-   # /sbin/shutdown -h now
+   # poweroff
 
 Clean up (remove MAC address details)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The operating system records the MAC address of the virtual Ethernet
 card in locations such as ``/etc/sysconfig/network-scripts/ifcfg-eth0``
-and ``/etc/udev/rules.d/70-persistent-net.rules`` during the instance
-process. However, each time the image boots up, the virtual Ethernet
-card will have a different MAC address, so this information must
+during the instance process. However, each time the image boots up, the virtual
+Ethernet card will have a different MAC address, so this information must
 be deleted from the configuration file.
 
 There is a utility called :command:`virt-sysprep`, that performs

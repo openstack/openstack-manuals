@@ -33,7 +33,8 @@ permissions to run libvirt, but has sudo privileges, do:
    The ``-X`` flag passed to ssh will enable X11 forwarding over ssh.
    If this does not work, try replacing it with the ``-Y`` flag.
 
-Click the :guilabel:`New` button at the top-left and step through the
+Click the :guilabel:`Create a new virtual machine` button at the top-left,
+or go to :menuselection:`File --> New Virtual Machine`. Then, follow the
 instructions.
 
 .. figure:: figures/virt-manager.png
@@ -44,7 +45,7 @@ to specify information about the virtual machine.
 
 .. note::
 
-   When using qcow2 format images you should check the option
-   ``customize before install``, go to disk properties and
+   When using qcow2 format images, you should check the option
+   ``Customize configuration before install``, go to disk properties and
    explicitly select the :guilabel:`qcow2` format.
    This ensures the virtual machine disk size will be correct.

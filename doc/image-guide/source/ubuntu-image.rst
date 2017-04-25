@@ -197,14 +197,17 @@ The account varies by distribution.
 On Ubuntu-based virtual machines, the account is called ``ubuntu``.
 On Fedora-based virtual machines, the account is called ``ec2-user``.
 
-You can change the name of the account used by cloud-init by editing the
-``/etc/cloud/cloud.cfg`` file and adding a line with a different user.
-For example, to configure cloud-init to put the key in an account named
-``admin``, edit the config file so it has the line:
+You can change the name of the account used by ``cloud-init``
+by editing the ``/etc/cloud/cloud.cfg`` file and adding a line
+with a different user. For example, to configure ``cloud-init``
+to put the key in an account named ``admin``, use the following
+syntax in the configuration file:
 
 .. code-block:: console
 
-   user: admin
+   users:
+     - name: admin
+       (...)
 
 Shut down the instance
 ~~~~~~~~~~~~~~~~~~~~~~
