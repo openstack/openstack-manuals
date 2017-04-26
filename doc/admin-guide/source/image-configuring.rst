@@ -263,7 +263,7 @@ the API server accesses the registry server.
    ``use_user_token``, ``admin_user``, ``admin_password``,
    ``admin_tenant_name``, ``auth_url``, ``auth_strategy`` and ``auth_region``
    options were considered harmful and have been deprecated in the Mitaka release.
-   They were fully removed in the the Ocata release. For more information read
+   They were fully removed in the Ocata release. For more information read
    `OSSN-0060 <https://wiki.openstack.org/wiki/OSSN/OSSN-0060>`_.
    Related functionality with uploading big images has been implemented with
    Keystone trusts support.
