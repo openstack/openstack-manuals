@@ -20,10 +20,11 @@
 Workflow service (mistral) command-line client
 ==============================================
 
-The mistral client is the command-line interface (CLI) for
-the Workflow service (mistral) API and its extensions.
+The mistral client is the command-line interface (CLI) for the
+Workflow service (mistral) API
+and its extensions.
 
-This chapter documents :command:`mistral` version ``3.0.0``.
+This chapter documents :command:`mistral` version ``3.1.0``.
 
 For help on a specific :command:`mistral` command, enter:
 
@@ -44,7 +45,8 @@ mistral usage
                   [--os-mistral-service-type SERVICE_TYPE]
                   [--os-mistral-endpoint-type ENDPOINT_TYPE]
                   [--os-username USERNAME] [--os-password PASSWORD]
-                  [--os-tenant-id TENANT_ID] [--os-tenant-name TENANT_NAME]
+                  [--os-tenant-id TENANT_ID] [--os-project-id PROJECT_ID]
+                  [--os-tenant-name TENANT_NAME] [--os-project-name PROJECT_NAME]
                   [--os-auth-token TOKEN]
                   [--os-project-domain-name PROJECT_DOMAIN_NAME]
                   [--os-user-domain-name USER_DOMAIN_NAME]
@@ -114,11 +116,23 @@ mistral optional arguments
 
 ``--os-tenant-id TENANT_ID``
   Authentication tenant identifier (Env:
-  OS_TENANT_ID)
+  OS_TENANT_ID or OS_PROJECT_ID)
+
+``--os-project-id PROJECT_ID``
+  Authentication project identifier (Env:
+  OS_TENANT_ID or OS_PROJECT_ID), will use
+  tenant_id if both tenant_id and project_id are
+  set
 
 ``--os-tenant-name TENANT_NAME``
   Authentication tenant name (Env:
-  OS_TENANT_NAME)
+  OS_TENANT_NAME or OS_PROJECT_NAME)
+
+``--os-project-name PROJECT_NAME``
+  Authentication project name (Env:
+  OS_TENANT_NAME or OS_PROJECT_NAME), will use
+  tenant_name if both tenant_name and
+  project_name are set
 
 ``--os-auth-token TOKEN``
   Authentication token (Env: OS_AUTH_TOKEN)
@@ -152,7 +166,7 @@ mistral optional arguments
 
 ``--auth-type AUTH_TYPE``
   Authentication type. Valid options are:
-  ['keystone', 'keycloak-oidc']. (Env:
+  keystone, keycloak-oidc. (Env:
   MISTRAL_AUTH_TYPE)
 
 ``--openid-client-id CLIENT_ID``
@@ -557,7 +571,7 @@ mistral cron-trigger-create
                                       [--prefix PREFIX] [--params PARAMS]
                                       [--pattern <* * * * *>]
                                       [--first-time <YYYY-MM-DD HH:MM>]
-                                      [--count <integer>]
+                                      [--count <integer>] [--utc]
                                       name workflow_identifier [workflow_input]
 
 Create new trigger.
@@ -585,10 +599,14 @@ Create new trigger.
   Cron trigger pattern
 
 ``--first-time <YYYY-MM-DD HH:MM>``
-  Date and time of the first execution
+  Date and time of the first execution. Time is treated
+  as local time unless --utc is also specified
 
 ``--count <integer>``
   Number of wanted executions
+
+``--utc``
+  All times specified should be treated as UTC
 
 .. _mistral_cron-trigger-delete:
 
