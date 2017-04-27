@@ -45,6 +45,7 @@ FWaaS management options are also available in the Dashboard.
       agent_version = v1
       driver = iptables
       enabled = True
+      conntrack_driver = conntrack
 
 #. Create the required tables in the database:
 
