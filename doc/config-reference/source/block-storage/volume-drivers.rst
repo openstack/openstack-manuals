@@ -9,7 +9,6 @@ Volume drivers
    :maxdepth: 1
 
    drivers/ceph-rbd-volume-driver.rst
-   drivers/glusterfs-driver.rst
    drivers/lvm-volume-driver.rst
    drivers/nfs-volume-driver.rst
    drivers/sheepdog-driver.rst
