@@ -8,6 +8,11 @@ from the server that hosts the ``cinder`` volume service.
 
 .. note::
 
+   The GlusterFS volume driver, which was deprecated in the Newton release,
+   has been removed in the Ocata release.
+
+.. note::
+
    The cinder volume service is named ``openstack-cinder-volume`` on the
    following distributions:
 
