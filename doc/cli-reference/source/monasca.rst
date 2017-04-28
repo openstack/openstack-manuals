@@ -23,7 +23,7 @@ Monitoring (monasca) command-line client
 The monasca client is the command-line interface (CLI) for
 the Monitoring (monasca) API and its extensions.
 
-This chapter documents :command:`monasca` version ``1.5.0``.
+This chapter documents :command:`monasca` version ``1.6.0``.
 
 For help on a specific :command:`monasca` command, enter:
 
@@ -48,7 +48,8 @@ monasca usage
                   [--os-project-name OS_PROJECT_NAME]
                   [--os-project-domain-id OS_PROJECT_DOMAIN_ID]
                   [--os-project-domain-name OS_PROJECT_DOMAIN_NAME]
-                  [--os-auth-url OS_AUTH_URL] [--os-region-name OS_REGION_NAME]
+                  [--os-auth-url OS_AUTH_URL] [--os-auth-version OS_AUTH_VERSION]
+                  [--os-region-name OS_REGION_NAME]
                   [--os-auth-token OS_AUTH_TOKEN] [--os-no-client-auth]
                   [--monasca-api-url MONASCA_API_URL]
                   [--monasca-api-version MONASCA_API_VERSION]
@@ -161,6 +162,9 @@ monasca optional arguments
 
 ``--os-auth-url OS_AUTH_URL``
   Defaults to ``env[OS_AUTH_URL]``.
+
+``--os-auth-version OS_AUTH_VERSION``
+  Defaults to ``env[OS_AUTH_VERSION]``.
 
 ``--os-region-name OS_REGION_NAME``
   Defaults to ``env[OS_REGION_NAME]``.
