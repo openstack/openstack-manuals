@@ -84,26 +84,27 @@ the volume.
 
       $ . admin-openrc.sh
 
-#. Create the volume type:
+#. Create the volume type, marking the volume type as encrypted and providing
+   the necessary details. Use ``--encryption-control-location`` to specify
+   where encryption is performed: ``front-end`` (default) or ``back-end``.
 
    .. code-block:: console
 
-      $ openstack volume type create LUKS
+      $ openstack volume type create --encryption-provider nova.volume.encryptors.luks.LuksEncryptor \
+        --encryption-cipher aes-xts-plain64 --encryption-key-size 256 --encryption-control-location front-end LUKS
 
-#. Mark the volume type as encrypted and provide the necessary details. Use
-   ``--control_location`` to specify where encryption is performed:
-   ``front-end`` (default) or ``back-end``.
-
-   .. code-block:: console
-
-
-      $ cinder encryption-type-create --cipher aes-xts-plain64 --key_size 256 \
-        --control_location front-end LUKS nova.volume.encryptors.luks.LuksEncryptor
-      +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
-      |            Volume Type ID            |                  Provider                 |      Cipher     | Key Size | Control Location |
-      +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
-      | e64b35a4-a849-4c53-9cc7-2345d3c8fbde | nova.volume.encryptors.luks.LuksEncryptor | aes-xts-plain64 |   256    |    front-end     |
-      +--------------------------------------+-------------------------------------------+-----------------+----------+------------------+
+        +-------------+----------------------------------------------------------------+
+        | Field       | Value                                                          |
+        +-------------+----------------------------------------------------------------+
+        | description | None                                                           |
+        | encryption  | cipher='aes-xts-plain64', control_location='front-end',        |
+        |             | encryption_id='8584c43f-1666-43d1-a348-45cfcef72898',          |
+        |             | key_size='256',                                                |
+        |             | provider='nova.volume.encryptors.luks.LuksEncryptor'           |
+        | id          | b9a8cff5-2f60-40d1-8562-d33f3bf18312                           |
+        | is_public   | True                                                           |
+        | name        | LUKS                                                           |
+        +-------------+----------------------------------------------------------------+
 
 The OpenStack dashboard (horizon) supports creating the encrypted
 volume type as of the Kilo release. For instructions, see
@@ -113,11 +114,11 @@ volume type as of the Kilo release. For instructions, see
 Create an encrypted volume
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the OpenStack dashboard (horizon), or the :command:`cinder`
-command to create volumes just as you normally would. For an encrypted volume,
-pass the ``--volume-type LUKS`` flag, which denotes that the volume will be of
-encrypted type ``LUKS``. If that argument is left out, the default volume
-type, ``unencrypted``, is used.
+Use the OpenStack dashboard (horizon), or :command:`openstack volume
+create` command to create volumes just as you normally would. For an
+encrypted volume, pass the ``--type LUKS`` flag, which specifies that the
+volume type will be ``LUKS`` (Linux Unified Key Setup). If that argument is
+left out, the default volume type, ``unencrypted``, is used.
 
 #. Source your admin credentials:
 
