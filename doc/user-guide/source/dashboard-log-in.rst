@@ -57,8 +57,8 @@ The dashboard is generally installed on the controller node.
 
 .. _dashboard-project-tab:
 
-OpenStack dashboard — :guilabel:`Project` tab
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack dashboard — Project tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Projects are organizational units in the cloud and are also known as
 tenants or accounts. Each user is a member of one or more projects.
@@ -76,8 +76,8 @@ model, you can also select the domain from this menu.
 
 From the :guilabel:`Project` tab, you can access the following categories:
 
-:guilabel:`Compute` tab
------------------------
+Compute tab
+-----------
 
 * :guilabel:`Overview`: View reports for the project.
 
@@ -118,8 +118,8 @@ From the :guilabel:`Project` tab, you can access the following categories:
 
   * :guilabel:`Security Services`: View, manage, and delete security services.
 
-:guilabel:`Network` tab
------------------------
+Network tab
+-----------
 
 * :guilabel:`Network Topology`: View the network topology.
 
@@ -143,8 +143,8 @@ From the :guilabel:`Project` tab, you can access the following categories:
 
   * :guilabel:`Firewall Rules`: Add and manage firewall rules.
 
-:guilabel:`Orchestration` tab
------------------------------
+Orchestration tab
+-----------------
 
 * :guilabel:`Stacks`: Use the REST API to orchestrate multiple composite
   cloud applications.
@@ -152,15 +152,15 @@ From the :guilabel:`Project` tab, you can access the following categories:
 * :guilabel:`Resource Types`: Show a list of all the supported resource
   types for HOT templates.
 
-:guilabel:`Object Store` tab
-----------------------------
+Object Store tab
+----------------
 
 * :guilabel:`Containers`: Create and manage containers and objects.
 
 .. _dashboard-admin-tab:
 
-OpenStack dashboard — :guilabel:`Admin` tab
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack dashboard — Admin tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Administrative users can use the :guilabel:`Admin` tab to view usage and to
 manage instances, volumes, flavors, images, networks, and so on.
@@ -174,8 +174,8 @@ manage instances, volumes, flavors, images, networks, and so on.
 From the :guilabel:`Admin` tab, you can access the following category
 to complete these tasks:
 
-:guilabel:`System` tab
-----------------------
+System tab
+----------
 
 * :guilabel:`Overview`: View basic reports.
 
@@ -253,8 +253,8 @@ to complete these tasks:
 
 .. _dashboard-identity-tab:
 
-OpenStack dashboard — :guilabel:`Identity` tab
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack dashboard — Identity tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: figures/dashboard_identity_tab.png
    :width: 100%
@@ -268,8 +268,8 @@ OpenStack dashboard — :guilabel:`Identity` tab
 
 .. _dashboard-settings-tab:
 
-OpenStack dashboard — :guilabel:`Settings` tab
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack dashboard — Settings tab
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. figure:: figures/dashboard_settings_tab.png
    :width: 100%
