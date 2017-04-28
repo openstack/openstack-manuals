@@ -79,7 +79,7 @@ transparent huge pages (``AnonHugePages``) allocated. Huge pages can be
 allocated at boot time or run time. Huge pages require a contiguous area of
 memory - memory that gets increasingly fragmented the long a host is running.
 Identifying contiguous areas of memory is a issue for all huge page sizes, but
-it's particularly problematic for larger huge page sizes such as 1 GB huge
+it is particularly problematic for larger huge page sizes such as 1 GB huge
 pages. Allocating huge pages at boot time will ensure the correct number of huge
 pages is always available, while allocating them at run time can fail if memory
 has become too fragmented.
@@ -214,15 +214,17 @@ of flavor. To configure an image to use 1 GB huge pages, run:
 
    $ openstack image set [IMAGE_ID]  --property hw_mem_page_size=1GB
 
-Image metadata takes precedence over flavor extra specs. Thus, configuring
-competing page sizes causes an exception. By setting a ``small`` page size
-through image metadata, administrators can prevent users requesting huge pages
-in flavors and impacting resource utilization. To configure this page size,
-run:
+If the flavor specifies a numerical page size or a page size of "small" the
+image is not allowed to specify a page size and if it does an exception will
+be raised. If the flavor specifies a page size of ``any`` or ``large`` then
+any page size specified in the image will be used. By setting a ``small``
+page size in the flavor, administrators can prevent users requesting huge
+pages in flavors and impacting resource utilization. To configure this page
+size, run:
 
 .. code-block:: console
 
-   $ openstack image set [IMAGE_ID] --property hw_mem_page_size=small
+   $ openstack flavor set m1.large --property hw:mem_page_size=small
 
 .. note::
 
