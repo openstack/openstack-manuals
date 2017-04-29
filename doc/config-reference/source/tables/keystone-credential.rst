@@ -19,4 +19,8 @@
    * - **[credential]**
      -
    * - ``driver`` = ``sql``
-     - (String) Entrypoint for the credential backend driver in the keystone.credential namespace.
+     - (String) Entry point for the credential backend driver in the `keystone.credential` namespace. Keystone only provides a `sql` driver, so there's no reason to change this unless you are providing a custom entry point.
+   * - ``provider`` = ``fernet``
+     - (String) Entry point for credential encryption and decryption operations in the `keystone.credential.provider` namespace. Keystone only provides a `fernet` driver, so there's no reason to change this unless you are providing a custom entry point to encrypt and decrypt credentials.
+   * - ``key_repository`` = ``/etc/keystone/credential-keys/``
+     - (String) Directory containing Fernet keys used to encrypt and decrypt credentials stored in the credential backend. Fernet keys used to encrypt credentials have no relationship to Fernet keys used to encrypt Fernet tokens. Both sets of keys should be managed separately and require different rotation policies. Do not share this repository with the repository used to manage keys for Fernet tokens.

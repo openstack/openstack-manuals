@@ -19,10 +19,12 @@
    * - **[memcache]**
      -
    * - ``dead_retry`` = ``300``
-     - (Integer) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system (e.g. token pooled memcached persistence backend).
-   * - ``pool_connection_get_timeout`` = ``10``
-     - (Integer) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system.
+   * - ``socket_timeout`` = ``3``
+     - (Integer) Timeout in seconds for every call to a server. This is used by the key value store system.
    * - ``pool_maxsize`` = ``10``
-     - (Integer) Max total number of open connections to every memcached server. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Max total number of open connections to every memcached server. This is used by the key value store system.
    * - ``pool_unused_timeout`` = ``60``
-     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system.
+   * - ``pool_connection_get_timeout`` = ``10``
+     - (Integer) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system.

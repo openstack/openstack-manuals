@@ -18,9 +18,9 @@
      - Description
    * - **[oauth1]**
      -
-   * - ``access_token_duration`` = ``86400``
-     - (Integer) Duration (in seconds) for the OAuth Access Token.
    * - ``driver`` = ``sql``
-     - (String) Entrypoint for the OAuth backend driver in the keystone.oauth1 namespace.
+     - (String) Entry point for the OAuth backend driver in the `keystone.oauth1` namespace. Typically, there is no reason to set this option unless you are providing a custom entry point.
    * - ``request_token_duration`` = ``28800``
-     - (Integer) Duration (in seconds) for the OAuth Request Token.
+     - (Integer) Number of seconds for the OAuth Request Token to remain valid after being created. This is the amount of time the user has to authorize the token. Setting this option to zero means that request tokens will last forever.
+   * - ``access_token_duration`` = ``86400``
+     - (Integer) Number of seconds for the OAuth Access Token to remain valid after being created. This is the amount of time the consumer has to interact with the service provider (which is typically keystone). Setting this option to zero means that access tokens will last forever.

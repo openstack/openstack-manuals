@@ -18,25 +18,35 @@
      - Description
    * - **[token]**
      -
-   * - ``allow_rescope_scoped_token`` = ``True``
-     - (Boolean) Allow rescoping of scoped token. Setting allow_rescoped_scoped_token to false prevents a user from exchanging a scoped token for any other token.
    * - ``bind`` =
-     - (List) External auth mechanisms that should add bind information to token, e.g., kerberos,x509.
-   * - ``cache_time`` = ``None``
-     - (Integer) Time to cache tokens (in seconds). This has no effect unless global and token caching are enabled.
-   * - ``caching`` = ``True``
-     - (Boolean) Toggle for token system caching. This has no effect unless global caching is enabled.
-   * - ``driver`` = ``sql``
-     - (String) Entrypoint for the token persistence backend driver in the keystone.token.persistence namespace. Supplied drivers are kvs, memcache, memcache_pool, and sql.
+     - (List) This is a list of external authentication mechanisms which should add token binding metadata to tokens, such as `kerberos` or `x509`. Binding metadata is enforced according to the `[token] enforce_token_bind` option.
    * - ``enforce_token_bind`` = ``permissive``
-     - (String) Enforcement policy on tokens presented to Keystone with bind information. One of disabled, permissive, strict, required or a specifically required bind mode, e.g., kerberos or x509 to require binding to that authentication.
+     - (String) This controls the token binding enforcement policy on tokens presented to keystone with token binding metadata (as specified by the `[token] bind` option). `disabled` completely bypasses token binding validation. `permissive` and `strict` do not require tokens to have binding metadata (but will validate it if present), whereas `required` will always demand tokens to having binding metadata. `permissive` will allow unsupported binding metadata to pass through without validation (usually to be validated at another time by another component), whereas `strict` and `required` will demand that the included binding metadata be supported by keystone.
+
+       - **Deprecated**
+
+         No deprecation reason provided for this option.
    * - ``expiration`` = ``3600``
-     - (Integer) Amount of time a token should remain valid (in seconds).
-   * - ``hash_algorithm`` = ``md5``
-     - (String) DEPRECATED: The hash algorithm to use for PKI tokens. This can be set to any algorithm that hashlib supports. WARNING: Before changing this value, the auth_token middleware must be configured with the hash_algorithms, otherwise token revocation will not be processed correctly. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
-   * - ``infer_roles`` = ``True``
-     - (Boolean) Add roles to token that are not explicitly added, but that are linked implicitly to other roles.
-   * - ``provider`` = ``uuid``
-     - (String) Controls the token construction, validation, and revocation operations. Entrypoint in the keystone.token.provider namespace. Core providers are [fernet|pkiz|pki|uuid].
+     - (Integer) The amount of time that a token should remain valid (in seconds). Drastically reducing this value may break "long-running" operations that involve multiple services to coordinate together, and will force users to authenticate with keystone more frequently. Drastically increasing this value will increase load on the `[token] driver`, as more tokens will be simultaneously valid. Keystone tokens are also bearer tokens, so a shorter duration will also reduce the potential security impact of a compromised token.
+   * - ``provider`` = ``fernet``
+     - (String) Entry point for the token provider in the `keystone.token.provider` namespace. The token provider controls the token construction, validation, and revocation operations. Keystone includes `fernet` and `uuid` token providers. `uuid` tokens must be persisted (using the backend specified in the `[token] driver` option), but do not require any extra configuration or setup. `fernet` tokens do not need to be persisted at all, but require that you run `keystone-manage fernet_setup` (also see the `keystone-manage fernet_rotate` command).
+   * - ``driver`` = ``sql``
+     - (String) Entry point for the token persistence backend driver in the `keystone.token.persistence` namespace. Keystone provides the `sql` driver. The `sql` option (default) depends on the options in your `[database]` section. If you're using the `fernet` `[token] provider`, this backend will not be utilized to persist tokens at all.
+
+       - **Deprecated**
+
+         No deprecation reason provided for this option.
+   * - ``caching`` = ``True``
+     - (Boolean) Toggle for caching token creation and validation data. This has no effect unless global caching is enabled.
+   * - ``cache_time`` = ``None``
+     - (Integer) The number of seconds to cache token creation and validation data. This has no effect unless both global and `[token] caching` are enabled.
    * - ``revoke_by_id`` = ``True``
-     - (Boolean) Revoke token by token identifier. Setting revoke_by_id to true enables various forms of enumerating tokens, e.g. `list tokens for user`. These enumerations are processed to determine the list of tokens to revoke. Only disable if you are switching to using the Revoke extension with a backend other than KVS, which stores events in memory.
+     - (Boolean) This toggles support for revoking individual tokens by the token identifier and thus various token enumeration operations (such as listing all tokens issued to a specific user). These operations are used to determine the list of tokens to consider revoked. Do not disable this option if you're using the `kvs` `[revoke] driver`.
+   * - ``allow_rescope_scoped_token`` = ``True``
+     - (Boolean) This toggles whether scoped tokens may be re-scoped to a new project or domain, thereby preventing users from exchanging a scoped token (including those with a default project scope) for any other token. This forces users to either authenticate for unscoped tokens (and later exchange that unscoped token for tokens with a more specific scope) or to provide their credentials in every request for a scoped token to avoid re-scoping altogether.
+   * - ``infer_roles`` = ``True``
+     - (Boolean) This controls whether roles should be included with tokens that are not directly assigned to the token's scope, but are instead linked implicitly to other role assignments.
+   * - ``cache_on_issue`` = ``True``
+     - (Boolean) Enable storing issued token data to token validation cache so that first token validation doesn't actually cause full validation cycle. This option has no effect unless global caching and token caching are enabled.
+   * - ``allow_expired_window`` = ``172800``
+     - (Integer) This controls the number of seconds that a token can be retrieved for beyond the built-in expiry time. This allows long running operations to succeed. Defaults to two days.
