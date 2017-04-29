@@ -6,6 +6,20 @@ New, updated, and deprecated options in Ocata for Identity service
   changes will be overwritten. The tool to do so lives in the
   openstack-doc-tools repository.
 
+.. list-table:: New options
+   :header-rows: 1
+   :class: config-ref-table
+
+   * - Option = default value
+     - (Type) Help string
+   * - ``[auth] mapped = None``
+     - (StrOpt) Entry point for the mapped auth plugin module in the `keystone.auth.mapped` namespace. You do not need to set this unless you are overriding keystone's own `mapped` authentication plugin.
+   * - ``[ldap] connection_timeout = -1``
+     - (IntOpt) The connection timeout to use with the LDAP server. A value of `-1` means that connections will never timeout.
+   * - ``[security_compliance] change_password_upon_first_use = False``
+     - (BoolOpt) Enabling this option requires users to change their password when the user is created, or upon administrative reset. Before accessing any services, affected users will have to change their password. To ignore this requirement for specific users, such as service users, set the `options` attribute `ignore_change_password_upon_first_use` to `True` for the desired user via the update user API. This feature is disabled by default. This feature is only applicable with the `sql` backend for the `[identity] driver`.
+   * - ``[token] allow_expired_window = 172800``
+     - (IntOpt) This controls the number of seconds that a token can be retrieved for beyond the built-in expiry time. This allows long running operations to succeed. Defaults to two days.
 
 .. list-table:: New default values
    :header-rows: 1
@@ -23,6 +37,21 @@ New, updated, and deprecated options in Ocata for Identity service
    * - ``[DEFAULT] notification_opt_out``
      - ``[]``
      - ``['identity.authenticate.success', 'identity.authenticate.pending', 'identity.authenticate.failed']``
+   * - ``[assignment] driver``
+     - ``None``
+     - ``sql``
+   * - ``[auth] methods``
+     - ``external, password, token, oauth1``
+     - ``external, password, token, oauth1, mapped``
+   * - ``[resource] driver``
+     - ``None``
+     - ``sql``
+   * - ``[token] cache_on_issue``
+     - ``False``
+     - ``True``
+   * - ``[token] provider``
+     - ``uuid``
+     - ``fernet``
 
 .. list-table:: Deprecated options
    :header-rows: 1
