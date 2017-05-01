@@ -2752,7 +2752,7 @@ O
       Each OpenStack release has a code name. Code names ascend in
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
-      Mitaka, Newton, Ocata, Pike, and Queens.
+      Mitaka, Newton, Ocata, Pike, Queens, and Rocky.
       Code names are cities or counties near where the
       corresponding OpenStack design summit took place. An
       exception, called the Waldon exception, is granted to
@@ -3240,6 +3240,12 @@ R
       Builds and manages rings within Object Storage, assigns
       partitions to devices, and pushes the configuration to other storage
       nodes.
+
+   Rocky
+
+      The code name for the eightteenth release of OpenStack. The
+      design summit will take place in Vancouver, Kanada. The release
+      is named after the Rocky Mountains.
 
    role
 
