@@ -114,6 +114,13 @@ volumes.
 
 `*` Source `NIST SP 800-38E <http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38e.pdf>`_
 
+   .. note::
+
+      To see further information and CLI instructions, see
+      `Create an encrypted volume type
+      <https://docs.openstack.org/ocata/config-reference/block-storage/volume-encryption.html>`_
+      in the OpenStack Configuration Reference.
+
 Delete volume types
 ~~~~~~~~~~~~~~~~~~~
 
