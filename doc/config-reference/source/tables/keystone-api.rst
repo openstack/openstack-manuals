@@ -37,7 +37,11 @@
    * - ``public_endpoint`` = ``None``
      - (URI) The base public endpoint URL for Keystone that is advertised to clients (NOTE: this does NOT affect how Keystone listens for connections). Defaults to the base host URL of the request. For example, if keystone receives a request to `http://server:5000/v3/users`, then this will option will be automatically treated as `http://server:5000`. You should only need to set option if either the value of the base URL contains a path that keystone does not automatically infer (`/prefix/v3`), or if the endpoint should be found on a different host.
    * - ``secure_proxy_ssl_header`` = ``HTTP_X_FORWARDED_PROTO``
-     - (String) DEPRECATED: The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy. This option has been deprecated in the N release and will be removed in the P release. Use oslo.middleware.http_proxy_to_wsgi configuration instead.
+     - (String) The HTTP header used to determine the scheme for the original request, even if it was removed by an SSL terminating proxy.
+
+       - **Deprecated**
+
+         This option has been deprecated in the N release and will be removed in the P release. Use oslo.middleware.http_proxy_to_wsgi configuration instead.
    * - ``strict_password_check`` = ``False``
      - (Boolean) If set to true, strict password length checking is performed for password manipulation. If a password exceeds the maximum length, the operation will fail with an HTTP 403 Forbidden error. If set to false, passwords are automatically truncated to the maximum length.
    * - **[oslo_middleware]**
@@ -47,4 +51,70 @@
    * - ``max_request_body_size`` = ``114688``
      - (Integer) The maximum body size for each request, in bytes.
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
+     - (String) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
+
+       - **Deprecated**
+
+         No deprecation reason provided for this option.
+   * - **[shadow_users]**
+     -
+   * - ``driver`` = ``sql``
+     - (String) Entry point for the shadow users backend driver in the `keystone.identity.shadow_users` namespace. This driver is used for persisting local user references to externally-managed identities (via federation, LDAP, etc). Keystone only provides a `sql` driver, so there is no reason to change this option unless you are providing a custom entry point.
+   * - **[paste_deploy]**
+     -
+   * - ``config_file`` = ``keystone-paste.ini``
+     - (String) Name of (or absolute path to) the Paste Deploy configuration file that composes middleware and the keystone application itself into actual WSGI entry points. See http://pythonpaste.org/deploy/ for additional documentation on the file's format.
+   * - **[endpoint_filter]**
+     -
+   * - ``driver`` = ``sql``
+     - (String) Entry point for the endpoint filter driver in the `keystone.endpoint_filter` namespace. Only a `sql` option is provided by keystone, so there is no reason to set this unless you are providing a custom entry point.
+   * - ``return_all_endpoints_if_no_filter`` = ``True``
+     - (Boolean) This controls keystone's behavior if the configured endpoint filters do not result in any endpoints for a user + project pair (and therefore a potentially empty service catalog). If set to true, keystone will return the entire service catalog. If set to false, keystone will return an empty service catalog.
+   * - **[eventlet_server]**
+     -
+   * - ``public_bind_host`` = ``0.0.0.0``
+     - (Unknown) The IP address of the network interface for the public service to listen on.
+
+       - **Deprecated**
+
+         Support for running keystone under eventlet has been removed in the Newton release. These options remain for backwards compatibility because they are used for URL substitutions.
+   * - ``public_port`` = ``5000``
+     - (Port number) The port number for the public service to listen on.
+
+       - **Deprecated**
+
+         Support for running keystone under eventlet has been removed in the Newton release. These options remain for backwards compatibility because they are used for URL substitutions.
+   * - ``admin_bind_host`` = ``0.0.0.0``
+     - (Unknown) The IP address of the network interface for the admin service to listen on.
+
+       - **Deprecated**
+
+         Support for running keystone under eventlet has been removed in the Newton release. These options remain for backwards compatibility because they are used for URL substitutions.
+   * - ``admin_port`` = ``35357``
+     - (Port number) The port number for the admin service to listen on.
+
+       - **Deprecated**
+
+         Support for running keystone under eventlet has been removed in the Newton release. These options remain for backwards compatibility because they are used for URL substitutions.
+   * - **[endpoint_policy]**
+     -
+   * - ``driver`` = ``sql``
+     - (String) Entry point for the endpoint policy driver in the `keystone.endpoint_policy` namespace. Only a `sql` driver is provided by keystone, so there is no reason to set this unless you are providing a custom entry point.
+   * - **[resource]**
+     -
+   * - ``driver`` = ``sql``
+     - (String) Entry point for the resource driver in the `keystone.resource` namespace. Only a `sql` driver is supplied by keystone. Unless you are writing proprietary drivers for keystone, you do not need to set this option.
+   * - ``caching`` = ``True``
+     - (Boolean) Toggle for resource caching. This has no effect unless global caching is enabled.
+   * - ``cache_time`` = ``None``
+     - (Integer) Time to cache resource data in seconds. This has no effect unless global caching is enabled.
+   * - ``list_limit`` = ``None``
+     - (Integer) Maximum number of entities that will be returned in a resource collection.
+   * - ``admin_project_domain_name`` = ``None``
+     - (String) Name of the domain that owns the `admin_project_name`. If left unset, then there is no admin project. `[resource] admin_project_name` must also be set to use this option.
+   * - ``admin_project_name`` = ``None``
+     - (String) This is a special project which represents cloud-level administrator privileges across services. Tokens scoped to this project will contain a true `is_admin_project` attribute to indicate to policy systems that the role assignments on that specific project should apply equally across every project. If left unset, then there is no admin project, and thus no explicit means of cross-project role assignments. `[resource] admin_project_domain_name` must also be set to use this option.
+   * - ``project_name_url_safe`` = ``off``
+     - (String) This controls whether the names of projects are restricted from containing URL-reserved characters. If set to `new`, attempts to create or update a project with a URL-unsafe name will fail. If set to `strict`, attempts to scope a token with a URL-unsafe project name will fail, thereby forcing all project names to be updated to be URL-safe.
+   * - ``domain_name_url_safe`` = ``off``
+     - (String) This controls whether the names of domains are restricted from containing URL-reserved characters. If set to `new`, attempts to create or update a domain with a URL-unsafe name will fail. If set to `strict`, attempts to scope a token with a URL-unsafe domain name will fail, thereby forcing all domain names to be updated to be URL-safe.
