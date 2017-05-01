@@ -82,20 +82,21 @@ Then, during the boot process, you must:
 
 * Resize the root volume file system.
 
-The simplest way to support this is to install in your image the:
+Depending on your distribution, the simplest way to support this is to install
+in your image:
 
-* `cloud-utils <https://launchpad.net/cloud-utils>`_ package,
-  which contains the ``growpart`` tool for extending partitions.
-* `cloud-initramfs-growroot <https://launchpad.net/cloud-initramfs-tools>`_
-  package for Ubuntu, Debian and Fedora, which supports resizing
-  root partition on the first boot.
-* ``cloud-initramfs-growroot`` package for CentOS and RHEL.
-* `cloud-init <https://launchpad.net/cloud-init>`__ package.
+* the `cloud-init <https://launchpad.net/cloud-init>`__ package,
+* the `cloud-utils <https://launchpad.net/cloud-utils>`_ package,
+  which, on Ubuntu and Debian, also contains the ``growpart`` tool for
+  extending partitions,
+* if you use Fedora, CentOS 7, or RHEL 7, the ``cloud-utils-growpart``
+  package, which contains the ``growpart`` tool for extending partitions,
+* if you use Ubuntu or Debian, the
+  `cloud-initramfs-growroot <https://launchpad.net/cloud-initramfs-tools>`_
+  package , which supports resizing root partition on the first boot.
 
 With these packages installed, the image performs the root partition
 resize on boot. For example, in the ``/etc/rc.local`` file.
-These packages are in the Ubuntu and Debian package repository, as well as
-the EPEL repository (for Fedora/RHEL/CentOS/Scientific Linux guests).
 
 If you cannot install ``cloud-initramfs-tools``, Robert Plestenjak
 has a GitHub project called `linux-rootfs-resize
@@ -103,7 +104,7 @@ has a GitHub project called `linux-rootfs-resize
 that contains scripts that update a ramdisk by using
 ``growpart`` so that the image resizes properly on boot.
 
-If you can install the cloud-utils and ``cloud-init`` packages,
+If you can install the ``cloud-init`` and ``cloud-utils`` packages,
 we recommend that when you create your images, you create
 a single ext3 or ext4 partition (not managed by LVM).
 
@@ -199,18 +200,21 @@ Use cloud-init to fetch the public key
 The ``cloud-init`` package automatically fetches the public key
 from the metadata server and places the key in an account.
 The account varies by distribution.
-On Ubuntu-based virtual machines, the account is called ``ubuntu``.
-On Fedora-based virtual machines, the account is called ``ec2-user``.
+On Ubuntu-based virtual machines, the account is called ``ubuntu``,
+on Fedora-based virtual machines, the account is called ``fedora``,
+and on CentOS-based virtual machines, the account is called ``centos``.
 
 You can change the name of the account used by ``cloud-init``
 by editing the ``/etc/cloud/cloud.cfg`` file and adding a line
 with a different user. For example, to configure ``cloud-init``
-to put the key in an account named ``admin``, edit the
-configuration file so it has the line:
+to put the key in an account named ``admin``, use the following syntax
+in the configuration file:
 
 .. code-block:: yaml
 
-   user: admin
+   users:
+     - name: admin
+       (...)
 
 Write a custom script to fetch the public key
 ---------------------------------------------
@@ -301,7 +305,8 @@ Ensure image writes boot log to console
 
 You must configure the image so that the kernel writes
 the boot log to the ``ttyS0`` device. In particular, the
-``console=ttyS0`` argument must be passed to the kernel on boot.
+``console=tty0 console=ttyS0,115200n8`` arguments must be passed to
+the kernel on boot.
 
 If your image uses ``grub2`` as the boot loader,
 there should be a line in the grub configuration file.
@@ -309,17 +314,17 @@ For example, ``/boot/grub/grub.cfg``, which looks something like this:
 
 .. code-block:: console
 
-   linux /boot/vmlinuz-3.2.0-49-virtual root=UUID=6d2231e4-0975-4f35-a94f-56738c1a8150 ro console=ttyS0
+   linux /boot/vmlinuz-3.2.0-49-virtual root=UUID=6d2231e4-0975-4f35-a94f-56738c1a8150 ro console=tty0 console=ttyS0,115200n8
 
-If ``console=ttyS0`` does not appear, you must modify your grub
-configuration. In general, you should not update the ``grub.cfg``
-directly, since it is automatically generated.
+If ``console=tty0 console=ttyS0,115200n8`` does not appear, you must
+modify your grub configuration. In general, you should not update the
+``grub.cfg`` directly, since it is automatically generated.
 Instead, you should edit the ``/etc/default/grub`` file and modify the
 value of the ``GRUB_CMDLINE_LINUX_DEFAULT`` variable:
 
 .. code-block:: bash
 
-   GRUB_CMDLINE_LINUX_DEFAULT="console=ttyS0"
+   GRUB_CMDLINE_LINUX_DEFAULT="console=tty0 console=ttyS0,115200n8"
 
 Next, update the grub configuration. On Debian-based
 operating systems such as Ubuntu, run this command:
