@@ -242,15 +242,22 @@ image to use pinned vCPUs and avoid thread siblings, run:
      --property hw_cpu_policy=dedicated \
      --property hw_cpu_thread_policy=isolate
 
-Image metadata takes precedence over flavor extra specs. Thus, configuring
-competing policies causes an exception. By setting a ``shared`` policy
-through image metadata, administrators can prevent users configuring CPU
-policies in flavors and impacting resource utilization. To configure this
-policy, run:
+If the flavor specifies a CPU policy of ``dedicated`` then that policy will be
+used. If the flavor explicitly specifies a CPU policy of ``shared`` and the
+image specifies no policy or a policy of ``shared`` then the ``shared`` policy
+will be used, but if the image specifies a policy of ``dedicated`` an exception
+will be raised. By setting a ``shared`` policy through flavor extra-specs,
+administrators can prevent users configuring CPU policies in images and
+impacting resource utilization. To configure this policy, run:
 
 .. code-block:: console
 
-   $ openstack image set [IMAGE_ID] --property hw_cpu_policy=shared
+   $ openstack flavor set m1.large --property hw:cpu_policy=shared
+
+If the flavor does not specify a CPU thread policy then the CPU thread policy
+specified by the image (if any) will be used. If both the flavor and image
+specify a CPU thread policy then they must specify the same policy, otherwise
+an exception will be raised.
 
 .. note::
 
@@ -344,10 +351,11 @@ maximum of one thread, run:
      --property hw_cpu_max_sockets=2 \
      --property hw_cpu_max_threads=1
 
-Image metadata takes precedence over flavor extra specs. Configuring competing
-constraints causes an exception. By setting a ``max`` value for sockets, cores,
-or threads, administrators can prevent users configuring topologies that might,
-for example, incur an additional licensing fees.
+The value specified in the flavor is treated as the abolute limit.  The image
+limits are not permitted to exceed the flavor limits, they can only be equal
+to or lower than what the flavor defines. By setting a ``max`` value for
+sockets, cores, or threads, administrators can prevent users configuring
+topologies that might, for example, incur an additional licensing fees.
 
 For more information about image metadata, refer to the `Image metadata`_
 guide.
