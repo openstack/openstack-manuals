@@ -94,8 +94,31 @@ Verify operation of the Compute service.
    .. code-block:: console
 
       $ openstack image list
+
       +--------------------------------------+-------------+-------------+
       | ID                                   | Name        | Status      |
       +--------------------------------------+-------------+-------------+
       | 9a76d9f9-9620-4f2e-8c69-6c5691fae163 | cirros      | active      |
       +--------------------------------------+-------------+-------------+
+
+#. Check the cells and placement API are working successfully:
+
+   .. code-block:: console
+
+      # nova-status upgrade check
+
+      +---------------------------+
+      | Upgrade Check Results     |
+      +---------------------------+
+      | Check: Cells v2           |
+      | Result: Success           |
+      | Details: None             |
+      +---------------------------+
+      | Check: Placement API      |
+      | Result: Success           |
+      | Details: None             |
+      +---------------------------+
+      | Check: Resource Providers |
+      | Result: Success           |
+      | Details: None             |
+      +---------------------------+
