@@ -16,41 +16,19 @@
 
    * - Configuration option = Default value
      - Description
-   * - **[eventlet_server_ssl]**
-     -
-   * - ``ca_certs`` = ``/etc/keystone/ssl/certs/ca.pem``
-     - (String) DEPRECATED: Path of the CA cert file for SSL.
-   * - ``cert_required`` = ``False``
-     - (Boolean) DEPRECATED: Require client certificate.
-   * - ``certfile`` = ``/etc/keystone/ssl/certs/keystone.pem``
-     - (String) DEPRECATED: Path of the certfile for SSL. For non-production environments, you may be interested in using `keystone-manage ssl_setup` to generate self-signed certificates.
-   * - ``enable`` = ``False``
-     - (Boolean) DEPRECATED: Toggle for SSL support on the Keystone eventlet servers.
-   * - ``keyfile`` = ``/etc/keystone/ssl/private/keystonekey.pem``
-     - (String) DEPRECATED: Path of the keyfile for SSL.
    * - **[signing]**
      -
    * - ``ca_certs`` = ``/etc/keystone/ssl/certs/ca.pem``
-     - (String) DEPRECATED: Path of the CA for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+     - (String) Absolute path to the public certificate authority (CA) file to use when creating self-signed certificates with `keystone-manage pki_setup`. Set this together with `[signing] ca_key`. There is no reason to set this option unless you are requesting revocation lists in a non-production environment. Use a `[signing] certfile` issued from a trusted certificate authority instead.
    * - ``ca_key`` = ``/etc/keystone/ssl/private/cakey.pem``
-     - (String) DEPRECATED: Path of the CA key for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+     - (String) Absolute path to the private certificate authority (CA) key file to use when creating self-signed certificates with `keystone-manage pki_setup`. Set this together with `[signing] ca_certs`. There is no reason to set this option unless you are requesting revocation lists in a non-production environment. Use a `[signing] certfile` issued from a trusted certificate authority instead.
    * - ``cert_subject`` = ``/C=US/ST=Unset/L=Unset/O=Unset/CN=www.example.com``
-     - (String) DEPRECATED: Certificate subject (auto generated certificate) for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+     - (String) The certificate subject to use when generating a self-signed token signing certificate. There is no reason to set this option unless you are requesting revocation lists in a non-production environment. Use a `[signing] certfile` issued from a trusted certificate authority instead.
    * - ``certfile`` = ``/etc/keystone/ssl/certs/signing_cert.pem``
-     - (String) DEPRECATED: Path of the certfile for token signing. For non-production environments, you may be interested in using `keystone-manage pki_setup` to generate self-signed certificates. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+     - (String) Absolute path to the public certificate file to use for signing responses to revocation lists requests. Set this together with `[signing] keyfile`. For non-production environments, you may be interested in using `keystone-manage pki_setup` to generate self-signed certificates.
    * - ``key_size`` = ``2048``
-     - (Integer) DEPRECATED: Key size (in bits) for token signing cert (auto generated certificate). PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+     - (Integer) Key size (in bits) to use when generating a self-signed token signing certificate. There is no reason to set this option unless you are requesting revocation lists in a non-production environment. Use a `[signing] certfile` issued from a trusted certificate authority instead.
    * - ``keyfile`` = ``/etc/keystone/ssl/private/signing_key.pem``
-     - (String) DEPRECATED: Path of the keyfile for token signing. PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
+     - (String) Absolute path to the private key file to use for signing responses to revocation lists requests. Set this together with `[signing] certfile`.
    * - ``valid_days`` = ``3650``
-     - (Integer) DEPRECATED: Days the token signing cert is valid for (auto generated certificate). PKI token support has been deprecated in the M release and will be removed in the O release. Fernet or UUID tokens are recommended.
-   * - **[ssl]**
-     -
-   * - ``ca_key`` = ``/etc/keystone/ssl/private/cakey.pem``
-     - (String) Path of the CA key file for SSL.
-   * - ``cert_subject`` = ``/C=US/ST=Unset/L=Unset/O=Unset/CN=localhost``
-     - (String) SSL certificate subject (auto generated certificate).
-   * - ``key_size`` = ``1024``
-     - (Integer) SSL key length (in bits) (auto generated certificate).
-   * - ``valid_days`` = ``3650``
-     - (Integer) Days the certificate is valid for once signed (auto generated certificate).
+     - (Integer) The validity period (in days) to use when generating a self-signed token signing certificate. There is no reason to set this option unless you are requesting revocation lists in a non-production environment. Use a `[signing] certfile` issued from a trusted certificate authority instead.

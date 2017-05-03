@@ -19,10 +19,10 @@
    * - **[trust]**
      -
    * - ``allow_redelegation`` = ``False``
-     - (Boolean) Enable redelegation feature.
+     - (Boolean) Allows authorization to be redelegated from one user to another, effectively chaining trusts together. When disabled, the `remaining_uses` attribute of a trust is constrained to be zero.
    * - ``driver`` = ``sql``
-     - (String) Entrypoint for the trust backend driver in the keystone.trust namespace.
+     - (String) Entry point for the trust backend driver in the `keystone.trust` namespace. Keystone only provides a `sql` driver, so there is no reason to change this unless you are providing a custom entry point.
    * - ``enabled`` = ``True``
-     - (Boolean) Delegation and impersonation features can be optionally disabled.
+     - (Boolean) Delegation and impersonation features using trusts can be optionally disabled.
    * - ``max_redelegation_count`` = ``3``
-     - (Integer) Maximum depth of trust redelegation.
+     - (Integer) Maximum number of times that authorization can be redelegated from one user to another in a chain of trusts. This number may be reduced further for a specific trust.

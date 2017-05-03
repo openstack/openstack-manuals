@@ -19,6 +19,6 @@
    * - **[policy]**
      -
    * - ``driver`` = ``sql``
-     - (String) Entrypoint for the policy backend driver in the keystone.policy namespace. Supplied drivers are rules and sql.
+     - (String) Entry point for the policy backend driver in the `keystone.policy` namespace. Supplied drivers are `rules` (which does not support any CRUD operations for the v3 policy API) and `sql`. Typically, there is no reason to set this option unless you are providing a custom entry point.
    * - ``list_limit`` = ``None``
      - (Integer) Maximum number of entities that will be returned in a policy collection.

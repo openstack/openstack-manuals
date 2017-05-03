@@ -19,10 +19,18 @@
    * - **[memcache]**
      -
    * - ``dead_retry`` = ``300``
-     - (Integer) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds memcached server is considered dead before it is tried again. This is used by the key value store system.
    * - ``pool_connection_get_timeout`` = ``10``
-     - (Integer) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds that an operation will wait to get a memcache client connection. This is used by the key value store system.
    * - ``pool_maxsize`` = ``10``
-     - (Integer) Max total number of open connections to every memcached server. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Max total number of open connections to every memcached server. This is used by the key value store system.
    * - ``pool_unused_timeout`` = ``60``
-     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system (e.g. token pooled memcached persistence backend).
+     - (Integer) Number of seconds a connection to memcached is held unused in the pool before it is closed. This is used by the key value store system.
+   * - ``servers`` = ``localhost:11211``
+     - (List) Comma-separated list of memcached servers in the format of `host:port,host:port` that keystone should use for the `memcache` token persistence provider and other memcache-backed KVS drivers. This configuration value is NOT used for intermediary caching between keystone and other backends, such as SQL and LDAP (for that, see the `[cache]` section). Multiple keystone servers in the same deployment should use the same set of memcached servers to ensure that data (such as UUID tokens) created by one node is available to the others.
+
+       - **Deprecated**
+
+         This option has been deprecated in the O release and will be removed in the P release. Use oslo.cache instead.
+   * - ``socket_timeout`` = ``3``
+     - (Integer) Timeout in seconds for every call to a server. This is used by the key value store system.

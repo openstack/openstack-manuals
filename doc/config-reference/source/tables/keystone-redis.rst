@@ -21,15 +21,31 @@
    * - ``check_timeout`` = ``20000``
      - (Integer) Time in ms to wait before the transaction is killed.
    * - ``host`` = ``127.0.0.1``
-     - (String) DEPRECATED: Host to locate redis. Replaced by [DEFAULT]/transport_url
+     - (String) Host to locate redis.
+
+       - **Deprecated**
+
+         Replaced by [DEFAULT]/transport_url
    * - ``password`` =
-     - (String) DEPRECATED: Password for Redis server (optional). Replaced by [DEFAULT]/transport_url
+     - (String) Password for Redis server (optional).
+
+       - **Deprecated**
+
+         Replaced by [DEFAULT]/transport_url
    * - ``port`` = ``6379``
-     - (Port number) DEPRECATED: Use this port to connect to redis host. Replaced by [DEFAULT]/transport_url
+     - (Port number) Use this port to connect to redis host.
+
+       - **Deprecated**
+
+         Replaced by [DEFAULT]/transport_url
    * - ``sentinel_group_name`` = ``oslo-messaging-zeromq``
      - (String) Redis replica set name.
    * - ``sentinel_hosts`` =
-     - (List) DEPRECATED: List of Redis Sentinel hosts (fault tolerance mode), e.g., [host:port, host1:port ... ] Replaced by [DEFAULT]/transport_url
+     - (List) List of Redis Sentinel hosts (fault tolerance mode), e.g., [host:port, host1:port ... ]
+
+       - **Deprecated**
+
+         Replaced by [DEFAULT]/transport_url
    * - ``socket_timeout`` = ``10000``
      - (Integer) Timeout in ms on blocking socket operations.
    * - ``wait_timeout`` = ``2000``
