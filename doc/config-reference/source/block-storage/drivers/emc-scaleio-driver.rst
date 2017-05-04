@@ -197,7 +197,7 @@ Configure the driver name by adding the following parameter:
 
 .. code-block:: ini
 
-   volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
+   volume_driver = cinder.volume.drivers.dell_emc.scaleio.driver.ScaleIODriver
 
 ScaleIO MDM server IP
 ---------------------
@@ -304,7 +304,7 @@ parameters as follows:
    enabled_backends = scaleio
 
    [scaleio]
-   volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
+   volume_driver = cinder.volume.drivers.dell_emc.scaleio.driver.ScaleIODriver
    volume_backend_name = scaleio
    san_ip = GATEWAY_IP
    sio_protection_domain_name = Default_domain
