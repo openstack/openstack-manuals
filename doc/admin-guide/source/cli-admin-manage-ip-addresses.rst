@@ -9,6 +9,14 @@ communication between instances, and public IP addresses are used
 for communication with networks outside the cloud, including the
 Internet.
 
+.. note::
+
+   When creating and updating a floating IP, only consider IPv4 addresses
+   on both the floating IP port and the internal port the floating IP is
+   associated with. Additionally, disallow creating floating IPs on networks
+   without any IPv4 subnets, since these floating IPs could not be allocated
+   an IPv6 address.
+
 - By default, both administrative and end users can associate floating IP
   addresses with projects and instances. You can change user permissions for
   managing IP addresses by updating the ``/etc/nova/policy.json``
