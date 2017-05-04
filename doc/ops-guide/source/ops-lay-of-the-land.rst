@@ -289,22 +289,26 @@ running:
 
 .. code-block:: console
 
-   # openstack service list
+   # openstack compute service list --long
 
 The output looks like the following:
 
 .. code-block:: console
 
-   +----------------------------------+----------+----------+
-   | ID                               | Name     | Type     |
-   +----------------------------------+----------+----------+
-   | 0a01b2d1ee5d4ce79ea65f6356a6fffb | nova     | compute  |
-   | 769eeea7aaef4724aa98376941d7c364 | glance   | image    |
-   | 87f4688f09104d81ab52661d74134652 | keystone | identity |
-   | 936cf7f450c2428e9e5746e0ea0a2cc7 | cinder   | volume   |
-   | c92b9bdcb42c48ddb7abd926d43999f9 | neutron  | network  |
-   | f633b72d040e46cb8700c62e82418b98 | cinderv2 | volumev2 |
-   +----------------------------------+----------+----------+
+   +----+------------------+-------------------+------+---------+-------+----------------------------+-----------------+
+   | Id | Binary           | Host              | Zone | Status  | State | Updated_at                 | Disabled Reason |
+   +----+------------------+-------------------+------+---------+-------+----------------------------+-----------------+
+   | 1  | nova-cert        | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 2  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 3  | nova-compute     | c01.example.com.  | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 4  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 5  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 6  | nova-compute     | c01.example.com   | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 7  | nova-conductor   | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 8  | nova-cert        | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:42.000000 | -               |
+   | 9  | nova-scheduler   | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:38.000000 | -               |
+   | 10 | nova-consoleauth | cloud.example.com | nova | enabled | up    | 2016-01-05T17:20:35.000000 | -               |
+   +----+------------------+-------------------+------+---------+-------+----------------------------+-----------------+
 
 The output shows that there are five compute nodes and one cloud
 controller. You see all the services in the up state, which indicates that
