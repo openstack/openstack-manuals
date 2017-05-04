@@ -103,7 +103,7 @@ XenAPI deployment architecture
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A basic OpenStack deployment on a XAPI-managed server, assuming
-that the network provider is nova-network, looks like this:
+that the network provider is neutron network, looks like this:
 
 .. figure:: ../figures/xenserver_architecture.png
    :width: 100%
@@ -116,13 +116,14 @@ Key things to note:
 * OpenStack VM: The ``Compute`` service runs in a paravirtualized
   virtual machine, on the host under management.
   Each host runs a local instance of ``Compute``.
-  It is also running an instance of nova-network.
+  It is also running neutron plugin-agent (``neutron-openvswitch-agent``)
+  to perform local vSwitch configuration.
 * OpenStack Compute uses the XenAPI Python library to talk to XAPI, and
   it uses the Management Network to reach from the OpenStack VM to Domain 0.
 
 Some notes on the networking:
 
-* The above diagram assumes FlatDHCP networking.
+* The above diagram assumes DHCP networking.
 * There are three main OpenStack networks:
 
   * Management network: RabbitMQ, MySQL, inter-host communication, and
@@ -130,8 +131,7 @@ Some notes on the networking:
     by the XenAPI plug-ins, so make sure that the OpenStack Image service
     is accessible through this network. It usually means binding those
     services to the management interface.
-  * Tenant network: controlled by nova-network, this is used for tenant
-    traffic.
+  * Tenant network: controlled by neutron, this is used for tenant traffic.
   * Public network: floating IPs, public API endpoints.
 
 * The networks shown here must be connected to the corresponding physical
@@ -142,7 +142,7 @@ Some notes on the networking:
   (In case of VLAN networking, the physical channels have to be able
   to forward the tagged traffic.)
 
-* If you are using Networking service, enable Linux bridge in ``Dom0`` which
+* With the Networking service, you should enable Linux bridge in ``Dom0`` which
   is used for Compute service. ``nova-compute`` will create Linux bridges
   for security group and ``neutron-openvswitch-agent`` in Compute node will
   apply security group rules on these Linux bridges. To implement this,
@@ -220,14 +220,15 @@ Install XAPI plug-ins
 When you use a XAPI managed hypervisor, you can install a Python script
 (or any executable) on the host side, and execute that through XenAPI.
 These scripts are called plug-ins. The OpenStack related XAPI plug-ins
-live in OpenStack Compute's code repository. These plug-ins have to be
+live in OpenStack os-xenapi code repository. These plug-ins have to be
 copied to dom0's filesystem, to the appropriate directory, where XAPI
 can find them. It is important to ensure that the version of the plug-ins
 are in line with the OpenStack Compute installation you are using.
 
 The plugins should typically be copied from the Nova installation
-running in the Compute's DomU, but if you want to download the latest
-version the following procedure can be used.
+running in the Compute's DomU (``pip show os-xenapi`` to find its location),
+but if you want to download the latest version the following procedure
+can be used.
 
 **Manually installing the plug-ins**
 
@@ -235,24 +236,24 @@ version the following procedure can be used.
 
    .. code-block:: console
 
-      $ NOVA_TARBALL=$(mktemp)
-      $ NOVA_SOURCES=$(mktemp -d)
+      $ OS_XENAPI_TARBALL=$(mktemp)
+      $ OS_XENAPI_SOURCES=$(mktemp -d)
 
 #. Get the source from the openstack.org archives. The example assumes
-   the master branch is used, and the XenServer host is accessible as
+   the latest release is used, and the XenServer host is accessible as
    xenserver. Match those parameters to your setup.
 
    .. code-block:: console
 
-      $ NOVA_URL=https://tarballs.openstack.org/nova/nova-master.tar.gz
-      $ wget -qO "$NOVA_TARBALL" "$NOVA_URL"
-      $ tar xvf "$NOVA_TARBALL" -d "$NOVA_SOURCES"
+      $ OS_XENAPI_URL=https://tarballs.openstack.org/os-xenapi/os-xenapi-0.1.1.tar.gz
+      $ wget -qO "$OS_XENAPI_TARBALL" "$OS_XENAPI_URL"
+      $ tar xvf "$OS_XENAPI_TARBALL" -d "$OS_XENAPI_SOURCES"
 
 #. Copy the plug-ins to the hypervisor:
 
    .. code-block:: console
 
-      $ PLUGINPATH=$(find $NOVA_SOURCES -path '*/xapi.d/plugins' -type d -print)
+      $ PLUGINPATH=$(find $OS_XENAPI_SOURCES -path '*/xapi.d/plugins' -type d -print)
       $ tar -czf - -C "$PLUGINPATH" ./ |
       > ssh root@xenserver tar -xozf - -C /etc/xapi.d/plugins
 
@@ -260,8 +261,8 @@ version the following procedure can be used.
 
    .. code-block:: console
 
-      $ rm "$NOVA_ZIPBALL"
-      $ rm -rf "$NOVA_SOURCES"
+      $ rm "$OS_XENAPI_TARBALL"
+      $ rm -rf "$OS_XENAPI_SOURCES"
 
 Prepare for AMI type images
 ---------------------------
@@ -332,6 +333,8 @@ To enable the XenAPI driver, add the following configuration options to
    connection_url = http://your_xenapi_management_ip_address
    connection_username = root
    connection_password = your_password
+   ovs_integration_bridge = br-int
+   vif_driver = nova.virt.xenapi.vif.XenAPIOpenVswitchDriver
 
 These connection details are used by OpenStack Compute service to
 contact your hypervisor and are the same details you use to connect
@@ -341,6 +344,38 @@ XenCenter, the XenServer management console, to your XenServer node.
 
    The ``connection_url`` is generally the management network IP
    address of the XenServer.
+
+Networking configuration
+------------------------
+
+The Networking service in the Compute node is running
+``neutron-openvswitch-agent``, this manages dom0's OVS. You can refer
+Networking `openvswitch_agent.ini.sample <https://github.com/openstack/
+openstack-manuals/blob/master/doc/config-reference/source/samples/neutron/
+openvswitch_agent.ini.sample>`_ for details, however there are several
+specific items to look out for.
+
+.. code-block:: ini
+
+   [agent]
+   minimize_polling = False
+   root_helper_daemon = xenapi_root_helper
+
+   [ovs]
+   of_listen_address = management_ip_address
+   ovsdb_connection = tcp:your_xenapi_management_ip_address:6640
+   bridge_mappings = <physical_network>:<physical_bridge>, ...
+   integration_bridge = br-int
+
+   [xenapi]
+   connection_url = http://your_xenapi_management_ip_address
+   connection_username = root
+   connection_password = your_pass_word
+
+.. note::
+
+   The ``ovsdb_connection`` is the connection string for the native OVSDB
+   backend, you need to enable port 6640 in dom0.
 
 Agent
 -----
