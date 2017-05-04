@@ -76,11 +76,11 @@ Verify operation of the Compute service.
       |           |           |   public: http://controller:8774/v2.1   |
       |           |           |                                         |
       | placement | placement | RegionOne                               |
-      |           |           |   public: http://controller/placement   |
+      |           |           |   public: http://controller:8778        |
       |           |           | RegionOne                               |
-      |           |           |   admin: http://controller/placement    |
+      |           |           |   admin: http://controller:8778         |
       |           |           | RegionOne                               |
-      |           |           |   internal: http://controller/placement |
+      |           |           |   internal: http://controller:8778      |
       |           |           |                                         |
       +-----------+-----------+-----------------------------------------+
 
