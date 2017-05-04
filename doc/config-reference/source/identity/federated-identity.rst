@@ -101,7 +101,7 @@ Configuring federation in keystone
 
       PUT /OS-FEDERATION/identity_providers/{idp_id}
 
-   More configuration information for IdPs can be found `<http://specs.openstack.org/openstack/keystone-specs/api/v3/identity-api-v3-os-federation-ext.html#register-an-identity-provider>`_.
+   More configuration information for IdPs can be found `Register an Identity Provider <https://developer.openstack.org/api-ref/identity/v3-ext/index.html#register-an-identity-provider>`_.
 
 #. Add mapping rules:
 
@@ -109,7 +109,7 @@ Configuring federation in keystone
 
       PUT /OS-FEDERATION/mappings/{mapping_id}
 
-   More configuration information for mapping rules can be found `<http://specs.openstack.org/openstack/keystone-specs/api/v3/identity-api-v3-os-federation-ext.html#create-a-mapping>`_.
+   More configuration information for mapping rules can be found `Create a mapping <https://developer.openstack.org/api-ref/identity/v3-ext/index.html#create-a-mapping>`_.
 
    .. note::
 
@@ -122,7 +122,7 @@ Configuring federation in keystone
 
       PUT /OS-FEDERATION/identity_providers/{idp_id}/protocols/{protocol_id}
 
-   More configuration information for protocols can be found `<http://specs.openstack.org/openstack/keystone-specs/api/v3/identity-api-v3-os-federation-ext.html#add-a-protocol-and-attribute-mapping-to-an-identity-provider>`_.
+   More configuration information for protocols can be found `Add a protocol and attribute mapping to an identity provider <https://developer.openstack.org/api-ref/identity/v3-ext/index.html#add-a-protocol-and-attribute-mapping-to-an-identity-provider>`_.
 
 Performing federated authentication
 -----------------------------------
