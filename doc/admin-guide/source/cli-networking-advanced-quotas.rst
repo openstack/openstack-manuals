@@ -138,16 +138,22 @@ the default set of quotas are enforced for all projects, so no
 
    .. code-block:: console
 
-      $ neutron ext-show quotas
+      $ openstack extension show quotas
       +-------------+---------------------------------------------------+
       | Field       | Value                                             |
       +-------------+---------------------------------------------------+
-      | alias       | quotas                                            |
-      | description | Expose functions for quotas management per tenant |
-      | links       |                                                   |
-      | name        | Quota management support                          |
-      | updated     | 2012-07-29T10:00:00-00:00                         |
+      | Alias       | quotas                                            |
+      | Description | Expose functions for quotas management per tenant |
+      | Links       | []                                                |
+      | Name        | Quota management support                          |
+      | Namespace   |                                                   |
+      | Updated     |                                                   |
       +-------------+---------------------------------------------------+
+
+   .. note::
+
+      :command:`openstack extension show` is only supported currently by networking
+      v2.
 
    .. note::
 
