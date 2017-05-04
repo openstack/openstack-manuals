@@ -6,7 +6,7 @@ Routed provider networks
 
 .. note::
 
-   Experimental feature. Use of this feature requires the OpenStack client
+   Use of this feature requires the OpenStack client
    version 3.3 or newer.
 
 Before routed provider networks, the Networking service could not present a
@@ -46,29 +46,6 @@ Thus, both the Networking service and physical network infrastructure must
 contain configuration for routed provider networks, similar to conventional
 provider networks. In the future, implementation of dynamic routing protocols
 may ease configuration of routed networks.
-
-Limitations
-~~~~~~~~~~~
-
-The Newton implementation contains the following limitations:
-
-* The Compute scheduler lacks awareness of IP address resources on a routed
-  network. Thus, the scheduler could exhaust the IP addresses in one segment
-  before assigning IP addresses from another segment. The Ocata release of
-  the Compute scheduler should provide the capability of scheduling around
-  segments without available IP addresses. In Newton, the Compute scheduler
-  selects any compute node on the provider network. If the segment on that
-  compute node lacks available IP addresses, port binding fails and the
-  Compute scheduler chooses another compute node without regard to segments.
-  Rescheduling continues up to the maximum number of retries. Operators
-  should monitor IP usage and add subnets to segments prior to exhaustion
-  of IP addresses. For more information, see the
-  `blueprint <https://blueprints.launchpad.net/neutron/+spec/routed-networks>`__.
-
-* A routed provider network cannot also function as a ``router:external``
-  networks which prevents compatibility with floating IPv4 addresses.
-  Additional routing, possibly using :ref:`config-bgp-dynamic-routing`,
-  could address this issue in the future.
 
 Prerequisites
 ~~~~~~~~~~~~~
