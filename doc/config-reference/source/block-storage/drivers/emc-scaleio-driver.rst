@@ -20,8 +20,6 @@ Support matrix
 
    * - ScaleIO version
      - Supported Linux operating systems
-   * - 1.32
-     - CentOS 6.x, CentOS 7.x, SLES 11 SP3, SLES 12
    * - 2.0
      - CentOS 6.x, CentOS 7.x, SLES 11 SP3, SLES 12, Ubuntu 14.04
 
