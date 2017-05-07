@@ -6,11 +6,11 @@ The cloud operator assigns roles to users. Roles determine who can
 upload and manage images. The operator might restrict image upload and
 management to only cloud administrators or operators.
 
-You can upload images through the ``glance`` client or the Image service
-API. You can use the ``nova`` client for the image management.
-The latter provides mechanisms to list and delete images, set and delete
-image metadata, and create images of a running instance or snapshot and
-backup types.
+You can upload images through the :command:`openstack image create`
+command or the Image service API. You can use the ``openstack`` client
+for the image management. It provides mechanisms to list and
+delete images, set and delete image metadata, and create images of a
+running instance or snapshot and backup types.
 
 After you upload an image, you cannot change it.
 
