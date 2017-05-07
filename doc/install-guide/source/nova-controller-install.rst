@@ -616,6 +616,12 @@ Install and configure components
             </IfVersion>
          </Directory>
 
+   * Restart the httpd service:
+
+     .. code-block:: console
+
+        # systemctl restart httpd
+
 .. endonly
 
 .. only:: rdo or ubuntu or debian or obs
