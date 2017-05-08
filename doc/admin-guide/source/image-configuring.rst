@@ -308,7 +308,7 @@ following for the API server, in a configuration file called
   The format string for timestamps in the log output.
 
   Defaults to ``%Y-%m-%d %H:%M:%S``. See the
-  `logging module <http://docs.python.org/library/logging.html>`_ documentation
+  `logging module <https://docs.python.org/library/logging.html>`_ documentation
   for more information on setting this format string.
 
 ``log_use_syslog``
@@ -419,7 +419,7 @@ Configuring the swift storage back end
 
   Sets the authentication URL supplied to swift when making calls to its storage
   system. For more information about the swift authentication system,
-  see the `Swift auth <http://docs.openstack.org/developer/swift/overview_auth.html>`_
+  see the `Swift auth <https://docs.openstack.org/developer/swift/overview_auth.html>`_
   documentation.
 
   .. warning::
@@ -572,7 +572,7 @@ Configuring the swift storage back end
 
   A string indicating which version of swift OpenStack authentication
   to use. See the project
-  `python-swiftclient <http://docs.openstack.org/developer/python-swiftclient/>`_
+  `python-swiftclient <https://docs.openstack.org/developer/python-swiftclient/>`_
   for more details.
 
 ``swift_store_service_type``
@@ -1567,7 +1567,7 @@ example, in the ``glance-api-paste.ini`` file:
    pipeline = healthcheck versionnegotiation osprofiler unauthenticated-context rootapp
 
 For more information see
-`oslo.middleware <http://docs.openstack.org/developer/oslo.middleware/api.html#oslo_middleware.Healthcheck>`_.
+`oslo.middleware <https://docs.openstack.org/developer/oslo.middleware/api.html#oslo_middleware.Healthcheck>`_.
 
 Configuring supported disk formats
 ----------------------------------
