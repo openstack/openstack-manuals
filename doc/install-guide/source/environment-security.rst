@@ -7,7 +7,9 @@ database server and message broker support password security.
 
 To ease the installation process, this guide only covers password
 security where applicable. You can create secure passwords manually,
-generate them using a tool such as
+but the database connection string in services configuration file
+cannot accept special characters like "@". We recommend you generate
+them using a tool such as
 `pwgen <https://sourceforge.net/projects/pwgen/>`_, or by running the
 following command:
 
