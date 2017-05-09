@@ -15,6 +15,7 @@ Enable FWaaS v2
       service_provider = FIREWALL:Iptables:neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver:default
 
       [fwaas]
+      agent_version = v2
       driver = neutron_fwaas.services.firewall.drivers.linux.iptables_fwaas_v2.IptablesFwaasDriver
       enabled = True
 
@@ -33,16 +34,6 @@ Enable FWaaS v2
 
       [AGENT]
       extensions = fwaas
-
-   Edit the FWaaS section in the ``/etc/neutron/neutron.conf`` file to indicate
-   the agent version and driver:
-
-   .. code-block:: ini
-
-      [fwaas]
-      agent_version = v2
-      driver = iptables
-      enabled = True
 
 #. Create the required tables in the database:
 
