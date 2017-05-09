@@ -117,7 +117,7 @@ The following is a list of supported hypervisors.
 
 -  `XEN <http://www.xenproject.org/help/documentation.html>`__
 
--  `VMware vSphere <http://www.vmware.com/products/vsphere-hypervisor/support.html>`__
+-  `VMware vSphere <https://www.vmware.com/support/vsphere-hypervisor.html>`__
 
 
 Supported networking services
