@@ -28,11 +28,6 @@ Internet.
   (``neutron``), refer to :ref:`networking-adv-features`.
   No floating IP addresses are created by default in OpenStack Networking.
 
-As an administrator using legacy networking (``nova-network``), you
-can use the following bulk commands to list, create, and delete ranges
-of floating IP addresses. These addresses can then be associated with
-instances by end users.
-
 List addresses for all projects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
