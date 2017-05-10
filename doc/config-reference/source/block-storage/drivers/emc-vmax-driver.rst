@@ -461,15 +461,15 @@ VMAX All Flash and Hybrid
    OS-[shortHostName]-[SRP]-[SLO]-[Workload]-[protocol]-SG
 
 
-Intervals and Retries
----------------------
+Interval and Retries
+--------------------
 
-By default, ``Intervals`` and ``Retries`` are ``10`` seconds and ``60``
-retries respectively. These determine how long (``Intervals``) and how many
+By default, ``Interval`` and ``Retries`` are ``10`` seconds and ``60``
+retries respectively. These determine how long (``Interval``) and how many
 times (``Retries``) a user is willing to wait for a single SMIS call,
 ``10*60=300seconds``. Depending on usage, these may need to be overriden by
 the user in the XML file.  For example, if performance is a factor, then the
-``Intervals`` should be decreased to check the job status more frequently,
+``Interval`` should be decreased to check the job status more frequently,
 and if multiple concurrent provisioning requests are issued then ``Retries``
 should be increased so calls will not timeout prematurely.
 
@@ -494,7 +494,7 @@ Add the following lines to the XML file:
          </PortGroups>
          <Array>111111111111</Array>
          <Pool>SRP_1</Pool>
-         <Intervals>5</Intervals>
+         <Interval>5</Interval>
          <Retries>120</Retries>
        </EMC>
 
