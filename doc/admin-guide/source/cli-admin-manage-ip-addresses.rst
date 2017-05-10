@@ -49,29 +49,25 @@ To list all floating IP addresses for all projects, run:
    | ea3ebc6d-a146-47cd-aaa8-35f06e1e8c3d | 172.24.4.229        | None             | None |
    +--------------------------------------+---------------------+------------------+------+
 
-Bulk create floating IP addresses
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Create floating IP addresses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To create a range of floating IP addresses, run:
+To create a floating IP addresses, run:
 
 .. code-block:: console
 
-   $ nova floating-ip-bulk-create [--pool POOL_NAME] [--interface INTERFACE] RANGE_TO_CREATE
+   $ openstack floating ip create --fixed-ip-address <fixed-ip-address> <network>
 
 For example:
 
 .. code-block:: console
 
-   $ nova floating-ip-bulk-create --pool test 192.168.1.56/29
-
-By default, ``floating-ip-bulk-create`` uses the
-``public`` pool and ``eth0`` interface values.
+   $ openstack floating ip create --fixed-ip-address 192.168.1.56 NETWORK
 
 .. note::
 
-   You should use a range of free IP addresses that is valid for your
-   network. If you are not sure, at least try to avoid the DHCP address
-   range:
+   You should use a free IP addresses that is valid for your network.
+   If you are not sure, at least try to avoid the DHCP address range:
 
    - Pick a small range (/29 gives an 8 address range, 6 of
      which will be usable).
