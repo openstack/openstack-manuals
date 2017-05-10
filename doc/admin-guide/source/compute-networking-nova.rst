@@ -173,12 +173,15 @@ to create a network:
      --fixed-range-v4 10.0.0.0/16 --fixed-cidr 10.0.20.0/24 --bridge br100
 
 This example uses the following parameters:
-   --fixed-range-v4       specifies the network subnet.
-   --fixed-cidr           specifies a range of fixed IP addresses to allocate,
-                          and can be a subset of the ``--fixed-range-v4``
-                          argument.
-   --bridge               specifies the bridge device to which this network is
-                          connected on every compute node.
+
+``--fixed-range-v4``
+    Specifies the network subnet.
+``--fixed-cidr``
+    Specifies a range of fixed IP addresses to allocate, and
+    can be a subset of the ``--fixed-range-v4`` argument.
+``--bridge``
+    Specifies the bridge device to which this network is connected
+    on every compute node.
 
 .. _compute-dnsmasq:
 
