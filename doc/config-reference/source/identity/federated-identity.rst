@@ -318,7 +318,8 @@ A rule hierarchy is as follows:
 * ``condition``: contains information on conditions that allow a rule, can
   only be set in a remote rule.
 
-For more information on mapping rules, see `<https://docs.openstack.org/developer/keystone/federation/federated_identity.html#mapping-rules>`_.
+For more information on mapping rules, see `Mapping Rules
+<https://docs.openstack.org/developer/keystone/federation/federated_identity.html#mapping-rules>`_.
 
 Mapping creation
 ----------------
