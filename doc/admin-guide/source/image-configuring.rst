@@ -31,7 +31,7 @@ is likely that you will have sample configuration files installed in
 
 In addition, sample configuration files for each server application with
 detailed comments are available in the `Glance project repository
-<https://git.openstack.org/glance/etc/glance>`_.
+<https://git.openstack.org/cgit/openstack/glance/tree/etc>`_.
 
 The PasteDeploy configuration (controlling the deployment of the WSGI
 application for each component) can be found by default in
