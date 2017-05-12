@@ -159,7 +159,7 @@ old password.
     Otherwise, users would not be able to change their passwords before they
     expire.
 
-.. _Security Hardening PCI-DSS: http://specs.openstack.org/openstack/keystone-specs/specs/keystone/newton/pci-dss.html
+.. _Security Hardening PCI-DSS: https://specs.openstack.org/openstack/keystone-specs/specs/keystone/newton/pci-dss.html
 
 
 .. _v2.0: https://developer.openstack.org/api-ref/identity/v2-admin/index.html?expanded=update-user-admin-endpoint-detail#update-user-admin-endpoint

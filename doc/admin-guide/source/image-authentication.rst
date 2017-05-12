@@ -45,7 +45,7 @@ For example:
 
 The values for these variables will need to be set depending on
 your situation. For more information, please refer to the
-`keystone documentation <http://docs.openstack.org/developer/keystonemiddleware/middlewarearchitecture.html#configuration>`_
+`keystone documentation <https://docs.openstack.org/developer/keystonemiddleware/middlewarearchitecture.html#configuration>`_
 on the ``auth_token`` middleware.
 
 * The ``auth_url`` variable points to the keystone service.
