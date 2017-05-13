@@ -23,7 +23,7 @@ Bare Metal service (ironic) command-line client
 The ironic client is the command-line interface (CLI) for
 the Bare Metal service (ironic) API and its extensions.
 
-This chapter documents :command:`ironic` version ``1.12.0``.
+This chapter documents :command:`ironic` version ``1.13.0``.
 
 For help on a specific :command:`ironic` command, enter:
 
@@ -530,9 +530,18 @@ ironic driver-list
 
 .. code-block:: console
 
-   usage: ironic driver-list
+   usage: ironic driver-list [-t <type>] [--detail]
 
 List the enabled drivers.
+
+**Optional arguments:**
+
+``-t <type>, --type <type>``
+  Type of driver ("classic" or "dynamic"). The default
+  is to list all of them.
+
+``--detail``
+  Show detailed information about the drivers.
 
 .. _ironic_driver-properties:
 
