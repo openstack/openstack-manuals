@@ -79,7 +79,7 @@ Disable a service
 ~~~~~~~~~~~~~~~~~
 
 When an administrator wants to disable a service, identify the Binary
-and the Host of the service. Use the :command:`cinder service-disable`
+and the Host of the service. Use the :command:` openstack volume service set`
 command combined with the Binary and Host to disable the service:
 
 #. Determine the binary and host of the service you want to remove
@@ -100,7 +100,7 @@ command combined with the Binary and Host to disable the service:
 
    .. code-block:: console
 
-      $ cinder service-disable HOST_NAME BINARY_NAME
+      $ openstack volume service set --disable HOST_NAME BINARY_NAME
 
 #. Remove the service from the database.
 
