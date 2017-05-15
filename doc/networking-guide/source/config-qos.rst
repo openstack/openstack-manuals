@@ -167,37 +167,32 @@ First, create a QoS policy and its bandwidth limit rule:
 
 .. code-block:: console
 
-   $ neutron qos-policy-create bw-limiter
+   $ openstack network qos policy create bw-limiter
 
    Created a new policy:
    +-------------+--------------------------------------+
    | Field       | Value                                |
    +-------------+--------------------------------------+
    | description |                                      |
-   | id          | 0ee1c673-5671-40ca-b55f-4cd4bbd999c7 |
-   | name        | bw-limiter                           |
-   | rules       |                                      |
+   | id          | 5df855e9-a833-49a3-9c82-c0839a5f103f |
+   | name        | qos1                                 |
+   | project_id  | 4db7c1ed114a4a7fb0f077148155c500     |
+   | rules       | []                                   |
    | shared      | False                                |
-   | tenant_id   | 85b859134de2428d94f6ee910dc545d8     |
    +-------------+--------------------------------------+
 
-   $ neutron qos-bandwidth-limit-rule-create bw-limiter --max-kbps 3000 \
-     --max-burst-kbps 300
+   $ openstack network qos rule create --type bandwidth-limit --max-kbps 3000 \
+       --max-burst-kbits 300 --egress bw-limiter
 
    Created a new bandwidth_limit_rule:
    +----------------+--------------------------------------+
    | Field          | Value                                |
    +----------------+--------------------------------------+
+   | direction      | egress                               |
    | id             | 92ceb52f-170f-49d0-9528-976e2fee2d6f |
    | max_burst_kbps | 300                                  |
    | max_kbps       | 3000                                 |
    +----------------+--------------------------------------+
-
-.. note::
-
-   The burst value is given in kilobits, not in kilobits per second as the name
-   of the parameter might suggest. This is an amount of data which can be sent
-   before the bandwidth limit applies.
 
 .. note::
 
@@ -213,17 +208,18 @@ the already created policy. In the next example, we will assign the
 
 .. code-block:: console
 
-   $ neutron port-list
+   $ openstack port list
 
    +--------------------------------------+-----------------------------------+
-   | id                                   | fixed_ips                         |
+   | ID                                   | Fixed IP Addresses                |
    +--------------------------------------+-----------------------------------+
    | 0271d1d9-1b16-4410-bd74-82cdf6dcb5b3 | { ... , "ip_address": "192.0.2.1"}|
    | 88101e57-76fa-4d12-b0e0-4fc7634b874a | { ... , "ip_address": "192.0.2.3"}|
    | e04aab6a-5c6c-4bd9-a600-33333551a668 | { ... , "ip_address": "192.0.2.2"}|
    +--------------------------------------+-----------------------------------+
 
-   $ neutron port-update 88101e57-76fa-4d12-b0e0-4fc7634b874a --qos-policy bw-limiter
+   $ openstack port set --qos-policy bw-limiter \
+       88101e57-76fa-4d12-b0e0-4fc7634b874a
    Updated port: 88101e57-76fa-4d12-b0e0-4fc7634b874a
 
 In order to detach a port from the QoS policy, simply update again the
@@ -231,7 +227,7 @@ port configuration.
 
 .. code-block:: console
 
-   $ neutron port-update 88101e57-76fa-4d12-b0e0-4fc7634b874a --no-qos-policy
+   $ openstack port unset --no-qos-policy 88101e57-76fa-4d12-b0e0-4fc7634b874a
    Updated port: 88101e57-76fa-4d12-b0e0-4fc7634b874a
 
 
@@ -239,32 +235,44 @@ Ports can be created with a policy attached to them too.
 
 .. code-block:: console
 
-   $ neutron port-create private --qos-policy-id bw-limiter
+   $ openstack port create --qos-policy bw-limiter --network private port1
 
    Created a new port:
    +-----------------------+--------------------------------------------------+
    | Field                 | Value                                            |
    +-----------------------+--------------------------------------------------+
-   | admin_state_up        | True                                             |
+   | admin_state_up        | UP                                               |
    | allowed_address_pairs |                                                  |
-   | binding:vnic_type     | normal                                           |
+   | binding_host_id       |                                                  |
+   | binding_profile       |                                                  |
+   | binding_vif_details   |                                                  |
+   | binding_vif_type      | unbound                                          |
+   | binding_vnic_type     | normal                                           |
+   | created_at            | 2017-05-15T08:43:00Z                             |
+   | description           |                                                  |
    | device_id             |                                                  |
    | device_owner          |                                                  |
-   | dns_assignment        | {"hostname": "host-192-0-2-4", ...   }           |
-   | dns_name              |                                                  |
-   | fixed_ips             | {"subnet_id":                                    |
-   |                       |         "fabaf9b6-7a84-43b6-9d23-543591b531b8",  |
-   |                       |          "ip_address": "192.0.2.4"}              |
-   | id                    | c3cb8faa-db36-429d-bd25-6003fafe63c5             |
-   | mac_address           | fa:16:3e:02:65:15                                |
-   | name                  |                                                  |
-   | network_id            | 4920548d-1a6c-4d67-8de4-06501211587c             |
-   | port_security_enabled | True                                             |
-   | qos_policy_id         | 0ee1c673-5671-40ca-b55f-4cd4bbd999c7             |
-   | security_groups       | b9cecbc5-a136-4032-b196-fb3eb091fff2             |
+   | dns_assignment        | None                                             |
+   | dns_name              | None                                             |
+   | extra_dhcp_opts       |                                                  |
+   | fixed_ips             | ip_address='10.0.10.4', subnet_id='292f8c1e-...' |
+   | id                    | f51562ee-da8d-42de-9578-f6f5cb248226             |
+   | ip_address            | None                                             |
+   | mac_address           | fa:16:3e:d9:f2:ba                                |
+   | name                  | port1                                            |
+   | network_id            | 55dc2f70-0f92-4002-b343-ca34277b0234             |
+   | option_name           | None                                             |
+   | option_value          | None                                             |
+   | port_security_enabled | False                                            |
+   | project_id            | 4db7c1ed114a4a7fb0f077148155c500                 |
+   | qos_policy_id         | 5df855e9-a833-49a3-9c82-c0839a5f103f             |
+   | revision_number       | 6                                                |
+   | security_group_ids    | 0531cc1a-19d1-4cc7-ada5-49f8b08245be             |
    | status                | DOWN                                             |
-   | tenant_id             | 85b859134de2428d94f6ee910dc545d8                 |
+   | subnet_id             | None                                             |
+   | updated_at            | 2017-05-15T08:43:00Z                             |
    +-----------------------+--------------------------------------------------+
+
 
 You can attach networks to a QoS policy. The meaning of this is that
 any compute port connected to the network will use the network policy by
@@ -277,7 +285,7 @@ network, or initially create the network attached to the policy.
 
 .. code-block:: console
 
-    $ neutron net-update private --qos-policy bw-limiter
+    $ openstack network set --qos-policy bw-limiter private
     Updated network: private
 
 .. note::
@@ -312,17 +320,17 @@ attached port.
 
 .. code-block:: console
 
-    $ neutron qos-bandwidth-limit-rule-update \
-        92ceb52f-170f-49d0-9528-976e2fee2d6f bw-limiter \
-        --max-kbps 2000 --max-burst-kbps 200
+    $ openstack network qos rule set --max-kbps 2000 --max-burst-kbps 200 \
+        --ingress bw-limiter 92ceb52f-170f-49d0-9528-976e2fee2d6f
     Updated bandwidth_limit_rule: 92ceb52f-170f-49d0-9528-976e2fee2d6f
 
-    $ neutron qos-bandwidth-limit-rule-show \
-        92ceb52f-170f-49d0-9528-976e2fee2d6f bw-limiter
+    $ openstack network qos rule show \
+        bw-limiter 92ceb52f-170f-49d0-9528-976e2fee2d6f
 
     +----------------+--------------------------------------+
     | Field          | Value                                |
     +----------------+--------------------------------------+
+    | direction      | ingress                              |
     | id             | 92ceb52f-170f-49d0-9528-976e2fee2d6f |
     | max_burst_kbps | 200                                  |
     | max_kbps       | 2000                                 |
@@ -332,18 +340,17 @@ Just like with bandwidth limiting, create a policy for DSCP marking rule:
 
 .. code-block:: console
 
-    $ neutron qos-policy-create dscp-marking
+    $ openstack network qos policy create dscp-marking
 
-    Created a new policy:
     +-------------+--------------------------------------+
     | Field       | Value                                |
     +-------------+--------------------------------------+
     | description |                                      |
-    | id          | 8569fb4d-3d63-483e-b49a-9f9290d794f4 |
+    | id          | d1f90c76-fbe8-4d6f-bb87-a9aea997ed1e |
     | name        | dscp-marking                         |
-    | rules       |                                      |
+    | project_id  | 4db7c1ed114a4a7fb0f077148155c500     |
+    | rules       | []                                   |
     | shared      | False                                |
-    | tenant_id   | 85b859134de2428d94f6ee910dc545d8     |
     +-------------+--------------------------------------+
 
 You can create, update, list, delete, and show DSCP markings
@@ -351,7 +358,8 @@ with the neutron client:
 
 .. code-block:: console
 
-    $ neutron qos-dscp-marking-rule-create dscp-marking --dscp-mark 26
+    $ openstack network qos rule create --type dscp-marking --dscp-mark 26 \
+        dscp-marking
 
     Created a new dscp marking rule
     +----------------+--------------------------------------+
@@ -363,20 +371,20 @@ with the neutron client:
 
 .. code-block:: console
 
-    $ neutron qos-dscp-marking-rule-update \
-        115e4f70-8034-4176-8fe9-2c47f8878a7d dscp-marking --dscp-mark 22
+    $ openstack network qos rule set --dscp-mark 22 \
+        dscp-marking 115e4f70-8034-4176-8fe9-2c47f8878a7d
     Updated dscp_rule: 115e4f70-8034-4176-8fe9-2c47f8878a7d
 
-    $ neutron qos-dscp-marking-rule-list dscp-marking
+    $ openstack network qos rule list dscp-marking
 
     +--------------------------------------+----------------------------------+
-    | id                                   | dscp_mark                        |
+    | ID                                   | DSCP Mark                        |
     +--------------------------------------+----------------------------------+
     | 115e4f70-8034-4176-8fe9-2c47f8878a7d | 22                               |
     +--------------------------------------+----------------------------------+
 
-    $ neutron qos-dscp-marking-rule-show \
-        115e4f70-8034-4176-8fe9-2c47f8878a7d dscp-marking
+    $ openstack network qos rule show \
+        dscp-marking 115e4f70-8034-4176-8fe9-2c47f8878a7d
 
     +----------------+--------------------------------------+
     | Field          | Value                                |
@@ -385,8 +393,8 @@ with the neutron client:
     | dscp_mark      | 22                                   |
     +----------------+--------------------------------------+
 
-    $ neutron qos-dscp-marking-rule-delete \
-        115e4f70-8034-4176-8fe9-2c47f8878a7d dscp-marking
+    $ openstack network qos rule delete \
+        dscp-marking 115e4f70-8034-4176-8fe9-2c47f8878a7d
       Deleted dscp_rule: 115e4f70-8034-4176-8fe9-2c47f8878a7d
 
 You can also include minimum bandwidth rules in your policy:
@@ -405,8 +413,8 @@ You can also include minimum bandwidth rules in your policy:
     | shared      | False                                |
     +-------------+--------------------------------------+
 
-    $ openstack network qos rule create bandwidth-control \
-      --type minimum-bandwidth --min-kbps 1000 --egress
+    $ openstack network qos rule create \
+      --type minimum-bandwidth --min-kbps 1000 --egress bandwidth-control
     +------------+--------------------------------------+
     | Field      | Value                                |
     +------------+--------------------------------------+
@@ -426,8 +434,8 @@ It is also possible to combine several rules in one policy:
 
 .. code-block:: console
 
-    $ openstack network qos rule create bandwidth-control \
-      --type bandwidth-limit --max-kbps 50000 --max-burst-kbits 50000
+    $ openstack network qos rule create --type bandwidth-limit \
+        --max-kbps 50000 --max-burst-kbits 50000 bandwidth-control
     +----------------+--------------------------------------+
     | Field          | Value                                |
     +----------------+--------------------------------------+
