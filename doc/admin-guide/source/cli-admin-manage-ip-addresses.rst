@@ -73,17 +73,17 @@ For example:
      command :command:`nmap -sn 192.168.1.56/29` to check whether the entire
      range is currently unused.
 
-Bulk delete floating IP addresses
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Delete floating IP addresses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To delete a range of floating IP addresses, run:
+To delete a floating IP address, run:
 
 .. code-block:: console
 
-   $ openstack floating ip delete RANGE_TO_DELETE
+   $ openstack floating ip delete FLOATING_IP
 
 For example:
 
 .. code-block:: console
 
-   $ openstack floating ip delete 192.168.1.56/29
+   $ openstack floating ip delete 192.168.1.56
