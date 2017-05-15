@@ -241,7 +241,7 @@ View the available properties for volume types by running:
 
 .. code-block:: console
 
-   $ cinder qos-list
+   $ openstack volume qos list
 
 In order to access these properties in a custom string use the following
 format:
@@ -265,12 +265,12 @@ function:
 
    [lvm-1]
    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-   volume_backend_name = sample_LVM
+   volume_backend_name = sample_LVM01
    filter_function = "volume.size < 10"
 
    [lvm-2]
    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-   volume_backend_name = sample_LVM
+   volume_backend_name = sample_LVM02
    filter_function = "volume.size >= 10"
 
 The above example will filter volumes to different back ends depending
@@ -290,12 +290,12 @@ function:
 
    [lvm-1]
    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-   volume_backend_name = sample_LVM
+   volume_backend_name = sample_LVM01
    goodness_function = "(volume.size < 5) ? 100 : 50"
 
    [lvm-2]
    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-   volume_backend_name = sample_LVM
+   volume_backend_name = sample_LVM02
    goodness_function = "(volume.size >= 5) ? 100 : 25"
 
 The above example will determine the goodness rating of a back end based
@@ -318,13 +318,13 @@ filter and goodness functions:
 
    [lvm-1]
    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-   volume_backend_name = sample_LVM
+   volume_backend_name = sample_LVM01
    filter_function = "stats.total_capacity_gb < 500"
    goodness_function = "(volume.size < 25) ? 100 : 50"
 
    [lvm-2]
    volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-   volume_backend_name = sample_LVM
+   volume_backend_name = sample_LVM02
    filter_function = "stats.total_capacity_gb >= 500"
    goodness_function = "(volume.size >= 25) ? 100 : 75"
 
