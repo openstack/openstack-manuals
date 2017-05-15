@@ -35,26 +35,39 @@ by providing a plug-in/driver class property called
 to `QoS rule types
 <https://git.openstack.org/cgit/openstack/neutron/tree/neutron/services/qos/qos_consts.py>`_.
 
+The following table shows the Networking back ends, QoS supported rules, and
+traffic directions (from the VM point of view).
+
+.. table:: **Networking back ends, supported rules, and traffic direction**
+
+    ====================  ================  ================  ================
+     Rule \ back end        Open vSwitch      SR-IOV            Linux bridge
+    ====================  ================  ================  ================
+     Bandwidth limit        Egress            Egress (1)        Egress
+     Minimum bandwidth      -                 Egress            -
+     DSCP marking           Egress            -                 Egress
+    ====================  ================  ================  ================
+
 .. note::
 
-   Bandwidth limit is supported on OVS, Linux bridge, and SR-IOV mechanism
-   drivers. For the Newton release onward DSCP marking is supported on the
-   OVS and Linux bridge mechanism drivers, and the minimum bandwidth rules
-   on the SR-IOV NIC mechanism driver.
+   (1) Max burst parameter is skipped because it is not supported by the
+       IP tool.
 
 In the most simple case, the property can be represented by a simple Python
 list defined on the class.
 
-For an ml2 plug-in, the list of supported QoS rule types is defined as a common
-subset of rules supported by all active mechanism drivers.
+For an ml2 plug-in, the list of supported QoS rule types and parameters is
+defined as a common subset of rules supported by all active mechanism drivers.
+A QoS rule is always attached to a QoS policy. When a rule is created or
+updated:
 
-.. note::
+* The QoS plug-in will check if this rule and parameters are supported by any
+  active mechanism driver if the QoS policy is not attached to any port or
+  network.
 
-   The list of supported rule types reported by core plug-in is not
-   enforced when accessing QoS rule resources. This is mostly because
-   then we would not be able to create any rules while at least one ml2
-   driver lacks support for QoS (at the moment of writing, only macvtap
-   is such a driver).
+* The QoS plug-in will check if this rule and parameters are supported by the
+  mechanism drivers managing those ports if the QoS policy is attached to any
+  port or network.
 
 
 Configuration
