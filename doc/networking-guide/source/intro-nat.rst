@@ -13,7 +13,7 @@ NAT is often implemented by routers, and so we will refer to the host
 performing NAT as a *NAT router*. However, in OpenStack deployments it
 is typically Linux servers that implement the NAT functionality, not
 hardware routers. These servers use the
-`iptables <http://www.netfilter.org/projects/iptables/index.html>`_
+`iptables <https://www.netfilter.org/projects/iptables/index.html>`_
 software package to implement the NAT functionality.
 
 There are multiple variations of NAT, and here we describe three kinds

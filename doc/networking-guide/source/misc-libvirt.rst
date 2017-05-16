@@ -4,7 +4,7 @@
 Disable libvirt networking
 ==========================
 
-Most OpenStack deployments use the `libvirt <http://libvirt.org>`__
+Most OpenStack deployments use the `libvirt <https://libvirt.org>`__
 toolkit for interacting with the
 hypervisor. Specifically, OpenStack Compute uses libvirt for tasks such as
 booting and terminating virtual machine instances. When OpenStack Compute boots
