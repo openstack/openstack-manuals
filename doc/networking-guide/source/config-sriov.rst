@@ -122,6 +122,36 @@ network and has access to the private networks of all machines.
       receive the error ``Device or resource busy``. In this case, you must
       first set ``sriov_numvfs`` to ``0``, then set it to your new value.
 
+   .. note::
+
+      A network interface could be used both for PCI passthrough, using the PF,
+      and SR-IOV, using the VFs. If the PF is used, the VF number stored in
+      the ``sriov_numvfs`` file is lost. If the PF is attached again to the
+      operating system, the number of VFs assigned to this interface will be
+      zero. To keep the number of VFs always assigned to this interface,
+      modify the interfaces configuration file adding an ``ifup`` script
+      command.
+
+      In Ubuntu, modifying the ``/etc/network/interfaces`` file:
+
+      .. code-block:: ini
+
+         auto eth3
+         iface eth3 inet dhcp
+         pre-up echo '4' > /sys/class/net/eth3/device/sriov_numvfs
+
+
+      In Red Hat, modifying the ``/sbin/ifup-local`` file:
+
+      .. code-block:: bash
+
+         #!/bin/sh
+         if [[ "$1" == "eth3" ]]
+         then
+             echo '4' > /sys/class/net/eth3/device/sriov_numvfs
+         fi
+
+
    .. warning::
 
       Alternatively, you can create VFs by passing the ``max_vfs`` to the
