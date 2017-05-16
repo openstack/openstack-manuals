@@ -11,18 +11,37 @@ The openstack-manuals project uses a `tox.ini
 <https://git.openstack.org/cgit/openstack/openstack-manuals/tree/tox.ini>`_
 file with specific sections that run jobs using the `Tox
 <https://tox.readthedocs.org/en/latest/>`_ tool, a virtualenv-based
-automation of test activities.
+automation of test activities. You can use MacOS, Windows, or Linux to
+build the Sphinx documentation everywhere in OpenStack.
 
 .. _docs_dependencies:
 
 Install dependencies for building documentation
 -----------------------------------------------
 
+OpenStack maintains a tool called ``bindep`` that maintains a list of
+dependencies for Linux package managers. When you run the
+:command:`tox -e bindep` command, read the error messages and install the
+dependencies based on the error messages returned. Continue to run until
+your local environment meets the requirements as listed in ``bindep.txt``
+in the repository.
+
 .. note::
 
    You cannot run :command:`tox -e bindep` on Mac OS X as it uses a Linux tool
    to parse the information. `Issue logged here
    <https://storyboard.openstack.org/#!/story/2000888>`_.
+
+* On MacOS
+
+Open a Terminal window. Make sure you have Python installed. Many contributors
+use the `Homebrew tool instructions
+<http://python-guide-pt-br.readthedocs.io/en/latest/starting/install/osx/>`_.
+
+  .. code-block:: console
+
+     $ brew install python
+     $ pip install tox
 
 * On Ubuntu or Debian:
 
@@ -57,6 +76,19 @@ Install dependencies for building documentation
    PDF files. If you do not build PDF files, you do not need to install
    the `texlive <https://www.tug.org/texlive/>`__ packages and
    `Liberation font family <https://fedorahosted.org/liberation-fonts/>`__.
+
+* On Windows
+
+To the doc build scripts as-is on Windows, first install `Git for Windows`_.
+Make sure you have a working Python environment, and then use Git Bash to run
+all :command:`tox` commands within the repository directory:
+
+  .. code-block:: console
+
+     $ pip install tox
+
+.. _Git for Windows: https://git-for-windows.github.io/
+
 
 Build workflow
 --------------
