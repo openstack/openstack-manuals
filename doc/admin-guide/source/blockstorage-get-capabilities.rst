@@ -189,12 +189,12 @@ these volumes. An administrator/operator can then define private volume types
 using cinder client.
 Volume type access extension adds the ability to manage volume type access.
 Volume types are public by default. Private volume types can be created by
-setting the ``is_public`` Boolean field to ``False`` at creation time. Access to a
+setting the ``--private`` parameter at creation time. Access to a
 private volume type can be controlled by adding or removing a project from it.
 Private volume types without projects are only visible by users with the
 admin role/context.
 
-Create a public volume type by setting ``is_public`` field to ``True``:
+Create a public volume type by setting ``--public`` parameter:
 
 .. code-block:: console
 
@@ -208,7 +208,7 @@ Create a public volume type by setting ``is_public`` field to ``True``:
    | name        | vol_Type1                            |
    +-------------+--------------------------------------+
 
-Create a private volume type by setting ``is_public`` field to ``False``:
+Create a private volume type by setting ``--private`` parameter:
 
 .. code-block:: console
 
