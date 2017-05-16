@@ -4,6 +4,34 @@
 Building documentation
 ======================
 
+Clone a repository first
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before building documentation, you must first clone the repo where the files
+reside:
+
+  .. code-block:: console
+
+     $ git clone git://git.openstack.org/openstack/openstack-manuals.git
+
+Navigate to the ``openstack-manuals`` directory and create a branch from there
+to do your work:
+
+  .. code-block:: console
+
+     $ cd openstack-manuals
+     $ git checkout -b new-branch
+
+The value of ``new-branch`` is any name you want to give to your branch.
+
+To work on a file, use a text editor and open the .rst file from the same
+navigational path as the path shown in the HTML URL. For example,
+https://docs.openstack.org/contributor-guide/docs-builds.html, is found in the
+folder: ``openstack-manuals/doc/contributor-guide/docs-builds.rst``.
+
+Refer to :doc:`Writing documentation <writing-docs>` for details on how to
+create content and contribute to the documentation.
+
 Building output locally
 ~~~~~~~~~~~~~~~~~~~~~~~
 
