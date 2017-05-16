@@ -82,11 +82,11 @@ on the IDs of the parent backups. A full restore is performed based on the
 full backup first, then restore is done based on the incremental backup,
 laying on top of it in order.
 
-You can view a backup list with the :command:`cinder backup-list`
+You can view a backup list with the :command:`openstack volume backup list`
 command. Optional arguments to clarify the status of your backups
 include: running ``--name``, ``--status``, and
-``--volume-id`` to filter through backups by the specified name,
-status, or volume-id. Search with ``--all-tenants`` for details of the
+``--volume`` to filter through backups by the specified name,
+status, or volume-id. Search with ``--all-projects`` for details of the
 projects associated with the listed backups.
 
 Because volume backups are dependent on the Block Storage database, you must
