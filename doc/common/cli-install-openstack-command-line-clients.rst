@@ -54,26 +54,21 @@ command-line clients, and provides installation instructions as needed.
        the related Python development package for your operating system
        and distribution.
 
-       Install pip through the package manager for your system:
+       **Option 1:** Install pip using get-pip.py
 
-       **MacOS**
-
-       .. code-block:: console
-
-          # easy_install pip
-
-       **Microsoft Windows**
-
-       Ensure that the ``C:\Python27\Scripts`` directory is defined in the
-       ``PATH`` environment variable, and use the ``easy_install`` command
-       from the setuptools package:
+       To install pip, securely download `get-pip.py
+       <https://bootstrap.pypa.io/get-pip.py>`__.
+       Then run the following:
 
        .. code-block:: console
 
-          C:\>easy_install pip
+          # python get-pip.py
 
-       Another option is to use the `unofficial binary installer provided by
-       Christoph Gohlke <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip>`_.
+       For more details visit `install pip
+       <https://pip.pypa.io/en/stable/installing/>`__.
+
+       **Option 2:** Install pip through the package manager for your system
+
 
        **Ubuntu or Debian**
 
@@ -140,6 +135,9 @@ command-line clients, and provides installation instructions as needed.
 
        There are also packaged versions of the clients available that enable
        zypper to install the clients as described in Installing_from_packages_.
+
+       Another option for Microsoft Windows is to  use the `unofficial binary installer provided
+       by Christoph Gohlke <http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip>`_.
 
 Install the OpenStack client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
