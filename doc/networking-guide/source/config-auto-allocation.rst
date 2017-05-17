@@ -54,12 +54,18 @@ topology creation. To perform this task, proceed with the following steps:
    `OpenStack Administrator Guide
    <https://docs.openstack.org/admin-guide/networking-adv-features.html>`_.
    Assuming the external network to be used for the auto-allocation feature
-   is named ``public``, make it the default external network
+   is named ``public``, make it the ``default`` external network
    with the following command:
 
    .. code-block:: console
 
       $ neutron net-update public --is-default=True
+
+   .. note::
+
+      The flag ``--default`` (and ``--no-default`` flag) is only effective
+      with external networks and has no effects on regular (or internal)
+      networks.
 
 #. Create default subnetpools
 
