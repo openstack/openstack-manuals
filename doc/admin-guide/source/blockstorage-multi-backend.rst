@@ -155,7 +155,7 @@ back end name.
 
    .. code-block:: console
 
-      $ cinder --os-username admin --os-tenant-name admin extra-specs-list
+      $ openstack --os-username admin --os-tenant-name admin volume type list --long
 
 .. note::
 
