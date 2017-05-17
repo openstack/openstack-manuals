@@ -18,11 +18,11 @@ Volume drivers
    drivers/coho-data-driver.rst
    drivers/coprhd-driver.rst
    drivers/datera-volume-driver.rst
+   drivers/dell-emc-scaleio-driver.rst
+   drivers/dell-emc-unity-driver.rst
    drivers/dell-equallogic-driver.rst
    drivers/dell-storagecenter-driver.rst
-   drivers/dell-emc-unity-driver.rst
    drivers/dothill-driver.rst
-   drivers/emc-scaleio-driver.rst
    drivers/emc-vmax-driver.rst
    drivers/emc-vnx-driver.rst
    drivers/emc-xtremio-driver.rst

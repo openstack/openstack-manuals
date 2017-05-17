@@ -1,6 +1,6 @@
-==============================================
-EMC ScaleIO Block Storage driver configuration
-==============================================
+=====================================
+Dell EMC ScaleIO Block Storage driver
+=====================================
 
 ScaleIO is a software-only solution that uses existing servers' local
 disks and LAN to create a virtual SAN that has all of the benefits of
@@ -21,7 +21,7 @@ Support matrix
    * - ScaleIO version
      - Supported Linux operating systems
    * - 2.0
-     - CentOS 6.x, CentOS 7.x, SLES 11 SP3, SLES 12, Ubuntu 14.04
+     - CentOS 6.x, CentOS 7.x, SLES 11 SP3, SLES 12, Ubuntu 14.04, Ubuntu 16.04
 
 Deployment prerequisites
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,10 +47,9 @@ To find the ScaleIO documentation:
 
 #. Go to the `ScaleIO product documentation page <https://support.emc.com/products/33925_ScaleIO/Documentation/?source=promotion>`_.
 
-#. From the left-side panel, select the relevant version (1.32 or 2.0).
+#. From the left-side panel, select the relevant version.
 
-#. Search for "ScaleIO Installation Guide 1.32" or "ScaleIO 2.0 Deployment
-   Guide" accordingly.
+#. Search for "ScaleIO 2.0 Deployment Guide".
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
@@ -180,9 +179,9 @@ ScaleIO Block Storage driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Edit the ``cinder.conf`` file by adding the configuration below under
-the ``[DEFAULT]`` section of the file in case of a single back end, or
-under a separate section in case of multiple back ends (for example
-[ScaleIO]). The configuration file is usually located at
+a new section (for example, ``[scaleio]``) and change the ``enable_backends``
+setting (in the ``[DEFAULT]`` section) to include this new back end.
+The configuration file is usually located at
 ``/etc/cinder/cinder.conf``.
 
 For a configuration example, refer to the example
