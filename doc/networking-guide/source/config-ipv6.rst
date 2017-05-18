@@ -471,13 +471,6 @@ Configuring OpenStack Networking for prefix delegation
 ------------------------------------------------------
 
 To enable prefix delegation, edit the ``/etc/neutron/neutron.conf`` file.
-If you are running OpenStack Liberty, make the following change:
-
-.. code-block:: console
-
-   default_ipv6_subnet_pool = prefix_delegation
-
-Otherwise if you are running OpenStack Mitaka, make this change:
 
 .. code-block:: console
 
