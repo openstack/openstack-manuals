@@ -199,8 +199,8 @@ External networks are visible to all users. However, the default policy
 settings enable only administrative users to create, update, and delete
 external networks.
 
-This table shows example neutron commands that enable you to complete
-basic L3 operations:
+This table shows example :command:`openstack` commands that enable you
+to complete basic L3 operations:
 
 .. list-table:: **Basic L3 Operations**
    :widths: 30 50
