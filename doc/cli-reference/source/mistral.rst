@@ -805,7 +805,7 @@ Create new execution.
 
 ``workflow_identifier``
   Workflow ID or name. Workflow name will be deprecated
-  sinceMitaka.
+  since Mitaka.
 
 ``workflow_input``
   Workflow input
