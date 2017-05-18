@@ -26,6 +26,77 @@ After you allocate a floating IP address to a project, you can:
 
 Use the :command:`openstack` commands to manage floating IP addresses.
 
+Create an external network
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+#. Create an external network named ``public``:
+
+.. code-block:: console
+
+   $ openstack network create public --external
+
+   +---------------------------+--------------------------------------+
+   | Field                     | Value                                |
+   +---------------------------+--------------------------------------+
+   | admin_state_up            | UP                                   |
+   | availability_zone_hints   |                                      |
+   | availability_zones        |                                      |
+   | created_at                | 2017-05-18T05:06:06Z                 |
+   | description               |                                      |
+   | dns_domain                | None                                 |
+   | id                        | 5a6c74b9-5659-4b9e-951e-85ffca212139 |
+   | ipv4_address_scope        | None                                 |
+   | ipv6_address_scope        | None                                 |
+   | is_default                | False                                |
+   | mtu                       | 1450                                 |
+   | name                      | public                               |
+   | port_security_enabled     | False                                |
+   | project_id                | b3abf186ac64462e85741315376e9ca7     |
+   | provider:network_type     | vxlan                                |
+   | provider:physical_network | None                                 |
+   | provider:segmentation_id  | 9                                    |
+   | qos_policy_id             | None                                 |
+   | revision_number           | 3                                    |
+   | router:external           | External                             |
+   | segments                  | None                                 |
+   | shared                    | False                                |
+   | status                    | ACTIVE                               |
+   | subnets                   |                                      |
+   | updated_at                | 2017-05-18T05:06:06Z                 |
+   +---------------------------+--------------------------------------+
+
+#. Create a subnet of the ``public`` external network:
+
+.. code-block:: console
+
+   $ openstack subnet create --network public --subnet-range 172.24.4.0/24 public_subnet
+
+   +-------------------------+--------------------------------------+
+   | Field                   | Value                                |
+   +-------------------------+--------------------------------------+
+   | allocation_pools        | 172.24.4.2-172.24.4.254              |
+   | cidr                    | 172.24.4.0/24                        |
+   | created_at              | 2017-05-18T05:16:46Z                 |
+   | description             |                                      |
+   | dns_nameservers         |                                      |
+   | enable_dhcp             | True                                 |
+   | gateway_ip              | 172.24.4.1                           |
+   | host_routes             |                                      |
+   | id                      | f61a73b3-6097-48ff-b7ef-98da203e6b18 |
+   | ip_version              | 4                                    |
+   | ipv6_address_mode       | None                                 |
+   | ipv6_ra_mode            | None                                 |
+   | name                    | public_subnet                        |
+   | network_id              | 5a6c74b9-5659-4b9e-951e-85ffca212139 |
+   | project_id              | b3abf186ac64462e85741315376e9ca7     |
+   | revision_number         | 2                                    |
+   | segment_id              | None                                 |
+   | service_types           |                                      |
+   | subnetpool_id           | None                                 |
+   | updated_at              | 2017-05-18T05:16:46Z                 |
+   | use_default_subnet_pool | None                                 |
+   +-------------------------+--------------------------------------+
+
 List floating IP address information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -45,6 +116,20 @@ To list all pools that provide floating IP addresses, run:
 
    If this list is empty, the cloud administrator must configure a pool
    of floating IP addresses.
+   This command is only available in ``nova-network``. If you use the OpenStack
+   Networking service, run the following command to list external networks:
+
+   .. code-block:: console
+
+      $ openstack network list --external
+
+      +--------------------------------------+-------------+--------------------------------------+
+      | ID                                   | Name        | Subnets                              |
+      +--------------------------------------+-------------+--------------------------------------+
+      | 5a6c74b9-5659-4b9e-951e-85ffca212139 | public      | f61a73b3-6097-48ff-b7ef-98da203e6b18 |
+      | 9839a22d-33b7-4173-9708-985f091bb892 | public1     | 19f1fbb4-f411-4465-8ed9-b641c7fc73d0 |
+      +--------------------------------------+-------------+--------------------------------------+
+
 
 To list all floating IP addresses that are allocated to the current project,
 run:
