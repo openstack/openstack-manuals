@@ -142,6 +142,10 @@ for layer-3 (routing) services. Additionally, a :term:`DHCP<Dynamic Host
 Configuration Protocol (DHCP)>` service provides IP address information to
 instances.
 
+The OpenStack user requires more information about the underlying network
+infrastructure to create a virtual network to exactly match the
+infrastructure.
+
 .. warning::
 
    This option lacks support for self-service (private) networks, layer-3
@@ -167,6 +171,10 @@ as :term:`VXLAN <Virtual Extensible LAN (VXLAN)>`. Essentially, it routes
 virtual networks to physical networks using :term:`NAT<Network Address
 Translation (NAT)>`. Additionally, this option provides the foundation for
 advanced services such as LBaaS and FWaaS.
+
+The OpenStack user can create virtual networks without the knowledge
+of underlying infrastructure on the data network. This can also include
+VLAN networks if the layer-2 plug-in is configured accordingly.
 
 .. _figure-network2-services:
 
