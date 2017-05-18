@@ -196,6 +196,17 @@ When you launch an instance from a volume, note the following steps:
 * Select the volume or volume snapshot from which to boot. Enter a
   device name. Enter ``vda`` for KVM images or ``xvda`` for Xen images.
 
+.. note::
+
+   When running QEMU without support for the hardware virtualization, set
+   ``cpu_mode="none"`` alongside ``virt_type=qemu`` in
+   ``/etc/nova/nova-compute.conf`` to solve the following error:
+
+   .. code-block:: console
+
+      libvirtError: unsupported configuration: CPU mode 'host-model'
+      for ``x86_64`` qemu domain on ``x86_64`` host is not supported by hypervisor
+
 Connect to your instance by using SSH
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
