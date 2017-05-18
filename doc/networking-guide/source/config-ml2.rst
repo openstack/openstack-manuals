@@ -100,8 +100,9 @@ To enable type drivers in the ML2 plug-in. Edit the
     [ml2]
     type_drivers = flat,vlan,vxlan,gre
 
-.. todo::
-  Update Link. See bug https://bugs.launchpad.net/openstack-manuals/+bug/1567792
+.. note::
+
+   For more details，see the `Bug 1567792 <https://bugs.launchpad.net/openstack-manuals/+bug/1567792>`__.
 
 For more details, see the
 `Networking configuration options <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__
@@ -151,13 +152,13 @@ More information about provider networks see
   used.
 
   .. note::
+
      VXLAN multicast group configuration is not applicable for the Open
      vSwitch agent.
 
      As of today it is not used in the Linux bridge agent. The Linux bridge
-     agent has its own agent specific configuration option. Please see
-     the following bug for more details:
-     https://bugs.launchpad.net/neutron/+bug/1523614
+     agent has its own agent specific configuration option. For more details,
+     see the `Bug 1523614 <https://bugs.launchpad.net/neutron/+bug/1523614>`__.
 
 Project network types
 ^^^^^^^^^^^^^^^^^^^^^
@@ -210,8 +211,9 @@ To enable mechanism drivers in the ML2 plug-in, edit the
    [ml2]
    mechanism_drivers = ovs,l2pop
 
-.. todo::
-  Update Link. See bug https://bugs.launchpad.net/openstack-manuals/+bug/1567792
+.. note::
+
+   For more details, see the `Bug 1567792 <https://bugs.launchpad.net/openstack-manuals/+bug/1567792>`__.
 
 For more details, see the
 `Configuration Reference <https://docs.openstack.org/ocata/config-reference/networking/networking_options_reference.html#modular-layer-2-ml2-plug-in-configuration-options>`__.
