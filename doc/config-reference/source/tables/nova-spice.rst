@@ -87,7 +87,7 @@
 
    * - ``html5proxy_host`` = ``0.0.0.0``
 
-     - (String) IP address or a hostname on which the ``nova-spicehtml5proxy`` service listens for incoming requests.
+     - (Host address) IP address or a hostname on which the ``nova-spicehtml5proxy`` service listens for incoming requests.
 
        Related options:
 

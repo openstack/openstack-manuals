@@ -25,19 +25,23 @@
 
      - (Boolean) Auto-delete queues in AMQP.
 
-   * - ``kombu_ssl_version`` =
+   * - ``ssl`` = ``False``
+
+     - (Boolean) Connect over SSL.
+
+   * - ``ssl_version`` =
 
      - (String) SSL version to use (valid only if SSL enabled). Valid values are TLSv1 and SSLv23. SSLv2, SSLv3, TLSv1_1, and TLSv1_2 may be available on some distributions.
 
-   * - ``kombu_ssl_keyfile`` =
+   * - ``ssl_key_file`` =
 
      - (String) SSL key file (valid only if SSL enabled).
 
-   * - ``kombu_ssl_certfile`` =
+   * - ``ssl_cert_file`` =
 
      - (String) SSL cert file (valid only if SSL enabled).
 
-   * - ``kombu_ssl_ca_certs`` =
+   * - ``ssl_ca_file`` =
 
      - (String) SSL certification authority file (valid only if SSL enabled).
 
@@ -80,10 +84,6 @@
        - **Deprecated**
 
          Replaced by [DEFAULT]/transport_url
-
-   * - ``rabbit_use_ssl`` = ``False``
-
-     - (Boolean) Connect over SSL for RabbitMQ.
 
    * - ``rabbit_userid`` = ``guest``
 
@@ -168,10 +168,6 @@
    * - ``heartbeat_interval`` = ``3``
 
      - (Integer) How often to send heartbeats for consumer's connections
-
-   * - ``ssl`` = ``None``
-
-     - (Boolean) Enable SSL
 
    * - ``ssl_options`` = ``None``
 

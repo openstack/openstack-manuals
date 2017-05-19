@@ -17,22 +17,26 @@
    * - Configuration option = Default value
      - Description
 
-   * - ``retry_delay`` = ``1``
+   * - ``barbican_endpoint`` = ``None``
 
-     - (Integer) Number of seconds to wait before retrying poll for key creation completion
+     - (String) Use this endpoint to connect to Barbican, for example: "http://localhost:9311/"
 
    * - ``number_of_retries`` = ``60``
 
      - (Integer) Number of times to retry poll for key creation completion
 
-   * - ``barbican_endpoint`` = ``None``
-
-     - (String) Use this endpoint to connect to Barbican, for example: "http://localhost:9311/"
-
    * - ``barbican_api_version`` = ``None``
 
      - (String) Version of the Barbican API, for example: "v1"
 
-   * - ``auth_endpoint`` = ``http://localhost:5000/v3``
+   * - ``verify_ssl`` = ``True``
+
+     - (Boolean) Specifies if insecure TLS (https) requests. If False, the server's certificate will not be validated
+
+   * - ``retry_delay`` = ``1``
+
+     - (Integer) Number of seconds to wait before retrying poll for key creation completion
+
+   * - ``auth_endpoint`` = ``http://localhost/identity/v3``
 
      - (String) Use this endpoint to connect to Keystone

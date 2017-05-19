@@ -107,7 +107,7 @@
 
    * - ``host_ip`` = ``None``
 
-     - (String) Hostname or IP address for connection to VMware vCenter host.
+     - (Host address) Hostname or IP address for connection to VMware vCenter host.
 
    * - ``maximum_objects`` = ``100``
 

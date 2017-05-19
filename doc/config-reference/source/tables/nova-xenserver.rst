@@ -153,7 +153,7 @@
 
    * - ``target_host`` = ``None``
 
-     - (String) The iSCSI Target Host.
+     - (Host address) The iSCSI Target Host.
 
        This option represents the hostname or ip of the iSCSI Target. If the target host is not present in the connection information from the volume provider then the value from this option is taken.
 
@@ -359,13 +359,13 @@
 
        * `none`: will turnoff downloading images via Bit Torrent.
 
-   * - ``console_public_hostname`` = ``localhost``
+   * - ``console_public_hostname`` = ``<current_hostname>``
 
      - (String) Publicly visible name for this console host.
 
        Possible values:
 
-       * A string representing a valid hostname
+       * Current hostname (default) or any string representing hostname.
 
    * - ``connection_concurrent`` = ``5``
 

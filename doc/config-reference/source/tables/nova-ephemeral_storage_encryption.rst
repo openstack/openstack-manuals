@@ -21,7 +21,7 @@
 
      - (String) Cipher-mode string to be used.
 
-       The cipher and mode to be used to encrypt ephemeral storage. The set of cipher-mode combinations available depends on kernel support.
+       The cipher and mode to be used to encrypt ephemeral storage. The set of cipher-mode combinations available depends on kernel support. According to the dm-crypt documentation, the cipher is expected to be in the format: "<cipher>-<chainmode>-<ivmode>".
 
        Possible values:
 

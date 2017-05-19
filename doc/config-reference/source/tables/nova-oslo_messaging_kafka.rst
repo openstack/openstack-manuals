@@ -39,7 +39,7 @@
 
    * - ``kafka_consumer_timeout`` = ``1.0``
 
-     - (Integer) Default timeout(s) for Kafka consumers
+     - (Floating point) Default timeout(s) for Kafka consumers
 
    * - ``pool_size`` = ``10``
 

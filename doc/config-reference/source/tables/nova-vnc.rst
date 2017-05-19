@@ -19,7 +19,7 @@
 
    * - ``xvpvncproxy_host`` = ``0.0.0.0``
 
-     - (String) IP address or hostname that the XVP VNC console proxy should bind to.
+     - (Host address) IP address or hostname that the XVP VNC console proxy should bind to.
 
        The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients. Xen provides the Xenserver VNC Proxy, or XVP, as an alternative to the websocket-based noVNC proxy used by Libvirt. In contrast to noVNC, XVP clients are Java-based.
 
@@ -67,11 +67,11 @@
 
    * - ``vncserver_listen`` = ``127.0.0.1``
 
-     - (String) The IP address or hostname on which an instance should listen to for incoming VNC connection requests on this node.
+     - (Host address) The IP address or hostname on which an instance should listen to for incoming VNC connection requests on this node.
 
    * - ``vncserver_proxyclient_address`` = ``127.0.0.1``
 
-     - (String) Private, internal IP address or hostname of VNC console proxy.
+     - (Host address) Private, internal IP address or hostname of VNC console proxy.
 
        The VNC proxy is an OpenStack component that enables compute service users to access their instances through VNC clients.
 

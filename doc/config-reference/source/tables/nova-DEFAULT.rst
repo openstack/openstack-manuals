@@ -45,6 +45,14 @@
 
        * Any string representing a floating IP pool name
 
+       - **Deprecated**
+
+         This option was used for two purposes: to set the floating IP pool name for nova-network and to do the same for neutron. nova-network is deprecated, as are any related configuration options. Users of neutron, meanwhile, should use the 'default_floating_pool' option in the '[neutron]' group.
+
+   * - ``translation_lazy_load`` = ``True``
+
+     - (Boolean) Specifies whether to Lazy-Load Translation
+
    * - ``compute_topic`` = ``compute``
 
      - (String) This is the message queue topic that the compute service 'listens' on. It is used when the compute service is started up to configure the queue, and whenever an RPC call to the compute service is made.
@@ -75,7 +83,7 @@
 
        Possible values:
 
-        Any valid virtual interface name, such as 'eth0'
+       * Any valid virtual interface name, such as 'eth0'
 
        - **Deprecated**
 
@@ -92,6 +100,10 @@
      - (Integer) Expiry interval (in seconds) for LDAP DNS driver Start of Authority
 
        Time interval, a secondary/slave DNS server holds the information before it is no longer considered authoritative.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``block_device_allocate_retries`` = ``60``
 
@@ -135,7 +147,11 @@
 
        Related options:
 
-        ``use_neutron``, ``vpn_ip``, ``fake_network``
+       * ``use_neutron``
+
+       * ``vpn_ip``
+
+       * ``fake_network``
 
        - **Deprecated**
 
@@ -153,19 +169,19 @@
 
        Possible values:
 
-        Any string representing a network interface name
-
-   * - ``verbose`` = ``True``
-
-     - (Boolean) If set to false, the logging level will be set to WARNING instead of the default INFO level.
+       * Any string representing a network interface name
 
        - **Deprecated**
 
-         No deprecation reason provided for this option.
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``ldap_dns_password`` = ``password``
 
      - (String) Bind user's password for LDAP server
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``network_size`` = ``256``
 
@@ -175,11 +191,13 @@
 
        Possible values:
 
-        Any positive integer that is less than or equal to the available network size. Note that if you are creating multiple networks, they must all fit in the available IP address space. The default is 256.
+       * Any positive integer that is less than or equal to the available network size. Note that if you are creating multiple networks, they must all fit in the available IP address space. The default is 256.
 
        Related options:
 
-        ``use_neutron``, ``num_networks``
+       * ``use_neutron``
+
+       * ``num_networks``
 
        - **Deprecated**
 
@@ -229,6 +247,10 @@
 
        * Any valid string representing LDAP DNS hostmaster.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``password_length`` = ``12``
 
      - (Integer) Length of generated instance admin passwords.
@@ -259,7 +281,9 @@
 
    * - ``use_neutron`` = ``True``
 
-     - (Boolean) Whether to use Neutron or Nova Network as the back end for networking. Defaults to False (indicating Nova network).Set to True to use neutron.
+     - (Boolean) Enable neutron as the backend for networking.
+
+       Determine whether to use Neutron or Nova Network as the back end. Set to true to use neutron.
 
        - **Deprecated**
 
@@ -279,7 +303,7 @@
 
    * - ``allow_resize_to_same_host`` = ``False``
 
-     - (Boolean) Allow destination machine to match source for resize. Useful when testing in single-host environments. By default it is not allowed to resize to the same host. Setting this option to true will add the same host to the destination options.
+     - (Boolean) Allow destination machine to match source for resize. Useful when testing in single-host environments. By default it is not allowed to resize to the same host. Setting this option to true will add the same host to the destination options. Also set to true if you allow the ServerGroupAffinityFilter and need to resize.
 
    * - ``reclaim_instance_interval`` = ``0``
 
@@ -301,19 +325,13 @@
 
        Goal of the root wrapper is to allow a service-specific unprivileged user to run a number of actions as the root user in the safest manner possible. The configuration file used here must match the one defined in the sudoers entry.
 
-   * - ``max_local_block_devices`` = ``3``
+   * - ``reserved_host_cpus`` = ``0``
 
-     - (Integer) Maximum number of devices that will result in a local image being created on the hypervisor node.
-
-       A negative number means unlimited. Setting max_local_block_devices to 0 means that any request that attempts to create a local disk will fail. This option is meant to limit the number of local discs (so root local disc that is the result of --image being used, and any other ephemeral and swap disks). 0 does not mean that images will be automatically converted to volumes and boot instances from volumes - it just means that all requests that attempt to create a local disk will fail.
+     - (Integer) Number of physical CPUs to reserve for the host. The host resources usage is reported back to the scheduler continuously from nova-compute running on the compute node. To prevent the host CPU from being considered as available, this option is used to reserve random pCPU(s) for the host.
 
        Possible values:
 
-       * 0: Creating a local disk is not allowed.
-
-       * Negative number: Allows unlimited number of local discs.
-
-       * Positive number: Allows only these many number of local discs. (Default value is 3).
+       * Any positive integer representing number of physical CPUs to reserve for the host.
 
    * - ``metadata_listen`` = ``0.0.0.0``
 
@@ -351,27 +369,29 @@
 
        Possible values:
 
-        Any valid IPv6 CIDR. The default value is "fd00::/48".
+       * Any valid IPv6 CIDR
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
          nova-network is deprecated, as are any related configuration options.
 
-   * - ``dns_server`` = ``[]``
+   * - ``auto_assign_floating_ip`` = ``False``
 
-     - (Multi-valued) Despite the singular form of the name of this option, it is actually a list of zero or more server addresses that dnsmasq will use for DNS nameservers. If this is not empty, dnsmasq will not read /etc/resolv.conf, but will only use the servers specified in this option. If the option use_network_dns_servers is True, the dns1 and dns2 servers from the network will be appended to this list, and will be used as DNS servers, too.
+     - (Boolean) Autoassigning floating IP to VM
 
-       Possible values:
-
-        A list of strings, where each string is either an IP address or a FQDN.
+       When set to True, floating IP is auto allocated and associated to the VM upon creation.
 
        Related options:
 
-        use_network_dns_servers
+       * use_neutron: this options only works with nova-network.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``default_access_ip_network_name`` = ``None``
 
@@ -383,6 +403,18 @@
 
        * Any string representing network name.
 
+   * - ``instance_dns_domain`` =
+
+     - (String) If specified, Nova checks if the availability_zone of every instance matches what the database says the availability_zone should be for the specified dns_domain.
+
+       Related options:
+
+       * use_neutron: this options only works with nova-network.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``resume_guests_state_on_host_boot`` = ``False``
 
      - (Boolean) This option specifies whether to start guests that were running before the host rebooted. It ensures that all of the instances on a Nova compute node resume their state each time the compute node boots or restarts.
@@ -393,7 +425,11 @@
 
        Possible values:
 
-        Any positive integer value.
+       * Any positive integer value.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``floating_ip_dns_manager`` = ``nova.network.noop_dns_driver.NoopDNSDriver``
 
@@ -414,6 +450,16 @@
        - **Deprecated**
 
          nova-network is deprecated, as are any related configuration options.
+
+   * - ``state_path`` = ``$pybasedir``
+
+     - (String) The top-level directory for maintaining Nova's state.
+
+       This directory is used to store Nova's internal state. It is used by a variety of other config options which derive from this. In some scenarios (for example migrations) it makes sense to use a storage location which is shared between multiple compute hosts (for example via NFS). Unless the option ``instances_path`` gets overwritten, this directory can grow very large.
+
+       Possible values:
+
+       * The full path to a directory. Defaults to value provided in ``pybasedir``.
 
    * - ``injected_network_template`` = ``$pybasedir/nova/virt/interfaces.template``
 
@@ -443,18 +489,6 @@
 
      - (String) Log level name used by rate limiting: CRITICAL, ERROR, INFO, WARNING, DEBUG or empty string. Logs with level greater or equal to rate_limit_except_level are not filtered. An empty string means that all levels are filtered.
 
-   * - ``send_arp_for_ha_count`` = ``3``
-
-     - (Integer) When arp messages are configured to be sent, they will be sent with the count set to the value of this option. Of course, if this is set to zero, no arp messages will be sent.
-
-       Possible values:
-
-        Any integer greater than or equal to 0
-
-       Related options:
-
-        send_arp_for_ha
-
    * - ``heal_instance_info_cache_interval`` = ``60``
 
      - (Integer) Interval between instance network information cache updates.
@@ -483,13 +517,15 @@
 
      - (String) This option determines the IP address for the network metadata API server.
 
+       This is really the client side of the metadata host equation that allows nova-network to find the metadata server when doing a default multi host networking.
+
        Possible values:
 
        * Any valid IP address. The default is the address of the Nova API server.
 
        Related options:
 
-       * metadata_port
+       * ``metadata_port``
 
    * - ``debug`` = ``False``
 
@@ -505,31 +541,35 @@
 
    * - ``routing_source_ip`` = ``$my_ip``
 
-     - (String) This is the public IP address of the network host. It is used when creating a SNAT rule.
+     - (String) The public IP address of the network host.
+
+       This is used when creating an SNAT rule.
 
        Possible values:
 
-        Any valid IP address
+       * Any valid IP address
 
        Related options:
 
-        force_snat_range
+       * ``force_snat_range``
 
-   * - ``firewall_driver`` = ``None``
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
+   * - ``firewall_driver`` = ``nova.virt.firewall.NoopFirewallDriver``
 
      - (String) Firewall driver to use with ``nova-network`` service.
 
        This option only applies when using the ``nova-network`` service. When using another networking services, such as Neutron, this should be to set to the ``nova.virt.firewall.NoopFirewallDriver``.
 
-       If unset (the default), this will default to the hypervisor-specified default driver.
-
        Possible values:
 
-       * nova.virt.firewall.IptablesFirewallDriver
+       * ``nova.virt.firewall.IptablesFirewallDriver``
 
-       * nova.virt.firewall.NoopFirewallDriver
+       * ``nova.virt.firewall.NoopFirewallDriver``
 
-       * nova.virt.libvirt.firewall.IptablesFirewallDriver
+       * ``nova.virt.libvirt.firewall.IptablesFirewallDriver``
 
        * [...]
 
@@ -537,9 +577,17 @@
 
        * ``use_neutron``: This must be set to ``False`` to enable ``nova-network`` networking
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``ldap_dns_user`` = ``uid=admin,ou=people,dc=example,dc=org``
 
      - (String) Bind user for LDAP server
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``config_drive_format`` = ``iso9660``
 
@@ -589,15 +637,25 @@
 
        * Any positive integer in seconds: The instance will exist for the specified number of seconds before being offloaded.
 
-   * - ``state_path`` = ``$pybasedir``
+   * - ``instance_dns_manager`` = ``nova.network.noop_dns_driver.NoopDNSDriver``
 
-     - (String) The top-level directory for maintaining Nova's state.
+     - (String) Full class name for the DNS Manager for instance IPs.
 
-       This directory is used to store Nova's internal state. It is used by a variety of other config options which derive from this. In some scenarios (for example migrations) it makes sense to use a storage location which is shared between multiple compute hosts (for example via NFS). Unless the option ``instances_path`` gets overwritten, this directory can grow very large.
+       This option specifies the class of the driver that provides functionality to manage DNS entries for instances.
+
+       On instance creation, nova will add DNS entries for the instance name and id, using the specified instance DNS driver and domain. On instance deletion, nova will remove the DNS entries.
 
        Possible values:
 
-       * The full path to a directory. Defaults to value provided in ``pybasedir``.
+       * Full Python path to the class to be used
+
+       Related options:
+
+       * use_neutron: this options only works with nova-network.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``pointer_model`` = ``usbtablet``
 
@@ -631,6 +689,10 @@
 
        * ebtables_exec_attempts
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``disk_allocation_ratio`` = ``0.0``
 
      - (Floating point) This option helps you specify virtual disk to physical disk allocation ratio.
@@ -639,7 +701,9 @@
 
        A ratio greater than 1.0 will result in over-subscription of the available physical disk, which can be useful for more efficiently packing instances created with images that do not use the entire virtual disk, such as sparse or compressed images. It can be set to a value between 0.0 and 1.0 in order to preserve a percentage of the disk for uses other than instances.
 
-       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.0'.
+       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.0.
+
+       NOTE: As of the 16.0.0 Pike release, this configuration option is ignored for the ironic.IronicDriver compute driver and is hardcoded to 1.0.
 
        Possible values:
 
@@ -663,27 +727,23 @@
 
        Possible values:
 
-        Any valid IP address.
+       * Any valid IP address.
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
          nova-network is deprecated, as are any related configuration options.
 
-   * - ``force_snat_range`` = ``[]``
+   * - ``use_journal`` = ``False``
 
-     - (Multi-valued) This is a list of zero or more IP ranges that traffic from the `routing_source_ip` will be SNATted to. If the list is empty, then no SNAT rules are created.
+     - (Boolean) Enable journald for logging. If running in a systemd environment you may wish to enable journal support. Doing so will use the journal native protocol which includes structured metadata in addition to log messages.This option is ignored if log_config_append is set.
 
-       Possible values:
+   * - ``use_stderr`` = ``False``
 
-        A list of strings, each of which should be a valid CIDR.
-
-       Related options:
-
-        routing_source_ip
+     - (Boolean) Log output to standard error. This option is ignored if log_config_append is set.
 
    * - ``default_ephemeral_format`` = ``None``
 
@@ -713,6 +773,10 @@
 
        * A valid LDAP URL representing the server
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``metadata_listen_port`` = ``8775``
 
      - (Port number) Port on which the metadata API will listen.
@@ -735,6 +799,10 @@
 
        * A string representing an iptables chain. The default is DROP.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``gateway`` = ``None``
 
      - (String) This is the default IPv4 gateway. It is used only in the testing suite.
@@ -743,11 +811,13 @@
 
        Possible values:
 
-        Any valid IP address.
+       * Any valid IP address.
 
        Related options:
 
-        ``use_neutron``, ``gateway_v6``
+       * ``use_neutron``
+
+       * ``gateway_v6``
 
        - **Deprecated**
 
@@ -773,10 +843,6 @@
 
      - (String) Path to directory with content which will be served by a web server.
 
-   * - ``use_stderr`` = ``False``
-
-     - (Boolean) Log output to standard error. This option is ignored if log_config_append is set.
-
    * - ``instance_usage_audit_period`` = ``month``
 
      - (String) Time period to generate instance usages for. It is possible to define optional offset to given period by appending @ character followed by a number defining offset.
@@ -801,7 +867,11 @@
 
        This option helps to decide where to look up the host in LDAP.
 
-   * - ``default_log_levels`` = ``amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN, taskflow=WARN, keystoneauth=WARN, oslo.cache=INFO, dogpile.core.dogpile=INFO``
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
+   * - ``default_log_levels`` = ``amqp=WARN, amqplib=WARN, boto=WARN, qpid=WARN, sqlalchemy=WARN, suds=INFO, oslo.messaging=INFO, oslo_messaging=INFO, iso8601=WARN, requests.packages.urllib3.connectionpool=WARN, urllib3.connectionpool=WARN, websocket=WARN, requests.packages.urllib3.util.retry=WARN, urllib3.util.retry=WARN, keystonemiddleware=WARN, routes.middleware=WARN, stevedore=WARN, taskflow=WARN, keystoneauth=WARN, oslo.cache=INFO, dogpile.core.dogpile=INFO``
 
      - (List) List of package logging levels in logger=LEVEL pairs. This option is ignored if log_config_append is set.
 
@@ -827,11 +897,11 @@
 
        Possible values:
 
-        Any string that is a valid domain name.
+       * Any string that is a valid domain name.
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -843,7 +913,11 @@
 
        Possible values:
 
-        A list of zero or more interface names, or the word 'all'.
+       * A list of zero or more interface names, or the word 'all'.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``console_topic`` = ``console``
 
@@ -897,17 +971,21 @@
 
    * - ``vpn_ip`` = ``$my_ip``
 
-     - (String) This is the public IP address for the cloudpipe VPN servers. It defaults to the IP address of the host.
+     - (String) This option is no longer used since the /os-cloudpipe API was removed in the 16.0.0 Pike release. This is the public IP address for the cloudpipe VPN servers. It defaults to the IP address of the host.
 
        Please note that this option is only used when using nova-network instead of Neutron in your deployment. It also will be ignored if the configuration option for `network_manager` is not set to the default of 'nova.network.manager.VlanManager'.
 
        Possible values:
 
-        Any valid IP address. The default is $my_ip, the IP address of the VM.
+       * Any valid IP address. The default is ``$my_ip``, the IP address of the VM.
 
        Related options:
 
-        ``network_manager``, ``use_neutron``, ``vpn_start``
+       * ``network_manager``
+
+       * ``use_neutron``
+
+       * ``vpn_start``
 
        - **Deprecated**
 
@@ -931,11 +1009,11 @@
 
        Possible values:
 
-        Any integer, zero or greater. The default is 600 (10 minutes).
+       * Any integer, zero or greater.
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -957,11 +1035,11 @@
 
        Related options:
 
-       * running_deleted_instance_poll
+       * running_deleted_instance_poll_interval
 
        * running_deleted_instance_timeout
 
-   * - ``console_host`` = ``socket.gethostname()``
+   * - ``console_host`` = ``<current_hostname>``
 
      - (String) Console proxy host to be used to connect to instances on this host. It is the publicly visible name for the console host.
 
@@ -1005,7 +1083,7 @@
 
        Related options:
 
-       * use_neutron
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -1015,6 +1093,10 @@
 
      - (Boolean) This option is used mainly in testing to avoid calls to the underlying network utilities.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``vpn_start`` = ``1000``
 
      - (Port number) This is the port number to use as the first VPN port for private networks.
@@ -1023,11 +1105,15 @@
 
        Possible values:
 
-        Any integer representing a valid port number. The default is 1000.
+       * Any integer representing a valid port number. The default is 1000.
 
        Related options:
 
-        ``use_neutron``, ``vpn_ip``, ``network_manager``
+       * ``use_neutron``
+
+       * ``vpn_ip``
+
+       * ``network_manager``
 
        - **Deprecated**
 
@@ -1039,7 +1125,11 @@
 
        Possible values
 
-        A string containing the full path to the desired configuration directory
+       * A string containing the full path to the desired configuration directory
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``rate_limit_burst`` = ``0``
 
@@ -1051,19 +1141,23 @@
 
        Possible values:
 
-        A list of strings, each of which should be a valid CIDR.
-
-   * - ``instance_dns_domain`` =
-
-     - (String) If specified, Nova checks if the availability_zone of every instance matches what the database says the availability_zone should be for the specified dns_domain.
-
-       Related options:
-
-       * use_neutron: this options only works with nova-network.
+       * A list of strings, each of which should be a valid CIDR.
 
        - **Deprecated**
 
          nova-network is deprecated, as are any related configuration options.
+
+   * - ``send_arp_for_ha_count`` = ``3``
+
+     - (Integer) When arp messages are configured to be sent, they will be sent with the count set to the value of this option. Of course, if this is set to zero, no arp messages will be sent.
+
+       Possible values:
+
+       * Any integer greater than or equal to 0
+
+       Related options:
+
+       * ``send_arp_for_ha``
 
    * - ``migrate_max_retries`` = ``-1``
 
@@ -1133,6 +1227,8 @@
 
        NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 1.5.
 
+       NOTE: As of the 16.0.0 Pike release, this configuration option is ignored for the ironic.IronicDriver compute driver and is hardcoded to 1.0.
+
        Possible values:
 
        * Any valid positive integer or float value
@@ -1155,7 +1251,7 @@
 
        Possible values:
 
-        Any valid virtual interface name, such as 'eth0'
+       * Any valid virtual interface name, such as 'eth0'
 
        - **Deprecated**
 
@@ -1167,7 +1263,11 @@
 
        Possible values:
 
-        Any string representing a valid bridge name.
+       * Any string representing a valid bridge name.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``scheduler_topic`` = ``scheduler``
 
@@ -1189,7 +1289,7 @@
 
        Related options:
 
-        send_arp_for_ha_count
+       * ``send_arp_for_ha_count``
 
    * - ``network_allocate_retries`` = ``0``
 
@@ -1233,7 +1333,15 @@
 
        Possible values:
 
-        The full path to the configuration file, or an empty string if there is no custom dnsmasq configuration file.
+       * The full path to the configuration file, or an empty string if there is no custom dnsmasq configuration file.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
+   * - ``pypowervm_update_collision_retries`` = ``5``
+
+     - (Integer) Number of retries if an update operation failed due to collision
 
    * - ``ebtables_exec_attempts`` = ``3``
 
@@ -1245,7 +1353,11 @@
 
        Related options:
 
-       * ebtables_retry_interval
+       * ``ebtables_retry_interval``
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``null_kernel`` = ``nokernel``
 
@@ -1405,13 +1517,17 @@
 
        * iptables_top_regex
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``update_dns_entries`` = ``False``
 
      - (Boolean) When this option is True, whenever a DNS entry must be updated, a fanout cast message is sent to all network hosts to update their DNS entries in multi-host mode.
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -1461,15 +1577,17 @@
 
          This option no longer does anything. Previously this option had only two valid, in-tree values: nova.console.xvp.XVPConsoleProxy and nova.console.fake.FakeConsoleProxy. The latter of these was only used in tests and has since been replaced.
 
-   * - ``auto_assign_floating_ip`` = ``False``
+   * - ``dns_server`` = ``[]``
 
-     - (Boolean) Autoassigning floating IP to VM
+     - (Multi-valued) Despite the singular form of the name of this option, it is actually a list of zero or more server addresses that dnsmasq will use for DNS nameservers. If this is not empty, dnsmasq will not read /etc/resolv.conf, but will only use the servers specified in this option. If the option use_network_dns_servers is True, the dns1 and dns2 servers from the network will be appended to this list, and will be used as DNS servers, too.
 
-       When set to True, floating IP is auto allocated and associated to the VM upon creation.
+       Possible values:
+
+       * A list of strings, where each string is either an IP address or a FQDN.
 
        Related options:
 
-       * use_neutron: this options only works with nova-network.
+       * ``use_network_dns_servers``
 
        - **Deprecated**
 
@@ -1495,6 +1613,10 @@
 
        * ``firewall_driver``: This must be set to ``nova.virt.libvirt.firewall.IptablesFirewallDriver`` to ensure the libvirt firewall driver is enabled.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``watch_log_file`` = ``False``
 
      - (Boolean) Uses logging handler designed to watch file system. When log file is moved or removed this handler will open a new log file with specified path instantaneously. It makes sense only if log_file option is specified and Linux platform is used. This option is ignored if log_config_append is set.
@@ -1505,31 +1627,27 @@
 
        Possible values:
 
-        Any dot-separated string that represents the import path to an L3 networking library.
+       * Any dot-separated string that represents the import path to an L3 networking library.
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
          nova-network is deprecated, as are any related configuration options.
 
-   * - ``instance_dns_manager`` = ``nova.network.noop_dns_driver.NoopDNSDriver``
+   * - ``force_snat_range`` = ``[]``
 
-     - (String) Full class name for the DNS Manager for instance IPs.
-
-       This option specifies the class of the driver that provides functionality to manage DNS entries for instances.
-
-       On instance creation, nova will add DNS entries for the instance name and id, using the specified instance DNS driver and domain. On instance deletion, nova will remove the DNS entries.
+     - (Multi-valued) This is a list of zero or more IP ranges that traffic from the `routing_source_ip` will be SNATted to. If the list is empty, then no SNAT rules are created.
 
        Possible values:
 
-       * Full Python path to the class to be used
+       * A list of strings, each of which should be a valid CIDR.
 
        Related options:
 
-       * use_neutron: this options only works with nova-network.
+       * ``routing_source_ip``
 
        - **Deprecated**
 
@@ -1579,6 +1697,10 @@
 
        * use_neutron: this only works with nova-network.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``image_cache_subdirectory_name`` = ``_base``
 
      - (String) Location of cached images.
@@ -1615,7 +1737,11 @@
 
        Related options:
 
-       * metadata_host
+       * ``metadata_host``
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``dns_update_periodic_interval`` = ``-1``
 
@@ -1623,11 +1749,13 @@
 
        Possible values:
 
-        Either -1 (default), or any positive integer. A negative value will disable the updates.
+       * A positive integer
+
+       * -1 to disable updates
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -1639,7 +1767,7 @@
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -1651,7 +1779,11 @@
 
        Possible values
 
-        A list of strings, where each string is the full path to a dhcpbridge configuration file.
+       * A list of strings, where each string is the full path to a dhcpbridge configuration file.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``use_cow_images`` = ``True``
 
@@ -1665,7 +1797,11 @@
 
        Possible values:
 
-        Any string representing the full path to the binary for dhcpbridge
+       * Any string representing the full path to the binary for dhcpbridge
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``num_networks`` = ``1``
 
@@ -1675,11 +1811,13 @@
 
        Possible values:
 
-        Any positive integer is technically valid, although there are practical limits based upon available IP address space and virtual interfaces. The default is 1.
+       * Any positive integer is technically valid, although there are practical limits based upon available IP address space and virtual interfaces.
 
        Related options:
 
-        ``use_neutron``, ``network_size``
+       * ``use_neutron``
+
+       * ``network_size``
 
        - **Deprecated**
 
@@ -1702,6 +1840,10 @@
      - (Integer) Retry interval (in seconds) for LDAP DNS driver Start of Authority
 
        Time interval, a secondary/slave DNS server should wait, if an attempt to transfer zone failed during the previous refresh interval.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``network_manager`` = ``nova.network.manager.VlanManager``
 
@@ -1773,7 +1915,11 @@
 
        Related options:
 
-        dns_server
+       * ``dns_server``
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``enabled_ssl_apis`` =
 
@@ -1789,6 +1935,10 @@
 
      - (Integer) Interval, number of seconds, of log rate limiting.
 
+   * - ``pypowervm_job_request_timeout`` = ``1800``
+
+     - (Integer) Default timeout in seconds for PowerVM Job requests.
+
    * - ``rescue_timeout`` = ``0``
 
      - (Integer) Interval to wait before un-rescuing an instance stuck in RESCUE.
@@ -1799,6 +1949,20 @@
 
        * Any positive integer in seconds: Enables the option.
 
+   * - ``max_local_block_devices`` = ``3``
+
+     - (Integer) Maximum number of devices that will result in a local image being created on the hypervisor node.
+
+       A negative number means unlimited. Setting max_local_block_devices to 0 means that any request that attempts to create a local disk will fail. This option is meant to limit the number of local discs (so root local disc that is the result of --image being used, and any other ephemeral and swap disks). 0 does not mean that images will be automatically converted to volumes and boot instances from volumes - it just means that all requests that attempt to create a local disk will fail.
+
+       Possible values:
+
+       * 0: Creating a local disk is not allowed.
+
+       * Negative number: Allows unlimited number of local discs.
+
+       * Positive number: Allows only these many number of local discs. (Default value is 3).
+
    * - ``ovs_vsctl_timeout`` = ``120``
 
      - (Integer) This option represents the period of time, in seconds, that the ovs_vsctl calls will wait for a response from the database before timing out. A setting of 0 means that the utility should wait forever for a response.
@@ -1806,6 +1970,10 @@
        Possible values:
 
        * Any positive integer if a limited timeout is desired, or zero if the calls should wait forever for a response.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``max_concurrent_live_migrations`` = ``1``
 
@@ -1831,11 +1999,13 @@
 
        Possible values:
 
-        Any valid IP address.
+       * Any valid IP address.
 
        Related options:
 
-        ``use_neutron``, ``gateway``
+       * ``use_neutron``
+
+       * ``gateway``
 
        - **Deprecated**
 
@@ -1881,7 +2051,11 @@
 
        Possible values:
 
-        Any string representing a dot-separated class path that Nova can import.
+       * Any string representing a dot-separated class path that Nova can import.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``bindir`` = ``/usr/local/bin``
 
@@ -1919,7 +2093,9 @@
 
        This configuration specifies ratio for CoreFilter which can be set per compute node. For AggregateCoreFilter, it will fall back to this configuration value if no per-aggregate setting is found.
 
-       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 16.0'.
+       NOTE: This can be set per-compute, or if set to 0.0, the value set on the scheduler node(s) or compute node(s) will be used and defaulted to 16.0.
+
+       NOTE: As of the 16.0.0 Pike release, this configuration option is ignored for the ironic.IronicDriver compute driver and is hardcoded to 1.0.
 
        Possible values:
 
@@ -1943,11 +2119,11 @@
 
        Possible values:
 
-        Any positive integer. The default is 5.
+       * Any positive integer. The default is 5.
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -1983,7 +2159,11 @@
 
        Related options:
 
-       * iptables_bottom_regex
+       * ``iptables_bottom_regex``
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``vlan_start`` = ``100``
 
@@ -1993,11 +2173,13 @@
 
        Possible values:
 
-        Any integer between 1 and 4094. Values outside of that range will raise a ValueError exception. Default = 100.
+       * Any integer between 1 and 4094. Values outside of that range will raise a ValueError exception.
 
        Related options:
 
-        ``network_manager``, ``use_neutron``
+       * ``network_manager``
+
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -2024,6 +2206,10 @@
        Possible values:
 
        * A valid URL representing a DNS server
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``log_config_append`` = ``None``
 
@@ -2055,6 +2241,10 @@
 
        * use_ipv6: this option only works if ipv6 is enabled for nova-network.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``log_file`` = ``None``
 
      - (String) (Optional) Name of log file to send logging output to. If no default is set, logging will go to stderr as defined by use_stderr. This option is ignored if log_config_append is set.
@@ -2064,6 +2254,10 @@
      - (Integer) Minimum interval (in seconds) for LDAP DNS driver Start of Authority
 
        It is Minimum time-to-live applies for all resource records in the zone file. This value is supplied to other servers how long they should keep the data in cache.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``network_driver`` = ``nova.network.linux_net``
 
@@ -2077,7 +2271,7 @@
 
        Related options:
 
-       * use_neutron
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -2121,17 +2315,23 @@
 
      - (Boolean) When set to True, only the firt nic of a VM will get its default gateway from the DHCP server.
 
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
+
    * - ``cnt_vpn_clients`` = ``0``
 
      - (Integer) This option represents the number of IP addresses to reserve at the top of the address range for VPN clients. It also will be ignored if the configuration option for `network_manager` is not set to the default of 'nova.network.manager.VlanManager'.
 
        Possible values:
 
-        Any integer, 0 or greater. The default is 0.
+       * Any integer, 0 or greater.
 
        Related options:
 
-        ``use_neutron``, ``network_manager``
+       * ``use_neutron``
+
+       * ``network_manager``
 
        - **Deprecated**
 
@@ -2156,6 +2356,10 @@
        Time interval, a secondary/slave DNS server waits before requesting for primary DNS server's current SOA record. If the records are different, secondary DNS server will request a zone transfer from primary.
 
        NOTE: Lower values would cause more traffic.
+
+       - **Deprecated**
+
+         nova-network is deprecated, as are any related configuration options.
 
    * - ``instance_build_timeout`` = ``0``
 
@@ -2185,11 +2389,11 @@
 
        Possible values:
 
-        Any string representing a valid network bridge, such as 'br100'
+       * Any string representing a valid network bridge, such as 'br100'
 
        Related options:
 
-        ``use_neutron``
+       * ``use_neutron``
 
        - **Deprecated**
 
@@ -2333,7 +2537,7 @@
 
    * - ``executor_thread_pool_size`` = ``64``
 
-     - (Integer) Size of executor thread pool.
+     - (Integer) Size of executor thread pool when executor is threading or eventlet.
 
    * - ``rpc_response_timeout`` = ``60``
 

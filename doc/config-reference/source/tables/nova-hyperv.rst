@@ -227,14 +227,6 @@
 
        This requires the Multipath IO Windows feature to be enabled. MPIO must be configured to claim such devices.
 
-   * - ``force_volumeutils_v1`` = ``False``
-
-     - (Boolean) Force V1 volume utility class
-
-       - **Deprecated**
-
-         No deprecation reason provided for this option.
-
    * - ``mounted_disk_query_retry_interval`` = ``5``
 
      - (Integer) Mounted disk query retry interval

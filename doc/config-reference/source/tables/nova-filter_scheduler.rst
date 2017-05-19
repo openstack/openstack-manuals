@@ -141,7 +141,7 @@
 
        Multiplier used for weighing free disk space. Negative numbers mean to stack vs spread.
 
-       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'ram' weigher is enabled.
+       This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect. Also note that this setting only affects scheduling if the 'disk' weigher is enabled.
 
        Possible values:
 
@@ -174,6 +174,8 @@
        If the configured filters and weighers do not need this information, disabling this option will improve performance. It may also be disabled when the tracking overhead proves too heavy, although this will cause classes requiring host usage data to query the database on each request instead.
 
        This option is only used by the FilterScheduler and its subclasses; if you use a different scheduler, this option has no effect.
+
+       NOTE: In a multi-cell (v2) setup where the cell MQ is separated from the top-level, computes cannot directly communicate with the scheduler. Thus, this option cannot be enabled in that scenario. See also the [workarounds]/disable_group_policy_check_upcall option.
 
    * - ``ram_weight_multiplier`` = ``1.0``
 

@@ -21,7 +21,7 @@
 
      - (String) PEM encoded client certificate cert file
 
-   * - ``catalog_info`` = ``volumev2:cinderv2:publicURL``
+   * - ``catalog_info`` = ``volumev3:cinderv3:publicURL``
 
      - (String) Info to match when looking for cinder in the service catalog.
 

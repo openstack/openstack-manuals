@@ -17,6 +17,12 @@
    * - Configuration option = Default value
      - Description
 
+   * - ``default_floating_pool`` = ``nova``
+
+     - (String) Default name for the floating IP pool.
+
+       Specifies the name of floating IP pool used for allocating floating IPs. This option is only used if Neutron does not specify the floating IP pool name in port binding reponses.
+
    * - ``auth_type`` = ``None``
 
      - (Unknown) Authentication type to load
@@ -65,11 +71,9 @@
 
    * - ``ovs_bridge`` = ``br-int``
 
-     - (String) Specifies the name of an integration bridge interface used by OpenvSwitch. This option is used only if Neutron does not specify the OVS bridge name.
+     - (String) Default name for the Open vSwitch integration bridge.
 
-       Possible values:
-
-       * Any string representing OVS bridge name.
+       Specifies the name of an integration bridge interface used by OpenvSwitch. This option is only used if Neutron does not specify the OVS bridge name in port binding responses.
 
    * - ``keyfile`` = ``None``
 

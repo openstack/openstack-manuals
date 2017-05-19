@@ -157,6 +157,10 @@
 
      - (Boolean) Operators can turn off the ability for a user to take snapshots of their instances by setting this option to False. When disabled, any attempt to take a snapshot will result in a HTTP 400 response ("Bad Request").
 
+       - **Deprecated**
+
+         This option disables the createImage server action API in a non-discoverable way and is thus a barrier to interoperability. Also, it is not used for other APIs that create snapshots like shelve or createBackup. Disabling snapshots should be done via policy if so desired.
+
    * - ``compute_link_prefix`` = ``None``
 
      - (String) This string is prepended to the normal URL that is returned in links to the OpenStack Compute API. If it is empty (the default), the URLs are returned unchanged.

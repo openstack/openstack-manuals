@@ -17,26 +17,26 @@
    * - Configuration option = Default value
      - Description
 
+   * - ``allow_methods`` = ``OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH``
+
+     - (List) Indicate which methods can be used during the actual request.
+
    * - ``allowed_origin`` = ``None``
 
      - (List) Indicate whether this resource may be shared with the domain received in the requests "origin" header. Format: "<protocol>://<host>[:<port>]", no trailing slash. Example: https://horizon.example.com
 
-   * - ``allow_credentials`` = ``True``
+   * - ``allow_headers`` =
 
-     - (Boolean) Indicate that the actual request can include user credentials
-
-   * - ``expose_headers`` =
-
-     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
+     - (List) Indicate which header field names may be used during the actual request.
 
    * - ``max_age`` = ``3600``
 
      - (Integer) Maximum cache age of CORS preflight requests.
 
-   * - ``allow_methods`` = ``OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, PATCH``
+   * - ``expose_headers`` =
 
-     - (List) Indicate which methods can be used during the actual request.
+     - (List) Indicate which headers are safe to expose to the API. Defaults to HTTP Simple Headers.
 
-   * - ``allow_headers`` =
+   * - ``allow_credentials`` = ``True``
 
-     - (List) Indicate which header field names may be used during the actual request.
+     - (Boolean) Indicate that the actual request can include user credentials

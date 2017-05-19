@@ -28,3 +28,7 @@
    * - ``topics`` = ``notifications``
 
      - (List) AMQP topic used for OpenStack notifications.
+
+   * - ``retry`` = ``-1``
+
+     - (Integer) The maximum number of attempts to re-send a notification message which failed to be delivered due to a recoverable error. 0 - No retry, -1 - indefinite

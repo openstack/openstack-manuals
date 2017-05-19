@@ -17,9 +17,9 @@
    * - Configuration option = Default value
      - Description
 
-   * - ``notify_on_api_faults`` = ``False``
+   * - ``default_level`` = ``INFO``
 
-     - (Boolean) If enabled, send api.fault notifications on caught exceptions in the API service.
+     - (String) Default notification level for outgoing notifications.
 
    * - ``notification_format`` = ``both``
 
@@ -51,6 +51,10 @@
 
        * "vm_and_task_state" - notifications on VM and task state changes
 
+   * - ``notify_on_api_faults`` = ``False``
+
+     - (Boolean) If enabled, send api.fault notifications on caught exceptions in the API service.
+
    * - ``default_publisher_id`` = ``$my_ip``
 
      - (String) Default publisher_id for outgoing notifications. If you consider routing notifications using different publisher, change this value accordingly.
@@ -63,6 +67,10 @@
 
        * my_ip - IP address of this host
 
-   * - ``default_level`` = ``INFO``
+   * - ``versioned_notifications_topics`` = ``versioned_notifications``
 
-     - (String) Default notification level for outgoing notifications.
+     - (List) Specifies the topics for the versioned notifications issued by nova.
+
+       The default value is fine for most deployments and rarely needs to be changed. However, if you have a third-party service that consumes versioned notifications, it might be worth getting a topic for that service. Nova will send a message containing a versioned notification payload to each topic queue in this list.
+
+       The list of versioned notifications is visible in http://docs.openstack.org/developer/nova/notifications.html

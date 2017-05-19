@@ -25,10 +25,6 @@
 
      - (Boolean) If True, increases the interval between retries of a database operation up to db_max_retry_interval.
 
-   * - ``db_max_retry_interval`` = ``10``
-
-     - (Integer) If db_inc_retry_interval is set, the maximum seconds between retries of a database operation.
-
    * - ``pool_timeout`` = ``None``
 
      - (Integer) If set, use this value for pool_timeout with SQLAlchemy.
@@ -89,18 +85,14 @@
 
      - (Boolean) Add Python stack traces to SQL as comment strings.
 
-   * - ``backend`` = ``sqlalchemy``
+   * - ``db_max_retry_interval`` = ``10``
 
-     - (String) The back end to use for the database.
+     - (Integer) If db_inc_retry_interval is set, the maximum seconds between retries of a database operation.
 
    * - ``sqlite_synchronous`` = ``True``
 
      - (Boolean) If True, SQLite uses synchronous mode.
 
-   * - ``sqlite_db`` = ``oslo.sqlite``
+   * - ``backend`` = ``sqlalchemy``
 
-     - (String) The file name to use with SQLite.
-
-       - **Deprecated**
-
-         Should use config option connection or slave_connection to connect the database.
+     - (String) The back end to use for the database.

@@ -9,7 +9,7 @@ nova.conf - configuration options
 .. include:: ../tables/nova-cache.rst
 .. include:: ../tables/nova-cells.rst
 .. include:: ../tables/nova-cinder.rst
-.. include:: ../tables/nova-cloudpipe.rst
+.. include:: ../tables/nova-compute.rst
 .. include:: ../tables/nova-conductor.rst
 .. include:: ../tables/nova-consoleauth.rst
 .. include:: ../tables/nova-console.rst
@@ -23,7 +23,6 @@ nova.conf - configuration options
 .. include:: ../tables/nova-guestfs.rst
 .. include:: ../tables/nova-healthcheck.rst
 .. include:: ../tables/nova-hyperv.rst
-.. include:: ../tables/nova-image_file_url.rst
 .. include:: ../tables/nova-ironic.rst
 .. include:: ../tables/nova-key_manager.rst
 .. include:: ../tables/nova-keystone_authtoken.rst

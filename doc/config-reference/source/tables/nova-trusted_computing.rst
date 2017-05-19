@@ -89,7 +89,7 @@
 
    * - ``attestation_server`` = ``None``
 
-     - (String) The host to use as the attestation server.
+     - (Host address) The host to use as the attestation server.
 
        Cloud computing pools can involve thousands of compute nodes located at different geographical locations, making it difficult for cloud providers to identify a node's trustworthiness. When using the Trusted filter, users can request that their VMs only be placed on nodes that have been verified by the attestation server specified in this option.
 

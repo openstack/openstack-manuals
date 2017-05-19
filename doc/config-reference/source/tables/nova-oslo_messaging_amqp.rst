@@ -29,6 +29,10 @@
 
      - (Boolean) Debug: dump AMQP frames to stdout
 
+   * - ``ssl`` = ``False``
+
+     - (Boolean) Attempt to connect via SSL. If no other ssl-related parameters are given, it will use the system's CA-bundle to verify the server's certificate.
+
    * - ``ssl_ca_file`` =
 
      - (String) CA certificate PEM file used to verify the server's certificate
@@ -65,13 +69,25 @@
 
      - (String) Name of configuration file (without .conf suffix)
 
+   * - ``sasl_default_realm`` =
+
+     - (String) SASL realm to use if no realm present in username
+
    * - ``username`` =
 
      - (String) User name for message broker authentication
 
+       - **Deprecated**
+
+         Should use configuration option transport_url to provide the username.
+
    * - ``password`` =
 
      - (String) Password for message broker authentication
+
+       - **Deprecated**
+
+         Should use configuration option transport_url to provide the password.
 
    * - ``connection_retry_interval`` = ``1``
 

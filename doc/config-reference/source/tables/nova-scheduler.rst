@@ -23,7 +23,7 @@
 
        This value controls how often (in seconds) the scheduler should attempt to discover new hosts that have been added to cells. If negative (the default), no automatic discovery will occur.
 
-       Small deployments may want this periodic task enabled, as surveying the cells for new hosts is likely to be lightweight enough to not cause undue burdon to the scheduler. However, larger clouds (and those that are not adding hosts regularly) will likely want to disable this automatic behavior and instead use the `nova-manage cell_v2 discover_hosts` command when hosts have been added to a cell.
+       Deployments where compute nodes come and go frequently may want this enabled, where others may prefer to manually discover hosts when one is added to avoid any overhead from constantly checking. If enabled, every time this runs, we will select any unmapped hosts out of each cell database on every run.
 
    * - ``driver`` = ``filter_scheduler``
 
@@ -33,7 +33,7 @@
 
        Possible values:
 
-       * A string, where the string corresponds to the class name of a scheduler driver. There are a number of options available: ** 'caching_scheduler', which aggressively caches the system state for better individual scheduler performance at the risk of more retries when running multiple schedulers ** 'chance_scheduler', which simply picks a host at random ** 'fake_scheduler', which is used for testing ** A custom scheduler driver. In this case, you will be responsible for creating and maintaining the entry point in your 'setup.cfg' file
+       * A string, where the string corresponds to the class name of a scheduler driver. There are a number of options available: ** 'caching_scheduler', which aggressively caches the system state for better individual scheduler performance at the risk of more retries when running multiple schedulers ** 'chance_scheduler', which simply picks a host at random ** 'fake_scheduler', which is used for testing
 
    * - ``periodic_task_interval`` = ``60``
 
