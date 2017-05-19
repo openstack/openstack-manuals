@@ -101,18 +101,18 @@ Create the trunk
   .. code-block:: console
 
      $ openstack port create --network project-net-A trunk
-     +-------------------+------------------------------------------------------------------------+
-     | Field             | Value                                                                  |
-     +-------------------+------------------------------------------------------------------------+
-     | admin_state_up    | UP                                                                     |
-     | binding_vif_type  | unbound                                                                |
-     | binding_vnic_type | normal                                                                 |
+     +-------------------+-------------------------------------------------------------------------+
+     | Field             | Value                                                                   |
+     +-------------------+-------------------------------------------------------------------------+
+     | admin_state_up    | UP                                                                      |
+     | binding_vif_type  | unbound                                                                 |
+     | binding_vnic_type | normal                                                                  |
      | fixed_ips         | ip_address='192.0.2.7',subnet_id='8b957198-d3cf-4953-8449-ad4e4dd712cc' |
-     | id                | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                   |
-     | mac_address       | fa:16:3e:dd:c4:d1                                                      |
-     | name              | trunk                                                                  |
-     | network_id        | 1b47d3e7-cda5-48e4-b0c8-d20bd7e35f55                                   |
-     +-------------------+------------------------------------------------------------------------+
+     | id                | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                    |
+     | mac_address       | fa:16:3e:dd:c4:d1                                                       |
+     | name              | trunk                                                                   |
+     | network_id        | 1b47d3e7-cda5-48e4-b0c8-d20bd7e35f55                                    |
+     +-------------------+-------------------------------------------------------------------------+
 
 * Create the trunk using ``--parent-port`` to reference the port from
   the previous step:
@@ -144,32 +144,32 @@ or adding subports to an existing trunk.
   .. code-block:: console
 
      $ openstack port create --network project-net-A trunk-parent
-     +-------------------+------------------------------------------------------------------------+
-     | Field             | Value                                                                  |
-     +-------------------+------------------------------------------------------------------------+
-     | admin_state_up    | UP                                                                     |
-     | binding_vif_type  | unbound                                                                |
-     | binding_vnic_type | normal                                                                 |
+     +-------------------+-------------------------------------------------------------------------+
+     | Field             | Value                                                                   |
+     +-------------------+-------------------------------------------------------------------------+
+     | admin_state_up    | UP                                                                      |
+     | binding_vif_type  | unbound                                                                 |
+     | binding_vnic_type | normal                                                                  |
      | fixed_ips         | ip_address='192.0.2.7',subnet_id='8b957198-d3cf-4953-8449-ad4e4dd712cc' |
-     | id                | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                   |
-     | mac_address       | fa:16:3e:dd:c4:d1                                                      |
-     | name              | trunk-parent                                                           |
-     | network_id        | 1b47d3e7-cda5-48e4-b0c8-d20bd7e35f55                                   |
-     +-------------------+------------------------------------------------------------------------+
+     | id                | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                    |
+     | mac_address       | fa:16:3e:dd:c4:d1                                                       |
+     | name              | trunk-parent                                                            |
+     | network_id        | 1b47d3e7-cda5-48e4-b0c8-d20bd7e35f55                                    |
+     +-------------------+-------------------------------------------------------------------------+
 
      $ openstack port create --network trunked-net subport1
-     +-------------------+------------------------------------------------------------------------+
-     | Field             | Value                                                                  |
-     +-------------------+------------------------------------------------------------------------+
-     | admin_state_up    | UP                                                                     |
-     | binding_vif_type  | unbound                                                                |
-     | binding_vnic_type | normal                                                                 |
-     | fixed_ips         | ip_address='192.0.2.8',subnet_id='2a860e2c-922b-437b-a149-b269a8c9b120' |
-     | id                | 91f9dde8-80a4-4506-b5da-c287feb8f5d8                                   |
-     | mac_address       | fa:16:3e:ba:f0:4d                                                      |
-     | name              | subport1                                                               |
-     | network_id        | aef78ec5-16e3-4445-b82d-b2b98c6a86d9                                   |
-     +-------------------+------------------------------------------------------------------------+
+     +-------------------+----------------------------------------------------------------------------+
+     | Field             | Value                                                                      |
+     +-------------------+----------------------------------------------------------------------------+
+     | admin_state_up    | UP                                                                         |
+     | binding_vif_type  | unbound                                                                    |
+     | binding_vnic_type | normal                                                                     |
+     | fixed_ips         | ip_address='198.51.100.8',subnet_id='2a860e2c-922b-437b-a149-b269a8c9b120' |
+     | id                | 91f9dde8-80a4-4506-b5da-c287feb8f5d8                                       |
+     | mac_address       | fa:16:3e:ba:f0:4d                                                          |
+     | name              | subport1                                                                   |
+     | network_id        | aef78ec5-16e3-4445-b82d-b2b98c6a86d9                                       |
+     +-------------------+----------------------------------------------------------------------------+
 
      $ openstack network trunk create \
        --parent-port 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38 \
