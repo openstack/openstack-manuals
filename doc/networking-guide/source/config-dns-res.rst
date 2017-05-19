@@ -28,7 +28,7 @@ one DNS resolver, use a comma between each value.
 
   .. code-block:: console
 
-     $ neutron subnet-create --dns-nameserver 8.8.8.8,8.8.4.4
+     $ neutron subnet-create --dns-nameserver 203.0.113.8,198.51.100.53
 
   .. note::
 
@@ -47,7 +47,7 @@ one DNS resolver, use a comma between each value.
 
   .. code-block:: console
 
-     $ neutron subnet-update --dns-nameserver 8.8.8.8,8.8.4.4 selfservice
+     $ neutron subnet-update --dns-nameserver 203.0.113.8,198.51.100.53 selfservice
 
 Case 2: All virtual networks use same DNS resolver(s)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -69,7 +69,7 @@ instances via DHCP on all virtual networks.
   .. code-block:: ini
 
      [DEFAULT]
-     dnsmasq_dns_servers = 8.8.8.8, 8.8.4.4
+     dnsmasq_dns_servers = 203.0.113.8, 198.51.100.53
 
   .. note::
 
