@@ -163,11 +163,11 @@ There are two syntaxes for expressing a netmask:
 * dotted quad
 * classless inter-domain routing (CIDR)
 
-Consider an IP address of 192.168.1.5, where the first 24 bits of the
+Consider an IP address of 192.0.2.5, where the first 24 bits of the
 address are the network number. In dotted quad notation, the netmask
 would be written as ``255.255.255.0``. CIDR notation includes both the
 IP address and netmask, and this example would be written as
-``192.168.1.5/24``.
+``192.0.2.5/24``.
 
 .. note::
 
@@ -178,14 +178,14 @@ IP address and netmask, and this example would be written as
 Sometimes we want to refer to a subnet, but not any particular IP
 address on the subnet. A common convention is to set the host
 identifier to all zeros to make reference to a subnet. For example, if
-a host's IP address is ``10.10.53.24/16``, then we would say the
-subnet is ``10.10.0.0/16``.
+a host's IP address is ``192.0.2.24/24``, then we would say the
+subnet is ``192.0.2.0/24``.
 
 To understand how ARP translates IP addresses to MAC addresses,
 consider the following example. Assume host *A* has an IP address of
-``192.168.1.5/24`` and a MAC address of ``fc:99:47:49:d4:a0``, and
+``192.0.2.5/24`` and a MAC address of ``fc:99:47:49:d4:a0``, and
 wants to send a packet to host *B* with an IP address of
-``192.168.1.7``. Note that the network number is the same for both
+``192.0.2.7``. Note that the network number is the same for both
 hosts, so host *A* is able to send frames directly to host *B*.
 
 The first time host *A* attempts to communicate with host *B*, the
@@ -194,25 +194,25 @@ the local network. The request is a broadcast with a message like
 this:
 
 *To: everybody (ff:ff:ff:ff:ff:ff). I am looking for the computer who
-has IP address 192.168.1.7. Signed: MAC address fc:99:47:49:d4:a0*.
+has IP address 192.0.2.7. Signed: MAC address fc:99:47:49:d4:a0*.
 
 Host *B* responds with a response like this:
 
-*To: fc:99:47:49:d4:a0. I have IP address 192.168.1.7. Signed: MAC
+*To: fc:99:47:49:d4:a0. I have IP address 192.0.2.7. Signed: MAC
 address 54:78:1a:86:00:a5.*
 
 Host *A* then sends Ethernet frames to host *B*.
 
 You can initiate an ARP request manually using the :command:`arping` command.
-For example, to send an ARP request to IP address ``10.30.0.132``:
+For example, to send an ARP request to IP address ``192.0.2.132``:
 
 .. code-block:: console
 
-   $ arping -I eth0 10.30.0.132
-   ARPING 10.30.0.132 from 10.30.0.131 eth0
-   Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.670ms
-   Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.722ms
-   Unicast reply from 10.30.0.132 [54:78:1A:86:1C:0B]  0.723ms
+   $ arping -I eth0 192.0.2.132
+   ARPING 192.0.2.132 from 192.0.2.131 eth0
+   Unicast reply from 192.0.2.132 [54:78:1A:86:1C:0B]  0.670ms
+   Unicast reply from 192.0.2.132 [54:78:1A:86:1C:0B]  0.722ms
+   Unicast reply from 192.0.2.132 [54:78:1A:86:1C:0B]  0.723ms
    Sent 3 probes (1 broadcast(s))
    Received 3 response(s)
 
@@ -225,8 +225,8 @@ command:
 
    $ arp -n
    Address                  HWtype  HWaddress           Flags Mask            Iface
-   10.0.2.3                 ether   52:54:00:12:35:03   C                     eth0
-   10.0.2.2                 ether   52:54:00:12:35:02   C                     eth0
+   192.0.2.3                ether   52:54:00:12:35:03   C                     eth0
+   192.0.2.2                ether   52:54:00:12:35:02   C                     eth0
 
 .. _DHCP:
 
@@ -251,11 +251,11 @@ client. The exchange looks like this:
 1. The client sends a discover ("I’m a client at MAC address
    ``08:00:27:b9:88:74``, I need an IP address")
 2. The server sends an offer ("OK ``08:00:27:b9:88:74``, I’m offering
-   IP address ``10.10.0.112``")
-3. The client sends a request ("Server ``10.10.0.131``, I would like
-   to have IP ``10.10.0.112``")
+   IP address ``192.0.2.112``")
+3. The client sends a request ("Server ``192.0.2.131``, I would like
+   to have IP ``192.0.2.112``")
 4. The server sends an acknowledgement ("OK ``08:00:27:b9:88:74``, IP
-   ``10.10.0.112`` is yours")
+   ``192.0.2.112`` is yours")
 
 
 OpenStack uses a third-party program called
@@ -265,9 +265,9 @@ Dnsmasq writes to the syslog, where you can observe the DHCP request
 and replies::
 
     Apr 23 15:53:46 c100-1 dhcpd: DHCPDISCOVER from 08:00:27:b9:88:74 via eth2
-    Apr 23 15:53:46 c100-1 dhcpd: DHCPOFFER on 10.10.0.112 to 08:00:27:b9:88:74 via eth2
-    Apr 23 15:53:48 c100-1 dhcpd: DHCPREQUEST for 10.10.0.112 (10.10.0.131) from 08:00:27:b9:88:74 via eth2
-    Apr 23 15:53:48 c100-1 dhcpd: DHCPACK on 10.10.0.112 to 08:00:27:b9:88:74 via eth2
+    Apr 23 15:53:46 c100-1 dhcpd: DHCPOFFER on 192.0.2.112 to 08:00:27:b9:88:74 via eth2
+    Apr 23 15:53:48 c100-1 dhcpd: DHCPREQUEST for 192.0.2.112 (192.0.2.131) from 08:00:27:b9:88:74 via eth2
+    Apr 23 15:53:48 c100-1 dhcpd: DHCPACK on 192.0.2.112 to 08:00:27:b9:88:74 via eth2
 
 When troubleshooting an instance that is not reachable over the network, it can
 be helpful to examine this log to verify that all four steps of the DHCP
@@ -307,25 +307,25 @@ Here is an example of output from :command:`ip route show`:
 .. code-block:: console
 
    $ ip route show
-   default via 10.0.2.2 dev eth0
-   10.0.2.0/24 dev eth0  proto kernel  scope link  src 10.0.2.15
-   192.168.27.0/24 dev eth1  proto kernel  scope link  src 192.168.27.100
-   192.168.122.0/24 dev virbr0  proto kernel  scope link  src 192.168.122.1
+   default via 192.0.2.2 dev eth0
+   192.0.2.0/24 dev eth0  proto kernel  scope link  src 192.0.2.15
+   198.51.100.0/25 dev eth1  proto kernel  scope link  src 198.51.100.100
+   198.51.100.192/26 dev virbr0  proto kernel  scope link  src 198.51.100.193
 
 Line 1 of the output specifies the location of the default route,
 which is the effective routing rule if none of the other rules match.
-The router associated with the default route (``10.0.2.2`` in the
+The router associated with the default route (``192.0.2.2`` in the
 example above) is sometimes referred to as the *default gateway*. A
 DHCP_ server typically transmits the IP address of the default gateway
 to the DHCP client along with the client's IP address and a netmask.
 
-Line 2 of the output specifies that IPs in the ``10.0.2.0/24`` subnet are on
+Line 2 of the output specifies that IPs in the ``192.0.2.0/24`` subnet are on
 the local network associated with the network interface eth0.
 
-Line 3 of the output specifies that IPs in the ``192.168.27.0/24`` subnet
+Line 3 of the output specifies that IPs in the ``198.51.100.0/25`` subnet
 are on the local network associated with the network interface eth1.
 
-Line 4 of the output specifies that IPs in the ``192.168.122.0/24`` subnet are
+Line 4 of the output specifies that IPs in the ``198.51.100.192/26`` subnet are
 on the local network associated with the network interface virbr0.
 
 The output of the :command:`route -n` and :command:`netstat -rn` commands are
@@ -337,27 +337,27 @@ routes would be formatted using these commands:
    $ route -n
    Kernel IP routing table
    Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
-   0.0.0.0         10.0.2.2        0.0.0.0         UG        0 0          0 eth0
-   10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 eth0
-   192.168.27.0    0.0.0.0         255.255.255.0   U         0 0          0 eth1
-   192.168.122.0   0.0.0.0         255.255.255.0   U         0 0          0 virbr0
+   0.0.0.0         192.0.2.2       0.0.0.0         UG        0 0          0 eth0
+   192.0.2.0       0.0.0.0         255.255.255.0   U         0 0          0 eth0
+   198.51.100.0    0.0.0.0         255.255.255.128 U         0 0          0 eth1
+   198.51.100.192  0.0.0.0         255.255.255.192 U         0 0          0 virbr0
 
 The :command:`ip route get` command outputs the route for a destination
-IP address. From the below example, destination IP address ``10.0.2.14`` is on
+IP address. From the below example, destination IP address ``192.0.2.14`` is on
 the local network of eth0 and would be sent directly:
 
 .. code-block:: console
 
-   $ ip route get 10.0.2.14
-   10.0.2.14 dev eth0  src 10.0.2.15
+   $ ip route get 192.0.2.14
+   192.0.2.14 dev eth0  src 192.0.2.15
 
-The destination IP address ``93.184.216.34`` is not on any of the connected
-local  networks and would be forwarded to the default gateway at ``10.0.2.2``:
+The destination IP address ``203.0.113.34`` is not on any of the connected
+local  networks and would be forwarded to the default gateway at ``192.0.2.2``:
 
 .. code-block:: console
 
-   $ ip route get 93.184.216.34
-   93.184.216.34 via 10.0.2.2 dev eth0  src 10.0.2.15
+   $ ip route get 203.0.113.34
+   203.0.113.34 via 192.0.2.2 dev eth0  src 192.0.2.15
 
 It is common for a packet to hop across multiple routers to reach its final
 destination. On a Linux machine, the ``traceroute`` and more recent ``mtr``
