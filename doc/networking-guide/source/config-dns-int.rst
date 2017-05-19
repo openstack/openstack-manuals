@@ -77,26 +77,26 @@ in its ``dns_name`` attribute.
 
    $ neutron port-create my-net --dns_name my-port
    Created a new port:
-   +-----------------------+-----------------------------------------------------------------------------------+
-   | Field                 | Value                                                                             |
-   +-----------------------+-----------------------------------------------------------------------------------+
-   | admin_state_up        | True                                                                              |
-   | allowed_address_pairs |                                                                                   |
-   | binding:vnic_type     | normal                                                                            |
-   | device_id             |                                                                                   |
-   | device_owner          |                                                                                   |
-   | dns_assignment        | {"hostname": "my-port", "ip_address": "10.0.1.3", "fqdn": "my-port.example.org."} |
-   | dns_name              | my-port                                                                           |
-   | fixed_ips             | {"subnet_id":"6141b474-56cd-430f-b731-71660bb79b79", "ip_address": "10.0.1.3"}    |
-   | id                    | fb3c10f4-017e-420c-9be1-8f8c557ae21f                                              |
-   | mac_address           | fa:16:3e:aa:9b:e1                                                                 |
-   | name                  |                                                                                   |
-   | network_id            | bf2802a0-99a0-4e8c-91e4-107d03f158ea                                              |
-   | port_security_enabled | True                                                                              |
-   | security_groups       | 1f0ddd73-7e3c-48bd-a64c-7ded4fe0e635                                              |
-   | status                | DOWN                                                                              |
-   | tenant_id             | d5660cb1e6934612a01b4fb2fb630725                                                  |
-   +-----------------------+-----------------------------------------------------------------------------------+
+   +-----------------------+-------------------------------------------------------------------------------------+
+   | Field                 | Value                                                                               |
+   +-----------------------+-------------------------------------------------------------------------------------+
+   | admin_state_up        | True                                                                                |
+   | allowed_address_pairs |                                                                                     |
+   | binding:vnic_type     | normal                                                                              |
+   | device_id             |                                                                                     |
+   | device_owner          |                                                                                     |
+   | dns_assignment        | {"hostname": "my-port", "ip_address": "192.0.2.67", "fqdn": "my-port.example.org."} |
+   | dns_name              | my-port                                                                             |
+   | fixed_ips             | {"subnet_id":"6141b474-56cd-430f-b731-71660bb79b79", "ip_address": "192.0.2.67"}    |
+   | id                    | fb3c10f4-017e-420c-9be1-8f8c557ae21f                                                |
+   | mac_address           | fa:16:3e:aa:9b:e1                                                                   |
+   | name                  |                                                                                     |
+   | network_id            | bf2802a0-99a0-4e8c-91e4-107d03f158ea                                                |
+   | port_security_enabled | True                                                                                |
+   | security_groups       | 1f0ddd73-7e3c-48bd-a64c-7ded4fe0e635                                                |
+   | status                | DOWN                                                                                |
+   | tenant_id             | d5660cb1e6934612a01b4fb2fb630725                                                    |
+   +-----------------------+-------------------------------------------------------------------------------------+
 
 When this functionality is enabled, it is leveraged by the Compute service when
 creating instances. When allocating ports for an instance during boot, the
@@ -149,7 +149,7 @@ The following is an example of an instance creation, showing how its
    +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------------+
    | id                                   | name | mac_address       | fixed_ips                                                                             |
    +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------------+
-   | b3ecc464-1263-44a7-8c38-2d8a52751773 |      | fa:16:3e:a8:ce:b8 | {"subnet_id": "277eca5d-9869-474b-960e-6da5951d09f7", "ip_address": "172.24.5.8"}     |
+   | b3ecc464-1263-44a7-8c38-2d8a52751773 |      | fa:16:3e:a8:ce:b8 | {"subnet_id": "277eca5d-9869-474b-960e-6da5951d09f7", "ip_address": "203.0.113.8"}    |
    |                                      |      |                   | {"subnet_id": "eab47748-3f0a-4775-a09f-b0c24bb64bc4", "ip_address":"2001:db8:10::8"}  |
    +--------------------------------------+------+-------------------+---------------------------------------------------------------------------------------+
 
@@ -162,11 +162,11 @@ The following is an example of an instance creation, showing how its
    | binding:vnic_type     | normal                                                                                |
    | device_id             | 66c13cb4-3002-4ab3-8400-7efc2659c363                                                  |
    | device_owner          | compute:None                                                                          |
-   | dns_assignment        | {"hostname": "my-vm", "ip_address": "172.24.5.8", "fqdn": "my-vm.example.org."}       |
+   | dns_assignment        | {"hostname": "my-vm", "ip_address": "203.0.113.8", "fqdn": "my-vm.example.org."}      |
    |                       | {"hostname": "my-vm", "ip_address": "2001:db8:10::8", "fqdn": "my-vm.example.org."}   |
    | dns_name              | my-vm                                                                                 |
    | extra_dhcp_opts       |                                                                                       |
-   | fixed_ips             | {"subnet_id": "277eca5d-9869-474b-960e-6da5951d09f7", "ip_address": "172.24.5.8"}     |
+   | fixed_ips             | {"subnet_id": "277eca5d-9869-474b-960e-6da5951d09f7", "ip_address": "203.0.113.8"}    |
    |                       | {"subnet_id": "eab47748-3f0a-4775-a09f-b0c24bb64bc4", "ip_address": "2001:db8:10::8"} |
    | id                    | b3ecc464-1263-44a7-8c38-2d8a52751773                                                  |
    | mac_address           | fa:16:3e:a8:ce:b8                                                                     |
@@ -251,11 +251,11 @@ external DNS service. This is an example:
    +--------------------------------------+----------+----------------------------------------------------------+
    | 41fa3995-9e4a-4cd9-bb51-3e5424f2ff2a | public   | a67cfdf7-9d5d-406f-8a19-3f38e4fc3e74                     |
    |                                      |          | cbd8c6dc-ca81-457e-9c5d-f8ece7ef67f8                     |
-   | 37aaff3a-6047-45ac-bf4f-a825e56fd2b3 | external | 277eca5d-9869-474b-960e-6da5951d09f7 172.24.5.0/24       |
+   | 37aaff3a-6047-45ac-bf4f-a825e56fd2b3 | external | 277eca5d-9869-474b-960e-6da5951d09f7 203.0.113.0/24      |
    |                                      |          | eab47748-3f0a-4775-a09f-b0c24bb64bc4 2001:db8:10::/64    |
-   | bf2802a0-99a0-4e8c-91e4-107d03f158ea | my-net   | 6141b474-56cd-430f-b731-71660bb79b79 10.0.1.0/24         |
+   | bf2802a0-99a0-4e8c-91e4-107d03f158ea | my-net   | 6141b474-56cd-430f-b731-71660bb79b79 192.0.2.64/26       |
    | 38c5e950-b450-4c30-83d4-ee181c28aad3 | private  | 43414c53-62ae-49bc-aa6c-c9dd7705818a fda4:653e:71b0::/64 |
-   |                                      |          | 5b9282a1-0be1-4ade-b478-7868ad2a16ff 10.0.0.0/24         |
+   |                                      |          | 5b9282a1-0be1-4ade-b478-7868ad2a16ff 192.0.2.0/26        |
    +--------------------------------------+----------+----------------------------------------------------------+
 
    $ neutron net-update 37aaff3a-6047-45ac-bf4f-a825e56fd2b3 --dns_domain example.org.
@@ -302,10 +302,10 @@ external DNS service. This is an example:
    | binding:vnic_type     | normal                                                                                |
    | device_id             |                                                                                       |
    | device_owner          |                                                                                       |
-   | dns_assignment        | {"hostname": "my-vm", "ip_address": "172.24.5.9", "fqdn": "my-vm.example.org."}       |
+   | dns_assignment        | {"hostname": "my-vm", "ip_address": "203.0.113.9", "fqdn": "my-vm.example.org."}      |
    |                       | {"hostname": "my-vm", "ip_address": "2001:db8:10::9", "fqdn": "my-vm.example.org."}   |
    | dns_name              | my-vm                                                                                 |
-   | fixed_ips             | {"subnet_id": "277eca5d-9869-474b-960e-6da5951d09f7", "ip_address": "172.24.5.9"}     |
+   | fixed_ips             | {"subnet_id": "277eca5d-9869-474b-960e-6da5951d09f7", "ip_address": "203.0.113.9"}    |
    |                       | {"subnet_id": "eab47748-3f0a-4775-a09f-b0c24bb64bc4", "ip_address": "2001:db8:10::9"} |
    | id                    | 04be331b-dc5e-410a-9103-9c8983aeb186                                                  |
    | mac_address           | fa:16:3e:0f:4b:e4                                                                     |
@@ -323,7 +323,7 @@ external DNS service. This is an example:
    +--------------------------------------+------+--------------------+-----------------------------------------------------------------------+
    | 10a36008-6ecf-47c3-b321-05652a929b04 | SOA  | example.org.       | ns1.devstack.org. malavall.us.ibm.com. 1455563035 3600 600 86400 3600 |
    | 56ca0b88-e343-4c98-8faa-19746e169baf | NS   | example.org.       | ns1.devstack.org.                                                     |
-   | 3593591b-181f-4beb-9ab7-67fad7413b37 | A    | my-vm.example.org. | 172.24.5.9                                                            |
+   | 3593591b-181f-4beb-9ab7-67fad7413b37 | A    | my-vm.example.org. | 203.0.113.9                                                           |
    | 5649c68f-7a88-48f5-9f87-ccb1f6ae67ca | AAAA | my-vm.example.org. | 2001:db8:10::9                                                        |
    +--------------------------------------+------+--------------------+-----------------------------------------------------------------------+
 
@@ -362,11 +362,11 @@ external DNS service. This is an example:
    +--------------------------------------+----------------------------------------------------------------+
 
    $ openstack server list
-   +--------------------------------------+-------+--------+------------+-------------+-------------------------------------+------------+
-   | ID                                   | Name  | Status | Task State | Power State | Networks                            | Image Name |
-   +--------------------------------------+-------+--------+------------+-------------+-------------------------------------+------------+
-   | 62c19691-d1c7-4d7b-a88e-9cc4d95d4f41 | my_vm | ACTIVE | -          | Running     | external=172.24.5.9, 2001:db8:10::9 | cirros     |
-   +--------------------------------------+-------+--------+------------+-------------+-------------------------------------+------------+
+   +--------------------------------------+-------+--------+------------+-------------+--------------------------------------+------------+
+   | ID                                   | Name  | Status | Task State | Power State | Networks                             | Image Name |
+   +--------------------------------------+-------+--------+------------+-------------+--------------------------------------+------------+
+   | 62c19691-d1c7-4d7b-a88e-9cc4d95d4f41 | my_vm | ACTIVE | -          | Running     | external=203.0.113.9, 2001:db8:10::9 | cirros     |
+   +--------------------------------------+-------+--------+------------+-------------+--------------------------------------+------------+
 
 In this example the port is created manually by the user and then used to boot
 an instance. Notice that:
@@ -382,14 +382,14 @@ value of ipv6_ptr_zone_prefix_size is 116. For more details, see
 
 .. code-block:: console
 
-   $ designate record-list 5.24.172.in-addr.arpa.
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
-   | id                                   | type | name                     | data                                                                |
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
-   | ab7ada72-7e64-4bed-913e-04718a80fafc | NS   | 5.24.172.in-addr.arpa.   | ns1.devstack.org.                                                   |
-   | 28346a94-790c-4ae1-9f7b-069d98d9efbd | SOA  | 5.24.172.in-addr.arpa.   | ns1.devstack.org. admin.example.org. 1455563035 3600 600 86400 3600 |
-   | cfcaf537-844a-4c1b-9b5f-464ff07dca33 | PTR  | 9.5.24.172.in-addr.arpa. | my-vm.example.org.                                                  |
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
+   $ designate record-list 113.0.203.in-addr.arpa.
+   +--------------------------------------+------+---------------------------+---------------------------------------------------------------------+
+   | id                                   | type | name                      | data                                                                |
+   +--------------------------------------+------+---------------------------+---------------------------------------------------------------------+
+   | ab7ada72-7e64-4bed-913e-04718a80fafc | NS   | 113.0.203.in-addr.arpa.   | ns1.devstack.org.                                                   |
+   | 28346a94-790c-4ae1-9f7b-069d98d9efbd | SOA  | 113.0.203.in-addr.arpa.   | ns1.devstack.org. admin.example.org. 1455563035 3600 600 86400 3600 |
+   | cfcaf537-844a-4c1b-9b5f-464ff07dca33 | PTR  | 9.113.0.203.in-addr.arpa. | my-vm.example.org.                                                  |
+   +--------------------------------------+------+---------------------------+---------------------------------------------------------------------+
 
    $ designate record-list 0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.1.0.0.8.b.d.0.1.0.0.2.ip6.arpa.
    +--------------------------------------+------+---------------------------------------------------------------------------+---------------------------------------------------------------------+
@@ -482,17 +482,17 @@ Following is an example of these steps:
    +--------------------------------------+----------------------------------------------------------------+
 
    $ openstack server list
-   +--------------------------------------+-------+--------+------------+-------------+---------------------------------------------------------+------------+
-   | ID                                   | Name  | Status | Task State | Power State | Networks                                                | Image Name |
-   +--------------------------------------+-------+--------+------------+-------------+---------------------------------------------------------+------------+
-   | 43f328bb-b2d1-4cf1-a36f-3b2593397cb1 | my_vm | ACTIVE | -          | Running     | private=fda4:653e:71b0:0:f816:3eff:fe16:b5f2, 10.0.0.15 | cirros     |
-   +--------------------------------------+-------+--------+------------+-------------+---------------------------------------------------------+------------+
+   +--------------------------------------+-------+--------+------------+-------------+----------------------------------------------------------+------------+
+   | ID                                   | Name  | Status | Task State | Power State | Networks                                                 | Image Name |
+   +--------------------------------------+-------+--------+------------+-------------+----------------------------------------------------------+------------+
+   | 43f328bb-b2d1-4cf1-a36f-3b2593397cb1 | my_vm | ACTIVE | -          | Running     | private=fda4:653e:71b0:0:f816:3eff:fe16:b5f2, 192.0.2.15 | cirros     |
+   +--------------------------------------+-------+--------+------------+-------------+----------------------------------------------------------+------------+
 
    $ neutron port-list --device_id 43f328bb-b2d1-4cf1-a36f-3b2593397cb1
    +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------------------------+
    | id                                   | name | mac_address       | fixed_ips                                                                                                   |
    +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------------------------+
-   | da0b1f75-c895-460f-9fc1-4d6ec84cf85f |      | fa:16:3e:16:b5:f2 | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "10.0.0.15"}                            |
+   | da0b1f75-c895-460f-9fc1-4d6ec84cf85f |      | fa:16:3e:16:b5:f2 | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "192.0.2.15"}                           |
    |                                      |      |                   | {"subnet_id": "43414c53-62ae-49bc-aa6c-c9dd7705818a", "ip_address": "fda4:653e:71b0:0:f816:3eff:fe16:b5f2"} |
    +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------------------------+
 
@@ -505,11 +505,11 @@ Following is an example of these steps:
    | binding:vnic_type     | normal                                                                                                      |
    | device_id             | 43f328bb-b2d1-4cf1-a36f-3b2593397cb1                                                                        |
    | device_owner          | compute:None                                                                                                |
-   | dns_assignment        | {"hostname": "my-vm", "ip_address": "10.0.0.15", "fqdn": "my-vm.example.org."}                              |
+   | dns_assignment        | {"hostname": "my-vm", "ip_address": "192.0.2.15", "fqdn": "my-vm.example.org."}                             |
    |                       | {"hostname": "my-vm", "ip_address": "fda4:653e:71b0:0:f816:3eff:fe16:b5f2", "fqdn": "my-vm.example.org."}   |
    | dns_name              | my-vm                                                                                                       |
    | extra_dhcp_opts       |                                                                                                             |
-   | fixed_ips             | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "10.0.0.15"}                            |
+   | fixed_ips             | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "192.0.2.15"}                           |
    |                       | {"subnet_id": "43414c53-62ae-49bc-aa6c-c9dd7705818a", "ip_address": "fda4:653e:71b0:0:f816:3eff:fe16:b5f2"} |
    | id                    | da0b1f75-c895-460f-9fc1-4d6ec84cf85f                                                                        |
    | mac_address           | fa:16:3e:16:b5:f2                                                                                           |
@@ -537,8 +537,8 @@ Following is an example of these steps:
    +---------------------+--------------------------------------+
    | dns_domain          |                                      |
    | dns_name            |                                      |
-   | fixed_ip_address    | 10.0.0.15                            |
-   | floating_ip_address | 172.24.4.4                           |
+   | fixed_ip_address    | 192.0.2.15                           |
+   | floating_ip_address | 198.51.100.4                         |
    | floating_network_id | 41fa3995-9e4a-4cd9-bb51-3e5424f2ff2a |
    | id                  | e78f6eb1-a35f-4a90-941d-87c888d5fcc7 |
    | port_id             | da0b1f75-c895-460f-9fc1-4d6ec84cf85f |
@@ -553,7 +553,7 @@ Following is an example of these steps:
    +--------------------------------------+------+--------------------+-----------------------------------------------------------------------+
    | 10a36008-6ecf-47c3-b321-05652a929b04 | SOA  | example.org.       | ns1.devstack.org. malavall.us.ibm.com. 1455564861 3600 600 86400 3600 |
    | 56ca0b88-e343-4c98-8faa-19746e169baf | NS   | example.org.       | ns1.devstack.org.                                                     |
-   | 5ff53fd0-3746-48da-b9c9-77ed3004ec67 | A    | my-vm.example.org. | 172.24.4.4                                                            |
+   | 5ff53fd0-3746-48da-b9c9-77ed3004ec67 | A    | my-vm.example.org. | 198.51.100.4                                                          |
    +--------------------------------------+------+--------------------+-----------------------------------------------------------------------+
 
 In this example, notice that the data is published in the DNS service when the
@@ -565,14 +565,14 @@ IPv4, the value of ``ipv4_ptr_zone_prefix_size`` is 24. For more details, see
 
 .. code-block:: console
 
-   $ designate record-list 4.24.172.in-addr.arpa.
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
-   | id                                   | type | name                     | data                                                                |
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
-   | 2dd0b894-25fa-4563-9d32-9f13bd67f329 | NS   | 4.24.172.in-addr.arpa.   | ns1.devstack.org.                                                   |
-   | 47b920f1-5eff-4dfa-9616-7cb5b7cb7ca6 | SOA  | 4.24.172.in-addr.arpa.   | ns1.devstack.org. admin.example.org. 1455564862 3600 600 86400 3600 |
-   | fb1edf42-abba-410c-8397-831f45fd0cd7 | PTR  | 4.4.24.172.in-addr.arpa. | my-vm.example.org.                                                  |
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
+   $ designate record-list 100.51.198.in-addr.arpa.
+   +--------------------------------------+------+----------------------------+---------------------------------------------------------------------+
+   | id                                   | type | name                       | data                                                                |
+   +--------------------------------------+------+----------------------------+---------------------------------------------------------------------+
+   | 2dd0b894-25fa-4563-9d32-9f13bd67f329 | NS   | 100.51.198.in-addr.arpa.   | ns1.devstack.org.                                                   |
+   | 47b920f1-5eff-4dfa-9616-7cb5b7cb7ca6 | SOA  | 100.51.198.in-addr.arpa.   | ns1.devstack.org. admin.example.org. 1455564862 3600 600 86400 3600 |
+   | fb1edf42-abba-410c-8397-831f45fd0cd7 | PTR  | 4.100.51.198.in-addr.arpa. | my-vm.example.org.                                                  |
+   +--------------------------------------+------+----------------------------+---------------------------------------------------------------------+
 
 
 Use case 3: Floating IPs are published in the external DNS service
@@ -642,17 +642,17 @@ allocated for the instance:
    +--------------------------------------+----------------------------------------------------------------+
 
    $ openstack server list
-   +--------------------------------------+-------+--------+------------+-------------+---------------------------------------------------------+------------+
-   | ID                                   | Name  | Status | Task State | Power State | Networks                                                | Image Name |
-   +--------------------------------------+-------+--------+------------+-------------+---------------------------------------------------------+------------+
-   | 71fb4ac8-eed8-4644-8113-0641962bb125 | my_vm | ACTIVE | -          | Running     | private=fda4:653e:71b0:0:f816:3eff:fe24:8614, 10.0.0.16 | cirros     |
-   +--------------------------------------+-------+--------+------------+-------------+---------------------------------------------------------+------------+
+   +--------------------------------------+-------+--------+------------+-------------+----------------------------------------------------------+------------+
+   | ID                                   | Name  | Status | Task State | Power State | Networks                                                 | Image Name |
+   +--------------------------------------+-------+--------+------------+-------------+----------------------------------------------------------+------------+
+   | 71fb4ac8-eed8-4644-8113-0641962bb125 | my_vm | ACTIVE | -          | Running     | private=fda4:653e:71b0:0:f816:3eff:fe24:8614, 192.0.2.16 | cirros     |
+   +--------------------------------------+-------+--------+------------+-------------+----------------------------------------------------------+------------+
 
    $ neutron port-list --device_id 71fb4ac8-eed8-4644-8113-0641962bb125
    +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------------------------+
    | id                                   | name | mac_address       | fixed_ips                                                                                                   |
    +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------------------------+
-   | 1e7033fb-8e9d-458b-89ed-8312cafcfdcb |      | fa:16:3e:24:86:14 | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "10.0.0.16"}                            |
+   | 1e7033fb-8e9d-458b-89ed-8312cafcfdcb |      | fa:16:3e:24:86:14 | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "192.0.2.16"}                           |
    |                                      |      |                   | {"subnet_id": "43414c53-62ae-49bc-aa6c-c9dd7705818a", "ip_address": "fda4:653e:71b0:0:f816:3eff:fe24:8614"} |
    +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------------------------------------+
 
@@ -665,11 +665,11 @@ allocated for the instance:
    | binding:vnic_type     | normal                                                                                                      |
    | device_id             | 71fb4ac8-eed8-4644-8113-0641962bb125                                                                        |
    | device_owner          | compute:None                                                                                                |
-   | dns_assignment        | {"hostname": "my-vm", "ip_address": "10.0.0.16", "fqdn": "my-vm.example.org."}                              |
+   | dns_assignment        | {"hostname": "my-vm", "ip_address": "192.0.2.16", "fqdn": "my-vm.example.org."}                             |
    |                       | {"hostname": "my-vm", "ip_address": "fda4:653e:71b0:0:f816:3eff:fe24:8614", "fqdn": "my-vm.example.org."}   |
    | dns_name              | my-vm                                                                                                       |
    | extra_dhcp_opts       |                                                                                                             |
-   | fixed_ips             | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "10.0.0.16"}                            |
+   | fixed_ips             | {"subnet_id": "5b9282a1-0be1-4ade-b478-7868ad2a16ff", "ip_address": "192.0.2.16"}                           |
    |                       | {"subnet_id": "43414c53-62ae-49bc-aa6c-c9dd7705818a", "ip_address": "fda4:653e:71b0:0:f816:3eff:fe24:8614"} |
    | id                    | 1e7033fb-8e9d-458b-89ed-8312cafcfdcb                                                                        |
    | mac_address           | fa:16:3e:24:86:14                                                                                           |
@@ -698,7 +698,7 @@ allocated for the instance:
    | dns_domain          | example.org.                         |
    | dns_name            | my-floatingip                        |
    | fixed_ip_address    |                                      |
-   | floating_ip_address | 172.24.4.5                           |
+   | floating_ip_address | 198.51.100.5                         |
    | floating_network_id | 41fa3995-9e4a-4cd9-bb51-3e5424f2ff2a |
    | id                  | 9f23a9c6-eceb-42eb-9f45-beb58c473728 |
    | port_id             |                                      |
@@ -713,7 +713,7 @@ allocated for the instance:
    +--------------------------------------+------+----------------------------+-----------------------------------------------------------------------+
    | 10a36008-6ecf-47c3-b321-05652a929b04 | SOA  | example.org.               | ns1.devstack.org. malavall.us.ibm.com. 1455566486 3600 600 86400 3600 |
    | 56ca0b88-e343-4c98-8faa-19746e169baf | NS   | example.org.               | ns1.devstack.org.                                                     |
-   | 8884c56f-3ef5-446e-ae4d-8053cc8bc2b4 | A    | my-floatingip.example.org. | 172.24.4.5                                                            |
+   | 8884c56f-3ef5-446e-ae4d-8053cc8bc2b4 | A    | my-floatingip.example.org. | 198.51.100.53                                                         |
    +--------------------------------------+------+----------------------------+-----------------------------------------------------------------------+
 
 Note that in this use case:
@@ -733,14 +733,14 @@ IPv4, the value of ipv4_ptr_zone_prefix_size is 24. For more details, see
 
 .. code-block:: console
 
-   $ designate record-list 4.24.172.in-addr.arpa.
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
-   | id                                   | type | name                     | data                                                                |
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
-   | 2dd0b894-25fa-4563-9d32-9f13bd67f329 | NS   | 4.24.172.in-addr.arpa.   | ns1.devstack.org.                                                   |
-   | 47b920f1-5eff-4dfa-9616-7cb5b7cb7ca6 | SOA  | 4.24.172.in-addr.arpa.   | ns1.devstack.org. admin.example.org. 1455566487 3600 600 86400 3600 |
-   | 589a0171-e77a-4ab6-ba6e-23114f2b9366 | PTR  | 5.4.24.172.in-addr.arpa. | my-floatingip.example.org.                                          |
-   +--------------------------------------+------+--------------------------+---------------------------------------------------------------------+
+   $ designate record-list 100.51.198.in-addr.arpa.
+   +--------------------------------------+------+----------------------------+---------------------------------------------------------------------+
+   | id                                   | type | name                       | data                                                                |
+   +--------------------------------------+------+----------------------------+---------------------------------------------------------------------+
+   | 2dd0b894-25fa-4563-9d32-9f13bd67f329 | NS   | 100.51.198.in-addr.arpa.   | ns1.devstack.org.                                                   |
+   | 47b920f1-5eff-4dfa-9616-7cb5b7cb7ca6 | SOA  | 100.51.198.in-addr.arpa.   | ns1.devstack.org. admin.example.org. 1455566487 3600 600 86400 3600 |
+   | 589a0171-e77a-4ab6-ba6e-23114f2b9366 | PTR  | 5.100.51.198.in-addr.arpa. | my-floatingip.example.org.                                          |
+   +--------------------------------------+------+----------------------------+---------------------------------------------------------------------+
 
 .. _config-dns-performance-considerations:
 
@@ -813,9 +813,9 @@ Once this is done, the user has to take the following steps and restart
    .. code-block:: console
 
       [designate]
-      url = http://55.114.111.93:9001/v2
-      auth_uri = http://55.114.111.93:5000
-      admin_auth_url = http://55.114.111.93:35357
+      url = http://192.0.2.240:9001/v2
+      auth_uri = http://192.0.2.240:5000
+      admin_auth_url = http://192.0.2.240:35357
       admin_username = neutron
       admin_password = PASSWORD
       admin_tenant_name = service
