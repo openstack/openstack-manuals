@@ -261,12 +261,18 @@ List the access information about the given volume type:
 
 .. code-block:: console
 
-   $ cinder type-access-list --volume-type vol_Type2
-   +--------------------------------------+----------------------------------+
-   |            Volume_type_ID            |            Project_ID            |
-   +--------------------------------------+----------------------------------+
-   | fd508846-213f-4a07-aaf2-40518fb9a23f | c4860af62ffe465e99ed1bc08ef6082e |
-   +--------------------------------------+----------------------------------+
+   $ openstack volume type show vol_Type2
+   +--------------------+--------------------------------------+
+   | Field              | Value                                |
+   +--------------------+--------------------------------------+
+   | access_project_ids | c4860af62ffe465e99ed1bc08ef6082e     |
+   | description        |                                      |
+   | id                 | fd508846-213f-4a07-aaf2-40518fb9a23f |
+   | is_public          | False                                |
+   | name               | vol_Type2                            |
+   | properties         |                                      |
+   | qos_specs_id       | None                                 |
+   +--------------------+--------------------------------------+
 
 Remove volume type access for the given project:
 
@@ -274,8 +280,15 @@ Remove volume type access for the given project:
 
    $ openstack volume type unset --project c4860af62ffe465e99ed1bc08ef6082e \
      vol_Type2
-   $ cinder type-access-list --volume-type vol_Type2
-   +----------------+------------+
-   | Volume_type_ID | Project_ID |
-   +----------------+------------+
-   +----------------+------------+
+   $ openstack volume type show vol_Type2
+   +--------------------+--------------------------------------+
+   | Field              | Value                                |
+   +--------------------+--------------------------------------+
+   | access_project_ids |                                      |
+   | description        |                                      |
+   | id                 | fd508846-213f-4a07-aaf2-40518fb9a23f |
+   | is_public          | False                                |
+   | name               | vol_Type2                            |
+   | properties         |                                      |
+   | qos_specs_id       | None                                 |
+   +--------------------+--------------------------------------+
