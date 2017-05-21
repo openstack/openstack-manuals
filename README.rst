@@ -84,7 +84,7 @@ documentation to testing to deployment scripts.
 
 If you would like to contribute to the documents, please see the
 `OpenStack Documentation Contributor Guide
-<http://docs.openstack.org/contributor-guide/>`_.
+<https://docs.openstack.org/contributor-guide/>`_.
 
 Generated files
 ---------------
