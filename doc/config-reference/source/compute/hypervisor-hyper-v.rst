@@ -395,7 +395,7 @@ the image to glance using the openstack-client:
 
 .. code-block:: none
 
-   PS C:\> openstack image create --name "VM_IMAGE_NAME" --public \
+   PS C:\> openstack image create --name "VM_IMAGE_NAME" --property hypervisor_type=hyperv --public \
              --container-format bare --disk-format vhd
 
 .. note::
