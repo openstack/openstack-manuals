@@ -13,9 +13,9 @@ and *AMD-v* for AMD chips.
    Consult the vendor documentation to check for virtualization support. For
    Intel CPUs, see
    `Does my processor support Intel® Virtualization Technology?
-   <http://www.intel.com/support/processors/sb/cs-030729.htm>`_. For AMD CPUs,
+   <https://www.intel.com/content/www/us/en/support/processors/000005486.html>`_. For AMD CPUs,
    see `AMD Virtualization
-   <http://www.amd.com/en-us/innovations/software-technologies/server-solution/virtualization>`_.
+   <https://www.amd.com/en-us/innovations/software-technologies/server-solution/virtualization>`_.
    Your CPU may support virtualization but it may be disabled. Consult your
    BIOS documentation for how to enable CPU features.
 
