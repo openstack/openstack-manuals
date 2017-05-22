@@ -58,7 +58,7 @@ OpenStack Compute consists of the following areas and their components:
   by the ``nova-compute`` service. The ``nova-conductor`` module scales
   horizontally. However, do not deploy it on nodes where the
   ``nova-compute`` service runs. For more information, see `Configuration
-  Reference Guide <https://docs.openstack.org/ocata/config-reference/compute/conductor.html>`__.
+  Reference Guide <https://docs.openstack.org/ocata/config-reference/compute/config-options.html#nova-conductor>`__.
 
 ``nova-consoleauth`` daemon
   Authorizes tokens for users that console proxies provide. See
