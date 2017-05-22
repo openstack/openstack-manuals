@@ -2863,11 +2863,12 @@ P
 
    Platform-as-a-Service (PaaS)
 
-      Provides to the consumer the ability to deploy applications
-      through a programming language or tools supported by the cloud
-      platform provider. An example of Platform-as-a-Service is an
-      Eclipse/Java programming platform provided with no downloads
-      required.
+      Provides to the consumer an operating system and, often, a
+      language runtime and libraries (collectively, the "platform")
+      upon which they can run their own application code, without
+      providing any control over the underlying infrastructure.
+      Examples of Platform-as-a-Service providers include Cloud Foundry
+      and OpenShift.
 
    plug-in
 
