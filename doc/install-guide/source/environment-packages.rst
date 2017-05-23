@@ -107,7 +107,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # yum install https://rdoproject.org/repos/rdo-release.rpm
+        # yum install https://repos.fedorapeople.org/repos/openstack/openstack-newton/rdo-release-newton-5.noarch.rpm
 
      .. end
 
