@@ -100,7 +100,7 @@ Create the trunk
 
   .. code-block:: console
 
-     $ openstack port create --network project-net-A trunk
+     $ openstack port create --network project-net-A trunk-parent
      +-------------------+-------------------------------------------------------------------------+
      | Field             | Value                                                                   |
      +-------------------+-------------------------------------------------------------------------+
@@ -110,7 +110,7 @@ Create the trunk
      | fixed_ips         | ip_address='192.0.2.7',subnet_id='8b957198-d3cf-4953-8449-ad4e4dd712cc' |
      | id                | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                    |
      | mac_address       | fa:16:3e:dd:c4:d1                                                       |
-     | name              | trunk                                                                   |
+     | name              | trunk-parent                                                            |
      | network_id        | 1b47d3e7-cda5-48e4-b0c8-d20bd7e35f55                                    |
      +-------------------+-------------------------------------------------------------------------+
 
@@ -119,13 +119,13 @@ Create the trunk
 
   .. code-block:: console
 
-     $ openstack network trunk create --parent-port 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38 trunk
+     $ openstack network trunk create --parent-port trunk-parent trunk1
      +-----------------+--------------------------------------+
      | Field           | Value                                |
      +-----------------+--------------------------------------+
      | admin_state_up  | UP                                   |
      | id              | fdf02fcb-1844-45f1-9d9b-e4c2f522c164 |
-     | name            | trunk                                |
+     | name            | trunk1                               |
      | port_id         | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38 |
      | sub_ports       |                                      |
      +-----------------+--------------------------------------+
@@ -172,15 +172,15 @@ or adding subports to an existing trunk.
      +-------------------+----------------------------------------------------------------------------+
 
      $ openstack network trunk create \
-       --parent-port 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38 \
-       --subport port=91f9dde8-80a4-4506-b5da-c287feb8f5d8, \
-       segmentation-type=vlan,segmentation-id=100
+       --parent-port trunk-parent \
+       --subport port=subport1,segmentation-type=vlan,segmentation-id=100 \
+       trunk1
      +----------------+-------------------------------------------------------------------------------------------------+
      | Field          | Value                                                                                           |
      +----------------+-------------------------------------------------------------------------------------------------+
      | admin_state_up | UP                                                                                              |
      | id             | 61d8e620-fe3a-4d8f-b9e6-e1b0dea6d9e3                                                            |
-     | name           | trunk                                                                                           |
+     | name           | trunk1                                                                                          |
      | port_id        | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                                            |
      | sub_ports      | port_id='73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38', segmentation_id='100', segmentation_type='vlan' |
      +----------------+-------------------------------------------------------------------------------------------------+
@@ -193,9 +193,8 @@ or adding subports to an existing trunk.
   .. code-block:: console
 
      $ openstack network trunk set --subport \
-       port=91f9dde8-80a4-4506-b5da-c287feb8f5d8, \
-       segmentation-type=vlan, \
-       segmentation-id=100 61d8e620-fe3a-4d8f-b9e6-e1b0dea6d9e3
+       port=subport1,segmentation-type=vlan,segmentation-id=100 \
+       trunk1
 
   .. note::
 
@@ -203,13 +202,13 @@ or adding subports to an existing trunk.
 
   .. code-block:: console
 
-     $ openstack network trunk show 61d8e620-fe3a-4d8f-b9e6-e1b0dea6d9e3
+     $ openstack network trunk show trunk1
      +----------------+-------------------------------------------------------------------------------------------------+
      | Field          | Value                                                                                           |
      +----------------+-------------------------------------------------------------------------------------------------+
      | admin_state_up | UP                                                                                              |
      | id             | 61d8e620-fe3a-4d8f-b9e6-e1b0dea6d9e3                                                            |
-     | name           | trunk                                                                                           |
+     | name           | trunk1                                                                                          |
      | port_id        | 73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38                                                            |
      | sub_ports      | port_id='73fb9d54-43a7-4bb1-a8dc-569e0e0a0a38', segmentation_id='100', segmentation_type='vlan' |
      +----------------+-------------------------------------------------------------------------------------------------+
@@ -221,7 +220,7 @@ Launch an instance on the trunk
 
   .. code-block:: console
 
-     $ openstack network trunk show 61d8e620-fe3a-4d8f-b9e6-e1b0dea6d9e3
+     $ openstack network trunk show trunk1
      +----------------+--------------------------------------+
      | Field          | Value                                |
      +----------------+--------------------------------------+
