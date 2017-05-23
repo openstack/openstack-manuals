@@ -35,7 +35,7 @@ that will access volumes backed by GlusterFS.
    package instead.
 
 For information on how to install and configure GlusterFS, refer to the
-`GlusterDocumentation`_ page.
+`GlusterFS Documentation`_ page.
 
 **Configure GlusterFS for OpenStack Block Storage**
 
@@ -198,4 +198,4 @@ OpenStack Block Storage is now configured to use a GlusterFS back end.
    volumes on an instance. This includes all compute nodes.
 
 .. Links
-.. _`GlusterDocumentation`: http://www.gluster.org/community/documentation/index.php/Main_Page
+.. _`GlusterFS Documentation`: https://gluster.readthedocs.io/en/latest/
