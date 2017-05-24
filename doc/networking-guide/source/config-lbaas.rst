@@ -102,7 +102,10 @@ Configuring LBaaS v2 with an agent
     .. code-block:: console
 
        [DEFAULT]
+       device_driver = neutron_lbaas.drivers.haproxy.namespace_driver.HaproxyNSDriver
        interface_driver = INTERFACE_DRIVER
+       [haproxy]
+       user_group = haproxy
 
     Replace ``INTERFACE_DRIVER`` with the interface driver that the layer-2
     agent in your environment uses. For example, ``openvswitch`` for Open
