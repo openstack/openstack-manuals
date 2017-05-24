@@ -86,7 +86,7 @@ these procedures on all nodes.
 
      .. code-block:: console
 
-        # yum install https://rdoproject.org/repos/rdo-release.rpm
+        # yum install https://repos.fedorapeople.org/repos/openstack/openstack-mitaka/rdo-release-mitaka-6.noarch.rpm
 
 .. only:: obs
 
