@@ -63,7 +63,7 @@ and their associated references in the guide.
    * - ``PLACEMENT_PASS``
      - Password of the Placement service user ``placement``
    * - ``RABBIT_PASS``
-     - Password of user guest of RabbitMQ
+     - Password of RabbitMQ user ``openstack``
 
 OpenStack and supporting services require administrative privileges
 during installation and operation. In some cases, services perform
