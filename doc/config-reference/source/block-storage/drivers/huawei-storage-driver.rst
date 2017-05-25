@@ -44,7 +44,7 @@ driver, Huawei storage system and OpenStack:
        Create and delete a cgsnapshot
      - OceanStor T series V2R2 C00/C20/C30
 
-       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
+       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00/C10/C20
 
        OceanStor 2200V3 V300R005C00
 
@@ -53,6 +53,12 @@ driver, Huawei storage system and OpenStack:
        OceanStor 18500/18800 V1R1C00/C20/C30 V3R3C00
 
        OceanStor Dorado V300R001C00
+
+       OceanStor V3 V300R006C00
+
+       OceanStor 2200V3 V300R006C00
+
+       OceanStor 2600V3 V300R006C00
    * - Clone a volume
 
        Create volume from snapshot
@@ -68,29 +74,45 @@ driver, Huawei storage system and OpenStack:
        Thick
      - OceanStor T series V2R2 C00/C20/C30
 
-       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
+       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00/C10/C20
 
        OceanStor 2200V3 V300R005C00
 
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800V1R1C00/C20/C30
+
+       OceanStor V3 V300R006C00
+
+       OceanStor 2200V3 V300R006C00
+
+       OceanStor 2600V3 V300R006C00
    * - SmartPartition
      - OceanStor T series V2R2 C00/C20/C30
 
-       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00
+       OceanStor V3 V3R1C10/C20 V3R2C10 V3R3C00/C10/C20
 
        OceanStor 2600V3 V300R005C00
 
        OceanStor 18500/18800V1R1C00/C20/C30
+
+       OceanStor V3 V300R006C00
+
+       OceanStor 2600V3 V300R006C00
    * - Hypermetro
 
        Hypermetro consistency group
-     - OceanStor V3 V3R3C00
+     - OceanStor V3 V3R3C00/C10/C20
 
        OceanStor 2600V3 V3R5C00
 
        OceanStor 18500/18800 V3R3C00
+
+       OceanStor Dorado V300R001C00
+
+       OceanStor V3 V300R006C00
+
+       OceanStor 2600V3 V300R006C00
 
 Volume driver configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
