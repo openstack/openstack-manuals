@@ -43,7 +43,8 @@ information, see the `Swift project page <https://www.openstack.org/software/rel
 Block storage
 ~~~~~~~~~~~~~
 
-The Block Storage service (cinder) in OpenStacs. Because these volumes are
+Block storage is implemented in OpenStack by the
+Block Storage service (cinder). Because these volumes are
 persistent, they can be detached from one instance and re-attached to another
 instance and the data remains intact.
 
