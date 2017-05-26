@@ -75,7 +75,7 @@ in its ``dns_name`` attribute.
 
 .. code-block:: console
 
-   $ neutron port-create my-net --dns_name my-port
+   $ neutron port-create my-net --dns-name my-port
    Created a new port:
    +-----------------------+-------------------------------------------------------------------------------------+
    | Field                 | Value                                                                               |
