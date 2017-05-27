@@ -392,7 +392,7 @@ above table is the following:
 
 OpenStack Compute is capable of collecting ``CPU`` related meters from
 the compute host machines. In order to use that you need to set the
-``compute_monitors`` option to ``ComputeDriverCPUMonitor`` in the
+``compute_monitors`` option to ``cpu.virt_driver`` in the
 ``nova.conf`` configuration file. For further information see the
 Compute configuration section in the `Compute chapter
 <https://docs.openstack.org/ocata/config-reference/compute/config-options.html>`__
