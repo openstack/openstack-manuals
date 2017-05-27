@@ -820,9 +820,8 @@ Configuring the RBD storage back end
 
   This option is specific to the RBD storage back end.
 
-  Sets the RADOS user to authenticate as. This is only needed
-  when `RADOS authentication <http://ceph.newdream.net/wiki/Cephx>`_
-  is `enabled. <http://ceph.newdream.net/wiki/Cluster_configuration#Cephx_auth>`_.
+  Sets the RADOS user to authenticate as. For more details, see the
+  `RADOS authentication <http://docs.ceph.com/docs/master/rados/configuration/auth-config-ref/>`_.
 
 A keyring must be set for this user in the Ceph
 configuration file, for example with the user ``glance``:
