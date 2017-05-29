@@ -16,7 +16,8 @@ a software or hardware upgrade, perform the following steps:
 
    .. code-block:: console
 
-      # nova service-disable --reason maintenance c01.example.com nova-compute
+      # openstack compute service set --disable --disable-reason \
+      maintenance c01.example.com nova-compute
 
 #. Verify that all hosted instances have been moved off the node:
 
@@ -76,7 +77,7 @@ a software or hardware upgrade, perform the following steps:
 
    .. code-block:: console
 
-      # nova service-enable c01.example.com nova-compute
+      # openstack compute service set --enable c01.example.com nova-compute
 
 #. Optionally, migrate the instances back to their original compute node.
 
