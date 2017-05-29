@@ -43,12 +43,33 @@ governed by:
 * A sliding time window to indicate how far back into the recent past
   you want to look.
 
+Valid threshold alarms are: ``gnocchi_resources_threshold_rule``,
+``gnocchi_aggregation_by_metrics_threshold_rule``, or
+``gnocchi_aggregation_by_resources_threshold_rule``.
+
+.. note::
+
+  As of Ocata, the ``threshold`` alarm is deprecated since Ceilometer's
+  native storage API is deprecated.
+
+Composite rule alarms
+---------------------
+
+Composite alarms enable users to define an alarm with multiple triggering
+conditions, using a combination of ``and`` and ``or`` relations.
+
+
 Combination rule alarms
 -----------------------
 
+.. note::
+
+   Combination alarms are deprecated as of Newton for composite alarms.
+   Combination alarm functionality is removed in Pike.
+
 The Telemetry service also supports the concept of a meta-alarm, which
 aggregates over the current state of a set of underlying basic alarms
-combined via a logical operator (AND or OR).
+combined via a logical operator (``and`` or ``or``).
 
 Alarm dimensioning
 ~~~~~~~~~~~~~~~~~~
@@ -123,18 +144,18 @@ Using alarms
 Alarm creation
 --------------
 
-An example of creating a threshold-oriented alarm, based on an upper
+An example of creating a Gnocchi threshold-oriented alarm, based on an upper
 bound on the CPU utilization for a particular instance:
 
 .. code-block:: console
 
-   $ ceilometer alarm-threshold-create --name cpu_hi \
+   $ aodh alarm create --name cpu_hi \
+     --type gnocchi_resources_threshold \
      --description 'instance running hot' \
-     --meter-name cpu_util --threshold 70.0 \
-     --comparison-operator gt --statistic avg \
-     --period 600 --evaluation-periods 3 \
-     --alarm-action 'log://' \
-     --query resource_id=INSTANCE_ID
+     --metric cpu_util --threshold 70.0 \
+     --comparison-operator gt --aggregation_method avg \
+     --granularity 600 --evaluation-periods 3 \
+     --alarm-action 'log://' --resource_id INSTANCE_ID
 
 This creates an alarm that will fire when the average CPU utilization
 for an individual instance exceeds 70% for three consecutive 10
@@ -157,16 +178,10 @@ time boundaries, rather it's anchored on the current time for each
 evaluation cycle, and continually creeps forward as each evaluation
 cycle rolls around (by default, this occurs every minute).
 
-The period length is set to 600s in this case to reflect the
-out-of-the-box default cadence for collection of the associated
-meter. This period matching illustrates an important general
-principal to keep in mind for alarms:
-
 .. note::
 
-   The alarm period should be a whole number multiple (1 or more)
-   of the interval configured in the pipeline corresponding to the
-   target meter.
+   The alarm granularity must match the granularities of the metric configured
+   in Gnocchi.
 
 Otherwise the alarm will tend to flit in and out of the
 ``insufficient data`` state due to the mismatch between the actual
@@ -210,16 +225,26 @@ state of two underlying alarms:
 
 .. code-block:: console
 
-   $ ceilometer alarm-combination-create --name meta \
-     --alarm_ids ALARM_ID1 \
-     --alarm_ids ALARM_ID2 \
-     --operator or \
+   $ aodh alarm create --name meta --type composite \
+     --composite-rule '{"or":[{"threshold": 0.8,"metric": "cpu_util", "type": \
+     "gnocchi_resources_threshold", "resource_id": INSTANCE_ID, \
+     "aggregation-method": "last"},{"threshold": 0.8,"metric": "cpu_util", \
+     "type": "gnocchi_resources_threshold", "resource_id": INSTANCE_ID2, \
+     "aggregation-method": "last"}]}' \
      --alarm-action 'http://example.org/notify'
 
 This creates an alarm that will fire when either one of two underlying
 alarms transition into the alarm state. The notification in this case
 is a webhook call. Any number of underlying alarms can be combined in
-this way, using either ``and`` or ``or``.
+this way, using either ``and`` or ``or``. Additionally, combinations
+can contain nested conditions:
+
+.. code-block:: console
+
+   $ aodh alarm create --name meta --type composite \
+     --composite-rule '{"or":[ALARM_1, {"and":[ALARM2, ALARM3]}]}'
+     --alarm-action 'http://example.org/notify'
+
 
 Alarm retrieval
 ---------------
@@ -229,12 +254,12 @@ brevity):
 
 .. code-block:: console
 
-   $ ceilometer alarm-list
-   +----------+--------+-------------------+---------------------------------+
-   | Alarm ID | Name   | State             | Alarm condition                 |
-   +----------+--------+-------------------+---------------------------------+
-   | ALARM_ID | cpu_hi | insufficient data | cpu_util > 70.0 during 3 x 600s |
-   +----------+--------+-------------------+---------------------------------+
+   $ aodh alarm list
+   +----------+-----------+--------+-------------------+----------+---------+
+   | Alarm ID | Type      | Name   | State             | Severity | Enabled |
+   +----------+-----------+--------+-------------------+----------+---------+
+   | ALARM_ID | threshold | cpu_hi | insufficient data | high     | True    |
+   +----------+-----------+--------+-------------------+----------+---------+
 
 In this case, the state is reported as ``insufficient data`` which
 could indicate that:
@@ -269,7 +294,7 @@ any other alarm attribute) can be updated thusly:
 
 .. code-block:: console
 
-   $ ceilometer alarm-update --threshold 75 ALARM_ID
+   $ aodh alarm update ALARM_ID --threshold 75
 
 The change will take effect from the next evaluation cycle, which by
 default occurs every minute.
@@ -289,7 +314,7 @@ via the audit API:
 
 .. code-block:: console
 
-   $ ceilometer alarm-history ALARM_ID
+   $ aodh alarm-history show ALARM_ID
    +------------------+-----------+---------------------------------------+
    | Type             | Timestamp | Detail                                |
    +------------------+-----------+---------------------------------------+
@@ -309,14 +334,10 @@ longer actively evaluated:
 
 .. code-block:: console
 
-   $ ceilometer alarm-update --enabled False -a ALARM_ID
+   $ aodh alarm update --enabled False -a ALARM_ID
 
 or even deleted permanently (an irreversible step):
 
 .. code-block:: console
 
-   $ ceilometer alarm-delete ALARM_ID
-
-.. note::
-
-    By default, alarm history is retained for deleted alarms.
+   $ aodh alarm delete ALARM_ID
