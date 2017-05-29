@@ -22,8 +22,8 @@ OpenStack
 Cloud (General)
 ~~~~~~~~~~~~~~~
 
--  `“The NIST Definition of Cloud
-   Computing” <http://csrc.nist.gov/publications/nistpubs/800-145/SP800-145.pdf>`_
+-  `The NIST Definition of Cloud
+   Computing <http://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-145.pdf>`_
 
 Python
 ~~~~~~
@@ -39,8 +39,8 @@ Networking
 -  `The TCP/IP Guide (No Starch
    Press) <http://www.nostarch.com/tcpip.htm>`_
 
--  `“A tcpdump Tutorial and
-   Primer” <http://danielmiessler.com/study/tcpdump/>`_
+-  `A tcpdump Tutorial and
+   Primer <http://danielmiessler.com/study/tcpdump/>`_
 
 Systems Administration
 ~~~~~~~~~~~~~~~~~~~~~~
