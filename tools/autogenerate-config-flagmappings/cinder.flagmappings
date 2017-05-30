@@ -218,12 +218,19 @@ glance_request_timeout images
 glusterfs_backup_mount_point backups_glusterfs
 glusterfs_backup_share backups_glusterfs
 goodness_function scheduler
-gpfs_images_dir storage_gpfs
-gpfs_images_share_mode storage_gpfs
-gpfs_max_clone_depth storage_gpfs
-gpfs_mount_point_base storage_gpfs
-gpfs_sparse_volumes storage_gpfs
-gpfs_storage_pool storage_gpfs
+gpfs_hosts ibm_gpfs_remote
+gpfs_hosts_key_file ibm_gpfs_remote
+gpfs_images_dir ibm_gpfs ibm_gpfs_remote ibm_gpfs_nfs
+gpfs_images_share_mode ibm_gpfs ibm_gpfs_remote ibm_gpfs_nfs
+gpfs_max_clone_depth ibm_gpfs ibm_gpfs_remote ibm_gpfs_nfs
+gpfs_mount_point_base ibm_gpfs ibm_gpfs_remote ibm_gpfs_nfs
+gpfs_private_key ibm_gpfs_remote
+gpfs_sparse_volumes ibm_gpfs ibm_gpfs_remote ibm_gpfs_nfs
+gpfs_ssh_port ibm_gpfs_remote
+gpfs_storage_pool ibm_gpfs ibm_gpfs_remote ibm_gpfs_nfs
+gpfs_strict_host_key_policy ibm_gpfs_remote
+gpfs_user_login ibm_gpfs_remote
+gpfs_user_password ibm_gpfs_remote
 group_api_class common
 hds_hnas_iscsi_config_file hitachi-hnas
 hds_hnas_nfs_config_file hitachi-hnas
@@ -396,15 +403,15 @@ monkey_patch common
 monkey_patch_modules common
 multi_pool_support emc
 my_ip common
-nas_host nas storage_gpfs
-nas_login nas storage_gpfs
+nas_host nas ibm_gpfs_nfs
+nas_login nas ibm_gpfs_nfs
 nas_mount_options nas
-nas_password nas storage_gpfs
-nas_private_key nas storage_gpfs
+nas_password nas ibm_gpfs_nfs
+nas_private_key nas ibm_gpfs_nfs
 nas_secure_file_operations nas
 nas_secure_file_permissions nas
 nas_share_path nas
-nas_ssh_port nas storage_gpfs
+nas_ssh_port nas ibm_gpfs_nfs
 nas_volume_prov_type nas
 naviseccli_path emc
 nec_actual_free_capacity nec_m
@@ -482,9 +489,9 @@ nexenta_volume nexenta nexenta5
 nexenta_volume_group nexenta5
 nfs_mount_attempts storage_nfs
 nfs_mount_options storage_nfs
-nfs_mount_point_base storage_nfs
+nfs_mount_point_base storage_nfs ibm_gpfs_nfs
 nfs_qcow2_volumes storage_nfs
-nfs_shares_config storage_nfs
+nfs_shares_config storage_nfs ibm_gpfs_nfs
 nfs_snapshot_support storage_nfs
 nfs_sparsed_volumes storage_nfs
 nimble_pool_name nimble
