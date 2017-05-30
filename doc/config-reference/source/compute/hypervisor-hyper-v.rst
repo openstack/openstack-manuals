@@ -62,7 +62,7 @@ Configure Hyper-V virtual switching
 
 Information regarding the Hyper-V virtual Switch can be located here:
 `Hyper-V Virtual Switch Overview
-<http://technet.microsoft.com/en-us/library/hh831823.aspx>`_.
+<https://technet.microsoft.com/en-us/library/hh831823.aspx>`_.
 
 To quickly enable an interface to be used as a Virtual Interface the
 following PowerShell may be used:
@@ -95,7 +95,7 @@ Configure shared nothing live migration
 
 Detailed information on the configuration of live migration can be found
 here: `Use live migration without Failover Clustering to move a virtual
-machine <http://technet.microsoft.com/en-us/library/jj134199.aspx>`_.
+machine <https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/manage/Use-live-migration-without-Failover-Clustering-to-move-a-virtual-machine>`_.
 
 The following outlines the steps of shared nothing live migration.
 
@@ -169,7 +169,7 @@ Additional Reading
 This article clarifies the various live migration options in Hyper-V:
 
 `Hyper-V Live Migration of Yesterday
-<http://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html>`_
+<https://ariessysadmin.blogspot.ro/2012/04/hyper-v-live-migration-of-windows.html>`_
 
 Install nova-compute using OpenStack Hyper-V installer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,7 +231,7 @@ Python dependencies
 The following packages need to be downloaded and manually installed:
 
 setuptools
-  http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe
+  https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe
 
 pip
   https://pip.pypa.io/en/latest/installing/
@@ -240,7 +240,7 @@ PyMySQL
   http://codegood.com/download/10/
 
 PyWin32
-  http://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe
+  https://sourceforge.net/projects/pywin32/files/pywin32/Build%20217/pywin32-217.win32-py2.7.exe
 
 Greenlet
   http://www.lfd.uci.edu/~gohlke/pythonlibs/#greenlet
