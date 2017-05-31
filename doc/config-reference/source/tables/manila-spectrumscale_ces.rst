@@ -8,35 +8,50 @@
     autogenerate-config-doc tool from the openstack-doc-tools repository, or
     ask for help on the documentation mailing list, IRC channel or meeting.
 
-.. _manila-gpfs:
+.. _manila-spectrumscale_ces:
 
-.. list-table:: Description of IBM GPFS share driver configuration options
+.. list-table:: Description of IBM Spectrum Scale CES share driver configuration options
    :header-rows: 1
    :class: config-ref-table
 
    * - Configuration option = Default value
      - Description
+
    * - **[DEFAULT]**
      -
+
    * - ``gpfs_mount_point_base`` = ``$state_path/mnt``
+
      - (String) Base folder where exported shares are located.
-   * - ``gpfs_nfs_server_list`` = ``None``
-     - (List) A list of the fully qualified NFS server names that make up the OpenStack Manila configuration.
-   * - ``gpfs_nfs_server_type`` = ``KNFS``
-     - (String) NFS Server type. Valid choices are "KNFS" (kernel NFS) or "CES" (Ganesha NFS).
+
+   * - ``gpfs_nfs_server_type`` = ``CES``
+
+     - (String) NFS Server type. Valid choices are "CES" (Ganesha NFS) or "KNFS" (Kernel NFS).
+
    * - ``gpfs_share_export_ip`` = ``None``
-     - (String) IP to be added to GPFS export string.
+
+     - (Host address) IP to be added to GPFS export string.
+
    * - ``gpfs_share_helpers`` = ``KNFS=manila.share.drivers.ibm.gpfs.KNFSHelper, CES=manila.share.drivers.ibm.gpfs.CESHelper``
+
      - (List) Specify list of share export helpers.
+
    * - ``gpfs_ssh_login`` = ``None``
+
      - (String) GPFS server SSH login name.
+
    * - ``gpfs_ssh_password`` = ``None``
+
      - (String) GPFS server SSH login password. The password is not needed, if 'gpfs_ssh_private_key' is configured.
+
    * - ``gpfs_ssh_port`` = ``22``
+
      - (Port number) GPFS server SSH port.
+
    * - ``gpfs_ssh_private_key`` = ``None``
+
      - (String) Path to GPFS server SSH private key for login.
+
    * - ``is_gpfs_node`` = ``False``
+
      - (Boolean) True:when Manila services are running on one of the Spectrum Scale node. False:when Manila services are not running on any of the Spectrum Scale node.
-   * - ``knfs_export_options`` = ``rw,sync,no_root_squash,insecure,no_wdelay,no_subtree_check``
-     - (String) DEPRECATED: Options to use when exporting a share using kernel NFS server. Note that these defaults can be overridden when a share is created by passing metadata with key name export_options. This option isn't used any longer. Please use share-type extra specs for export options.
