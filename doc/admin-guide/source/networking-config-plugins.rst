@@ -98,7 +98,7 @@ formerly known as Nicira NVP.
 
    .. code-block:: console
 
-      # apt-get install neutron-plugin-vmware
+      # apt-get install python-vmware-nsx
 
 #. Edit the ``/etc/neutron/neutron.conf`` file and set this line:
 
