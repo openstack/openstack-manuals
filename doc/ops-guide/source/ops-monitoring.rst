@@ -208,7 +208,7 @@ Intelligent alerting can be thought of as a form of continuous
 integration for operations. For example, you can easily check to see
 whether the Image service is up and running by ensuring that
 the ``glance-api`` and ``glance-registry`` processes are running or by
-seeing whether ``glace-api`` is responding on port 9292.
+seeing whether ``glance-api`` is responding on port 9292.
 
 But how can you tell whether images are being successfully uploaded to
 the Image service? Maybe the disk that Image service is storing the
