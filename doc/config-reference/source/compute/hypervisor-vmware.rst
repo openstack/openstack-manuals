@@ -941,40 +941,33 @@ remove_unused_original_minimum_age_seconds
 Networking with VMware vSphere
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The VMware driver supports networking with the ``nova-network`` service
-or the Networking Service. Depending on your installation,
-complete these configuration steps before you provision VMs:
+The VMware driver supports the Networking Service through DVS and NSX.
+Depending on your installation,complete these configuration steps before
+you provision VMs:
 
-#. **The nova-network service with the FlatManager or FlatDHCPManager**.
-   Create a port group with the same name as the ``flat_network_bridge``
-   value in the ``nova.conf`` file. The default value is ``br100``.
-   If you specify another value, the new value must be a valid Linux bridge
-   identifier that adheres to Linux bridge naming conventions.
+#. **Neutron DVS Support**.
+   Before provisioning VMs, create a VDS (vNetwork Distributed Switch)
+   with the same name as the ``dvs_name`` in ``nsx.ini`` of neutron-*
+   services. All VM NICs are attached to this VDS. Different neutron networks
+   will be reflected to its related port group with its own VLAN ID.
 
-   All VM NICs are attached to this port group.
+   On the network node, install the ``vmware-nsx`` plugin and configure
+   ``nsx.ini`` as below:
 
-   Ensure that the flat interface of the node that runs the ``nova-network``
-   service has a path to this network.
+.. code-block:: ini
 
-   .. note::
+   [dvs]
+   host_ip = <vCenter hostname or IP address>
+   host_username = <vCenter username>
+   host_password = <vCenter password>
+   dvs_name = <vNetwork Distributed Switch name>
 
-      When configuring the port binding for this port group in vCenter,
-      specify ``ephemeral`` for the port binding type. For more information,
-      see `Choosing a port binding type in ESX/ESXi <http://kb.vmware.com/
-      selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC
-      &amp;externalId=1022312>`_ in the VMware Knowledge Base.
-
-#. **The nova-network service with the VlanManager**.
-   Set the ``vlan_interface`` configuration option to match the ESX host
-   interface that handles VLAN-tagged VM traffic.
-
-   OpenStack Compute automatically creates the corresponding port groups.
-
-#. If you are using the OpenStack Networking Service:
-   Before provisioning VMs, create a port group with the same name as the
-   ``vmware.integration_bridge`` value in ``nova.conf`` (default is
-   ``br-int``). All VM NICs are attached to this port group for management
-   by the OpenStack Networking plug-in.
+#. **Neutron NSX Support**.
+   Before provisioning VMs, install nsx manager into vSphere.
+   For more information, see the `NSX Install Guide <https://www.vmware.com/support/pubs/nsx_pubs.html>`_.
+   Install ``vmware-nsx`` plugin on neutron and configure ``nsx.ini`` on
+   the network node.
+   For more information, see the `VMware Integrated OpenStack Documentation <https://pubs.vmware.com/integrated-openstack-3/index.jsp?lang=en>`_.
 
 Volumes with VMware vSphere
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
