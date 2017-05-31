@@ -336,7 +336,6 @@ OpenStack on Hyper-V. Below is a sample ``nova.conf`` for Windows:
    volume_api_class = nova.volume.cinder.API
    fake_network = true
    instances_path = C:\Program Files (x86)\OpenStack\Instances
-   glance_api_servers = IP_ADDRESS:9292
    use_cow_images = true
    force_config_drive = false
    injected_network_template = C:\Program Files (x86)\OpenStack\Nova\etc\interfaces.template
@@ -359,6 +358,8 @@ OpenStack on Hyper-V. Below is a sample ``nova.conf`` for Windows:
    instance_usage_audit = true
    instance_usage_audit_period = hour
    use_neutron = True
+   [glance]
+   api_servers = http://IP_ADDRESS:9292
    [neutron]
    url = http://IP_ADDRESS:9696
    auth_strategy = keystone
