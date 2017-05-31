@@ -2,6 +2,16 @@
 Data retrieval
 ==============
 
+.. warning::
+
+   Accessing meters through the v2 API of Ceilometer is deprecated in Ocata and
+   has been unmaintained for a few cycles prior. We recommend storing metric
+   data in a time-series optimized database such as Gnocchi_ and event data in
+   Panko_.
+
+.. _Gnocchi: http://gnocchi.xyz/
+.. _Panko: https://docs.openstack.org/developer/panko
+
 The Telemetry service offers several mechanisms from which the persisted
 data can be accessed. As described in :ref:`telemetry-system-architecture` and
 in :ref:`telemetry-data-collection`, the collected information can be stored in
