@@ -16,13 +16,22 @@
 
    * - Configuration option = Default value
      - Description
+
    * - **[timeouts]**
      -
+
    * - ``delete_instances_timeout`` = ``10800``
+
      - (Integer) Wait for instances to be deleted, in seconds
+
    * - ``detach_volume_timeout`` = ``300``
+
      - (Integer) Timeout for detaching volumes from instance, in seconds
+
    * - ``ips_assign_timeout`` = ``10800``
+
      - (Integer) Assign IPs timeout, in seconds
+
    * - ``wait_until_accessible`` = ``10800``
+
      - (Integer) Wait for instance accessibility, in seconds
