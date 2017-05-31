@@ -38,11 +38,10 @@ Shared File Systems service:
       any number of share networks corresponding to the various physical
       network segments in a project environment.
 
-   b) ``manila.network.neutron.neutron_network_plugin.
-      NeutronSingleNetworkPlugin``. This is a simplification of the previous
-      case. It accepts values for ``neutron_net_id`` and ``neutron_subnet_id``
-      from the ``manila.conf`` configuration file and uses one network for all
-      shares.
+   b) ``manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin``.
+      This is a simplification of the previous case. It accepts values for
+      ``neutron_net_id`` and ``neutron_subnet_id`` from the ``manila.conf``
+      configuration file and uses one network for all shares.
 
    When only a single network is needed, the NeutronSingleNetworkPlugin (1.b)
    is a simple solution. Otherwise NeutronNetworkPlugin (1.a) should be chosen.
