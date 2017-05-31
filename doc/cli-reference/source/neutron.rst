@@ -23,7 +23,7 @@ Networking service (neutron) command-line client
 The neutron client is the command-line interface (CLI) for
 the Networking service (neutron) API and its extensions.
 
-This chapter documents :command:`neutron` version ``6.2.0``.
+This chapter documents :command:`neutron` version ``6.3.0``.
 
 For help on a specific :command:`neutron` command, enter:
 
@@ -952,9 +952,8 @@ neutron address-scope-create
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
-                                       [--prefix PREFIX]
-                                       [--request-format {json}]
-                                       [--tenant-id TENANT_ID] [--shared]
+                                       [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                       [--shared]
                                        NAME IP_VERSION
 
 Create an address scope for a given tenant.
@@ -972,9 +971,6 @@ Create an address scope for a given tenant.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
@@ -988,8 +984,7 @@ neutron address-scope-delete
 
 .. code-block:: console
 
-   usage: neutron address-scope-delete [-h] [--request-format {json}]
-                                       ADDRESS_SCOPE [ADDRESS_SCOPE ...]
+   usage: neutron address-scope-delete [-h] ADDRESS_SCOPE [ADDRESS_SCOPE ...]
 
 Delete an address scope.
 
@@ -1003,9 +998,6 @@ Delete an address scope.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_address-scope-list:
 
 neutron address-scope-list
@@ -1016,9 +1008,8 @@ neutron address-scope-list
    usage: neutron address-scope-list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--quote {all,minimal,none,nonnumeric}]
-                                     [--request-format {json}] [-D] [-F FIELD]
-                                     [-P SIZE] [--sort-key FIELD]
+                                     [--quote {all,minimal,none,nonnumeric}] [-D]
+                                     [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                      [--sort-dir {asc,desc}]
 
 List address scopes that belong to a given tenant.
@@ -1027,9 +1018,6 @@ List address scopes that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1063,8 +1051,7 @@ neutron address-scope-show
    usage: neutron address-scope-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [-D] [-F FIELD]
+                                     [--prefix PREFIX] [-D] [-F FIELD]
                                      ADDRESS_SCOPE
 
 Show information about an address scope.
@@ -1078,9 +1065,6 @@ Show information about an address scope.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1096,8 +1080,7 @@ neutron address-scope-update
 
 .. code-block:: console
 
-   usage: neutron address-scope-update [-h] [--request-format {json}]
-                                       [--name NAME] [--shared {True,False}]
+   usage: neutron address-scope-update [-h] [--name NAME] [--shared {True,False}]
                                        ADDRESS_SCOPE
 
 Update an address scope.
@@ -1112,9 +1095,6 @@ Update an address scope.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--name NAME``
   Updated name of the address scope.
 
@@ -1128,7 +1108,7 @@ neutron agent-delete
 
 .. code-block:: console
 
-   usage: neutron agent-delete [-h] [--request-format {json}] AGENT [AGENT ...]
+   usage: neutron agent-delete [-h] AGENT [AGENT ...]
 
 Delete a given agent.
 
@@ -1142,9 +1122,6 @@ Delete a given agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_agent-list:
 
 neutron agent-list
@@ -1155,8 +1132,8 @@ neutron agent-list
    usage: neutron agent-list [-h] [-f {csv,html,json,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--print-empty]
                              [--noindent] [--quote {all,minimal,none,nonnumeric}]
-                             [--request-format {json}] [-D] [-F FIELD]
-                             [--sort-key FIELD] [--sort-dir {asc,desc}]
+                             [-D] [-F FIELD] [--sort-key FIELD]
+                             [--sort-dir {asc,desc}]
 
 List agents.
 
@@ -1164,9 +1141,6 @@ List agents.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1195,8 +1169,7 @@ neutron agent-show
 
    usage: neutron agent-show [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--print-empty]
-                             [--noindent] [--prefix PREFIX]
-                             [--request-format {json}] [-D] [-F FIELD]
+                             [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                              AGENT
 
 Show information of a given agent.
@@ -1210,9 +1183,6 @@ Show information of a given agent.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1228,8 +1198,8 @@ neutron agent-update
 
 .. code-block:: console
 
-   usage: neutron agent-update [-h] [--request-format {json}]
-                               [--admin-state-down] [--description DESCRIPTION]
+   usage: neutron agent-update [-h] [--admin-state-down]
+                               [--description DESCRIPTION]
                                AGENT
 
 Updates the admin status and description for a specified agent.
@@ -1244,9 +1214,6 @@ Updates the admin status and description for a specified agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--admin-state-down``
   Set admin state up of the agent to false.
 
@@ -1260,8 +1227,7 @@ neutron auto-allocated-topology-delete
 
 .. code-block:: console
 
-   usage: neutron auto-allocated-topology-delete [-h] [--request-format {json}]
-                                                 [--tenant-id tenant-id]
+   usage: neutron auto-allocated-topology-delete [-h] [--tenant-id tenant-id]
 
 Delete the auto-allocated topology of a given tenant.
 
@@ -1269,9 +1235,6 @@ Delete the auto-allocated topology of a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id``
   tenant-id
@@ -1289,9 +1252,7 @@ neutron auto-allocated-topology-show
                                                [-c COLUMN]
                                                [--max-width <integer>]
                                                [--print-empty] [--noindent]
-                                               [--prefix PREFIX]
-                                               [--request-format {json}]
-                                               [--dry-run]
+                                               [--prefix PREFIX] [--dry-run]
                                                [--tenant-id tenant-id]
 
 Show the auto-allocated topology of a given tenant.
@@ -1300,9 +1261,6 @@ Show the auto-allocated topology of a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--dry-run``
   Validate the requirements for auto-allocated-topology.
@@ -1324,8 +1282,8 @@ neutron availability-zone-list
                                          [-c COLUMN] [--max-width <integer>]
                                          [--print-empty] [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
-                                         [--request-format {json}] [-D]
-                                         [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                         [-D] [-F FIELD] [-P SIZE]
+                                         [--sort-key FIELD]
                                          [--sort-dir {asc,desc}]
 
 List availability zones.
@@ -1334,9 +1292,6 @@ List availability zones.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1373,8 +1328,7 @@ neutron bgp-dragent-list-hosting-speaker
                                                    [--max-width <integer>]
                                                    [--print-empty] [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
-                                                   [--request-format {json}] [-D]
-                                                   [-F FIELD]
+                                                   [-D] [-F FIELD]
                                                    BGP_SPEAKER
 
 List Dynamic Routing agents hosting a BGP speaker.
@@ -1388,9 +1342,6 @@ List Dynamic Routing agents hosting a BGP speaker.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1406,8 +1357,7 @@ neutron bgp-dragent-speaker-add
 
 .. code-block:: console
 
-   usage: neutron bgp-dragent-speaker-add [-h] [--request-format {json}]
-                                          BGP_DRAGENT_ID BGP_SPEAKER
+   usage: neutron bgp-dragent-speaker-add [-h] BGP_DRAGENT_ID BGP_SPEAKER
 
 Add a BGP speaker to a Dynamic Routing agent.
 
@@ -1424,9 +1374,6 @@ Add a BGP speaker to a Dynamic Routing agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-dragent-speaker-remove:
 
 neutron bgp-dragent-speaker-remove
@@ -1434,8 +1381,7 @@ neutron bgp-dragent-speaker-remove
 
 .. code-block:: console
 
-   usage: neutron bgp-dragent-speaker-remove [-h] [--request-format {json}]
-                                             BGP_DRAGENT_ID BGP_SPEAKER
+   usage: neutron bgp-dragent-speaker-remove [-h] BGP_DRAGENT_ID BGP_SPEAKER
 
 Removes a BGP speaker from a Dynamic Routing agent.
 
@@ -1452,9 +1398,6 @@ Removes a BGP speaker from a Dynamic Routing agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-peer-create:
 
 neutron bgp-peer-create
@@ -1465,7 +1408,6 @@ neutron bgp-peer-create
    usage: neutron bgp-peer-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent] [--prefix PREFIX]
-                                  [--request-format {json}]
                                   [--tenant-id TENANT_ID] --peer-ip
                                   PEER_IP_ADDRESS --remote-as PEER_REMOTE_AS
                                   [--auth-type PEER_AUTH_TYPE]
@@ -1483,9 +1425,6 @@ Create a BGP Peer.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -1510,8 +1449,7 @@ neutron bgp-peer-delete
 
 .. code-block:: console
 
-   usage: neutron bgp-peer-delete [-h] [--request-format {json}]
-                                  BGP_PEER [BGP_PEER ...]
+   usage: neutron bgp-peer-delete [-h] BGP_PEER [BGP_PEER ...]
 
 Delete a BGP peer.
 
@@ -1525,9 +1463,6 @@ Delete a BGP peer.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-peer-list:
 
 neutron bgp-peer-list
@@ -1538,9 +1473,8 @@ neutron bgp-peer-list
    usage: neutron bgp-peer-list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
-                                [--request-format {json}] [-D] [-F FIELD]
-                                [-P SIZE] [--sort-key FIELD]
+                                [--quote {all,minimal,none,nonnumeric}] [-D]
+                                [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                 [--sort-dir {asc,desc}]
 
 List BGP peers.
@@ -1549,9 +1483,6 @@ List BGP peers.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1585,7 +1516,7 @@ neutron bgp-peer-show
    usage: neutron bgp-peer-show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [-D] [-F FIELD]
+                                [-D] [-F FIELD]
                                 BGP_PEER
 
 Show information of a given BGP peer.
@@ -1599,9 +1530,6 @@ Show information of a given BGP peer.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1617,8 +1545,7 @@ neutron bgp-peer-update
 
 .. code-block:: console
 
-   usage: neutron bgp-peer-update [-h] [--request-format {json}] [--name NAME]
-                                  [--password AUTH_PASSWORD]
+   usage: neutron bgp-peer-update [-h] [--name NAME] [--password AUTH_PASSWORD]
                                   BGP_PEER
 
 Update BGP Peer's information.
@@ -1632,9 +1559,6 @@ Update BGP Peer's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Updated name of the BGP peer.
@@ -1655,8 +1579,7 @@ neutron bgp-speaker-advertiseroute-list
                                                   [--max-width <integer>]
                                                   [--print-empty] [--noindent]
                                                   [--quote {all,minimal,none,nonnumeric}]
-                                                  [--request-format {json}] [-D]
-                                                  [-F FIELD] [-P SIZE]
+                                                  [-D] [-F FIELD] [-P SIZE]
                                                   [--sort-key FIELD]
                                                   [--sort-dir {asc,desc}]
                                                   BGP_SPEAKER
@@ -1672,9 +1595,6 @@ List routes advertised by a given BGP speaker.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1708,9 +1628,8 @@ neutron bgp-speaker-create
    usage: neutron bgp-speaker-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [--tenant-id TENANT_ID] --local-as LOCAL_AS
-                                     [--ip-version {4,6}]
+                                     [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                     --local-as LOCAL_AS [--ip-version {4,6}]
                                      [--advertise-floating-ip-host-routes {True,False}]
                                      [--advertise-tenant-networks {True,False}]
                                      NAME
@@ -1726,9 +1645,6 @@ Create a BGP Speaker.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -1758,8 +1674,7 @@ neutron bgp-speaker-delete
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-delete [-h] [--request-format {json}]
-                                     BGP_SPEAKER [BGP_SPEAKER ...]
+   usage: neutron bgp-speaker-delete [-h] BGP_SPEAKER [BGP_SPEAKER ...]
 
 Delete a BGP speaker.
 
@@ -1773,9 +1688,6 @@ Delete a BGP speaker.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-speaker-list:
 
 neutron bgp-speaker-list
@@ -1786,9 +1698,8 @@ neutron bgp-speaker-list
    usage: neutron bgp-speaker-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--request-format {json}] [-D] [-F FIELD]
-                                   [-P SIZE] [--sort-key FIELD]
+                                   [--quote {all,minimal,none,nonnumeric}] [-D]
+                                   [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                    [--sort-dir {asc,desc}]
 
 List BGP speakers.
@@ -1797,9 +1708,6 @@ List BGP speakers.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1835,8 +1743,7 @@ neutron bgp-speaker-list-on-dragent
                                               [-c COLUMN] [--max-width <integer>]
                                               [--print-empty] [--noindent]
                                               [--quote {all,minimal,none,nonnumeric}]
-                                              [--request-format {json}] [-D]
-                                              [-F FIELD]
+                                              [-D] [-F FIELD]
                                               BGP_DRAGENT_ID
 
 List BGP speakers hosted by a Dynamic Routing agent.
@@ -1850,9 +1757,6 @@ List BGP speakers hosted by a Dynamic Routing agent.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -1868,8 +1772,7 @@ neutron bgp-speaker-network-add
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-network-add [-h] [--request-format {json}]
-                                          BGP_SPEAKER NETWORK
+   usage: neutron bgp-speaker-network-add [-h] BGP_SPEAKER NETWORK
 
 Add a network to the BGP speaker.
 
@@ -1886,9 +1789,6 @@ Add a network to the BGP speaker.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-speaker-network-remove:
 
 neutron bgp-speaker-network-remove
@@ -1896,8 +1796,7 @@ neutron bgp-speaker-network-remove
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-network-remove [-h] [--request-format {json}]
-                                             BGP_SPEAKER NETWORK
+   usage: neutron bgp-speaker-network-remove [-h] BGP_SPEAKER NETWORK
 
 Remove a network from the BGP speaker.
 
@@ -1914,9 +1813,6 @@ Remove a network from the BGP speaker.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-speaker-peer-add:
 
 neutron bgp-speaker-peer-add
@@ -1924,8 +1820,7 @@ neutron bgp-speaker-peer-add
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-peer-add [-h] [--request-format {json}]
-                                       BGP_SPEAKER BGP_PEER
+   usage: neutron bgp-speaker-peer-add [-h] BGP_SPEAKER BGP_PEER
 
 Add a peer to the BGP speaker.
 
@@ -1942,9 +1837,6 @@ Add a peer to the BGP speaker.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-speaker-peer-remove:
 
 neutron bgp-speaker-peer-remove
@@ -1952,8 +1844,7 @@ neutron bgp-speaker-peer-remove
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-peer-remove [-h] [--request-format {json}]
-                                          BGP_SPEAKER BGP_PEER
+   usage: neutron bgp-speaker-peer-remove [-h] BGP_SPEAKER BGP_PEER
 
 Remove a peer from the BGP speaker.
 
@@ -1970,9 +1861,6 @@ Remove a peer from the BGP speaker.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_bgp-speaker-show:
 
 neutron bgp-speaker-show
@@ -1983,7 +1871,7 @@ neutron bgp-speaker-show
    usage: neutron bgp-speaker-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent] [--prefix PREFIX]
-                                   [--request-format {json}] [-D] [-F FIELD]
+                                   [-D] [-F FIELD]
                                    BGP_SPEAKER
 
 Show information of a given BGP speaker.
@@ -1997,9 +1885,6 @@ Show information of a given BGP speaker.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2015,7 +1900,7 @@ neutron bgp-speaker-update
 
 .. code-block:: console
 
-   usage: neutron bgp-speaker-update [-h] [--request-format {json}] [--name NAME]
+   usage: neutron bgp-speaker-update [-h] [--name NAME]
                                      [--advertise-floating-ip-host-routes {True,False}]
                                      [--advertise-tenant-networks {True,False}]
                                      BGP_SPEAKER
@@ -2031,9 +1916,6 @@ Update BGP Speaker's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name of the BGP speaker to update.
@@ -2062,8 +1944,7 @@ neutron dhcp-agent-list-hosting-net
                                               [-c COLUMN] [--max-width <integer>]
                                               [--print-empty] [--noindent]
                                               [--quote {all,minimal,none,nonnumeric}]
-                                              [--request-format {json}] [-D]
-                                              [-F FIELD]
+                                              [-D] [-F FIELD]
                                               NETWORK
 
 List DHCP agents hosting a network.
@@ -2077,9 +1958,6 @@ List DHCP agents hosting a network.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2095,8 +1973,7 @@ neutron dhcp-agent-network-add
 
 .. code-block:: console
 
-   usage: neutron dhcp-agent-network-add [-h] [--request-format {json}]
-                                         DHCP_AGENT NETWORK
+   usage: neutron dhcp-agent-network-add [-h] DHCP_AGENT NETWORK
 
 Add a network to a DHCP agent.
 
@@ -2113,9 +1990,6 @@ Add a network to a DHCP agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_dhcp-agent-network-remove:
 
 neutron dhcp-agent-network-remove
@@ -2123,8 +1997,7 @@ neutron dhcp-agent-network-remove
 
 .. code-block:: console
 
-   usage: neutron dhcp-agent-network-remove [-h] [--request-format {json}]
-                                            DHCP_AGENT NETWORK
+   usage: neutron dhcp-agent-network-remove [-h] DHCP_AGENT NETWORK
 
 Remove a network from a DHCP agent.
 
@@ -2141,9 +2014,6 @@ Remove a network from a DHCP agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_ext-list:
 
 neutron ext-list
@@ -2153,8 +2023,8 @@ neutron ext-list
 
    usage: neutron ext-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
                            [--max-width <integer>] [--print-empty] [--noindent]
-                           [--quote {all,minimal,none,nonnumeric}]
-                           [--request-format {json}] [-D] [-F FIELD]
+                           [--quote {all,minimal,none,nonnumeric}] [-D]
+                           [-F FIELD]
 
 List all extensions.
 
@@ -2162,9 +2032,6 @@ List all extensions.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2182,8 +2049,7 @@ neutron ext-show
 
    usage: neutron ext-show [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--print-empty]
-                           [--noindent] [--prefix PREFIX]
-                           [--request-format {json}] [-D] [-F FIELD]
+                           [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                            EXTENSION
 
 Show information of a given resource.
@@ -2197,9 +2063,6 @@ Show information of a given resource.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2218,7 +2081,6 @@ neutron firewall-create
    usage: neutron firewall-create [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent] [--prefix PREFIX]
-                                  [--request-format {json}]
                                   [--tenant-id TENANT_ID] [--name NAME]
                                   [--description DESCRIPTION]
                                   [--router ROUTER | --no-routers]
@@ -2237,9 +2099,6 @@ Create a firewall.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -2269,8 +2128,7 @@ neutron firewall-delete
 
 .. code-block:: console
 
-   usage: neutron firewall-delete [-h] [--request-format {json}]
-                                  FIREWALL [FIREWALL ...]
+   usage: neutron firewall-delete [-h] FIREWALL [FIREWALL ...]
 
 Delete a given firewall.
 
@@ -2284,9 +2142,6 @@ Delete a given firewall.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_firewall-list:
 
 neutron firewall-list
@@ -2297,9 +2152,8 @@ neutron firewall-list
    usage: neutron firewall-list [-h] [-f {csv,html,json,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent]
-                                [--quote {all,minimal,none,nonnumeric}]
-                                [--request-format {json}] [-D] [-F FIELD]
-                                [-P SIZE] [--sort-key FIELD]
+                                [--quote {all,minimal,none,nonnumeric}] [-D]
+                                [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                 [--sort-dir {asc,desc}]
 
 List firewalls that belong to a given tenant.
@@ -2308,9 +2162,6 @@ List firewalls that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2346,7 +2197,6 @@ neutron firewall-policy-create
                                          [-c COLUMN] [--max-width <integer>]
                                          [--print-empty] [--noindent]
                                          [--prefix PREFIX]
-                                         [--request-format {json}]
                                          [--tenant-id TENANT_ID] [--shared]
                                          [--audited] [--description DESCRIPTION]
                                          [--firewall-rules FIREWALL_RULES]
@@ -2363,9 +2213,6 @@ Create a firewall policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -2390,7 +2237,7 @@ neutron firewall-policy-delete
 
 .. code-block:: console
 
-   usage: neutron firewall-policy-delete [-h] [--request-format {json}]
+   usage: neutron firewall-policy-delete [-h]
                                          FIREWALL_POLICY [FIREWALL_POLICY ...]
 
 Delete a given firewall policy.
@@ -2405,9 +2252,6 @@ Delete a given firewall policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_firewall-policy-insert-rule:
 
 neutron firewall-policy-insert-rule
@@ -2415,7 +2259,7 @@ neutron firewall-policy-insert-rule
 
 .. code-block:: console
 
-   usage: neutron firewall-policy-insert-rule [-h] [--request-format {json}]
+   usage: neutron firewall-policy-insert-rule [-h]
                                               [--insert-before FIREWALL_RULE]
                                               [--insert-after FIREWALL_RULE]
                                               FIREWALL_POLICY FIREWALL_RULE
@@ -2435,9 +2279,6 @@ Insert a rule into a given firewall policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--insert-before FIREWALL_RULE``
   Insert before this rule.
 
@@ -2455,9 +2296,8 @@ neutron firewall-policy-list
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
-                                       [--request-format {json}] [-D] [-F FIELD]
-                                       [-P SIZE] [--sort-key FIELD]
-                                       [--sort-dir {asc,desc}]
+                                       [-D] [-F FIELD] [-P SIZE]
+                                       [--sort-key FIELD] [--sort-dir {asc,desc}]
 
 List firewall policies that belong to a given tenant.
 
@@ -2465,9 +2305,6 @@ List firewall policies that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2498,8 +2335,7 @@ neutron firewall-policy-remove-rule
 
 .. code-block:: console
 
-   usage: neutron firewall-policy-remove-rule [-h] [--request-format {json}]
-                                              FIREWALL_POLICY FIREWALL_RULE
+   usage: neutron firewall-policy-remove-rule [-h] FIREWALL_POLICY FIREWALL_RULE
 
 Remove a rule from a given firewall policy.
 
@@ -2517,9 +2353,6 @@ Remove a rule from a given firewall policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_firewall-policy-show:
 
 neutron firewall-policy-show
@@ -2531,8 +2364,7 @@ neutron firewall-policy-show
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
-                                       [--prefix PREFIX]
-                                       [--request-format {json}] [-D] [-F FIELD]
+                                       [--prefix PREFIX] [-D] [-F FIELD]
                                        FIREWALL_POLICY
 
 Show information of a given firewall policy.
@@ -2546,9 +2378,6 @@ Show information of a given firewall policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2564,8 +2393,7 @@ neutron firewall-policy-update
 
 .. code-block:: console
 
-   usage: neutron firewall-policy-update [-h] [--request-format {json}]
-                                         [--description DESCRIPTION]
+   usage: neutron firewall-policy-update [-h] [--description DESCRIPTION]
                                          [--firewall-rules FIREWALL_RULES]
                                          [--name NAME] [--shared {True,False}]
                                          [--audited {True,False}]
@@ -2582,9 +2410,6 @@ Update a given firewall policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--description DESCRIPTION``
   Description for the firewall policy.
@@ -2615,10 +2440,9 @@ neutron firewall-rule-create
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
-                                       [--prefix PREFIX]
-                                       [--request-format {json}]
-                                       [--tenant-id TENANT_ID] [--shared]
-                                       [--name NAME] [--description DESCRIPTION]
+                                       [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                       [--shared] [--name NAME]
+                                       [--description DESCRIPTION]
                                        [--source-ip-address SOURCE_IP_ADDRESS]
                                        [--destination-ip-address DESTINATION_IP_ADDRESS]
                                        [--source-port SOURCE_PORT]
@@ -2633,9 +2457,6 @@ Create a firewall rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -2681,8 +2502,7 @@ neutron firewall-rule-delete
 
 .. code-block:: console
 
-   usage: neutron firewall-rule-delete [-h] [--request-format {json}]
-                                       FIREWALL_RULE [FIREWALL_RULE ...]
+   usage: neutron firewall-rule-delete [-h] FIREWALL_RULE [FIREWALL_RULE ...]
 
 Delete a given firewall rule.
 
@@ -2696,9 +2516,6 @@ Delete a given firewall rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_firewall-rule-list:
 
 neutron firewall-rule-list
@@ -2709,9 +2526,8 @@ neutron firewall-rule-list
    usage: neutron firewall-rule-list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--quote {all,minimal,none,nonnumeric}]
-                                     [--request-format {json}] [-D] [-F FIELD]
-                                     [-P SIZE] [--sort-key FIELD]
+                                     [--quote {all,minimal,none,nonnumeric}] [-D]
+                                     [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                      [--sort-dir {asc,desc}]
 
 List firewall rules that belong to a given tenant.
@@ -2720,9 +2536,6 @@ List firewall rules that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2756,8 +2569,7 @@ neutron firewall-rule-show
    usage: neutron firewall-rule-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [-D] [-F FIELD]
+                                     [--prefix PREFIX] [-D] [-F FIELD]
                                      FIREWALL_RULE
 
 Show information of a given firewall rule.
@@ -2771,9 +2583,6 @@ Show information of a given firewall rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2789,8 +2598,7 @@ neutron firewall-rule-update
 
 .. code-block:: console
 
-   usage: neutron firewall-rule-update [-h] [--request-format {json}]
-                                       [--shared {True,False}]
+   usage: neutron firewall-rule-update [-h] [--shared {True,False}]
                                        [--ip-version {4,6}] [--name NAME]
                                        [--description DESCRIPTION]
                                        [--source-ip-address SOURCE_IP_ADDRESS]
@@ -2813,9 +2621,6 @@ Update a given firewall rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--shared {True,False}``
   Update the shared flag for the firewall rule.
@@ -2861,7 +2666,7 @@ neutron firewall-show
    usage: neutron firewall-show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [-D] [-F FIELD]
+                                [-D] [-F FIELD]
                                 FIREWALL
 
 Show information of a given firewall.
@@ -2875,9 +2680,6 @@ Show information of a given firewall.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -2893,8 +2695,7 @@ neutron firewall-update
 
 .. code-block:: console
 
-   usage: neutron firewall-update [-h] [--request-format {json}] [--name NAME]
-                                  [--description DESCRIPTION]
+   usage: neutron firewall-update [-h] [--name NAME] [--description DESCRIPTION]
                                   [--router ROUTER | --no-routers]
                                   [--policy POLICY]
                                   [--admin-state-up {True,False}]
@@ -2911,9 +2712,6 @@ Update a given firewall.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name for the firewall.
@@ -2945,8 +2743,7 @@ neutron flavor-associate
 
 .. code-block:: console
 
-   usage: neutron flavor-associate [-h] [--request-format {json}]
-                                   FLAVOR FLAVOR_PROFILE
+   usage: neutron flavor-associate [-h] FLAVOR FLAVOR_PROFILE
 
 Associate a Neutron service flavor with a flavor profile.
 
@@ -2956,16 +2753,12 @@ Associate a Neutron service flavor with a flavor profile.
   ID or name of the flavor to associate.
 
 ``FLAVOR_PROFILE``
-  ID of the flavor profile to be associated with the
-  flavor.
+  ID of the flavor profile to be associated with the flavor.
 
 **Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 .. _neutron_flavor-create:
 
@@ -2977,7 +2770,7 @@ neutron flavor-create
    usage: neutron flavor-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [--tenant-id TENANT_ID]
+                                [--tenant-id TENANT_ID]
                                 [--description DESCRIPTION]
                                 [--enabled {True,False}]
                                 NAME SERVICE_TYPE
@@ -2998,9 +2791,6 @@ Create a Neutron service flavor.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
@@ -3017,8 +2807,7 @@ neutron flavor-delete
 
 .. code-block:: console
 
-   usage: neutron flavor-delete [-h] [--request-format {json}]
-                                FLAVOR [FLAVOR ...]
+   usage: neutron flavor-delete [-h] FLAVOR [FLAVOR ...]
 
 Delete a given Neutron service flavor.
 
@@ -3032,9 +2821,6 @@ Delete a given Neutron service flavor.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_flavor-disassociate:
 
 neutron flavor-disassociate
@@ -3042,8 +2828,7 @@ neutron flavor-disassociate
 
 .. code-block:: console
 
-   usage: neutron flavor-disassociate [-h] [--request-format {json}]
-                                      FLAVOR FLAVOR_PROFILE
+   usage: neutron flavor-disassociate [-h] FLAVOR FLAVOR_PROFILE
 
 Disassociate a Neutron service flavor from a flavor profile.
 
@@ -3061,9 +2846,6 @@ Disassociate a Neutron service flavor from a flavor profile.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_flavor-list:
 
 neutron flavor-list
@@ -3074,9 +2856,9 @@ neutron flavor-list
    usage: neutron flavor-list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]
-                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+                              [--quote {all,minimal,none,nonnumeric}] [-D]
+                              [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                              [--sort-dir {asc,desc}]
 
 List Neutron service flavors.
 
@@ -3084,9 +2866,6 @@ List Neutron service flavors.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3121,9 +2900,7 @@ neutron flavor-profile-create
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
-                                        [--prefix PREFIX]
-                                        [--request-format {json}]
-                                        [--tenant-id TENANT_ID]
+                                        [--prefix PREFIX] [--tenant-id TENANT_ID]
                                         [--description DESCRIPTION]
                                         [--driver DRIVER] [--metainfo METAINFO]
                                         [--enabled {True,False}]
@@ -3134,9 +2911,6 @@ Create a Neutron service flavor profile.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -3160,7 +2934,7 @@ neutron flavor-profile-delete
 
 .. code-block:: console
 
-   usage: neutron flavor-profile-delete [-h] [--request-format {json}]
+   usage: neutron flavor-profile-delete [-h]
                                         SERVICE_PROFILE [SERVICE_PROFILE ...]
 
 Delete a given Neutron service flavor profile.
@@ -3175,9 +2949,6 @@ Delete a given Neutron service flavor profile.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_flavor-profile-list:
 
 neutron flavor-profile-list
@@ -3189,9 +2960,8 @@ neutron flavor-profile-list
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
-                                      [--request-format {json}] [-D] [-F FIELD]
-                                      [-P SIZE] [--sort-key FIELD]
-                                      [--sort-dir {asc,desc}]
+                                      [-D] [-F FIELD] [-P SIZE]
+                                      [--sort-key FIELD] [--sort-dir {asc,desc}]
 
 List Neutron service flavor profiles.
 
@@ -3199,9 +2969,6 @@ List Neutron service flavor profiles.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3236,8 +3003,7 @@ neutron flavor-profile-show
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
-                                      [--prefix PREFIX] [--request-format {json}]
-                                      [-D] [-F FIELD]
+                                      [--prefix PREFIX] [-D] [-F FIELD]
                                       SERVICE_PROFILE
 
 Show information about a given Neutron service flavor profile.
@@ -3251,9 +3017,6 @@ Show information about a given Neutron service flavor profile.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3269,8 +3032,7 @@ neutron flavor-profile-update
 
 .. code-block:: console
 
-   usage: neutron flavor-profile-update [-h] [--request-format {json}]
-                                        [--description DESCRIPTION]
+   usage: neutron flavor-profile-update [-h] [--description DESCRIPTION]
                                         [--driver DRIVER] [--metainfo METAINFO]
                                         [--enabled {True,False}]
                                         SERVICE_PROFILE
@@ -3286,9 +3048,6 @@ Update a given Neutron service flavor profile.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--description DESCRIPTION``
   Description for the flavor profile.
@@ -3311,8 +3070,7 @@ neutron flavor-show
 
    usage: neutron flavor-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
-                              [--noindent] [--prefix PREFIX]
-                              [--request-format {json}] [-D] [-F FIELD]
+                              [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                               FLAVOR
 
 Show information about a given Neutron service flavor.
@@ -3326,9 +3084,6 @@ Show information about a given Neutron service flavor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3344,8 +3099,7 @@ neutron flavor-update
 
 .. code-block:: console
 
-   usage: neutron flavor-update [-h] [--request-format {json}] [--name NAME]
-                                [--description DESCRIPTION]
+   usage: neutron flavor-update [-h] [--name NAME] [--description DESCRIPTION]
                                 [--enabled {True,False}]
                                 FLAVOR
 
@@ -3360,9 +3114,6 @@ Update a Neutron service flavor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name for the flavor.
@@ -3380,8 +3131,7 @@ neutron floatingip-associate
 
 .. code-block:: console
 
-   usage: neutron floatingip-associate [-h] [--request-format {json}]
-                                       [--fixed-ip-address FIXED_IP_ADDRESS]
+   usage: neutron floatingip-associate [-h] [--fixed-ip-address FIXED_IP_ADDRESS]
                                        FLOATINGIP_ID PORT
 
 Create a mapping between a floating IP and a fixed IP.
@@ -3400,9 +3150,6 @@ Create a mapping between a floating IP and a fixed IP.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--fixed-ip-address FIXED_IP_ADDRESS``
   IP address on the port (only required if port has
   multiple IPs).
@@ -3417,8 +3164,7 @@ neutron floatingip-create
    usage: neutron floatingip-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--prefix PREFIX] [--request-format {json}]
-                                    [--tenant-id TENANT_ID]
+                                    [--prefix PREFIX] [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION]
                                     [--port-id PORT_ID]
                                     [--fixed-ip-address FIXED_IP_ADDRESS]
@@ -3440,9 +3186,6 @@ Create a floating IP for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -3478,8 +3221,7 @@ neutron floatingip-delete
 
 .. code-block:: console
 
-   usage: neutron floatingip-delete [-h] [--request-format {json}]
-                                    FLOATINGIP [FLOATINGIP ...]
+   usage: neutron floatingip-delete [-h] FLOATINGIP [FLOATINGIP ...]
 
 Delete a given floating IP.
 
@@ -3493,9 +3235,6 @@ Delete a given floating IP.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_floatingip-disassociate:
 
 neutron floatingip-disassociate
@@ -3503,8 +3242,7 @@ neutron floatingip-disassociate
 
 .. code-block:: console
 
-   usage: neutron floatingip-disassociate [-h] [--request-format {json}]
-                                          FLOATINGIP_ID
+   usage: neutron floatingip-disassociate [-h] FLOATINGIP_ID
 
 Remove a mapping from a floating IP to a fixed IP.
 
@@ -3518,9 +3256,6 @@ Remove a mapping from a floating IP to a fixed IP.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_floatingip-list:
 
 neutron floatingip-list
@@ -3531,9 +3266,8 @@ neutron floatingip-list
    usage: neutron floatingip-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-                                  [--request-format {json}] [-D] [-F FIELD]
-                                  [-P SIZE] [--sort-key FIELD]
+                                  [--quote {all,minimal,none,nonnumeric}] [-D]
+                                  [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                   [--sort-dir {asc,desc}]
 
 List floating IPs that belong to a given tenant.
@@ -3542,9 +3276,6 @@ List floating IPs that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3578,7 +3309,7 @@ neutron floatingip-show
    usage: neutron floatingip-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent] [--prefix PREFIX]
-                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-D] [-F FIELD]
                                   FLOATINGIP
 
 Show information of a given floating IP.
@@ -3592,9 +3323,6 @@ Show information of a given floating IP.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3616,7 +3344,6 @@ neutron ipsec-site-connection-create
                                                [--max-width <integer>]
                                                [--print-empty] [--noindent]
                                                [--prefix PREFIX]
-                                               [--request-format {json}]
                                                [--tenant-id TENANT_ID]
                                                [--admin-state-down]
                                                --vpnservice-id VPNSERVICE
@@ -3638,9 +3365,6 @@ Create an IPsec site connection.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -3710,7 +3434,7 @@ neutron ipsec-site-connection-delete
 
 .. code-block:: console
 
-   usage: neutron ipsec-site-connection-delete [-h] [--request-format {json}]
+   usage: neutron ipsec-site-connection-delete [-h]
                                                IPSEC_SITE_CONNECTION
                                                [IPSEC_SITE_CONNECTION ...]
 
@@ -3726,9 +3450,6 @@ Delete a given IPsec site connection.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_ipsec-site-connection-list:
 
 neutron ipsec-site-connection-list
@@ -3741,8 +3462,7 @@ neutron ipsec-site-connection-list
                                              [-c COLUMN] [--max-width <integer>]
                                              [--print-empty] [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
-                                             [--request-format {json}] [-D]
-                                             [-F FIELD] [-P SIZE]
+                                             [-D] [-F FIELD] [-P SIZE]
                                              [--sort-key FIELD]
                                              [--sort-dir {asc,desc}]
 
@@ -3752,9 +3472,6 @@ List IPsec site connections that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3789,9 +3506,7 @@ neutron ipsec-site-connection-show
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--print-empty] [--noindent]
-                                             [--prefix PREFIX]
-                                             [--request-format {json}] [-D]
-                                             [-F FIELD]
+                                             [--prefix PREFIX] [-D] [-F FIELD]
                                              IPSEC_SITE_CONNECTION
 
 Show information of a given IPsec site connection.
@@ -3805,9 +3520,6 @@ Show information of a given IPsec site connection.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3823,7 +3535,7 @@ neutron ipsec-site-connection-update
 
 .. code-block:: console
 
-   usage: neutron ipsec-site-connection-update [-h] [--request-format {json}]
+   usage: neutron ipsec-site-connection-update [-h]
                                                [--admin-state-up {True,False}]
                                                [--name NAME]
                                                [--description DESCRIPTION]
@@ -3848,9 +3560,6 @@ Update a given IPsec site connection.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--admin-state-up {True,False}``
   Update the administrative state. (True meaning "Up")
@@ -3913,8 +3622,7 @@ neutron l3-agent-list-hosting-router
                                                [--max-width <integer>]
                                                [--print-empty] [--noindent]
                                                [--quote {all,minimal,none,nonnumeric}]
-                                               [--request-format {json}] [-D]
-                                               [-F FIELD]
+                                               [-D] [-F FIELD]
                                                ROUTER
 
 List L3 agents hosting a router.
@@ -3928,9 +3636,6 @@ List L3 agents hosting a router.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -3946,8 +3651,7 @@ neutron l3-agent-router-add
 
 .. code-block:: console
 
-   usage: neutron l3-agent-router-add [-h] [--request-format {json}]
-                                      L3_AGENT ROUTER
+   usage: neutron l3-agent-router-add [-h] L3_AGENT ROUTER
 
 Add a router to a L3 agent.
 
@@ -3964,9 +3668,6 @@ Add a router to a L3 agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_l3-agent-router-remove:
 
 neutron l3-agent-router-remove
@@ -3974,8 +3675,7 @@ neutron l3-agent-router-remove
 
 .. code-block:: console
 
-   usage: neutron l3-agent-router-remove [-h] [--request-format {json}]
-                                         L3_AGENT ROUTER
+   usage: neutron l3-agent-router-remove [-h] L3_AGENT ROUTER
 
 Remove a router from a L3 agent.
 
@@ -3992,9 +3692,6 @@ Remove a router from a L3 agent.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-agent-hosting-pool:
 
 neutron lb-agent-hosting-pool
@@ -4007,7 +3704,7 @@ neutron lb-agent-hosting-pool
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
-                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [-D] [-F FIELD]
                                         POOL
 
 Get loadbalancer agent hosting a pool. Deriving from ListCommand though server
@@ -4024,9 +3721,6 @@ schedulers
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``-D, --show-details``
   Show detailed information.
 
@@ -4041,8 +3735,7 @@ neutron lb-healthmonitor-associate
 
 .. code-block:: console
 
-   usage: neutron lb-healthmonitor-associate [-h] [--request-format {json}]
-                                             HEALTH_MONITOR_ID POOL
+   usage: neutron lb-healthmonitor-associate [-h] HEALTH_MONITOR_ID POOL
 
 Create a mapping between a health monitor and a pool.
 
@@ -4052,16 +3745,12 @@ Create a mapping between a health monitor and a pool.
   Health monitor to associate.
 
 ``POOL``
-  ID of the pool to be associated with the health
-  monitor.
+  ID of the pool to be associated with the health monitor.
 
 **Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 .. _neutron_lb-healthmonitor-create:
 
@@ -4075,7 +3764,6 @@ neutron lb-healthmonitor-create
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
                                           [--prefix PREFIX]
-                                          [--request-format {json}]
                                           [--tenant-id TENANT_ID]
                                           [--admin-state-down]
                                           [--expected-codes EXPECTED_CODES]
@@ -4090,9 +3778,6 @@ Create a health monitor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -4117,17 +3802,16 @@ Create a health monitor.
   beginning with a / (forward slash).
 
 ``--delay DELAY``
-  The time in milliseconds between sending probes to
-  members.
+  The time in seconds between sending probes to members.
 
 ``--max-retries MAX_RETRIES``
   Number of permissible connection failures before
   changing the member status to INACTIVE. [1..10]
 
 ``--timeout TIMEOUT``
-  Maximum number of milliseconds for a monitor to wait
-  for a connection to be established before it times
-  out. The value must be less than the delay value.
+  Maximum number of seconds for a monitor to wait for a
+  connection to be established before it times out. The
+  value must be less than the delay value.
 
 ``--type {PING,TCP,HTTP,HTTPS}``
   One of the predefined health monitor types.
@@ -4139,7 +3823,7 @@ neutron lb-healthmonitor-delete
 
 .. code-block:: console
 
-   usage: neutron lb-healthmonitor-delete [-h] [--request-format {json}]
+   usage: neutron lb-healthmonitor-delete [-h]
                                           HEALTH_MONITOR [HEALTH_MONITOR ...]
 
 Delete a given health monitor.
@@ -4154,9 +3838,6 @@ Delete a given health monitor.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-healthmonitor-disassociate:
 
 neutron lb-healthmonitor-disassociate
@@ -4164,8 +3845,7 @@ neutron lb-healthmonitor-disassociate
 
 .. code-block:: console
 
-   usage: neutron lb-healthmonitor-disassociate [-h] [--request-format {json}]
-                                                HEALTH_MONITOR_ID POOL
+   usage: neutron lb-healthmonitor-disassociate [-h] HEALTH_MONITOR_ID POOL
 
 Remove a mapping from a health monitor to a pool.
 
@@ -4183,9 +3863,6 @@ Remove a mapping from a health monitor to a pool.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-healthmonitor-list:
 
 neutron lb-healthmonitor-list
@@ -4198,8 +3875,8 @@ neutron lb-healthmonitor-list
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
-                                        [--request-format {json}] [-D] [-F FIELD]
-                                        [-P SIZE] [--sort-key FIELD]
+                                        [-D] [-F FIELD] [-P SIZE]
+                                        [--sort-key FIELD]
                                         [--sort-dir {asc,desc}]
 
 List health monitors that belong to a given tenant.
@@ -4208,9 +3885,6 @@ List health monitors that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4245,8 +3919,7 @@ neutron lb-healthmonitor-show
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
-                                        [--prefix PREFIX]
-                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [--prefix PREFIX] [-D] [-F FIELD]
                                         HEALTH_MONITOR
 
 Show information of a given health monitor.
@@ -4260,9 +3933,6 @@ Show information of a given health monitor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4278,8 +3948,7 @@ neutron lb-healthmonitor-update
 
 .. code-block:: console
 
-   usage: neutron lb-healthmonitor-update [-h] [--request-format {json}]
-                                          HEALTH_MONITOR
+   usage: neutron lb-healthmonitor-update [-h] HEALTH_MONITOR
 
 Update a given health monitor.
 
@@ -4293,9 +3962,6 @@ Update a given health monitor.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-member-create:
 
 neutron lb-member-create
@@ -4306,7 +3972,6 @@ neutron lb-member-create
    usage: neutron lb-member-create [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent] [--prefix PREFIX]
-                                   [--request-format {json}]
                                    [--tenant-id TENANT_ID] [--admin-state-down]
                                    [--weight WEIGHT] --address ADDRESS
                                    --protocol-port PROTOCOL_PORT
@@ -4323,9 +3988,6 @@ Create a member.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -4351,8 +4013,7 @@ neutron lb-member-delete
 
 .. code-block:: console
 
-   usage: neutron lb-member-delete [-h] [--request-format {json}]
-                                   MEMBER [MEMBER ...]
+   usage: neutron lb-member-delete [-h] MEMBER [MEMBER ...]
 
 Delete a given member.
 
@@ -4366,9 +4027,6 @@ Delete a given member.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-member-list:
 
 neutron lb-member-list
@@ -4379,9 +4037,8 @@ neutron lb-member-list
    usage: neutron lb-member-list [-h] [-f {csv,html,json,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>]
                                  [--print-empty] [--noindent]
-                                 [--quote {all,minimal,none,nonnumeric}]
-                                 [--request-format {json}] [-D] [-F FIELD]
-                                 [-P SIZE] [--sort-key FIELD]
+                                 [--quote {all,minimal,none,nonnumeric}] [-D]
+                                 [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                  [--sort-dir {asc,desc}]
 
 List members that belong to a given tenant.
@@ -4390,9 +4047,6 @@ List members that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4426,7 +4080,7 @@ neutron lb-member-show
    usage: neutron lb-member-show [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>]
                                  [--print-empty] [--noindent] [--prefix PREFIX]
-                                 [--request-format {json}] [-D] [-F FIELD]
+                                 [-D] [-F FIELD]
                                  MEMBER
 
 Show information of a given member.
@@ -4440,9 +4094,6 @@ Show information of a given member.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4458,7 +4109,7 @@ neutron lb-member-update
 
 .. code-block:: console
 
-   usage: neutron lb-member-update [-h] [--request-format {json}] MEMBER
+   usage: neutron lb-member-update [-h] MEMBER
 
 Update a given member.
 
@@ -4472,9 +4123,6 @@ Update a given member.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-pool-create:
 
 neutron lb-pool-create
@@ -4485,7 +4133,6 @@ neutron lb-pool-create
    usage: neutron lb-pool-create [-h] [-f {html,json,shell,table,value,yaml}]
                                  [-c COLUMN] [--max-width <integer>]
                                  [--print-empty] [--noindent] [--prefix PREFIX]
-                                 [--request-format {json}]
                                  [--tenant-id TENANT_ID] [--admin-state-down]
                                  [--description DESCRIPTION] --lb-method
                                  {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP} --name
@@ -4498,9 +4145,6 @@ Create a pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -4535,7 +4179,7 @@ neutron lb-pool-delete
 
 .. code-block:: console
 
-   usage: neutron lb-pool-delete [-h] [--request-format {json}] POOL [POOL ...]
+   usage: neutron lb-pool-delete [-h] POOL [POOL ...]
 
 Delete a given pool.
 
@@ -4549,9 +4193,6 @@ Delete a given pool.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-pool-list:
 
 neutron lb-pool-list
@@ -4562,9 +4203,8 @@ neutron lb-pool-list
    usage: neutron lb-pool-list [-h] [-f {csv,html,json,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>]
                                [--print-empty] [--noindent]
-                               [--quote {all,minimal,none,nonnumeric}]
-                               [--request-format {json}] [-D] [-F FIELD]
-                               [-P SIZE] [--sort-key FIELD]
+                               [--quote {all,minimal,none,nonnumeric}] [-D]
+                               [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                [--sort-dir {asc,desc}]
 
 List pools that belong to a given tenant.
@@ -4573,9 +4213,6 @@ List pools that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4611,7 +4248,7 @@ neutron lb-pool-list-on-agent
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
-                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [-D] [-F FIELD]
                                         LBAAS_AGENT
 
 List the pools on a loadbalancer agent.
@@ -4625,9 +4262,6 @@ List the pools on a loadbalancer agent.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4646,7 +4280,7 @@ neutron lb-pool-show
    usage: neutron lb-pool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>]
                                [--print-empty] [--noindent] [--prefix PREFIX]
-                               [--request-format {json}] [-D] [-F FIELD]
+                               [-D] [-F FIELD]
                                POOL
 
 Show information of a given pool.
@@ -4660,9 +4294,6 @@ Show information of a given pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4681,7 +4312,7 @@ neutron lb-pool-stats
    usage: neutron lb-pool-stats [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [-D] [-F FIELD]
+                                [-D] [-F FIELD]
                                 POOL
 
 Retrieve stats for a given pool.
@@ -4695,9 +4326,6 @@ Retrieve stats for a given pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4713,7 +4341,7 @@ neutron lb-pool-update
 
 .. code-block:: console
 
-   usage: neutron lb-pool-update [-h] [--request-format {json}] POOL
+   usage: neutron lb-pool-update [-h] POOL
 
 Update a given pool.
 
@@ -4727,9 +4355,6 @@ Update a given pool.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-vip-create:
 
 neutron lb-vip-create
@@ -4740,8 +4365,8 @@ neutron lb-vip-create
    usage: neutron lb-vip-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [--tenant-id TENANT_ID]
-                                [--address ADDRESS] [--admin-state-down]
+                                [--tenant-id TENANT_ID] [--address ADDRESS]
+                                [--admin-state-down]
                                 [--connection-limit CONNECTION_LIMIT]
                                 [--description DESCRIPTION] --name NAME
                                 --protocol-port PROTOCOL_PORT --protocol
@@ -4759,9 +4384,6 @@ Create a vip.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -4800,7 +4422,7 @@ neutron lb-vip-delete
 
 .. code-block:: console
 
-   usage: neutron lb-vip-delete [-h] [--request-format {json}] VIP [VIP ...]
+   usage: neutron lb-vip-delete [-h] VIP [VIP ...]
 
 Delete a given vip.
 
@@ -4814,9 +4436,6 @@ Delete a given vip.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lb-vip-list:
 
 neutron lb-vip-list
@@ -4827,9 +4446,9 @@ neutron lb-vip-list
    usage: neutron lb-vip-list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]
-                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+                              [--quote {all,minimal,none,nonnumeric}] [-D]
+                              [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                              [--sort-dir {asc,desc}]
 
 List vips that belong to a given tenant.
 
@@ -4837,9 +4456,6 @@ List vips that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4872,8 +4488,7 @@ neutron lb-vip-show
 
    usage: neutron lb-vip-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
-                              [--noindent] [--prefix PREFIX]
-                              [--request-format {json}] [-D] [-F FIELD]
+                              [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                               VIP
 
 Show information of a given vip.
@@ -4887,9 +4502,6 @@ Show information of a given vip.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4905,7 +4517,7 @@ neutron lb-vip-update
 
 .. code-block:: console
 
-   usage: neutron lb-vip-update [-h] [--request-format {json}] VIP
+   usage: neutron lb-vip-update [-h] VIP
 
 Update a given vip.
 
@@ -4918,9 +4530,6 @@ Update a given vip.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 .. _neutron_lbaas-agent-hosting-loadbalancer:
 
@@ -4935,8 +4544,7 @@ neutron lbaas-agent-hosting-loadbalancer
                                                    [--max-width <integer>]
                                                    [--print-empty] [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
-                                                   [--request-format {json}] [-D]
-                                                   [-F FIELD]
+                                                   [-D] [-F FIELD]
                                                    LOADBALANCER
 
 Get lbaas v2 agent hosting a loadbalancer. Deriving from ListCommand though
@@ -4952,9 +4560,6 @@ schedulers
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -4975,7 +4580,6 @@ neutron lbaas-healthmonitor-create
                                              [-c COLUMN] [--max-width <integer>]
                                              [--print-empty] [--noindent]
                                              [--prefix PREFIX]
-                                             [--request-format {json}]
                                              [--tenant-id TENANT_ID] --delay
                                              DELAY [--name NAME] --timeout
                                              TIMEOUT [--http-method HTTP_METHOD]
@@ -4991,9 +4595,6 @@ LBaaS v2 Create a healthmonitor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -5046,7 +4647,7 @@ neutron lbaas-healthmonitor-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-healthmonitor-delete [-h] [--request-format {json}]
+   usage: neutron lbaas-healthmonitor-delete [-h]
                                              HEALTHMONITOR [HEALTHMONITOR ...]
 
 LBaaS v2 Delete a given healthmonitor.
@@ -5061,9 +4662,6 @@ LBaaS v2 Delete a given healthmonitor.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-healthmonitor-list:
 
 neutron lbaas-healthmonitor-list
@@ -5076,8 +4674,7 @@ neutron lbaas-healthmonitor-list
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD] [-P SIZE]
+                                           [-D] [-F FIELD] [-P SIZE]
                                            [--sort-key FIELD]
                                            [--sort-dir {asc,desc}]
 
@@ -5087,9 +4684,6 @@ LBaaS v2 List healthmonitors that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5124,9 +4718,7 @@ neutron lbaas-healthmonitor-show
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
-                                           [--prefix PREFIX]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD]
+                                           [--prefix PREFIX] [-D] [-F FIELD]
                                            HEALTHMONITOR
 
 LBaaS v2 Show information of a given healthmonitor.
@@ -5140,9 +4732,6 @@ LBaaS v2 Show information of a given healthmonitor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5158,8 +4747,7 @@ neutron lbaas-healthmonitor-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-healthmonitor-update [-h] [--request-format {json}]
-                                             [--delay DELAY] [--name NAME]
+   usage: neutron lbaas-healthmonitor-update [-h] [--delay DELAY] [--name NAME]
                                              [--timeout TIMEOUT]
                                              [--http-method HTTP_METHOD]
                                              [--url-path URL_PATH]
@@ -5179,9 +4767,6 @@ LBaaS v2 Update a given healthmonitor.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--delay DELAY``
   The time in seconds between sending probes to members.
@@ -5229,11 +4814,10 @@ neutron lbaas-l7policy-create
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
-                                        [--prefix PREFIX]
-                                        [--request-format {json}]
-                                        [--tenant-id TENANT_ID] [--name NAME]
-                                        [--description DESCRIPTION] --action
-                                        ACTION [--redirect-pool REDIRECT_POOL]
+                                        [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                        [--name NAME] [--description DESCRIPTION]
+                                        --action ACTION
+                                        [--redirect-pool REDIRECT_POOL]
                                         [--redirect-url REDIRECT_URL]
                                         [--position POSITION]
                                         [--admin-state-down] --listener LISTENER
@@ -5244,9 +4828,6 @@ LBaaS v2 Create L7 policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -5287,8 +4868,7 @@ neutron lbaas-l7policy-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-l7policy-delete [-h] [--request-format {json}]
-                                        L7POLICY [L7POLICY ...]
+   usage: neutron lbaas-l7policy-delete [-h] L7POLICY [L7POLICY ...]
 
 LBaaS v2 Delete a given L7 policy.
 
@@ -5302,9 +4882,6 @@ LBaaS v2 Delete a given L7 policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-l7policy-list:
 
 neutron lbaas-l7policy-list
@@ -5316,9 +4893,8 @@ neutron lbaas-l7policy-list
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
-                                      [--request-format {json}] [-D] [-F FIELD]
-                                      [-P SIZE] [--sort-key FIELD]
-                                      [--sort-dir {asc,desc}]
+                                      [-D] [-F FIELD] [-P SIZE]
+                                      [--sort-key FIELD] [--sort-dir {asc,desc}]
 
 LBaaS v2 List L7 policies that belong to a given listener.
 
@@ -5326,9 +4902,6 @@ LBaaS v2 List L7 policies that belong to a given listener.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5363,8 +4936,7 @@ neutron lbaas-l7policy-show
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
-                                      [--prefix PREFIX] [--request-format {json}]
-                                      [-D] [-F FIELD]
+                                      [--prefix PREFIX] [-D] [-F FIELD]
                                       L7POLICY
 
 LBaaS v2 Show information of a given L7 policy.
@@ -5378,9 +4950,6 @@ LBaaS v2 Show information of a given L7 policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5396,8 +4965,8 @@ neutron lbaas-l7policy-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-l7policy-update [-h] [--request-format {json}]
-                                        [--name NAME] [--description DESCRIPTION]
+   usage: neutron lbaas-l7policy-update [-h] [--name NAME]
+                                        [--description DESCRIPTION]
                                         [--action ACTION]
                                         [--redirect-pool REDIRECT_POOL]
                                         [--redirect-url REDIRECT_URL]
@@ -5416,9 +4985,6 @@ LBaaS v2 Update a given L7 policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name of the policy.
@@ -5458,8 +5024,8 @@ neutron lbaas-l7rule-create
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
-                                      [--prefix PREFIX] [--request-format {json}]
-                                      [--tenant-id TENANT_ID] --type
+                                      [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                      --type
                                       {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}
                                       --compare-type
                                       {REGEX,STARTS_WITH,ENDS_WITH,CONTAINS,EQUAL_TO}
@@ -5478,9 +5044,6 @@ LBaaS v2 Create L7 rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -5511,8 +5074,7 @@ neutron lbaas-l7rule-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-l7rule-delete [-h] [--request-format {json}]
-                                      RULE [RULE ...] L7POLICY
+   usage: neutron lbaas-l7rule-delete [-h] RULE [RULE ...] L7POLICY
 
 LBaaS v2 Delete a given L7 rule.
 
@@ -5529,9 +5091,6 @@ LBaaS v2 Delete a given L7 rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-l7rule-list:
 
 neutron lbaas-l7rule-list
@@ -5542,9 +5101,8 @@ neutron lbaas-l7rule-list
    usage: neutron lbaas-l7rule-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--quote {all,minimal,none,nonnumeric}]
-                                    [--request-format {json}] [-D] [-F FIELD]
-                                    [-P SIZE] [--sort-key FIELD]
+                                    [--quote {all,minimal,none,nonnumeric}] [-D]
+                                    [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                     [--sort-dir {asc,desc}]
                                     L7POLICY
 
@@ -5559,9 +5117,6 @@ LBaaS v2 List L7 rules that belong to a given L7 policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5595,8 +5150,7 @@ neutron lbaas-l7rule-show
    usage: neutron lbaas-l7rule-show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--prefix PREFIX] [--request-format {json}]
-                                    [-D] [-F FIELD]
+                                    [--prefix PREFIX] [-D] [-F FIELD]
                                     RULE L7POLICY
 
 LBaaS v2 Show information of a given rule.
@@ -5614,9 +5168,6 @@ LBaaS v2 Show information of a given rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``-D, --show-details``
   Show detailed information.
 
@@ -5631,7 +5182,7 @@ neutron lbaas-l7rule-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-l7rule-update [-h] [--request-format {json}]
+   usage: neutron lbaas-l7rule-update [-h]
                                       [--type {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}]
                                       [--compare-type {REGEX,STARTS_WITH,ENDS_WITH,CONTAINS,EQUAL_TO}]
                                       [--invert-compare] [--key KEY]
@@ -5653,9 +5204,6 @@ LBaaS v2 Update a given L7 rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--type {HOST_NAME,PATH,FILE_TYPE,HEADER,COOKIE}``
   Rule type.
@@ -5688,9 +5236,7 @@ neutron lbaas-listener-create
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
-                                        [--prefix PREFIX]
-                                        [--request-format {json}]
-                                        [--tenant-id TENANT_ID]
+                                        [--prefix PREFIX] [--tenant-id TENANT_ID]
                                         [--description DESCRIPTION]
                                         [--connection-limit CONNECTION_LIMIT]
                                         [--default-pool DEFAULT_POOL]
@@ -5707,9 +5253,6 @@ LBaaS v2 Create a listener.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -5768,8 +5311,7 @@ neutron lbaas-listener-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-listener-delete [-h] [--request-format {json}]
-                                        LISTENER [LISTENER ...]
+   usage: neutron lbaas-listener-delete [-h] LISTENER [LISTENER ...]
 
 LBaaS v2 Delete a given listener.
 
@@ -5783,9 +5325,6 @@ LBaaS v2 Delete a given listener.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-listener-list:
 
 neutron lbaas-listener-list
@@ -5797,9 +5336,8 @@ neutron lbaas-listener-list
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
-                                      [--request-format {json}] [-D] [-F FIELD]
-                                      [-P SIZE] [--sort-key FIELD]
-                                      [--sort-dir {asc,desc}]
+                                      [-D] [-F FIELD] [-P SIZE]
+                                      [--sort-key FIELD] [--sort-dir {asc,desc}]
 
 LBaaS v2 List listeners that belong to a given tenant.
 
@@ -5807,9 +5345,6 @@ LBaaS v2 List listeners that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5844,8 +5379,7 @@ neutron lbaas-listener-show
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
-                                      [--prefix PREFIX] [--request-format {json}]
-                                      [-D] [-F FIELD]
+                                      [--prefix PREFIX] [-D] [-F FIELD]
                                       LISTENER
 
 LBaaS v2 Show information of a given listener.
@@ -5859,9 +5393,6 @@ LBaaS v2 Show information of a given listener.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -5877,8 +5408,7 @@ neutron lbaas-listener-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-listener-update [-h] [--request-format {json}]
-                                        [--description DESCRIPTION]
+   usage: neutron lbaas-listener-update [-h] [--description DESCRIPTION]
                                         [--connection-limit CONNECTION_LIMIT]
                                         [--default-pool DEFAULT_POOL]
                                         [--name NAME]
@@ -5896,9 +5426,6 @@ LBaaS v2 Update a given listener.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--description DESCRIPTION``
   Description of the listener.
@@ -5930,7 +5457,6 @@ neutron lbaas-loadbalancer-create
                                             [-c COLUMN] [--max-width <integer>]
                                             [--print-empty] [--noindent]
                                             [--prefix PREFIX]
-                                            [--request-format {json}]
                                             [--tenant-id TENANT_ID]
                                             [--description DESCRIPTION]
                                             [--name NAME] [--admin-state-down]
@@ -5950,9 +5476,6 @@ LBaaS v2 Create a loadbalancer.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -5982,8 +5505,7 @@ neutron lbaas-loadbalancer-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-loadbalancer-delete [-h] [--request-format {json}]
-                                            LOADBALANCER [LOADBALANCER ...]
+   usage: neutron lbaas-loadbalancer-delete [-h] LOADBALANCER [LOADBALANCER ...]
 
 LBaaS v2 Delete a given loadbalancer.
 
@@ -5997,9 +5519,6 @@ LBaaS v2 Delete a given loadbalancer.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-loadbalancer-list:
 
 neutron lbaas-loadbalancer-list
@@ -6012,8 +5531,8 @@ neutron lbaas-loadbalancer-list
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
-                                          [--request-format {json}] [-D]
-                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                          [-D] [-F FIELD] [-P SIZE]
+                                          [--sort-key FIELD]
                                           [--sort-dir {asc,desc}]
 
 LBaaS v2 List loadbalancers that belong to a given tenant.
@@ -6022,9 +5541,6 @@ LBaaS v2 List loadbalancers that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6061,8 +5577,7 @@ neutron lbaas-loadbalancer-list-on-agent
                                                    [--max-width <integer>]
                                                    [--print-empty] [--noindent]
                                                    [--quote {all,minimal,none,nonnumeric}]
-                                                   [--request-format {json}] [-D]
-                                                   [-F FIELD]
+                                                   [-D] [-F FIELD]
                                                    LBAAS_AGENT
 
 List the loadbalancers on a loadbalancer v2 agent.
@@ -6076,9 +5591,6 @@ List the loadbalancers on a loadbalancer v2 agent.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6098,9 +5610,7 @@ neutron lbaas-loadbalancer-show
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
-                                          [--prefix PREFIX]
-                                          [--request-format {json}] [-D]
-                                          [-F FIELD]
+                                          [--prefix PREFIX] [-D] [-F FIELD]
                                           LOADBALANCER
 
 LBaaS v2 Show information of a given loadbalancer.
@@ -6114,9 +5624,6 @@ LBaaS v2 Show information of a given loadbalancer.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6136,9 +5643,7 @@ neutron lbaas-loadbalancer-stats
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
-                                           [--prefix PREFIX]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD]
+                                           [--prefix PREFIX] [-D] [-F FIELD]
                                            LOADBALANCER
 
 Retrieve stats for a given loadbalancer.
@@ -6152,9 +5657,6 @@ Retrieve stats for a given loadbalancer.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6170,8 +5672,7 @@ neutron lbaas-loadbalancer-status
 
 .. code-block:: console
 
-   usage: neutron lbaas-loadbalancer-status [-h] [--request-format {json}]
-                                            LOADBALANCER
+   usage: neutron lbaas-loadbalancer-status [-h] LOADBALANCER
 
 Retrieve status for a given loadbalancer. The only output is a formatted JSON
 tree, and the table format does not support this type of data.
@@ -6186,9 +5687,6 @@ tree, and the table format does not support this type of data.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-loadbalancer-update:
 
 neutron lbaas-loadbalancer-update
@@ -6196,8 +5694,7 @@ neutron lbaas-loadbalancer-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-loadbalancer-update [-h] [--request-format {json}]
-                                            [--admin-state-up {True,False}]
+   usage: neutron lbaas-loadbalancer-update [-h] [--admin-state-up {True,False}]
                                             [--description DESCRIPTION]
                                             [--name NAME]
                                             LOADBALANCER
@@ -6213,9 +5710,6 @@ LBaaS v2 Update a given loadbalancer.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--admin-state-up {True,False}``
   Update the administrative state of the load balancer
@@ -6238,11 +5732,11 @@ neutron lbaas-member-create
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
-                                      [--prefix PREFIX] [--request-format {json}]
-                                      [--tenant-id TENANT_ID] [--name NAME]
-                                      [--weight WEIGHT] [--admin-state-down]
-                                      --subnet SUBNET --address ADDRESS
-                                      --protocol-port PROTOCOL_PORT
+                                      [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                      [--name NAME] [--weight WEIGHT]
+                                      [--admin-state-down] --subnet SUBNET
+                                      --address ADDRESS --protocol-port
+                                      PROTOCOL_PORT
                                       POOL
 
 LBaaS v2 Create a member.
@@ -6256,9 +5750,6 @@ LBaaS v2 Create a member.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -6290,8 +5781,7 @@ neutron lbaas-member-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-member-delete [-h] [--request-format {json}]
-                                      MEMBER [MEMBER ...] POOL
+   usage: neutron lbaas-member-delete [-h] MEMBER [MEMBER ...] POOL
 
 LBaaS v2 Delete a given member.
 
@@ -6308,9 +5798,6 @@ LBaaS v2 Delete a given member.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-member-list:
 
 neutron lbaas-member-list
@@ -6321,9 +5808,8 @@ neutron lbaas-member-list
    usage: neutron lbaas-member-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--quote {all,minimal,none,nonnumeric}]
-                                    [--request-format {json}] [-D] [-F FIELD]
-                                    [-P SIZE] [--sort-key FIELD]
+                                    [--quote {all,minimal,none,nonnumeric}] [-D]
+                                    [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                     [--sort-dir {asc,desc}]
                                     POOL
 
@@ -6338,9 +5824,6 @@ LBaaS v2 List members that belong to a given pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6374,8 +5857,7 @@ neutron lbaas-member-show
    usage: neutron lbaas-member-show [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--prefix PREFIX] [--request-format {json}]
-                                    [-D] [-F FIELD]
+                                    [--prefix PREFIX] [-D] [-F FIELD]
                                     MEMBER POOL
 
 LBaaS v2 Show information of a given member.
@@ -6393,9 +5875,6 @@ LBaaS v2 Show information of a given member.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``-D, --show-details``
   Show detailed information.
 
@@ -6410,8 +5889,7 @@ neutron lbaas-member-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-member-update [-h] [--request-format {json}]
-                                      [--admin-state-up {True,False}]
+   usage: neutron lbaas-member-update [-h] [--admin-state-up {True,False}]
                                       [--name NAME] [--weight WEIGHT]
                                       MEMBER POOL
 
@@ -6429,9 +5907,6 @@ LBaaS v2 Update a given member.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--admin-state-up {True,False}``
   Update the administrative state of the member (True
@@ -6454,8 +5929,7 @@ neutron lbaas-pool-create
    usage: neutron lbaas-pool-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--prefix PREFIX] [--request-format {json}]
-                                    [--tenant-id TENANT_ID]
+                                    [--prefix PREFIX] [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION] [--name NAME]
                                     --lb-algorithm
                                     {ROUND_ROBIN,LEAST_CONNECTIONS,SOURCE_IP}
@@ -6470,9 +5944,6 @@ LBaaS v2 Create a pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -6515,8 +5986,7 @@ neutron lbaas-pool-delete
 
 .. code-block:: console
 
-   usage: neutron lbaas-pool-delete [-h] [--request-format {json}]
-                                    POOL [POOL ...]
+   usage: neutron lbaas-pool-delete [-h] POOL [POOL ...]
 
 LBaaS v2 Delete a given pool.
 
@@ -6530,9 +6000,6 @@ LBaaS v2 Delete a given pool.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_lbaas-pool-list:
 
 neutron lbaas-pool-list
@@ -6543,9 +6010,8 @@ neutron lbaas-pool-list
    usage: neutron lbaas-pool-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-                                  [--request-format {json}] [-D] [-F FIELD]
-                                  [-P SIZE] [--sort-key FIELD]
+                                  [--quote {all,minimal,none,nonnumeric}] [-D]
+                                  [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                   [--sort-dir {asc,desc}]
 
 LBaaS v2 List pools that belong to a given tenant.
@@ -6554,9 +6020,6 @@ LBaaS v2 List pools that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6590,7 +6053,7 @@ neutron lbaas-pool-show
    usage: neutron lbaas-pool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent] [--prefix PREFIX]
-                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-D] [-F FIELD]
                                   POOL
 
 LBaaS v2 Show information of a given pool.
@@ -6604,9 +6067,6 @@ LBaaS v2 Show information of a given pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6622,8 +6082,7 @@ neutron lbaas-pool-update
 
 .. code-block:: console
 
-   usage: neutron lbaas-pool-update [-h] [--request-format {json}]
-                                    [--admin-state-up {True,False}]
+   usage: neutron lbaas-pool-update [-h] [--admin-state-up {True,False}]
                                     [--session-persistence type=TYPE[,cookie_name=COOKIE_NAME]
                                     | --no-session-persistence]
                                     [--description DESCRIPTION] [--name NAME]
@@ -6641,9 +6100,6 @@ LBaaS v2 Update a given pool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--admin-state-up {True,False}``
   Update the administrative state of the pool (True
@@ -6677,8 +6133,7 @@ neutron meter-label-create
    usage: neutron meter-label-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [--tenant-id TENANT_ID]
+                                     [--prefix PREFIX] [--tenant-id TENANT_ID]
                                      [--description DESCRIPTION] [--shared]
                                      NAME
 
@@ -6693,9 +6148,6 @@ Create a metering label for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -6713,8 +6165,7 @@ neutron meter-label-delete
 
 .. code-block:: console
 
-   usage: neutron meter-label-delete [-h] [--request-format {json}]
-                                     METERING_LABEL [METERING_LABEL ...]
+   usage: neutron meter-label-delete [-h] METERING_LABEL [METERING_LABEL ...]
 
 Delete a given metering label.
 
@@ -6728,9 +6179,6 @@ Delete a given metering label.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_meter-label-list:
 
 neutron meter-label-list
@@ -6741,9 +6189,8 @@ neutron meter-label-list
    usage: neutron meter-label-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--request-format {json}] [-D] [-F FIELD]
-                                   [-P SIZE] [--sort-key FIELD]
+                                   [--quote {all,minimal,none,nonnumeric}] [-D]
+                                   [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                    [--sort-dir {asc,desc}]
 
 List metering labels that belong to a given tenant.
@@ -6752,9 +6199,6 @@ List metering labels that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6790,7 +6234,6 @@ neutron meter-label-rule-create
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
                                           [--prefix PREFIX]
-                                          [--request-format {json}]
                                           [--tenant-id TENANT_ID]
                                           [--direction {ingress,egress}]
                                           [--excluded]
@@ -6811,9 +6254,6 @@ Create a metering label rule for a given label.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
@@ -6831,7 +6271,7 @@ neutron meter-label-rule-delete
 
 .. code-block:: console
 
-   usage: neutron meter-label-rule-delete [-h] [--request-format {json}]
+   usage: neutron meter-label-rule-delete [-h]
                                           METERING_LABEL_RULE
                                           [METERING_LABEL_RULE ...]
 
@@ -6847,9 +6287,6 @@ Delete a given metering label.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_meter-label-rule-list:
 
 neutron meter-label-rule-list
@@ -6862,8 +6299,8 @@ neutron meter-label-rule-list
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
-                                        [--request-format {json}] [-D] [-F FIELD]
-                                        [-P SIZE] [--sort-key FIELD]
+                                        [-D] [-F FIELD] [-P SIZE]
+                                        [--sort-key FIELD]
                                         [--sort-dir {asc,desc}]
 
 List metering labels that belong to a given label.
@@ -6872,9 +6309,6 @@ List metering labels that belong to a given label.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6909,8 +6343,7 @@ neutron meter-label-rule-show
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
-                                        [--prefix PREFIX]
-                                        [--request-format {json}] [-D] [-F FIELD]
+                                        [--prefix PREFIX] [-D] [-F FIELD]
                                         METERING_LABEL_RULE
 
 Show information of a given metering label rule.
@@ -6924,9 +6357,6 @@ Show information of a given metering label rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6945,7 +6375,7 @@ neutron meter-label-show
    usage: neutron meter-label-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent] [--prefix PREFIX]
-                                   [--request-format {json}] [-D] [-F FIELD]
+                                   [-D] [-F FIELD]
                                    METERING_LABEL
 
 Show information of a given metering label.
@@ -6959,9 +6389,6 @@ Show information of a given metering label.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -6980,9 +6407,8 @@ neutron net-create
    usage: neutron net-create [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--print-empty]
                              [--noindent] [--prefix PREFIX]
-                             [--request-format {json}] [--tenant-id TENANT_ID]
-                             [--admin-state-down] [--shared]
-                             [--provider:network_type <network_type>]
+                             [--tenant-id TENANT_ID] [--admin-state-down]
+                             [--shared] [--provider:network_type <network_type>]
                              [--provider:physical_network <physical_network_name>]
                              [--provider:segmentation_id <segmentation_id>]
                              [--vlan-transparent {True,False}]
@@ -7003,9 +6429,6 @@ Create a network for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -7054,7 +6477,7 @@ neutron net-delete
 
 .. code-block:: console
 
-   usage: neutron net-delete [-h] [--request-format {json}] NETWORK [NETWORK ...]
+   usage: neutron net-delete [-h] NETWORK [NETWORK ...]
 
 Delete a given network.
 
@@ -7068,9 +6491,6 @@ Delete a given network.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_net-external-list:
 
 neutron net-external-list
@@ -7081,9 +6501,8 @@ neutron net-external-list
    usage: neutron net-external-list [-h] [-f {csv,html,json,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--quote {all,minimal,none,nonnumeric}]
-                                    [--request-format {json}] [-D] [-F FIELD]
-                                    [-P SIZE] [--sort-key FIELD]
+                                    [--quote {all,minimal,none,nonnumeric}] [-D]
+                                    [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                     [--sort-dir {asc,desc}]
                                     [--tenant-id TENANT_ID] [--name NAME]
                                     [--admin-state-up {True,False}]
@@ -7098,9 +6517,6 @@ List external networks that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7136,8 +6552,7 @@ neutron net-ip-availability-list
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD] [--sort-key FIELD]
+                                           [-D] [-F FIELD] [--sort-key FIELD]
                                            [--sort-dir {asc,desc}]
                                            [--ip-version {4,6}]
                                            [--network-id NETWORK_ID]
@@ -7150,9 +6565,6 @@ List IP usage of networks
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7184,7 +6596,6 @@ neutron net-ip-availability-show
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
                                            [--prefix PREFIX]
-                                           [--request-format {json}]
                                            NETWORK
 
 Show IP usage of specific network
@@ -7199,9 +6610,6 @@ Show IP usage of specific network
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_net-list:
 
 neutron net-list
@@ -7211,12 +6619,11 @@ neutron net-list
 
    usage: neutron net-list [-h] [-f {csv,html,json,table,value,yaml}] [-c COLUMN]
                            [--max-width <integer>] [--print-empty] [--noindent]
-                           [--quote {all,minimal,none,nonnumeric}]
-                           [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                           [--sort-key FIELD] [--sort-dir {asc,desc}]
-                           [--tenant-id TENANT_ID] [--name NAME]
-                           [--admin-state-up {True,False}] [--status STATUS]
-                           [--shared {True,False}]
+                           [--quote {all,minimal,none,nonnumeric}] [-D]
+                           [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                           [--sort-dir {asc,desc}] [--tenant-id TENANT_ID]
+                           [--name NAME] [--admin-state-up {True,False}]
+                           [--status STATUS] [--shared {True,False}]
                            [--router:external {True,False}] [--tags TAG]
                            [--tags-any TAG] [--not-tags TAG] [--not-tags-any TAG]
 
@@ -7226,9 +6633,6 @@ List networks that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7264,8 +6668,8 @@ neutron net-list-on-dhcp-agent
                                          [-c COLUMN] [--max-width <integer>]
                                          [--print-empty] [--noindent]
                                          [--quote {all,minimal,none,nonnumeric}]
-                                         [--request-format {json}] [-D]
-                                         [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                         [-D] [-F FIELD] [-P SIZE]
+                                         [--sort-key FIELD]
                                          [--sort-dir {asc,desc}]
                                          [--tenant-id TENANT_ID] [--name NAME]
                                          [--admin-state-up {True,False}]
@@ -7287,9 +6691,6 @@ List the networks on a DHCP agent.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7322,8 +6723,7 @@ neutron net-show
 
    usage: neutron net-show [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--print-empty]
-                           [--noindent] [--prefix PREFIX]
-                           [--request-format {json}] [-D] [-F FIELD]
+                           [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                            NETWORK
 
 Show information of a given network.
@@ -7337,9 +6737,6 @@ Show information of a given network.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7355,8 +6752,7 @@ neutron net-update
 
 .. code-block:: console
 
-   usage: neutron net-update [-h] [--request-format {json}] [--name NAME]
-                             [--description DESCRIPTION]
+   usage: neutron net-update [-h] [--name NAME] [--description DESCRIPTION]
                              [--qos-policy QOS_POLICY | --no-qos-policy]
                              [--dns-domain DNS_DOMAIN | --no-dns-domain]
                              NETWORK
@@ -7372,9 +6768,6 @@ Update network's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name of the network.
@@ -7407,8 +6800,8 @@ neutron port-create
    usage: neutron port-create [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent] [--prefix PREFIX]
-                              [--request-format {json}] [--tenant-id TENANT_ID]
-                              [--name NAME] [--description DESCRIPTION]
+                              [--tenant-id TENANT_ID] [--name NAME]
+                              [--description DESCRIPTION]
                               [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                               [--device-id DEVICE_ID]
                               [--device-owner DEVICE_OWNER] [--admin-state-down]
@@ -7433,9 +6826,6 @@ Create a port for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -7507,7 +6897,7 @@ neutron port-delete
 
 .. code-block:: console
 
-   usage: neutron port-delete [-h] [--request-format {json}] PORT [PORT ...]
+   usage: neutron port-delete [-h] PORT [PORT ...]
 
 Delete a given port.
 
@@ -7521,9 +6911,6 @@ Delete a given port.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_port-list:
 
 neutron port-list
@@ -7534,8 +6921,8 @@ neutron port-list
    usage: neutron port-list [-h] [-f {csv,html,json,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--print-empty]
                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
-                            [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                            [--sort-key FIELD] [--sort-dir {asc,desc}]
+                            [-D] [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                            [--sort-dir {asc,desc}]
 
 List ports that belong to a given tenant.
 
@@ -7543,9 +6930,6 @@ List ports that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7578,8 +6962,7 @@ neutron port-show
 
    usage: neutron port-show [-h] [-f {html,json,shell,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--print-empty]
-                            [--noindent] [--prefix PREFIX]
-                            [--request-format {json}] [-D] [-F FIELD]
+                            [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                             PORT
 
 Show information of a given port.
@@ -7593,9 +6976,6 @@ Show information of a given port.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7611,8 +6991,7 @@ neutron port-update
 
 .. code-block:: console
 
-   usage: neutron port-update [-h] [--request-format {json}] [--name NAME]
-                              [--description DESCRIPTION]
+   usage: neutron port-update [-h] [--name NAME] [--description DESCRIPTION]
                               [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                               [--device-id DEVICE_ID]
                               [--device-owner DEVICE_OWNER]
@@ -7636,9 +7015,6 @@ Update port's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name of this port.
@@ -7705,7 +7081,7 @@ neutron purge
 
 .. code-block:: console
 
-   usage: neutron purge [-h] [--request-format {json}] TENANT
+   usage: neutron purge [-h] TENANT
 
 Delete all resources that belong to a given tenant.
 
@@ -7719,9 +7095,6 @@ Delete all resources that belong to a given tenant.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_qos-available-rule-types:
 
 neutron qos-available-rule-types
@@ -7734,8 +7107,7 @@ neutron qos-available-rule-types
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD] [-P SIZE]
+                                           [-D] [-F FIELD] [-P SIZE]
                                            [--sort-key FIELD]
                                            [--sort-dir {asc,desc}]
 
@@ -7745,9 +7117,6 @@ List available qos rule types.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7784,7 +7153,6 @@ neutron qos-bandwidth-limit-rule-create
                                                   [--max-width <integer>]
                                                   [--print-empty] [--noindent]
                                                   [--prefix PREFIX]
-                                                  [--request-format {json}]
                                                   [--tenant-id TENANT_ID]
                                                   [--max-kbps MAX_KBPS]
                                                   [--max-burst-kbps MAX_BURST_KBPS]
@@ -7802,9 +7170,6 @@ Create a qos bandwidth limit rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
@@ -7821,7 +7186,7 @@ neutron qos-bandwidth-limit-rule-delete
 
 .. code-block:: console
 
-   usage: neutron qos-bandwidth-limit-rule-delete [-h] [--request-format {json}]
+   usage: neutron qos-bandwidth-limit-rule-delete [-h]
                                                   BANDWIDTH_LIMIT_RULE
                                                   [BANDWIDTH_LIMIT_RULE ...]
                                                   QOS_POLICY
@@ -7841,9 +7206,6 @@ Delete a given qos bandwidth limit rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_qos-bandwidth-limit-rule-list:
 
 neutron qos-bandwidth-limit-rule-list
@@ -7857,8 +7219,7 @@ neutron qos-bandwidth-limit-rule-list
                                                 [--max-width <integer>]
                                                 [--print-empty] [--noindent]
                                                 [--quote {all,minimal,none,nonnumeric}]
-                                                [--request-format {json}] [-D]
-                                                [-F FIELD] [-P SIZE]
+                                                [-D] [-F FIELD] [-P SIZE]
                                                 [--sort-key FIELD]
                                                 [--sort-dir {asc,desc}]
                                                 QOS_POLICY
@@ -7874,9 +7235,6 @@ List all qos bandwidth limit rules belonging to the specified policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -7912,9 +7270,7 @@ neutron qos-bandwidth-limit-rule-show
                                                 [-c COLUMN]
                                                 [--max-width <integer>]
                                                 [--print-empty] [--noindent]
-                                                [--prefix PREFIX]
-                                                [--request-format {json}] [-D]
-                                                [-F FIELD]
+                                                [--prefix PREFIX] [-D] [-F FIELD]
                                                 BANDWIDTH_LIMIT_RULE QOS_POLICY
 
 Show information about the given qos bandwidth limit rule.
@@ -7932,9 +7288,6 @@ Show information about the given qos bandwidth limit rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``-D, --show-details``
   Show detailed information.
 
@@ -7949,8 +7302,7 @@ neutron qos-bandwidth-limit-rule-update
 
 .. code-block:: console
 
-   usage: neutron qos-bandwidth-limit-rule-update [-h] [--request-format {json}]
-                                                  [--max-kbps MAX_KBPS]
+   usage: neutron qos-bandwidth-limit-rule-update [-h] [--max-kbps MAX_KBPS]
                                                   [--max-burst-kbps MAX_BURST_KBPS]
                                                   BANDWIDTH_LIMIT_RULE QOS_POLICY
 
@@ -7968,9 +7320,6 @@ Update the given qos bandwidth limit rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--max-kbps MAX_KBPS``
   Maximum bandwidth in kbps.
@@ -7991,7 +7340,6 @@ neutron qos-dscp-marking-rule-create
                                                [--max-width <integer>]
                                                [--print-empty] [--noindent]
                                                [--prefix PREFIX]
-                                               [--request-format {json}]
                                                [--tenant-id TENANT_ID]
                                                --dscp-mark DSCP_MARK
                                                QOS_POLICY
@@ -8008,9 +7356,6 @@ Create a QoS DSCP marking rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
@@ -8025,7 +7370,7 @@ neutron qos-dscp-marking-rule-delete
 
 .. code-block:: console
 
-   usage: neutron qos-dscp-marking-rule-delete [-h] [--request-format {json}]
+   usage: neutron qos-dscp-marking-rule-delete [-h]
                                                DSCP_MARKING_RULE
                                                [DSCP_MARKING_RULE ...] QOS_POLICY
 
@@ -8044,9 +7389,6 @@ Delete a given qos dscp marking rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_qos-dscp-marking-rule-list:
 
 neutron qos-dscp-marking-rule-list
@@ -8059,8 +7401,7 @@ neutron qos-dscp-marking-rule-list
                                              [-c COLUMN] [--max-width <integer>]
                                              [--print-empty] [--noindent]
                                              [--quote {all,minimal,none,nonnumeric}]
-                                             [--request-format {json}] [-D]
-                                             [-F FIELD] [-P SIZE]
+                                             [-D] [-F FIELD] [-P SIZE]
                                              [--sort-key FIELD]
                                              [--sort-dir {asc,desc}]
                                              QOS_POLICY
@@ -8076,9 +7417,6 @@ List all QoS DSCP marking rules belonging to the specified policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -8113,9 +7451,7 @@ neutron qos-dscp-marking-rule-show
                                              [-f {html,json,shell,table,value,yaml}]
                                              [-c COLUMN] [--max-width <integer>]
                                              [--print-empty] [--noindent]
-                                             [--prefix PREFIX]
-                                             [--request-format {json}] [-D]
-                                             [-F FIELD]
+                                             [--prefix PREFIX] [-D] [-F FIELD]
                                              DSCP_MARKING_RULE QOS_POLICY
 
 Show information about the given qos dscp marking rule.
@@ -8133,9 +7469,6 @@ Show information about the given qos dscp marking rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``-D, --show-details``
   Show detailed information.
 
@@ -8150,8 +7483,7 @@ neutron qos-dscp-marking-rule-update
 
 .. code-block:: console
 
-   usage: neutron qos-dscp-marking-rule-update [-h] [--request-format {json}]
-                                               --dscp-mark DSCP_MARK
+   usage: neutron qos-dscp-marking-rule-update [-h] --dscp-mark DSCP_MARK
                                                DSCP_MARKING_RULE QOS_POLICY
 
 Update the given QoS DSCP marking rule.
@@ -8168,9 +7500,6 @@ Update the given QoS DSCP marking rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--dscp-mark DSCP_MARK``
   DSCP mark: value can be 0, even numbers from 8-56,
@@ -8189,7 +7518,6 @@ neutron qos-minimum-bandwidth-rule-create
                                                     [--max-width <integer>]
                                                     [--print-empty] [--noindent]
                                                     [--prefix PREFIX]
-                                                    [--request-format {json}]
                                                     [--tenant-id TENANT_ID]
                                                     --min-kbps MIN_KBPS
                                                     --direction {egress}
@@ -8206,9 +7534,6 @@ Create a qos minimum bandwidth rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -8228,7 +7553,6 @@ neutron qos-minimum-bandwidth-rule-delete
 .. code-block:: console
 
    usage: neutron qos-minimum-bandwidth-rule-delete [-h]
-                                                    [--request-format {json}]
                                                     MINIMUM_BANDWIDTH_RULE
                                                     [MINIMUM_BANDWIDTH_RULE ...]
                                                     QOS_POLICY
@@ -8248,9 +7572,6 @@ Delete a given qos minimum bandwidth rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_qos-minimum-bandwidth-rule-list:
 
 neutron qos-minimum-bandwidth-rule-list
@@ -8264,8 +7585,7 @@ neutron qos-minimum-bandwidth-rule-list
                                                   [--max-width <integer>]
                                                   [--print-empty] [--noindent]
                                                   [--quote {all,minimal,none,nonnumeric}]
-                                                  [--request-format {json}] [-D]
-                                                  [-F FIELD] [-P SIZE]
+                                                  [-D] [-F FIELD] [-P SIZE]
                                                   [--sort-key FIELD]
                                                   [--sort-dir {asc,desc}]
                                                   QOS_POLICY
@@ -8281,9 +7601,6 @@ List all qos minimum bandwidth rules belonging to the specified policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -8319,8 +7636,7 @@ neutron qos-minimum-bandwidth-rule-show
                                                   [-c COLUMN]
                                                   [--max-width <integer>]
                                                   [--print-empty] [--noindent]
-                                                  [--prefix PREFIX]
-                                                  [--request-format {json}] [-D]
+                                                  [--prefix PREFIX] [-D]
                                                   [-F FIELD]
                                                   MINIMUM_BANDWIDTH_RULE
                                                   QOS_POLICY
@@ -8340,9 +7656,6 @@ Show information about the given qos minimum bandwidth rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``-D, --show-details``
   Show detailed information.
 
@@ -8357,9 +7670,7 @@ neutron qos-minimum-bandwidth-rule-update
 
 .. code-block:: console
 
-   usage: neutron qos-minimum-bandwidth-rule-update [-h]
-                                                    [--request-format {json}]
-                                                    --min-kbps MIN_KBPS
+   usage: neutron qos-minimum-bandwidth-rule-update [-h] --min-kbps MIN_KBPS
                                                     --direction {egress}
                                                     MINIMUM_BANDWIDTH_RULE
                                                     QOS_POLICY
@@ -8379,9 +7690,6 @@ Update the given qos minimum bandwidth rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--min-kbps MIN_KBPS``
   QoS minimum bandwidth assurance, expressed in kilobits
   per second.
@@ -8399,8 +7707,7 @@ neutron qos-policy-create
    usage: neutron qos-policy-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--prefix PREFIX] [--request-format {json}]
-                                    [--tenant-id TENANT_ID]
+                                    [--prefix PREFIX] [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION] [--shared]
                                     NAME
 
@@ -8415,9 +7722,6 @@ Create a qos policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -8436,8 +7740,7 @@ neutron qos-policy-delete
 
 .. code-block:: console
 
-   usage: neutron qos-policy-delete [-h] [--request-format {json}]
-                                    POLICY [POLICY ...]
+   usage: neutron qos-policy-delete [-h] POLICY [POLICY ...]
 
 Delete a given qos policy.
 
@@ -8451,9 +7754,6 @@ Delete a given qos policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_qos-policy-list:
 
 neutron qos-policy-list
@@ -8464,9 +7764,8 @@ neutron qos-policy-list
    usage: neutron qos-policy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-                                  [--request-format {json}] [-D] [-F FIELD]
-                                  [-P SIZE] [--sort-key FIELD]
+                                  [--quote {all,minimal,none,nonnumeric}] [-D]
+                                  [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                   [--sort-dir {asc,desc}]
 
 List QoS policies that belong to a given tenant connection.
@@ -8475,9 +7774,6 @@ List QoS policies that belong to a given tenant connection.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -8511,7 +7807,7 @@ neutron qos-policy-show
    usage: neutron qos-policy-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent] [--prefix PREFIX]
-                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-D] [-F FIELD]
                                   POLICY
 
 Show information of a given qos policy.
@@ -8525,9 +7821,6 @@ Show information of a given qos policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -8543,7 +7836,7 @@ neutron qos-policy-update
 
 .. code-block:: console
 
-   usage: neutron qos-policy-update [-h] [--request-format {json}] [--name NAME]
+   usage: neutron qos-policy-update [-h] [--name NAME]
                                     [--description DESCRIPTION]
                                     [--shared | --no-shared]
                                     POLICY
@@ -8559,9 +7852,6 @@ Update a given qos policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name of the QoS policy.
@@ -8586,8 +7876,7 @@ neutron quota-default-show
    usage: neutron quota-default-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [--tenant-id tenant-id]
+                                     [--prefix PREFIX] [--tenant-id tenant-id]
 
 Show default quotas for a given tenant.
 
@@ -8595,9 +7884,6 @@ Show default quotas for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id``
   tenant-id
@@ -8610,8 +7896,7 @@ neutron quota-delete
 
 .. code-block:: console
 
-   usage: neutron quota-delete [-h] [--request-format {json}]
-                               [--tenant-id tenant-id]
+   usage: neutron quota-delete [-h] [--tenant-id tenant-id]
 
 Delete defined quotas of a given tenant.
 
@@ -8619,9 +7904,6 @@ Delete defined quotas of a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id``
   tenant-id
@@ -8637,7 +7919,6 @@ neutron quota-list
    usage: neutron quota-list [-h] [-f {csv,html,json,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--print-empty]
                              [--noindent] [--quote {all,minimal,none,nonnumeric}]
-                             [--request-format {json}]
 
 List quotas of all tenants who have non-default quota values.
 
@@ -8645,9 +7926,6 @@ List quotas of all tenants who have non-default quota values.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 .. _neutron_quota-show:
 
@@ -8659,7 +7937,7 @@ neutron quota-show
    usage: neutron quota-show [-h] [-f {html,json,shell,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--print-empty]
                              [--noindent] [--prefix PREFIX]
-                             [--request-format {json}] [--tenant-id tenant-id]
+                             [--tenant-id tenant-id]
 
 Show quotas for a given tenant.
 
@@ -8667,9 +7945,6 @@ Show quotas for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id``
   tenant-id
@@ -8685,10 +7960,9 @@ neutron quota-update
    usage: neutron quota-update [-h] [-f {html,json,shell,table,value,yaml}]
                                [-c COLUMN] [--max-width <integer>]
                                [--print-empty] [--noindent] [--prefix PREFIX]
-                               [--request-format {json}] [--tenant-id tenant-id]
-                               [--network networks] [--subnet subnets]
-                               [--port ports] [--router routers]
-                               [--floatingip floatingips]
+                               [--tenant-id tenant-id] [--network networks]
+                               [--subnet subnets] [--port ports]
+                               [--router routers] [--floatingip floatingips]
                                [--security-group security_groups]
                                [--security-group-rule security_group_rules]
                                [--vip vips] [--pool pools] [--member members]
@@ -8703,9 +7977,6 @@ Update a given tenant's quotas.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id``
   tenant-id
@@ -8769,8 +8040,7 @@ neutron rbac-create
    usage: neutron rbac-create [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent] [--prefix PREFIX]
-                              [--request-format {json}] [--tenant-id TENANT_ID]
-                              --type {qos-policy,network}
+                              [--tenant-id TENANT_ID] --type {qos-policy,network}
                               [--target-tenant TARGET_TENANT] --action
                               {access_as_external,access_as_shared}
                               RBAC_OBJECT
@@ -8786,9 +8056,6 @@ Create a RBAC policy for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -8810,8 +8077,7 @@ neutron rbac-delete
 
 .. code-block:: console
 
-   usage: neutron rbac-delete [-h] [--request-format {json}]
-                              RBAC_POLICY [RBAC_POLICY ...]
+   usage: neutron rbac-delete [-h] RBAC_POLICY [RBAC_POLICY ...]
 
 Delete a RBAC policy.
 
@@ -8825,9 +8091,6 @@ Delete a RBAC policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_rbac-list:
 
 neutron rbac-list
@@ -8838,8 +8101,8 @@ neutron rbac-list
    usage: neutron rbac-list [-h] [-f {csv,html,json,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--print-empty]
                             [--noindent] [--quote {all,minimal,none,nonnumeric}]
-                            [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                            [--sort-key FIELD] [--sort-dir {asc,desc}]
+                            [-D] [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                            [--sort-dir {asc,desc}]
 
 List RBAC policies that belong to a given tenant.
 
@@ -8847,9 +8110,6 @@ List RBAC policies that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -8882,8 +8142,7 @@ neutron rbac-show
 
    usage: neutron rbac-show [-h] [-f {html,json,shell,table,value,yaml}]
                             [-c COLUMN] [--max-width <integer>] [--print-empty]
-                            [--noindent] [--prefix PREFIX]
-                            [--request-format {json}] [-D] [-F FIELD]
+                            [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                             RBAC_POLICY
 
 Show information of a given RBAC policy.
@@ -8897,9 +8156,6 @@ Show information of a given RBAC policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -8915,9 +8171,7 @@ neutron rbac-update
 
 .. code-block:: console
 
-   usage: neutron rbac-update [-h] [--request-format {json}]
-                              [--target-tenant TARGET_TENANT]
-                              RBAC_POLICY
+   usage: neutron rbac-update [-h] [--target-tenant TARGET_TENANT] RBAC_POLICY
 
 Update RBAC policy for given tenant.
 
@@ -8930,9 +8184,6 @@ Update RBAC policy for given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--target-tenant TARGET_TENANT``
   ID of the tenant to which the RBAC policy will be
@@ -8948,10 +8199,9 @@ neutron router-create
    usage: neutron router-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [--tenant-id TENANT_ID]
-                                [--admin-state-down] [--description DESCRIPTION]
-                                [--flavor FLAVOR] [--distributed {True,False}]
-                                [--ha {True,False}]
+                                [--tenant-id TENANT_ID] [--admin-state-down]
+                                [--description DESCRIPTION] [--flavor FLAVOR]
+                                [--distributed {True,False}] [--ha {True,False}]
                                 [--availability-zone-hint AVAILABILITY_ZONE]
                                 NAME
 
@@ -8966,9 +8216,6 @@ Create a router for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -9000,8 +8247,7 @@ neutron router-delete
 
 .. code-block:: console
 
-   usage: neutron router-delete [-h] [--request-format {json}]
-                                ROUTER [ROUTER ...]
+   usage: neutron router-delete [-h] ROUTER [ROUTER ...]
 
 Delete a given router.
 
@@ -9015,9 +8261,6 @@ Delete a given router.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_router-gateway-clear:
 
 neutron router-gateway-clear
@@ -9025,7 +8268,7 @@ neutron router-gateway-clear
 
 .. code-block:: console
 
-   usage: neutron router-gateway-clear [-h] [--request-format {json}] ROUTER
+   usage: neutron router-gateway-clear [-h] ROUTER
 
 Remove an external network gateway from a router.
 
@@ -9039,9 +8282,6 @@ Remove an external network gateway from a router.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_router-gateway-set:
 
 neutron router-gateway-set
@@ -9049,8 +8289,7 @@ neutron router-gateway-set
 
 .. code-block:: console
 
-   usage: neutron router-gateway-set [-h] [--request-format {json}]
-                                     [--enable-snat] [--disable-snat]
+   usage: neutron router-gateway-set [-h] [--enable-snat] [--disable-snat]
                                      [--fixed-ip subnet_id=SUBNET,ip_address=IP_ADDR]
                                      ROUTER EXTERNAL-NETWORK
 
@@ -9068,9 +8307,6 @@ Set the external network gateway for a router.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--enable-snat``
   Enable source NAT on the router gateway.
@@ -9092,8 +8328,7 @@ neutron router-interface-add
 
 .. code-block:: console
 
-   usage: neutron router-interface-add [-h] [--request-format {json}]
-                                       ROUTER INTERFACE
+   usage: neutron router-interface-add [-h] ROUTER INTERFACE
 
 Add an internal network interface to a router.
 
@@ -9103,18 +8338,15 @@ Add an internal network interface to a router.
   ID or name of the router.
 
 ``INTERFACE``
-  The format is "SUBNET|subnet=SUBNET|port=PORT". Either
-  a subnet or port must be specified. Both ID and name
-  are accepted as SUBNET or PORT. Note that "subnet="
-  can be omitted when specifying a subnet.
+  The format is "SUBNET|subnet=SUBNET|port=PORT". Either a subnet
+  or port must be specified. Both ID and name are accepted as
+  SUBNET or PORT. Note that "subnet=" can be omitted when
+  specifying a subnet.
 
 **Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 .. _neutron_router-interface-delete:
 
@@ -9123,8 +8355,7 @@ neutron router-interface-delete
 
 .. code-block:: console
 
-   usage: neutron router-interface-delete [-h] [--request-format {json}]
-                                          ROUTER INTERFACE
+   usage: neutron router-interface-delete [-h] ROUTER INTERFACE
 
 Remove an internal network interface from a router.
 
@@ -9134,18 +8365,15 @@ Remove an internal network interface from a router.
   ID or name of the router.
 
 ``INTERFACE``
-  The format is "SUBNET|subnet=SUBNET|port=PORT". Either
-  a subnet or port must be specified. Both ID and name
-  are accepted as SUBNET or PORT. Note that "subnet="
-  can be omitted when specifying a subnet.
+  The format is "SUBNET|subnet=SUBNET|port=PORT". Either a subnet
+  or port must be specified. Both ID and name are accepted as
+  SUBNET or PORT. Note that "subnet=" can be omitted when
+  specifying a subnet.
 
 **Optional arguments:**
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 .. _neutron_router-list:
 
@@ -9157,9 +8385,9 @@ neutron router-list
    usage: neutron router-list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]
-                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+                              [--quote {all,minimal,none,nonnumeric}] [-D]
+                              [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                              [--sort-dir {asc,desc}]
 
 List routers that belong to a given tenant.
 
@@ -9167,9 +8395,6 @@ List routers that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9205,8 +8430,7 @@ neutron router-list-on-l3-agent
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
-                                          [--request-format {json}] [-D]
-                                          [-F FIELD]
+                                          [-D] [-F FIELD]
                                           L3_AGENT
 
 List the routers on a L3 agent.
@@ -9220,9 +8444,6 @@ List the routers on a L3 agent.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9241,9 +8462,8 @@ neutron router-port-list
    usage: neutron router-port-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--request-format {json}] [-D] [-F FIELD]
-                                   [-P SIZE] [--sort-key FIELD]
+                                   [--quote {all,minimal,none,nonnumeric}] [-D]
+                                   [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                    [--sort-dir {asc,desc}]
                                    ROUTER
 
@@ -9258,9 +8478,6 @@ List ports that belong to a given tenant, with specified router.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9293,8 +8510,7 @@ neutron router-show
 
    usage: neutron router-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
-                              [--noindent] [--prefix PREFIX]
-                              [--request-format {json}] [-D] [-F FIELD]
+                              [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                               ROUTER
 
 Show information of a given router.
@@ -9308,9 +8524,6 @@ Show information of a given router.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9326,8 +8539,7 @@ neutron router-update
 
 .. code-block:: console
 
-   usage: neutron router-update [-h] [--request-format {json}] [--name NAME]
-                                [--description DESCRIPTION]
+   usage: neutron router-update [-h] [--name NAME] [--description DESCRIPTION]
                                 [--admin-state-up {True,False}]
                                 [--distributed {True,False}]
                                 [--route destination=CIDR,nexthop=IP_ADDR | --no-routes]
@@ -9344,9 +8556,6 @@ Update router's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Updated name of the router.
@@ -9381,9 +8590,7 @@ neutron security-group-create
                                         [-f {html,json,shell,table,value,yaml}]
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
-                                        [--prefix PREFIX]
-                                        [--request-format {json}]
-                                        [--tenant-id TENANT_ID]
+                                        [--prefix PREFIX] [--tenant-id TENANT_ID]
                                         [--description DESCRIPTION]
                                         NAME
 
@@ -9399,9 +8606,6 @@ Create a security group.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
 
@@ -9415,8 +8619,7 @@ neutron security-group-delete
 
 .. code-block:: console
 
-   usage: neutron security-group-delete [-h] [--request-format {json}]
-                                        SECURITY_GROUP [SECURITY_GROUP ...]
+   usage: neutron security-group-delete [-h] SECURITY_GROUP [SECURITY_GROUP ...]
 
 Delete a given security group.
 
@@ -9430,9 +8633,6 @@ Delete a given security group.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_security-group-list:
 
 neutron security-group-list
@@ -9444,9 +8644,8 @@ neutron security-group-list
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
                                       [--quote {all,minimal,none,nonnumeric}]
-                                      [--request-format {json}] [-D] [-F FIELD]
-                                      [-P SIZE] [--sort-key FIELD]
-                                      [--sort-dir {asc,desc}]
+                                      [-D] [-F FIELD] [-P SIZE]
+                                      [--sort-key FIELD] [--sort-dir {asc,desc}]
 
 List security groups that belong to a given tenant.
 
@@ -9454,9 +8653,6 @@ List security groups that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9492,7 +8688,6 @@ neutron security-group-rule-create
                                              [-c COLUMN] [--max-width <integer>]
                                              [--print-empty] [--noindent]
                                              [--prefix PREFIX]
-                                             [--request-format {json}]
                                              [--tenant-id TENANT_ID]
                                              [--description DESCRIPTION]
                                              [--direction {ingress,egress}]
@@ -9516,9 +8711,6 @@ Create a security group rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -9556,7 +8748,7 @@ neutron security-group-rule-delete
 
 .. code-block:: console
 
-   usage: neutron security-group-rule-delete [-h] [--request-format {json}]
+   usage: neutron security-group-rule-delete [-h]
                                              SECURITY_GROUP_RULE
                                              [SECURITY_GROUP_RULE ...]
 
@@ -9572,9 +8764,6 @@ Delete a given security group rule.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_security-group-rule-list:
 
 neutron security-group-rule-list
@@ -9587,8 +8776,7 @@ neutron security-group-rule-list
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
                                            [--quote {all,minimal,none,nonnumeric}]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD] [-P SIZE]
+                                           [-D] [-F FIELD] [-P SIZE]
                                            [--sort-key FIELD]
                                            [--sort-dir {asc,desc}]
                                            [--no-nameconv]
@@ -9599,9 +8787,6 @@ List security group rules that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9639,9 +8824,7 @@ neutron security-group-rule-show
                                            [-f {html,json,shell,table,value,yaml}]
                                            [-c COLUMN] [--max-width <integer>]
                                            [--print-empty] [--noindent]
-                                           [--prefix PREFIX]
-                                           [--request-format {json}] [-D]
-                                           [-F FIELD]
+                                           [--prefix PREFIX] [-D] [-F FIELD]
                                            SECURITY_GROUP_RULE
 
 Show information of a given security group rule.
@@ -9655,9 +8838,6 @@ Show information of a given security group rule.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9677,8 +8857,7 @@ neutron security-group-show
                                       [-f {html,json,shell,table,value,yaml}]
                                       [-c COLUMN] [--max-width <integer>]
                                       [--print-empty] [--noindent]
-                                      [--prefix PREFIX] [--request-format {json}]
-                                      [-D] [-F FIELD]
+                                      [--prefix PREFIX] [-D] [-F FIELD]
                                       SECURITY_GROUP
 
 Show information of a given security group.
@@ -9692,9 +8871,6 @@ Show information of a given security group.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9710,8 +8886,8 @@ neutron security-group-update
 
 .. code-block:: console
 
-   usage: neutron security-group-update [-h] [--request-format {json}]
-                                        [--name NAME] [--description DESCRIPTION]
+   usage: neutron security-group-update [-h] [--name NAME]
+                                        [--description DESCRIPTION]
                                         SECURITY_GROUP
 
 Update a given security group.
@@ -9725,9 +8901,6 @@ Update a given security group.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Updated name of the security group.
@@ -9747,8 +8920,8 @@ neutron service-provider-list
                                         [-c COLUMN] [--max-width <integer>]
                                         [--print-empty] [--noindent]
                                         [--quote {all,minimal,none,nonnumeric}]
-                                        [--request-format {json}] [-D] [-F FIELD]
-                                        [-P SIZE] [--sort-key FIELD]
+                                        [-D] [-F FIELD] [-P SIZE]
+                                        [--sort-key FIELD]
                                         [--sort-dir {asc,desc}]
 
 List service providers.
@@ -9757,9 +8930,6 @@ List service providers.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9793,8 +8963,8 @@ neutron subnet-create
    usage: neutron subnet-create [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                [--request-format {json}] [--tenant-id TENANT_ID]
-                                [--name NAME] [--description DESCRIPTION]
+                                [--tenant-id TENANT_ID] [--name NAME]
+                                [--description DESCRIPTION]
                                 [--gateway GATEWAY_IP | --no-gateway]
                                 [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                                 [--host-route destination=CIDR,nexthop=IP_ADDR]
@@ -9822,9 +8992,6 @@ Create a subnet for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -9892,8 +9059,7 @@ neutron subnet-delete
 
 .. code-block:: console
 
-   usage: neutron subnet-delete [-h] [--request-format {json}]
-                                SUBNET [SUBNET ...]
+   usage: neutron subnet-delete [-h] SUBNET [SUBNET ...]
 
 Delete a given subnet.
 
@@ -9907,9 +9073,6 @@ Delete a given subnet.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_subnet-list:
 
 neutron subnet-list
@@ -9920,9 +9083,9 @@ neutron subnet-list
    usage: neutron subnet-list [-h] [-f {csv,html,json,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
                               [--noindent]
-                              [--quote {all,minimal,none,nonnumeric}]
-                              [--request-format {json}] [-D] [-F FIELD] [-P SIZE]
-                              [--sort-key FIELD] [--sort-dir {asc,desc}]
+                              [--quote {all,minimal,none,nonnumeric}] [-D]
+                              [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                              [--sort-dir {asc,desc}]
 
 List subnets that belong to a given tenant.
 
@@ -9930,9 +9093,6 @@ List subnets that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9965,8 +9125,7 @@ neutron subnet-show
 
    usage: neutron subnet-show [-h] [-f {html,json,shell,table,value,yaml}]
                               [-c COLUMN] [--max-width <integer>] [--print-empty]
-                              [--noindent] [--prefix PREFIX]
-                              [--request-format {json}] [-D] [-F FIELD]
+                              [--noindent] [--prefix PREFIX] [-D] [-F FIELD]
                               SUBNET
 
 Show information of a given subnet.
@@ -9980,9 +9139,6 @@ Show information of a given subnet.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -9998,8 +9154,7 @@ neutron subnet-update
 
 .. code-block:: console
 
-   usage: neutron subnet-update [-h] [--request-format {json}] [--name NAME]
-                                [--description DESCRIPTION]
+   usage: neutron subnet-update [-h] [--name NAME] [--description DESCRIPTION]
                                 [--gateway GATEWAY_IP | --no-gateway]
                                 [--allocation-pool start=IP_ADDR,end=IP_ADDR]
                                 [--host-route destination=CIDR,nexthop=IP_ADDR]
@@ -10018,9 +9173,6 @@ Update subnet's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name of this subnet.
@@ -10063,8 +9215,7 @@ neutron subnetpool-create
    usage: neutron subnetpool-create [-h] [-f {html,json,shell,table,value,yaml}]
                                     [-c COLUMN] [--max-width <integer>]
                                     [--print-empty] [--noindent]
-                                    [--prefix PREFIX] [--request-format {json}]
-                                    [--tenant-id TENANT_ID]
+                                    [--prefix PREFIX] [--tenant-id TENANT_ID]
                                     [--description DESCRIPTION]
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
@@ -10085,9 +9236,6 @@ Create a subnetpool for a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -10126,8 +9274,7 @@ neutron subnetpool-delete
 
 .. code-block:: console
 
-   usage: neutron subnetpool-delete [-h] [--request-format {json}]
-                                    SUBNETPOOL [SUBNETPOOL ...]
+   usage: neutron subnetpool-delete [-h] SUBNETPOOL [SUBNETPOOL ...]
 
 Delete a given subnetpool.
 
@@ -10141,9 +9288,6 @@ Delete a given subnetpool.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_subnetpool-list:
 
 neutron subnetpool-list
@@ -10154,9 +9298,8 @@ neutron subnetpool-list
    usage: neutron subnetpool-list [-h] [-f {csv,html,json,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent]
-                                  [--quote {all,minimal,none,nonnumeric}]
-                                  [--request-format {json}] [-D] [-F FIELD]
-                                  [-P SIZE] [--sort-key FIELD]
+                                  [--quote {all,minimal,none,nonnumeric}] [-D]
+                                  [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                   [--sort-dir {asc,desc}]
 
 List subnetpools that belong to a given tenant.
@@ -10165,9 +9308,6 @@ List subnetpools that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10201,7 +9341,7 @@ neutron subnetpool-show
    usage: neutron subnetpool-show [-h] [-f {html,json,shell,table,value,yaml}]
                                   [-c COLUMN] [--max-width <integer>]
                                   [--print-empty] [--noindent] [--prefix PREFIX]
-                                  [--request-format {json}] [-D] [-F FIELD]
+                                  [-D] [-F FIELD]
                                   SUBNETPOOL
 
 Show information of a given subnetpool.
@@ -10215,9 +9355,6 @@ Show information of a given subnetpool.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10233,8 +9370,7 @@ neutron subnetpool-update
 
 .. code-block:: console
 
-   usage: neutron subnetpool-update [-h] [--request-format {json}]
-                                    [--description DESCRIPTION]
+   usage: neutron subnetpool-update [-h] [--description DESCRIPTION]
                                     [--min-prefixlen MIN_PREFIXLEN]
                                     [--max-prefixlen MAX_PREFIXLEN]
                                     [--default-prefixlen DEFAULT_PREFIXLEN]
@@ -10254,9 +9390,6 @@ Update subnetpool's information.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--description DESCRIPTION``
   Description of subnetpool.
@@ -10295,8 +9428,9 @@ neutron tag-add
 
 .. code-block:: console
 
-   usage: neutron tag-add [-h] [--request-format {json}] --resource-type
-                          {network} --resource RESOURCE --tag TAG
+   usage: neutron tag-add [-h] --resource-type
+                          {network,subnet,port,router,subnetpool} --resource
+                          RESOURCE --tag TAG
 
 Add a tag into the resource.
 
@@ -10305,10 +9439,7 @@ Add a tag into the resource.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--resource-type {network}``
+``--resource-type {network,subnet,port,router,subnetpool}``
   Resource Type.
 
 ``--resource RESOURCE``
@@ -10324,8 +9455,9 @@ neutron tag-remove
 
 .. code-block:: console
 
-   usage: neutron tag-remove [-h] [--request-format {json}] --resource-type
-                             {network} --resource RESOURCE [--all | --tag TAG]
+   usage: neutron tag-remove [-h] --resource-type
+                             {network,subnet,port,router,subnetpool} --resource
+                             RESOURCE [--all | --tag TAG]
 
 Remove a tag on the resource.
 
@@ -10334,10 +9466,7 @@ Remove a tag on the resource.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--resource-type {network}``
+``--resource-type {network,subnet,port,router,subnetpool}``
   Resource Type.
 
 ``--resource RESOURCE``
@@ -10356,8 +9485,9 @@ neutron tag-replace
 
 .. code-block:: console
 
-   usage: neutron tag-replace [-h] [--request-format {json}] --resource-type
-                              {network} --resource RESOURCE --tag TAG
+   usage: neutron tag-replace [-h] --resource-type
+                              {network,subnet,port,router,subnetpool} --resource
+                              RESOURCE --tag TAG
 
 Replace all tags on the resource.
 
@@ -10366,10 +9496,7 @@ Replace all tags on the resource.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
-``--resource-type {network}``
+``--resource-type {network,subnet,port,router,subnetpool}``
   Resource Type.
 
 ``--resource RESOURCE``
@@ -10390,7 +9517,6 @@ neutron vpn-endpoint-group-create
                                             [-c COLUMN] [--max-width <integer>]
                                             [--print-empty] [--noindent]
                                             [--prefix PREFIX]
-                                            [--request-format {json}]
                                             [--tenant-id TENANT_ID] [--name NAME]
                                             [--description DESCRIPTION] --type
                                             TYPE --value ENDPOINTS
@@ -10401,9 +9527,6 @@ Create a VPN endpoint group.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -10428,7 +9551,7 @@ neutron vpn-endpoint-group-delete
 
 .. code-block:: console
 
-   usage: neutron vpn-endpoint-group-delete [-h] [--request-format {json}]
+   usage: neutron vpn-endpoint-group-delete [-h]
                                             ENDPOINT_GROUP [ENDPOINT_GROUP ...]
 
 Delete a given VPN endpoint group.
@@ -10443,9 +9566,6 @@ Delete a given VPN endpoint group.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_vpn-endpoint-group-list:
 
 neutron vpn-endpoint-group-list
@@ -10458,8 +9578,8 @@ neutron vpn-endpoint-group-list
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
                                           [--quote {all,minimal,none,nonnumeric}]
-                                          [--request-format {json}] [-D]
-                                          [-F FIELD] [-P SIZE] [--sort-key FIELD]
+                                          [-D] [-F FIELD] [-P SIZE]
+                                          [--sort-key FIELD]
                                           [--sort-dir {asc,desc}]
 
 List VPN endpoint groups that belong to a given tenant.
@@ -10468,9 +9588,6 @@ List VPN endpoint groups that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10505,9 +9622,7 @@ neutron vpn-endpoint-group-show
                                           [-f {html,json,shell,table,value,yaml}]
                                           [-c COLUMN] [--max-width <integer>]
                                           [--print-empty] [--noindent]
-                                          [--prefix PREFIX]
-                                          [--request-format {json}] [-D]
-                                          [-F FIELD]
+                                          [--prefix PREFIX] [-D] [-F FIELD]
                                           ENDPOINT_GROUP
 
 Show a specific VPN endpoint group.
@@ -10521,9 +9636,6 @@ Show a specific VPN endpoint group.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10539,8 +9651,7 @@ neutron vpn-endpoint-group-update
 
 .. code-block:: console
 
-   usage: neutron vpn-endpoint-group-update [-h] [--request-format {json}]
-                                            [--name NAME]
+   usage: neutron vpn-endpoint-group-update [-h] [--name NAME]
                                             [--description DESCRIPTION]
                                             ENDPOINT_GROUP
 
@@ -10555,9 +9666,6 @@ Update a given VPN endpoint group.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Set a name for the endpoint group.
@@ -10576,9 +9684,7 @@ neutron vpn-ikepolicy-create
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
-                                       [--prefix PREFIX]
-                                       [--request-format {json}]
-                                       [--tenant-id TENANT_ID]
+                                       [--prefix PREFIX] [--tenant-id TENANT_ID]
                                        [--description DESCRIPTION]
                                        [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                        [--encryption-algorithm ENCRYPTION_ALGORITHM]
@@ -10598,9 +9704,6 @@ Create an IKE policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -10636,8 +9739,7 @@ neutron vpn-ikepolicy-delete
 
 .. code-block:: console
 
-   usage: neutron vpn-ikepolicy-delete [-h] [--request-format {json}]
-                                       IKEPOLICY [IKEPOLICY ...]
+   usage: neutron vpn-ikepolicy-delete [-h] IKEPOLICY [IKEPOLICY ...]
 
 Delete a given IKE policy.
 
@@ -10651,9 +9753,6 @@ Delete a given IKE policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_vpn-ikepolicy-list:
 
 neutron vpn-ikepolicy-list
@@ -10664,9 +9763,8 @@ neutron vpn-ikepolicy-list
    usage: neutron vpn-ikepolicy-list [-h] [-f {csv,html,json,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--quote {all,minimal,none,nonnumeric}]
-                                     [--request-format {json}] [-D] [-F FIELD]
-                                     [-P SIZE] [--sort-key FIELD]
+                                     [--quote {all,minimal,none,nonnumeric}] [-D]
+                                     [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                      [--sort-dir {asc,desc}]
 
 List IKE policies that belong to a tenant.
@@ -10675,9 +9773,6 @@ List IKE policies that belong to a tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10711,8 +9806,7 @@ neutron vpn-ikepolicy-show
    usage: neutron vpn-ikepolicy-show [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [-D] [-F FIELD]
+                                     [--prefix PREFIX] [-D] [-F FIELD]
                                      IKEPOLICY
 
 Show information of a given IKE policy.
@@ -10726,9 +9820,6 @@ Show information of a given IKE policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10744,8 +9835,8 @@ neutron vpn-ikepolicy-update
 
 .. code-block:: console
 
-   usage: neutron vpn-ikepolicy-update [-h] [--request-format {json}]
-                                       [--name NAME] [--description DESCRIPTION]
+   usage: neutron vpn-ikepolicy-update [-h] [--name NAME]
+                                       [--description DESCRIPTION]
                                        [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                        [--encryption-algorithm ENCRYPTION_ALGORITHM]
                                        [--phase1-negotiation-mode {main}]
@@ -10764,9 +9855,6 @@ Update a given IKE policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Updated name of the IKE policy.
@@ -10807,7 +9895,6 @@ neutron vpn-ipsecpolicy-create
                                          [-c COLUMN] [--max-width <integer>]
                                          [--print-empty] [--noindent]
                                          [--prefix PREFIX]
-                                         [--request-format {json}]
                                          [--tenant-id TENANT_ID]
                                          [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                          [--description DESCRIPTION]
@@ -10829,9 +9916,6 @@ Create an IPsec policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -10870,8 +9954,7 @@ neutron vpn-ipsecpolicy-delete
 
 .. code-block:: console
 
-   usage: neutron vpn-ipsecpolicy-delete [-h] [--request-format {json}]
-                                         IPSECPOLICY [IPSECPOLICY ...]
+   usage: neutron vpn-ipsecpolicy-delete [-h] IPSECPOLICY [IPSECPOLICY ...]
 
 Delete a given IPsec policy.
 
@@ -10885,9 +9968,6 @@ Delete a given IPsec policy.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_vpn-ipsecpolicy-list:
 
 neutron vpn-ipsecpolicy-list
@@ -10899,9 +9979,8 @@ neutron vpn-ipsecpolicy-list
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
                                        [--quote {all,minimal,none,nonnumeric}]
-                                       [--request-format {json}] [-D] [-F FIELD]
-                                       [-P SIZE] [--sort-key FIELD]
-                                       [--sort-dir {asc,desc}]
+                                       [-D] [-F FIELD] [-P SIZE]
+                                       [--sort-key FIELD] [--sort-dir {asc,desc}]
 
 List IPsec policies that belong to a given tenant connection.
 
@@ -10909,9 +9988,6 @@ List IPsec policies that belong to a given tenant connection.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10946,8 +10022,7 @@ neutron vpn-ipsecpolicy-show
                                        [-f {html,json,shell,table,value,yaml}]
                                        [-c COLUMN] [--max-width <integer>]
                                        [--print-empty] [--noindent]
-                                       [--prefix PREFIX]
-                                       [--request-format {json}] [-D] [-F FIELD]
+                                       [--prefix PREFIX] [-D] [-F FIELD]
                                        IPSECPOLICY
 
 Show information of a given IPsec policy.
@@ -10961,9 +10036,6 @@ Show information of a given IPsec policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -10979,8 +10051,7 @@ neutron vpn-ipsecpolicy-update
 
 .. code-block:: console
 
-   usage: neutron vpn-ipsecpolicy-update [-h] [--request-format {json}]
-                                         [--name NAME]
+   usage: neutron vpn-ipsecpolicy-update [-h] [--name NAME]
                                          [--auth-algorithm {sha1,sha256,sha384,sha512}]
                                          [--description DESCRIPTION]
                                          [--encapsulation-mode {tunnel,transport}]
@@ -11001,9 +10072,6 @@ Update a given IPsec policy.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Updated name of the IPsec policy.
@@ -11045,9 +10113,9 @@ neutron vpn-service-create
    usage: neutron vpn-service-create [-h] [-f {html,json,shell,table,value,yaml}]
                                      [-c COLUMN] [--max-width <integer>]
                                      [--print-empty] [--noindent]
-                                     [--prefix PREFIX] [--request-format {json}]
-                                     [--tenant-id TENANT_ID] [--admin-state-down]
-                                     [--name NAME] [--description DESCRIPTION]
+                                     [--prefix PREFIX] [--tenant-id TENANT_ID]
+                                     [--admin-state-down] [--name NAME]
+                                     [--description DESCRIPTION]
                                      ROUTER [SUBNET]
 
 Create a VPN service.
@@ -11065,9 +10133,6 @@ Create a VPN service.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--tenant-id TENANT_ID``
   The owner tenant ID.
@@ -11088,8 +10153,7 @@ neutron vpn-service-delete
 
 .. code-block:: console
 
-   usage: neutron vpn-service-delete [-h] [--request-format {json}]
-                                     VPNSERVICE [VPNSERVICE ...]
+   usage: neutron vpn-service-delete [-h] VPNSERVICE [VPNSERVICE ...]
 
 Delete a given VPN service.
 
@@ -11103,9 +10167,6 @@ Delete a given VPN service.
 ``-h, --help``
   show this help message and exit
 
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
-
 .. _neutron_vpn-service-list:
 
 neutron vpn-service-list
@@ -11116,9 +10177,8 @@ neutron vpn-service-list
    usage: neutron vpn-service-list [-h] [-f {csv,html,json,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent]
-                                   [--quote {all,minimal,none,nonnumeric}]
-                                   [--request-format {json}] [-D] [-F FIELD]
-                                   [-P SIZE] [--sort-key FIELD]
+                                   [--quote {all,minimal,none,nonnumeric}] [-D]
+                                   [-F FIELD] [-P SIZE] [--sort-key FIELD]
                                    [--sort-dir {asc,desc}]
 
 List VPN service configurations that belong to a given tenant.
@@ -11127,9 +10187,6 @@ List VPN service configurations that belong to a given tenant.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -11163,7 +10220,7 @@ neutron vpn-service-show
    usage: neutron vpn-service-show [-h] [-f {html,json,shell,table,value,yaml}]
                                    [-c COLUMN] [--max-width <integer>]
                                    [--print-empty] [--noindent] [--prefix PREFIX]
-                                   [--request-format {json}] [-D] [-F FIELD]
+                                   [-D] [-F FIELD]
                                    VPNSERVICE
 
 Show information of a given VPN service.
@@ -11177,9 +10234,6 @@ Show information of a given VPN service.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``-D, --show-details``
   Show detailed information.
@@ -11195,7 +10249,7 @@ neutron vpn-service-update
 
 .. code-block:: console
 
-   usage: neutron vpn-service-update [-h] [--request-format {json}] [--name NAME]
+   usage: neutron vpn-service-update [-h] [--name NAME]
                                      [--description DESCRIPTION]
                                      [--admin-state-up {True,False}]
                                      VPNSERVICE
@@ -11211,9 +10265,6 @@ Update a given VPN service.
 
 ``-h, --help``
   show this help message and exit
-
-``--request-format {json}``
-  **DEPRECATED!** Only JSON request format is supported.
 
 ``--name NAME``
   Name for the VPN service.
