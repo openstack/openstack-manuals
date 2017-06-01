@@ -9,7 +9,7 @@ tens of terabytes to petabyte configurations, and includes all data management
 functionality by default.
 
 For user documentation, see the
-`Nexenta Documentation Center <http://docs.nexenta.com>`__.
+`Nexenta Documentation Center <https://nexenta.com/products/documentation>`__.
 
 Supported operations
 ~~~~~~~~~~~~~~~~~~~~
