@@ -9,7 +9,9 @@ This guide describes how to install and configure OpenStack for high
 availability. It supplements the Installation Tutorials and Guides
 and assumes that you are familiar with the material in those guides.
 
-This guide documents OpenStack Ocata, Newton, and Mitaka releases.
+.. note::
+   This guide documents OpenStack Ocata, Newton, and Mitaka releases
+   and may not apply to EOL releases Kilo and Liberty.
 
 .. warning::
 
