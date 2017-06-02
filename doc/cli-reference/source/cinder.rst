@@ -20,11 +20,10 @@
 Block Storage service (cinder) command-line client
 ==================================================
 
-The cinder client is the command-line interface (CLI) for the
-Block Storage service (cinder) API
-and its extensions.
+The cinder client is the command-line interface (CLI) for
+the Block Storage service (cinder) API and its extensions.
 
-This chapter documents :command:`cinder` version ``2.0.1``.
+This chapter documents :command:`cinder` version ``2.1.0``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -39,14 +38,16 @@ cinder usage
 
 .. code-block:: console
 
-   usage: cinder [--version] [-d] [--os-auth-system <auth-system>]
-                 [--service-type <service-type>] [--service-name <service-name>]
+   usage: cinder [--version] [-d] [--os-auth-system <os-auth-system>]
+                 [--os-auth-type <os-auth-type>] [--service-type <service-type>]
+                 [--service-name <service-name>]
                  [--volume-service-name <volume-service-name>]
                  [--os-endpoint-type <os-endpoint-type>]
                  [--endpoint-type <endpoint-type>]
                  [--os-volume-api-version <volume-api-ver>]
-                 [--bypass-url <bypass-url>] [--retries <retries>]
-                 [--profile HMAC_KEY] [--os-auth-strategy <auth-strategy>]
+                 [--bypass-url <bypass-url>] [--os-endpoint <os-endpoint>]
+                 [--retries <retries>] [--profile HMAC_KEY]
+                 [--os-auth-strategy <auth-strategy>]
                  [--os-username <auth-user-name>] [--os-password <auth-password>]
                  [--os-tenant-name <auth-tenant-name>]
                  [--os-tenant-id <auth-tenant-id>] [--os-auth-url <auth-url>]
@@ -696,7 +697,7 @@ cinder usage
   relationship.
 
 ``reset-state``
-  Explicitly updates the volume state in the Cinder
+  Explicitly updates the entity state in the Cinder
   database.
 
 ``retype``
@@ -851,8 +852,12 @@ cinder optional arguments
 ``-d, --debug``
   Shows debugging output.
 
-``--os-auth-system <auth-system>``
-  Defaults to ``env[OS_AUTH_SYSTEM]``.
+``--os-auth-system <os-auth-system>``
+  **DEPRECATED!** Use --os-auth-type.Defaults to
+  ``env[OS_AUTH_SYSTEM]``.
+
+``--os-auth-type <os-auth-type>``
+  Defaults to ``env[OS_AUTH_TYPE]``.
 
 ``--service-type <service-type>``
   Service type. For most actions, default is volume.
@@ -878,8 +883,13 @@ cinder optional arguments
   part).Default= ``env[OS_VOLUME_API_VERSION]``.
 
 ``--bypass-url <bypass-url>``
+  **DEPRECATED!** Use os_endpoint. Use this API endpoint
+  instead of the Service Catalog. Defaults to
+  ``env[CINDERCLIENT_BYPASS_URL]``.
+
+``--os-endpoint <os-endpoint>``
   Use this API endpoint instead of the Service Catalog.
-  Defaults to ``env[CINDERCLIENT_BYPASS_URL]``.
+  Defaults to ``env[CINDER_ENDPOINT]``.
 
 ``--retries <retries>``
   Number of retries.
@@ -982,12 +992,12 @@ cinder attachment-create
 
 .. code-block:: console
 
-   usage: cinder attachment-create [--instance <instance>] [--connect <connect>]
+   usage: cinder attachment-create [--connect <connect>]
                                    [--initiator <initiator>] [--ip <ip>]
                                    [--host <host>] [--platform <platform>]
                                    [--ostype <ostype>] [--multipath <multipath>]
                                    [--mountpoint <mountpoint>]
-                                   <volume>
+                                   <volume> <server_id>
 
 Create an attachment for a cinder volume.
 
@@ -996,10 +1006,10 @@ Create an attachment for a cinder volume.
 ``<volume>``
   Name or ID of volume or volumes to attach.
 
-**Optional arguments:**
+``<server_id>``
+  ID of server attaching to.
 
-``--instance <instance>``
-  UUID of Instance attaching to. Default=None.
+**Optional arguments:**
 
 ``--connect <connect>``
   Make an active connection using provided connector
@@ -1021,7 +1031,7 @@ Create an attachment for a cinder volume.
   OS type. Default=linux2.
 
 ``--multipath <multipath>``
-  OS type. Default=False.
+  Use multipath. Default=False.
 
 ``--mountpoint <mountpoint>``
   Mountpoint volume will be attached at. Default=None.
@@ -1074,7 +1084,7 @@ Lists all attachments.
   Default=None.
 
 ``--limit <limit>``
-  Maximum number of attachemnts to return. Default=None.
+  Maximum number of attachments to return. Default=None.
 
 ``--sort <key>[:<direction>]``
   Comma-separated list of sort keys and directions in
@@ -1142,7 +1152,7 @@ and where it's being connected to.
   OS type. Default=linux2.
 
 ``--multipath <multipath>``
-  OS type. Default=False.
+  Use multipath. Default=False.
 
 ``--mountpoint <mountpoint>``
   Mountpoint volume will be attached at. Default=None.
@@ -1859,8 +1869,8 @@ cinder encryption-type-create
 .. code-block:: console
 
    usage: cinder encryption-type-create [--cipher <cipher>]
-                                        [--key_size <key_size>]
-                                        [--control_location <control_location>]
+                                        [--key-size <key_size>]
+                                        [--control-location <control_location>]
                                         <volume_type> <provider>
 
 Creates encryption type for a volume type. Admin only.
@@ -1887,11 +1897,11 @@ Creates encryption type for a volume type. Admin only.
   aes-xts-plain64.
   Default=None.
 
-``--key_size <key_size>``
+``--key-size <key_size>``
   Size of encryption key, in bits. For example, 128 or
   256. Default=None.
 
-``--control_location <control_location>``
+``--control-location <control_location>``
   Notional service where encryption is performed. Valid
   values are "front-end" or "back-end." For example,
   front-end=Nova. Default is "front-end."
@@ -1963,7 +1973,7 @@ Update encryption type information for a volume type (Admin Only).
 
 ``--provider <provider>``
   Class providing encryption support (e.g.
-  LuksEncryptor) (Optional)
+  LuksEncryptor)
 
 ``--cipher [<cipher>]``
   Encryption
@@ -1979,17 +1989,16 @@ Update encryption type information for a volume type (Admin Only).
   to
   set
   to
-  provider default. (Optional)
+  provider default.
 
 ``--key-size [<key-size>]``
   Size of the encryption key, in bits (e.g., 128, 256).
   Provide parameter without value to set to provider
-  default. (Optional)
+  default.
 
 ``--control-location <control-location>``
   Notional service where encryption is performed (e.g.,
   front-end=Nova). Values: 'front-end', 'back-end'
-  (Optional)
 
 .. _cinder_endpoints:
 
@@ -2692,8 +2701,8 @@ Lists all manageable volumes.
 
 ``--marker <marker>``
   Begin returning volumes that appear later in the
-  volume list than that represented by this volume id.
-  Default=None.
+  volume list than that represented by this reference.
+  This reference should be json like. Default=None.
 
 ``--limit <limit>``
   Maximum number of volumes to return. Default=None.
@@ -3337,51 +3346,47 @@ cinder reset-state
 
 .. code-block:: console
 
-   usage: cinder reset-state [--state <state>] [--attach-status <attach-status>]
+   usage: cinder reset-state [--type <type>] [--state <state>]
+                             [--attach-status <attach-status>]
                              [--reset-migration-status]
-                             <volume> [<volume> ...]
+                             <entity> [<entity> ...]
 
-Explicitly updates the volume state in the Cinder database. Note that this
-does not affect whether the volume is actually attached to the Nova compute
-host or instance and can result in an unusable volume. Being a database change
-only, this has no impact on the true state of the volume and may not match the
-actual state. This can render a volume unusable in the case of change to the
-'available' state.
+Explicitly updates the entity state in the Cinder database. Being a database
+change only, this has no impact on the true state of the entity and may not
+match the actual state. This can render a entity unusable in the case of
+changing to the 'available' state.
 
 **Positional arguments:**
 
-``<volume>``
-  Name or ID of volume to modify.
+``<entity>``
+  Name or ID of entity to update.
 
 **Optional arguments:**
 
+``--type <type>``
+  Type of entity to update. Available resources are:
+  'volume', 'snapshot', 'backup', 'group' (since 3.20)
+  and 'group-snapshot' (since 3.19), Default=volume.
+
 ``--state <state>``
-  The state to assign to the volume. Valid values are
-  "available",
-  "error",
-  "creating",
-  "deleting",
-  "in-use",
-  "attaching",
-  "detaching",
-  "error_deleting"
-  and
-  "maintenance". NOTE: This command simply changes the
-  state of the Volume in the DataBase with no regard to
-  actual status, exercise caution when using.
-  Default=None, that means the state is unchanged.
+  The state to assign to the entity. NOTE: This command
+  simply changes the state of the entity in the database
+  with no regard to actual status, exercise caution when
+  using. Default=None, that means the state is
+  unchanged.
 
 ``--attach-status <attach-status>``
-  The attach status to assign to the volume in the
-  DataBase, with no regard to the actual status. Valid
-  values are "attached" and "detached". Default=None,
-  that means the status is unchanged.
+  This only used in volume entity. The attach status to
+  assign to the volume in the DataBase, with no regard
+  to the actual status. Valid values are "attached" and
+  "detached". Default=None, that means the status is
+  unchanged.
 
 ``--reset-migration-status``
-  Clears the migration status of the volume in the
-  DataBase that indicates the volume is source or
-  destination of volume migration, with no regard to the
-  actual status.
+  This only used in volume entity. Clears the migration
+  status of the volume in the DataBase that indicates
+  the volume is source or destination of volume
+  migration, with no regard to the actual status.
 
 .. _cinder_retype:
 
@@ -3686,8 +3691,8 @@ Lists all manageable snapshots.
 
 ``--marker <marker>``
   Begin returning volumes that appear later in the
-  volume list than that represented by this volume id.
-  Default=None.
+  volume list than that represented by this reference.
+  This reference should be json like. Default=None.
 
 ``--limit <limit>``
   Maximum number of volumes to return. Default=None.
