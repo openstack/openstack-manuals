@@ -74,3 +74,9 @@ troubleshoot your installation and back up your Compute volumes.
    blockstorage-volume-backed-image.rst
    blockstorage-get-capabilities.rst
    blockstorage-groups.rst
+
+.. note::
+
+   To enable the use of encrypted volumes, see the setup instructions in
+   `Create an encrypted volume type
+   <https://docs.openstack.org/admin-guide/dashboard-manage-volumes.html#create-an-encrypted-volume-type>`_.
