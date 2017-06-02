@@ -16,21 +16,40 @@
 
    * - Configuration option = Default value
      - Description
+
    * - **[oslo_messaging_rabbit]**
      -
+
    * - ``connection_factory`` = ``single``
+
      - (String) Connection factory implementation
+
    * - **[oslo_middleware]**
      -
+
    * - ``enable_proxy_headers_parsing`` = ``False``
+
      - (Boolean) Whether the application is behind a proxy or not. This determines if the middleware should parse the headers or not.
+
    * - ``max_request_body_size`` = ``114688``
+
      - (Integer) The maximum body size for each request, in bytes.
+
    * - ``secure_proxy_ssl_header`` = ``X-Forwarded-Proto``
-     - (String) DEPRECATED: The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
+
+     - (String) The HTTP Header that will be used to determine what the original request protocol scheme was, even if it was hidden by a SSL termination proxy.
+
+       - **Deprecated**
+
+         No deprecation reason provided for this option.
+
    * - **[retries]**
      -
+
    * - ``retries_number`` = ``5``
+
      - (Integer) Number of times to retry the request to client before failing
+
    * - ``retry_after`` = ``10``
+
      - (Integer) Time between the retries to client (in seconds).

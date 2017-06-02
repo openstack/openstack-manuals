@@ -16,9 +16,14 @@
 
    * - Configuration option = Default value
      - Description
+
    * - **[object_store_access]**
      -
+
    * - ``public_identity_ca_file`` = ``None``
+
      - (String) Location of ca certificate file to use for identity client requests via public endpoint
+
    * - ``public_object_store_ca_file`` = ``None``
+
      - (String) Location of ca certificate file to use for object-store client requests via public endpoint

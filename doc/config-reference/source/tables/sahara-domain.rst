@@ -16,11 +16,18 @@
 
    * - Configuration option = Default value
      - Description
+
    * - **[DEFAULT]**
      -
+
    * - ``proxy_user_domain_name`` = ``None``
+
      - (String) The domain Sahara will use to create new proxy users for Swift object access.
+
    * - ``proxy_user_role_names`` = ``Member``
+
      - (List) A list of the role names that the proxy user should assume through trust for Swift object access.
+
    * - ``use_domain_for_proxy_users`` = ``False``
+
      - (Boolean) Enables Sahara to use a domain for creating temporary proxy users to access Swift. If this is enabled a domain must be created for Sahara to use.
