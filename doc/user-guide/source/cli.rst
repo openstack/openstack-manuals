@@ -24,3 +24,4 @@ OpenStack command-line clients
    cli-create-and-manage-stacks.rst
    cli-ceilometer.rst
    trove-manage-db.rst
+   database-module-usage.rst
