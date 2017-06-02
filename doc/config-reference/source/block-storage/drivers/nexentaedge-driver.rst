@@ -11,7 +11,7 @@ technology to break new ground in terms of reliability, functionality and cost
 efficiency.
 
 For user documentation, see the
-`Nexenta Documentation Center <http://docs.nexenta.com>`_.
+`Nexenta Documentation Center <https://nexenta.com/products/documentation>`_.
 
 
 iSCSI driver
