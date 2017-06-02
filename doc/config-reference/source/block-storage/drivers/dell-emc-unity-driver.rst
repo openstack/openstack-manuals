@@ -28,6 +28,7 @@ Supported operations
 - Create, list, and delete volume snapshots.
 - Create a volume from a snapshot.
 - Copy an image to a volume.
+- Create an image from a volume.
 - Clone a volume.
 - Extend a volume.
 - Migrate a volume.
