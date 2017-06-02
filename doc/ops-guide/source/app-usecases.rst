@@ -182,11 +182,11 @@ to expand to 300,000 cores by 2015.
 Resources
 ---------
 
--  `“OpenStack in Production: A tale of 3 OpenStack
-   Clouds” <http://openstack-in-production.blogspot.de/2013/09/a-tale-of-3-openstack-clouds-50000.html>`_
+-  `OpenStack in Production: A tale of 3 OpenStack
+   Clouds <http://openstack-in-production.blogspot.de/2013/09/a-tale-of-3-openstack-clouds-50000.html>`_
 
--  `“Review of CERN Data Centre
-   Infrastructure” <http://cds.cern.ch/record/1457989/files/chep%202012%20CERN%20infrastructure%20final.pdf?version=1>`_
+-  `Review of CERN Data Centre
+   Infrastructure <http://cds.cern.ch/record/1457989/files/chep%202012%20CERN%20infrastructure%20final.pdf?version=1>`_
 
--  `“CERN Cloud Infrastructure User
-   Guide” <http://information-technology.web.cern.ch/book/cern-private-cloud-user-guide>`_
+-  `CERN Cloud Infrastructure User
+   Guide <http://information-technology.web.cern.ch/book/cern-private-cloud-user-guide>`_
