@@ -32,7 +32,7 @@ Configuring HAProxy
 
 #. Restart the HAProxy service.
 
-#. Locate your HAProxy instance on each OpenStack controller in your
+#. Locate your HAProxy instance on each OpenStack controller node in your
    environment. The following is an example ``/etc/haproxy/haproxy.cfg``
    configuration file. Configure your instance using the following
    configuration file, you will need a copy of it on each
