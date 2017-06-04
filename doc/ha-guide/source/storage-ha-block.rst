@@ -117,7 +117,7 @@ Edit the ``/etc/cinder/cinder.conf`` file. For example, on a RHEL-based system:
    nfs_mount_options = v3
 
    [database]
-   sql_connection = mysql://cinder:CINDER_DBPASS@10.0.0.11/cinder
+   connection = mysql://cinder:CINDER_DBPASS@10.0.0.11/cinder
    max_retries = -1
 
    [keystone_authtoken]
@@ -150,10 +150,10 @@ be filled in for you, resulting in a shorter configuration file:
    :linenos:
 
    # We have to use MySQL connection to store data:
-   sql_connection = mysql://cinder:CINDER_DBPASS@10.0.0.11/cinder
+   connection = mysql://cinder:CINDER_DBPASS@10.0.0.11/cinder
    # Alternatively, you can switch to pymysql,
    # a new Python 3 compatible library and use
-   # sql_connection = mysql+pymysql://cinder:CINDER_DBPASS@10.0.0.11/cinder
+   # connection = mysql+pymysql://cinder:CINDER_DBPASS@10.0.0.11/cinder
    # and be ready when everything moves to Python 3.
    # Ref: https://wiki.openstack.org/wiki/PyMySQL_evaluation
 
