@@ -119,8 +119,8 @@ the child cells.
 .. figure:: figures/Generic_CERN_Architecture.png
 
 Additional monitoring tools in use include
-`Flume <http://flume.apache.org/>`__, `Elastic
-Search <http://www.elasticsearch.org/>`__,
-`Kibana <http://www.elasticsearch.org/overview/kibana/>`__, and the CERN
+`Flume <https://flume.apache.org/>`__, `Elastic
+Search <https://www.elastic.co/>`__,
+`Kibana <https://www.elastic.co/products/kibana>`__, and the CERN
 developed `Lemon <http://lemon.web.cern.ch/lemon/index.shtml>`__
 project.
