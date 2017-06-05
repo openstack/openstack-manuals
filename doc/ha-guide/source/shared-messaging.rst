@@ -229,11 +229,17 @@ Configure the OpenStack components to use at least two RabbitMQ nodes.
 
 Use these steps to configurate all services using RabbitMQ:
 
-#. RabbitMQ HA cluster ``host:port`` pairs:
+#. RabbitMQ HA cluster Transport URL using ``[user:pass@]host:port`` format:
 
-   .. code-block:: console
+   .. code-block:: ini
 
-      rabbit_hosts=rabbit1:5672,rabbit2:5672,rabbit3:5672
+      transport_url = rabbit://RABBIT_USER:RABBIT_PASS@rabbit1:5672,
+      RABBIT_USER:RABBIT_PASS@rabbit2:5672,RABBIT_USER:RABBIT_PASS@rabbit3:5672
+
+   Replace ``RABBIT_USER`` with RabbitMQ username and ``RABBIT_PASS`` with
+   password for respective RabbitMQ host. For more information, see
+   `oslo messaging transport
+   <https://docs.openstack.org/developer/oslo.messaging/transport.html>`_.
 
 #. Retry connecting with RabbitMQ:
 
