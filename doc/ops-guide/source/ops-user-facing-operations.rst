@@ -2077,8 +2077,8 @@ no downtime (assuming QEMU 1.3+ and libvirt 1.0+ are used).
 
 **Ensuring Snapshots of Linux Guests Are Consistent**
 
-The following section is from Sébastien Han's `“OpenStack: Perform
-Consistent Snapshots” blog
+The following section is from Sébastien Han's `OpenStack: Perform
+Consistent Snapshots blog
 entry <http://www.sebastien-han.fr/blog/2012/12/10/openstack-perform-consistent-snapshots/>`__.
 
 A snapshot captures the state of the file system, but not the state of
