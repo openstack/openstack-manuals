@@ -22,7 +22,9 @@
      - (String) FSS additional retry list, separate by ;
    * - ``fss_debug`` = ``False``
      - (Boolean) Enable HTTP debugging to FSS
-   * - ``fss_pool`` =
-     - (Integer) FSS pool id in which FalconStor volumes are stored.
+   * - ``fss_pools`` = ``{}``
+     - (Dict) FSS pool ID list in which FalconStor volumes are stored. If you have only one pool, use ``A:<pool-id>``. You can also have up to two storage pools, P for primary and O for all supporting devices. The usage is ``P:<primary-pool-id>,O:<others-pool-id>``
    * - ``fss_san_secondary_ip`` =
      - (String) Specifies FSS secondary management IP to be used if san_ip is invalid or becomes inaccessible.
+   * - ``san_thin_provision`` =
+     - (Boolean) Enable FSS thin provision.
