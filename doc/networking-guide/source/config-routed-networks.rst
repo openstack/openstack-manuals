@@ -406,6 +406,12 @@ segment contains one IPv4 subnet and one IPv6 subnet.
    Compute service placement API (for the sake of brevity, only one of the
    segments is shown in this example).
 
+   .. note::
+
+      URLs differ depending on your OpenStack deployment. You can discover
+      the URL by executing the
+      :command:`openstack endpoint list | grep placement` command.
+
    .. code-block:: console
 
       $ SEGMENT_ID=053b7925-9a89-4489-9992-e164c8cc8763
