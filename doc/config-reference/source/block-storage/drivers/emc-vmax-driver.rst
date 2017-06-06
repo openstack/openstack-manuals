@@ -263,7 +263,7 @@ Setup VMAX drivers
    configure the ECOM, go to that directory and type ``TestSmiProvider.exe``
    for windows and ``./TestSmiProvider`` for linux
 
-   Use ``disco`` in ``TestSmiProvider`` to add an array. Use ``dv`` and examine
+   Use ``addsys`` in ``TestSmiProvider`` to add an array. Use ``dv`` and examine
    the output after the array is added. In advance of ``TestSmiProvider``,
    arrays need to be discovered on the Solutions Enabler by using the
    :command:`symcfg discover` command. Make sure that the arrays are recognized by the
@@ -349,7 +349,7 @@ Setup VMAX drivers
     Port number of the ECOM server which is packaged with SMI-S.
 
 ``EcomUserName`` and ``EcomPassword``
-    Cedentials for the ECOM server.
+    Credentials for the ECOM server.
 
 ``PortGroups``
     Supplies the names of VMAX port groups that have been pre-configured to
@@ -1368,7 +1368,7 @@ Use case 3 - Retype from compression disabled to compression enabled
 #. Set extra spec ``volume_backend_name`` as before.
 #. Set the new extra spec's compression as
    ``storagetype:disablecompression = False`` or DO NOT set this extra spec.
-#. Retype from volume type ``VAX_COMPRESSION_DISABLED`` to
+#. Retype from volume type ``VMAX_COMPRESSION_DISABLED`` to
    ``VMAX_COMPRESSION_ENABLED``.
 #. Check in Unisphere or symcli to see if the volume exists in storage group
    ``OS-<srp>-<servicelevel>-<workload>-SG``, and compression is enabled on
