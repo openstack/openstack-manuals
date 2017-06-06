@@ -23,7 +23,7 @@ Block Storage service (cinder) command-line client
 The cinder client is the command-line interface (CLI) for
 the Block Storage service (cinder) API and its extensions.
 
-This chapter documents :command:`cinder` version ``2.1.0``.
+This chapter documents :command:`cinder` version ``2.2.0``.
 
 For help on a specific :command:`cinder` command, enter:
 
@@ -558,6 +558,11 @@ cinder usage
 ``list``
   Lists all volumes.
 
+``list-filters``
+  (Supported by API versions 3.33 - 3.latest) [hint: use
+  '--os-volume-api-version' flag to show help message
+  for proper version]
+
 ``manage``
   Manage an existing volume.
 
@@ -853,7 +858,7 @@ cinder optional arguments
   Shows debugging output.
 
 ``--os-auth-system <os-auth-system>``
-  **DEPRECATED!** Use --os-auth-type.Defaults to
+  **DEPRECATED!** Use --os-auth-type. Defaults to
   ``env[OS_AUTH_SYSTEM]``.
 
 ``--os-auth-type <os-auth-type>``
@@ -1064,6 +1069,7 @@ cinder attachment-list
                                  [--marker <marker>] [--limit <limit>]
                                  [--sort <key>[:<direction>]]
                                  [--tenant [<tenant>]]
+                                 [--filters [<key=value> [<key=value> ...]]]
 
 Lists all attachments.
 
@@ -1073,10 +1079,16 @@ Lists all attachments.
   Shows details for all tenants. Admin only.
 
 ``--volume-id <volume-id>``
-  Filters results by a volume ID. Default=None.
+  Filters results by a volume ID. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--status <status>``
-  Filters results by a status. Default=None.
+  Filters results by a status. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--marker <marker>``
   Begin returning attachments that appear later in
@@ -1094,6 +1106,25 @@ Lists all attachments.
 
 ``--tenant [<tenant>]``
   Display information from single tenant (Admin only).
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_attachment-show:
 
@@ -1295,6 +1326,7 @@ cinder backup-list
                              [--status <status>] [--volume-id <volume-id>]
                              [--marker <marker>] [--limit <limit>]
                              [--sort <key>[:<direction>]]
+                             [--filters [<key=value> [<key=value> ...]]]
 
 Lists all backups.
 
@@ -1304,13 +1336,22 @@ Lists all backups.
   Shows details for all tenants. Admin only.
 
 ``--name <name>``
-  Filters results by a name. Default=None.
+  Filters results by a name. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--status <status>``
-  Filters results by a status. Default=None.
+  Filters results by a status. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--volume-id <volume-id>``
-  Filters results by a volume ID. Default=None.
+  Filters results by a volume ID. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--marker <marker>``
   Begin returning backups that appear later in the
@@ -1325,6 +1366,25 @@ Lists all backups.
   the form of <key>[:<asc|desc>]. Valid keys: id,
   status, size, availability_zone, name, bootable,
   created_at, reference. Default=None.
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_backup-reset-state:
 
@@ -2118,7 +2178,7 @@ cinder get-pools
 
 .. code-block:: console
 
-   usage: cinder get-pools [--detail]
+   usage: cinder get-pools [--detail] [--filters [<key=value> [<key=value> ...]]]
 
 Show pool information for backends. Admin only.
 
@@ -2126,6 +2186,25 @@ Show pool information for backends. Admin only.
 
 ``--detail``
   Show detailed information about pools.
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_group-create:
 
@@ -2220,6 +2299,7 @@ cinder group-list
 .. code-block:: console
 
    usage: cinder group-list [--all-tenants [<0|1>]]
+                            [--filters [<key=value> [<key=value> ...]]]
 
 Lists all groups.
 
@@ -2227,6 +2307,25 @@ Lists all groups.
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_group-show:
 
@@ -2295,6 +2394,7 @@ cinder group-snapshot-list
 
    usage: cinder group-snapshot-list [--all-tenants [<0|1>]] [--status <status>]
                                      [--group-id <group_id>]
+                                     [--filters [<key=value> [<key=value> ...]]]
 
 Lists all group snapshots.
 
@@ -2304,10 +2404,35 @@ Lists all group snapshots.
   Shows details for all tenants. Admin only.
 
 ``--status <status>``
-  Filters results by a status. Default=None.
+  Filters results by a status. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--group-id <group_id>``
-  Filters results by a group ID. Default=None.
+  Filters results by a group ID. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_group-snapshot-show:
 
@@ -2557,38 +2682,58 @@ cinder list
                       [--image_metadata [<key=value> [<key=value> ...]]]
                       [--marker <marker>] [--limit <limit>] [--fields <fields>]
                       [--sort <key>[:<direction>]] [--tenant [<tenant>]]
+                      [--filters [<key=value> [<key=value> ...]]]
 
 Lists all volumes.
 
 **Optional arguments:**
 
 ``--group_id <group_id>``
-  Filters results by a group_id. Default=None.
-  (Supported by API version 3.10 and later)
+  Filters results by a group_id. Default=None.This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead. (Supported by API
+  version 3.10 and later)
 
 ``--all-tenants [<0|1>]``
   Shows details for all tenants. Admin only.
 
 ``--name <name>``
-  Filters results by a name. Default=None.
+  Filters results by a name. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--status <status>``
-  Filters results by a status. Default=None.
+  Filters results by a status. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--bootable [<True|true|False|false>]``
-  Filters results by bootable status. Default=None.
+  Filters results by bootable status. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--migration_status <migration_status>``
   Filters results by a migration status. Default=None.
-  Admin only.
+  Admin only. This option is deprecated and will be
+  removed in newer release. Please use '--filters'
+  option which is introduced since 3.33 instead.
 
 ``--metadata [<key=value> [<key=value> ...]]``
   Filters results by a metadata key and value pair.
-  Default=None.
+  Default=None. This option is deprecated and will be
+  removed in newer release. Please use '--filters'
+  option which is introduced since 3.33 instead.
 
 ``--image_metadata [<key=value> [<key=value> ...]]``
   Filters results by a image metadata key and value
-  pair. Require volume api version >=3.4. Default=None.
+  pair. Require volume api version >=3.4.
+  Default=None.This option is deprecated and will be
+  removed in newer release. Please use '--filters'
+  option which is introduced since 3.33 instead.
   (Supported by API version 3.4 and later)
 
 ``--marker <marker>``
@@ -2614,6 +2759,25 @@ Lists all volumes.
 ``--tenant [<tenant>]``
   Display information from single tenant (Admin only).
 
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
+
 .. _cinder_list-extensions:
 
 cinder list-extensions
@@ -2623,6 +2787,22 @@ cinder list-extensions
 
    usage: cinder list-extensions
 
+
+.. _cinder_list-filters:
+
+cinder list-filters
+-------------------
+
+.. code-block:: console
+
+   usage: cinder list-filters [--resource <resource>]
+
+
+**Optional arguments:**
+
+``--resource <resource>``
+  Show enabled filters for specified resource.
+  Default=None.
 
 .. _cinder_manage:
 
@@ -2743,6 +2923,7 @@ cinder message-list
                               [--resource_uuid <resource_uuid>]
                               [--resource_type <type>] [--event_id <id>]
                               [--request_id <request_id>] [--level <level>]
+                              [--filters [<key=value> [<key=value> ...]]]
 
 Lists all messages.
 
@@ -2765,19 +2946,53 @@ Lists all messages.
   version 3.5 and later)
 
 ``--resource_uuid <resource_uuid>``
-  Filters results by a resource uuid. Default=None.
+  Filters results by a resource uuid. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--resource_type <type>``
-  Filters results by a resource type. Default=None.
+  Filters results by a resource type. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--event_id <id>``
-  Filters results by event id. Default=None.
+  Filters results by event id. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--request_id <request_id>``
-  Filters results by request id. Default=None.
+  Filters results by request id. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--level <level>``
   Filters results by the message level. Default=None.
+  This option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_message-show:
 
@@ -3376,17 +3591,17 @@ changing to the 'available' state.
   unchanged.
 
 ``--attach-status <attach-status>``
-  This only used in volume entity. The attach status to
-  assign to the volume in the DataBase, with no regard
-  to the actual status. Valid values are "attached" and
-  "detached". Default=None, that means the status is
-  unchanged.
+  This is only used for a volume entity. The attach
+  status to assign to the volume in the database, with
+  no regard to the actual status. Valid values are
+  "attached" and "detached". Default=None, that means
+  the status is unchanged.
 
 ``--reset-migration-status``
-  This only used in volume entity. Clears the migration
-  status of the volume in the DataBase that indicates
-  the volume is source or destination of volume
-  migration, with no regard to the actual status.
+  This is only used for a volume entity. Clears the
+  migration status of the volume in the DataBase that
+  indicates the volume is source or destination of
+  volume migration, with no regard to the actual status.
 
 .. _cinder_retype:
 
@@ -3587,6 +3802,7 @@ cinder snapshot-list
                                [--marker <marker>] [--limit <limit>]
                                [--sort <key>[:<direction>]] [--tenant [<tenant>]]
                                [--metadata [<key=value> [<key=value> ...]]]
+                               [--filters [<key=value> [<key=value> ...]]]
 
 Lists all snapshots.
 
@@ -3596,13 +3812,22 @@ Lists all snapshots.
   Shows details for all tenants. Admin only.
 
 ``--name <name>``
-  Filters results by a name. Default=None.
+  Filters results by a name. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--status <status>``
-  Filters results by a status. Default=None.
+  Filters results by a status. Default=None. This option
+  is deprecated and will be removed in newer release.
+  Please use '--filters' option which is introduced
+  since 3.33 instead.
 
 ``--volume-id <volume-id>``
-  Filters results by a volume ID. Default=None.
+  Filters results by a volume ID. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead.
 
 ``--marker <marker>``
   Begin returning snapshots that appear later in the
@@ -3623,8 +3848,30 @@ Lists all snapshots.
 
 ``--metadata [<key=value> [<key=value> ...]]``
   Filters results by a metadata key and value pair.
-  Require volume api version >=3.22. Default=None.
-  (Supported by API version 3.22 and later)
+  Require volume api version >=3.22. Default=None. This
+  option is deprecated and will be removed in newer
+  release. Please use '--filters' option which is
+  introduced since 3.33 instead. (Supported by API
+  version 3.22 and later)
+
+``--filters [<key=value> [<key=value> ...]]``
+  Filter
+  key
+  and
+  value
+  pairs.
+  Please
+  use
+  'cinder
+  list-filters'
+  to
+  check
+  enabled
+  filters
+  from
+  server,
+  Default=None. (Supported by API version 3.33 and
+  later)
 
 .. _cinder_snapshot-manage:
 
