@@ -17,14 +17,14 @@ To complete these tasks, use these parameters on the
      - Information
    * - Boot an instance from an image and attach a non-bootable
        volume.
-     - ``--block-device``
+     - ``--block-device-mapping``
      -  :ref:`Boot_instance_from_image_and_attach_non-bootable_volume`
    * - Create a volume from an image and boot an instance from that
        volume.
-     - ``--block-device``
+     - ``--volume``
      - :ref:`Create_volume_from_image_and_boot_instance`
-   * - Boot from an existing source image, volume, or snapshot.
-     - ``--block-device``
+   * - Boot from an existing source volume or snapshot.
+     - ``--volume``
      - :ref:`Create_volume_from_image_and_boot_instance`
 
 .. note::
@@ -56,10 +56,10 @@ system.
       | availability_zone   | nova                                 |
       | bootable            | false                                |
       | consistencygroup_id | None                                 |
-      | created_at          | 2016-11-25T10:37:08.850997           |
+      | created_at          | 2017-06-10T13:45:19.588269           |
       | description         | None                                 |
       | encrypted           | False                                |
-      | id                  | b8f7bbec-6274-4cd7-90e7-60916a5e75d4 |
+      | id                  | e77b30a9-2c1b-4f3a-b161-e09685296a83 |
       | migration_status    | None                                 |
       | multiattach         | False                                |
       | name                | my-volume                            |
@@ -69,9 +69,9 @@ system.
       | snapshot_id         | None                                 |
       | source_volid        | None                                 |
       | status              | creating                             |
-      | type                | None                                 |
+      | type                | lvmdriver-1                          |
       | updated_at          | None                                 |
-      | user_id             | 0678735e449149b0a42076e12dd54e28     |
+      | user_id             | 07a3f50419714d90b55edb6505b7cc1d     |
       +---------------------+--------------------------------------+
 
 #. List volumes.
@@ -82,50 +82,91 @@ system.
       +--------------------------------------+--------------+-----------+------+-------------+
       | ID                                   | Display Name | Status    | Size | Attached to |
       +--------------------------------------+--------------+-----------+------+-------------+
-      | b8f7bbec-6274-4cd7-90e7-60916a5e75d4 | my-volume    | available |    8 |             |
+      | e77b30a9-2c1b-4f3a-b161-e09685296a83 | my-volume    | available |    8 |             |
       +--------------------------------------+--------------+-----------+------+-------------+
 
 #. Boot an instance from an image and attach the empty volume to the
-   instance.
+   instance, use the ``--block-device-mapping`` parameter.
+
+   For example:
 
    .. code-block:: console
 
-      $ openstack server create --flavor 2 --image 98901246-af91-43d8-b5e6-a4506aa8f369 \
+      $ openstack server create --flavor FLAVOR --image IMAGE \
+        --block-device-mapping DEV-NAME=ID:TYPE:SIZE:DELETE_ON_TERMINATE \
+        NAME
+
+   The parameters are:
+
+   - ``--flavor``
+     The flavor ID or name.
+
+   - ``--image``
+     The image ID or name.
+
+   - ``--block-device-mapping``
+     DEV-NAME=ID:TYPE:SIZE:DELETE_ON_TERMINATE
+
+     **DEV-NAME**
+       The device name to attch the volume when the instance is booted.
+
+     **ID**
+       The ID of the source object.
+
+     **TYPE**
+       Which type object to create the volume.
+       ``volume`` chooses volume to create. ``snapshot`` chooses snapshot
+       to create.
+
+     **SIZE**
+       The size(GB) of the volume that is created.
+
+     **DELETE_ON_TERMINATE**
+       What to do with the volume when the instance is terminated.
+       ``false`` does not delete the volume. ``true`` deletes the
+       volume.
+
+   - ``NAME``. The name for the server.
+
+   .. code-block:: console
+
+      $ openstack server create --flavor 2 --image c76cf108-1760-45aa-8559-28176f2c0530 \
         --block-device-mapping \
-        myVolumeAttach=b8f7bbec-6274-4cd7-90e7-60916a5e75d4:volume:8:false \
+        myVolumeAttach=e77b30a9-2c1b-4f3a-b161-e09685296a83:volume:8:false \
         myInstanceWithVolume
       +--------------------------------------+--------------------------------------------+
       | Field                                | Value                                      |
       +--------------------------------------+--------------------------------------------+
       | OS-DCF:diskConfig                    | MANUAL                                     |
-      | OS-EXT-AZ:availability_zone          | nova                                       |
-      | OS-EXT-SRV-ATTR:host                 | -                                          |
-      | OS-EXT-SRV-ATTR:hypervisor_hostname  | -                                          |
+      | OS-EXT-AZ:availability_zone          |                                            |
+      | OS-EXT-SRV-ATTR:host                 | None                                       |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                                       |
       | OS-EXT-SRV-ATTR:instance_name        | instance-00000004                          |
-      | OS-EXT-STS:power_state               | 0                                          |
+      | OS-EXT-STS:power_state               | NOSTATE                                    |
       | OS-EXT-STS:task_state                | scheduling                                 |
       | OS-EXT-STS:vm_state                  | building                                   |
-      | OS-SRV-USG:launched_at               | -                                          |
-      | OS-SRV-USG:terminated_at             | -                                          |
+      | OS-SRV-USG:launched_at               | None                                       |
+      | OS-SRV-USG:terminated_at             | None                                       |
       | accessIPv4                           |                                            |
       | accessIPv6                           |                                            |
-      | adminPass                            | ZaiYeC8iucgU                               |
+      | addresses                            |                                            |
+      | adminPass                            | UAwJJ7FZWxmA                               |
       | config_drive                         |                                            |
-      | created                              | 2014-05-09T16:34:50Z                       |
+      | created                              | 2017-06-10T13:50:47Z                       |
       | flavor                               | m1.small (2)                               |
       | hostId                               |                                            |
-      | id                                   | 1e1797f3-1662-49ff-ae8c-a77e82ee1571       |
-      | image                                | cirros-0.3.5-x86_64-uec (98901246-af91-... |
-      | key_name                             | -                                          |
-      | metadata                             | {}                                         |
-      | name                                 | myInstanceWithVolume                       |
-      | os-extended-volumes:volumes_attached | [{"id": "b8f7bbec-6274-4cd7-90e7-60916a... |
+      | id                                   | 555cf3e2-9ba3-46bf-9aa5-0a0c73d5b538       |
+      | image                                | cirros-0.3.5-x86_64-uec (c76cf108-1760-... |
+      | key_name                             | None                                       |
+      | name                                 | InstanceWithVolume                         |
+      | os-extended-volumes:volumes_attached | [{u'id': u'e77b30a9-2c1b-4f3a-b161-e096... |
       | progress                             | 0                                          |
-      | security_groups                      | default                                    |
+      | project_id                           | ff903e4825c74f8dbc1aea6432e4f2fd           |
+      | properties                           |                                            |
+      | security_groups                      | [{u'name': u'default'}]                    |
       | status                               | BUILD                                      |
-      | tenant_id                            | ccef9e62b1e645df98728fb2b3076f27           |
-      | updated                              | 2014-05-09T16:34:51Z                       |
-      | user_id                              | fef060ae7bfd4024b3edb97dff59017a           |
+      | updated                              | 2017-06-10T13:50:48Z                       |
+      | user_id                              | 07a3f50419714d90b55edb6505b7cc1d           |
       +--------------------------------------+--------------------------------------------+
 
 .. _Create_volume_from_image_and_boot_instance:
@@ -145,10 +186,10 @@ the volume to boot an instance.
       +-----------------+---------------------------------+--------+
       | ID              | Name                            | Status |
       +-----------------+---------------------------------+--------+
-      | 484e05af-a14... | Fedora-x86_64-20-20131211.1-sda | active |
-      | 98901246-af9... | cirros-0.3.5-x86_64-uec         | active |
-      | b6e95589-7eb... | cirros-0.3.5-x86_64-uec-kernel  | active |
-      | c90893ea-e73... | cirros-0.3.5-x86_64-uec-ramdisk | active |
+      | dfcd8407-486... | Fedora-x86_64-20-20131211.1-sda | active |
+      | c76cf108-176... | cirros-0.3.5-x86_64-uec         | active |
+      | 02d6b27f-40b... | cirros-0.3.5-x86_64-uec-kernel  | active |
+      | 47b90a42-8f4... | cirros-0.3.5-x86_64-uec-ramdisk | active |
       +-----------------+---------------------------------+--------+
 
    Note the ID of the image that you want to use to create a volume.
@@ -160,26 +201,26 @@ the volume to boot an instance.
 
    .. code-block:: console
 
-      $ openstack image show 98901246-af9d-4b61-bea8-09cc6dc41829
+      $ openstack image show dfcd8407-4865-4d82-93f3-7fef323a5951
       +------------------+------------------------------------------------------+
       | Field            | Value                                                |
       +------------------+------------------------------------------------------+
-      | checksum         | ee1eca47dc88f4879d8a229cc70a07c6                     |
+      | checksum         | eb9139e4942121f22bbc2afc0400b2a4                     |
       | container_format | bare                                                 |
-      | created_at       | 2016-10-08T14:59:05Z                                 |
+      | created_at       | 2017-06-10T06:46:26Z                                 |
       | disk_format      | qcow2                                                |
-      | file             | /v2/images/9fef3b2d-c35d-4b61-bea8-09cc6dc41829/file |
-      | id               | 98901246-af9d-4b61-bea8-09cc6dc41829                 |
+      | file             | /v2/images/dfcd8407-4865-4d82-93f3-7fef323a5951/file |
+      | id               | dfcd8407-4865-4d82-93f3-7fef323a5951                 |
       | min_disk         | 0                                                    |
       | min_ram          | 0                                                    |
-      | name             | cirros-0.3.5-x86_64-uec                              |
-      | owner            | 8d8ef3cdf2b54c25831cbb409ad9ae86                     |
+      | name             | Fedora-x86_64-20-20131211.1-sda                      |
+      | owner            | 5ed8a204e27d462a8709bc8ec491e873                     |
       | protected        | False                                                |
       | schema           | /v2/schemas/image                                    |
-      | size             | 13287936                                             |
+      | size             | 25165824                                             |
       | status           | active                                               |
       | tags             |                                                      |
-      | updated_at       | 2016-10-19T09:12:52Z                                 |
+      | updated_at       | 2017-06-10T13:36:55Z                                 |
       | virtual_size     | None                                                 |
       | visibility       | public                                               |
       +------------------+------------------------------------------------------+
@@ -201,49 +242,6 @@ the volume to boot an instance.
 
    Note the ID of the flavor that you want to use to create a volume.
 
-#. To create a bootable volume from an image and launch an instance from
-   this volume, use the ``--block-device`` parameter.
-
-   For example:
-
-   .. code-block:: console
-
-      $ openstack server create --flavor FLAVOR --block-device \
-        source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX \
-        NAME
-
-   The parameters are:
-
-   - ``--flavor``
-     The flavor ID or name.
-
-   - ``--block-device``
-     source=SOURCE,id=ID,dest=DEST,size=SIZE,shutdown=PRESERVE,bootindex=INDEX
-
-     **source=SOURCE**
-       The type of object used to create the block device. Valid values
-       are ``volume``, ``snapshot``, ``image``, and ``blank``.
-
-     **id=ID**
-       The ID of the source object.
-
-     **dest=DEST**
-       The type of the target virtual device. Valid values are ``volume``
-       and ``local``.
-
-     **size=SIZE**
-       The size of the volume that is created.
-
-     **shutdown={preserve\|remove}**
-       What to do with the volume when the instance is deleted.
-       ``preserve`` does not delete the volume. ``remove`` deletes the
-       volume.
-
-     **bootindex=INDEX**
-       Orders the boot disks. Use ``0`` to boot from this volume.
-
-   - ``NAME``. The name for the server.
-
 #. Create a bootable volume from an image. Cinder makes a volume bootable
    when ``--image`` parameter is passed.
 
@@ -251,48 +249,48 @@ the volume to boot an instance.
 
       $ openstack volume create --image IMAGE_ID --size SIZE_IN_GB bootable_volume
 
-#. Create a VM from previously created bootable volume. The volume is not
+#. Create a VM from previously created bootable volume,
+   use the ``--volume`` parameter. The volume is not
    deleted when the instance is terminated.
 
    .. code-block:: console
 
       $ openstack server create --flavor 2 --volume VOLUME_ID \
-        --block-device source=volume,id=$VOLUME_ID,dest=volume,size=10,shutdown=preserve,bootindex=0 \
         myInstanceFromVolume
-      +--------------------------------------+--------------------------------+
-      | Field                                | Value                          |
-      +--------------------------------------+--------------------------------+
-      | OS-EXT-STS:task_state                | scheduling                     |
-      | image                                | Attempt to boot from volume    |
-      |                                      | - no image supplied            |
-      | OS-EXT-STS:vm_state                  | building                       |
-      | OS-EXT-SRV-ATTR:instance_name        | instance-00000003              |
-      | OS-SRV-USG:launched_at               | None                           |
-      | flavor                               | m1.small                       |
-      | id                                   | 2e65c854-dba9-4f68-8f08-fe3... |
-      | security_groups                      | [{u'name': u'default'}]        |
-      | user_id                              | 352b37f5c89144d4ad053413926... |
-      | OS-DCF:diskConfig                    | MANUAL                         |
-      | accessIPv4                           |                                |
-      | accessIPv6                           |                                |
-      | progress                             | 0                              |
-      | OS-EXT-STS:power_state               | 0                              |
-      | OS-EXT-AZ:availability_zone          | nova                           |
-      | config_drive                         |                                |
-      | status                               | BUILD                          |
-      | updated                              | 2014-02-02T13:29:54Z           |
-      | hostId                               |                                |
-      | OS-EXT-SRV-ATTR:host                 | None                           |
-      | OS-SRV-USG:terminated_at             | None                           |
-      | key_name                             | None                           |
-      | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                           |
-      | name                                 | myInstanceFromVolume           |
-      | adminPass                            | TzjqyGsRcJo9                   |
-      | tenant_id                            | f7ac731cc11f40efbc03a9f9e1d... |
-      | created                              | 2014-02-02T13:29:53Z           |
-      | os-extended-volumes:volumes_attached | [{"id": "2fff50ab..."}]        |
-      | metadata                             | {}                             |
-      +--------------------------------------+--------------------------------+
+      +--------------------------------------+----------------------------------+
+      | Field                                | Value                            |
+      +--------------------------------------+----------------------------------+
+      | OS-DCF:diskConfig                    | MANUAL                           |
+      | OS-EXT-AZ:availability_zone          |                                  |
+      | OS-EXT-SRV-ATTR:host                 | None                             |
+      | OS-EXT-SRV-ATTR:hypervisor_hostname  | None                             |
+      | OS-EXT-SRV-ATTR:instance_name        | instance-00000005                |
+      | OS-EXT-STS:power_state               | NOSTATE                          |
+      | OS-EXT-STS:task_state                | scheduling                       |
+      | OS-EXT-STS:vm_state                  | building                         |
+      | OS-SRV-USG:launched_at               | None                             |
+      | OS-SRV-USG:terminated_at             | None                             |
+      | accessIPv4                           |                                  |
+      | accessIPv6                           |                                  |
+      | addresses                            |                                  |
+      | adminPass                            | dizZcBMnWH8i                     |
+      | config_drive                         |                                  |
+      | created                              | 2017-06-10T14:15:10Z             |
+      | flavor                               | m1.small (2)                     |
+      | hostId                               |                                  |
+      | id                                   | 7074c21a-22b3-4e91-9ea1-6a22c... |
+      | image                                |                                  |
+      | key_name                             | None                             |
+      | name                                 | myInstanceFromVolume             |
+      | os-extended-volumes:volumes_attached | [{u'id': u'3da01e5a-7d81-4a34... |
+      | progress                             | 0                                |
+      | project_id                           | ff903e4825c74f8dbc1aea6432e4f2fd |
+      | properties                           |                                  |
+      | security_groups                      | [{u'name': u'default'}]          |
+      | status                               | BUILD                            |
+      | updated                              | 2017-06-10T14:15:11Z             |
+      | user_id                              | 07a3f50419714d90b55edb6505b7cc1d |
+      +--------------------------------------+----------------------------------+
 
 #. List volumes to see the bootable volume and its attached
    ``myInstanceFromVolume`` instance.
@@ -303,8 +301,8 @@ the volume to boot an instance.
       +---------------------+-----------------+--------+------+---------------------------------+
       | ID                  | Display Name    | Status | Size | Attached to                     |
       +---------------------+-----------------+--------+------+---------------------------------+
-      | c612f739-8592-44c4- | bootable_volume | in-use |  10  | Attached to myInstanceFromVolume|
-      | b7d4-0fee2fe1da0c   |                 |        |      | on /dev/vda                     |
+      | 3da01e5a-7d81-4a34- | bootable_volume | in-use |    2 | Attached to myInstanceFromVolume|
+      | a182-1958d10f7758   |                 |        |      | on /dev/vda                     |
       +---------------------+-----------------+--------+------+---------------------------------+
 
 .. _Attach_swap_or_ephemeral_disk_to_an_instance:
