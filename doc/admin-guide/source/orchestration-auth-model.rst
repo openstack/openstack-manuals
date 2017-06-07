@@ -71,7 +71,7 @@ with the following information:
 
 * Whether to enable impersonation.
 
-The OpenStack Identity service provides a *trust id*,
+The OpenStack Identity service provides a *trust ID*,
 which is consumed by *only* the trustee to obtain a
 *trust scoped token*. This token is limited in scope,
 such that the trustee has limited access to those
@@ -94,11 +94,11 @@ Trusts authorization involves the following steps:
    For example, to ensure that the heat process can access only
    those services that are expected while impersonating a stack owner.
 
-#. Orchestration stores the encrypted *trust id* in the Orchestration
+#. Orchestration stores the encrypted *trust ID* in the Orchestration
    database.
 
 #. When a deferred operation is required, the Orchestration service
-   retrieves the *trust id* and requests a trust scoped token which
+   retrieves the *trust ID* and requests a trust scoped token which
    enables the service user to impersonate the stack owner during
    the deferred operation. Impersonation is helpful, for example,
    so the service user can launch Compute instances on
@@ -120,11 +120,22 @@ parameter in the ``heat.conf`` file:
    deferred_auth_method=password
 
 To enable the trusts authorization model, change the following
-parameter in the ``heat.conf`` file:
+two parameters in the ``heat.conf`` file.
+
+Specify the authentication method for the deferred Orchestration actions.
+This parameter triggers creating *trust ID* and stores it
+in the Orchestration database:
 
 .. code-block:: ini
 
    deferred_auth_method=trusts
+
+Allow reauthentication with the trust scoped token issued
+by using the stored *trust ID* for long running tasks:
+
+.. code-block:: ini
+
+   reauthentication_auth_method=trusts
 
 To specify the trustor roles that it delegates to trustee during
 authorization, specify the ``trusts_delegated_roles`` parameter
