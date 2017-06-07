@@ -249,7 +249,7 @@ segment contains one IPv4 subnet and one IPv6 subnet.
    .. code-block:: console
 
       $ openstack network segment create --physical-network provider2 \
-         --network-type vlan --segment 2016 --network multisegment1 segment2
+        --network-type vlan --segment 2016 --network multisegment1 segment2
       +------------------+--------------------------------------+
       | Field            | Value                                |
       +------------------+--------------------------------------+
@@ -414,11 +414,11 @@ segment contains one IPv4 subnet and one IPv6 subnet.
 
    .. code-block:: console
 
-      $ nova aggregate-list
+      $ openstack aggregate list
       +----+---------------------------------------------------------+-------------------+
       | Id | Name                                                    | Availability Zone |
       +----+---------------------------------------------------------+-------------------+
-      | 10 | Neutron segment id 053b7925-9a89-4489-9992-e164c8cc8763 |                   |
+      | 10 | Neutron segment id 053b7925-9a89-4489-9992-e164c8cc8763 | None              |
       +----+---------------------------------------------------------+-------------------+
 
 #. Launch one or more instances. Each instance obtains IP addresses according
