@@ -182,8 +182,82 @@ Cost
  incompatibility and interoperability issues.
 
 Performance
- The latency of storage I/O requests indicates performance. Performance
- requirements affect which solution you choose.
+  Performance of block based storage is typically measured in the maximum read
+  and write operations to non-contiguous storage locations per second. This
+  measurement typically applies to SAN, hard drives, and solid state drives.
+  While IOPS can be broadly measured and is not an official benchmark, many
+  vectors like to be used by vendors to communicate performance levels. Since
+  there are no real standards for measuring IOPS, vendor test results may vary,
+  sometimes wildly. However, along with transfer rate which measures the speed
+  that data can be transferred to contiguous storage locations, IOPS can be
+  used in a performance evaluation. Typically, transfer rate is represented by
+  a bytes per second calculation but IOPS is measured by an integer.
+
+To calculate IOPS for a single drive you could use:
+  IOPS = 1 / (AverageLatency + AverageSeekTime)
+  For example:
+  Average Latency for Single Disk = 2.99ms or .00299 seconds
+  Average Seek Time for Single Disk = 4.7ms or .0047 seconds
+  IOPS = 1/(.00299 + .0047)
+  IOPS = 130
+
+To calculate maximum IOPS for a disk array:
+  Maximum Read IOPS:
+  In order to accurately calculate maximum read IOPS for a disk array,
+  multiply the IOPS for each disk by the maximum read or write IOPS per disk.
+  maxReadIOPS = nDisks * diskMaxIOPS
+  For example, 15 10K Spinning Disks would be measured the following way:
+  maxReadIOPS = 15 * 130 maxReadIOPS = 1950
+
+Maximum write IOPS per array:
+  Determining the maximum *write* IOPS is a little different because most
+  administrators configure disk replication using RAID and since the RAID
+  controller requires IOPS itself, there is a write penalty. The severity of
+  the write penalty is determined by the type of RAID used.
+
+  =========== ==========
+  Raid Type   Penalty
+  ----------- ----------
+  1           2
+  5           4
+  10          2
+  =========== ==========
+
+.. note::
+
+   Raid 5 has the worst penalty (has the most cross disk writes.)
+   Therefore, when using the above examples, a 15 disk array using RAID 5 is
+   capable of 1950 read IOPS however, we need to add the penalty when
+   determining the *write* IOPS:
+
+   .. code-block:: none
+
+      maxWriteIOPS = 1950 / 4
+      maxWriteIOPS = 487.5
+
+   A RAID 5 array only has 25% of the write IOPS of the read IOPS while a RAID
+   1 array in this case would produce a maximum of 975 IOPS.
+
+What about SSD? DRAM SSD?
+  In an HDD, data transfer is sequential. The actual read/write head "seeks" a
+  point in the hard drive to execute the operation. Seek time is significant.
+  Transfer rate can also be influenced by file system fragmentation and the
+  layout. Finally, the mechanical nature of hard disks also has certain
+  performance limitations.
+
+  In an SSD, data transfer is *not* sequential; it is random so it is faster.
+  There is consistent read performance because the physical location of data is
+  irrelevant because SSDs have no read/write heads and thus no delays due to
+  head motion (seeking).
+
+.. note::
+
+   Some basic benchmarks for small read/writes:
+
+   - **HDDs**: Small reads – 175 IOPs, Small writes – 280 IOPs
+   - **Flash SSDs**: Small reads – 1075 IOPs (6x), Small writes – 21 IOPs (0.1x)
+   - **DRAM SSDs**: Small reads – 4091 IOPs (23x), Small writes – 4184 IOPs
+     (14x)
 
 Scalability
  Scalability, along with expandability, is a major consideration in a
@@ -207,9 +281,9 @@ Configure Block Storage resource nodes with advanced RAID controllers
 and high-performance disks to provide fault tolerance at the hardware
 level.
 
-Deploy high performing storage solutions such as SSD drives or
-flash storage systems for applications requiring additional performance out
-of Block Storage devices.
+We recommend deploying high performing storage solutions such as SSD
+drives or flash storage systems for applications requiring additional
+performance out of Block Storage devices.
 
 In environments that place substantial demands on Block Storage, we
 recommend using multiple storage pools. In this case, each pool of
@@ -418,9 +492,51 @@ nodes and proxy servers should make use of a design which is scalable.
 Redundancy
 ----------
 
-.. TODO
+
 
 Replication
 -----------
 
-.. TODO
+Replicas in Object Storage function independently, and clients only
+require a majority of nodes to respond to a request in order for an
+operation to be considered successful. Thus, transient failures like
+network partitions can quickly cause replicas to diverge.
+Fix These differences are eventually reconciled by
+asynchronous, peer-to-peer replicator processes. The replicator processes
+traverse their local filesystems, concurrently performing operations in a
+manner that balances load across physical disks.
+
+Replication uses a push model, with records and files generally only being
+copied from local to remote replicas. This is important because data on the
+node may not belong there (as in the case of handoffs and ring changes), and a
+replicator can not know what data exists elsewhere in the cluster that it
+should pull in. It is the duty of any node that contains data to ensure that
+data gets to where it belongs. Replica placement is handled by the ring.
+
+Every deleted record or file in the system is marked by a tombstone, so that
+deletions can be replicated alongside creations. The replication process cleans
+up tombstones after a time period known as the consistency window. The
+consistency window encompasses replication duration and the length of time a
+transient failure can remove a node from the cluster. Tombstone cleanup must be
+tied to replication to reach replica convergence.
+
+If a replicator detects that a remote drive has failed, the replicator uses the
+``get_more_nodes`` interface for the ring to choose an alternative node with
+which to synchronize. The replicator can maintain desired levels of replication
+in the face of disk failures, though some replicas may not be in an immediately
+usable location.
+
+.. note::
+
+   The replicator does not maintain desired levels of replication when other
+   failures occur, such as entire node failures, because most failures are
+   transient.
+
+   Replication is an area of active development, andimplementation details
+   are likely to change over time.
+
+There are two major classes of replicator: the db replicator, which replicates
+accounts and containers, and the object replicator, which replicates object
+data.
+
+For more information, please see the `Swift replication page <https://docs.openstack.org/developer/swift/overview_replication.html>`_.
