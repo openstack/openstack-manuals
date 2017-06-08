@@ -293,6 +293,10 @@ root object, and select the :guilabel:`Propagate to Child Objects` option.
    * -
      -
      -
+     - Set annotation
+   * -
+     -
+     -
      - Swapfile placement
    * -
      -
