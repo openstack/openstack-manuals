@@ -23,7 +23,7 @@ Compute service (nova) command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service (nova) API and its extensions.
 
-This chapter documents :command:`nova` version ``8.0.0``.
+This chapter documents :command:`nova` version ``9.0.0``.
 
 For help on a specific :command:`nova` command, enter:
 
@@ -64,7 +64,8 @@ nova usage
 **Subcommands:**
 
 ``add-fixed-ip``
-  Add new IP address on a network to server.
+  **DEPRECATED** Add new IP address on a network to
+  server.
 
 ``add-secgroup``
   Add a Security Group to a server.
@@ -132,15 +133,16 @@ nova usage
   change the instance server password.
 
 ``cloudpipe-configure``
-  Update the VPN IP/port of a cloudpipe
-  instance.
+  **DEPRECATED** Update the VPN IP/port of a
+  cloudpipe instance.
 
 ``cloudpipe-create``
-  Create a cloudpipe instance for the given
-  project.
+  **DEPRECATED** Create a cloudpipe instance for the
+  given project.
 
 ``cloudpipe-list``
-  Print a list of all cloudpipe instances.
+  **DEPRECATED** Print a list of all cloudpipe
+  instances.
 
 ``console-log``
   Get console log output of a server.
@@ -182,11 +184,12 @@ nova usage
   Show details about the given flavor.
 
 ``floating-ip-associate``
-  Associate a floating IP address to a server.
+  **DEPRECATED** Associate a floating IP address to
+  a server.
 
 ``floating-ip-disassociate``
-  Disassociate a floating IP address from a
-  server.
+  **DEPRECATED** Disassociate a floating IP address
+  from a server.
 
 ``force-delete``
   Force delete a server.
@@ -216,10 +219,10 @@ nova usage
   Get a vnc console to a server.
 
 ``host-action``
-  Perform a power action on a host.
+  **DEPRECATED** Perform a power action on a host.
 
 ``host-describe``
-  Describe a specific host.
+  **DEPRECATED** Describe a specific host.
 
 ``host-evacuate``
   Evacuate all instances from failed host.
@@ -229,7 +232,7 @@ nova usage
   host to other available hosts.
 
 ``host-list``
-  List all hosts by service.
+  **DEPRECATED** List all hosts by service.
 
 ``host-meta``
   Set or Delete metadata on all instances of a
@@ -240,7 +243,7 @@ nova usage
   host to other available hosts.
 
 ``host-update``
-  Update host settings.
+  **DEPRECATED** Update host settings.
 
 ``hypervisor-list``
   List hypervisors. (Supported by API versions
@@ -318,7 +321,7 @@ nova usage
   Print rate and absolute limits.
 
 ``list``
-  List active servers.
+  List servers.
 
 ``list-extensions``
   List all the os-api extensions that are
@@ -409,7 +412,7 @@ nova usage
   Refresh server network information.
 
 ``remove-fixed-ip``
-  Remove an IP address from a server.
+  **DEPRECATED** Remove an IP address from a server.
 
 ``remove-secgroup``
   Remove a Security Group from a server.
@@ -615,8 +618,8 @@ nova usage
   List all API versions.
 
 ``virtual-interface-list``
-  Show virtual interface info about the given
-  server.
+  **DEPRECATED** Show virtual interface info about
+  the given server.
 
 ``volume-attach``
   Attach a volume to a server.
@@ -628,13 +631,17 @@ nova usage
   Detach a volume from a server.
 
 ``volume-update``
-  Update volume attachment.
+  Update the attachment on the server. Migrates
+  the data from an attached volume to the
+  specified available volume and swaps out the
+  active attachment to the new volume.
 
 ``x509-create-cert``
-  Create x509 cert for a user in tenant.
+  **DEPRECATED** Create x509 cert for a user in
+  tenant.
 
 ``x509-get-root-cert``
-  Fetch the x509 root cert.
+  **DEPRECATED** Fetch the x509 root cert.
 
 ``bash-completion``
   Prints all of the commands and options to
@@ -699,25 +706,6 @@ nova optional arguments
 
 ``--os-auth-type <name>, --os-auth-plugin <name>``
   Authentication type to use
-
-.. _nova_add-fixed-ip:
-
-nova add-fixed-ip
------------------
-
-.. code-block:: console
-
-   usage: nova add-fixed-ip <server> <network-id>
-
-Add new IP address on a network to server.
-
-**Positional arguments:**
-
-``<server>``
-  Name or ID of server.
-
-``<network-id>``
-  Network ID.
 
 .. _nova_add-secgroup:
 
@@ -968,10 +956,10 @@ Update the aggregate's name and optionally availability zone.
 **Optional arguments:**
 
 ``--name NAME``
-  Name of aggregate.
+  New name for aggregate.
 
 ``--availability-zone <availability-zone>``
-  The availability zone of the aggregate.
+  New availability zone for aggregate.
 
 .. _nova_availability-zone-list:
 
@@ -1114,21 +1102,22 @@ Boot a new server.
   honoured only if device type is supplied)
   type=device type (e.g. disk, cdrom, ...;
   defaults to 'disk') device=name of the device
-  (e.g. vda, xda, ...; tag=device metadata tag
-  (optional) if omitted, hypervisor driver
-  chooses suitable device depending on selected
-  bus; note the libvirt driver always uses
-  default device names), size=size of the block
-  device in MB(for swap) and in GB(for other
-  formats) (if omitted, hypervisor driver
+  (e.g. vda, xda, ...; if omitted, hypervisor
+  driver chooses suitable device depending on
+  selected bus; note the libvirt driver always
+  uses default device names), size=size of the
+  block device in MB(for swap) and in GB(for
+  other formats) (if omitted, hypervisor driver
   calculates size), format=device will be
   formatted (e.g. swap, ntfs, ...; optional),
   bootindex=integer used for ordering the boot
   disks (for image backed instances it is equal
-  to 0, for others need to be specified) and
+  to 0, for others need to be specified),
   shutdown=shutdown behaviour (either preserve
   or remove, for local destination set to
-  remove). (Supported by API versions '2.32' -'2.latest')
+  remove) and tag=device metadata tag
+  (optional). (Supported by API versions '2.42'
+  - '2.latest')
 
 ``--swap <swap_size>``
   Create and attach a local swap block device of
@@ -1163,7 +1152,7 @@ Boot a new server.
   NIC to port with this UUID tag: interface
   metadata tag (optional) (either port-id or
   net-id must be provided). (Supported by API
-  versions '2.37' - '2.latest')
+  versions '2.42' - '2.latest')
 
 ``--config-drive <value>``
   Enable config drive.
@@ -1233,52 +1222,6 @@ does not actually change the instance server password.
 
 ``<server>``
   Name or ID of server.
-
-.. _nova_cloudpipe-configure:
-
-nova cloudpipe-configure
-------------------------
-
-.. code-block:: console
-
-   usage: nova cloudpipe-configure <ip address> <port>
-
-Update the VPN IP/port of a cloudpipe instance.
-
-**Positional arguments:**
-
-``<ip address>``
-  New IP Address.
-
-``<port>``
-  New Port.
-
-.. _nova_cloudpipe-create:
-
-nova cloudpipe-create
----------------------
-
-.. code-block:: console
-
-   usage: nova cloudpipe-create <project_id>
-
-Create a cloudpipe instance for the given project.
-
-**Positional arguments:**
-
-``<project_id>``
-  UUID of the project to create the cloudpipe for.
-
-.. _nova_cloudpipe-list:
-
-nova cloudpipe-list
--------------------
-
-.. code-block:: console
-
-   usage: nova cloudpipe-list
-
-Print a list of all cloudpipe instances.
 
 .. _nova_console-log:
 
@@ -1395,7 +1338,7 @@ nova flavor-access-list
 
 .. code-block:: console
 
-   usage: nova flavor-access-list [--flavor <flavor>] [--tenant <tenant_id>]
+   usage: nova flavor-access-list [--flavor <flavor>]
 
 Print access information about the given flavor.
 
@@ -1403,11 +1346,6 @@ Print access information about the given flavor.
 
 ``--flavor <flavor>``
   Filter results by flavor name or ID.
-
-``--tenant <tenant_id>``
-  Filter results by tenant ID. (Deprecated; this option
-  is not supported, and will be removed in version
-  5.0.0.)
 
 .. _nova_flavor-access-remove:
 
@@ -1571,50 +1509,6 @@ Show details about the given flavor.
 ``<flavor>``
   Name or ID of flavor.
 
-.. _nova_floating-ip-associate:
-
-nova floating-ip-associate
---------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-associate [--fixed-address <fixed_address>]
-                                     <server> <address>
-
-Associate a floating IP address to a server.
-
-**Positional arguments:**
-
-``<server>``
-  Name or ID of server.
-
-``<address>``
-  IP Address.
-
-**Optional arguments:**
-
-``--fixed-address <fixed_address>``
-  Fixed IP Address to associate with.
-
-.. _nova_floating-ip-disassociate:
-
-nova floating-ip-disassociate
------------------------------
-
-.. code-block:: console
-
-   usage: nova floating-ip-disassociate <server> <address>
-
-Disassociate a floating IP address from a server.
-
-**Positional arguments:**
-
-``<server>``
-  Name or ID of server.
-
-``<address>``
-  IP Address.
-
 .. _nova_force-delete:
 
 nova force-delete
@@ -1751,43 +1645,6 @@ Get a vnc console to a server.
 ``<console-type>``
   Type of vnc console ("novnc" or "xvpvnc").
 
-.. _nova_host-action:
-
-nova host-action
-----------------
-
-.. code-block:: console
-
-   usage: nova host-action [--action <action>] <hostname>
-
-Perform a power action on a host.
-
-**Positional arguments:**
-
-``<hostname>``
-  Name of host.
-
-**Optional arguments:**
-
-``--action <action>``
-  A power action: startup, reboot, or shutdown.
-
-.. _nova_host-describe:
-
-nova host-describe
-------------------
-
-.. code-block:: console
-
-   usage: nova host-describe <hostname>
-
-Describe a specific host.
-
-**Positional arguments:**
-
-``<hostname>``
-  Name of host.
-
 .. _nova_host-evacuate:
 
 nova host-evacuate
@@ -1849,23 +1706,6 @@ Live migrate all instances of the specified host to other available hosts.
   Force to not verify the scheduler if a host is
   provided. (Supported by API versions '2.30' -'2.latest')
 
-.. _nova_host-list:
-
-nova host-list
---------------
-
-.. code-block:: console
-
-   usage: nova host-list [--zone <zone>]
-
-List all hosts by service.
-
-**Optional arguments:**
-
-``--zone <zone>``
-  Filters the list, returning only those hosts in the
-  availability zone <zone>.
-
 .. _nova_host-meta:
 
 nova host-meta
@@ -1903,32 +1743,6 @@ Cold migrate all instances off the specified host to other available hosts.
 
 ``<host>``
   Name of host.
-
-.. _nova_host-update:
-
-nova host-update
-----------------
-
-.. code-block:: console
-
-   usage: nova host-update [--status <enable|disable>]
-                           [--maintenance <enable|disable>]
-                           <hostname>
-
-Update host settings.
-
-**Positional arguments:**
-
-``<hostname>``
-  Name of host.
-
-**Optional arguments:**
-
-``--status <enable|disable>``
-  Either enable or disable a host.
-
-``--maintenance <enable|disable>``
-  Either put or resume host to/from maintenance.
 
 .. _nova_hypervisor-list:
 
@@ -2303,7 +2117,7 @@ nova list
                     [--tags <tags>] [--tags-any <tags-any>]
                     [--not-tags <not-tags>] [--not-tags-any <not-tags-any>]
 
-List active servers.
+List servers.
 
 **Optional arguments:**
 
@@ -2582,23 +2396,21 @@ nova migration-list
 
 .. code-block:: console
 
-   usage: nova migration-list [--host <host>] [--status <status>]
-                              [--cell_name <cell_name>]
+   usage: nova migration-list [--instance-uuid <instance_uuid>] [--host <host>]
+                              [--status <status>]
 
 Print a list of migrations.
 
 **Optional arguments:**
+
+``--instance-uuid <instance_uuid>``
+  Fetch migrations for the given instance.
 
 ``--host <host>``
   Fetch migrations for the given host.
 
 ``--status <status>``
   Fetch migrations for the given status.
-
-``--cell_name <cell_name>``
-  Fetch migrations for the given cell_name.
-  (Deprecated; this option is not supported, and will
-  be removed after version 8.0.0.)
 
 .. _nova_pause:
 
@@ -2921,25 +2733,6 @@ Refresh server network information.
 ``<server>``
   Name or ID of a server for which the network cache should be
   refreshed from neutron (Admin only).
-
-.. _nova_remove-fixed-ip:
-
-nova remove-fixed-ip
---------------------
-
-.. code-block:: console
-
-   usage: nova remove-fixed-ip <server> <address>
-
-Remove an IP address from a server.
-
-**Positional arguments:**
-
-``<server>``
-  Name or ID of server.
-
-``<address>``
-  IP Address.
 
 .. _nova_remove-secgroup:
 
@@ -3776,22 +3569,6 @@ nova version-list
 
 List all API versions.
 
-.. _nova_virtual-interface-list:
-
-nova virtual-interface-list
----------------------------
-
-.. code-block:: console
-
-   usage: nova virtual-interface-list <server>
-
-Show virtual interface info about the given server.
-
-**Positional arguments:**
-
-``<server>``
-  ID of server.
-
 .. _nova_volume-attach:
 
 nova volume-attach
@@ -3857,54 +3634,20 @@ nova volume-update
 
 .. code-block:: console
 
-   usage: nova volume-update <server> <attachment> <volume>
+   usage: nova volume-update <server> <src_volid> <dest_volid>
 
-Update volume attachment.
+Update the attachment on the server. Migrates the data from an attached volume
+to the specified available volume and swaps out the active attachment to the
+new volume.
 
 **Positional arguments:**
 
 ``<server>``
   Name or ID of server.
 
-``<attachment>``
-  Attachment ID of the volume.
+``<src_volid>``
+  ID of the source (original) volume.
 
-``<volume>``
-  ID of the volume to attach.
-
-.. _nova_x509-create-cert:
-
-nova x509-create-cert
----------------------
-
-.. code-block:: console
-
-   usage: nova x509-create-cert [<private-key-filename>] [<x509-cert-filename>]
-
-Create x509 cert for a user in tenant.
-
-**Positional arguments:**
-
-``<private-key-filename>``
-  Filename for the private key. [Default: pk.pem]
-
-``<x509-cert-filename>``
-  Filename for the X.509 certificate. [Default:
-  cert.pem]
-
-.. _nova_x509-get-root-cert:
-
-nova x509-get-root-cert
------------------------
-
-.. code-block:: console
-
-   usage: nova x509-get-root-cert [<filename>]
-
-Fetch the x509 root cert.
-
-**Positional arguments:**
-
-``<filename>``
-  Filename to write the x509 root cert.
+``<dest_volid>``
+  ID of the destination volume.
 
