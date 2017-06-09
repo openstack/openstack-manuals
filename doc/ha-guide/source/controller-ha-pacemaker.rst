@@ -11,7 +11,7 @@ Pacemaker is used to make OpenStack infrastructure highly available.
    It is storage and application-agnostic, and in no way specific to OpenStack.
 
 Pacemaker relies on the
-`Corosync <http://corosync.github.io/corosync/>`_ messaging layer
+`Corosync <https://corosync.github.io/corosync/>`_ messaging layer
 for reliable cluster communications. Corosync implements the Totem single-ring
 ordering and membership protocol. It also provides UDP and InfiniBand based
 messaging, quorum, and cluster membership to Pacemaker.
