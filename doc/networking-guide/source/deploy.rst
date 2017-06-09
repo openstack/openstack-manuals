@@ -82,7 +82,7 @@ components on each node.
 
    You can virtualize these nodes for demonstration, training, or
    proof-of-concept purposes. However, you must use physical hosts for
-   for evaluation of performance or scaling.
+   evaluation of performance or scaling.
 
 Networks and network interfaces
 -------------------------------
