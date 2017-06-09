@@ -2073,7 +2073,7 @@ no downtime (assuming QEMU 1.3+ and libvirt 1.0+ are used).
    .. code-block:: ini
 
       [workarounds]
-          disable_libvirt_livesnapshot = True
+      disable_libvirt_livesnapshot = True
 
 **Ensuring Snapshots of Linux Guests Are Consistent**
 
