@@ -24,8 +24,8 @@ As soon as pre-release packages are available, you can start testing. Testers
 should look at the current draft version of the document, and attempt to
 run each command on the pre-release package. If you are able to run the
 instructions in the book successfully, then place a green tick in the
-matrix, noting which version you tested against. If a command can't be run,
-and it's confirmed to be a bug in the documentation, add a note in the
+matrix, noting which version you tested against. If a command cannot be run,
+and it is confirmed to be a bug in the documentation, add a note in the
 `Issues` section, so that the book can be updated.
 
 .. note::
@@ -56,7 +56,7 @@ However, we do need to write release notes for our documentation. Release
 notes should be added as major changes occur throughout the release, however
 this is often overlooked - both by authors and reviewers - and thus a final
 review is needed to check that all major changes are in. Contact each
-Speciality Team lead, listed at :doc:`../team-structure`, and ask them for
+Specialty Team lead, listed at :doc:`../team-structure`, and ask them for
 the notes for the books they look after. The source repository for release
 notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
 published to
