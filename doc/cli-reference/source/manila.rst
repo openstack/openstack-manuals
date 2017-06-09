@@ -23,7 +23,7 @@ Shared File Systems service (manila) command-line client
 The manila client is the command-line interface (CLI) for
 the Shared File Systems service (manila) API and its extensions.
 
-This chapter documents :command:`manila` version ``1.15.0``.
+This chapter documents :command:`manila` version ``1.16.0``.
 
 For help on a specific :command:`manila` command, enter:
 
@@ -646,8 +646,8 @@ Show access list for share.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "access_type,access_to"
+  Comma separated list of columns to be displayed example
+  --columns "access_type,access_to".
 
 .. _manila_api-version:
 
@@ -674,8 +674,8 @@ List all availability zones.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed example
+  --columns "id,name".
 
 .. _manila_create:
 
@@ -722,7 +722,7 @@ Creates a new share (NFS, CIFS, CephFS, GlusterFS or HDFS).
 
 ``--share-type <share-type>, --share_type <share-type>, --volume-type <share-type>, --volume_type <share-type>``
   Optional share type. Use of optional volume type is
-  deprecated(Default=None)
+  deprecated. (Default=None)
 
 ``--public``
   Level of visibility for share. Defines whether other
@@ -812,8 +812,8 @@ Print a list of current 'share types and extra specs' (Admin Only).
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed example
+  --columns "id,name".
 
 .. _manila_force-delete:
 
@@ -867,12 +867,12 @@ List NAS shares with filters.
 
 ``--metadata [<key=value> [<key=value> ...]]``
   Filters results by a metadata key and value. OPTIONAL:
-  Default=None
+  Default=None.
 
 ``--extra-specs [<key=value> [<key=value> ...]], --extra_specs [<key=value> [<key=value> ...]]``
   Filters results by a extra specs key and value of
   share type that was used for share creation. OPTIONAL:
-  Default=None
+  Default=None.
 
 ``--share-type <share_type>, --volume-type <share_type>, --share_type <share_type>, --share-type-id <share_type>, --volume-type-id <share_type>, --share-type_id <share_type>, --share_type-id <share_type>, --share_type_id <share_type>, --volume_type <share_type>, --volume_type_id <share_type>``
   Filter results by a share type id or name that was
@@ -888,12 +888,11 @@ List NAS shares with filters.
 
 ``--sort-key <sort_key>, --sort_key <sort_key>``
   Key to be sorted, available keys are ('id', 'status',
-  'size', 'host', 'share_proto', 'export_location',
-  'availability_zone', 'user_id', 'project_id',
-  'created_at', 'updated_at', 'display_name', 'name',
-  'share_type_id', 'share_type', 'share_network_id',
-  'share_network', 'snapshot_id', 'snapshot'). OPTIONAL:
-  Default=None.
+  'size', 'host', 'share_proto', 'availability_zone',
+  'user_id', 'project_id', 'created_at', 'updated_at',
+  'display_name', 'name', 'share_type_id', 'share_type',
+  'share_network_id', 'share_network', 'snapshot_id',
+  'snapshot'). OPTIONAL: Default=None.
 
 ``--sort-dir <sort_dir>, --sort_dir <sort_dir>``
   Sort direction, available values are ('asc', 'desc').
@@ -921,8 +920,8 @@ List NAS shares with filters.
   (Experimental, Default=None).
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "export_location,is public"
+  Comma separated list of columns to be displayed
+  example --columns "export_location,is public".
 
 .. _manila_list-extensions:
 
@@ -953,7 +952,7 @@ Manage share not handled by Manila (Admin only).
 **Positional arguments:**
 
 ``<service_host>``
-  manage-share service host: some.host@driver#pool
+  manage-share service host: some.host@driver#pool.
 
 ``<protocol>``
   Protocol of the share to manage, such as NFS or CIFS.
@@ -961,7 +960,7 @@ Manage share not handled by Manila (Admin only).
 ``<export_path>``
   Share export path, NFS share such as:
   10.0.0.1:/example_path, CIFS share such as:
-  \\\\10.0.0.1\\example_cifs_share
+  \\\\10.0.0.1\\example_cifs_share.
 
 **Optional arguments:**
 
@@ -981,7 +980,7 @@ Manage share not handled by Manila (Admin only).
 ``--public``
   Level of visibility for share. Defines whether other
   tenants are able to see it or not. Available only for
-  microversion >= 2.8
+  microversion >= 2.8.
 
 .. _manila_metadata:
 
@@ -1192,15 +1191,15 @@ List all backend storage pools known to the scheduler (Admin only).
   supported.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "name,host"
+  Comma separated list of columns to be displayed
+  example --columns "name,host".
 
 ``--detail, --detailed``
   Show detailed information about pools. (Default=False)
 
 ``--share-type <share_type>, --share_type <share_type>, --share-type-id <share_type>, --share_type_id <share_type>``
   Filter results by share type name or ID.
-  (Default=None)Available only for microversion >= 2.23
+  (Default=None)Available only for microversion >= 2.23.
 
 .. _manila_quota-class-show:
 
@@ -1373,8 +1372,8 @@ Print a list of rate limits for a user.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "verb,uri,value"
+  Comma separated list of columns to be displayed example
+  --columns "verb,uri,value".
 
 .. _manila_reset-state:
 
@@ -1505,7 +1504,7 @@ Delete one or more security services.
 **Positional arguments:**
 
 ``<security-service>``
-  Name or ID of the security service(s) to delete
+  Name or ID of the security service(s) to delete.
 
 .. _manila_security-service-list:
 
@@ -1567,8 +1566,8 @@ Get a list of security services.
   Number of security services to return per request.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "name,type"
+  Comma separated list of columns to be displayed
+  example --columns "name,type".
 
 .. _manila_security-service-show:
 
@@ -1698,8 +1697,8 @@ List all services (Admin only).
   Availability zone.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,host"
+  Comma separated list of columns to be displayed example
+  --columns "id,host".
 
 .. _manila_share-export-location-list:
 
@@ -1720,8 +1719,8 @@ List export locations of a given share.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,host,status"
+  Comma separated list of columns to be displayed example
+  --columns "id,host,status".
 
 .. _manila_share-export-location-show:
 
@@ -1877,8 +1876,8 @@ List share groups with filters (Experimental).
   OPTIONAL: Default=None.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed
+  example --columns "id,name".
 
 .. _manila_share-group-reset-state:
 
@@ -2004,8 +2003,8 @@ List share group snapshots with filters (Experimental).
   Filter results by share group ID.
 
 ``--limit <limit>``
-  Maximum number of share group snapshots to
-  return.(Default=None)
+  Maximum number of share group snapshots to return.
+  (Default=None)
 
 ``--offset <offset>``
   Start position of share group snapshot listing.
@@ -2023,8 +2022,8 @@ List share group snapshots with filters (Experimental).
   Show detailed information about share group snapshots.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed
+  example --columns "id,name".
 
 .. _manila_share-group-snapshot-list-members:
 
@@ -2046,8 +2045,8 @@ List members of a share group snapshot (Experimental).
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed
+  example --columns "id,name".
 
 .. _manila_share-group-snapshot-reset-state:
 
@@ -2113,7 +2112,7 @@ Update a share group snapshot (Experimental).
 
 ``--name <name>``
   Optional new name for the share group snapshot.
-  (Default=None
+  (Default=None)
 
 ``--description <description>``
   Optional share group snapshot description.
@@ -2257,8 +2256,8 @@ Print a list of available 'share group types'.
   Display all share group types (Admin only).
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed example
+  --columns "id,name".
 
 .. _manila_share-group-type-specs-list:
 
@@ -2274,8 +2273,8 @@ Print a list of 'share group types specs' (Admin Only).
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed example
+  --columns "id,name".
 
 .. _manila_share-group-update:
 
@@ -2322,8 +2321,8 @@ List export locations of a given share instance.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,host,status"
+  Comma separated list of columns to be displayed example
+  --columns "id,host,status".
 
 .. _manila_share-instance-export-location-show:
 
@@ -2378,8 +2377,8 @@ List share instances (Admin only).
   Filter results by share ID.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,host,status"
+  Comma separated list of columns to be displayed
+  example --columns "id,host,status".
 
 .. _manila_share-instance-reset-state:
 
@@ -2537,8 +2536,8 @@ Get a list of network info.
   Number of share networks to return per request.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id"
+  Comma separated list of columns to be displayed
+  example --columns "id".
 
 .. _manila_share-network-security-service-add:
 
@@ -2580,8 +2579,8 @@ Get list of security services associated with a given share network.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed example
+  --columns "id,name".
 
 .. _manila_share-network-security-service-remove:
 
@@ -2724,8 +2723,8 @@ List share replicas (Experimental).
   List replicas belonging to share.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "replica_state,id"
+  Comma separated list of columns to be displayed
+  example --columns "replica_state,id".
 
 .. _manila_share-replica-promote:
 
@@ -2884,8 +2883,8 @@ List all share servers (Admin only).
   Filter results by project ID.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,host,status"
+  Comma separated list of columns to be displayed
+  example --columns "id,host,status".
 
 .. _manila_share-server-show:
 
@@ -2999,8 +2998,8 @@ Show access list for a snapshot.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "access_type,access_to"
+  Comma separated list of columns to be displayed example
+  --columns "access_type,access_to".
 
 .. _manila_snapshot-create:
 
@@ -3067,8 +3066,8 @@ List export locations of a given snapshot.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,path"
+  Comma separated list of columns to be displayed example
+  --columns "id,path".
 
 .. _manila_snapshot-export-location-show:
 
@@ -3126,8 +3125,8 @@ List export locations of a given snapshot instance.
 **Optional arguments:**
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,path,is_admin_only"
+  Comma separated list of columns to be displayed example
+  --columns "id,path,is_admin_only".
 
 .. _manila_snapshot-instance-export-location-show:
 
@@ -3168,8 +3167,8 @@ List share snapshot instances.
   Filter results by share snapshot ID.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id"
+  Comma separated list of columns to be displayed
+  example --columns "id".
 
 ``--detailed <detailed>``
   Show detailed information about snapshot instances.
@@ -3267,8 +3266,8 @@ List all the snapshots.
   OPTIONAL: Default=None.
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed
+  example --columns "id,name".
 
 .. _manila_snapshot-manage:
 
@@ -3462,7 +3461,7 @@ Create a new share type (Admin only).
 
 ``<spec_driver_handles_share_servers>``
   Required extra specification. Valid values are
-  'true'/'1' and 'false'/'0'
+  'true'/'1' and 'false'/'0'.
 
 **Optional arguments:**
 
@@ -3487,7 +3486,7 @@ Create a new share type (Admin only).
 ``--extra-specs [<key=value> [<key=value> ...]], --extra_specs [<key=value> [<key=value> ...]]``
   Extra specs key and value of share type that will be
   used for share type creation. OPTIONAL: Default=None.
-  e.g --extra-specs thin_provisioning='<is> True',
+  example --extra-specs thin_provisioning='<is> True',
   replication_type=readable.
 
 ``--is_public <is_public>, --is-public <is_public>``
@@ -3548,8 +3547,8 @@ Print a list of available 'share types'.
   Display all share types (Admin only).
 
 ``--columns <columns>``
-  Comma separated list of columns to be displayed e.g.
-  --columns "id,name"
+  Comma separated list of columns to be displayed example
+  --columns "id,name".
 
 .. _manila_unmanage:
 
