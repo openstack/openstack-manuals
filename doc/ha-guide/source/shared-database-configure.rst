@@ -43,7 +43,7 @@ This can be achieved using the :command:`iptables` command:
 Make sure to save the changes once you are done. This will vary
 depending on your distribution:
 
-- For `Ubuntu <http://askubuntu.com/questions/66890/how-can-i-make-a-specific-set-of-iptables-rules-permanent#66905>`_
+- For `Ubuntu <https://askubuntu.com/questions/66890/how-can-i-make-a-specific-set-of-iptables-rules-permanent#66905>`_
 - For `Fedora <https://fedoraproject.org/wiki/How_to_edit_iptables_rules>`_
 
 Alternatively, make modifications using the ``firewall-cmd`` utility for
