@@ -72,5 +72,5 @@ The CPL works alongside the documentation release team to test installation
 instructions and complete the release testing matrix (for example, see the
 `Ocata release testing matrix
 <https://wiki.openstack.org/wiki/Documentation/OcataDocTesting>`_). It is
-recommended that the liason tests the instructions for at least one
+recommended that the liaison tests the instructions for at least one
 distribution.
