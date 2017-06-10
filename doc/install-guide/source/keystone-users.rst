@@ -96,7 +96,7 @@ service. The authentication service uses a combination of :term:`domains
 
      .. end
 
-   * Add the ``user`` role to the ``demo`` project and user:
+   * Add the ``user`` role to the ``demo`` user of the ``demo`` project:
 
      .. code-block:: console
 
