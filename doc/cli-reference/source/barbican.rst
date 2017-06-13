@@ -23,7 +23,7 @@ Key Manager service (barbican) command-line client
 The barbican client is the command-line interface (CLI) for
 the Key Manager service (barbican) API and its extensions.
 
-This chapter documents :command:`barbican` version ``4.2.0``.
+This chapter documents :command:`barbican` version ``4.3.0``.
 
 For help on a specific :command:`barbican` command, enter:
 
@@ -351,7 +351,7 @@ barbican ca list
                            [--quote {all,minimal,none,nonnumeric}]
                            [--limit LIMIT] [--offset OFFSET] [--name NAME]
 
-List cas.
+List CAs.
 
 **Optional arguments:**
 
@@ -531,34 +531,20 @@ Retrieve a secret by providing its URI.
 
 ``--decrypt, -d``
   if specified, retrieve the unencrypted secret data;
-  the data type can be specified with --payload-content-type.
+  the data type can be specified with
+  --payload_content_type.
 
 ``--payload, -p``
   if specified, retrieve the unencrypted secret data;
-  the
-  data
-  type
-  can
-  be
-  specified
-  with
-  --payload-content-type.
-  If
-  the
-  user
-  wishes
-  to
-  only
-  retrieve
-  the
-  value
-  of
-  the payload they must add "-f value" to format
-  returning only the value of the payload
+  the data type can be specified with
+  --payload_content_type. If the user wishes to only
+  retrieve the value of the payload they must add "-f
+  value" to format returning only the value of the
+  payload
 
 ``--payload_content_type PAYLOAD_CONTENT_TYPE, -t PAYLOAD_CONTENT_TYPE``
   the content type of the decrypted secret (default:
-  text/plain.
+  text/plain).
 
 .. _barbican_secret_list:
 
