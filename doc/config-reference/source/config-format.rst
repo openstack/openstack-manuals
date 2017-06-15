@@ -77,8 +77,8 @@ key-value pairs (``DictOpt``)
 list value (``ListOpt``)
  Represents values of other types, separated by commas.
  As an example, the following sets ``allowed_rpc_exception_modules``
- to a list containing the four elements ``oslo.messaging.exceptions``,
- ``nova.exception``, ``cinder.exception``, and ``exceptions``:
+ to a list containing the two elements ``oslo.messaging.exceptions`` and
+ ``nova.exception``:
 
  .. code-block:: ini
 
