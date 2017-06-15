@@ -18,7 +18,8 @@ projects.
 Firewalls are implemented in various ways, depending on the driver used. For
 example, an iptables driver implements firewalls using iptable rules. An
 OpenVSwitch driver implements firewall rules using flow entries in flow tables.
-A Cisco firewall driver manipulates NSX devices.
+A Cisco firewall driver manipulates Cisco appliances. A VMware driver
+configures NSX routers.
 
 FWaaS v1
 --------
