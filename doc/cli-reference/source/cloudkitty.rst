@@ -23,7 +23,7 @@ Rating service (cloudkitty) command-line client
 The cloudkitty client is the command-line interface (CLI) for
 the Rating service (cloudkitty) API and its extensions.
 
-This chapter documents :command:`cloudkitty` version ``1.0.0``.
+This chapter documents :command:`cloudkitty` version ``1.1.0``.
 
 For help on a specific :command:`cloudkitty` command, enter:
 
