@@ -23,7 +23,7 @@ Application Catalog service (murano) command-line client
 The murano client is the command-line interface (CLI) for
 the Application Catalog service (murano) API and its extensions.
 
-This chapter documents :command:`murano` version ``0.12.0``.
+This chapter documents :command:`murano` version ``0.13.0``.
 
 For help on a specific :command:`murano` command, enter:
 
@@ -92,7 +92,8 @@ murano usage
   Display class schema
 
 ``deployment-list``
-  List deployments for an environment.
+  List deployments for an environment or multiple
+  environments.
 
 ``env-template-add-app``
   Add application to the environment template.
@@ -314,7 +315,7 @@ murano optional arguments
 ``--os-user-id OS_USER_ID``
   User ID
 
-``--os-username OS_USERNAME, --os-user_name OS_USERNAME``
+``--os-username OS_USERNAME, --os-user-name OS_USERNAME, --os-user_name OS_USERNAME``
   Username
 
 ``--os-user-domain-id OS_USER_DOMAIN_ID``
@@ -513,14 +514,20 @@ murano deployment-list
 
 .. code-block:: console
 
-   usage: murano deployment-list <ID>
+   usage: murano deployment-list [--all-environments] [<ID>]
 
-List deployments for an environment.
+List deployments for an environment or multiple environments.
 
 **Positional arguments:**
 
 ``<ID>``
   Environment ID for which to list deployments.
+
+**Optional arguments:**
+
+``--all-environments``
+  Lists all deployments for all environments in user's
+  tenant.
 
 .. _murano_env-template-add-app:
 
