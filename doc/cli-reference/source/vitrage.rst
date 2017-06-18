@@ -23,7 +23,7 @@ RCA (Root Cause Analysis) service (vitrage) command-line client
 The vitrage client is the command-line interface (CLI) for
 the RCA (Root Cause Analysis) service (vitrage) API and its extensions.
 
-This chapter documents :command:`vitrage` version ``1.1.1``.
+This chapter documents :command:`vitrage` version ``1.2.0``.
 
 For help on a specific :command:`vitrage` command, enter:
 
@@ -108,7 +108,7 @@ vitrage alarm list
    usage: vitrage alarm list [-h] [-f {csv,html,json,table,value,yaml}]
                              [-c COLUMN] [--max-width <integer>] [--print-empty]
                              [--noindent] [--quote {all,minimal,none,nonnumeric}]
-                             [--all-tenants [<0|1>]]
+                             [--all-tenants]
                              [<vitrage id>]
 
 List alarms on entity
@@ -123,7 +123,7 @@ List alarms on entity
 ``-h, --help``
   show this help message and exit
 
-``--all-tenants [<0|1>]``
+``--all-tenants``
   Shows alarms of all the tenants in the entity graph
 
 .. _vitrage_event_post:
@@ -177,14 +177,14 @@ vitrage rca show
 
    usage: vitrage rca show [-h] [-f {html,json,shell,table,value,yaml}]
                            [-c COLUMN] [--max-width <integer>] [--print-empty]
-                           [--noindent] [--prefix PREFIX] [--all-tenants [<0|1>]]
-                           alarm_id
+                           [--noindent] [--prefix PREFIX] [--all-tenants]
+                           alarm_vitrage_id
 
 Show an RCA
 
 **Positional arguments:**
 
-``alarm_id``
+``alarm_vitrage_id``
   ID of an alarm
 
 **Optional arguments:**
@@ -192,7 +192,7 @@ Show an RCA
 ``-h, --help``
   show this help message and exit
 
-``--all-tenants [<0|1>]``
+``--all-tenants``
   Shows alarms of all the tenants for the RCA
 
 .. _vitrage_resource_list:
@@ -206,7 +206,7 @@ vitrage resource list
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent]
                                 [--quote {all,minimal,none,nonnumeric}]
-                                [--type <resource type>]
+                                [--type <resource type>] [--all-tenants]
 
 List resources
 
@@ -218,6 +218,9 @@ List resources
 ``--type <resource type>``
   Type of resource
 
+``--all-tenants``
+  Shows resources of all the tenants
+
 .. _vitrage_resource_show:
 
 vitrage resource show
@@ -228,14 +231,14 @@ vitrage resource show
    usage: vitrage resource show [-h] [-f {html,json,shell,table,value,yaml}]
                                 [-c COLUMN] [--max-width <integer>]
                                 [--print-empty] [--noindent] [--prefix PREFIX]
-                                resource_id
+                                vitrage_id
 
 Show a resource
 
 **Positional arguments:**
 
-``resource_id``
-  ID of a resource
+``vitrage_id``
+  vitrage_id of a resource
 
 **Optional arguments:**
 
@@ -318,7 +321,7 @@ vitrage topology show
                                 [--print-empty] [--noindent] [--prefix PREFIX]
                                 [--filter <query>] [--limit <depth>]
                                 [--root ROOT] [--graph-type {tree,graph}]
-                                [--all-tenants [<0|1>]]
+                                [--all-tenants]
 
 Show the topology of the system
 
@@ -339,6 +342,6 @@ Show the topology of the system
 ``--graph-type {tree,graph}``
   graph type. Valid graph types: [tree, graph]
 
-``--all-tenants [<0|1>]``
+``--all-tenants``
   Shows entities of all the tenants in the entity graph
 
