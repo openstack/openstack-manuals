@@ -21,10 +21,10 @@ Container Infrastructure Management service (magnum) command-line client
 ========================================================================
 
 The magnum client is the command-line interface (CLI) for
-the Container Infrastructure Management service (magnum) API and its
-extensions.
+the Container Infrastructure Management service (magnum) API
+and its extensions.
 
-This chapter documents :command:`magnum` version ``2.5.0``.
+This chapter documents :command:`magnum` version ``2.6.0``.
 
 For help on a specific :command:`magnum` command, enter:
 
@@ -104,6 +104,10 @@ magnum usage
   Update information about the given bay. (Deprecated in
   favor of cluster-update.)
 
+``ca-rotate``
+  Rotate the CA certificate for a bay or cluster to
+  revoke access.
+
 ``ca-show``
   Show details about the CA certificate for a bay or
   cluster.
@@ -153,6 +157,22 @@ magnum usage
 
 ``stats-list``
   Show stats for the given project_id
+
+``quotas-create``
+  Create a quota.
+
+``quotas-delete``
+  Delete specified resource quota.
+
+``quotas-list``
+  Print a list of available quotas.
+
+``quotas-show``
+  Show details about the given project resource quota.
+
+``quotas-update``
+  Update information about the given project resource
+  quota.
 
 ``bash-completion``
   Prints arguments for bash-completion. Prints all of
@@ -242,10 +262,27 @@ magnum optional arguments
   HMAC key to use for encrypting context data for
   performance profiling of operation. This key should be
   the value of the HMAC key configured for the
-  OSprofiler middleware in nova; it is specified in the
-  Nova configuration file at "/etc/nova/nova.conf".
-  Without the key, profiling will not be triggered even
-  if OSprofiler is enabled on the server side.
+  OSprofiler middleware in magnum; it is specified in
+  the Magnum configuration file at
+  "/etc/magnum/magnum.conf". Without the key, profiling
+  will not be triggered even if OSprofiler is enabled on
+  the server side.
+
+.. _magnum_ca-rotate:
+
+magnum ca-rotate
+----------------
+
+.. code-block:: console
+
+   usage: magnum ca-rotate --cluster <cluster>
+
+Rotate the CA certificate for a bay or cluster to revoke access.
+
+**Optional arguments:**
+
+``--cluster <cluster>``
+  ID or name of the cluster.
 
 .. _magnum_ca-show:
 
@@ -328,21 +365,29 @@ magnum cluster-create
                                 [--master-count <master-count>]
                                 [--discovery-url <discovery-url>]
                                 [--timeout <timeout>]
+                                [<name>]
 
 Create a cluster.
+
+**Positional arguments:**
+
+``<name>``
+  Name of the cluster to create.
 
 **Optional arguments:**
 
 ``--keypair-id <keypair>``
-  UUID or name of the keypair to use for this cluster.
-  This parameter is deprecated and will be removed in a
+  Name of the keypair to use for this cluster. This
+  parameter is deprecated and will be removed in a
   future release. Use --keypair instead.
 
 ``--keypair <keypair>``
-  UUID or name of the keypair to use for this cluster.
+  Name of the keypair to use for this cluster.
 
 ``--name <name>``
-  Name of the cluster to create.
+  Name of the cluster to create. The --name parameter is
+  deprecated and will be removed in a future release.
+  Use the <name> positional parameter instead.
 
 ``--cluster-template <cluster_template>``
   ID or name of the cluster template.
@@ -461,19 +506,26 @@ magnum cluster-template-create
                                          [--server-type <server-type>]
                                          [--master-lb-enabled]
                                          [--floating-ip-enabled]
+                                         [--insecure-registry <insecure-registry>]
+                                         [<name>]
 
 Create a cluster template.
+
+**Positional arguments:**
+
+``<name>``
+  Name of the cluster template to create.
 
 **Optional arguments:**
 
 ``--keypair-id <keypair>``
-  The name or UUID of the SSH keypair to load into the
-  Cluster nodes. This parameter is deprecated and will
-  be removed in a future release. Use --keypair instead.
+  The name of the SSH keypair to load into the Cluster
+  nodes. This parameter is deprecated and will be
+  removed in a future release. Use --keypair instead.
 
 ``--keypair <keypair>``
-  The name or UUID of the SSH keypair to load into the
-  Cluster nodes.
+  The name of the SSH keypair to load into the Cluster
+  nodes.
 
 ``--external-network-id <external-network>``
   The external Neutron network name or UUID to connect
@@ -514,7 +566,10 @@ Create a cluster template.
   the Cluster.
 
 ``--name <name>``
-  Name of the cluster template to create.
+  Name of the cluster template to create. The --name
+  parameter is deprecated and will be removed in a
+  future release. Use the <name> positional parameter
+  instead.
 
 ``--coe <coe>``
   Specify the Container Orchestration Engine to use.
@@ -580,6 +635,9 @@ Create a cluster template.
   Indicates whether created Clusters should have a
   floating ip or not.
 
+``--insecure-registry <insecure-registry>``
+  url of docker registry
+
 .. _magnum_cluster-template-delete:
 
 magnum cluster-template-delete
@@ -606,7 +664,7 @@ magnum cluster-template-list
 
    usage: magnum cluster-template-list [--limit <limit>] [--sort-key <sort-key>]
                                        [--sort-dir <sort-dir>]
-                                       [--fields <fields>]
+                                       [--fields <fields>] [--detail]
 
 Print a list of cluster templates.
 
@@ -626,6 +684,9 @@ Print a list of cluster templates.
   fields: uuid, name, coe, image_id, public, link,
   apiserver_port, server_type, tls_disabled,
   registry_enabled
+
+``--detail``
+  Show detailed information about the cluster templates.
 
 .. _magnum_cluster-template-show:
 
@@ -695,6 +756,121 @@ Update information about the given cluster.
 
 ``--rollback``
   Rollback cluster on update failure.
+
+.. _magnum_quotas-create:
+
+magnum quotas-create
+--------------------
+
+.. code-block:: console
+
+   usage: magnum quotas-create --project-id <project-id> --resource <resource>
+                               [--hard-limit <hard-limit>]
+
+Create a quota.
+
+**Optional arguments:**
+
+``--project-id <project-id>``
+  Project Id.
+
+``--resource <resource>``
+  Resource name.
+
+``--hard-limit <hard-limit>``
+  Max resource limit.
+
+.. _magnum_quotas-delete:
+
+magnum quotas-delete
+--------------------
+
+.. code-block:: console
+
+   usage: magnum quotas-delete --project-id <project-id> --resource <resource>
+
+Delete specified resource quota.
+
+**Optional arguments:**
+
+``--project-id <project-id>``
+  Project ID.
+
+``--resource <resource>``
+  Resource name
+
+.. _magnum_quotas-list:
+
+magnum quotas-list
+------------------
+
+.. code-block:: console
+
+   usage: magnum quotas-list [--marker <marker>] [--limit <limit>]
+                             [--sort-key <sort-key>] [--sort-dir <sort-dir>]
+                             [--all-tenants]
+
+Print a list of available quotas.
+
+**Optional arguments:**
+
+``--marker <marker>``
+  The last quota UUID of the previous page; displays
+  list of quotas after "marker".
+
+``--limit <limit>``
+  Maximum number of quotas to return.
+
+``--sort-key <sort-key>``
+  Column to sort results by.
+
+``--sort-dir <sort-dir>``
+  Direction to sort. "asc" or "desc".
+
+``--all-tenants``
+  Flag to indicate list all tenant quotas.
+
+.. _magnum_quotas-show:
+
+magnum quotas-show
+------------------
+
+.. code-block:: console
+
+   usage: magnum quotas-show --project-id <project-id> --resource <resource>
+
+Show details about the given project resource quota.
+
+**Optional arguments:**
+
+``--project-id <project-id>``
+  Project ID.
+
+``--resource <resource>``
+  Resource name
+
+.. _magnum_quotas-update:
+
+magnum quotas-update
+--------------------
+
+.. code-block:: console
+
+   usage: magnum quotas-update --project-id <project-id> --resource <resource>
+                               [--hard-limit <hard-limit>]
+
+Update information about the given project resource quota.
+
+**Optional arguments:**
+
+``--project-id <project-id>``
+  Project Id.
+
+``--resource <resource>``
+  Resource name.
+
+``--hard-limit <hard-limit>``
+  Max resource limit.
 
 .. _magnum_service-list:
 
