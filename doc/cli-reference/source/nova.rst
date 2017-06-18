@@ -23,7 +23,7 @@ Compute service (nova) command-line client
 The nova client is the command-line interface (CLI) for
 the Compute service (nova) API and its extensions.
 
-This chapter documents :command:`nova` version ``9.0.0``.
+This chapter documents :command:`nova` version ``9.0.1``.
 
 For help on a specific :command:`nova` command, enter:
 
