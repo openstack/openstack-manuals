@@ -19,7 +19,7 @@ the compute node, or other failures that could prevent instances from
 functioning correctly, such as, issues with a cinder volume I/O path.
 
 More details are available in the `user story
-<http://specs.openstack.org/openstack/openstack-user-stories/user-stories/proposed/ha_vm.html>`_
+<https://specs.openstack.org/openstack/openstack-user-stories/user-stories/proposed/ha_vm.html>`_
 co-authored by OpenStack's HA community and `Product Working Group
 <https://wiki.openstack.org/wiki/ProductTeam>`_ (PWG), where this feature is
 identified as missing functionality in OpenStack, which
@@ -40,7 +40,7 @@ links:
   <https://github.com/gryf/mistral-evacuate>`_, by Intel
 * `masakari <https://launchpad.net/masakari>`_, by NTT
 * `OCF RAs
-  <http://aspiers.github.io/openstack-summit-2016-austin-compute-ha/#/ocf-pros-cons>`_,
+  <https://aspiers.github.io/openstack-summit-2016-austin-compute-ha/#/ocf-pros-cons>`_,
   as used by Red Hat and SUSE
 
 Current upstream work

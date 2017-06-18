@@ -25,13 +25,13 @@ Tooz supports
 `various drivers <https://docs.openstack.org/developer/tooz/drivers.html>`_
 including the following back end solutions:
 
-* `Zookeeper <http://zookeeper.apache.org/>`_:
+* `Zookeeper <https://zookeeper.apache.org/>`_:
     Recommended solution by the Tooz project.
 
-* `Redis <http://redis.io/>`_:
+* `Redis <https://redis.io/>`_:
     Recommended solution by the Tooz project.
 
-* `Memcached <http://memcached.org/>`_:
+* `Memcached <https://memcached.org/>`_:
     Recommended for testing.
 
 You must configure a supported Tooz driver for the HA deployment of
