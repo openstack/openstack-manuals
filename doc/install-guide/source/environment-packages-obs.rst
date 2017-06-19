@@ -1,5 +1,5 @@
-OpenStack packages
-~~~~~~~~~~~~~~~~~~
+SUSE OpenStack packages
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Distributions release OpenStack packages as part of the distribution or
 using other methods because of differing release schedules. Perform

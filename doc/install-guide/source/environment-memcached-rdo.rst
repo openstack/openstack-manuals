@@ -1,5 +1,5 @@
-Memcached
-~~~~~~~~~
+Red Hat Memcached
+~~~~~~~~~~~~~~~~~
 
 The Identity service authentication mechanism for services uses Memcached
 to cache tokens. The memcached service typically runs on the controller

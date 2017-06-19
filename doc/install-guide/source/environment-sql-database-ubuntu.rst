@@ -1,5 +1,5 @@
-SQL database
-~~~~~~~~~~~~
+Ubuntu SQL database
+~~~~~~~~~~~~~~~~~~~
 
 Most OpenStack services use an SQL database to store information. The
 database typically runs on the controller node. The procedures in this

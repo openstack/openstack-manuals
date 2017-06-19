@@ -1,5 +1,5 @@
-Message queue
-~~~~~~~~~~~~~
+Red Hat Message queue
+~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack uses a :term:`message queue` to coordinate operations and
 status information among services. The message queue service typically

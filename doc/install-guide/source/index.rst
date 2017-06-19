@@ -5,8 +5,10 @@
 .. toctree::
    :maxdepth: 3
 
+   preface
    get-started-with-openstack
-   index-debian
-   index-obs
-   index-rdo
-   index-ubuntu
+   common/conventions.rst
+   overview.rst
+   environment.rst
+   launch-instance.rst
+   common/appendix.rst
