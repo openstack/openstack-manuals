@@ -1,6 +1,30 @@
 {% set scriptdir = '../../common/js/' %}
 {% set cssdir = '../../common/css/' %}
 {% set imagedir = '../../common/images/' %}
+
+{% set SERIES = "latest" %}
+
+{% set PROJECTS = [
+('keystone', 'Identity service'),
+('glance', 'Image service'),
+('nova', 'Compute service'),
+('neutron', 'Networking service'),
+('horizon', 'Dashboard'),
+('cinder', 'Block Storage service'),
+('ironic', 'Bare Metal service'),
+('magnum', 'Container Infrastructure Management service'),
+('trove', 'Database service'),
+('designate', 'DNS service'),
+('ec2-api', 'EC2 API compatibility layer'),
+('barbican', 'Key Manager service'),
+('zaqar', 'Messaging service'),
+('swift', 'Object Storage service'),
+('heat', 'Orchestration service'),
+('manila', 'Shared File Systems service'),
+('aodh', 'Telemetry Alarming services'),
+('ceilometer', 'Telemetry Data Collection service'),
+] %}
+
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}Draft Installation Tutorials and Guides{% endblock %}
 {% block title %}
@@ -13,26 +37,8 @@
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
                 <h1>Draft Installation Tutorials and Guides</h1>
-                <h5>
-                    <b>
-                      NOTE: This is documentation in progress for the next release.
-                    </b>
-                </h5>
                 <p>
                   These guides cover installation procedures for OpenStack
-                  services. Select your preferred operating system for a manual
-                  installation tutorial of core services (Identity, Image,
-                  Compute, Networking, and Block Storage , and
-                  the Dashboard service). Once you have the core services
-                  installed, select from the optional services for more
-                  installation guides.
-                </p>
-                <p>
-                  OpenStack services can be installed on Red Hat, SUSE, and Ubuntu
-                  distributions. Installing only the core services will
-                  provide a minimal deployment necessary to launch an
-                  instance with minimal/default configuration. Optional
-                  content augments a minimal deployment with additional
                   services.
                 </p>
                 <p>
@@ -46,59 +52,12 @@
 <div class="mid-docs-wrapper" id="docs-main-body">
     <div class="container">
         <div class="row docs-toc" style="padding-top: 10px;">
-            <div class="col-lg-4 col-md-4 col-sm-4">
-               <div class="os-box row-eq-height">
-                  <div class="logo-box">
-                     <img src ="{{ imagedir }}OpenSUSE_Logo.svg" class="os-logo" onclick="window.open('https://www.opensuse.org')" />
-                  </div>
-                  <div class="os-name">
-                     openSUSE and SUSE Linux Enterprise
-                  </div>
-                  <div class="os-description">
-                    Install core and optional OpenStack services on
-                    an openSUSE or SUSE Linux Enterprise system,
-                    using a manual installation method.
-                  </div>
-                  <div class="os-button">
-                     <input class="go-button" type="button" onclick="location.href='obs-services.html';" value="    Go!    " name="Go"/>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-               <div class="os-box row-eq-height">
-                  <div class="logo-box">
-                     <img src ="{{ imagedir }}centos-logo-light-vertical.svg" class="os-logo" alt="Redhat Logo"  onclick="window.open('https://www.redhat.com/en')"/>
-                  </div>
-                  <div class="os-name">
-                     Red Hat Enterprise Linux 7 and CentOS 7
-                  </div>
-                  <div class="os-description">
-                    Install core and optional OpenStack services on
-                    a Red Hat Enterprise Linux 7 or CentOS 7 system,
-                    using a manual installation method.
-                  </div>
-                  <div class="os-button">
-                     <input class="go-button" type="button" onclick="location.href='rdo-services.html';" value="    Go!    " name="Go"/>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4">
-               <div class="os-box row-eq-height">
-                  <div class="logo-box" style="height:120px;">
-                     <img src ="{{ imagedir }}ATT00001.png" class="os-logo" style="width:260px;margin-top:50px" onclick="window.open('https://www.ubuntu.com')" />
-                  </div>
-                  <div class="os-name">
-                     Ubuntu
-                  </div>
-                  <div class="os-description">
-                    Install core and optional OpenStack services on
-                    an Ubuntu system,
-                    using a manual installation method.
-                  </div>
-                  <div class="os-button">
-                     <input class="go-button" type="button" onclick="location.href='ubuntu-services.html';" value="    Go!    " name="Go"/>
-                  </div>
-               </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                 <ul>
+{% for project_name, service_type in PROJECTS -%}
+                   <li><a href="/{{project_name}}/{{SERIES}}/install/">{{service_type}} ({{project_name|title}})</a></li>
+{%- endfor %}
+                 </ul>
             </div>
         </div>
         <div class="row docs-contribute-wrapper">
