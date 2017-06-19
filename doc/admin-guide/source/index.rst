@@ -19,19 +19,6 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-   identity-management.rst
-   dashboard.rst
-   compute.rst
-   image.rst
-   objectstorage.rst
-   blockstorage.rst
-   shared-file-systems.rst
-   networking.rst
-   telemetry.rst
-   database.rst
-   baremetal.rst
-   orchestration.rst
-   cli.rst
    cross-project.rst
    appendix.rst
    common/app-support.rst
