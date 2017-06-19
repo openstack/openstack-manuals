@@ -80,19 +80,12 @@ release = '15.0.0'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['common/cli*', 'common/nova*',
-                    'common/get-started-with-openstack.rst',
-                    'common/get-started-openstack-services.rst',
-                    'common/get-started-logical-architecture.rst',
-                    'common/get-started-dashboard.rst',
-                    'common/get-started-storage-concepts.rst',
-                    'common/get-started-database-service.rst',
-                    'common/get-started-data-processing.rst',
-                    'common/get-started-object-storage.rst',
-                    'common/get-started-orchestration.rst',
-                    'common/get-started-shared-file-systems.rst',
-                    'common/get-started-telemetry.rst',
-                    'shared/note_configuration_vary_by_distribution.rst']
+exclude_patterns = [
+    'common/cli*',
+    'common/nova*',
+    'common/get-started-*.rst',
+    'shared/note_configuration_vary_by_distribution.rst',
+]
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.

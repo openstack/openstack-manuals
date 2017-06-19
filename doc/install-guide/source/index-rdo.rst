@@ -54,13 +54,6 @@ Contents
    common/conventions.rst
    overview.rst
    environment.rst
-   keystone.rst
-   glance.rst
-   nova.rst
-   neutron.rst
-   horizon.rst
-   cinder.rst
-   additional-services.rst
    launch-instance.rst
    common/appendix.rst
 

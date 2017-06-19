@@ -86,4 +86,3 @@ OpenStack architecture:
 
    get-started-conceptual-architecture.rst
    get-started-logical-architecture.rst
-   get-started-openstack-services.rst

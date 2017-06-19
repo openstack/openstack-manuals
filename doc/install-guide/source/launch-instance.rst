@@ -25,7 +25,7 @@ Create virtual networks
 -----------------------
 
 Create virtual networks for the networking option that you chose
-in :ref:`networking`. If you chose option 1, create only the provider
+when configuring Neutron. If you chose option 1, create only the provider
 network. If you chose option 2, create the provider and self-service
 networks.
 
