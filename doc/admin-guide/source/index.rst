@@ -19,7 +19,6 @@ Contents
    :maxdepth: 2
 
    common/conventions.rst
-   common/get-started-with-openstack.rst
    identity-management.rst
    dashboard.rst
    compute.rst
