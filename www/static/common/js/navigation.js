@@ -4,7 +4,7 @@ $(function() {
     $(".navbar-main").toggleClass("show");
     $(".search-container").toggleClass("show");
     $(".search-icon").toggleClass("show");
-    $('#gsc-i-id1').focus();
+    $('.custom-search-box').focus();
   });
 });
 
@@ -51,6 +51,7 @@ jQuery(document).ready(function(){
         $('#search-label').text('Search');
     }
 });
+
 jQuery(window).resize(function () {
     if (jQuery(window).width() < 1050) {
         $('#search-label').text('');
@@ -59,9 +60,6 @@ jQuery(window).resize(function () {
     }
 });
 
-// Show placeholder text in Google Search
-setTimeout( function() {
-    $(".gsc-input").attr("placeholder", "search openstack");
-}, 1000 );
+
 
 
