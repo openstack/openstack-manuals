@@ -192,7 +192,7 @@ the ``--dry-run`` option:
    +---------+-------+
    | Field   | Value |
    +---------+-------+
-   | dry-run | pass  |
+   | dry_run | pass  |
    +---------+-------+
 
 The validation option behaves identically for all users. However, it
