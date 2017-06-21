@@ -1,1 +1,0 @@
-../../install-guide/source/environment-ntp-controller.rst

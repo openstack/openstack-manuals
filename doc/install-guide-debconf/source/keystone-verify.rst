@@ -1,1 +1,0 @@
-../../install-guide/source/keystone-verify.rst

@@ -1,1 +1,0 @@
-../../install-guide/source/neutron-compute-install-option2.rst
