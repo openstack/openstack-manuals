@@ -19,6 +19,7 @@ import sys
 
 from bs4 import BeautifulSoup
 import jinja2
+import jsonschema
 import yaml
 
 
@@ -70,7 +71,19 @@ def main():
     if os.path.exists(project_data_filename):
         with open(project_data_filename, 'r') as f:
             project_data = yaml.safe_load(f.read())
-
+        project_schema_filename = os.path.join(
+            args.source_directory,
+            'schema.yaml',
+        )
+        with open(project_schema_filename, 'r') as f:
+            project_schema = yaml.safe_load(f.read())
+        validator = jsonschema.Draft4Validator(project_schema)
+        fail = False
+        for error in validator.iter_errors(project_data):
+            logger.error(str(error))
+            fail = True
+        if fail:
+            raise ValueError('invalid input in %s' % project_data_filename)
     try:
         loader = jinja2.FileSystemLoader(args.source_directory)
         environment = jinja2.Environment(loader=loader)
