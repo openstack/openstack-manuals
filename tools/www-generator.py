@@ -92,7 +92,8 @@ def main():
         return 1
 
     for templateFile in environment.list_templates():
-        if not templateFile.endswith('.html'):
+        if not (templateFile.endswith('.html')
+                or templateFile.endswith('.htaccess')):
             logger.info('ignoring %s', templateFile)
             continue
 
@@ -107,8 +108,9 @@ def main():
 
         try:
             output = template.render(projects=project_data)
-            soup = BeautifulSoup(output, "lxml")
-            output = soup.prettify()
+            if templateFile.endswith('.html'):
+                soup = BeautifulSoup(output, "lxml")
+                output = soup.prettify()
         except Exception as e:
             logger.error("rendering template %s failed: %s" %
                          (templateFile, e))

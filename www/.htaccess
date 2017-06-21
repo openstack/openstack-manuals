@@ -541,3 +541,11 @@ redirectmatch 301 "^/infra/shade(.*)$" /developer/shade$1
 # Redirecting old project developer docs to the new project home pages
 # while leaving the index / project list page as it is.
 redirectmatch 301 "^/developer/([^/]+)/.*$" /$1/latest/
+
+# Redirects from service-type to code-name
+{% for project in projects -%}
+{%- if project.type == 'service' and project.service_type %}
+redirectmatch 302 "^/{{project.service_type|lower}}/.*$" /{{project.name}}/latest/
+{%- endif %}
+{%- endfor %}
+# End service-type redirects
