@@ -30,68 +30,12 @@
 
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i> OpenStack Services</h3>
-        <a href="/murano/latest/">
-            Application Catalog service (murano)</a><br />
-        <a href="/ironic/latest/">
-            Bare Metal service (ironic)</a><br />
-        <a href="/cinder/latest/">
-            Block Storage service (cinder)</a><br />
-        <a href="/senlin/latest/">
-            Clustering service (senlin)</a><br />
-        <a href="/storlets/latest/">
-            Compute inside Object Storage service (storlets)</a><br />
-        <a href="/nova/latest/">
-            Compute service (nova)</a><br />
-        <a href="/magnum/latest/">
-            Container Infrastructure Management service (magnum)</a><br />
-        <a href="/zun/latest/">
-            Containers service (zun)</a><br />
-        <a href="/horizon/latest/">
-            Dashboard (horizon)</a><br />
-        <a href="/sahara/latest/">
-            Data Processing service (sahara)</a><br />
-        <a href="/trove/latest/">
-            Database service (trove)</a><br />
-        <a href="/designate/latest/">
-            DNS service (designate)</a><br />
-        <a href="/congress/latest/">
-            Governance service (congress)</a><br />
-        <a href="/keystone/latest/">
-            Identity service (keystone)</a><br />
-        <a href="/glance/latest/">
-            Image service (glance)</a><br />
-        <a href="/watcher/latest/">
-            Infrastructure Optimization service (watcher)</a><br />
-        <a href="/barbican/latest/">
-            Key Management service (barbican)</a><br />
-        <a href="/zaqar/latest/">
-            Message service (zaqar)</a><br />
-        <a href="/neutron/latest/">
-            Networking service (neutron)</a><br />
-        <a href="/tacker/latest/">
-            NFV Orchestration service (tacker)</a><br />
-        <a href="/swift/latest/">
-            Object Storage service (swift)</a><br />
-        <a href="/heat/latest/">
-            Orchestration service (heat)</a><br />
-        <a href="/cloudkitty/latest/">
-            Rating service (cloudkitty)</a><br />
-        <a href="/vitrage/latest/">
-            Root Cause Analysis service (vitrage)</a><br />
-        <a href="/searchlight/latest/">
-            Search service (searchlight)</a><br />
-        <a href="/manila/latest/">
-            Shared File Systems service (manila)</a><br />
-        <a href="/aodh/latest/">
-            Telemetry Alarming service (aodh)</a><br />
-        <a href="/ceilometer/latest/">
-            Telemetry Data Collection service (ceilometer)</a><br />
-        <a href="/panko/latest/">
-            Telemetry Event service (panko)</a><br />
-        <a href="/gnocchi/latest/">
-            Telemetry Time Series Database service (gnocchi)</a><br />
-        <a href="/mistral/latest/">
-            Workflow service (mistral)</a><br />
+{% for project in projects|sort(attribute='service') %}
+{% if project.type in ['service', 'other'] %}
+        <a href="/{{project.name}}/latest/">
+            {{project.service}} ({{project.name}})</a><br />
+{% endif %}
+{% endfor %}
     </div>
 
     <div class="docs-link-sections">
