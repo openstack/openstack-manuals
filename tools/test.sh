@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-.tox/checkbuild/bin/python tools/www-generator.py --source-directory www/ \
+.tox/checkbuild/bin/python tools/www-generator.py --verbose --source-directory www/ \
         --output-directory publish-docs/www/
 
 rsync -a www/static/ publish-docs/www/

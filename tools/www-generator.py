@@ -19,6 +19,7 @@ import sys
 
 from bs4 import BeautifulSoup
 import jinja2
+import yaml
 
 
 def initialize_logging(debug, verbose):
@@ -59,6 +60,17 @@ def main():
     args = parse_command_line_arguments()
     logger = initialize_logging(args.debug, args.verbose)
 
+    # Load project data, if it is present.
+    project_data = {}
+    project_data_filename = os.path.join(
+        args.source_directory,
+        'projects.yaml'
+    )
+    logger.info('looking for project data in %s', project_data_filename)
+    if os.path.exists(project_data_filename):
+        with open(project_data_filename, 'r') as f:
+            project_data = yaml.safe_load(f.read())
+
     try:
         loader = jinja2.FileSystemLoader(args.source_directory)
         environment = jinja2.Environment(loader=loader)
@@ -68,6 +80,7 @@ def main():
 
     for templateFile in environment.list_templates():
         if not templateFile.endswith('.html'):
+            logger.info('ignoring %s', templateFile)
             continue
 
         logger.info("generating %s" % templateFile)
@@ -80,7 +93,7 @@ def main():
             continue
 
         try:
-            output = template.render()
+            output = template.render(projects=project_data)
             soup = BeautifulSoup(output, "lxml")
             output = soup.prettify()
         except Exception as e:

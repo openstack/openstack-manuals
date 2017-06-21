@@ -4,27 +4,6 @@
 
 {% set SERIES = "latest" %}
 
-{% set PROJECTS = [
-('keystone', 'Identity service'),
-('glance', 'Image service'),
-('nova', 'Compute service'),
-('neutron', 'Networking service'),
-('horizon', 'Dashboard'),
-('cinder', 'Block Storage service'),
-('ironic', 'Bare Metal service'),
-('magnum', 'Container Infrastructure Management service'),
-('trove', 'Database service'),
-('designate', 'DNS service'),
-('ec2-api', 'EC2 API compatibility layer'),
-('barbican', 'Key Manager service'),
-('zaqar', 'Messaging service'),
-('swift', 'Object Storage service'),
-('heat', 'Orchestration service'),
-('manila', 'Shared File Systems service'),
-('aodh', 'Telemetry Alarming services'),
-('ceilometer', 'Telemetry Data Collection service'),
-] %}
-
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}Draft Installation Tutorials and Guides{% endblock %}
 {% block title %}
@@ -54,8 +33,10 @@
         <div class="row docs-toc" style="padding-top: 10px;">
             <div class="col-lg-12 col-md-12 col-sm-12">
                  <ul>
-{% for project_name, service_type in PROJECTS -%}
-                   <li><a href="/{{project_name}}/{{SERIES}}/install/">{{service_type}} ({{project_name|title}})</a></li>
+{% for project in projects -%}
+{% if project.has_install_guide %}
+                   <li><a href="/{{project.name}}/{{SERIES}}/install/">{{project.service_type}} ({{project.name|title}})</a></li>
+{% endif %}
 {%- endfor %}
                  </ul>
             </div>
