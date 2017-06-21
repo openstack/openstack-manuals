@@ -50,5 +50,4 @@ networking infrastructure for instances and handles security groups.
 
     .. end
 
-Return to
-:ref:`Networking compute node configuration <neutron-compute-compute>`.
+Return to *Networking compute node configuration*
