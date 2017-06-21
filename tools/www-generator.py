@@ -90,7 +90,7 @@ def main():
         except Exception as e:
             logger.error("parsing template %s failed: %s" %
                          (templateFile, e))
-            continue
+            raise
 
         try:
             output = template.render(projects=project_data)
@@ -99,7 +99,7 @@ def main():
         except Exception as e:
             logger.error("rendering template %s failed: %s" %
                          (templateFile, e))
-            continue
+            raise
 
         try:
             target_directory = os.path.join(args.output_directory,
