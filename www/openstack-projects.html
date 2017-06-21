@@ -107,75 +107,12 @@
 
     <div class="docs-link-sections">
         <h3><i class="fa fa-pencil"></i> Using Libraries</h3>
-        <a href="/automaton/latest/">automaton</a><br />
-        <p>Friendly state machines for python.</p>
-        <a href="/cliff/latest/">cliff</a><br />
-        <p>Builds command-line programs in Python.</p>
-        <a href="/debtcollector/latest/">debtcollector</a><br />
-        <p>A collection of Python deprecation patterns and strategies that
-            help you collect your technical debt in a non-destructive manner.</p>
-        <a href="/futurist/latest/">futurist</a><br />
-        <p>Asynchronous code from the future, helping you build out your
-            applications to handle asynchronous and periodic work in a nice manner.</p>
-        <a href="/keystoneauth/latest/">keystoneauth</a><br />
-        <p>Common authentication library for OpenStack clients.</p>
-        <a href="/keystonemiddleware/latest/">keystonemiddleware</a><br />
-        <p>Middleware provided for integrating with the OpenStack Identity API.</p>
-        <a href="/neutron-lib/latest/">neutron-lib</a><br />
-        <p>Library provided for integrating with the OpenStack Networking platform.</p>
-        <a href="/oslo.cache/latest/">oslo.cache</a><br />
-        <p>Generic caching mechanism for OpenStack projects by wrapping
-            the dogpile.cache.</p>
-        <a href="/oslo.concurrency/latest/">oslo.concurrency</a><br />
-        <p>External process management and task synchronization.</p>
-        <a href="/oslo.config/latest/">oslo.config</a><br />
-        <p>Configuration option parsing from the command line or configuration files.</p>
-        <a href="/oslo.context/latest/">oslo.context</a><br />
-        <p>Helpers to maintain useful information about a request context</p>
-        <a href="/oslo.db/latest/">oslo.db</a><br />
-        <p>Database connectivity.</p>
-        <a href="/oslo.i18n/latest/">oslo.i18n</a><br />
-        <p>Internationalization and translation.</p>
-        <a href="/oslo.log/latest/">oslo.log</a><br />
-        <p>A logging configuration library.</p>
-        <a href="/oslo.messaging/latest/">oslo.messaging</a><br />
-        <p>Inter-process communication.</p>
-        <a href="/oslo.middleware/latest/">oslo.middleware</a><br />
-        <p>A collection of WSGI middleware for web service development.</p>
-        <a href="/oslo.policy/latest/">oslo.policy</a><br />
-        <p>Common policy enforcement.</p>
-        <a href="/oslo.reports/latest/">oslo.reports</a><br />
-        <p>Error report framework for projects.</p>
-        <a href="/oslo.rootwrap/latest/">oslo.rootwrap</a><br />
-        <p>Fine filtering of shell commands to run as root.</p>
-        <a href="/oslo.serialization/latest/">oslo.serialization</a><br />
-        <p>Serialization with special handling for some common types.</p>
-        <a href="/oslo.service/latest/">oslo.service</a><br />
-        <p>Library for running and managing OpenStack services.</p>
-        <a href="/oslo.utils/latest/">oslo.utils</a><br />
-        <p>Database and RPC object schema versioning.</p>
-        <a href="/oslo.versionedobjects/latest/">oslo.versionedobjects</a><br />
-        <p>Library of common low-level utility modules.</p>
-        <a href="/oslo.vmware/latest/">oslo.vmware</a><br />
-        <p>Common functionality required by VMware drivers in several projects.</p>
-        <a href="/oslosphinx/latest/">oslosphinx</a><br />
-        <p>Theme and extension support for Sphinx documentation.</p>
-        <a href="/oslotest/latest/">oslotest</a><br />
-        <p>Unit test and fixture framework.</p>
-        <a href="/osprofiler/latest/">osprofiler</a><br />
-        <p>Cross-Project profiling library.</p>
-        <a href="/pbr/latest/">pbr</a><br />
-        <p>Manages setuptools packaging needs in a consistent way.</p>
-        <a href="/pycadf/latest/">PyCADF</a><br />
-        <p>Creates CADF events to capture cloud-related events.</p>
-        <a href="/pylockfile/latest/">pylockfile</a><br />
-        <p>The lockfile package provides a simple API for locking files.</p>
-        <a href="/stevedore/latest/">stevedore</a><br />
-        <p>Manages dynamic plug-ins for Python applications.</p>
-        <a href="/taskflow/latest/">TaskFlow</a><br />
-        <p>Makes task execution easy, consistent, and reliable.</p>
-        <a href="/tooz/latest/">Tooz</a><br />
-        <p>Distributed primitives like group membership protocol, lock service and leader elections.</p>
+{% for project in projects|sort(attribute='name') %}
+{% if project.type == 'library' %}
+        <a href="/{{project.name}}/latest/"></a><br />
+        <p>{{project.service}}</p>
+{% endif %}
+{% endfor %}
     </div>
 
             </div>
