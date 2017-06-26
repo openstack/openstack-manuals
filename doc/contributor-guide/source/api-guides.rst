@@ -93,19 +93,25 @@ The basic steps are:
    include the html theme, openstackdocstheme, use the os-api-ref Sphinx
    extension, and also point the bug reporting link to your project's repo::
 
-    import openstackdocstheme
-
     extensions = [
         'os_api_ref',
+        'openstackdocstheme'
     ]
 
+    # The prefix and repo name like
+    repository_name = 'openstack/glance'
+    # Set Launchpad bug tag, default is empty
+    bug_tag = ''
+    # The launchpad project name like
+    bug_project = 'glance'
 
     html_theme = 'openstackdocs'
-    html_theme_path = [openstackdocstheme.get_html_theme_path()]
     html_theme_options = {
         "sidebar_mode": "toc",
     }
-    html_context = {'bug_project': 'nova', 'bug_tag': 'api-ref'}
+
+    # Must set this variable to include year, month, day, hours, and minutes.
+    html_last_updated_fmt = '%Y-%m-%d %H:%M'
 
 #. Update the ``test-requirements.txt`` file for the project with a line for
    the ``os-api-ref`` Sphinx extension::
