@@ -72,13 +72,23 @@ Make the following changes in the **openstack-manuals** repository:
 
    - ``/www/RELEASE/index.html``
 
-#. Create the project-install-guide index pages for the new release, using the
-   existing pages as templates:
+#. Copy the latest project data file to one named for the release:
+
+   .. code-block:: console
+
+      $ cp www/project-data/latest.yaml www/project-data/RELEASE.yaml
+
+#. Create the project-install-guide index page for the new release, using the
+   existing page as a template:
 
    - ``/www/project-install-guide/RELEASE/index.html``
-   - ``/www/project-install-guide/RELEASE/obs-services.html``
-   - ``/www/project-install-guide/RELEASE/rdo-services.html``
-   - ``/www/project-install-guide/RELEASE/ubuntu-services.html``
+
+#. Modify the new file to set the ``SERIES`` variable for the template
+   correctly:
+
+   .. code-block:: jinja
+
+      {% set SERIES = "RELEASE" %}
 
 #. Create the ``project-deploy-guide`` index for the new release, using the
    existing page as a template:
@@ -98,7 +108,7 @@ Make the following changes in the **openstack-manuals** repository:
 
 #. Update the site redirects. Merge this patch on release day:
 
-   - ``/www/static/.htaccess``
+   - ``/www/.htaccess``
 
 #. Update the *Get started* links. Do not merge this patch until after the
    links are active:
@@ -120,13 +130,6 @@ locations. Most notably, the basic Installation Tutorial links to the
 additional services Installation Guides in
 ``doc/install-guide/source/additional-services.rst``. Update these links to
 the correct version before publishing the book.
-
-Run scripts for Configuration and CLI Reference Guides
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Run scripts to pull the latest changes for the Configuration Reference and
-CLI Reference Guides. Instructions for using these scripts are in the
-:ref:`doc-tools` chapter.
 
 Update main docs page
 ~~~~~~~~~~~~~~~~~~~~~
