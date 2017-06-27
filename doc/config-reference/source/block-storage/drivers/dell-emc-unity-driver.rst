@@ -278,9 +278,11 @@ connect this snapshot to the Block Storage host for volume backup.
 Troubleshooting
 ~~~~~~~~~~~~~~~
 
-To troubleshoot a failure in OpenStack deployment, the best way is to enable
-verbose and debug log, at the same time, leverage the build-in [request_id]_ to
-track specific Block Storage command logs.
+To troubleshoot a failure in OpenStack deployment, the best way is to
+enable verbose and debug log, at the same time, leverage the build-in
+`Return request ID to caller
+<https://specs.openstack.org/openstack/openstack-specs/specs/return-request-id.html>`_
+to track specific Block Storage command logs.
 
 
 #. Enable verbose log, set following in ``/etc/cinder/cinder.conf`` and restart
@@ -335,8 +337,3 @@ track specific Block Storage command logs.
 
       # grep "req-3a459e0e-871a-49f9-9796-b63cc48b5015" cinder-volume.log
 
-
-
-
-.. [request_id] `Return request ID to caller
-   <https://specs.openstack.org/openstack/openstack-specs/specs/return-request-id.html>`_
