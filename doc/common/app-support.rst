@@ -52,7 +52,7 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `Operations Guide <https://docs.openstack.org/ops-guide/>`_
 
-*  `Networking Guide <https://docs.openstack.org/ocata/networking-guide>`_
+*  `Networking Guide <https://docs.openstack.org/neutron/latest/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 

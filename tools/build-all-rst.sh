@@ -28,7 +28,7 @@ done
 
 # PDF targets for Install guides are dealt in build-install-guides-rst.sh
 PDF_TARGETS=( 'arch-design'\
-              'ha-guide' 'image-guide' 'networking-guide'\
+              'ha-guide' 'image-guide'\
               'ops-guide' 'user-guide' )
 
 # Note that these guides are only build for master branch
@@ -45,8 +45,8 @@ done
 
 # Draft guides
 # This includes guides that we publish from stable branches
-# as versioned like the networking-guide.
-for guide in ha-guide-draft networking-guide config-reference; do
+# as versioned like the ha-guide
+for guide in ha-guide-draft config-reference; do
     TARGET="draft/$guide"
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
