@@ -552,3 +552,11 @@ redirectmatch 302 "^/{{project.service_type|lower}}/.*$" /{{project.name}}/lates
 {%- endif %}
 {%- endfor %}
 # End service-type redirects
+
+# Redirects from code-name without a series to latest
+{% for project in projects -%}
+{%- if project.type == 'service' and project.service_type %}
+redirectmatch 301 "^/{{project.name}}/$" /{{project.name}}/latest/
+{%- endif %}
+{%- endfor %}
+# End code-name redirects
