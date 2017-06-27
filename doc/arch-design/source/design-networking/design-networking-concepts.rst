@@ -81,10 +81,6 @@ their networks as possible. The benefits of selecting a layer-2 design are:
   are not limited to, globally unique source addresses, globally unique
   destination addresses, and error control.
 
-* Ethernet frames contain all the essentials for networking. These include,
-  but are not limited to, globally unique source addresses, globally unique
-  destination addresses, and error control.
-
 * Ethernet frames can carry any kind of packet. Networking at layer-2 is
   independent of the layer-3 protocol.
 
