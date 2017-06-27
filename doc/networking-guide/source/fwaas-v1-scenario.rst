@@ -53,8 +53,9 @@ FWaaS management options are also available in the Dashboard.
 
       # neutron-db-manage --subproject neutron-fwaas upgrade head
 
-#. Enable the option in the ``local_settings.py`` file,
-   which is typically located on the controller node:
+#. Enable the firewall option in the local settings file (named
+   ``local_settings`` on RHEL and CentOS, and
+   ``local_settings.py`` on Ubuntu):
 
    .. code-block:: python
 
@@ -66,10 +67,8 @@ FWaaS management options are also available in the Dashboard.
 
    .. note::
 
-      By default, ``enable_firewall`` option value is ``True`` in
-      ``local_settings.py`` file.
-
-   Apply the settings by restarting the web server.
+      By default, the ``enable_firewall`` option value is
+      ``True`` in the local settings file.
 
 #. Restart the ``neutron-l3-agent`` and ``neutron-server`` services
    to apply the settings.
