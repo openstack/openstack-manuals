@@ -55,7 +55,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'OpenStack Documentation Team Release Notes'
-repository_name="openstack/openstack-manuals"
+repository_name = "openstack/openstack-manuals"
+bug_project = 'openstack-manuals'
 bug_tag = u'releasenotes'
 copyright = u'2016, OpenStack contributors'
 

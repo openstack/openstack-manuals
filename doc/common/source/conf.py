@@ -52,7 +52,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-repository_name="openstack/openstack-manuals"
+repository_name = "openstack/openstack-manuals"
+bug_project = 'openstack-manuals'
 project = u'Common documents'
 bug_tag = u'common'
 
