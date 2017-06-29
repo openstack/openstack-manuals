@@ -32,6 +32,8 @@
      - (Integer) Sets the LDAP debugging level for LDAP calls. A value of 0 means that debugging is not enabled. This value is a bitmask, consult your LDAP documentation for possible values.
    * - ``dumb_member`` = ``cn=dumb,dc=nonexistent``
      - (String) DN of the "dummy member" to use when "use_dumb_member" is enabled.
+   * - ``group_ad_nesting`` = ``False``
+     - (Boolean) If enabled, group queries will use Active Directory specific filters for nested groups. It will impact the "list_users_in_group", "list_groups_for_user" and "check_user_in_group operations".
    * - ``group_additional_attribute_mapping`` =
      - (List) Additional attribute mappings for groups. Attribute mapping format is <ldap_attr>:<user_attr>, where ldap_attr is the attribute in the LDAP entry and user_attr is the Identity API attribute.
    * - ``group_allow_create`` = ``True``
