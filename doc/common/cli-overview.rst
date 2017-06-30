@@ -79,10 +79,6 @@ service with its package name and description.
      - trove
      - python-troveclient
      - Creates and manages databases.
-   * - Deployment service
-     - fuel
-     - python-fuelclient
-     - Plans deployments.
    * - DNS service
      - designate
      - python-designateclient

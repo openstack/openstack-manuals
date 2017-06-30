@@ -166,7 +166,6 @@ list below.
 *  ``cinder`` - Block Storage API and extensions
 *  ``cloudkitty`` - Rating service API
 *  ``designate`` - DNS service API
-*  ``fuel`` - Deployment service API
 *  ``glance`` - Image service API
 *  ``gnocchi`` - Telemetry API v3
 *  ``heat`` - Orchestration API
