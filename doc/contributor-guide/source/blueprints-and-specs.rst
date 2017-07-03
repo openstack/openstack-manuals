@@ -42,14 +42,21 @@ For more information, see :ref:`doc_bugs`.
 Release-specific documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Installation Tutorials and Guides, Configuration Reference, and Networking
-Guide are released at release time, with draft material published to
-https://docs.openstack.org/draft/draft-index.html.
-The rest of the guides are continuously released.
+Release-specific documentation is published continuously as changes are
+made, with different versions for each series. The following guides
+are release specific:
 
-To patch for the release-specific documentation, you should generally patch to
-master branch with "backport: xxxx" (for example, backport: kilo) in the commit
-message.
+* Configuration reference
+* Command-line reference
+* Installation tutorials and guides
+* Networking guide
+
+To patch release-specific documentation, you should
+patch the master branch with "backport: xxxx" (for example, backport:
+kilo) in the commit message. During Pike, much of the material
+maintained by the documentation team was moved into project team
+repositories, so patching the same content for different release
+series may mean looking for the relevant files in multiple places.
 
 For these guides, the docs.openstack.org site defaults to the current release,
 with the previous two releases being available under the ``More Releases
@@ -66,8 +73,14 @@ remove them entirely.
 Installation Tutorials and Guides
 ---------------------------------
 
-The OpenStack Installation Tutorials and Guides describe a manual install
-process for multiple distributions based on the following packaging systems:
+Starting with Pike, the OpenStack Installation Tutorials and Guides
+are maintained by the project teams, with assistance from the
+documentation team. The guides describe a manual install process for
+multiple distributions based on openSUSE and SUSE Linux Enterprise
+Server; Red Hat Enterprise Linux and CentOS; and Ubuntu 16.04 (LTS).
+
+Prior to Pike, the documentation team maintained OpenStack
+Installation Tutorials and Guides:
 
 .. list-table::
    :header-rows: 1
@@ -98,6 +111,11 @@ process for multiple distributions based on the following packaging systems:
 
 Guides for deployers and administrators
 ---------------------------------------
+
+Starting with Pike, configuration reference and administrator guides
+are maintained by each project team.
+
+Prior to Pike, the documentation team maintained combined guides:
 
 * `OpenStack Configuration Reference
   <https://docs.openstack.org/ocata/config-reference/>`_:
@@ -235,21 +253,18 @@ project repositories and we will have redirects in place for these API pages.
 Project-specific guides
 -----------------------
 
-Each project maintains its own developer guide.
-They are published from each project repository.
-See https://docs.openstack.org/developer/openstack-projects.html
-and https://docs.openstack.org/developer/language-bindings.html.
+Each project maintains its own guides for installation,
+administration, configuration reference, and contributors.  They are
+published from each project repository.  See
+https://docs.openstack.org/openstack-projects.html and
+https://docs.openstack.org/language-bindings.html.
 
-Contributor guides
-------------------
-
-Generally, the https://docs.openstack.org/developer/ documentation is meant
-for contributors to OpenStack projects. Each project's repo has a
-``doc/source`` directory where RST source files are stored. They are built
-automatically with Sphinx when the patch is merged. For example, see
-https://git.openstack.org/cgit/openstack/horizon/tree/doc/source for the
-horizon contributor documentation source and https://docs.openstack.org/developer/horizon/
-for the built documentation.
+Each project's repo has a ``doc/source`` directory where RST source
+files are stored. They are built automatically with Sphinx when the
+patch is merged. For example, see
+https://git.openstack.org/cgit/openstack/horizon/tree/doc/source for
+the horizon documentation source and
+https://docs.openstack.org/horizon/ for the built documentation.
 
 * `Infrastructure User Manual <https://docs.openstack.org/infra/manual>`_:
   Reference documentation for tools and processes used for all
@@ -273,12 +288,12 @@ for the built documentation.
    * - Python Developer Documentation
      - https://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,
        such as https://git.openstack.org/cgit/openstack/nova/tree/doc/source
-     - https://docs.openstack.org/developer/openstack-projects.html
+     - https://docs.openstack.org/openstack-projects.html
 
    * - Language Bindings and Python Clients
      - https://git.openstack.org/cgit/openstack/python-<project>client/tree/master/doc/source/,
        such as https://git.openstack.org/cgit/openstack/python-novaclient/tree/doc/source
-     - https://docs.openstack.org/developer/language-bindings.html
+     - https://docs.openstack.org/language-bindings.html
 
    * - OpenStack Project Infrastructure
      - https://git.openstack.org/cgit/openstack-infra/system-config/tree/doc/source
@@ -286,7 +301,7 @@ for the built documentation.
 
    * - Tempest Testing Project
      - https://git.openstack.org/cgit/openstack/tempest/tree/doc/source
-     - https://docs.openstack.org/developer/tempest/
+     - https://docs.openstack.org/tempest/latest/
 
 Guides for contributors
 -----------------------

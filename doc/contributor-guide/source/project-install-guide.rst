@@ -1,12 +1,36 @@
+.. _project-install-guide:
+
 =================================
 Installation tutorials and guides
 =================================
+
+Pike and later
+~~~~~~~~~~~~~~
+
+Each official OpenStack project should maintain an installation guide
+following the layout described in the `documentation migration
+spec`_. When the guide is available, update
+``openstack-manuals/www/project-data/latest.yaml`` to include
+information about the project and ensure that the
+``has_install_guide`` flag is set to ``true`` to ensure that the guide
+is listed along with the guides from other projects.
+
+.. _documentation migration spec: http://specs.openstack.org/openstack/docs-specs/specs/pike/os-manuals-migration.html
+
+Newton and Ocata
+~~~~~~~~~~~~~~~~
 
 For the Newton release, a new method of publishing installation tutorials
 and guides is being implemented. This will allow each big tent project to
 create their own installation guide, based on a standard template,
 in their own repository. These guides are then centrally published to
 `docs.openstack.org <https://docs.openstack.org>`_.
+
+.. warning::
+
+   These instructions are superseded by the `documentation migration
+   spec`_. New installation guides should be created using the layout
+   defined in the spec, rather than the following instructions.
 
 For updates on the progress of this project, see the `Install Guide wiki
 page <https://wiki.openstack.org/wiki/Documentation/InstallGuideWorkItems>`_.

@@ -2,6 +2,12 @@
 Generate Command-Line Interface Reference
 =========================================
 
+.. note::
+
+   These instructions apply to the guides produced prior to the Pike
+   release. The command line reference guides are now managed in the
+   project repositories.
+
 The OpenStack Command-Line Interface (CLI) Reference source files are stored
 in the ``openstack-manuals`` repository. The majority of files are
 automatically generated and should not be modified manually. To update

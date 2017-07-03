@@ -49,7 +49,13 @@ Several scripts currently reside in the `openstack-manuals
 beneficial to consolidate these into the ``openstack-doc-tools`` repository.
 
 www-generator.py
-  Generates static, template-based HTML files for https://docs.openstack.org/.
+  Generates static, template-based HTML files for
+  https://docs.openstack.org/. The script reads YAML data files in
+  ``www/project-data`` to determine which projects exist in a given
+  series and how they should be displayed on the list of installation,
+  configuration, and other guides. The file
+  ``www/project-data/schema.yaml`` contains the JSONSchema settings to
+  describe what a valid data file looks like.
 
 sync-projects.sh
   Synchronizes the **Glossary**, common files, and some translations

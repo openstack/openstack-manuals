@@ -2,6 +2,14 @@
 Generate Configuration Reference
 ================================
 
+.. note::
+
+   These instructions apply to the guides produced prior to the Pike
+   release. The configuration reference guides are now managed in the
+   project repositories using `the Sphinx integration provided by
+   oslo.config
+   <https://docs.openstack.org/developer/oslo.config/sphinxext.html>`__.
+
 The OpenStack Configuration Reference source files are stored
 in the ``openstack-manuals`` repository. The majority of files are
 automatically generated and should not be modified manually. To update
