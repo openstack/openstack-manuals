@@ -34,7 +34,7 @@ notification comes to the list.
 
    #. In the title, put ``newton`` or ``ocata`` depending on the release the
       patch affects.
-   #. Copy and paste the `<review.openstack.org>`_ link in the bug description.
+   #. Copy and paste the ``review.openstack.org`` link in the bug description.
    #. Describe the documentation that is affected if the code patch lands in
       the bug description.
    #. Keep the doc bug set to ``New`` until the code patch is merged.
