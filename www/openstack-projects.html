@@ -42,8 +42,12 @@
 
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i> Bare Metal Sub Projects</h3>
-        <a href="/ironic-inspector/latest/">
-            Bare Metal Introspection service (ironic-inspector)</a><br />
+{% for project in projects|sort(attribute='service') %}
+{% if project.type == 'baremetal' %}
+        <a href="/{{project.name}}/latest/">
+            {{project.service}} ({{project.name}})</a><br />
+{% endif %}
+{% endfor %}
     </div>
 
     <div class="docs-link-sections">
