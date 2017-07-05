@@ -62,14 +62,12 @@
 
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i> Deployment Projects</h3>
-        <a href="/charm-guide/latest/">
-            Deploying OpenStack using Juju Charms (charms)</a><br />
-        <a href="/kolla/latest/">
-            Deploying OpenStack using Ansible in Docker Containers (kolla)</a><br />
-        <a href="/openstack-ansible/latest/">
-            Deploying OpenStack with Ansible (openstack-ansible)</a><br />
-        <a href="/tripleo-docs/latest/">
-            Deploying OpenStack with TripleO (tripleo)</a><br />
+{% for project in projects|sort(attribute='service') %}
+{% if project.type == 'deployment' %}
+        <a href="/{{project.name}}/latest/">
+            {{project.service}}</a><br />
+{% endif %}
+{% endfor %}
     </div>
 
     <div class="docs-link-sections">
