@@ -56,19 +56,15 @@ def parse_command_line_arguments():
     return parser.parse_args()
 
 
-def main():
-    """Entry point for this script."""
-
-    args = parse_command_line_arguments()
-    logger = initialize_logging(args.debug, args.verbose)
-
-    # Load project data. Start by setting up a JSONSchema validator,
+def load_project_data(source_directory):
+    "Return a dict with project data grouped by series."
+    logger = logging.getLogger(name='load_project_data')
+    # Start by setting up a JSONSchema validator,
     # then finding all of the other YAML files.
     project_data = {}
-    validator = None
     fail = False
     project_schema_filename = os.path.join(
-        args.source_directory,
+        source_directory,
         'project-data',
         'schema.yaml',
     )
@@ -76,20 +72,29 @@ def main():
         project_schema = yaml.safe_load(f.read())
         validator = jsonschema.Draft4Validator(project_schema)
     for filename in glob.glob(
-            os.path.join(args.source_directory, 'project-data', '*.yaml')):
+            os.path.join(source_directory, 'project-data', '*.yaml')):
         if filename.endswith('schema.yaml'):
             continue
         series, _ = os.path.splitext(os.path.basename(filename))
         logger.info('loading %s project data from %s', series, filename)
         with open(filename, 'r') as f:
             data = yaml.safe_load(f.read())
-        if validator:
-            for error in validator.iter_errors(data):
-                logger.error(str(error))
-                fail = True
-            if fail:
-                raise ValueError('invalid input in %s' % filename)
+        for error in validator.iter_errors(data):
+            logger.error(str(error))
+            fail = True
+        if fail:
+            raise ValueError('invalid input in %s' % filename)
         project_data[series] = data
+    return project_data
+
+
+def main():
+    """Entry point for this script."""
+
+    args = parse_command_line_arguments()
+    logger = initialize_logging(args.debug, args.verbose)
+
+    project_data = load_project_data(args.source_directory)
 
     # Set up jinja to discover the templates.
     try:
@@ -106,7 +111,7 @@ def main():
             logger.info('ignoring %s', templateFile)
             continue
 
-        logger.info("generating %s for %s", templateFile, series)
+        logger.info("generating %s", templateFile)
 
         try:
             template = environment.get_template(templateFile)
