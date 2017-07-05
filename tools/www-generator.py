@@ -72,14 +72,28 @@ _URLS = [
      'https://developer.openstack.org/api-guide/{service_type}/'),
 ]
 
+_SERVICE_TYPES_URL = 'http://git.openstack.org/cgit/openstack/service-types-authority/plain/service-types.yaml'  # noqa
+
+
+def _get_service_types():
+    "Return a map between repo base name and service type"
+    raw = requests.get('http://git.openstack.org/cgit/openstack/service-types-authority/plain/service-types.yaml')  # noqa
+    data = yaml.safe_load(raw.text)
+    service_types = {
+        d['project'].rsplit('/')[-1]: d['service_type']
+        for d in data['services']
+    }
+    return service_types
+
 
 def load_project_data(source_directory):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
-    # Start by setting up a JSONSchema validator,
-    # then finding all of the other YAML files.
     project_data = {}
     fail = False
+    service_types = _get_service_types()
+    # Set up a schema validator so we can quickly check that the input
+    # data conforms.
     project_schema_filename = os.path.join(
         source_directory,
         'project-data',
@@ -88,6 +102,8 @@ def load_project_data(source_directory):
     with open(project_schema_filename, 'r') as f:
         project_schema = yaml.safe_load(f.read())
         validator = jsonschema.Draft4Validator(project_schema)
+    # Load the data files, using the file basename as the release
+    # series name.
     for filename in glob.glob(
             os.path.join(source_directory, 'project-data', '*.yaml')):
         if filename.endswith('schema.yaml'):
@@ -99,9 +115,26 @@ def load_project_data(source_directory):
         for error in validator.iter_errors(data):
             logger.error(str(error))
             fail = True
-        # If the project claims to have a separately published guide
-        # of some sort, look for it before allowing the flag to stand.
         for project in data:
+            # If the project has a service-type set, ensure it matches
+            # the value in the service-type-authority data.base.
+            st = project.get('service_type')
+            if st is not None:
+                if project['name'] not in service_types:
+                    logger.error(
+                        'did not find %s in %s',
+                        project['name'], _SERVICE_TYPES_URL,
+                    )
+                    fail = True
+                elif project['service_type'] != service_types[project['name']]:
+                    logger.error(
+                        'expected service_type %r for %s but got %r',
+                        service_types[project['name']], project['name'],
+                        project['service_type'],
+                    )
+                    fail = True
+            # If the project claims to have a separately published guide
+            # of some sort, look for it before allowing the flag to stand.
             for flag, url_template in _URLS:
                 if project.get(flag):
                     url = url_template.format(series=series, **project)
