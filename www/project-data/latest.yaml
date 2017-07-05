@@ -43,6 +43,9 @@
 - name: keystonemiddleware
   type: library
   service: Middleware provided for integrating with the OpenStack Identity API.
+- name: pycadf
+  type: library
+  service: Creates CADF events to capture cloud-related events.
 
 - name: glance
   service: Image service
@@ -54,6 +57,9 @@
   service: Image service Python Bindings
   type: client
   description: glance client
+- name: glance-store
+  service: glance backend abstraction library
+  type: library
 
 - name: nova
   service: Compute service
@@ -65,6 +71,12 @@
   service: Compute service Python Bindings
   type: client
   description: nova client
+- name: os-vif
+  type: library
+  service: Library for plugging and unplugging virtual interfaces.
+- name: osc-placement
+  type: client
+  service: OpenStackClient plugin for the Nova Placement service.
 
 - name: neutron
   service: Networking service
@@ -84,6 +96,9 @@
   service: Dashboard
   has_install_guide: true
   type: service
+- name: django_openstack_auth
+  service: pluggable Django authentication backend for authenticating with Keystone
+  type: library
 
 - name: cinder
   service: Block Storage service
@@ -95,6 +110,14 @@
   service: Block Storage service Python Bindings
   type: client
   description: cinder client
+- name: os-brick
+  service: library for managing local volume attaches
+  type: library
+  description: cinder backend abstraction library
+- name: python-brick-cinderclient-ext
+  service: client for local volume attachement
+  type: client
+  description: cinder local client
 
 - name: ironic
   service: Bare Metal service
@@ -345,8 +368,8 @@
 - name: automaton
   service: Friendly state machines for Python.
   type: library
-- name: cliff
-  service: Builds command-line programs in Python.
+- name: castellan
+  service: Key Manager interface abstraction
   type: library
 - name: debtcollector
   type: library
@@ -390,6 +413,9 @@
 - name: oslo.policy
   type: library
   service: Common policy enforcement.
+- name: oslo.privsep
+  type: library
+  service: library for privilege separation
 - name: oslo.reports
   type: library
   service: Error report framework for projects.
@@ -404,10 +430,10 @@
   service: Library for running and managing OpenStack services.
 - name: oslo.utils
   type: library
-  service: Database and RPC object schema versioning.
+  service: Library of common low-level utility modules.
 - name: oslo.versionedobjects
   type: library
-  service: Library of common low-level utility modules.
+  service: Database and RPC object schema versioning.
 - name: oslo.vmware
   type: library
   service: Common functionality required by VMware drivers in several projects.
@@ -423,9 +449,6 @@
 - name: pbr
   type: library
   service: Manages setuptools packaging needs in a consistent way.
-- name: pycadf
-  type: library
-  service: Creates CADF events to capture cloud-related events.
 - name: pylockfile
   type: library
   service: The lockfile package provides a simple API for locking files.
@@ -451,3 +474,77 @@
   service: Load-balancer service client
   type: client
   description: octavia client
+
+# - name: freezer
+#   service: Backup, Restore, and Disaster Recovery service
+#   service_type: DOES NOT APPEAR IN service-types-authority list
+#   has_install_guide: true
+#   has_api_ref: true
+#   type: service
+- name: python-freezerclient
+  service: Backup, Restore, and Disaster Recovery service client
+  type: client
+  description: freezer client
+
+- name: karbor
+  service: Data Protection Orchestration Service
+  service_type: data-protection-orchestration
+#  has_install_guide: true
+  has_api_ref: true
+  type: service
+- name: python-karborclient
+  service: Data Protection Orchestration Service client
+  type: client
+  description: karbor client
+
+- name: python-monascaclient
+  service: Monitoring client
+  type: client
+  description: monasca client
+
+- name: python-openstackclient
+  service: Command line interface to OpenStack
+  type: client
+  description: openstack client
+- name: cliff
+  service: Builds command-line programs in Python.
+  type: library
+- name: os-client-config
+  service: library for collecting client configuration for using an OpenStack cloud
+  type: library
+
+- name: shade
+  service: Multi-cloud interoperability library
+  type: client
+  description: Client library for abstracting deployment differences between clouds
+
+- name: solum
+  service: Software Development Lifecycle Automation service
+  service_type: application-deployment
+#  has_install_guide: true
+#  has_api_ref: true
+  type: service
+- name: python-solumclient
+  service: Software Development Lifecycle Automation client
+  type: client
+  description: solum client
+
+- name: tricircle
+  service: Networking automation across Neutron service
+  service_type: multi-region-network-automation
+#  has_install_guide: true
+#  has_api_ref: true
+  type: service
+- name: python-tricircleclient
+  service: Networking automation client
+  type: client
+  description: tricircle client
+
+- name: os-win
+  service: Windows / Hyper-V library for OpenStack projects.
+  type: library
+
+# Projects that do not appear in the service-types-authority list:
+# - kuryr
+# - dragonflow
+# - monasca
