@@ -26,6 +26,8 @@ The type must be one of the values listed below:
 
   tool -- A command line tool or other project that is used with, or used to build, OpenStack.
 
+  networking -- A plugin for the networking service.
+
   other -- A project that does run in a cloud but does not provide a REST API.
 
 An entry can also optionally define service_type, which must match the

@@ -48,22 +48,12 @@
 
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i> Networking Sub Projects</h3>
-        <a href="/networking-bagpipe/latest/">
-            BaGPipe backend (networking-bagpipe)</a><br />
-        <a href="/networking-bgpvpn/latest/">
-            BGP-MPLS VPN Networking service Plug-in (networking-bgpvpn)</a><br />
-        <a href="/neutron-dynamic-routing/latest/">
-            Dynamic Routing service Plug-in (neutron-dynamic-routing)</a><br />
-        <a href="/neutron-fwaas/latest/">
-            Firewall-as-a-Service Plug-in (neutron-fwaas)</a><br />
-        <a href="/networking-midonet/latest/">
-            MidoNet Networking service Plug-in (networking-midonet)</a><br />
-        <a href="/networking-odl/latest/">
-            OpenDaylight(ODL) Networking service Plug-in (networking-odl)</a><br />
-        <a href="/networking-ovn/latest/">
-            OVN Networking service Plug-in (networking-ovn)</a><br />
-        <a href="/networking-sfc/latest/">
-            Service Function Chaining Networking service Plug-in (networking-sfc)</a><br />
+{% for project in projects|sort(attribute='service') %}
+{% if project.type == 'networking' %}
+        <a href="/{{project.name}}/latest/">
+            {{project.service}} ({{project.name}})</a><br />
+{% endif %}
+{% endfor %}
     </div>
 
     <div class="docs-link-sections">
