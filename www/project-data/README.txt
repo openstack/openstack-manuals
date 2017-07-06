@@ -30,6 +30,8 @@ The type must be one of the values listed below:
 
   baremetal -- A subproject for the bare metal project, Ironic.
 
+  deployment -- A tool for deploying OpenStack.
+
   other -- A project that does run in a cloud but does not provide a REST API.
 
 An entry can also optionally define service_type, which must match the
