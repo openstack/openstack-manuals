@@ -69,6 +69,8 @@ def _check_url(url):
 _URLS = [
     ('has_install_guide',
      'https://docs.openstack.org/{name}/{series}/install/'),
+    ('has_config_ref',
+     'https://docs.openstack.org/{name}/{series}/configuration/'),
     ('has_api_ref',
      'https://developer.openstack.org/api-ref/{service_type}/'),
     ('has_api_guide',

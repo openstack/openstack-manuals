@@ -51,5 +51,7 @@ include a link to that documentation on the templated landing pages.
 
   has_api_ref -- produces a link to developer.o.o/api-ref/service_type/
 
+  has_config_ref -- produces a link to docs.o.o/name/latest/configuration/
+
   NOTE: The documentation associated with the flags must exist before
   the flags are set.
