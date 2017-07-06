@@ -32,7 +32,7 @@ PDF_TARGETS=( 'arch-design'\
               'ops-guide' 'user-guide' )
 
 # Note that these guides are only build for master branch
-for guide in admin-guide arch-design cli-reference contributor-guide \
+for guide in admin-guide arch-design contributor-guide \
     ha-guide image-guide ops-guide user-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
