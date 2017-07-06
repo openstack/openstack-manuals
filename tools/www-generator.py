@@ -59,7 +59,10 @@ def parse_command_line_arguments():
 
 def _check_url(url):
     "Return True if the URL exists, False otherwise."
-    resp = requests.get(url)
+    try:
+        resp = requests.get(url)
+    except requests.exceptions.TooManyRedirects:
+        return False, 301
     return (resp.status_code // 100) == 2, resp.status_code
 
 
