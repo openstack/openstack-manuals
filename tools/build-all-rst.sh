@@ -46,7 +46,7 @@ done
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the ha-guide
-for guide in ha-guide-draft config-reference; do
+for guide in ha-guide-draft; do
     TARGET="draft/$guide"
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
