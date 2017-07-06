@@ -554,7 +554,8 @@ redirectmatch 302 "^/{{project.service_type|lower}}/.*$" /{{project.name}}/lates
 # End service-type redirects
 
 # Redirects from code-name without a series to latest
-{% for project in projects -%}
+# XXX: Disabled temporarily since Apache now gives an internal server error.
+{% for project in projects %}
 redirectmatch 301 "^/{{project.name}}/$" /{{project.name}}/latest/
 {%- endfor %}
 # End code-name redirects

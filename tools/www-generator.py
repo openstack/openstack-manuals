@@ -115,7 +115,8 @@ def load_project_data(source_directory):
                         )
                         fail = True
         if fail:
-            raise ValueError('invalid input in %s' % filename)
+            print('invalid input in %s' % filename)
+        #     raise ValueError('invalid input in %s' % filename)
         project_data[series] = data
     return project_data
 
