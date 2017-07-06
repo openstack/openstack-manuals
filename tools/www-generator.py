@@ -27,7 +27,7 @@ import yaml
 def initialize_logging(debug, verbose):
     """Initialize the Logger."""
 
-    logger = logging.getLogger(name='logger')
+    logger = logging.getLogger()
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
     handler = logging.StreamHandler()
     handler.setFormatter(formatter)
@@ -39,7 +39,7 @@ def initialize_logging(debug, verbose):
     if debug:
         logger.setLevel(logging.DEBUG)
 
-    return logging.getLogger('logger')
+    return logger
 
 
 def parse_command_line_arguments():
@@ -58,7 +58,7 @@ def parse_command_line_arguments():
 
 def load_project_data(source_directory):
     "Return a dict with project data grouped by series."
-    logger = logging.getLogger(name='load_project_data')
+    logger = logging.getLogger()
     # Start by setting up a JSONSchema validator,
     # then finding all of the other YAML files.
     project_data = {}
