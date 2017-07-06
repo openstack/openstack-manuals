@@ -21,6 +21,7 @@ import sys
 from bs4 import BeautifulSoup
 import jinja2
 import jsonschema
+import requests
 import yaml
 
 
@@ -56,6 +57,22 @@ def parse_command_line_arguments():
     return parser.parse_args()
 
 
+def _check_url(url):
+    "Return True if the URL exists, False otherwise."
+    resp = requests.get(url)
+    return (resp.status_code // 100) == 2, resp.status_code
+
+
+_URLS = [
+    ('has_install_guide',
+     'https://docs.openstack.org/{name}/{series}/install/'),
+    ('has_api_ref',
+     'https://developer.openstack.org/api-ref/{service_type}/'),
+    ('has_api_guide',
+     'https://developer.openstack.org/api-guide/{service_type}/'),
+]
+
+
 def load_project_data(source_directory):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
@@ -82,6 +99,21 @@ def load_project_data(source_directory):
         for error in validator.iter_errors(data):
             logger.error(str(error))
             fail = True
+        # If the project claims to have a separately published guide
+        # of some sort, look for it before allowing the flag to stand.
+        for project in data:
+            for flag, url_template in _URLS:
+                if project.get(flag):
+                    url = url_template.format(series=series, **project)
+                    logger.info('%s:%s looking for %s',
+                                series, project['name'], url)
+                    exists, status = _check_url(url)
+                    if not exists:
+                        logger.error(
+                            '%s set for %s but %s does not exist (%s)',
+                            flag, project['name'], url, status,
+                        )
+                        fail = True
         if fail:
             raise ValueError('invalid input in %s' % filename)
         project_data[series] = data
