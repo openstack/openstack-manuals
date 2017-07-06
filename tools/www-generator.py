@@ -77,7 +77,7 @@ _SERVICE_TYPES_URL = 'http://git.openstack.org/cgit/openstack/service-types-auth
 
 def _get_service_types():
     "Return a map between repo base name and service type"
-    raw = requests.get('http://git.openstack.org/cgit/openstack/service-types-authority/plain/service-types.yaml')  # noqa
+    raw = requests.get(_SERVICE_TYPES_URL)  # noqa
     data = yaml.safe_load(raw.text)
     service_types = {
         d['project'].rsplit('/')[-1]: d['service_type']
