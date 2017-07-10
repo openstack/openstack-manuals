@@ -186,7 +186,10 @@ def main():
             raise
 
         try:
-            output = template.render(PROJECT_DATA=project_data)
+            output = template.render(
+                PROJECT_DATA=project_data,
+                TEMPLATE_FILE=templateFile,
+            )
             if templateFile.endswith('.html'):
                 soup = BeautifulSoup(output, "lxml")
                 output = soup.prettify()
