@@ -140,6 +140,14 @@ def load_project_data(source_directory):
                         project['service_type'],
                     )
                     fail = True
+            # client projects must have a description
+            project_type = project.get('type')
+            if project_type == 'client' and not project.get('description'):
+                logger.error(
+                    'client project %s has no description',
+                    project['name'],
+                )
+                fail = True
             # If the project claims to have a separately published guide
             # of some sort, look for it before allowing the flag to stand.
             for flag, url_template in _URLS:
