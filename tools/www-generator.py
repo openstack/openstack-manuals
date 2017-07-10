@@ -51,9 +51,13 @@ def parse_command_line_arguments():
     parser.add_argument("--verbose", help="Be more verbose.",
                         action="store_true", default=False)
     parser.add_argument("--source-directory", type=str,
-                        default='www', help='')
+                        default='www', help='Set source directory.')
     parser.add_argument("--output-directory", type=str,
-                        default='publish-docs/www', help='')
+                        default='publish-docs/www',
+                        help='Set output directory.')
+    parser.add_argument("--check-all-links", action="store_true",
+                        default=False,
+                        help='Check for links with flags set false.')
     return parser.parse_args()
 
 
@@ -93,7 +97,7 @@ def _get_service_types():
     return service_types
 
 
-def load_project_data(source_directory):
+def load_project_data(source_directory, check_all_links=False):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
     project_data = {}
@@ -151,17 +155,34 @@ def load_project_data(source_directory):
             # If the project claims to have a separately published guide
             # of some sort, look for it before allowing the flag to stand.
             for flag, url_template in _URLS:
-                if project.get(flag):
+                flag_val = project.get(flag, False)
+                try:
                     url = url_template.format(series=series, **project)
+                except KeyError:
+                    # The project data does not include a field needed
+                    # to build the URL (typically the
+                    # service_type). Ignore this URL, unless the flag
+                    # is set.
+                    if flag_val:
+                        raise
+                    continue
+                # Only try to fetch the URL if we're going to do
+                # something with the result.
+                if flag_val or check_all_links:
                     logger.info('%s:%s looking for %s',
                                 series, project['name'], url)
                     exists, status = _check_url(url)
-                    if not exists:
-                        logger.error(
-                            '%s set for %s but %s does not exist (%s)',
-                            flag, project['name'], url, status,
-                        )
-                        fail = True
+                if flag_val and not exists:
+                    logger.error(
+                        '%s set for %s but %s does not exist (%s)',
+                        flag, project['name'], url, status,
+                    )
+                    fail = True
+                elif (not flag_val) and check_all_links and exists:
+                    logger.warning(
+                        '%s not set for %s but %s does exist',
+                        flag, project['name'], url,
+                    )
         if fail:
             raise ValueError('invalid input in %s' % filename)
         project_data[series] = data
@@ -199,7 +220,8 @@ def main():
     args = parse_command_line_arguments()
     logger = initialize_logging(args.debug, args.verbose)
 
-    project_data = load_project_data(args.source_directory)
+    project_data = load_project_data(args.source_directory,
+                                     args.check_all_links)
     regular_repos, infra_repos = _get_official_repos()
 
     # Set up jinja to discover the templates.
