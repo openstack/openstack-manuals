@@ -9,8 +9,8 @@ support the SSH key pair and user data injection.
 Because many of the images disable SSH password authentication
 by default, boot the image with an injected key pair.
 You can ``SSH`` into the instance with the private key and default
-login account. See the `OpenStack End User Guide
-<https://docs.openstack.org/user-guide/configure-access-and-security-for-instances.html>`_
+login account. See `Configure access and security for instances
+<https://docs.openstack.org/horizon/latest/user/configure-access-and-security-for-instances.html>`_
 for more information on how to create and inject key pairs with OpenStack.
 
 CentOS

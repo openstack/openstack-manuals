@@ -22,7 +22,6 @@ It includes these manuals:
  * Command-Line Interface Reference
  * Configuration Reference
  * Documentation Contributor Guide
- * End User Guide
  * High Availability Guide
  * Installation Tutorials
  * Networking Guide
@@ -54,17 +53,18 @@ virtual environment and build all guides (HTML only):
 
 You can also build a specific guide.
 
-For example, to build *OpenStack End User Guide*, use the following command::
+For example, to build *OpenStack Virtual Machine Image Guide*, use the
+following command::
 
-    $ tox -e build -- user-guide
+    $ tox -e build -- image-guide
 
 You can find the root of the generated HTML documentation at::
 
-    doc/user-guide/build/html/index.html
+    doc/image-guide/build/html/index.html
 
 To build a specific guide with a PDF file, add a ``-pdf`` option like::
 
-    $ tox -e build -- user-guide --pdf
+    $ tox -e build -- image-guide --pdf
 
 The generated PDF file will be copied to the root directory of the
 generated HTML documentation.

@@ -79,6 +79,8 @@ _URLS = [
      'https://docs.openstack.org/{name}/{series}/configuration/'),
     ('has_in_tree_api_docs',
      'https://docs.openstack.org/{name}/{series}/api/'),
+    ('has_user_guide',
+     'https://docs.openstack.org/{name}/{series}/user/'),
     ('has_api_ref',
      'https://developer.openstack.org/api-ref/{service_type}/'),
     ('has_api_guide',

@@ -204,9 +204,6 @@ Guides for deployers and administrators
 Guides for end users
 --------------------
 
-* `OpenStack End User Guide <https://docs.openstack.org/user-guide/>`_:
-  Shows OpenStack end users how to create and manage resources in an
-  OpenStack cloud with the OpenStack dashboard and OpenStack client commands.
 * `OpenStack API Guide
   <https://developer.openstack.org/api-guide/quick-start/>`_:
   A brief overview of how to send REST API requests to endpoints for
@@ -221,10 +218,6 @@ Guides for end users
    * - Document
      - Source location
      - Target location
-
-   * - OpenStack End User Guide
-     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/user-guide
-     - https://docs.openstack.org/user-guide/
 
    * - OpenStack API Guide
      - https://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start

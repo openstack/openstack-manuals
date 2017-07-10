@@ -60,10 +60,7 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `Virtual Machine Image Guide <https://docs.openstack.org/image-guide/>`_
 
-The following books explain how to use the OpenStack Dashboard and
-command-line clients:
-
-*  `End User Guide <https://docs.openstack.org/user-guide/>`_
+The following book explains how to use the command-line clients:
 
 *  `Command-Line Interface Reference
    <https://docs.openstack.org/cli-reference/>`_
