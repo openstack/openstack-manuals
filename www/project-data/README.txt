@@ -55,5 +55,7 @@ include a link to that documentation on the templated landing pages.
 
   has_in_tree_api_docs -- produces a link to docs.o.o/name/latest/api/
 
+  has_admin_guide -- produces a link to docs.o.o/name/latest/admin/
+
   NOTE: The documentation associated with the flags must exist before
   the flags are set.
