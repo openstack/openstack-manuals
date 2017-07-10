@@ -42,6 +42,7 @@
   service_type: compute
 #  has_install_guide: true
   has_api_ref: true
+  has_api_guide: true
 #  has_config_ref: true
   type: service
 - name: python-novaclient
@@ -59,7 +60,7 @@
 - name: neutron
   service: Networking service
   service_type: network
-#  has_install_guide: true
+  has_install_guide: true
 #  has_api_ref: true  # currently published under /networking/ not /network/
 #  has_config_ref: true
   type: service
@@ -70,31 +71,38 @@
 - name: neutron-lib
   type: library
   service: Library provided for integrating with the OpenStack Networking platform.
+  has_install_guide: true
 
 - name: networking-bagpipe
   service: BaGPipe backend
   type: networking
+  has_install_guide: true
 - name: networking-bgpvpn
   service: BGP-MPLS VPN Networking service Plug-in
   type: networking
+  has_install_guide: true
 - name: neutron-dynamic-routing
   service: Dynamic Routing service Plug-in
   type: networking
+  has_install_guide: true
 - name: neutron-fwaas
   service: Firewall-as-a-Service Plug-in
   type: networking
 - name: networking-midonet
   service: MidoNet Networking service Plug-in
   type: networking
+  has_install_guide: true
 - name: networking-odl
   service: OpenDaylight(ODL) Networking service Plug-in
   type: networking
 - name: networking-ovn
   service: OVN Networking service Plug-in
   type: networking
+  has_install_guide: true
 - name: networking-sfc
   service: Service Function Chaining Networking service Plug-in
   type: networking
+  has_install_guide: true
 
 - name: horizon
   service: Dashboard
@@ -104,6 +112,8 @@
 - name: django_openstack_auth
   service: pluggable Django authentication backend for authenticating with Keystone
   type: library
+  has_install_guide: true
+  has_config_ref: true
 
 - name: cinder
   service: Block Storage service
@@ -146,6 +156,7 @@
   service_type: container-infrastructure-management
 #  has_install_guide: true
 #  has_config_ref: true
+  has_api_ref: true
   type: service
 - name: python-magnumclient
   service: Container Infrastructure Management service Python Bindings
@@ -157,6 +168,7 @@
   service_type: database
 #  has_install_guide: true
 #  has_config_ref: true
+  has_api_ref: true
   type: service
 - name: python-troveclient
   service: Database service Python Bindings
@@ -168,6 +180,7 @@
   service_type: dns
 #  has_install_guide: true
 #  has_config_ref: true
+  has_api_ref: true
   type: service
 - name: python-designateclient
   service: DNS service Python Bindings
@@ -179,12 +192,14 @@
   service_type: ec2-api
 #  has_install_guide: true
 #  has_config_ref: true
+  has_api_ref: true
   type: service
 
 - name: barbican
   service: Key Manager service
   service_type: key-manager
   has_api_guide: true
+  has_api_ref: true
 #  has_install_guide: true
 #  has_config_ref: true
   type: service
@@ -221,6 +236,7 @@
   service_type: orchestration
 #  has_install_guide: true
 #  has_config_ref: true
+  has_api_ref: true
   type: service
 - name: python-heatclient
   service: Orchestration service Python Bindings
@@ -241,7 +257,7 @@
 - name: aodh
   service: Telemetry Alarming services
   service_type: alarm
-#  has_install_guide: true
+  has_install_guide: true
 #  has_config_ref: true
   type: service
 - name: python-aodhclient
@@ -265,6 +281,7 @@
   service_type: data-processing
   has_install_guide: false
 #  has_config_ref: true
+  has_api_ref: true
   type: service
 - name: python-saharaclient
   service: Data Processing service Python Bindings
@@ -310,6 +327,7 @@
   service_type: application-catalog
   type: service
   has_install_guide: false
+  has_api_ref: true
 #  has_config_ref: true
 - name: python-muranoclient
   service: Application Catalog service Python Bindings
@@ -347,7 +365,8 @@
   service: NFV Orchestration service
   service_type: nfv-orchestration
   type: service
-  has_install_guide: false
+  has_install_guide: true
+  has_api_ref: true
 #  has_config_ref: true
 - name: python-tackerclient
   service: NFV Orchestration service Python Bindings
@@ -369,7 +388,7 @@
   service: RCA (Root Cause Analysis) service
   service_type: root-cause-analysis
   type: service
-  has_install_guide: false
+  has_install_guide: true
 #  has_config_ref: true
 - name: python-vitrageclient
   service: RCA (Root Cause Analysis) service Python Bindings
@@ -383,6 +402,7 @@
   service_type: search
   type: service
   has_install_guide: false
+  has_api_ref: true
 #  has_config_ref: true
 - name: python-searchlightclient
   service: Search service Python Bindings
@@ -393,7 +413,7 @@
   service: Telemetry Event service
   service_type: event
   type: service
-  has_install_guide: false
+  has_install_guide: true
 #  has_config_ref: true
 - name: python-pankoclient
   service: Telemetry Event service Python Bindings
@@ -403,25 +423,29 @@
 - name: automaton
   service: Friendly state machines for Python.
   type: library
+  has_install_guide: true
 - name: castellan
   service: Key Manager interface abstraction
   type: library
+  has_install_guide: true
 - name: debtcollector
   type: library
   service:
     A collection of Python deprecation patterns and strategies that
     help you collect your technical debt in a non-destructive manner.
+  has_install_guide: true
 - name: futurist
   type: library
   service:
     Asynchronous code from the future, helping you build out your
     applications to handle asynchronous and periodic work in a nice
     manner.
+  has_install_guide: true
 - name: oslo.cache
   type: library
-  service:
-    Cache management library.
+  service: Cache management library.
   has_config_ref: true
+  has_install_guide: true
 - name: oslo.concurrency
   type: library
   service: External process management and task synchronization.
@@ -432,9 +456,11 @@
 - name: oslo.context
   type: library
   service: Helpers to maintain useful information about a request context.
+  has_install_guide: true
 - name: oslo.db
   type: library
   service: Database connectivity.
+  has_install_guide: true
 - name: oslo.i18n
   type: library
   service: Internationalization and translation.
@@ -442,6 +468,7 @@
   type: library
   service: A logging configuration library.
   has_config_ref: true
+  has_install_guide: true
 - name: oslo.messaging
   type: library
   service: Inter-process communication.
@@ -449,18 +476,23 @@
   type: library
   service: WSGI middleware library for web service development.
   has_config_ref: true
+  has_install_guide: true
 - name: oslo.policy
   type: library
   service: Common policy enforcement.
+  has_install_guide: true
 - name: oslo.privsep
   type: library
   service: library for privilege separation
+  has_install_guide: true
 - name: oslo.reports
   type: library
   service: Error report framework for projects.
+  has_install_guide: true
 - name: oslo.rootwrap
   type: library
   service: Fine filtering of shell commands to run as root.
+  has_install_guide: true
 - name: oslo.serialization
   type: library
   service: Serialization with special handling for some common types.
@@ -468,9 +500,11 @@
   type: library
   service: Library for running and managing OpenStack services.
   has_config_ref: true
+  has_install_guide: true
 - name: oslo.utils
   type: library
   service: Library of common low-level utility modules.
+  has_install_guide: true
 - name: oslo.versionedobjects
   type: library
   service: Database and RPC object schema versioning.
@@ -495,6 +529,7 @@
 - name: stevedore
   type: library
   service: Manages dynamic plug-ins for Python applications.
+  has_install_guide: true
 - name: taskflow
   type: library
   service: Makes task execution easy, consistent, and reliable.
@@ -551,14 +586,17 @@
 - name: cliff
   service: Builds command-line programs in Python.
   type: library
+  has_install_guide: true
 - name: os-client-config
   service: library for collecting client configuration for using an OpenStack cloud
   type: library
+  has_install_guide: true
 
 - name: shade
   service: Multi-cloud interoperability library
   type: client
   description: shade client library
+  has_install_guide: true
 
 - name: solum
   service: Software Development Lifecycle Automation service
@@ -599,6 +637,7 @@
 - name: reno
   service: Release Notes Manager
   type: tool
+  has_install_guide: true
 
 - name: tempest
   service: Tempest Test Suite for OpenStack
@@ -636,6 +675,7 @@
 - name: tripleo-docs
   type: deployment
   service: Deploying OpenStack with TripleO
+  has_install_guide: true
 
 
 # Projects that do not appear in the service-types-authority list:
