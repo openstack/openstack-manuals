@@ -53,5 +53,7 @@ include a link to that documentation on the templated landing pages.
 
   has_config_ref -- produces a link to docs.o.o/name/latest/configuration/
 
+  has_in_tree_api_docs -- produces a link to docs.o.o/name/latest/api/
+
   NOTE: The documentation associated with the flags must exist before
   the flags are set.
