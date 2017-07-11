@@ -160,6 +160,31 @@ def load_project_data(source_directory):
     return project_data
 
 
+_GOVERNANCE_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/projects.yaml'  # noqa
+
+
+def _get_official_repos():
+    """Return a tuple containing lists of all official repos.
+
+    The first member is the list of regular project repos. The second
+    member is the list of infra repos.
+
+    """
+    raw = requests.get(_GOVERNANCE_URL)
+    data = yaml.safe_load(raw.text)
+    regular_repos = []
+    infra_repos = []
+    for t_name, team in data.items():
+        for d_name, d_data in team.get('deliverables', {}).items():
+            if t_name == 'Infrastructure':
+                add = infra_repos.append
+            else:
+                add = regular_repos.append
+            for repo in d_data.get('repos', []):
+                add({'name': repo, 'base': repo.rsplit('/')[-1]})
+    return (regular_repos, infra_repos)
+
+
 def main():
     """Entry point for this script."""
 
@@ -167,6 +192,7 @@ def main():
     logger = initialize_logging(args.debug, args.verbose)
 
     project_data = load_project_data(args.source_directory)
+    regular_repos, infra_repos = _get_official_repos()
 
     # Set up jinja to discover the templates.
     try:
@@ -196,6 +222,8 @@ def main():
             output = template.render(
                 PROJECT_DATA=project_data,
                 TEMPLATE_FILE=templateFile,
+                REGULAR_REPOS=regular_repos,
+                INFRA_REPOS=infra_repos,
             )
             if templateFile.endswith('.html'):
                 soup = BeautifulSoup(output, "lxml")
