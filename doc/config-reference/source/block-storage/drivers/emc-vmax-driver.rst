@@ -233,8 +233,6 @@ Setup VMAX drivers
 
             # yum install scsi-target-utils.x86_64
 
-   #. Enable the iSCSI driver to start automatically.
-
 #. Download Solutions Enabler from ``support.emc.com`` and install it.
    Make sure you install the SMIS component. A [Y]es response installs the
    ``SMISPROVIDER`` component.
@@ -349,7 +347,7 @@ Setup VMAX drivers
     Port number of the ECOM server which is packaged with SMI-S.
 
 ``EcomUserName`` and ``EcomPassword``
-    Cedentials for the ECOM server.
+    Credentials for the ECOM server.
 
 ``PortGroups``
     Supplies the names of VMAX port groups that have been pre-configured to
@@ -540,19 +538,29 @@ SSL support
 
    .. code-block:: ini
 
-      driver_ssl_cert_verify = False
+      driver_ssl_cert_verify = True
       driver_use_ssl = True
 
    If you skip steps two and three, you must add the location of you .pem file.
 
    .. code-block:: ini
 
-      driver_ssl_cert_verify = False
+      driver_ssl_cert_verify = True
       driver_use_ssl = True
       driver_ssl_cert_path = /my_location/ca_cert.pem
 
 #. Update EcomServerIp to ECOM host name and EcomServerPort to secure port
    (5989 by default) in :file:`/etc/cinder/cinder_emc_config_<conf_group>.xml`.
+
+   .. note::
+      When specifying the ECOM host name in the XML file, it is the host name
+      and not the fully qualified domain name (FQDN) you use.
+
+      For example:
+
+      - Host name - ``ecom_dev``
+      - Domain name - ``openstack.prod.com``
+      - FQDN - ``eocm_dev.openstack.prod.com``
 
 
 Oversubscription support
@@ -637,8 +645,12 @@ in terms of bandwidth usage for clients. This enables them to provide a
 tiered level of service based on cost. The cinder QoS offers similar
 functionality based on volume type setting limits on host storage bandwidth
 per service offering. Each volume type is tied to specific QoS attributes
-that are unique to each storage vendor. The VMAX plugin offers limits via
-the following attributes:
+that are unique to each storage vendor. QoS enforcement in cinder is done
+either at the hypervisor (front end), the storage subsystem (back end),
+or both. The VMAX driver only supports the storage subsystem (back end)
+or the combination of hypervisor (front end) and the storage subsystem
+(back end), but never just hypervisor (front end).
+The VMAX driver offers the following attributes:
 
 - By I/O limit per second (IOPS)
 - By limiting throughput per second (MB/S)
@@ -670,7 +682,11 @@ Prerequisites - VMAX
 
    .. code-block:: console
 
-      $ openstack volume qos create --property maxIOPS=4000 maxMBPS=4000 DistributionType=Always SILVER
+      $ openstack volume qos create --consumer back-end \
+                                    --property maxIOPS=4000 \
+                                    --property maxMBPS=4000 \
+                                    --property DistributionType=Always \
+                                    SILVER
 
 #. Associate QoS specs with specified volume type:
 
@@ -1109,7 +1125,7 @@ Operations
 
   .. code-block:: console
 
-     $ openstack volume create --type volume_type_1 ----consistency-group \
+     $ openstack volume create --type volume_type_1 --consistency-group \
        1de80c27-3b2f-47a6-91a7-e867cbe36462 --size 1 cgBronzeVol
 
 
@@ -1249,7 +1265,7 @@ Use case 1 - Create a volume backup when the volume is in-use
 
    .. code-block:: console
 
-      openstack backup create --force VOLUME
+      openstack backup create --force VOLUME_ID
 
 #. For example:
 
@@ -1265,13 +1281,13 @@ Use case 2 - Restore a backup of a volume
 
    .. code-block:: console
 
-      openstack backup restore BACKUP_ID
+      openstack backup restore BACKUP_ID VOLUME_ID
 
 #. For example:
 
    .. code-block:: console
 
-      openstack backup restore ec7e17ec-ae3c-4495-9ee6-7f45c9a89572
+      openstack backup restore ec7e17ec-ae3c-4495-9ee6-7f45c9a89572 cba1ca83-b857-421a-87c3-df81eb9ea8ab
 
 Once complete, launch the back up as an instance, and it should be a
 bootable volume.
@@ -1368,7 +1384,7 @@ Use case 3 - Retype from compression disabled to compression enabled
 #. Set extra spec ``volume_backend_name`` as before.
 #. Set the new extra spec's compression as
    ``storagetype:disablecompression = False`` or DO NOT set this extra spec.
-#. Retype from volume type ``VAX_COMPRESSION_DISABLED`` to
+#. Retype from volume type ``VMAX_COMPRESSION_DISABLED`` to
    ``VMAX_COMPRESSION_ENABLED``.
 #. Check in Unisphere or symcli to see if the volume exists in storage group
    ``OS-<srp>-<servicelevel>-<workload>-SG``, and compression is enabled on
