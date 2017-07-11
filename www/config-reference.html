@@ -26,6 +26,9 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="docs-link-sections">
                         <h3><i class="fa fa-book"></i> Configuration Guides for OpenStack Services</h3>
+    <a href="/oslo.config/latest/configuration/">
+    General information about configuring OpenStack (oslo.config)
+    </a><br />
 {% for project in projects|sort(attribute='name') -%}
 {% if project.type in ['service', 'other'] and project.has_config_ref %}
     <a href="/{{project.name}}/latest/configuration/">
@@ -34,6 +37,18 @@
 {% endif %}
 {%- endfor %}
                     </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="docs-link-sections">
+                      <h3><i class="fa fa-pencil"></i> Common Configuration via Libraries</h3>
+{% for project in projects|sort(attribute='name') %}
+{% if project.type == 'library' and project.has_config_ref %}
+    <a href="/{{project.name}}/latest/configuration/">
+    {{project.service}} ({{project.name}})
+    </a><br />
+{% endif %}
+{% endfor %}
+    </div>
                 </div>
             </div>
             <div class="row docs-contribute-wrapper">
