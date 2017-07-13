@@ -51,7 +51,7 @@
                  <ul>
 
 {% for project in projects|sort(attribute='service') -%}
-{% if project.has_install_guide %}
+{% if project.type in ['service', 'other'] and project.has_install_guide %}
                    <li><a href="/{{project.name}}/{{series}}/install/">{{project.service}} ({{project.name|title}})</a></li>
 {% endif %}
 {%- endfor %}
