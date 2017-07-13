@@ -7,7 +7,16 @@
 OpenStack Architecture Design Guide
 ===================================
 
-.. note::
+.. important::
+
+   This guide was last updated as of the Ocata release, documenting
+   the OpenStack Ocata, Newton, and Mitaka releases. It may
+   not apply to EOL releases Kilo and Liberty.
+
+   We advise that you read this at your own discretion when planning
+   on your OpenStack cloud.
+
+   This guide is intended as advice only.
 
    This guide is a work in progress. Contributions are welcome.
 
