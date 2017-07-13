@@ -10,15 +10,15 @@ and a Dell EMC distributed Python package
 Prerequisites
 ~~~~~~~~~~~~~
 
-+-------------------+----------------+
-|    Software       |    Version     |
-+===================+================+
-| Unity OE          | 4.1.X          |
-+-------------------+----------------+
-| OpenStack         | Ocata          |
-+-------------------+----------------+
-| storops           | 0.4.2 or newer |
-+-------------------+----------------+
++-------------------+-----------------+
+|    Software       |    Version      |
++===================+=================+
+| Unity OE          | 4.1.X           |
++-------------------+-----------------+
+| OpenStack         | Ocata           |
++-------------------+-----------------+
+| storops           | 0.4.15 or newer |
++-------------------+-----------------+
 
 
 Supported operations
@@ -274,6 +274,9 @@ not efficient since a cloned volume will be created during backup.
 
 An effective approach to backups is to create a snapshot for the volume and
 connect this snapshot to the Block Storage host for volume backup.
+
+.. note:: Set ``backup_use_same_host`` to ``true`` to enable the efficient
+          backup.
 
 Troubleshooting
 ~~~~~~~~~~~~~~~
