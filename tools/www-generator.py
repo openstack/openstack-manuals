@@ -70,7 +70,12 @@ def _check_url(url):
     return (resp.status_code // 100) == 2, resp.status_code
 
 
+# NOTE(dhellmann): List of tuple of flag name and URL template. None
+# for the flag name means always apply the URL, otherwise look for a
+# True value associated with the flag in the project data.
 _URLS = [
+    (None,
+     'https://docs.openstack.org/{name}/{series}/'),
     ('has_install_guide',
      'https://docs.openstack.org/{name}/{series}/install/'),
     ('has_admin_guide',
@@ -159,7 +164,10 @@ def load_project_data(source_directory, check_all_links=False):
             # If the project claims to have a separately published guide
             # of some sort, look for it before allowing the flag to stand.
             for flag, url_template in _URLS:
-                flag_val = project.get(flag, False)
+                if flag is None:
+                    flag_val = True
+                else:
+                    flag_val = project.get(flag, False)
                 try:
                     url = url_template.format(series=series, **project)
                 except KeyError:
@@ -179,7 +187,8 @@ def load_project_data(source_directory, check_all_links=False):
                 if flag_val and not exists:
                     logger.error(
                         '%s set for %s but %s does not exist (%s)',
-                        flag, project['name'], url, status,
+                        flag or 'home page check', project['name'],
+                        url, status,
                     )
                     fail = True
                 elif (not flag_val) and check_all_links and exists:
