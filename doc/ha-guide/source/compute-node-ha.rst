@@ -50,6 +50,3 @@ Work is in progress on a unified approach, which combines the best
 aspects of existing upstream solutions. More details are available on
 `the HA VMs user story wiki
 <https://wiki.openstack.org/wiki/ProductTeam/User_Stories/HA_VMs>`_.
-
-To get involved with this work, see the section on the
-:doc:`ha-community`.
