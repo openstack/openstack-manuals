@@ -234,30 +234,30 @@ def _get_official_repos():
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
-                    templateFile, output_directory):
+                    template_file, output_directory):
     logger = logging.getLogger()
-    logger.info("generating %s", templateFile)
+    logger.info("generating %s", template_file)
 
     # Determine the relative path to a few common directories so
     # we don't need to set them in the templates.
     topdir = os.path.relpath(
-        '.', os.path.dirname(templateFile),
+        '.', os.path.dirname(template_file),
     ).rstrip('/') + '/'
     scriptdir = os.path.join(topdir, 'common', 'js').rstrip('/') + '/'
     cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
     imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
 
     try:
-        template = environment.get_template(templateFile)
+        template = environment.get_template(template_file)
     except Exception as e:
         logger.error("parsing template %s failed: %s" %
-                     (templateFile, e))
+                     (template_file, e))
         raise
 
     try:
         output = template.render(
             PROJECT_DATA=project_data,
-            TEMPLATE_FILE=templateFile,
+            TEMPLATE_FILE=template_file,
             REGULAR_REPOS=regular_repos,
             INFRA_REPOS=infra_repos,
             topdir=topdir,
@@ -265,18 +265,18 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             cssdir=cssdir,
             imagedir=imagedir,
         )
-        if templateFile.endswith('.html'):
+        if template_file.endswith('.html'):
             soup = BeautifulSoup(output, "lxml")
             output = soup.prettify()
     except Exception as e:
         logger.error("rendering template %s failed: %s" %
-                     (templateFile, e))
+                     (template_file, e))
         raise
 
     try:
         target_directory = os.path.join(output_directory,
-                                        os.path.dirname(templateFile))
-        target_file = os.path.join(output_directory, templateFile)
+                                        os.path.dirname(template_file))
+        target_file = os.path.join(output_directory, template_file)
         if not os.path.isdir(target_directory):
             logger.debug("creating target directory %s" %
                          target_directory)
@@ -311,17 +311,17 @@ def main():
         return 1
 
     # Render the templates.
-    for templateFile in environment.list_templates():
-        if not (templateFile.endswith('.html')
-                or templateFile.endswith('.htaccess')):
-            logger.info('ignoring %s', templateFile)
+    for template_file in environment.list_templates():
+        if not (template_file.endswith('.html')
+                or template_file.endswith('.htaccess')):
+            logger.info('ignoring %s', template_file)
             continue
         render_template(
             environment,
             project_data,
             regular_repos,
             infra_repos,
-            templateFile,
+            template_file,
             args.output_directory,
         )
 
