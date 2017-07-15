@@ -135,12 +135,14 @@ def load_project_data(source_directory,
         if filename.endswith('schema.yaml'):
             continue
         series, _ = os.path.splitext(os.path.basename(filename))
+
         logger.info('loading %s project data from %s', series, filename)
         with open(filename, 'r') as f:
             data = yaml.safe_load(f.read())
         for error in validator.iter_errors(data):
             logger.error(str(error))
             fail = True
+
         for project in data:
             # If the project has a service-type set, ensure it matches
             # the value in the service-type-authority data.base.
@@ -159,6 +161,7 @@ def load_project_data(source_directory,
                         project['service_type'],
                     )
                     fail = True
+
             # client projects must have a description
             project_type = project.get('type')
             if project_type == 'client' and not project.get('description'):
@@ -167,6 +170,7 @@ def load_project_data(source_directory,
                     project['name'],
                 )
                 fail = True
+
             # If the project claims to have a separately published guide
             # of some sort, look for it before allowing the flag to stand.
             if not skip_links:
@@ -185,6 +189,7 @@ def load_project_data(source_directory,
                         if flag_val:
                             raise
                         continue
+
                     # Only try to fetch the URL if we're going to do
                     # something with the result.
                     if flag_val or check_all_links:
@@ -202,6 +207,7 @@ def load_project_data(source_directory,
                             '%s not set for %s but %s does exist',
                             flag, project['name'], url,
                         )
+
         if fail:
             raise ValueError('invalid input in %s' % filename)
         project_data[series] = data
@@ -234,7 +240,7 @@ def _get_official_repos():
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
-                    template_file, output_directory):
+                    template_file, output_directory, extra={}):
     logger = logging.getLogger()
     logger.info("generating %s", template_file)
 
@@ -264,6 +270,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             scriptdir=scriptdir,
             cssdir=cssdir,
             imagedir=imagedir,
+            **extra
         )
         if template_file.endswith('.html'):
             soup = BeautifulSoup(output, "lxml")
@@ -311,10 +318,17 @@ def main():
         return 1
 
     # Render the templates.
+    output_pages = []
+    page_list_template = None
     for template_file in environment.list_templates():
         if not (template_file.endswith('.html')
                 or template_file.endswith('.htaccess')):
             logger.info('ignoring %s', template_file)
+            continue
+        if template_file.endswith('www-index.html'):
+            # Process this one at the end, so we have the full list of
+            # other output files.
+            page_list_template = template_file
             continue
         render_template(
             environment,
@@ -323,6 +337,21 @@ def main():
             infra_repos,
             template_file,
             args.output_directory,
+        )
+        output_pages.append(template_file)
+
+    if page_list_template is not None:
+        output_pages.sort()
+        render_template(
+            environment,
+            project_data,
+            regular_repos,
+            infra_repos,
+            page_list_template,
+            args.output_directory,
+            extra={
+                'file_list': output_pages,
+            },
         )
 
     return 0
