@@ -16,6 +16,7 @@ import argparse
 import glob
 import logging
 import os
+import os.path
 import sys
 
 from bs4 import BeautifulSoup
@@ -239,6 +240,7 @@ def main():
 
     # Set up jinja to discover the templates.
     try:
+        logger.info('looking for templates in %s', args.source_directory)
         loader = jinja2.FileSystemLoader(args.source_directory)
         environment = jinja2.Environment(loader=loader)
     except Exception as e:
@@ -254,6 +256,15 @@ def main():
 
         logger.info("generating %s", templateFile)
 
+        # Determine the relative path to a few common directories so
+        # we don't need to set them in the templates.
+        topdir = os.path.relpath(
+            '.', os.path.dirname(templateFile),
+        ).rstrip('/') + '/'
+        scriptdir = os.path.join(topdir, 'common', 'js').rstrip('/') + '/'
+        cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
+        imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
+
         try:
             template = environment.get_template(templateFile)
         except Exception as e:
@@ -267,6 +278,10 @@ def main():
                 TEMPLATE_FILE=templateFile,
                 REGULAR_REPOS=regular_repos,
                 INFRA_REPOS=infra_repos,
+                topdir=topdir,
+                scriptdir=scriptdir,
+                cssdir=cssdir,
+                imagedir=imagedir,
             )
             if templateFile.endswith('.html'):
                 soup = BeautifulSoup(output, "lxml")
