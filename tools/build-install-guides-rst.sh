@@ -31,4 +31,4 @@ MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revisio
 
 # Build the guide
 tools/build-rst.sh doc/install-guide \
-                   --target "draft/install-guide" $LINKCHECK $PDF_OPTION
+                   --target "install-guide" $LINKCHECK $PDF_OPTION
