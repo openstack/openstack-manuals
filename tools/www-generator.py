@@ -59,6 +59,9 @@ def parse_command_line_arguments():
     parser.add_argument("--check-all-links", action="store_true",
                         default=False,
                         help='Check for links with flags set false.')
+    parser.add_argument("--skip-links", action="store_true",
+                        default=False,
+                        help='Skip link checks')
     return parser.parse_args()
 
 
@@ -107,7 +110,9 @@ def _get_service_types():
     return service_types
 
 
-def load_project_data(source_directory, check_all_links=False):
+def load_project_data(source_directory,
+                      check_all_links=False,
+                      skip_links=False):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
     project_data = {}
@@ -164,39 +169,39 @@ def load_project_data(source_directory, check_all_links=False):
                 fail = True
             # If the project claims to have a separately published guide
             # of some sort, look for it before allowing the flag to stand.
-            for flag, url_template in _URLS:
-                if flag is None:
-                    flag_val = True
-                else:
-                    flag_val = project.get(flag, False)
-                try:
-                    url = url_template.format(series=series, **project)
-                except KeyError:
-                    # The project data does not include a field needed
-                    # to build the URL (typically the
-                    # service_type). Ignore this URL, unless the flag
-                    # is set.
-                    if flag_val:
-                        raise
-                    continue
-                # Only try to fetch the URL if we're going to do
-                # something with the result.
-                if flag_val or check_all_links:
-                    logger.info('%s:%s looking for %s',
-                                series, project['name'], url)
-                    exists, status = _check_url(url)
-                if flag_val and not exists:
-                    logger.error(
-                        '%s set for %s but %s does not exist (%s)',
-                        flag or 'home page check', project['name'],
-                        url, status,
-                    )
-                    fail = True
-                elif (not flag_val) and check_all_links and exists:
-                    logger.warning(
-                        '%s not set for %s but %s does exist',
-                        flag, project['name'], url,
-                    )
+            if not skip_links:
+                for flag, url_template in _URLS:
+                    if flag is None:
+                        flag_val = True
+                    else:
+                        flag_val = project.get(flag, False)
+                    try:
+                        url = url_template.format(series=series, **project)
+                    except KeyError:
+                        # The project data does not include a field needed
+                        # to build the URL (typically the
+                        # service_type). Ignore this URL, unless the flag
+                        # is set.
+                        if flag_val:
+                            raise
+                        continue
+                    # Only try to fetch the URL if we're going to do
+                    # something with the result.
+                    if flag_val or check_all_links:
+                        logger.info('%s:%s looking for %s',
+                                    series, project['name'], url)
+                        exists, status = _check_url(url)
+                    if flag_val and not exists:
+                        logger.error(
+                            '%s set for %s but %s does not exist (%s)',
+                            flag, project['name'], url, status,
+                        )
+                        fail = True
+                    elif (not flag_val) and check_all_links and exists:
+                        logger.warning(
+                            '%s not set for %s but %s does exist',
+                            flag, project['name'], url,
+                        )
         if fail:
             raise ValueError('invalid input in %s' % filename)
         project_data[series] = data
@@ -228,14 +233,72 @@ def _get_official_repos():
     return (regular_repos, infra_repos)
 
 
+def render_template(environment, project_data, regular_repos, infra_repos,
+                    templateFile, output_directory):
+    logger = logging.getLogger()
+    logger.info("generating %s", templateFile)
+
+    # Determine the relative path to a few common directories so
+    # we don't need to set them in the templates.
+    topdir = os.path.relpath(
+        '.', os.path.dirname(templateFile),
+    ).rstrip('/') + '/'
+    scriptdir = os.path.join(topdir, 'common', 'js').rstrip('/') + '/'
+    cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
+    imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
+
+    try:
+        template = environment.get_template(templateFile)
+    except Exception as e:
+        logger.error("parsing template %s failed: %s" %
+                     (templateFile, e))
+        raise
+
+    try:
+        output = template.render(
+            PROJECT_DATA=project_data,
+            TEMPLATE_FILE=templateFile,
+            REGULAR_REPOS=regular_repos,
+            INFRA_REPOS=infra_repos,
+            topdir=topdir,
+            scriptdir=scriptdir,
+            cssdir=cssdir,
+            imagedir=imagedir,
+        )
+        if templateFile.endswith('.html'):
+            soup = BeautifulSoup(output, "lxml")
+            output = soup.prettify()
+    except Exception as e:
+        logger.error("rendering template %s failed: %s" %
+                     (templateFile, e))
+        raise
+
+    try:
+        target_directory = os.path.join(output_directory,
+                                        os.path.dirname(templateFile))
+        target_file = os.path.join(output_directory, templateFile)
+        if not os.path.isdir(target_directory):
+            logger.debug("creating target directory %s" %
+                         target_directory)
+            os.makedirs(target_directory)
+        logger.debug("writing %s" % target_file)
+        with open(os.path.join(target_file), 'wb') as fh:
+            fh.write(output.encode('utf8'))
+    except (IOError, OSError, UnicodeEncodeError) as e:
+        logger.error("writing %s failed: %s" % (target_file, e))
+
+
 def main():
     """Entry point for this script."""
 
     args = parse_command_line_arguments()
     logger = initialize_logging(args.debug, args.verbose)
 
-    project_data = load_project_data(args.source_directory,
-                                     args.check_all_links)
+    project_data = load_project_data(
+        args.source_directory,
+        args.check_all_links,
+        args.skip_links,
+    )
     regular_repos, infra_repos = _get_official_repos()
 
     # Set up jinja to discover the templates.
@@ -253,58 +316,14 @@ def main():
                 or templateFile.endswith('.htaccess')):
             logger.info('ignoring %s', templateFile)
             continue
-
-        logger.info("generating %s", templateFile)
-
-        # Determine the relative path to a few common directories so
-        # we don't need to set them in the templates.
-        topdir = os.path.relpath(
-            '.', os.path.dirname(templateFile),
-        ).rstrip('/') + '/'
-        scriptdir = os.path.join(topdir, 'common', 'js').rstrip('/') + '/'
-        cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
-        imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
-
-        try:
-            template = environment.get_template(templateFile)
-        except Exception as e:
-            logger.error("parsing template %s failed: %s" %
-                         (templateFile, e))
-            raise
-
-        try:
-            output = template.render(
-                PROJECT_DATA=project_data,
-                TEMPLATE_FILE=templateFile,
-                REGULAR_REPOS=regular_repos,
-                INFRA_REPOS=infra_repos,
-                topdir=topdir,
-                scriptdir=scriptdir,
-                cssdir=cssdir,
-                imagedir=imagedir,
-            )
-            if templateFile.endswith('.html'):
-                soup = BeautifulSoup(output, "lxml")
-                output = soup.prettify()
-        except Exception as e:
-            logger.error("rendering template %s failed: %s" %
-                         (templateFile, e))
-            raise
-
-        try:
-            target_directory = os.path.join(args.output_directory,
-                                            os.path.dirname(templateFile))
-            target_file = os.path.join(args.output_directory, templateFile)
-            if not os.path.isdir(target_directory):
-                logger.debug("creating target directory %s" %
-                             target_directory)
-                os.makedirs(target_directory)
-            logger.debug("writing %s" % target_file)
-            with open(os.path.join(target_file), 'wb') as fh:
-                fh.write(output.encode('utf8'))
-        except (IOError, OSError, UnicodeEncodeError) as e:
-            logger.error("writing %s failed: %s" % (target_file, e))
-            continue
+        render_template(
+            environment,
+            project_data,
+            regular_repos,
+            infra_repos,
+            templateFile,
+            args.output_directory,
+        )
 
     return 0
 
