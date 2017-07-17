@@ -48,7 +48,7 @@ the ``bindep`` command::
     $ tox -e bindep
 
 All guides are in the RST format. You can use ``tox`` to prepare
-virtual environment and build all guides (HTML only):
+virtual environment and build all guides (HTML only)::
 
     $ tox -e docs
 
@@ -71,7 +71,7 @@ generated HTML documentation.
 
 If you get this message `make: xelatex: No such file or directory` it means
 your local environment does not have LaTeX installed. Read `Getting LaTeX
- <https://www.latex-project.org/get/>`_ for instructions.
+<https://www.latex-project.org/get/>`_ for instructions.
 
 Testing of changes and building of the manual
 =============================================
@@ -82,12 +82,12 @@ CI jobs.
 
 If you like to run individual tests, run:
 
- * ``tox -e checkbuild`` - to actually build the manual
- * ``tox -e checklang`` - to build translated manuals
- * ``tox -e checkniceness`` - to run the niceness tests
- * ``tox -e linkcheck`` - to run the tests for working remote URLs
+* ``tox -e checkbuild`` - to actually build the manual
+* ``tox -e checklang`` - to build translated manuals
+* ``tox -e checkniceness`` - to run the niceness tests
+* ``tox -e linkcheck`` - to run the tests for working remote URLs
 
-The :command:`tox` command uses the openstack-doc-tools package to run the
+The ``tox`` command uses the openstack-doc-tools package to run the
 tests.
 
 
