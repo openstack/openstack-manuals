@@ -1,5 +1,13 @@
 {% set series = 'latest' %}
+{% set released_series = 'ocata' %}{# The most recently released series #}
 {% set projects = PROJECT_DATA[series] %}
+
+# Redirect old top-level HTML pages to the version under most recent
+#  full release.
+redirectmatch 301 /$ /{{released_series}}/
+redirectmatch 301 /index.html$ /{{released_series}}/
+redirectmatch 301 /openstack-projects.html$ /{{released_series}}/projects.html
+redirectmatch 301 /language-bindings.html$ /{{released_series}}/language-bindings.html
 
 # Redirecting End-of-Life (EOL) versions, see https://wiki.openstack.org/wiki/Releases:
 redirectmatch 301 /bexar/.*$ /index.html
