@@ -61,14 +61,14 @@ To link to some external locations, format the RST source as follows:
 
 .. code-block:: none
 
-   Here is a link to the User guide: https://docs.openstack.org/user-guide/.
+   Here is a link to the Image guide: https://docs.openstack.org/image-guide/.
 
    Here is an external web link with a link title:
-  `User guide <https://docs.openstack.org/user-guide/>`_.
+  `Image guide <https://docs.openstack.org/image-guide/>`_.
 
 **Output**
 
-Here is a link to the User guide: https://docs.openstack.org/user-guide/.
+Here is a link to the Image guide: https://docs.openstack.org/image-guide/.
 
 Here is an external web link with a link title:
-`User guide <https://docs.openstack.org/user-guide/>`_.
+`Image guide <https://docs.openstack.org/image-guide/>`_.

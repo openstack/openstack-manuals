@@ -53,9 +53,6 @@ Based on the topic your request refers to, use the following tags:
 [training]
   Training labs, Training guides, and Upstream Training materials
 
-[user-guide]
-  OpenStack End User Guide
-
 [WIP]
   A marker that means the commit is a work in progress
 

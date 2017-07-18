@@ -276,8 +276,7 @@ Process user data and other metadata (cloud-init)
 
 In addition to the ssh public key, an image might need
 additional information from OpenStack, such as
-`Provide user data to instances <https://docs.openstack.org/
-user-guide/cli-provide-user-data-to-instances.html>`_,
+to povide user data to instances,
 that the user submitted when requesting the image.
 For example, you might want to set the host name of the instance
 when it is booted. Or, you might wish to configure your image
