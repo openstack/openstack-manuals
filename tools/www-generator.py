@@ -27,8 +27,25 @@ import requests
 import yaml
 
 
-SERIES_PAT = re.compile('^(mitaka|newton|ocata|pike|queens|rocky)/')
-LATEST_SERIES = 'pike'
+PAST_SERIES = [
+    'kilo',
+    'liberty',
+    'mitaka',
+    'newton',
+]
+RELEASED_SERIES = 'ocata'
+SERIES_IN_DEVELOPMENT = 'pike'
+FUTURE_SERIES = [
+    'queens',
+    'rocky',
+]
+ALL_SERIES = (
+    PAST_SERIES +
+    [RELEASED_SERIES, SERIES_IN_DEVELOPMENT] +
+    FUTURE_SERIES
+)
+
+SERIES_PAT = re.compile('^(' + '|'.join(ALL_SERIES) + ')/')
 
 
 def initialize_logging(debug, verbose):
@@ -265,7 +282,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
     series_match = SERIES_PAT.match(template_file)
     if series_match:
         series = series_match.groups()[0]
-        if series == LATEST_SERIES:
+        if series == SERIES_IN_DEVELOPMENT:
             series = 'latest'
     else:
         series = None
@@ -284,6 +301,9 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             TEMPLATE_FILE=template_file,
             REGULAR_REPOS=regular_repos,
             INFRA_REPOS=infra_repos,
+            ALL_SERIES=ALL_SERIES,
+            RELEASED_SERIES=RELEASED_SERIES,
+            SERIES_IN_DEVELOPMENT=SERIES_IN_DEVELOPMENT,
             topdir=topdir,
             scriptdir=scriptdir,
             cssdir=cssdir,
