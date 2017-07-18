@@ -7,7 +7,7 @@
   has_install_guide: true
   has_api_ref: true
   has_admin_guide: true
-#  has_config_ref: true
+  has_config_ref: true
   type: service
 - name: python-keystoneclient
   service: Identity service Python Bindings
@@ -39,6 +39,7 @@
 - name: glance_store
   service: glance backend abstraction library
   type: library
+  has_user_guide: true
 
 - name: nova
   service: Compute service
@@ -55,6 +56,7 @@
 - name: os-vif
   type: library
   service: Library for plugging and unplugging virtual interfaces.
+  has_user_guide: true
 # - name: osc-placement
 #   type: client
 #   service: OpenStackClient plugin for the Nova Placement service.
@@ -76,6 +78,7 @@
   type: library
   service: Library provided for integrating with the OpenStack Networking platform.
   has_install_guide: true
+  has_user_guide: true
 
 - name: networking-bagpipe
   service: BaGPipe backend
@@ -95,10 +98,12 @@
 - name: neutron-fwaas
   service: Firewall-as-a-Service Plug-in
   type: networking
+  has_install_guide: true
 - name: networking-midonet
   service: MidoNet Networking service Plug-in
   type: networking
   has_install_guide: true
+  has_config_ref: true
 - name: networking-odl
   service: OpenDaylight(ODL) Networking service Plug-in
   type: networking
@@ -111,6 +116,7 @@
   service: Service Function Chaining Networking service Plug-in
   type: networking
   has_install_guide: true
+  has_user_guide: true
 
 - name: horizon
   service: Dashboard
@@ -159,6 +165,7 @@
   service: Bare Metal service Python Bindings
   type: client
   description: ironic client
+  has_user_guide: true
 
 - name: ironic-inspector
   service: Bare Metal Introspection service
@@ -179,7 +186,8 @@
 - name: trove
   service: Database service
   service_type: database
-#  has_install_guide: true
+  has_install_guide: true
+  has_admin_guide: true
 #  has_config_ref: true
   has_api_ref: true
   type: service
@@ -187,6 +195,7 @@
   service: Database service Python Bindings
   type: client
   description: trove client
+  has_user_guide: true
 
 - name: designate
   service: DNS service
@@ -201,6 +210,8 @@
   service: DNS service Python Bindings
   type: client
   description: designate client
+  has_install_guide: true
+  has_user_guide: true
 
 # - name: ec2-api
 #   service: EC2 API compatibility layer
@@ -215,13 +226,15 @@
   service_type: key-manager
   has_api_guide: true
   has_api_ref: true
-#  has_install_guide: true
-#  has_config_ref: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
   type: service
 - name: python-barbicanclient
   service: Key Manager service Python Bindings
   type: client
   description: barbican client
+  has_install_guide: true
 
 - name: zaqar
   service: Messaging service
@@ -274,6 +287,7 @@
   service: Telemetry Alarming services
   service_type: alarm
   has_install_guide: true
+  has_admin_guide: true
 #  has_config_ref: true
   type: service
 - name: python-aodhclient
@@ -334,8 +348,9 @@
   service: Workflow service
   service_type: workflow
   type: service
-  has_install_guide: false
-#  has_config_ref: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
 - name: python-mistralclient
   service: Workflow service Python Bindings
   type: client
@@ -345,8 +360,9 @@
   service: Application Catalog service
   service_type: application-catalog
   type: service
-  has_install_guide: false
+  has_install_guide: true
   has_api_ref: true
+  has_admin_guide: true
 #  has_config_ref: true
   has_user_guide: true
 # - name: python-muranoclient
@@ -358,7 +374,7 @@
   service: Clustering service
   service_type: resource-cluster
   type: service
-  has_install_guide: false
+  has_install_guide: true
 #  has_config_ref: true
   has_user_guide: true
 # - name: python-senlinclient
@@ -423,9 +439,11 @@
   # searchlight documentation.
   service_type: search
   type: service
-  has_install_guide: false
+  has_install_guide: true
   has_api_ref: true
-#  has_config_ref: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
 - name: python-searchlightclient
   service: Search service Python Bindings
   type: client
@@ -446,16 +464,19 @@
   service: Friendly state machines for Python.
   type: library
   has_install_guide: true
+  has_user_guide: true
 - name: castellan
   service: Key Manager interface abstraction
   type: library
   has_install_guide: true
+  has_user_guide: true
 - name: debtcollector
   type: library
   service:
     A collection of Python deprecation patterns and strategies that
     help you collect your technical debt in a non-destructive manner.
   has_install_guide: true
+  has_user_guide: true
 - name: futurist
   type: library
   service:
@@ -463,14 +484,19 @@
     applications to handle asynchronous and periodic work in a nice
     manner.
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.cache
   type: library
   service: Cache management library.
   has_config_ref: true
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.concurrency
   type: library
   service: External process management and task synchronization.
+  has_user_guide: true
+  has_install_guide: true
+  has_config_ref: true
 - name: oslo.config
   type: library
   service: Configuration option parsing from the command line or configuration files.
@@ -479,76 +505,100 @@
   type: library
   service: Helpers to maintain useful information about a request context.
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.db
   type: library
   service: Database connectivity.
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.i18n
   type: library
   service: Internationalization and translation.
+  has_user_guide: true
 - name: oslo.log
   type: library
   service: A logging configuration library.
   has_config_ref: true
   has_install_guide: true
   has_admin_guide: true
+  has_user_guide: true
 - name: oslo.messaging
   type: library
   service: Inter-process communication.
   has_admin_guide: true
+  has_user_guide: true
 - name: oslo.middleware
   type: library
   service: WSGI middleware library for web service development.
   has_config_ref: true
   has_install_guide: true
   has_admin_guide: true
+  has_user_guide: true
 - name: oslo.policy
   type: library
   service: Common policy enforcement.
   has_install_guide: true
   has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
 - name: oslo.privsep
   type: library
   service: library for privilege separation
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.reports
   type: library
   service: Error report framework for projects.
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.rootwrap
   type: library
   service: Fine filtering of shell commands to run as root.
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.serialization
   type: library
   service: Serialization with special handling for some common types.
+  has_install_guide: true
+  has_user_guide: true
 - name: oslo.service
   type: library
   service: Library for running and managing OpenStack services.
   has_config_ref: true
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.utils
   type: library
   service: Library of common low-level utility modules.
   has_install_guide: true
+  has_user_guide: true
 - name: oslo.versionedobjects
   type: library
   service: Database and RPC object schema versioning.
+  has_install_guide: true
+  has_config_ref: true
+  has_user_guide: true
 - name: oslo.vmware
   type: library
   service: Common functionality required by VMware drivers in several projects.
+  has_install_guide: true
+  has_user_guide: true
 - name: oslosphinx
   type: library
   service: Theme and extension support for Sphinx documentation.
 - name: oslotest
   type: library
   service: Unit test and fixture framework.
+  has_install_guide: true
+  has_user_guide: true
 - name: osprofiler
   type: library
   service: Cross-Project profiling library.
+  has_user_guide: true
 - name: pbr
   type: library
   service: Manages setuptools packaging needs in a consistent way.
+  has_user_guide: true
 - name: pylockfile
   type: library
   service: The lockfile package provides a simple API for locking files.
@@ -556,14 +606,18 @@
   type: library
   service: Manages dynamic plug-ins for Python applications.
   has_install_guide: true
+  has_user_guide: true
 - name: taskflow
   type: library
   service: Makes task execution easy, consistent, and reliable.
+  has_user_guide: true
 - name: tooz
   type: library
   service:
     Distributed primitives like group membership protocol, lock
     service and leader elections.
+  has_user_guide: true
+  has_install_guide: true
 
 - name: octavia
   service: Load-balancer service
@@ -611,14 +665,17 @@
   service: Command line interface to OpenStack
   type: client
   description: openstack client
+  has_config_ref: true
 - name: cliff
   service: Builds command-line programs in Python.
   type: library
   has_install_guide: true
+  has_user_guide: true
 - name: os-client-config
   service: library for collecting client configuration for using an OpenStack cloud
   type: library
   has_install_guide: true
+  has_user_guide: true
 
 - name: shade
   service: Multi-cloud interoperability library
@@ -630,9 +687,10 @@
 - name: solum
   service: Software Development Lifecycle Automation service
   service_type: application-deployment
-#  has_install_guide: true
+  has_install_guide: true
+  has_admin_guide: true
 #  has_api_ref: true
-#  has_config_ref: true
+  has_config_ref: true
   type: service
 # - name: python-solumclient
 #   service: Software Development Lifecycle Automation client
@@ -667,6 +725,7 @@
   service: Release Notes Manager
   type: tool
   has_install_guide: true
+  has_user_guide: true
 
 - name: tempest
   service: Tempest Test Suite for OpenStack
@@ -702,6 +761,7 @@
   type: deployment
   service: Deploying OpenStack with Ansible
   has_admin_guide: true
+  has_user_guide: true
 - name: tripleo-docs
   type: deployment
   service: Deploying OpenStack with TripleO
