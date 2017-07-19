@@ -252,6 +252,5 @@ Image is complete
 The underlying image file that you created with the
 :command:`qemu-img create` command, such as ``/tmp/trusty.qcow2``,
 is now ready for uploading to the Image service by using the
-:command:`openstack image create` command. For more information, see the
-`Create or update an image
-<https://docs.openstack.org/user-guide/common/cli-manage-images.html#create-or-update-an-image-glance>`__.
+:command:`openstack image create` command. For more information,
+see the `Glance User Guide <https://docs.openstack.org/glance/latest/user/index.html>`__.

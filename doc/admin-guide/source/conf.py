@@ -82,7 +82,6 @@ release = '15.0.0'
 exclude_patterns = [
     'common/appendix.rst',
     'common/cli-*.rst',
-    'common/nova-show-usage-statistics-for-hosts-instances.rst',
 ]
 
 # The reST default role (used for this markup: `text`) to use for all
