@@ -1,31 +1,60 @@
 ========================
 Commonly used technology
 ========================
+High availability can be achieved only on system level, while both hardware and
+software components can contribute to the system level availability.
+This document lists the most common hardware and software technologies
+that can be used to build a highly available system.
 
 Hardware
 ~~~~~~~~
-The following are the standard hardware requirements:
-
-- Provider networks: See the *Overview -> Networking Option 1: Provider
-  networks* section of the
-  `Install Tutorials and Guides <https://docs.openstack.org/project-install-guide/ocata>`_
-  depending on your distribution.
-- Self-service networks: See the *Overview -> Networking Option 2:
-  Self-service networks* section of the
-  `Install Tutorials and Guides <https://docs.openstack.org/project-install-guide/ocata>`_
-  depending on your distribution.
-
-Load balancers
---------------
+Using different technologies to enable high availability on the hardware
+level provides a good basis to build a high available system. The next chapters
+discuss the most common technologies used in this field.
 
 Redundant switches
 ------------------
+Network switches are single point of failures as networking is critical to
+operate all other basic domains of the infrastructure, like compute and
+storage. Network switches need to be able to forward the network traffic
+and be able to forward the traffic to a working next hop.
+For these reasons consider the following two factors when making a network
+switch redundant:
+
+#. The network switch itself should synchronize its internal state to a
+   redundant switch either in active/active or active/passive way.
+
+#. The network topology should be designed in a way that the network router can
+   use at least two paths in every critical direction.
 
 Bonded interfaces
 -----------------
+Bonded interfaces are two independent physical network interfaces handled as
+one interface in active/passive or in active/active redundancy mode. In
+active/passive mode, if an error happens in the active network interface or in
+the remote end of the interface, the interfaces are switched over. In
+active/active mode, when an error happens in an interface or in the remote end
+of an interface, then the interface is marked as unavailable and ceases to be
+used.
+
+Load balancers
+--------------
+Physical load balancers are special routers which direct the traffic in
+different directions based on a set of rules. Load balancers can be in
+redundant mode similarly to the physical switches.
+Load balancers are also important for distributing the traffic to the different
+active/active components of the system.
 
 Storage
 -------
+Physical storage high availability can be achieved with different scopes:
+
+#. High availability within a hardware unit with redundant disks (mostly
+   organized into different RAID configurations), redundant control components,
+   redundant I/O interfaces and redundant power supply.
+
+#. System level high availability with redundant hardware units with data
+   replication.
 
 Software
 ~~~~~~~~
