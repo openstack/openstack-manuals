@@ -50,8 +50,6 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/>`_
 
-*  `Operations Guide <https://docs.openstack.org/ops-guide/>`_
-
 *  `Networking Guide <https://docs.openstack.org/neutron/latest/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
