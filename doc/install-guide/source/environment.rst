@@ -9,7 +9,7 @@ Although most environments include Identity, Image service, Compute, at least
 one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to `Object Storage Installation Guide
-<https://docs.openstack.org/project-install-guide/object-storage/draft/>`_
+<https://docs.openstack.org/swift/>`_
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
