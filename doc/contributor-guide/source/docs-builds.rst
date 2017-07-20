@@ -317,6 +317,8 @@ workstation. xml2po is part of the gnome-doc-utils and can be installed with
 :command:`yum install gnome-doc-utils` (on RedHat-based distributions), or
 :command:`zypper install xml2po` (on SUSE-based distributions).
 
+.. _docs_builds_eol:
+
 Building docs from end-of-life releases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

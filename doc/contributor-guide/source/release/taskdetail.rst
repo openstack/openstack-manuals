@@ -81,9 +81,58 @@ Make the following changes in the **openstack-manuals** repository:
 
       $ cp -a www/RELEASE www/NEXT_SERIES
 
-#. Update the ``RELEASED_SERIES``, ``SERIES_IN_DEVELOPMENT``, and
-   ``FUTURE_SERIES`` values in the template generator
+#. Update the ``PAST_SERIES``, ``RELEASED_SERIES``,
+   ``SERIES_IN_DEVELOPMENT``, and ``FUTURE_SERIES`` values at the top
+   of the source file for the template generator
    (``tools/www-generator.py``).
+
+   * Add the existing value of the ``RELEASED_SERIES`` variable to the
+     ``PAST_SERIES`` list.
+   * Set the ``RELEASED_SERIES`` variable to the name of the series
+     being released.
+   * Set the ``SERIES_IN_DEVELOPMENT`` variable to the name of the
+     next series.
+   * Add any additional known names to the ``FUTURE_SERIES`` list.
+
+   For example, at the end of the Pike cycle, the variables will
+   contain:
+
+   .. code-block:: python
+
+      PAST_SERIES = [
+          'kilo',
+          'liberty',
+          'mitaka',
+          'newton',
+      ]
+      RELEASED_SERIES = 'ocata'
+      SERIES_IN_DEVELOPMENT = 'pike'
+      FUTURE_SERIES = [
+          'queens',
+      ]
+
+   To update the settings:
+
+   * ``'ocata'`` is added to ``PAST_SERIES``
+   * ``RELEASED_SERIES`` changes from ``'ocata'`` to ``'pike'``
+   * ``SERIES_IN_DEVELOPMENT`` becomes ``'queens'``
+   * ``'queens'`` is removed from the ``FUTURE_SERIES`` list
+   * ``'rocky'`` is added to the ``FUTURE_SERIES`` list
+
+   .. code-block:: python
+
+      PAST_SERIES = [
+          'kilo',
+          'liberty',
+          'mitaka',
+          'newton',
+          'ocata',
+      ]
+      RELEASED_SERIES = 'pike'
+      SERIES_IN_DEVELOPMENT = 'queens'
+      FUTURE_SERIES = [
+          'rocky',
+      ]
 
    This will cause docs.openstack.org to redirect to the
    series-specific landing page for the current release, and the
@@ -95,7 +144,8 @@ Make the following changes in the **openstack-manuals** repository:
    If any project links are missing and cause the template generator
    to fail, set the flags to disable linking to those docs. For
    example, if "foo" does not have a configuration reference guide,
-   set ``has_config_ref: false`` for the "foo" project.
+   set ``has_config_ref: false`` for the "foo" project by modifying
+   the file created in step 1.
 
 .. warning::
 
@@ -155,3 +205,20 @@ To:
 However, we will keep the documentation on the
 `docs.openstack.org <https://docs.openstack.org/>`_
 page for a while so that the users can refer the guides if necessary.
+
+.. seealso::
+
+   See :ref:`docs_builds_eol` for instructions for building
+   documentation for versions past their end-of-life.
+
+Removing series landing pages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To remove the landing pages for a series that has passed its end of
+life date, delete the series directory under ``www`` and remove the
+associated project data file.
+
+.. code-block:: console
+
+   $ git rm -r www/SERIES
+   $ git rm www/project-data/SERIES.yaml
