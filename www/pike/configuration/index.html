@@ -1,4 +1,4 @@
-{% set projects = PROJECT_DATA[series] %}
+{% set projects = PROJECT_DATA[SERIES] %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}Configuration Guides{% endblock %}
 {% block title %}
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <h1>OpenStack {% if series != 'latest' %}{{series|title}}{% endif %} Configuration Guides</h1>
+                <h1>OpenStack {% if SERIES != 'latest' %}{{SERIES|title}}{% endif %} Configuration Guides</h1>
                 <p>
                 This page contains documentation about configuring OpenStack services.
                 </p>
@@ -23,12 +23,12 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="docs-link-sections">
                         <h3><i class="fa fa-book"></i> Configuration Guides for OpenStack Services</h3>
-    <a href="/oslo.config/{{series}}/configuration/">
+    <a href="/oslo.config/{{SERIES}}/configuration/">
     General information about configuring OpenStack (oslo.config)
     </a><br />
 {% for project in projects|sort(attribute='name') -%}
 {% if project.type in ['service', 'other'] and project.has_config_ref %}
-    <a href="/{{project.name}}/{{series}}/configuration/">
+    <a href="/{{project.name}}/{{SERIES}}/configuration/">
     {{project.service}} ({{project.name}})
     </a><br />
 {% endif %}

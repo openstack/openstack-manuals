@@ -1,4 +1,4 @@
-{% set projects = PROJECT_DATA[series] %}
+{% set projects = PROJECT_DATA[SERIES] %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}Draft Installation Tutorials and Guides{% endblock %}
 {% block title %}
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <h1>OpenStack {% if series != 'latest' %}{{series|title}}{% endif %} Installation Tutorials and Guides</h1>
+                <h1>OpenStack {% if SERIES != 'latest' %}{{SERIES|title}}{% endif %} Installation Tutorials and Guides</h1>
                 <p>
                   These documents cover installation procedures for OpenStack
                   services.
@@ -47,7 +47,7 @@
 
 {% for project in projects|sort(attribute='service') -%}
 {% if project.type in ['service', 'other'] and project.has_install_guide %}
-                   <li><a href="/{{project.name}}/{{series}}/install/">{{project.service}} ({{project.name|title}})</a></li>
+                   <li><a href="/{{project.name}}/{{SERIES}}/install/">{{project.service}} ({{project.name|title}})</a></li>
 {% endif %}
 {%- endfor %}
                  </ul>

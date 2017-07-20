@@ -1,4 +1,4 @@
-{% set projects = PROJECT_DATA[series] %}
+{% set projects = PROJECT_DATA[SERIES] %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}Language bindings{% endblock %}
 {% block title %}
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <h1>OpenStack {% if series != 'latest' %}{{series|title}}{% endif %} API Bindings</h1>
+                <h1>OpenStack {% if SERIES != 'latest' %}{{SERIES|title}}{% endif %} API Bindings</h1>
                 <p>
                 This page contains documentation about the Python
                 bindings provided by OpenStack and how to use them.
@@ -26,7 +26,7 @@
                         <h3><i class="fa fa-book"></i> Bindings for the OpenStack APIs</h3>
 {% for project in projects|sort(attribute='service') -%}
 {% if project.type == 'client' %}
-    <a href="/{{project.name}}/{{series}}/">
+    <a href="/{{project.name}}/{{SERIES}}/">
     {{project.service}} ({{project.description}})
     </a><br />
 {% endif %}
@@ -42,7 +42,7 @@
     <p>
    User guide for the OpenStack dashboard and command-line clients.
     </p>
-    <a href="/python-openstackclient/{{series}}/">
+    <a href="/python-openstackclient/{{SERIES}}/">
     Unified OpenStack Client
     </a><br />
     <p>
