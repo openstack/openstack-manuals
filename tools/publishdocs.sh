@@ -19,30 +19,6 @@ if [[ -z "$PUBLISH" ]] ; then
     exit 1
 fi
 
-# Copy files from draft to named branch and replace all links from
-# draft with links to the branch
-function copy_to_branch {
-    BRANCH=$1
-
-    if [ -e publish-docs/draft ] ; then
-
-        # Copy files over
-        mkdir -p publish-docs/$BRANCH
-        cp -a publish-docs/draft/* publish-docs/$BRANCH/
-        # We don't need this file
-        rm -f publish-docs/$BRANCH/draft-index.html
-        # We don't need these draft guides on the branch
-        rm -rf publish-docs/$BRANCH/arch-design-to-archive
-
-        for f in $(find publish-docs/$BRANCH -name "atom.xml"); do
-            sed -i -e "s|/draft/|/$BRANCH/|g" $f
-        done
-        for f in $(find publish-docs/$BRANCH -name "*.html"); do
-            sed -i -e "s|/draft/|/$BRANCH/|g" $f
-        done
-    fi
-}
-
 mkdir -p publish-docs
 
 # Build all RST guides including PDF files
@@ -65,12 +41,6 @@ if [ "$PUBLISH" = "publish" ] ; then
     # Don't publish this file
     rm publish-docs/www-index.html
 fi
-
-# For publishing to both /draft and /BRANCH
-#if [ "$PUBLISH" = "publish" ] ; then
-#    # For publishing to both /draft and /BRANCH
-#    copy_to_branch ocata
-#fi
 
 if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
