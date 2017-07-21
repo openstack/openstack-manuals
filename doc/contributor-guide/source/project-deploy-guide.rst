@@ -6,7 +6,7 @@ As of the Newton release, a new method of publishing deployment guides has
 been implemented. This allows each deployment projects to create their own
 deployment guide, based on a standard template, in their own repository.
 These guides are then centrally published to
-`Deployment Guides <https://docs.openstack.org/project-deploy-guide/newton/>`_.
+`Deployment Guides <https://docs.openstack.org/newton/deploy/newton/>`_.
 
 .. note::
 
