@@ -16,7 +16,7 @@ Administrator Guide
   Page functionality, respectively.
 * General bug fixes and updates.
 
-API guides
+API Guides
 ~~~~~~~~~~
 
 * Updated the landing page at
