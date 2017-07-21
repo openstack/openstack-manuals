@@ -17,6 +17,7 @@ import glob
 import logging
 import os
 import os.path
+import re
 import sys
 
 from bs4 import BeautifulSoup
@@ -24,6 +25,10 @@ import jinja2
 import jsonschema
 import requests
 import yaml
+
+
+SERIES_PAT = re.compile('^(mitaka|newton|ocata|pike|queens|rocky)/')
+LATEST_SERIES = 'pike'
 
 
 def initialize_logging(debug, verbose):
@@ -257,6 +262,15 @@ def render_template(environment, project_data, regular_repos, infra_repos,
     cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
     imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
 
+    series_match = SERIES_PAT.match(template_file)
+    if series_match:
+        series = series_match.groups()[0]
+        if series == LATEST_SERIES:
+            series = 'latest'
+    else:
+        series = None
+    logger.info('series = %s', series)
+
     try:
         template = environment.get_template(template_file)
     except Exception as e:
@@ -274,6 +288,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             scriptdir=scriptdir,
             cssdir=cssdir,
             imagedir=imagedir,
+            series=series,
             **extra
         )
         if template_file.endswith('.html'):
