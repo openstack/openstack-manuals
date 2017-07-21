@@ -21,21 +21,13 @@ Release day is usually 1300UTC on the `initial release date` listed on the
   Ping Speciality Team leads to review and update release notes for
   openstack-manuals.
 
-*One to two weeks*
-  Publish project-specific docs to new branch, publish index pages to docs
-  (but leave unlinked).
+*At RC1*
+  When projects create their branches and land the first patch,
+  they will automatically have branch-specific documentation. After
+  the branches are created, create the project data file in the
+  ``openstack-manuals`` repository for the new series.
 
-*One week*
- Check and update all books to have correct version information, and update
- any links in each book to refer to the new release. Run scripts to pull the
- latest changes for the Configuration Reference and CLI Reference Guides.
-
-*On release day*
-  Add new release name to the dropdown menu on the docs page, regenerate the
-  sitemap.xml, and change the front page so the new release is the default.
-
-*After release day*
-  Cut the branch for versioned guides. This usually happens about a month
-  after release day, but the timing is informed mainly by the volume of
-  changes going in to the guides. Update the sphinxmark configuration files
-  for versioned guides with the latest release name.
+*Before or on release day*
+  Update the series settings in the template generator and add the
+  landing page for the next series by copying the templates from the
+  current release to the new release directory.

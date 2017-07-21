@@ -62,91 +62,56 @@ notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
 published to
 `https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html`.
 
-Update www pages
-~~~~~~~~~~~~~~~~
+Update www pages for end of release
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Make the following changes in the **openstack-manuals** repository:
 
-#. Create the docs.openstack.org index page for the new release, using the
-   existing page as a template:
-
-   - ``/www/RELEASE/index.html``
-
-#. Copy the latest project data file to one named for the release:
+#. Copy the "latest" project data file to one *named for the release
+   being completed*:
 
    .. code-block:: console
 
       $ cp www/project-data/latest.yaml www/project-data/RELEASE.yaml
 
-#. Create the project-install-guide index page for the new release, using the
-   existing page as a template:
+#. Create the docs.openstack.org pages for the *new* release, by
+   copying the existing templates to the new directory:
 
-   - ``/www/project-install-guide/RELEASE/index.html``
+   .. code-block:: console
 
-#. Modify the new file to set the ``SERIES`` variable for the template
-   correctly:
+      $ cp -a www/RELEASE www/NEXT_SERIES
 
-   .. code-block:: jinja
+#. Update the ``RELEASED_SERIES``, ``SERIES_IN_DEVELOPMENT``, and
+   ``FUTURE_SERIES`` values in the template generator
+   (``tools/www-generator.py``).
 
-      {% set SERIES = "RELEASE" %}
+   This will cause docs.openstack.org to redirect to the
+   series-specific landing page for the current release, and the
+   templates for the release being completed will use the data from
+   the file created in the previous step.
 
-#. Create the ``project-deploy-guide`` index for the new release, using the
-   existing page as a template:
+#. Test the build locally with ``tox -e checkbuild``.
 
-   - ``/www/project-deploy-guide/RELEASE/index.html``
+   If any project links are missing and cause the template generator
+   to fail, set the flags to disable linking to those docs. For
+   example, if "foo" does not have a configuration reference guide,
+   set ``has_config_ref: false`` for the "foo" project.
 
-#. Add the new pages to the list in ``/www/www-index.html``.
+.. warning::
 
-   This patch should have a core -2 review on it until it is ready to be
-   published. This should happen about a week before release day, sending the
-   page live, but should remain unlinked until the last moment. This is to
-   allow the release team to link to the new page.
+   When the patch to make these changes merges, docs.openstack.org
+   will immediately update to redirect to the release. The previous
+   release pages will still be present at their old locations.
 
-#. Update the drop-down menu. Merge this patch on release day:
+.. note::
 
-   - ``/www/templates/dropdown_releases_and_languages.tmpl``
-
-#. Update the site redirects. Merge this patch on release day:
-
-   - ``/www/.htaccess``
-
-#. Update the *Get started* links. Do not merge this patch until after the
-   links are active:
-
-   - ``/doc/common/get-started-with-openstack.rst``
-
-Update links in all books
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Every book maintained by OpenStack Manuals must be checked for links
-referencing the old release. Do one patch per book, and record the review
-number in the release etherpad so that release managers can review easily.
-For versioned books, these patches should have a core -2 review on them until
-they are ready to be published at release time. For continuously released
-books, these patches can be merged immediately.
-
-In some versioned guides, the master branch links to draft books in some
-locations. Most notably, the basic Installation Tutorial links to the
-additional services Installation Guides in
-``doc/install-guide/source/additional-services.rst``. Update these links to
-the correct version before publishing the book.
-
-Update main docs page
-~~~~~~~~~~~~~~~~~~~~~
-
-On release day, change the front page so the new release is the default by
-synchronising `openstack-manuals/www/RELEASENAME/index.html`, which you
-created earlier, with `openstack/openstack-manuals/www/index.html`. These
-two files should have the same content.
-
-Merge all the release day patches prepared earlier.
-
-Changes to the docs site can take an hour or more to populate, depending on
-the status of the gate and the number of changes being pushed at release time,
-so be prepared to have the release day patches ready well ahead of the
-official release time. You can check the current gate status at `Zuul status
-<http://status.openstack.org/zuul/>`_ to get an idea of the current merge
-times.
+   Changes to the docs site can take an hour or more to populate,
+   depending on the status of the gate and the number of changes being
+   pushed at release time, so be prepared to have the release day
+   patches ready well ahead of the official release time. You can
+   check the current gate status at `Zuul status
+   <http://status.openstack.org/zuul/>`_ to get an idea of the current
+   merge times.
 
 Generate the site map
 ~~~~~~~~~~~~~~~~~~~~~
@@ -155,46 +120,6 @@ After the release day patches have merged, generate a new site map for
 docs.openstack.org using the ``sitemap`` script in the **openstack-doc-tools**
 repository. Copy the `sitemap.xml` file into the `www/static` directory in
 the **openstack-manuals** repository and commit the change.
-
-Cut the branch
-~~~~~~~~~~~~~~
-
-Cut the branch for versioned guides. This usually happens about a month
-after release day, but the timing is informed mainly by the volume of
-changes going in to the guides. Cutting the branch is done by the
-OpenStack Infrastructure team.
-
-Once the branch ``stable/RELEASENAME`` is created, a few things need
-to be set up before any other changes merge:
-
-* Update the ``stable/RELEASENAME`` branch (`example stable branch change
-  <https://review.openstack.org/#/c/396875/>`__):
-
-  * Disable all non-translated and non-versioned guides for
-    translation.
-  * Only build backported guides (install-guide, config-reference,
-    networking-guide).
-  * Publish backported guides and their translations to
-    ``/RELEASENAME/``.
-  * Do not publish web pages.
-  * Update ``.gitreview`` for the branch.
-
-* Update the ``master`` branch (`example master branch change
-  <https://review.openstack.org/#/c/396874/>`__):
-
-  * Do not copy content anymore to ``/RELEASENAME``.
-  * Update the sphinxmark configuration files for versioned guides
-    with the latest release name.
-
-
-Also, for translations the following needs to be done:
-
-* The translation server needs be set up for this. A version
-  ``stable-RELEASENAME`` needs to be set up as copy from ``master``.
-* The OpenStack CI set up needs to be adjusted for the branch. Change
-  in ``openstack-infra/project-config`` the gerritbot notifications and
-  the import of translations (`example infra change
-  <https://review.openstack.org/396876>`__).
 
 End-of-life
 ~~~~~~~~~~~
