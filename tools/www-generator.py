@@ -311,10 +311,12 @@ def render_template(environment, project_data, regular_repos, infra_repos,
     series_match = SERIES_PAT.match(template_file)
     if series_match:
         series = series_match.groups()[0]
+        series_title = series.title()
         if series == SERIES_IN_DEVELOPMENT:
             series = 'latest'
     else:
         series = None
+        series_title = ''
     logger.info('series = %s', series)
 
     try:
@@ -339,6 +341,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             CSSDIR=cssdir,
             IMAGEDIR=imagedir,
             SERIES=series,
+            SERIES_TITLE=series_title,
             **extra
         )
         if template_file.endswith('.html'):
