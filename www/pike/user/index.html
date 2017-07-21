@@ -1,7 +1,5 @@
 {% set series = 'latest' %}
 {% set projects = PROJECT_DATA[series] %}
-{% set scriptdir = '../common/js/' %}
-{% set cssdir = '../common/css/' %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}User Guides{% endblock %}
 {% block title %}
@@ -34,7 +32,7 @@
                 <h3><i class="fa fa-cog"></i> OpenStack Services</h3>
 {% for project in projects|sort(attribute='service') %}
 {% if project.type in ['service', 'other'] and project.has_user_guide %}
-                <a href="/{{project.name}}/latest/user/">
+                <a href="/{{project.name}}/{{series}}/user/">
                   {{project.service}} ({{project.name}})</a><br />
 {% endif %}
 {% endfor %}
@@ -46,7 +44,7 @@
                 <h3><i class="fa fa-cog"></i> Client Libraries</h3>
 {% for project in projects|sort(attribute='name') %}
 {% if project.type in ['client'] and project.has_user_guide %}
-                <a href="/{{project.name}}/latest/">{{project.name}}</a><br />
+                <a href="/{{project.name}}/{{series}}/">{{project.name}}</a><br />
                 <p>{{project.service}} </p>
 {% endif %}
 {% endfor %}
