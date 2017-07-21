@@ -305,11 +305,11 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             PAST_SERIES=PAST_SERIES,
             RELEASED_SERIES=RELEASED_SERIES,
             SERIES_IN_DEVELOPMENT=SERIES_IN_DEVELOPMENT,
-            topdir=topdir,
-            scriptdir=scriptdir,
-            cssdir=cssdir,
-            imagedir=imagedir,
-            series=series,
+            TOPDIR=topdir,
+            SCRIPTDIR=scriptdir,
+            CSSDIR=cssdir,
+            IMAGEDIR=imagedir,
+            SERIES=series,
             **extra
         )
         if template_file.endswith('.html'):

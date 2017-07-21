@@ -1,4 +1,4 @@
-{% set projects = PROJECT_DATA[series] %}
+{% set projects = PROJECT_DATA[SERIES] %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}User Guides{% endblock %}
 {% block title %}
@@ -10,7 +10,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8">
-                <h1>OpenStack {% if series != 'latest' %}{{series|title}}{% endif %} Project User Guides</h1>
+                <h1>OpenStack {% if SERIES != 'latest' %}{{SERIES|title}}{% endif %} Project User Guides</h1>
                 <p>
                 This page contains project-specific documentation for
                 using OpenStack services and libraries.
@@ -31,7 +31,7 @@
                 <h3><i class="fa fa-cog"></i> OpenStack Services</h3>
 {% for project in projects|sort(attribute='service') %}
 {% if project.type in ['service', 'other'] and project.has_user_guide %}
-                <a href="/{{project.name}}/{{series}}/user/">
+                <a href="/{{project.name}}/{{SERIES}}/user/">
                   {{project.service}} ({{project.name}})</a><br />
 {% endif %}
 {% endfor %}
@@ -43,7 +43,7 @@
                 <h3><i class="fa fa-cog"></i> Client Libraries</h3>
 {% for project in projects|sort(attribute='name') %}
 {% if project.type in ['client'] and project.has_user_guide %}
-                <a href="/{{project.name}}/{{series}}/">{{project.name}}</a><br />
+                <a href="/{{project.name}}/{{SERIES}}/">{{project.name}}</a><br />
                 <p>{{project.service}} </p>
 {% endif %}
 {% endfor %}
