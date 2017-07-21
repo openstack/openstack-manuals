@@ -219,7 +219,7 @@ If your environment includes the Orchestration service, you can create
 a stack that launches an instance.
 
 For more information, see the
-`Orchestration installation guide <https://docs.openstack.org/project-install-guide/orchestration/ocata/launch-instance.html>`_.
+`Orchestration installation guide <https://docs.openstack.org/orchestration/>`_.
 
 Shared File Systems
 -------------------
@@ -229,4 +229,4 @@ a share and mount it in an instance.
 
 For more information, see the
 `Shared File Systems installation guide
-<https://docs.openstack.org/project-install-guide/shared-file-systems/ocata>`_.
+<https://docs.openstack.org/shared-file-system/>`_.
