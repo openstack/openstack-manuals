@@ -27,18 +27,29 @@ import requests
 import yaml
 
 
+# List released series for which documentation is still published.
 PAST_SERIES = [
     'kilo',
     'liberty',
     'mitaka',
     'newton',
 ]
+
+# Set RELEASED_SERIES to the most current release that is not in
+# active development.
 RELEASED_SERIES = 'ocata'
+
+# Set SERIES_IN_DEVELOPMENT to the name of the series being developed
+# right now.
 SERIES_IN_DEVELOPMENT = 'pike'
+
+# List any names known for future releases here.
 FUTURE_SERIES = [
     'queens',
     'rocky',
 ]
+
+# Do not modify this variable.
 ALL_SERIES = (
     PAST_SERIES +
     [RELEASED_SERIES, SERIES_IN_DEVELOPMENT] +
