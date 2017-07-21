@@ -135,22 +135,7 @@ to run a particular job:
 
   .. code-block:: console
 
-     $ tox -e build -- contributor-guide
-
-
-  .. note::
-
-     This command does not work for the install-guide, as it
-     contains conditional content. To build specific parts of the
-     Installation tutorials, use the commands below:
-
-     .. code-block:: console
-
-        $ tox -e install-guide-debconf
-        $ tox -e install-guide-debian
-        $ tox -e install-guide-obs
-        $ tox -e install-guide-rdo
-        $ tox -e install-guide-ubuntu
+     $ tox -e build -- image-guide
 
 This runs the :command:`sphinx-build` command. When the build is finished,
 it displays in the ``openstack-manuals/publish-docs`` directory.
@@ -201,7 +186,6 @@ The following individual checks are also available:
 
 * :command:`tox -e checkniceness` - to run the niceness tests (for example,
   to see extra whitespaces)
-* :command:`tox -e checksyntax` - to run syntax checks
 * :command:`tox -e checklang` - to check all the translated manuals
 * :command:`tox -e docs` - to build only RST-sourced manuals
 * :command:`tox -e checkbuild` - to build all the manuals. This will also
@@ -225,7 +209,7 @@ command for the guide with the ``pdf`` option. For example:
 
 .. code-block:: console
 
-   $ tox -e build -- contributor-guide --pdf
+   $ tox -e build -- image-guide --pdf
 
 PDF builds are accomplished using LaTeX as an intermediate format.
 Currently, you can generate a PDF file for a limited number of guides.
