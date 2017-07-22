@@ -37,7 +37,6 @@ import os
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'reno.sphinxext',
     'openstackdocstheme'
 ]
 
@@ -58,7 +57,7 @@ project = u'OpenStack Documentation Team Release Notes'
 repository_name = "openstack/openstack-manuals"
 bug_project = 'openstack-manuals'
 bug_tag = u'releasenotes'
-copyright = u'2016, OpenStack contributors'
+copyright = u'2017, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

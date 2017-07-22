@@ -35,6 +35,10 @@ Configuration Reference
 
 * Removed content that is not specifically configuration options.
 * Created sections for newly added vendor plug-ins for Ocata.
+* Update Huawei cinder driver configuration to remove the redundant
+  configuration and add new features and storage system that Huawei
+  cinder driver support.
+
 
 Contributor Guide
 ~~~~~~~~~~~~~~~~~
