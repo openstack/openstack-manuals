@@ -1,0 +1,54 @@
+{% set projects = PROJECT_DATA[SERIES] %}
+{% extends "templates/base.tmpl" %}
+{% block pagetitle %}Administrator Guides{% endblock %}
+{% block title %}
+<a href="https://docs.openstack.org/">Documentation</a> &gt; Administrator Guides
+{% endblock %}
+{% block content %}
+<!-- Begin Page Content -->
+<div class="top-docs-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <h1>OpenStack {% if SERIES != 'latest' %}{{SERIES|title}}{% endif %} Administrator Guides</h1>
+           </div>
+        </div>
+    </div>
+    <div class="mid-docs-wrapper" id="docs-main-body">
+        <div class="container">
+            <div class="row docs-toc">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="docs-link-sections services-section">
+                      <p>
+                        The central administration guides managed by
+                        the OpenStack Documentation team were
+                        deprecated and removed during the Pike release
+                        cycle. The content
+                        was <a href="http://specs.openstack.org/openstack/docs-specs/specs/pike/os-manuals-migration.html">moved
+                        to the individual project documentation
+                        trees</a>. Because of the timing of that
+                        change, there is no separate {{SERIES_TITLE}} version of
+                        the administrator guides. Please refer either
+                        to the version of the guides created for Pike,
+                        or the most recent series in development,
+                        instead.
+                      </p>
+                      <p>
+                        <a class="overview-btn docs-btn" style="width:80%;text-transform:initial;" 
+                           href="/pike/admin/">
+                          Pike Admininistrator Guides
+                        </a>
+                      </p>
+                      <p>
+                        <a class="overview-btn docs-btn" style="width:80%;text-transform:initial;" 
+                           href="/latest/admin/">
+                          Administrator Guides In Development ({{SERIES_IN_DEVELOPMENT|title}})
+                        </a>
+                      </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
