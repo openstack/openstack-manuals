@@ -31,8 +31,6 @@ import yaml
 
 # List released series for which documentation is still published.
 PAST_SERIES = [
-    'kilo',
-    'liberty',
     'mitaka',
     'newton',
 ]
