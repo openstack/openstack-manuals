@@ -15,6 +15,8 @@
 import argparse
 import glob
 import logging
+import multiprocessing
+import multiprocessing.pool
 import os
 import os.path
 import re
@@ -98,13 +100,19 @@ def parse_command_line_arguments():
     return parser.parse_args()
 
 
-def _check_url(url):
+def _check_url(args):
     "Return True if the URL exists, False otherwise."
+    url, project_name, flag, flag_val = args
     try:
-        resp = requests.get(url)
+        resp = requests.head(url)
     except requests.exceptions.TooManyRedirects:
         return False, 301
-    return (resp.status_code // 100) == 2, resp.status_code
+    return (url,
+            project_name,
+            flag,
+            flag_val,
+            (resp.status_code // 100) == 2,
+            resp.status_code)
 
 
 # NOTE(dhellmann): List of tuple of flag name and URL template. None
@@ -180,6 +188,7 @@ def load_project_data(source_directory,
             logger.error(str(error))
             fail = True
 
+        links_to_check = []
         for project in data:
             # If the project has a service-type set, ensure it matches
             # the value in the service-type-authority data.base.
@@ -232,18 +241,27 @@ def load_project_data(source_directory,
                     if flag_val or check_all_links:
                         logger.info('%s:%s looking for %s',
                                     series, project['name'], url)
-                        exists, status = _check_url(url)
-                    if flag_val and not exists:
-                        logger.error(
-                            '%s set for %s but %s does not exist (%s)',
-                            flag, project['name'], url, status,
+                        links_to_check.append(
+                            (url, project['name'], flag, flag_val)
                         )
-                        fail = True
-                    elif (not flag_val) and check_all_links and exists:
-                        logger.warning(
-                            '%s not set for %s but %s does exist',
-                            flag, project['name'], url,
-                        )
+
+        logger.info('checking %s links from %s...',
+                    len(links_to_check), filename)
+        pool = multiprocessing.pool.ThreadPool()
+        results = pool.map(_check_url, links_to_check)
+
+        for url, project_name, flag, flag_val, exists, status in results:
+            if flag_val and not exists:
+                logger.error(
+                    '%s set for %s but %s does not exist (%s)',
+                    flag, project_name, url, status,
+                )
+                fail = True
+            elif (not flag_val) and check_all_links and exists:
+                logger.warning(
+                    '%s not set for %s but %s does exist',
+                    flag, project_name, url,
+                )
 
         if fail:
             raise ValueError('invalid input in %s' % filename)
