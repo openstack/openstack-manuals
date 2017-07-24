@@ -97,6 +97,16 @@ def parse_command_line_arguments():
     parser.add_argument("--skip-links", action="store_true",
                         default=False,
                         help='Skip link checks')
+    parser.add_argument('--series',
+                        default=[],
+                        action='append',
+                        help='series to update/test',
+                        )
+    parser.add_argument('--skip-render',
+                        default=False,
+                        action='store_true',
+                        help='only test links, do not render templates',
+                        )
     return parser.parse_args()
 
 
@@ -157,9 +167,11 @@ def _get_service_types():
 
 def load_project_data(source_directory,
                       check_all_links=False,
-                      skip_links=False):
+                      skip_links=False,
+                      series_to_load=None):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
+    series_to_load = series_to_load or []
     project_data = {}
     fail = False
     service_types = _get_service_types()
@@ -180,6 +192,8 @@ def load_project_data(source_directory,
         if filename.endswith('schema.yaml'):
             continue
         series, _ = os.path.splitext(os.path.basename(filename))
+        if series_to_load and series not in series_to_load:
+            continue
 
         logger.info('loading %s project data from %s', series, filename)
         with open(filename, 'r') as f:
@@ -377,6 +391,7 @@ def main():
         args.source_directory,
         args.check_all_links,
         args.skip_links,
+        args.series,
     )
     regular_repos, infra_repos = _get_official_repos()
 
@@ -388,6 +403,9 @@ def main():
     except Exception as e:
         logger.error("initialising template environment failed: %s" % e)
         return 1
+
+    if args.skip_render:
+        return 0
 
     # Render the templates.
     output_pages = []
