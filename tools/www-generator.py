@@ -13,6 +13,7 @@
 # under the License.
 
 import argparse
+import collections
 import glob
 import logging
 import multiprocessing
@@ -29,44 +30,60 @@ import requests
 import yaml
 
 
-# List previously released series.
+SeriesInfo = collections.namedtuple('SeriesInfo', 'date status')
+# The 'date' should be a string containing the month name and 4 digit year.
+#
+# The 'status' field should be one of:
+#   'obsolete'    -- the release existed, but we have no more artifacts for it
+#   'EOL'         -- the release is closed but we have docs for it
+#   'maintained'  -- the release still has an open branch
+#   'development' -- the current release being developed
+
+SERIES_INFO = {
+    'austin': SeriesInfo(date='October 2010', status='obsolete'),
+    'bexar': SeriesInfo(date='February 2011', status='obsolete'),
+    'cactus': SeriesInfo(date='April 2011', status='obsolete'),
+    'diablo': SeriesInfo(date='September 2011', status='obsolete'),
+    'essex': SeriesInfo(date='April 2012', status='obsolete'),
+    'folsom': SeriesInfo(date='September 2012', status='obsolete'),
+    'grizzly': SeriesInfo(date='April 2013', status='obsolete'),
+    'havana': SeriesInfo(date='October 2013', status='obsolete'),
+    'icehouse': SeriesInfo(date='April 2014', status='EOL'),
+    'juno': SeriesInfo(date='October 2014', status='EOL'),
+    'kilo': SeriesInfo(date='April 2015', status='EOL'),
+    'liberty': SeriesInfo(date='October 2015', status='EOL'),
+    'mitaka': SeriesInfo(date='April 2016', status='EOL'),
+    'newton': SeriesInfo(date='October 2016', status='maintained'),
+    'ocata': SeriesInfo(date='February 2017', status='maintained'),
+    'pike': SeriesInfo(date='August 2017', status='development'),
+    # 'queens': SeriesInfo(),
+    # 'rocky': SeriesInfo(),
+}
+
+# Build a list of the series that are not the current series being
+# developed.
 PAST_SERIES = [
-    'austin',
-    'bexar',
-    'cactus',
-    'diablo',
-    'essex',
-    'folsom',
-    'grizzly',
-    'havana',
-    'icehouse',
-    'juno',
-    'kilo',
-    'liberty',
-    'mitaka',
-    'newton',
+    name
+    for name, info in sorted(SERIES_INFO.items())
+    if info.status != 'development'
 ]
 
-# Set RELEASED_SERIES to the most current release that is not in
-# active development.
-RELEASED_SERIES = 'ocata'
+# Find the most recently released series.
+RELEASED_SERIES = [
+    name
+    for name, info in sorted(SERIES_INFO.items())
+    if info.status == 'maintained'
+][-1]
 
-# Set SERIES_IN_DEVELOPMENT to the name of the series being developed
-# right now.
-SERIES_IN_DEVELOPMENT = 'pike'
-
-# List any names known for future releases here.
-FUTURE_SERIES = [
-    'queens',
-    'rocky',
-]
+# Find the series being developed.
+SERIES_IN_DEVELOPMENT = [
+    name
+    for name, info in sorted(SERIES_INFO.items())
+    if info.status == 'development'
+][0]
 
 # Do not modify this variable.
-ALL_SERIES = (
-    PAST_SERIES +
-    [RELEASED_SERIES, SERIES_IN_DEVELOPMENT] +
-    FUTURE_SERIES
-)
+ALL_SERIES = list(sorted(SERIES_INFO.keys()))
 
 SERIES_PAT = re.compile('^(' + '|'.join(ALL_SERIES) + ')/')
 
@@ -336,11 +353,13 @@ def render_template(environment, project_data, regular_repos, infra_repos,
     if series_match:
         series = series_match.groups()[0]
         series_title = series.title()
+        series_info = SERIES_INFO[series]
         if series == SERIES_IN_DEVELOPMENT:
             series = 'latest'
     else:
         series = None
         series_title = ''
+        series_info = SeriesInfo('', '')
     logger.info('series = %s', series)
 
     try:
@@ -366,6 +385,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             IMAGEDIR=imagedir,
             SERIES=series,
             SERIES_TITLE=series_title,
+            SERIES_INFO=series_info,
             **extra
         )
         if template_file.endswith('.html'):
