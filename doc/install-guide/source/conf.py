@@ -38,7 +38,7 @@ import openstackdocstheme
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ['sphinxmark', 'openstackdocstheme']
+extensions = ['openstackdocstheme']
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
@@ -306,9 +306,3 @@ pdf_documents = [
     ('index', u'InstallGuide', u'Install Guide',
      u'OpenStack contributors')
 ]
-
-# -- Options for sphinxmark -----------------------------------------------
-sphinxmark_enable = True
-sphinxmark_div = 'docs-body'
-sphinxmark_image = 'text'
-sphinxmark_text = 'Pike'
