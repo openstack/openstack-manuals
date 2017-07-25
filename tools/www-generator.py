@@ -29,8 +29,20 @@ import requests
 import yaml
 
 
-# List released series for which documentation is still published.
+# List previously released series.
 PAST_SERIES = [
+    'austin',
+    'bexar',
+    'cactus',
+    'diablo',
+    'essex',
+    'folsom',
+    'grizzly',
+    'havana',
+    'icehouse',
+    'juno',
+    'kilo',
+    'liberty',
     'mitaka',
     'newton',
 ]
