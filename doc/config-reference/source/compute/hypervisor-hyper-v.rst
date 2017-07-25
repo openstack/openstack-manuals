@@ -177,8 +177,8 @@ Install nova-compute using OpenStack Hyper-V installer
 In case you want to avoid all the manual setup, you can use Cloudbase
 Solutions' installer. You can find it here:
 
-`HyperVNovaCompute_Beta download
-<https://www.cloudbase.it/downloads/HyperVNovaCompute_Beta.msi>`_
+`HyperVNovaCompute download
+<https://cloudbase.it/downloads/HyperVNovaCompute_Ocata_15_0_0.msi>`_
 
 The tool installs an independent Python environment in order to avoid
 conflicts with existing applications, and dynamically generates a
