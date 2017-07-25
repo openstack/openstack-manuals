@@ -135,12 +135,13 @@ validate that users can get their auto-allocated network topology as follows:
 .. code-block:: console
 
    $ neutron auto-allocated-topology-show
-   +-----------+--------------------------------------+
-   | Field     | Value                                |
-   +-----------+--------------------------------------+
-   | id        | 8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 |
-   | tenant_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
-   +-----------+--------------------------------------+
+   +------------+--------------------------------------+
+   | Field      | Value                                |
+   +------------+--------------------------------------+
+   | id         | 8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 |
+   | project_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
+   | tenant_id  | 3a4e311bcb3545b9b7ad326f93194f8c     |
+   +------------+--------------------------------------+
 
 Operators (and users with admin role) can get the auto-allocated topology for a
 project by specifying the project ID:
@@ -148,12 +149,13 @@ project by specifying the project ID:
 .. code-block:: console
 
    $ neutron auto-allocated-topology-show 3a4e311bcb3545b9b7ad326f93194f8c
-   +-----------+--------------------------------------+
-   | Field     | Value                                |
-   +-----------+--------------------------------------+
-   | id        | 8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 |
-   | tenant_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
-   +-----------+--------------------------------------+
+   +------------+--------------------------------------+
+   | Field      | Value                                |
+   +------------+--------------------------------------+
+   | id         | 8b835bfb-cae2-4acc-b53f-c16bb5f9a7d0 |
+   | project_id | 3a4e311bcb3545b9b7ad326f93194f8c     |
+   | tenant_id  | 3a4e311bcb3545b9b7ad326f93194f8c     |
+   +------------+--------------------------------------+
 
 The ID returned by this command is a network which can be used for booting
 a VM.
