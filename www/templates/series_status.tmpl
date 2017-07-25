@@ -1,0 +1,44 @@
+{# -*- mode: html -*- #}
+
+{% if SERIES_INFO.status in ('obsolete', 'EOL') %}
+<p>
+  The {{SERIES_TITLE}} release of OpenStack is no longer supported by
+  the community. For more information about the release, refer to
+  the <a href="https://releases.openstack.org/{{SERIES}}/">releases
+  web site</a>.
+</p>
+{% endif %}
+
+{% if SERIES_INFO.status == 'obsolete' %}
+<p>
+  For documentation, please refer to a newer release. The most
+  recently released version is
+  <a href="../{{RELEASED_SERIES}}/">{{RELEASED_SERIES|title}}</a>
+  and the version in development is
+  <a href="../{{SERIES_IN_DEVELOPMENT}}">{{SERIES_IN_DEVELOPMENT|title}}</a>.
+</p>
+
+{% elif SERIES_INFO.status == 'EOL' %}
+<p>
+  Minimal documentation is still published here to
+  assist users running this version.  For additional
+  documentation, please refer to a newer release. The
+  most recently released version is
+  <a href="../{{RELEASED_SERIES}}/">{{RELEASED_SERIES|title}}</a> and
+  the version in development is
+  <a href="../{{SERIES_IN_DEVELOPMENT}}">{{SERIES_IN_DEVELOPMENT|title}}</a>.
+</p>
+
+{% elif SERIES == RELEASED_SERIES %}
+<p>This is the latest release. Use the menu to select a prior release
+  if needed.</p>
+
+{% elif SERIES_INFO.status == 'maintained' %}
+<p>This is not the latest release. Use the menu to select a different
+  release if needed.</p>
+
+{% elif SERIES_INFO.status == 'development' %}
+<p>This release is currently under development. Use the menu to select
+  a different release if needed.</p>
+
+{% endif %}
