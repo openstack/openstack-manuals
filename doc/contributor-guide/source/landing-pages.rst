@@ -11,4 +11,4 @@ To add your project content to these guides, change the file
 <http://git.openstack.org/cgit/openstack/openstack-manuals/tree/www/project-data/latest.yaml>`_
 in the openstack-manuals repository.
 
-.. include:: ../../../www/project-data/README.rst
+See :ref:`template-generator` for details.

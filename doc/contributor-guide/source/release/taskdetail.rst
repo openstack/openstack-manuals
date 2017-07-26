@@ -62,6 +62,8 @@ notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
 published to
 `https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html`.
 
+.. _release-www-page-updates:
+
 Update www pages for end of release
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -81,58 +83,45 @@ Make the following changes in the **openstack-manuals** repository:
 
       $ cp -a www/RELEASE www/NEXT_SERIES
 
-#. Update the ``PAST_SERIES``, ``RELEASED_SERIES``,
-   ``SERIES_IN_DEVELOPMENT``, and ``FUTURE_SERIES`` values at the top
-   of the source file for the template generator
-   (``tools/www-generator.py``).
+#. Update the ``SERIES_INFO`` data structure at the top of the source
+   file for the template generator (``tools/www-generator.py``). See
+   :ref:`template-generator` for details about the structure.
 
-   * Add the existing value of the ``RELEASED_SERIES`` variable to the
-     ``PAST_SERIES`` list.
-   * Set the ``RELEASED_SERIES`` variable to the name of the series
-     being released.
-   * Set the ``SERIES_IN_DEVELOPMENT`` variable to the name of the
-     next series.
-   * Add any additional known names to the ``FUTURE_SERIES`` list.
+   * Change the series with status ``'development'`` to have status
+     ``'maintained'``.
+   * Add a new entry for the new series, giving the estimated release
+     date and setting the status to ``'development'``.
 
    For example, at the end of the Pike cycle, the variables will
    contain:
 
    .. code-block:: python
 
-      PAST_SERIES = [
-          'kilo',
-          'liberty',
-          'mitaka',
-          'newton',
-      ]
-      RELEASED_SERIES = 'ocata'
-      SERIES_IN_DEVELOPMENT = 'pike'
-      FUTURE_SERIES = [
-          'queens',
-      ]
+      SERIES_INFO = {
+          'austin': SeriesInfo(date='October 2010', status='obsolete'),
+          # ...
+          'mitaka': SeriesInfo(date='April 2016', status='EOL'),
+          'newton': SeriesInfo(date='October 2016', status='maintained'),
+          'ocata': SeriesInfo(date='February 2017', status='maintained'),
+          'pike': SeriesInfo(date='August 2017', status='development'),
+      }
 
    To update the settings:
 
-   * ``'ocata'`` is added to ``PAST_SERIES``
-   * ``RELEASED_SERIES`` changes from ``'ocata'`` to ``'pike'``
-   * ``SERIES_IN_DEVELOPMENT`` becomes ``'queens'``
-   * ``'queens'`` is removed from the ``FUTURE_SERIES`` list
-   * ``'rocky'`` is added to the ``FUTURE_SERIES`` list
+   * the status for pike is changed to ``'maintained'``
+   * a new entry for queens is added
 
    .. code-block:: python
 
-      PAST_SERIES = [
-          'kilo',
-          'liberty',
-          'mitaka',
-          'newton',
-          'ocata',
-      ]
-      RELEASED_SERIES = 'pike'
-      SERIES_IN_DEVELOPMENT = 'queens'
-      FUTURE_SERIES = [
-          'rocky',
-      ]
+      SERIES_INFO = {
+          'austin': SeriesInfo(date='October 2010', status='obsolete'),
+          # ...
+          'mitaka': SeriesInfo(date='April 2016', status='EOL'),
+          'newton': SeriesInfo(date='October 2016', status='maintained'),
+          'ocata': SeriesInfo(date='February 2017', status='maintained'),
+          'pike': SeriesInfo(date='August 2017', status='maintained'),
+          'queens': SeriesInfo(date='August 2017', status='development'),
+      }
 
    This will cause docs.openstack.org to redirect to the
    series-specific landing page for the current release, and the
