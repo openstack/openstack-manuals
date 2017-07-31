@@ -60,9 +60,17 @@ redirectmatch 301 "^/project-install-guide/ocata/(.*)$" /ocata/install/$1
 # Redirecting infra docs links to new developer location
 redirectmatch 301 "^/infra/shade(.*)$" /developer/shade$1
 
-# Redirecting old project developer docs to the new project home pages
-# while leaving the index / project list page as it is.
-redirectmatch 301 "^/developer/([^/]+)/.*$" /$1/latest/
+# Redirecting old project developer docs to the new layout. If a
+# project has an in-tree .htaccess file, assume it can handle the full
+# path in the redirect. Otherwise, redirect everything to the new
+# latest index.html.
+{% for project in projects|sort(attribute='name') -%}
+{%- if project.has_in_tree_htaccess %}
+redirectmatch 301 "^/developer/{{project.name}}/(.*)$" /{{project.name}}/latest/$1
+{%- else %}
+redirectmatch 301 "^/developer/{{project.name}}/.*$" /{{project.name}}/latest/
+{%- endif %}
+{%- endfor %}
 
 # Redirect old cli-reference to the OSC latest docs
 redirectmatch 301 "^/cli-reference/.*$" /python-openstackclient/latest/

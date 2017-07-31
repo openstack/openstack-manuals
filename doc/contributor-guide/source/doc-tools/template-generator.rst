@@ -142,6 +142,10 @@ include a link to that documentation on the templated landing pages.
 ``has_admin_guide``
     produces a link to docs.o.o/name/latest/admin/
 
+``has_in_tree_htaccess``
+    enables full redirects to old paths, not just to the top of
+    /name/latest/
+
 .. note::
 
    The documentation associated with the flags must exist before the
