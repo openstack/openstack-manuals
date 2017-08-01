@@ -1,13 +1,13 @@
 .. _template-generator:
 
-============================
- Template generator details
-============================
+==========================
+Template generator details
+==========================
 
-The content on docs.openstack.org that is not managed as document sets
-built by Sphinx is handled via a custom template rendering tool in
-``tools/www-generator.py`` within the openstack-manuals git
-repository.
+The portion of the content on docs.openstack.org that is not managed
+as document sets built by Sphinx is handled via a custom template
+rendering tool in ``tools/www-generator.py`` within the
+openstack-manuals git repository.
 
 The script reads YAML data files in ``www/project-data`` to determine
 which projects exist in a given series and how they should be
@@ -29,7 +29,7 @@ templates to complete HTML pages, which it writes to the
 .. _Jinja2: http://jinja.pocoo.org
 
 Defining release series
-=======================
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The set of release series and their individual status and other
 metadata is embedded in the template generator script in the
@@ -65,7 +65,7 @@ For each release series, the generator needs to know:
    cycle.
 
 Project data file format
-========================
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The projects associated with each release series are listed in a
 separate YAML file in the ``www/project-data`` directory. Each file is
@@ -152,7 +152,7 @@ include a link to that documentation on the templated landing pages.
    flags are set.
 
 Template variables
-==================
+~~~~~~~~~~~~~~~~~~
 
 The template generator uses the input data to set several variables
 visible within the template. This allows us to reuse the same template
