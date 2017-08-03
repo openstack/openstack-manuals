@@ -16,13 +16,10 @@ Thus this file covers the content of the following repositories:
 Contents
 ~~~~~~~~
 
-.. release-notes::
-   :branch: origin/master
-
 .. toctree::
    :maxdepth: 2
 
-   unreleased
+   pike.rst
    ocata.rst
    newton.rst
    mitaka.rst
