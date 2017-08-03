@@ -5,8 +5,7 @@ Word choice
 ~~~~~~~~~~~
 
 This section offers conventions around general English usage and the terms that
-are not covered in the
-`glossary <https://docs.openstack.org/glossary/content/glossary.html>`_.
+are not covered in the :ref:`glossary`.
 Additionally, use the `IBM
 Terminology <http://www-01.ibm.com/software/globalization/terminology/>`_ as
 a reference.
