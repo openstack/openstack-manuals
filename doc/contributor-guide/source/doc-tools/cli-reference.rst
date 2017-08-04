@@ -49,7 +49,7 @@ To update CLI documentation and automatically submit a change request:
 
    .. code-block:: console
 
-      $ ./doc-tools-update-cli-reference <CLIENT_NAME>
+      $ ./doc-tools-update-cli-reference CLIENT_NAME
 
    The script generates a virtual environment, installs necessary software,
    generates the corresponding CLI documentation file based on the latest
@@ -61,7 +61,7 @@ To update CLI documentation and automatically submit a change request:
 
    .. code-block:: console
 
-      $ cd openstack-manuals
+      $ cd python-CLIENT_NAME
       $ git review
 
 .. important::
@@ -97,26 +97,20 @@ To re-generate CLI documentation and submit it manually:
       $ pip install .
       $ cd ..
 
-#. Change to the ``doc/cli-reference/source`` directory within
-   ``openstack-manuals``:
+#. Change to the ``doc/source/cli/`` directory within
+   the CLI project. For example:
 
    .. code-block:: console
 
-      $ cd /path/to/openstack-manuals/doc/cli-reference/source
+      $ cd /path/to/python-glanceclient/doc/source/cli/
 
 #. Generate CLI documentation using :command:`openstack-auto-commands`:
 
-   * To generate all CLI files, run:
+   * To generate the CLI file, run:
 
      .. code-block:: console
 
-        $ openstack-auto-commands --all
-
-   * To generate a specific CLI file, run:
-
-     .. code-block:: console
-
-        $ openstack-auto-commands <CLIENT_NAME>
+        $ openstack-auto-commands CLIENT_NAME
 
    * To check a list of available options, run:
 
