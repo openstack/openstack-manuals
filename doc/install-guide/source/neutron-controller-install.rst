@@ -307,6 +307,12 @@ Finalize installation
          Database population occurs later for Networking because the script
          requires complete server and plug-in configuration files.
 
+         If you receive the following Python exception,
+         ``Could not parse rfc1738 URL from string``,
+         move the `connection` option from the ``[default]`` section to the
+         ``[database]`` section. Then, remove the single quotes from the
+         value in the ``neutron.conf`` file.
+
    #. Restart the Compute API service:
 
       .. code-block:: console
