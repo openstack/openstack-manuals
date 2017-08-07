@@ -21,19 +21,50 @@ project <http://www.pool.ntp.org/>`_.
 DNS
 ~~~
 
-OpenStack does not currently provide DNS services, aside from the
-dnsmasq daemon, which resides on ``nova-network`` hosts. You could
-consider providing a dynamic DNS service to allow instances to update a
-DNS entry with new IP addresses. You can also consider making a generic
-forward and reverse DNS mapping for instances' IP addresses, such as
-``vm-203-0-113-123.example.com.``
+Designate is a multi-tenant DNSaaS service for OpenStack. It provides a REST
+API with integrated keystone authentication. It can be configured to
+auto-generate records based on nova and neutron actions. Designate supports a
+variety of DNS servers including Bind9 and PowerDNS.
+
+The DNS service provides DNS Zone and RecordSet management for OpenStack
+clouds. The DNS Service includes a REST API, a command-line client, and a
+horizon Dashboard plugin.
+
+For more information, see the `Designate project <https://www.openstack.org/software/releases/ocata/components/designate>`_
+web page.
+
+.. note::
+
+  The Designate service does not provide DNS service for the OpenStack
+  infrastructure upon install. We recommend working with your service
+  provider when installing OpenStack in order to properly name your
+  servers and other infrastructure hardware.
 
 DHCP
 ~~~~
 
-.. TODO
+OpenStack neutron deploys various agents when a network is created within
+OpenStack. One of these agents is a DHCP agent. This DHCP agent uses the linux
+binary, dnsmasq as the delivery agent for DHCP. This agent manages the network
+namespaces that are spawned for each project subnet to act as a DHCP server.
+The dnsmasq process is capable of allocating IP addresses to all virtual
+machines running on a network. When a network is created through OpenStack and
+the DHCP agent is enabled for that network, DHCP services are enabled by
+default.
 
 LBaaS
 ~~~~~
 
-.. TODO
+OpenStack neutron has the ability to distribute incoming requests between
+designated instances. Using neutron networking and OVS, Load
+Balancing-as-a-Service (LBaaS) can be created. The load balancing of workloads
+is used to distribute incoming application requests evenly between designated
+instances. This operation ensures that a workload is shared predictably among
+defined instances and allows a more effective use of underlying resources.
+OpenStack LBaaS can distribute load in the following methods:
+
+* Round robin - Even rotation between multiple defined instances.
+* Source IP - Requests from specific IPs are consistently directed to the same
+  instance.
+* Least connections - Sends requests to the instance with the least number of
+  active connections.
