@@ -1,6 +1,6 @@
-===============================
-Cloud management platform tools
-===============================
+=============================
+Cloud management architecture
+=============================
 
 Complex clouds, in particular hybrid clouds, may require tools to
 facilitate working across multiple clouds.

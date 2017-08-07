@@ -1,8 +1,8 @@
 .. _network-design:
 
-==========
-Networking
-==========
+====================
+Network architecture
+====================
 
 .. toctree::
    :maxdepth: 2

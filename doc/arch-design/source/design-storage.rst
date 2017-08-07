@@ -1,6 +1,6 @@
-==============
-Storage design
-==============
+====================
+Storage architecture
+====================
 
 Storage is found in many parts of the OpenStack cloud environment. This
 chapter describes storage type, design considerations and options when
