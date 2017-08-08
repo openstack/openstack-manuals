@@ -24,9 +24,6 @@ be answered:
 Choosing storage back ends
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO how to decide (encryption, SLA requirements, live migration
-   availability)
-
 Users will indicate different needs for their cloud architecture. Some may
 need fast access to many objects that do not change often, or want to
 set a time-to-live (TTL) value on a file. Others may access only storage
@@ -163,9 +160,6 @@ compute cloud are to provide:
 Selecting storage hardware
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. TODO how to design (IOPS requirements [spinner vs SSD]/Read+Write/
-   Availability/Migration)
-
 Storage hardware architecture is determined by selecting specific storage
 architecture. Determine the selection of storage architecture by
 evaluating possible solutions against the critical factors, the user
@@ -260,12 +254,17 @@ What about SSD? DRAM SSD?
      (14x)
 
 Scalability
- Scalability, along with expandability, is a major consideration in a
- general purpose OpenStack cloud. It might be difficult to predict
- the final intended size of the implementation as there are no
- established usage patterns for a general purpose cloud. It might
- become necessary to expand the initial deployment in order to
- accommodate growth and user demand.
+ Scalability, along with expandability, is a major consideration in
+ a general purpose OpenStack cloud. It might be difficult to predict the final
+ intended size of the implementation as there are no established usage patterns
+ for a general purpose cloud. It might become necessary to expand the initial
+ deployment in order to accommodate growth and user demand. Many vendors have
+ implemented their own solutions to this problem. Some use clustered file
+ systems that span multiple appliances, while others have similar technologies
+ to allow block storage to scale past a fixed capacity. Ceph, a distributed
+ storage solution that offers block storage, was designed to solve this scale
+ issue and does not have the same limitations on domains, clusters, or scale
+ issues of other appliance driven models.
 
 Expandability
  Expandability is a major architecture factor for storage solutions
@@ -492,7 +491,12 @@ nodes and proxy servers should make use of a design which is scalable.
 Redundancy
 ----------
 
-
+When making swift more redundant, one approach is to add additonal proxy
+servers and load balancing. HAProxy is one method of providing load
+balancing and high availability and is often combined with keepalived
+or pacemaker to ensure the HAProxy service maintains a stable VIP.
+Sample HAProxy configurations can be found in the `OpenStack HA Guide.
+<https://docs.openstack.org/ha-guide/controller-ha-haproxy.html#configuring-haproxy>`_.
 
 Replication
 -----------
