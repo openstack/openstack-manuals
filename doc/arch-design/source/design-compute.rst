@@ -1,6 +1,6 @@
-===================
-Compute node design
-===================
+====================
+Compute architecture
+====================
 
 .. toctree::
   :maxdepth: 3

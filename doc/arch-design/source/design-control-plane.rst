@@ -1,6 +1,6 @@
-=============
-Control Plane
-=============
+==========================
+Control plane architecture
+==========================
 
 .. From Ops Guide chapter: Designing for Cloud Controllers and Cloud
    Management
