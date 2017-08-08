@@ -11,4 +11,5 @@
    overview.rst
    environment.rst
    launch-instance.rst
+   firewalls-default-ports.rst
    common/appendix.rst
