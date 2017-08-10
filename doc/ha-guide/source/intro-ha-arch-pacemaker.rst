@@ -182,7 +182,7 @@ We recommend HAProxy as the load balancer, however, there are many alternative
 load balancing solutions in the marketplace.
 
 Generally, we use round-robin to distribute load amongst instances of
-active/active services. Alternatively, Galera uses ``stack-table`` options
+active/active services. Alternatively, Galera uses ``stick-table`` options
 to ensure that incoming connection to virtual IP (VIP) are directed to only one
 of the available back ends. This helps avoid lock contention and prevent
 deadlocks, although Galera can run active/active. Used in combination with
