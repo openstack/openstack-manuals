@@ -4,7 +4,7 @@
 {% set projects = PROJECT_DATA[series] %}
 
 # Redirect old top-level HTML pages to the version under most recent
-#  full release.
+# full release.
 redirectmatch 301 ^/$ /{{RELEASED_SERIES}}/
 redirectmatch 301 ^/index.html$ /{{RELEASED_SERIES}}/
 redirectmatch 301 ^/openstack-projects.html$ /{{RELEASED_SERIES}}/projects.html
@@ -18,11 +18,9 @@ redirect 301 /developer/index.html /{{RELEASED_SERIES}}/projects.html
 redirect 301 /cli/ /
 redirect 301 /api/api-specs.html http://developer.openstack.org/api-guide/quick-start/index.html
 
-# Redirect O'Reilly Operations Guide PDF to trunk version
-redirect 301 /trunk/openstack-ops/oreilly-openstack-ops-guide.pdf /openstack-ops/openstack-ops-manual.pdf
-
-# Redirect old Admin Guide to new landing page
-redirectmatch 301 ^/admin-guide/.*$ /{{RELEASED_SERIES}}/admin/index.html
+# Redirect old Admin Guides to new landing page
+redirectmatch 301 ^/admin-guide/.*$ /{{RELEASED_SERIES}}/admin/
+redirectmatch 301 ^/user-guide-admin/.*$ /{{RELEASED_SERIES}}/admin/
 
 # A doc generation bug resulted in Google indexing links containing "//", which cause
 # problems with linked content (images/css/etc).  This rule generates a 301 redirect
@@ -43,19 +41,30 @@ redirectmatch 301 ^/user-guide/.*$ /{{RELEASED_SERIES}}/user/
 # Redirect removed ops guide
 redirectmatch 301 ^/ops-guide/.*$ /{{RELEASED_SERIES}}/admin/
 redirectmatch 301 ^/ops/.*$ /{{RELEASED_SERIES}}/admin/
+redirectmatch 301 ^/openstack-ops/.*$ /{{RELEASED_SERIES}}/admin/
+redirectmatch 301 ^/trunk/openstack-ops/.*$ /{{RELEASED_SERIES}}/admin/
 
 # Redirect api list
 redirectmatch 301 ^/api/.*$ /{{RELEASED_SERIES}}/api/
 
 # Redirect old security index
 redirectmatch 301 ^/sec/.*$ /security-guide/
+redirectmatch 301 ^/security-guide/content/.*$ /security-guide/
 
-# Redirect some pages users search for
+# Redirect to series indexes
 redirectmatch 301 ^/user/.*$ /{{RELEASED_SERIES}}/user/
 redirectmatch 301 ^/latest/user/.*$ /{{SERIES_IN_DEVELOPMENT}}/user/
 redirectmatch 301 ^/admin/.*$ /{{RELEASED_SERIES}}/admin/
 redirectmatch 301 ^/latest/admin/.*$ /{{SERIES_IN_DEVELOPMENT}}/admin/
-redirect /glossary/content/glossary.html /contributor-guide/common/glossary.html
+redirect 301 /latest/ /{{SERIES_IN_DEVELOPMENT}}/
+
+# Redirect some pages users search for
+redirectmatch 301 ^/arch-design/content/.*$ /arch-design/
+redirectmatch 301 ^/image-guide/content/.*$ /image-guide/
+redirectmatch 301 ^/admin-guide-cloud/.*$ /{{RELEASED_SERIES}}/admin/
+redirectmatch 301 ^/trunk/openstack-compute/.*$ /nova/latest/admin/
+redirect 301 /glossary/content/glossary.html /contributor-guide/common/glossary.html
+redirect 301 /icehouse/training-guides/ /upstream-training/
 
 # Redirect changed directory name in the Contributor Guide
 redirect 301 /contributor-guide/ui-text-guidelines.html /contributor-guide/ux-ui-guidelines/ui-text-guidelines.html
@@ -70,6 +79,10 @@ redirectmatch 301 "^/project-deploy-guide/ocata/" /ocata/deploy/
 # Redirect old install guide list pages to their new home
 redirectmatch 301 "^/project-install-guide/newton/" /newton/install/
 redirectmatch 301 "^/project-install-guide/ocata/(.*)$" /ocata/install/$1
+redirectmatch 301 ^/kilo/install-guide/.*$ /kilo/
+redirectmatch 301 ^/juno/install-guide/.*$ /juno/
+redirectmatch 301 ^/icehouse/install-guide/.*$ /icehouse/
+redirectmatch 301 ^/havana/install-guide/.*$ /havana/
 
 # Redirecting infra docs links to new developer location
 redirectmatch 301 "^/infra/shade(.*)$" /developer/shade$1
