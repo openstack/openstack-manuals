@@ -319,7 +319,7 @@ This section shows the license indicators as of March 20, 2015.
 * OpenStack End User Guide: CC-by 3.0
 * Command-Line Interface Reference: CC-by 3.0
 
-* Contributor dev docs (docs.openstack.org/developer/<projectname>): none
+* Contributor dev docs (docs.openstack.org/<projectname>/latest): none
   indicated in output; Apache 2.0 in repo
 * OpenStack API Quick Start: none indicated in output; Apache 2.0 in repo
 * API Complete Reference: none indicated in output; Apache 2.0 in repo
@@ -344,7 +344,7 @@ These guides are created by "scraping" code:
 
 These guides have no indicator in output:
 
-* Contributor dev docs (docs.openstack.org/developer/<projectname>): none
+* Contributor dev docs (docs.openstack.org/<projectname>/latest): none
   indicated in output; Apache 2.0 in repo
 * OpenStack API Quick Start: none indicated in output; Apache 2.0 in repo
 * API Complete Reference: none indicated in output; Apache 2.0 in repo
