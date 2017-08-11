@@ -1,0 +1,60 @@
+{% set projects = PROJECT_DATA[SERIES] %}
+{% extends "templates/base.tmpl" %}
+{% block pagetitle %}{{SERIES_TITLE}} Configuration Guides{% endblock %}
+{% block title %}
+<a href="https://docs.openstack.org/">Documentation</a> &gt; Configuration Guides
+{% endblock %}
+{% block content %}
+<!-- Begin Page Content -->
+<div class="top-docs-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <h1>OpenStack {{SERIES_TITLE}} Configuration Guides</h1>
+                <p>
+                This page contains documentation about configuring OpenStack services.
+                </p>
+           </div>
+        </div>
+    </div>
+    <div class="mid-docs-wrapper" id="docs-main-body">
+        <div class="container">
+            <div class="row docs-toc">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="docs-link-sections">
+                        <h3><i class="fa fa-book"></i> Configuration Guides for OpenStack Services</h3>
+    <a href="/oslo.config/{{SERIES}}/configuration/">
+    General information about configuring OpenStack (oslo.config)
+    </a><br />
+{% for project in projects|sort(attribute='name') -%}
+{% if project.type in ['service', 'other'] and project.has_config_ref %}
+    <a href="/{{project.name}}/{{SERIES}}/configuration/">
+    {{project.service}} ({{project.name}})
+    </a><br />
+{% endif %}
+{%- endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="docs-link-sections">
+                      <h3><i class="fa fa-pencil"></i> Common Configuration via Libraries</h3>
+{% for project in projects|sort(attribute='name') %}
+{% if project.type == 'library' and project.has_config_ref %}
+                      <a href="/{{project.name}}/latest/configuration/">{{project.name}}</a><br />
+                      <p>{{project.service}}</p>
+{% endif %}
+{% endfor %}
+    </div>
+                </div>
+            </div>
+            <div class="row docs-contribute-wrapper">
+                <div class="col-lg-12">
+                    <p>Documentation treated like code, powered by the community - interested?</p>
+                    <a href="/contributor-guide/" class="overview-btn contribute-btn"
+                    >How To Contribute <i class="fa fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
