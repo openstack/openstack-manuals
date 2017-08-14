@@ -24,7 +24,7 @@ to do your work:
 
 The value of ``new-branch`` is any name you want to give to your branch.
 
-To work on a file, use a text editor and open the .rst file from the same
+To work on a file, use a text editor and open the ``.rst`` file from the same
 navigational path as the path shown in the HTML URL. For example,
 https://docs.openstack.org/contributor-guide/docs-builds.html, is found in the
 folder: ``openstack-manuals/doc/contributor-guide/docs-builds.rst``.
@@ -117,12 +117,11 @@ all :command:`tox` commands within the repository directory:
 
 .. _Git for Windows: https://git-for-windows.github.io/
 
-
 Build workflow
 --------------
 
 Once Tox is installed and configured, execute :command:`tox -e <jobname>`
-to run a particular job:
+to run a particular job.
 
 * To build all docs, open your local openstack-manuals project and run:
 
@@ -252,10 +251,10 @@ Build jobs
 ~~~~~~~~~~
 
 The build jobs for documentation are stored in the
-https://git.openstack.org/cgit/openstack-infra/project-config
+`Project config <https://git.openstack.org/cgit/openstack-infra/project-config>`_
 repository. The :file:`zuul/layout.yaml` file and the
 ``jenkins/jobs/manual-jobs.yaml`` or ``jenkins/jobs/api-jobs.yaml``
-file contain the build jobs that build to the docs.openstack.org
+file(s) contain the build jobs that build to the docs.openstack.org
 and developer.openstack.org sites, copying built files via FTP.
 
 The release specific books are built for the currently supported branches
@@ -302,14 +301,7 @@ cycle-with-milestones.
 
 .. note::
 
-   The docs repo, api-site, follows the independent release model.
-
-The content that uses a stable branch method to indicate a point in time that
-content is set for a release (cycle-with-milestones) includes these docs:
-
-* Configuration Reference
-* Install Guides
-* Networking Guide
+   The docs repo and the api-site follow the independent release model.
 
 When a release reaches an end-of-life status and is no longer maintained by the
 stable branch maintainers, the docs.openstack.org website redirects requests

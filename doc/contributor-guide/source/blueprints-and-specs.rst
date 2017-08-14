@@ -43,20 +43,24 @@ Release-specific documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Release-specific documentation is published continuously as changes are
-made, with different versions for each series. The following guides
-are release specific:
+made, with different versions for each series.
 
-* Configuration reference
-* Command-line reference
-* Installation tutorials and guides
-* Networking guide
-
-To patch release-specific documentation, you should
-patch the master branch with "backport: xxxx" (for example, backport:
+To patch release-specific documentation, submit your
+patch to the master branch with "backport: xxxx" (for example, backport:
 kilo) in the commit message. During Pike, much of the material
 maintained by the documentation team was moved into project team
 repositories, so patching the same content for different release
 series may mean looking for the relevant files in multiple places.
+
+.. note::
+
+   The following guides were release specific before the Pike
+   migration:
+
+   * Configuration reference
+   * Command-line reference
+   * Installation tutorials and guides
+   * Networking guide
 
 For these guides, the docs.openstack.org site defaults to the current release,
 with the previous two releases being available under the ``More Releases
@@ -112,10 +116,11 @@ Installation Tutorials and Guides:
 Guides for deployers and administrators
 ---------------------------------------
 
-Starting with Pike, configuration reference and administrator guides
+As of Pike, the configuration reference and administration guide(s)
 are maintained by each project team.
 
-Prior to Pike, the documentation team maintained combined guides:
+Prior to Pike, the documentation team maintained the following
+combined guides:
 
 * `OpenStack Configuration Reference
   <https://docs.openstack.org/ocata/config-reference/>`_:
@@ -134,45 +139,25 @@ Prior to Pike, the documentation team maintained combined guides:
      - Target location
 
    * - Configuration Reference
-     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/config-reference
+     - Maintained in project specific repositories
      - https://docs.openstack.org/ocata/config-reference/
 
    * - OpenStack Networking Guide
-     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/networking-guide
+     - https://github.com/openstack/neutron/tree/master/doc/source/admin
      - https://docs.openstack.org/ocata/networking-guide/
 
 Continuously released documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These guides cover multiple versions and we follow the general
+These guides cover multiple versions and follows the general
 `release information <https://wiki.openstack.org/wiki/Releases>`_.
 The guides cover the latest two versions, for
 example Juno and Kilo. The following exceptions apply:
 
-* Operations Guide: Icehouse target, revised specifically to target that
-  release
 * HA Guide: Updated last at Havana timeframe, still needs updates
 
 Guides for deployers and administrators
 ---------------------------------------
-
-* `OpenStack Architecture Design Guide
-  <https://docs.openstack.org/arch-design/>`_:
-  Contains information on how to plan, design and architect
-  an OpenStack cloud.
-* `OpenStack Administrator Guide <https://docs.openstack.org/admin-guide/>`_:
-  Contains how-to information for managing an OpenStack cloud as needed for
-  your use cases, such as storage, computing, or software-defined-networking.
-* `OpenStack High Availability Guide <https://docs.openstack.org/ha-guide/>`_:
-  Describes potential strategies for making your OpenStack services and
-  related controllers and data stores highly available.
-* `OpenStack Security Guide <https://docs.openstack.org/security-guide/>`_:
-  Provide best practices and conceptual
-  information about securing an OpenStack cloud.
-* `OpenStack Virtual Machine Image Guide
-  <https://docs.openstack.org/image-guide/>`_:
-  Shows you how to obtain, create, and modify virtual machine images that
-  are compatible with OpenStack.
 
 .. list-table::
    :header-rows: 1
@@ -186,7 +171,7 @@ Guides for deployers and administrators
      - https://docs.openstack.org/arch-design/
 
    * - OpenStack Administrator Guide
-     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/admin-guide
+     - Maintained in project specific repositories
      - https://docs.openstack.org/admin-guide/
 
    * - OpenStack High Availability Guide
@@ -211,6 +196,10 @@ Guides for end users
 * `OpenStack Command-Line Interface Reference
   <https://docs.openstack.org/cli-reference/>`_:
   Automatically generates help text for CLI commands and subcommands.
+* `OpenStack End User Guide
+  <https://docs.openstack.org/user/>`_:
+  This guide contains project-specific documentation for using OpenStack
+  services and libraries.
 
 .. list-table::
    :header-rows: 1
@@ -224,8 +213,12 @@ Guides for end users
      - https://developer.openstack.org/api-guide/quick-start/
 
    * - OpenStack Command-Line Interface Reference
-     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/cli-reference
+     - hhttps://git.openstack.org/cgit/openstack/oslo.config/tree/master/doc/source/cli
      - https://docs.openstack.org/cli-reference/
+
+   * - OpenStack Project User Guides
+     - Maintained in project specific repositories
+     - https://docs.openstack.org/user/
 
 API documentation
 -----------------
@@ -239,25 +232,21 @@ API documentation
 * `Object Storage API v1
   <https://docs.openstack.org/developer/swift/#object-storage-v1-rest-api-documentation>`_
 
-We are migrating away from WADL in 2016. Refer to :ref:`api-docs` for details.
-Once the migration is complete, the API reference pages will be stored in the
-project repositories and we will have redirects in place for these API pages.
-
 Project-specific guides
 -----------------------
 
 Each project maintains its own guides for installation,
 administration, configuration reference, and contributors.  They are
-published from each project repository.  See
-https://docs.openstack.org/openstack-projects.html and
-https://docs.openstack.org/language-bindings.html.
+published from each project repository. See the
+`OpenStack Projects <https://docs.openstack.org/openstack-projects.html>`_ and
+the `OpenStack API Bindings <https://docs.openstack.org/language-bindings.html>`_
+pages for more information.
 
 Each project's repo has a ``doc/source`` directory where RST source
 files are stored. They are built automatically with Sphinx when the
 patch is merged. For example, see
-https://git.openstack.org/cgit/openstack/horizon/tree/doc/source for
-the horizon documentation source and
-https://docs.openstack.org/horizon/ for the built documentation.
+the ` horizon documentation source <https://git.openstack.org/cgit/openstack/horizon/tree/doc/source>`_
+and the `built documentation <https://docs.openstack.org/horizon/>`_.
 
 * `Infrastructure User Manual <https://docs.openstack.org/infra/manual>`_:
   Reference documentation for tools and processes used for all
@@ -298,7 +287,6 @@ https://docs.openstack.org/horizon/ for the built documentation.
 
 Guides for contributors
 -----------------------
-
 
 Licenses
 ~~~~~~~~
