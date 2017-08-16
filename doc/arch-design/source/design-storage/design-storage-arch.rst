@@ -491,7 +491,7 @@ nodes and proxy servers should make use of a design which is scalable.
 Redundancy
 ----------
 
-When making swift more redundant, one approach is to add additonal proxy
+When making swift more redundant, one approach is to add additional proxy
 servers and load balancing. HAProxy is one method of providing load
 balancing and high availability and is often combined with keepalived
 or pacemaker to ensure the HAProxy service maintains a stable VIP.
