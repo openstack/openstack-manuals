@@ -26,6 +26,7 @@ import sys
 from bs4 import BeautifulSoup
 import jinja2
 import jsonschema
+import os_service_types
 import requests
 import yaml
 
@@ -178,19 +179,6 @@ _URLS = [
      'https://developer.openstack.org/api-guide/{service_type}/index.html'),
 ]
 
-_SERVICE_TYPES_URL = 'http://git.openstack.org/cgit/openstack/service-types-authority/plain/service-types.yaml'  # noqa
-
-
-def _get_service_types():
-    "Return a map between repo base name and service type"
-    raw = requests.get(_SERVICE_TYPES_URL)  # noqa
-    data = yaml.safe_load(raw.text)
-    service_types = {
-        d['project'].rsplit('/')[-1]: d['service_type']
-        for d in data['services']
-    }
-    return service_types
-
 
 def load_project_data(source_directory,
                       check_all_links=False,
@@ -201,7 +189,8 @@ def load_project_data(source_directory,
     series_to_load = series_to_load or []
     project_data = {}
     fail = False
-    service_types = _get_service_types()
+    service_types = os_service_types.ServiceTypes(
+        session=requests.Session(), only_remote=True)
     # Set up a schema validator so we can quickly check that the input
     # data conforms.
     project_schema_filename = os.path.join(
@@ -235,17 +224,22 @@ def load_project_data(source_directory,
             # the value in the service-type-authority data.base.
             st = project.get('service_type')
             if st is not None:
-                if project['name'] not in service_types:
+                st_data = service_types.get_service_data_for_project(
+                    project['name'])
+                if not st_data:
+                    # It's possible this is a project listed by its
+                    # service-type
+                    st_data = service_types.get_service_data(st)
+                if not st_data:
                     logger.error(
-                        'did not find %s in %s',
-                        project['name'], _SERVICE_TYPES_URL,
+                        'did not find %s in Service Types Authority',
+                        project['name'],
                     )
                     fail = True
-                elif project['service_type'] != service_types[project['name']]:
+                elif st != st_data['service_type']:
                     logger.error(
                         'expected service_type %r for %s but got %r',
-                        service_types[project['name']], project['name'],
-                        project['service_type'],
+                        st_data['service_type'], project['name'], st,
                     )
                     fail = True
 
