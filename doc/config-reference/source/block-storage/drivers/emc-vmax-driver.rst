@@ -98,10 +98,6 @@ VMAX drivers support these operations:
 -  Create and delete consistency group snapshot
 -  Modify consistency group (add and remove volumes)
 -  Create consistency group from source
--  Create and delete generic volume group
--  Create and delete generice volume group snapshot
--  Modify generic volume group (add and remove volumes)
--  Create generic volume group from source
 
 VMAX drivers also support the following features:
 
@@ -1487,8 +1483,8 @@ Volume replication interoperability with other features
 
 Most features are supported, except for the following:
 
-* There is no OpenStack Consistency Group or Generic Volume Group support
-  for replication-enabled VMAX volumes.
+* There is no OpenStack Consistency Group support for replication-enabled VMAX
+  volumes.
 
 * Storage-assisted retype operations on replication-enabled VMAX volumes
   (moving from a non-replicated type to a replicated-type and vice-versa.
