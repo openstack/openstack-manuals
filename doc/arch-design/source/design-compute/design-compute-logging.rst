@@ -53,7 +53,7 @@ configure Logstash for OpenStack. For example, in order to get Logstash to
 collect, parse, and send the correct portions of log files to the Elasticsearch
 server, you need to format the configuration file properly. There
 are input, output and filter configurations. Input configurations tell Logstash
-where to recieve data from (log files/forwarders/filebeats/StdIn/Eventlog),
+where to receive data from (log files/forwarders/filebeats/StdIn/Eventlog),
 output configurations specify where to put the data, and filter configurations
 define the input contents to forward to the output.
 
