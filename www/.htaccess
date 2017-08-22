@@ -35,6 +35,12 @@ redirect 301 /networking-guide/ /ocata/networking-guide/
 # Redirect old releases content to new location
 redirectmatch 301 "^/releases.*$" http://releases.openstack.org$1
 
+# redirect all kuryr sub-repositories appropriately
+redirectmatch 301 ^/developer/kuryr-(kubernetes|libnetwork|tempest-plugin)/(.*)$ /kuryr-$1/latest/$2
+
+# redirect all kolla sub-repositories appropriately
+redirectmatch 301 ^/developer/kolla-(ansible|kubernetes)/(.*)$ /kolla-$1/latest/$2
+
 # Redirect all openstack-ansible repositories appropriately
 redirectmatch 301 ^/developer/(ansible-hardening|openstack-ansible-[^/]+)/(.*)$ /$1/latest/$2
 
