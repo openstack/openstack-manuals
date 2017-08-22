@@ -8,8 +8,6 @@ Diagram guidelines are
 intended for designers, developers, or reviewers
 contributing illustrations to OpenStack documentation.
 
-
-
 .. toctree::
    :maxdepth: 2
 

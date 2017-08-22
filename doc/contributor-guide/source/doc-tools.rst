@@ -6,8 +6,7 @@ Using documentation tools
 
 The OpenStack documentation toolkit includes a number of scripts used
 for performing automated tasks to maintain the OpenStack documentation
-project. For example, there are tools that generate configuration and
-command-line interface references, generate a sitemap, check niceness,
+project. For example, there are tools that generate a sitemap, check niceness,
 synchronize files used across multiple repositories, and others.
 
 This section provides an overview of the documentation tools and their

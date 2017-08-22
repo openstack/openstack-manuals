@@ -77,7 +77,9 @@ The process of bug triaging consists of the following steps:
 * Check if a bug was filed for a correct component (project). If not,
   either change the project or mark it as ``Invalid``.
   For example, if the bug impacts the project-specific dev-ref, then
-  mark it as ``Invalid``.
+  mark it as ``Invalid``. If a bug is reported against the nova section
+  of the Installation Guide, ensure openstack-manuals is removed, and
+  the nova project is added.
 
 * If the reported bug affects the ReST API, tools, openstackdocstheme, or
   the Security Guide, add the relevant project to the affected
@@ -185,6 +187,12 @@ of the launchpad project
 
 Bugs for third-party drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+   As of the Pike release, this documentation was moved into
+   the project-specific repos and this option is no longer
+   required.
 
 Bugs to update tables for the configuration references use the tag
 **autogenerate-config-docs**.

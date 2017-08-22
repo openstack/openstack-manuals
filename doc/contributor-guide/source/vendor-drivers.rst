@@ -2,6 +2,11 @@
 Proprietary driver docs
 =======================
 
+.. important::
+
+   This documentation only applies to the released documents prior
+   to Pike since the content is now part of the project team repositories.
+
 Many OpenStack projects include drivers to support specific hardware or
 software. Examples are:
 
@@ -28,7 +33,7 @@ to maintain the documentation.
 
 .. important::
 
-   Other documentation (including the Cloud Admin Guide and Networking
+   Other documentation (including the Administrator Guide and Networking
    Guide) will not contain content for third-party drivers. In these books,
    where third party drivers exist, add the statement:
    “For other drivers, see Chapter X in the Configuration Reference Guide”.

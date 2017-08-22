@@ -2,6 +2,13 @@
 Governance tag documentation guidelines
 =======================================
 
+.. important::
+
+   As of the Pike release, these guidelines are now out of
+   date and do not cover the new documentation scope.
+
+   An revision is forthcoming.
+
 The ``docs:follows-policy`` tag indicates that the OpenStack Documentation team
 and the project team associated with the tagged deliverable verify that the
 project's documentation in the `openstack-manuals
