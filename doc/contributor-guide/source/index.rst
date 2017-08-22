@@ -26,6 +26,7 @@ Contents
    non-native-english-speakers.rst
    blueprints-and-specs.rst
    project-guides
+   doc-index.rst
    doc-tag.rst
    api-guides.rst
    doc-bugs.rst
