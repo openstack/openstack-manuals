@@ -136,6 +136,16 @@ Make the following changes in the **openstack-manuals** repository:
    set ``has_config_ref: false`` for the "foo" project by modifying
    the file created in step 1.
 
+   .. note::
+
+      If any link flags are set to false or any projects are commented
+      out, someone will need to periodically check for those documents
+      to be published when the new branches are created in the
+      affected projects. All branches should be created before the
+      final release deadline, so it should be possible to update the
+      project-data settings by then to have the site link to all of
+      the latest documentation.
+
 .. warning::
 
    When the patch to make these changes merges, docs.openstack.org
