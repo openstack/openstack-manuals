@@ -21,19 +21,17 @@ these procedures on all nodes.
    impact your OpenStack environment.
 
 
-
-
 Enable the OpenStack repository
 -------------------------------
 
 * Enable the Open Build Service repositories based on your openSUSE or
-  SLES version:
+  SLES version, and on the version of OpenStack you want to install:
 
-  **On openSUSE:**
+  **On openSUSE for OpenStack Pike:**
 
   .. code-block:: console
 
-     # zypper addrepo -f obs://Cloud:OpenStack:Ocata/openSUSE_Leap_42.2 Ocata
+     # zypper addrepo -f obs://Cloud:OpenStack:Pike/openSUSE_Leap_42.3 Pike
 
   .. end
 
@@ -52,11 +50,11 @@ Enable the OpenStack repository
 
      .. end
 
-  **On SLES:**
+  **On SLES for OpenStack Pike:**
 
   .. code-block:: console
 
-     # zypper addrepo -f obs://Cloud:OpenStack:Ocata/SLE_12_SP2 Ocata
+     # zypper addrepo -f obs://Cloud:OpenStack:Pike/SLE_12_SP3 Pike
 
   .. end
 
@@ -79,10 +77,7 @@ Enable the OpenStack repository
 Finalize the installation
 -------------------------
 
-1. Upgrade the packages on all nodes:
-
-
-
+#. Upgrade the packages on all nodes:
 
 .. code-block:: console
 
@@ -90,16 +85,12 @@ Finalize the installation
 
 .. end
 
-
    .. note::
 
       If the upgrade process includes a new kernel, reboot your host
       to activate it.
 
-2. Install the OpenStack client:
-
-
-
+#. Install the OpenStack client:
 
 .. code-block:: console
 

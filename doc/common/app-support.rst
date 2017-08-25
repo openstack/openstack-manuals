@@ -29,18 +29,10 @@ join our IRC channel ``#openstack-doc`` on the freenode IRC network,
 or `report a
 bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`_.
 
-The following books explain how to install an OpenStack cloud and its
+The following guides explain how to install an OpenStack cloud and its
 associated components:
 
-*  `Installation Tutorial for openSUSE Leap 42.2 and SUSE Linux Enterprise
-   Server 12 SP2
-   <https://docs.openstack.org/ocata/install-guide-obs/>`_
-
-*  `Installation Tutorial for Red Hat Enterprise Linux 7 and CentOS 7
-   <https://docs.openstack.org/ocata/install-guide-rdo/>`_
-
-*  `Installation Tutorial for Ubuntu 16.04 (LTS)
-   <https://docs.openstack.org/ocata/install-guide-ubuntu/>`_
+* `OpenStack Pike Installation Tutorials and Guides <https://docs.openstack.org/pike/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
@@ -48,7 +40,7 @@ The following books explain how to configure and run an OpenStack cloud:
 
 *  `Administrator Guide <https://docs.openstack.org/admin-guide/>`_
 
-*  `Configuration Reference <https://docs.openstack.org/ocata/config-reference/>`_
+*  `Configuration Reference <https://docs.openstack.org/pike/configuration/>`_
 
 *  `Networking Guide <https://docs.openstack.org/neutron/latest/admin/>`_
 
