@@ -1,0 +1,177 @@
+{# NOTE(dhellmann): This file is not in a series directory,
+   so we need to set the series name ourselves. #}
+{% set series = 'latest' %}
+{% set projects = PROJECT_DATA[series] %}
+
+# Redirect old top-level HTML pages to the version under most recent
+# full release.
+/ 301 /{{RELEASED_SERIES}}/
+/index.html 301 /{{RELEASED_SERIES}}/
+/openstack-projects.html 301 /{{RELEASED_SERIES}}/projects.html
+/language-bindings.html 301 /{{RELEASED_SERIES}}/language-bindings.html
+
+# Redirect docs.openstack.org index.html subpage pointers to main page
+/install/ 301 /{{RELEASED_SERIES}}/install/
+/basic-install/ 301 /{{RELEASED_SERIES}}/install/
+/run/ 301 /
+/developer/index.html 301 /{{RELEASED_SERIES}}/projects.html
+/cli/ 301 /
+/api/api-specs.html 301 http://developer.openstack.org/api-guide/quick-start/index.html
+
+# Redirect old Admin Guides to new landing page
+/admin-guide/ 301 /{{RELEASED_SERIES}}/admin/
+/admin-guide/any-page 301 /{{RELEASED_SERIES}}/admin/
+/admin-guide/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+/user-guide-admin/ 301 /{{RELEASED_SERIES}}/admin/
+/user-guide-admin/any-page 301 /{{RELEASED_SERIES}}/admin/
+/user-guide-admin/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+
+# A doc generation bug resulted in Google indexing links containing "//", which cause
+# problems with linked content (images/css/etc).  This rule generates a 301 redirect
+# for these links.
+#
+# details: https://bugs.launchpad.net/openstack-manuals/+bug/1288513
+/a//b/ 301 /a/b/
+
+# Redirect networking-guide since it is now versioned
+/networking-guide/ 301 /ocata/networking-guide/
+
+# Redirect old releases content to new location
+/releases 301 http://releases.openstack.org
+/releases/ 301 http://releases.openstack.org/
+/releases/any-page 301 http://releases.openstack.org/any-page
+/releases/any-page.html 301 http://releases.openstack.org/any-page.html
+
+# redirect all kuryr sub-repositories appropriately
+/developer/kuryr-kubernetes/ 301 /kuryr-kubernetes/latest/
+/developer/kuryr-kubernetes/any-page.html 301 /kuryr-kubernetes/latest/any-page.html
+/developer/kuryr-libnetwork/ 301 /kuryr-libnetwork/latest/
+/developer/kuryr-libnetwork/any-page.html 301 /kuryr-libnetwork/latest/any-page.html
+/developer/kuryr-tempest-plugin/ 301 /kuryr-tempest-plugin/latest/
+/developer/kuryr-tempest-plugin/any-page.html 301 /kuryr-tempest-plugin/latest/any-page.html
+
+# redirect all kolla sub-repositories appropriately
+/developer/kolla-ansible/ 301 /kolla-ansible/latest/
+/developer/kolla-ansible/any-page.html 301 /kolla-ansible/latest/any-page.html
+/developer/kolla-kubernetes/ 301 /kolla-kubernetes/latest/
+/developer/kolla-kubernetes/any-page.html 301 /kolla-kubernetes/latest/any-page.html
+
+# Redirect all openstack-ansible repositories appropriately
+/developer/ansible-hardening/ 301 /ansible-hardening/latest/
+/developer/ansible-hardening/any-page.html 301 /ansible-hardening/latest/any-page.html
+/developer/openstack-ansible-foo/ 301 /openstack-ansible-foo/latest/
+/developer/openstack-ansible-foo/any-page.html 301 /openstack-ansible-foo/latest/any-page.html
+
+# Redirect removed user guide
+/user-guide/ 301 /{{RELEASED_SERIES}}/user/
+/user-guide/any-page.html 301 /{{RELEASED_SERIES}}/user/
+
+# Redirect removed ops guide
+/ops-guide/ 301 /{{RELEASED_SERIES}}/admin/
+/ops-guide/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+/ops/ 301 /{{RELEASED_SERIES}}/admin/
+/ops/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+/openstack-ops/ 301 /{{RELEASED_SERIES}}/admin/
+/openstack-ops/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+/trunk/openstack-ops/ 301 /{{RELEASED_SERIES}}/admin/
+/trunk/openstack-ops/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+
+# Redirect api list
+/api/ 301 /{{RELEASED_SERIES}}/api/
+/api/any-page.html 301 /{{RELEASED_SERIES}}/api/
+
+# Redirect old security index
+/sec/ 301 /security-guide/
+/sec/any-page.html 301 /security-guide/
+/security-guide/content/ 301 /security-guide/
+/security-guide/content/any-page.html 301 /security-guide/
+
+# Redirect to series indexes
+/user/ 301 /{{RELEASED_SERIES}}/user/
+/user/any-page.html 301 /{{RELEASED_SERIES}}/user/
+/latest/user/ 301 /{{SERIES_IN_DEVELOPMENT}}/user/
+/latest/user/any-page.html 301 /{{SERIES_IN_DEVELOPMENT}}/user/
+/admin/ 301 /{{RELEASED_SERIES}}/admin/
+/admin/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+/latest/admin/ 301 /{{SERIES_IN_DEVELOPMENT}}/admin/
+/latest/admin/any-page.html 301 /{{SERIES_IN_DEVELOPMENT}}/admin/
+/latest/ 301 /{{SERIES_IN_DEVELOPMENT}}/
+
+# Redirect some pages users search for
+/arch-design/content/ 301 /arch-design/
+/arch-design/content/any-page.html 301 /arch-design/
+/image-guide/content/ 301 /image-guide/
+/image-guide/content/any-page.html 301 /image-guide/
+/admin-guide-cloud/ 301 /{{RELEASED_SERIES}}/admin/
+/admin-guide-cloud/any-page.html 301 /{{RELEASED_SERIES}}/admin/
+/trunk/openstack-compute/ 301 /nova/latest/admin/
+/trunk/openstack-compute/any-page.html 301 /nova/latest/admin/
+/glossary/content/glossary.html 301 /contributor-guide/common/glossary.html
+/icehouse/training-guides/ 301 /upstream-training/
+
+# Redirect changed directory name in the Contributor Guide
+/contributor-guide/ui-text-guidelines.html 301 /contributor-guide/ux-ui-guidelines/ui-text-guidelines.html
+/contributor-guide/ui-text-guidelines 301 /contributor-guide/ux-ui-guidelines
+
+# Redirect any deploy guide project directory back to the current stable index
+/project-deploy-guide/ 301 /{{RELEASED_SERIES}}/deploy/
+/project-deploy-guide/openstack-ansible/ 301 /project-deploy-guide/openstack-ansible/{{RELEASED_SERIES}}/
+/project-deploy-guide/newton/ 301 /newton/deploy/
+/project-deploy-guide/ocata/ 301 /ocata/deploy/
+
+# Redirect old install guide list pages to their new home
+/project-install-guide/newton/ 301 /newton/install/
+/project-install-guide/ocata/ 301 /ocata/install/
+/project-install-guide/ocata/any-page.html 301 /ocata/install/any-page.html
+/kilo/install-guide/ 301 /kilo/
+/kilo/install-guide/any-page.html 301 /kilo/
+/juno/install-guide/ 301 /juno/
+/juno/install-guide/any-page.html 301 /juno/
+/icehouse/install-guide/ 301 /icehouse/
+/icehouse/install-guide/any-page.html 301 /icehouse/
+/havana/install-guide/ 301 /havana/
+/havana/install-guide/any-page.html 301 /havana/
+
+# Redirecting infra docs links to new developer location
+/infra/shade 301 /developer/shade
+/infra/shade/ 301 /developer/shade/
+/infra/shade/any-page.html 301 /developer/shade/any-page.html
+
+# Redirecting old project developer docs to the new layout. If a
+# project has an in-tree .htaccess file, assume it can handle the full
+# path in the redirect. Otherwise, redirect everything to the new
+# latest index.html.
+{% for project in projects|sort(attribute='name') -%}
+{%- if project.has_in_tree_htaccess %}
+/developer/{{project.name}}/ 301 /{{project.name}}/latest/
+/developer/{{project.name}}/any-page.html 301 /{{project.name}}/latest/any-page.html
+{%- else %}
+/developer/{{project.name}}/ 301 /{{project.name}}/latest/
+/developer/{{project.name}}/any-page.html 301 /{{project.name}}/latest/
+{%- endif %}
+{%- endfor %}
+
+# Redirect old cli-reference to the OSC latest docs
+/cli-reference/ 301 /python-openstackclient/latest/
+/cli-reference/any-page.html 301 /python-openstackclient/latest/
+
+# Redirects from service-type to code-name
+{% for project in projects -%}
+{%- if project.type == 'service' and project.service_type and (project.service_type|lower != project.name) %}
+/{{project.service_type|lower}}/ 302 /{{project.name}}/latest/
+/{{project.service_type|lower}}/any-page.html 302 /{{project.name}}/latest/
+{%- endif %}
+{%- endfor %}
+# End service-type redirects
+
+# Redirects from code-name without a series to latest
+{% for repo in REGULAR_REPOS %}
+/{{repo.base}}/ 301 /{{repo.base}}/latest/
+{%- endfor %}
+# End latest code-name redirects
+
+# Redirects from infra code-name without a series to location
+{% for repo in INFRA_REPOS %}
+/{{repo.base}}/ 301 /infra/{{repo.base}}/
+{%- endfor %}
+# End infra code-name redirects
