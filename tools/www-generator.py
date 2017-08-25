@@ -440,8 +440,8 @@ def main():
     output_pages = []
     page_list_template = None
     for template_file in environment.list_templates():
-        if not (template_file.endswith('.html')
-                or template_file.endswith('.htaccess')):
+        if (template_file.startswith('static/') or
+                template_file.startswith('templates/')):
             logger.info('ignoring %s', template_file)
             continue
         if template_file.endswith('www-index.html'):
