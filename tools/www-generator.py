@@ -310,6 +310,10 @@ def load_project_data(source_directory,
 
 
 _GOVERNANCE_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/projects.yaml'  # noqa
+_IGNORED_REPOS = [
+    'openstack/releases',
+    'openstack-infra/releasestatus',
+]
 
 
 def _get_official_repos():
@@ -330,7 +334,8 @@ def _get_official_repos():
             else:
                 add = regular_repos.append
             for repo in d_data.get('repos', []):
-                add({'name': repo, 'base': repo.rsplit('/')[-1]})
+                if repo not in _IGNORED_REPOS:
+                    add({'name': repo, 'base': repo.rsplit('/')[-1]})
     return (regular_repos, infra_repos)
 
 
