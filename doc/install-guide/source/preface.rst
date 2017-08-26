@@ -23,7 +23,8 @@ are included.
    Please see the
    `OpenStack Training Labs <https://docs.openstack.org/training_labs/>`_.
 
-This guide documents the OpenStack Pike release.
+This guide documents the installation of OpenStack starting with the
+Pike release. It will cover multiple releases in the future.
 
 .. warning::
 
@@ -52,9 +53,6 @@ available through Debian 8 (code name: Jessie).
       # dpkg-reconfigure debconf
 
    .. end
-
-   If you prefer to use debconf, refer to the debconf
-   install-guide for Debian.
 
 openSUSE and SUSE Linux Enterprise Server
 +++++++++++++++++++++++++++++++++++++++++
