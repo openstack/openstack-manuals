@@ -325,6 +325,7 @@ def _get_official_repos():
     """
     raw = requests.get(_GOVERNANCE_URL)
     data = yaml.safe_load(raw.text)
+    seen_repos = set()
     regular_repos = []
     infra_repos = []
     for t_name, team in data.items():
@@ -334,6 +335,12 @@ def _get_official_repos():
             else:
                 add = regular_repos.append
             for repo in d_data.get('repos', []):
+                if repo in seen_repos:
+                    # Sometimes the governance data ends up with
+                    # duplicates, but we don't want duplicate rules to
+                    # be generated.
+                    continue
+                seen_repos.add(repo)
                 if repo not in _IGNORED_REPOS:
                     add({'name': repo, 'base': repo.rsplit('/')[-1]})
     return (regular_repos, infra_repos)

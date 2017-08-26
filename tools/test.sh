@@ -15,3 +15,5 @@ fi
 # publish-docs/www-index.html is the trigger for openstack-indexpage
 # to include the file.
 #mv publish-docs/www/www-index.html publish-docs/www-index.html
+
+.tox/checkbuild/bin/whereto $output/.htaccess $output/redirect-tests.txt
