@@ -199,16 +199,12 @@ Configure the driver name by adding the following parameter:
 
    volume_driver = cinder.volume.drivers.emc.scaleio.ScaleIODriver
 
-ScaleIO MDM server IP
----------------------
+ScaleIO Gateway server IP
+-------------------------
 
-The ScaleIO Meta Data Manager monitors and maintains the available
-resources and permissions.
+The ScaleIO Gateway provides a REST interface to ScaleIO.
 
-To retrieve the MDM server IP address, use the :command:`drv_cfg --query_mdms`
-command.
-
-Configure the MDM server IP address by adding the following parameter:
+Configure the Gateway server IP address by adding the following parameter:
 
 .. code-block:: ini
 
