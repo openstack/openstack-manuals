@@ -8,8 +8,8 @@ node using the example architecture.
 Although most environments include Identity, Image service, Compute, at least
 one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
-skip to `Object Storage Installation Guide
-<https://docs.openstack.org/swift/>`_
+skip to `Object Storage Installation Guide for Pike
+<https://docs.openstack.org/swift/pike/install/>`_
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
@@ -67,8 +67,8 @@ of nested VMs.
    a way to disable MAC address filtering on the provider network
    interface.
 
-For more information about system requirements, see the `OpenStack
-Operations Guide <https://docs.openstack.org/ops-guide/>`_.
+For more information about system requirements, see the
+`OpenStack Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_.
 
 .. toctree::
    :maxdepth: 1

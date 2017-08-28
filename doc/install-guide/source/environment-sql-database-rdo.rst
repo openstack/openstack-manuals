@@ -1,5 +1,5 @@
-Red Hat SQL database
-~~~~~~~~~~~~~~~~~~~~
+SQL database for RHEL and CentOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most OpenStack services use an SQL database to store information. The
 database typically runs on the controller node. The procedures in this
@@ -7,25 +7,16 @@ guide use MariaDB or MySQL depending on the distribution. OpenStack
 services also support other SQL databases including
 `PostgreSQL <https://www.postgresql.org/>`__.
 
-
 Install and configure components
 --------------------------------
 
 #. Install the packages:
 
+   .. code-block:: console
 
+      # yum install mariadb mariadb-server python2-PyMySQL
 
-
-.. code-block:: console
-
-   # yum install mariadb mariadb-server python2-PyMySQL
-
-.. end
-
-
-
-
-
+   .. end
 
 2. Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file
    and complete the following actions:
@@ -50,25 +41,18 @@ Install and configure components
 
      .. end
 
-
 Finalize installation
 ---------------------
-
-
 
 #. Start the database service and configure it to start when the system
    boots:
 
+   .. code-block:: console
 
-.. code-block:: console
+      # systemctl enable mariadb.service
+      # systemctl start mariadb.service
 
-   # systemctl enable mariadb.service
-   # systemctl start mariadb.service
-
-.. end
-
-
-
+   .. end
 
 2. Secure the database service by running the ``mysql_secure_installation``
    script. In particular, choose a suitable password for the database
@@ -79,4 +63,3 @@ Finalize installation
       # mysql_secure_installation
 
    .. end
-

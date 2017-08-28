@@ -5,9 +5,9 @@
 .. toctree::
    :maxdepth: 3
 
+   common/conventions.rst
    preface
    get-started-with-openstack
-   common/conventions.rst
    overview.rst
    environment.rst
    openstack-services.rst

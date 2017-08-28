@@ -13,10 +13,13 @@ through a set of interrelated services. Each service offers an
 integration. Depending on your needs, you can install some or all
 services.
 
+The OpenStack services
+======================
+
 The following table describes the OpenStack services that make up the
 OpenStack architecture:
 
-.. list-table:: OpenStack Services
+.. list-table:: The OpenStack services
    :header-rows: 1
    :widths: 10 10 40
 
@@ -80,6 +83,11 @@ OpenStack architecture:
      - Provides capabilities to provision and scale Hadoop clusters in OpenStack
        by specifying parameters like Hadoop version, cluster topology and nodes
        hardware details.
+
+The OpenStack architecture
+==========================
+
+The following sections describe the OpenStack architecture in more detail:
 
 .. toctree::
    :maxdepth: 2

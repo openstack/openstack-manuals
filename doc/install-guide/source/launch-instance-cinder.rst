@@ -138,8 +138,7 @@ Attach the volume to an instance
       to use the volume.
 
 For more information about how to manage volumes, see the
-`Manage volumes
-<https://docs.openstack.org/user-guide/common/cli-manage-volumes.html>`__
-in OpenStack End User Guide.
+`python-openstackclient documentation for Pike
+<https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/volume.html>`__.
 
 Return to :ref:`launch-instance`.

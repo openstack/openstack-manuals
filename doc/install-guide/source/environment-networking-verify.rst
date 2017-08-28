@@ -80,13 +80,13 @@ among the nodes before proceeding further.
 
 .. note::
 
-   Red Hat and SUSE enables a restrictive :term:`firewall` by
+   RHEL, CentOS and SUSE distributions enable a restrictive :term:`firewall` by
    default. During the installation process, certain steps will fail
    unless you alter or disable the firewall. For more information
    about securing your environment, refer to the `OpenStack Security
    Guide <https://docs.openstack.org/security-guide/>`_.
 
-   Debian and Ubuntu do not enable a restrictive :term:`firewall` by
+   Ubuntu does not enable a restrictive :term:`firewall` by
    default. For more information about securing your environment,
    refer to the `OpenStack Security Guide
    <https://docs.openstack.org/security-guide/>`_.

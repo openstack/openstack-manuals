@@ -60,8 +60,8 @@ follows:
 
 For more information on production architectures, see the
 `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_,
-`OpenStack Operations Guide <https://docs.openstack.org/ops-guide/>`_, and
-`OpenStack Networking Guide <https://docs.openstack.org/ocata/networking-guide/>`_.
+`OpenStack Networking Guide for Pike <https://docs.openstack.org/neutron/pike/admin/>`_,
+and `OpenStack Administrator Guides for Pike <https://docs.openstack.org/pike/admin/>`_.
 
 .. _figure-hwreqs:
 

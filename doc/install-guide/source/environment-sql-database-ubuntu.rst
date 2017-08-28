@@ -1,12 +1,11 @@
-Ubuntu SQL database
-~~~~~~~~~~~~~~~~~~~
+SQL database for Ubuntu
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Most OpenStack services use an SQL database to store information. The
 database typically runs on the controller node. The procedures in this
 guide use MariaDB or MySQL depending on the distribution. OpenStack
 services also support other SQL databases including
 `PostgreSQL <https://www.postgresql.org/>`__.
-
 
 .. note::
 
@@ -17,24 +16,16 @@ services also support other SQL databases including
    the root user no longer uses a password for local access to
    the server.
 
-
 Install and configure components
 --------------------------------
 
 #. Install the packages:
 
+   .. code-block:: console
 
-.. code-block:: console
+      # apt install mariadb-server python-pymysql
 
-   # apt install mariadb-server python-pymysql
-
-.. end
-
-
-
-
-
-
+   .. end
 
 2. Create and edit the ``/etc/mysql/mariadb.conf.d/99-openstack.cnf`` file
    and complete the following actions:
@@ -55,13 +46,11 @@ Install and configure components
         max_connections = 4096
         collation-server = utf8_general_ci
         character-set-server = utf8
+
      .. end
-
-
 
 Finalize installation
 ---------------------
-
 
 #. Restart the database service:
 
@@ -70,10 +59,6 @@ Finalize installation
       # service mysql restart
 
    .. end
-
-
-
-
 
 2. Secure the database service by running the ``mysql_secure_installation``
    script. In particular, choose a suitable password for the database
@@ -84,4 +69,3 @@ Finalize installation
       # mysql_secure_installation
 
    .. end
-

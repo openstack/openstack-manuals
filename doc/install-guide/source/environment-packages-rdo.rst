@@ -1,5 +1,5 @@
-Red Hat OpenStack packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack packages for RHEL and CentOS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Distributions release OpenStack packages as part of the distribution or
 using other methods because of differing release schedules. Perform
@@ -19,8 +19,6 @@ these procedures on all nodes.
 
    Disable or remove any automatic update services because they can
    impact your OpenStack environment.
-
-
 
 Prerequisites
 -------------
@@ -55,8 +53,6 @@ Prerequisites
 
    .. end
 
-
-
 Enable the OpenStack repository
 -------------------------------
 
@@ -65,9 +61,11 @@ Enable the OpenStack repository
   default, so you can simply install the package to enable the OpenStack
   repository.
 
+  **When installing the Pike release, run:**
+
   .. code-block:: console
 
-     # yum install centos-release-openstack-ocata
+     # yum install centos-release-openstack-pike
 
   .. end
 
@@ -80,22 +78,18 @@ Enable the OpenStack repository
 
   .. end
 
-
+  The RDO repository RPM installs the latest available OpenStack release.
 
 Finalize the installation
 -------------------------
 
 1. Upgrade the packages on all nodes:
 
+   .. code-block:: console
 
+      # yum upgrade
 
-.. code-block:: console
-
-   # yum upgrade
-
-.. end
-
-
+   .. end
 
    .. note::
 
@@ -104,16 +98,11 @@ Finalize the installation
 
 2. Install the OpenStack client:
 
+   .. code-block:: console
 
+      # yum install python-openstackclient
 
-.. code-block:: console
-
-   # yum install python-openstackclient
-
-.. end
-
-
-
+   .. end
 
 3. RHEL and CentOS enable :term:`SELinux` by default. Install the
    ``openstack-selinux`` package to automatically manage security
@@ -124,4 +113,3 @@ Finalize the installation
       # yum install openstack-selinux
 
    .. end
-

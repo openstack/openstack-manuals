@@ -19,50 +19,50 @@ Configure network interfaces
    Replace ``INTERFACE_NAME`` with the actual interface name. For example,
    *eth1* or *ens224*.
 
-   For Ubuntu or Debian:
+   For Ubuntu:
 
-      * Edit the ``/etc/network/interfaces`` file to contain the following:
+   * Edit the ``/etc/network/interfaces`` file to contain the following:
 
-        .. path /etc/network/interfaces
-        .. code-block:: bash
+     .. path /etc/network/interfaces
+     .. code-block:: bash
 
-           # The provider network interface
-           auto INTERFACE_NAME
-           iface INTERFACE_NAME inet manual
-           up ip link set dev $IFACE up
-           down ip link set dev $IFACE down
+        # The provider network interface
+        auto INTERFACE_NAME
+        iface INTERFACE_NAME inet manual
+        up ip link set dev $IFACE up
+        down ip link set dev $IFACE down
 
-        .. end
+     .. end
 
-   For Red Hat or CentOS:
+   For RHEL or CentOS:
 
-      * Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
-        to contain the following:
+   * Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
+     to contain the following:
 
-        Do not change the ``HWADDR`` and ``UUID`` keys.
+     Do not change the ``HWADDR`` and ``UUID`` keys.
 
-        .. path /etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME
-        .. code-block:: ini
+     .. path /etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME
+     .. code-block:: ini
 
-           DEVICE=INTERFACE_NAME
-           TYPE=Ethernet
-           ONBOOT="yes"
-           BOOTPROTO="none"
+        DEVICE=INTERFACE_NAME
+        TYPE=Ethernet
+        ONBOOT="yes"
+        BOOTPROTO="none"
 
-        .. end
+     .. end
 
    For SUSE:
 
-      * Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
-        contain the following:
+   * Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
+     contain the following:
 
-        .. path /etc/sysconfig/network/ifcfg-INTERFACE_NAME
-        .. code-block:: ini
+     .. path /etc/sysconfig/network/ifcfg-INTERFACE_NAME
+     .. code-block:: ini
 
-           STARTMODE='auto'
-           BOOTPROTO='static'
+        STARTMODE='auto'
+        BOOTPROTO='static'
 
-        .. end
+     .. end
 
 #. Reboot the system to activate the changes.
 
