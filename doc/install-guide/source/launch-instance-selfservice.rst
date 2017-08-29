@@ -308,9 +308,9 @@ Access the instance remotely
    .. end
 
 If your instance does not launch or seem to work as you expect, see the
-`Instance Boot Failures
-<https://docs.openstack.org/ops-guide/ops-maintenance-compute.html#instances>`__
-section in OpenStack Operations Guide for more information or use one of
+`Troubleshoot Compute documentation for Pike
+<https://docs.openstack.org/nova/pike/admin/support-compute.html>`__
+for more information or use one of
 the :doc:`many other options <common/app-support>`
 to seek assistance. We want your first installation to work!
 

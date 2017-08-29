@@ -1,5 +1,5 @@
-SUSE OpenStack packages
-~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack packages for SUSE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Distributions release OpenStack packages as part of the distribution or
 using other methods because of differing release schedules. Perform
@@ -72,18 +72,16 @@ Enable the OpenStack repository
 
      .. end
 
-
-
 Finalize the installation
 -------------------------
 
 #. Upgrade the packages on all nodes:
 
-.. code-block:: console
+   .. code-block:: console
 
-   # zypper refresh && zypper dist-upgrade
+      # zypper refresh && zypper dist-upgrade
 
-.. end
+   .. end
 
    .. note::
 
@@ -92,10 +90,8 @@ Finalize the installation
 
 #. Install the OpenStack client:
 
-.. code-block:: console
+   .. code-block:: console
 
-   # zypper install python-openstackclient
+      # zypper install python-openstackclient
 
-.. end
-
-
+   .. end

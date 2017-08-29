@@ -1,5 +1,5 @@
-Ubuntu Memcached
-~~~~~~~~~~~~~~~~
+Memcached for Ubuntu
+~~~~~~~~~~~~~~~~~~~~
 
 The Identity service authentication mechanism for services uses Memcached
 to cache tokens. The memcached service typically runs on the controller
@@ -12,15 +12,11 @@ Install and configure components
 #. Install the packages:
 
 
-.. code-block:: console
+   .. code-block:: console
 
-   # apt install memcached python-memcache
+      # apt install memcached python-memcache
 
-.. end
-
-
-
-
+   .. end
 
 2. Edit the ``/etc/memcached.conf`` file and configure the
    service to use the management IP address of the controller node.
@@ -36,12 +32,8 @@ Install and configure components
 
       Change the existing line that had ``-l 127.0.0.1``.
 
-
-
-
 Finalize installation
 ---------------------
-
 
 * Restart the Memcached service:
 
@@ -50,5 +42,3 @@ Finalize installation
      # service memcached restart
 
   .. end
-
-

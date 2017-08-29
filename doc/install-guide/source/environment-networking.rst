@@ -12,11 +12,10 @@ distribution, see the documentation.
 
 .. seealso::
 
-   * `Debian Network Configuration <https://wiki.debian.org/NetworkConfiguration>`__
    * `Ubuntu Network Configuration
      <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__
-   * `Red Hat Network Configuration
-     <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Using_the_Command_Line_Interface.html>`__
+   * `RHEL 7 Network Configuration
+     <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Config_Using_CLI.html>`__
    * `SLES 12
      <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
      or `openSUSE
@@ -84,8 +83,8 @@ the controller node.
 
 .. note::
 
-   Red Hat and SUSE distributions enable a restrictive
-   :term:`firewall` by default. Ubuntu and Debian do not. For more
+   RHEL, CentOS and SUSE distributions enable a restrictive
+   :term:`firewall` by default. Ubuntu does not. For more
    information about securing your environment, refer to the
    `OpenStack Security Guide
    <https://docs.openstack.org/security-guide/>`_.

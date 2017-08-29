@@ -1,5 +1,5 @@
-Ubuntu Message queue
-~~~~~~~~~~~~~~~~~~~~
+Message queue for Ubuntu
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack uses a :term:`message queue` to coordinate operations and
 status information among services. The message queue service typically
@@ -19,17 +19,11 @@ Install and configure components
 
 1. Install the package:
 
+   .. code-block:: console
 
-.. code-block:: console
+      # apt install rabbitmq-server
 
-   # apt install rabbitmq-server
-
-.. end
-
-
-
-
-
+   .. end
 
 2. Add the ``openstack`` user:
 
@@ -53,4 +47,3 @@ Install and configure components
       Setting permissions for user "openstack" in vhost "/" ...
 
    .. end
-

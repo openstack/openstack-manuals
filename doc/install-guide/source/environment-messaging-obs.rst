@@ -1,5 +1,5 @@
-SUSE Message queue
-~~~~~~~~~~~~~~~~~~
+Message queue for SUSE
+~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack uses a :term:`message queue` to coordinate operations and
 status information among services. The message queue service typically
@@ -19,16 +19,11 @@ Install and configure components
 
 1. Install the package:
 
+   .. code-block:: console
 
+      # zypper install rabbitmq-server
 
-
-.. code-block:: console
-
-   # zypper install rabbitmq-server
-
-.. end
-
-
+   .. end
 
 2. Start the message queue service and configure it to start when the
    system boots:
@@ -62,5 +57,3 @@ Install and configure components
       Setting permissions for user "openstack" in vhost "/" ...
 
    .. end
-
-

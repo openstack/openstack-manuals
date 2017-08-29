@@ -36,24 +36,6 @@ Pike release. It will cover multiple releases in the future.
 Operating Systems
 ~~~~~~~~~~~~~~~~~
 
-Debian
-++++++
-
-This guide walks through an installation by using packages
-available through Debian 8 (code name: Jessie).
-
-.. note::
-
-   This guide uses installation with debconf set to non-interactive
-   mode. That is, there will be no debconf prompt. To configure a computer
-   to use this mode, run the following command:
-
-   .. code-block:: console
-
-      # dpkg-reconfigure debconf
-
-   .. end
-
 openSUSE and SUSE Linux Enterprise Server
 +++++++++++++++++++++++++++++++++++++++++
 

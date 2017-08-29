@@ -13,11 +13,11 @@ The instructions in this section use command-line interface (CLI)
 tools on the controller node. However, you can follow the instructions
 on any host that the tools are installed.
 For more information on the CLI tools, see the
-`OpenStack End User Guide
-<https://docs.openstack.org/user-guide/cli-launch-instances.html>`__.
+`OpenStackClient documentation for Pike
+<https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/server.html#server-create>`__.
 To use the dashboard, see the
-`OpenStack End User Guide
-<https://docs.openstack.org/user-guide/dashboard.html>`__.
+`Dashboard User Documentation for Pike
+<https://docs.openstack.org/horizon/pike/user/>`__.
 
 .. _launch-instance-networks:
 
@@ -219,7 +219,8 @@ If your environment includes the Orchestration service, you can create
 a stack that launches an instance.
 
 For more information, see the
-`Orchestration installation guide <https://docs.openstack.org/orchestration/>`_.
+`Orchestration installation guide for Pike
+<https://docs.openstack.org/heat/pike/>`_.
 
 Shared File Systems
 -------------------
@@ -228,5 +229,5 @@ If your environment includes the Shared File Systems service, you can create
 a share and mount it in an instance.
 
 For more information, see the
-`Shared File Systems installation guide
-<https://docs.openstack.org/shared-file-system/>`_.
+`Shared File Systems installation guide for Pike
+<https://docs.openstack.org/manila/pike/>`_.

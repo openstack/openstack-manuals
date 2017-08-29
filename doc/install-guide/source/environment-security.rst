@@ -70,8 +70,8 @@ during installation and operation. In some cases, services perform
 modifications to the host that can interfere with deployment automation
 tools such as Ansible, Chef, and Puppet. For example, some OpenStack
 services add a root wrapper to ``sudo`` that can interfere with security
-policies. See the `OpenStack Administrator Guide <https://docs.openstack.org/
-admin-guide/compute-root-wrap-reference.html>`__
+policies. See the
+`Compute service documentation for Pike <https://docs.openstack.org/nova/pike/admin/root-wrap-reference.html>`__
 for more information.
 
 The Networking service assumes default values for kernel network

@@ -1,5 +1,5 @@
-Ubuntu OpenStack packages
-~~~~~~~~~~~~~~~~~~~~~~~~~
+OpenStack packages for Ubuntu
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Distributions release OpenStack packages as part of the distribution or
 using other methods because of differing release schedules. Perform
@@ -27,28 +27,20 @@ Enable the OpenStack repository
 .. code-block:: console
 
    # apt install software-properties-common
-   # add-apt-repository cloud-archive:ocata
+   # add-apt-repository cloud-archive:pike
 
 .. end
-
-
-
-
 
 Finalize the installation
 -------------------------
 
 1. Upgrade the packages on all nodes:
 
+   .. code-block:: console
 
-.. code-block:: console
+      # apt update && apt dist-upgrade
 
-   # apt update && apt dist-upgrade
-
-.. end
-
-
-
+   .. end
 
    .. note::
 
@@ -57,13 +49,8 @@ Finalize the installation
 
 2. Install the OpenStack client:
 
+   .. code-block:: console
 
-.. code-block:: console
+      # apt install python-openstackclient
 
-   # apt install python-openstackclient
-
-.. end
-
-
-
-
+   .. end

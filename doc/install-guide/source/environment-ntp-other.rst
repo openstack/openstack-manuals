@@ -12,27 +12,27 @@ Install and configure components
 
 1. Install the packages.
 
-   For Debian or Ubuntu:
+   For Ubuntu:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         # apt install chrony
+      # apt install chrony
 
-   For Red Hat:
+   For RHEL or CentOS:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         # yum install chrony
+      # yum install chrony
 
-      .. end
+   .. end
 
    For SUSE:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         # zypper install chrony
+      # zypper install chrony
 
-      .. end
+   .. end
 
 2. Edit the ``/etc/chrony/chrony.conf`` file and comment out or remove all
    but one ``server`` key. Change it to reference the controller node:
@@ -48,19 +48,19 @@ Install and configure components
 
 4. Restart the NTP service.
 
-   For Debian or Ubuntu:
+   For Ubuntu:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         # service chrony restart
+      # service chrony restart
 
-      .. end
+   .. end
 
-   For Red Hat or SUSE:
+   For RHEL, CentOS, or SUSE:
 
-      .. code-block:: console
+   .. code-block:: console
 
-         # systemctl enable chronyd.service
-         # systemctl start chronyd.service
+      # systemctl enable chronyd.service
+      # systemctl start chronyd.service
 
-      .. end
+   .. end
