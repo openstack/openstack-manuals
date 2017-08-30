@@ -34,6 +34,13 @@ API Guides
 
 * TBD
 
+Security Guide
+~~~~~~~~~~~~~~
+
+* Updated Keystone Checklists
+* Rework of 'node hardening' section
+* Various fixes such as grammar and incorrect hyperlinks
+
 Training Guides
 ~~~~~~~~~~~~~~~
 
