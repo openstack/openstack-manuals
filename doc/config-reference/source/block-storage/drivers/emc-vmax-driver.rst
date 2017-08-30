@@ -1610,7 +1610,7 @@ retype, follow these steps:
 
       $ openstack volume type create VMAX_FC_DIAMOND_OLTP
       $ openstack volume type set --property volume_backend_name=FC_backend VMAX_FC_DIAMOND_OLTP
-      $ openstack volume type set --property pool_name=Diamond+OLTP+SRP_1+111111111111
+      $ openstack volume type set --property pool_name=Diamond+OLTP+SRP_1+111111111111 VMAX_FC_DIAMOND_OLTP
 
    .. note::
       Create as many volume types as the number of Service Level and Workload
