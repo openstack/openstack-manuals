@@ -11,6 +11,4 @@ while contributing to OpenStack documentation.
 .. toctree::
    :maxdepth: 2
 
-   additional-git-workflow/cherry-pick.rst
-   additional-git-workflow/backport.rst
    additional-git-workflow/rebase.rst
