@@ -172,16 +172,8 @@ option during network creation or add it later. In this case, the
 ``router:external`` option was set by using the ``--external`` parameter
 when creating the ``provider`` network.
 
-#. On the controller node, source the ``admin`` credentials to gain access to
-   admin-only CLI commands:
-
-   .. code-block:: console
-
-      $ . admin-openrc
-
-   .. end
-
-#. Source the ``demo`` credentials to gain access to user-only CLI commands:
+#. On the controller node, source the ``demo`` credentials to gain access to
+   user-only CLI commands:
 
    .. code-block:: console
 
