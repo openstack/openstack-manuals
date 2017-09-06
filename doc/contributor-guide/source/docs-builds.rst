@@ -10,17 +10,17 @@ Clone a repository first
 Before building documentation, you must first clone the repo where the files
 reside:
 
-  .. code-block:: console
+.. code-block:: console
 
-     $ git clone git://git.openstack.org/openstack/openstack-manuals.git
+   $ git clone git://git.openstack.org/openstack/openstack-manuals.git
 
 Navigate to the ``openstack-manuals`` directory and create a branch from there
 to do your work:
 
-  .. code-block:: console
+.. code-block:: console
 
-     $ cd openstack-manuals
-     $ git checkout -b new-branch
+   $ cd openstack-manuals
+   $ git checkout -b new-branch
 
 The value of ``new-branch`` is any name you want to give to your branch.
 
@@ -66,10 +66,10 @@ Open a Terminal window. Make sure you have Python installed. Many contributors
 use the `Homebrew tool instructions
 <http://python-guide-pt-br.readthedocs.io/en/latest/starting/install/osx/>`_.
 
-  .. code-block:: console
+.. code-block:: console
 
-     $ brew install python
-     $ pip install tox
+   $ brew install python
+   $ pip install tox
 
 * On Ubuntu or Debian:
 
@@ -111,9 +111,9 @@ To the doc build scripts as-is on Windows, first install `Git for Windows`_.
 Make sure you have a working Python environment, and then use Git Bash to run
 all :command:`tox` commands within the repository directory:
 
-  .. code-block:: console
+.. code-block:: console
 
-     $ pip install tox
+   $ pip install tox
 
 .. _Git for Windows: https://git-for-windows.github.io/
 
