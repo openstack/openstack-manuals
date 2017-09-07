@@ -142,13 +142,13 @@
 # path in the redirect. Otherwise, redirect everything to the new
 # latest index.html.
 {% for project in projects|sort(attribute='name') -%}
+/developer/{{project.name}} 301 /{{project.name}}/latest/
+/developer/{{project.name}}/ 301 /{{project.name}}/latest/
 {%- if project.has_in_tree_htaccess %}
-/developer/{{project.name}}/ 301 /{{project.name}}/latest/
 /developer/{{project.name}}/any-page.html 301 /{{project.name}}/latest/any-page.html
-{%- else %}
-/developer/{{project.name}}/ 301 /{{project.name}}/latest/
+{% else %}
 /developer/{{project.name}}/any-page.html 301 /{{project.name}}/latest/
-{%- endif %}
+{% endif -%}
 {%- endfor %}
 
 # Redirect old cli-reference to the OSC latest docs
@@ -158,6 +158,7 @@
 # Redirects from service-type to code-name
 {% for project in projects -%}
 {%- if project.type == 'service' and project.service_type and (project.service_type|lower != project.name) %}
+/{{project.service_type|lower}} 302 /{{project.name}}/latest/
 /{{project.service_type|lower}}/ 302 /{{project.name}}/latest/
 /{{project.service_type|lower}}/any-page.html 302 /{{project.name}}/latest/
 {%- endif %}
@@ -166,12 +167,14 @@
 
 # Redirects from code-name without a series to latest
 {% for repo in REGULAR_REPOS %}
+/{{repo.base}} 301 /{{repo.base}}/latest/
 /{{repo.base}}/ 301 /{{repo.base}}/latest/
 {%- endfor %}
 # End latest code-name redirects
 
 # Redirects from infra code-name without a series to location
 {% for repo in INFRA_REPOS %}
+/{{repo.base}} 301 /infra/{{repo.base}}/
 /{{repo.base}}/ 301 /infra/{{repo.base}}/
 {%- endfor %}
 # End infra code-name redirects

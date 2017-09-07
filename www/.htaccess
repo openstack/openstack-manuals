@@ -101,6 +101,9 @@ redirectmatch 301 "^/infra/shade(.*)$" /developer/shade$1
 # path in the redirect. Otherwise, redirect everything to the new
 # latest index.html.
 {% for project in projects|sort(attribute='name') -%}
+{# use separate rules for project.name$ and project.name/(.*)$ because
+   some project names are prefixes of other project names (glance and glance_store) #}
+redirectmatch 301 "^/developer/{{project.name}}$" /{{project.name}}/latest/
 {%- if project.has_in_tree_htaccess %}
 redirectmatch 301 "^/developer/{{project.name}}/(.*)$" /{{project.name}}/latest/$1
 {%- else %}
@@ -114,6 +117,9 @@ redirectmatch 301 "^/cli-reference/.*$" /python-openstackclient/latest/
 # Redirects from service-type to code-name
 {% for project in projects -%}
 {%- if project.type == 'service' and project.service_type and (project.service_type|lower != project.name) %}
+{# use separate rules for project.name$ and project.name/(.*)$ because
+   some project names are prefixes of other project names (glance and glance_store) #}
+redirectmatch 302 "^/{{project.service_type|lower}}$" /{{project.name}}/latest/
 redirectmatch 302 "^/{{project.service_type|lower}}/.*$" /{{project.name}}/latest/
 {%- endif %}
 {%- endfor %}
@@ -121,12 +127,12 @@ redirectmatch 302 "^/{{project.service_type|lower}}/.*$" /{{project.name}}/lates
 
 # Redirects from code-name without a series to latest
 {% for repo in REGULAR_REPOS %}
-redirectmatch 301 "^/{{repo.base}}/$" /{{repo.base}}/latest/
+redirectmatch 301 "^/{{repo.base}}/?$" /{{repo.base}}/latest/
 {%- endfor %}
 # End latest code-name redirects
 
 # Redirects from infra code-name without a series to location
 {% for repo in INFRA_REPOS %}
-redirectmatch 301 "^/{{repo.base}}/$" /infra/{{repo.base}}/
+redirectmatch 301 "^/{{repo.base}}/?$" /infra/{{repo.base}}/
 {%- endfor %}
 # End infra code-name redirects
