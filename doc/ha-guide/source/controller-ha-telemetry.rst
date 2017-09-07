@@ -22,7 +22,7 @@ It provides an API above several back ends that can be used for building
 distributed applications.
 
 Tooz supports
-`various drivers <https://docs.openstack.org/developer/tooz/drivers.html>`_
+`various drivers <https://docs.openstack.org/tooz/latest/user/drivers.html>`_
 including the following back end solutions:
 
 * `Zookeeper <https://zookeeper.apache.org/>`_:

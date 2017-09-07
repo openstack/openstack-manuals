@@ -14,7 +14,7 @@ the following steps:
 #. Complete the procedures described
    in the `Developers Guide <https://docs.openstack.org/infra/manual/developers.html>`_.
 
-#. Follow  `OpenStack Style Commandments <https://docs.openstack.org/developer/hacking/>`_
+#. Follow  `OpenStack Style Commandments <https://docs.openstack.org/hacking/latest/>`_
    while developing improvements for the tool.
 
 #. Run tests before you submit your change request.

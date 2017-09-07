@@ -34,7 +34,7 @@ functionality compared to more commonly used hypervisors.
 For more information about feature support for
 hypervisors as well as ironic and Virtuozzo (formerly Parallels), see
 `Hypervisor Support Matrix
-<https://docs.openstack.org/developer/nova/support-matrix.html>`_
+<https://docs.openstack.org/nova/latest/user/support-matrix.html>`_
 and `Hypervisors
 <https://docs.openstack.org/ocata/config-reference/compute/hypervisors.html>`_
 in the Configuration Reference.

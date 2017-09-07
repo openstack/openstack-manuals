@@ -239,7 +239,7 @@ Use these steps to configurate all services using RabbitMQ:
    Replace ``RABBIT_USER`` with RabbitMQ username and ``RABBIT_PASS`` with
    password for respective RabbitMQ host. For more information, see
    `oslo messaging transport
-   <https://docs.openstack.org/developer/oslo.messaging/transport.html>`_.
+   <https://docs.openstack.org/oslo.messaging/latest/reference/transport.html>`_.
 
 #. Retry connecting with RabbitMQ:
 

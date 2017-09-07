@@ -8,7 +8,7 @@ Generate Configuration Reference
    release. The configuration reference guides are now managed in the
    project repositories using `the Sphinx integration provided by
    oslo.config
-   <https://docs.openstack.org/developer/oslo.config/sphinxext.html>`__.
+   <https://docs.openstack.org/oslo.config/latest/reference/sphinxext.html>`__.
 
 The OpenStack Configuration Reference source files are stored
 in the ``openstack-manuals`` repository. The majority of files are

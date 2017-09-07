@@ -94,7 +94,7 @@ The following patterns provide GUI frameworks to assist designers and engineers
 to create interfaces that are consistent across OpenStack products.
 
 For example, the horizon project chooses to use ``bootstrap``.
-See `Styling in Horizon (SCSS) <https://docs.openstack.org/developer/horizon/topics/styling.html>`_
+See `Styling in Horizon (SCSS) <https://docs.openstack.org/horizon/latest/contributor/topics/styling.html>`_
 for more information.
 
 Cancel buttons

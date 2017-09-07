@@ -230,7 +230,7 @@ API documentation
   Within project's specification repos, some have opted
   to document API specifications, such as Identity.
 * `Object Storage API v1
-  <https://docs.openstack.org/developer/swift/#object-storage-v1-rest-api-documentation>`_
+  <https://docs.openstack.org/swift/latest/api/object_api_v1_overview.html>`_
 
 Project-specific guides
 -----------------------

@@ -543,4 +543,4 @@ There are two major classes of replicator: the db replicator, which replicates
 accounts and containers, and the object replicator, which replicates object
 data.
 
-For more information, please see the `Swift replication page <https://docs.openstack.org/developer/swift/overview_replication.html>`_.
+For more information, please see the `Swift replication page <https://docs.openstack.org/swift/latest/overview_replication.html>`_.

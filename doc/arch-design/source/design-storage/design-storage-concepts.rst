@@ -169,7 +169,7 @@ storage types.
        a share was being created. In case of thin provisioning it can be
        partial space reservation (for more details see
        `Capabilities and Extra-Specs
-       <https://docs.openstack.org/developer/manila/devref/capabilities_and_extra_specs.html?highlight=extra%20specs#common-capabilities>`_
+       <https://docs.openstack.org/manila/latest/contributor/capabilities_and_extra_specs.html#common-capabilities>`_
        specification)
 
 .. note::

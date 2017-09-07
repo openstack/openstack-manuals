@@ -7,7 +7,7 @@ There are several tools that are designed to automate image creation.
 Diskimage-builder
 ~~~~~~~~~~~~~~~~~
 
-`Diskimage-builder <https://docs.openstack.org/developer/diskimage-builder/>`_
+`Diskimage-builder <https://docs.openstack.org/diskimage-builder/latest/>`_
 is an automated disk image creation tool that supports a variety
 of distributions and architectures.
 Diskimage-builder (DIB) can build images for Fedora, Red Hat
@@ -34,7 +34,7 @@ This example creates the image as before, but for arm architecture.
 More elements are available in the `git source directory
 <https://git.openstack.org/cgit/openstack/diskimage-builder/tree/elements>`_
 and documented in the `diskimage-builder elements documentation
-<https://docs.openstack.org/developer/diskimage-builder/elements.html>`_.
+<https://docs.openstack.org/diskimage-builder/latest/elements.html>`_.
 
 Oz
 ~~
