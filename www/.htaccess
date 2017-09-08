@@ -44,6 +44,12 @@ redirectmatch 301 ^/developer/kolla-(ansible|kubernetes)/(.*)$ /kolla-$1/latest/
 # Redirect all openstack-ansible repositories appropriately
 redirectmatch 301 ^/developer/(ansible-hardening|openstack-ansible-[^/]+)/(.*)$ /$1/latest/$2
 
+# Redirect some tripleo repositories appropriately
+redirectmatch 301 ^/developer/(tripleo-common|tripleo-quickstart|tripleo-validations)/(.*)$ /$1/latest/$2
+
+# Redirect sahara repositories appropriately
+redirectmatch 301 ^/developer/sahara-tests/(.*)$ /sahara-tests/latest/$1
+
 # Redirect removed user guide
 redirectmatch 301 ^/user-guide/.*$ /{{RELEASED_SERIES}}/user/
 
@@ -93,8 +99,8 @@ redirectmatch 301 ^/juno/install-guide/.*$ /juno/
 redirectmatch 301 ^/icehouse/install-guide/.*$ /icehouse/
 redirectmatch 301 ^/havana/install-guide/.*$ /havana/
 
-# Redirecting infra docs links to new developer location
-redirectmatch 301 "^/infra/shade(.*)$" /developer/shade$1
+# Redirecting infra docs links to new location
+redirectmatch 301 "^/infra/shade(.*)$" /shade/latest$1
 
 # Redirecting old project developer docs to the new layout. If a
 # project has an in-tree .htaccess file, assume it can handle the full
