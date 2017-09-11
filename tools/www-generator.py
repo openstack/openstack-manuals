@@ -315,6 +315,13 @@ _IGNORED_REPOS = [
     'openstack-infra/releasestatus',
 ]
 
+# List of infra repos that publish to the normal location (/REPO/) and
+# not to /infra/REPO.
+_INFRA_REPOS_EXCEPTION = [
+    'openstack-infra/pynotedb',
+    'openstack-infra/subunit2sql',
+]
+
 
 def _get_official_repos():
     """Return a tuple containing lists of all official repos.
@@ -341,7 +348,11 @@ def _get_official_repos():
                     # be generated.
                     continue
                 seen_repos.add(repo)
-                if repo not in _IGNORED_REPOS:
+                # Overwrite infra list for a few repositories
+                if repo in _INFRA_REPOS_EXCEPTION:
+                    regular_repos.append({'name': repo,
+                                          'base': repo.rsplit('/')[-1]})
+                elif repo not in _IGNORED_REPOS:
                     add({'name': repo, 'base': repo.rsplit('/')[-1]})
     return (regular_repos, infra_repos)
 
