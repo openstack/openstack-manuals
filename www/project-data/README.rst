@@ -1,3 +1,3 @@
 See
-https://docs.openstack.org/contributor-guide/doc-tools/template-generator.html
+https://docs.openstack.org/doc-contrib-guide/doc-tools/template-generator.html
 for details.

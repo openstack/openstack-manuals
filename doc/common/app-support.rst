@@ -62,7 +62,7 @@ for the OpenStack APIs:
 
 The following guide provides how to contribute to OpenStack documentation:
 
-*  `Documentation Contributor Guide <https://docs.openstack.org/contributor-guide/>`_
+*  `Documentation Contributor Guide <https://docs.openstack.org/doc-contrib-guide/>`_
 
 ask.openstack.org
 ~~~~~~~~~~~~~~~~~
@@ -102,7 +102,7 @@ of relevant material. More is being added all the time, so be sure to
 check back often. You can find the search box in the upper-right corner
 of any OpenStack wiki page.
 
-The Launchpad Bugs area
+The Launchpad bugs area
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenStack community values your set up and testing efforts and wants

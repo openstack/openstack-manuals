@@ -199,7 +199,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'contributor-guide'
+htmlhelp_basename = 'glossary'
 
 # If true, publish source files
 html_copy_source = False

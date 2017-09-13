@@ -16,7 +16,7 @@ documentation to testing to deployment scripts.
 
 If you would like to contribute to the documents, please see the
 `OpenStack Documentation Contributor Guide
-<https://docs.openstack.org/contributor-guide/>`_.
+<https://docs.openstack.org/doc-contrib-guide/>`_.
 
 If you would like to contribute to the development of OpenStack, you must
 follow the steps in this page:

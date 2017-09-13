@@ -211,7 +211,7 @@ Each title should include a clear description of the page’s subject.
 
 Also, ensure that you follow the documentation guidelines for titles.
 For more information, see `Titles
-<https://docs.openstack.org/contributor-guide/rst-conv/titles.html>`_.
+<https://docs.openstack.org/doc-contrib-guide/rst-conv/titles.html>`_.
 
 .. _be_clear_and_concise:
 

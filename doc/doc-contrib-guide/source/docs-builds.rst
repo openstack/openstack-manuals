@@ -26,8 +26,8 @@ The value of ``new-branch`` is any name you want to give to your branch.
 
 To work on a file, use a text editor and open the ``.rst`` file from the same
 navigational path as the path shown in the HTML URL. For example,
-https://docs.openstack.org/contributor-guide/docs-builds.html, is found in the
-folder: ``openstack-manuals/doc/contributor-guide/docs-builds.rst``.
+https://docs.openstack.org/doc-contrib-guide/docs-builds.html, is found in the
+folder: ``openstack-manuals/doc/doc-contrib-guide/docs-builds.rst``.
 
 Refer to :doc:`Writing documentation <writing-docs>` for details on how to
 create content and contribute to the documentation.

@@ -13,7 +13,7 @@ OpenStack Manuals
 This repository contains documentation for the OpenStack project.
 
 For more details, see the `OpenStack Documentation Contributor
-Guide <https://docs.openstack.org/contributor-guide/>`_.
+Guide <https://docs.openstack.org/doc-contrib-guide/>`_.
 
 It includes these manuals:
 
@@ -97,7 +97,7 @@ Generated files
 Some documentation files are generated using tools. These files include
 a ``do not edit`` header and should not be modified by hand.
 Please see `Generated files
-<https://docs.openstack.org/contributor-guide/doc-tools.html>`_.
+<https://docs.openstack.org/doc-contrib-guide/doc-tools.html>`_.
 
 
 Bugs

@@ -55,8 +55,8 @@ master_doc = 'index'
 # General information about the project.
 repository_name = "openstack/openstack-manuals"
 bug_project = 'openstack-manuals'
-project = u'Contributor Guide'
-bug_tag = u'contributor-guide'
+project = u'Documentation Contributor Guide'
+bug_tag = u'doc-contrib-guide'
 
 copyright = u'2015-2017, OpenStack contributors'
 
@@ -200,7 +200,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'contributor-guide'
+htmlhelp_basename = 'doc-contrib-guide'
 
 # If true, publish source files
 html_copy_source = False

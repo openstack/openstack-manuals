@@ -264,8 +264,8 @@ and the `built documentation <https://docs.openstack.org/horizon/>`_.
      - Target location
 
    * - Documentation Contributor Guide
-     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/contributor-guide
-     - https://docs.openstack.org/contributor-guide/
+     - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/doc-contrib-guide
+     - https://docs.openstack.org/doc-contrib-guide/
 
    * - Python Developer Documentation
      - https://git.openstack.org/cgit/openstack/<project>/tree/master/doc/source/,

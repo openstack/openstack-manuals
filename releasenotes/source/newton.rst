@@ -48,7 +48,7 @@ API guides
   examples of the new API reference, maintained by the project team rather
   than a central docs team.
 
-* Updated the `Contributor Guide <https://docs.openstack.org/contributor-guide/api-guides.html>`__
+* Updated the `Contributor Guide <https://docs.openstack.org/doc-contrib-guide/api-guides.html>`__
   to include specific API Guides information.
 
 * Completed `API Documentation <https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html>`__
