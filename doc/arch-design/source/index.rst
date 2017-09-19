@@ -9,16 +9,16 @@ OpenStack Architecture Design Guide
 
 .. important::
 
-   This guide was last updated as of the Ocata release, documenting
+   **This guide is no longer maintained by the OpenStack documentation
+   team. If you wish to update this guide, propose a patch at your
+   own leisure.**
+
+   This guide was last updated as of the Pike release, documenting
    the OpenStack Ocata, Newton, and Mitaka releases. It may
    not apply to EOL releases Kilo and Liberty.
 
    We advise that you read this at your own discretion when planning
-   on your OpenStack cloud.
-
-   This guide is intended as advice only.
-
-   This guide is a work in progress. Contributions are welcome.
+   on your OpenStack cloud. This guide is intended as advice only.
 
 Abstract
 ~~~~~~~~
