@@ -80,3 +80,4 @@ For more information about system requirements, see the
    environment-sql-database.rst
    environment-messaging.rst
    environment-memcached.rst
+   environment-etcd.rst
