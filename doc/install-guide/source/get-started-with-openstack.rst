@@ -19,7 +19,7 @@ The OpenStack services
 The following table describes the OpenStack services that make up the
 OpenStack architecture:
 
-.. list-table:: The OpenStack services
+.. list-table:: OpenStack services
    :header-rows: 1
    :widths: 10 10 40
 
