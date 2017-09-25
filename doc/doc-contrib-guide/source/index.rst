@@ -38,6 +38,7 @@ Contents
    diagram-guidelines.rst
    docs-review.rst
    docs-builds.rst
+   redirects.rst
    doc-tools.rst
    release.rst
 
