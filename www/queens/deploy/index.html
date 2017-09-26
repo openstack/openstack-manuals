@@ -1,3 +1,4 @@
+{% set projects = PROJECT_DATA[SERIES] %}
 {% extends "templates/base.tmpl" %}
 {% block pagetitle %}{{SERIES_TITLE}} Deployment Guides{% endblock %}
 {% block title %}
@@ -22,8 +23,13 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="docs-link-sections">
                         <h3><i class="fa fa-cogs"></i>By deployment method</h3>
-                        <p><a href="/project-deploy-guide/openstack-ansible/">OpenStack-Ansible Deployment Guide</a></li></p>
-                        <p><a href="/project-deploy-guide/kolla-ansible/">Kolla Deployment Guide</a></li></p>
+{% for project in projects|sort(attribute='name') -%}
+{% if project.type == 'deployment' and project.has_admin_guide %}
+                  <p><a href="/project-deploy-guide/{{project.name}}/{SERIES}/">
+                      {{project.service}} Guide
+                  </a></p>
+{% endif %}
+{%- endfor %}
                     </div>
                 </div>
             </div>

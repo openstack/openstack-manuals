@@ -177,6 +177,8 @@ _URLS = [
      'https://developer.openstack.org/api-ref/{service_type}/index.html'),
     ('has_api_guide', ['service'],
      'https://developer.openstack.org/api-guide/{service_type}/index.html'),
+    ('has_deployment_guide', ['deployment'],
+     'https://docs.openstack.org/project-deploy-guide/{name}/{series}/index.html'),  # noqa
 ]
 
 
