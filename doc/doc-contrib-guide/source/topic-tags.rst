@@ -39,7 +39,7 @@ Based on the topic your request refers to, use the following tags:
   OpenStack Virtual Machine Image Guide
 
 [install]
-  OpenStack Installation tutorials and guides
+  OpenStack Installation Guides
 
 [networking]
   OpenStack Networking Guide

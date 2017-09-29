@@ -59,7 +59,7 @@ series may mean looking for the relevant files in multiple places.
 
    * Configuration reference
    * Command-line reference
-   * Installation tutorials and guides
+   * Installation guides
    * Networking guide
 
 For these guides, the docs.openstack.org site defaults to the current release,
@@ -74,17 +74,17 @@ currently developing a similar method of marking older books written in RST.
 The core team tracks usage of older versions, and as usage falls, can
 remove them entirely.
 
-Installation Tutorials and Guides
----------------------------------
+Installation Guides
+-------------------
 
-Starting with Pike, the OpenStack Installation Tutorials and Guides
+Starting with Pike, the OpenStack Installation Guides
 are maintained by the project teams, with assistance from the
 documentation team. The guides describe a manual install process for
 multiple distributions based on openSUSE and SUSE Linux Enterprise
 Server; Red Hat Enterprise Linux and CentOS; and Ubuntu 16.04 (LTS).
 
 Prior to Pike, the documentation team maintained OpenStack
-Installation Tutorials and Guides:
+Installation Guides:
 
 .. list-table::
    :header-rows: 1

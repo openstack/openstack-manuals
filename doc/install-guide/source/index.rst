@@ -1,6 +1,6 @@
-=================================
- OpenStack Installation Tutorial
-=================================
+==============================
+ OpenStack Installation Guide
+==============================
 
 .. toctree::
    :maxdepth: 3

@@ -1,8 +1,8 @@
 .. _project-install-guide:
 
-=================================
-Installation tutorials and guides
-=================================
+===================
+Installation Guides
+===================
 
 Pike and later
 ~~~~~~~~~~~~~~
