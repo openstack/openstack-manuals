@@ -3,24 +3,75 @@
 {% set series = 'latest' %}
 {% set projects = PROJECT_DATA[series] %}
 
+{# Macro to generate redirects for anything under a specific directory to a
+   given page, allowing the path to not have a trailing slash.
+
+   Arguments:
+     path -- the partial regex representing the input path (should not end in /)
+     result -- the result pattern
+     code -- the response code (defaults to 301)
+#}
+{% macro dir_to_page(path, result, code=301) -%}
+redirectmatch {{ code }} ^{{ path }}/?$ {{ result }}
+{%- endmacro %}
+
+{# Macro to generate redirects for anything under a given path to a
+   given page, allowing the path to not have a trailing slash.
+
+   Arguments:
+     path -- the partial regex representing the input path (should not end in /)
+     result -- the result pattern
+     code -- the response code (defaults to 301)
+#}
+{% macro path_to_page(path, result, code=301) -%}
+redirectmatch {{ code }} ^{{ path }}($|/.*$) {{ result }}
+{%- endmacro %}
+
+{# Macro to generate redirects for a given path to a location under
+   the RELEASED_SERIES. The result argument should be the sub-directory
+   under RELEASED_SERIES.
+
+   Arguments:
+     path -- the partial regex representing the input path (should not end in /)
+     result -- the subdirectory under /RELEASED_SERIES, (should start with /)
+     code -- the response code (defaults to 301)
+#}
+{% macro path_to_released_series(path, result, code=301) -%}
+{{ path_to_page(path, '/' + RELEASED_SERIES + result, code) }}
+{%- endmacro %}
+
+{# Macro to generate redirects deep links under a page.
+
+   A trailing catch-all pattern is appended and can be referenced in
+   the result value.
+
+   Arguments:
+     path -- the partial regex representing the input path (should not end in /)
+     result -- the result pattern (may include references to groups from path)
+     code -- the response code (defaults to 301)
+#}
+{% macro deep_links(path, result, code=301) -%}
+redirectmatch {{ code }} ^{{ path }}/?(.*)$ {{ result }}
+{%- endmacro %}
+
 # Redirect old top-level HTML pages to the version under most recent
 # full release.
-redirectmatch 301 ^/$ /{{RELEASED_SERIES}}/
-redirectmatch 301 ^/index.html$ /{{RELEASED_SERIES}}/
-redirectmatch 301 ^/openstack-projects.html$ /{{RELEASED_SERIES}}/projects.html
-redirectmatch 301 ^/language-bindings.html$ /{{RELEASED_SERIES}}/language-bindings.html
+redirectmatch 301 ^/$ /{{ RELEASED_SERIES }}/
+redirectmatch 301 ^/index.html$ /{{ RELEASED_SERIES }}/
+redirectmatch 301 ^/openstack-projects.html$ /{{ RELEASED_SERIES }}/projects.html
+redirectmatch 301 ^/language-bindings.html$ /{{ RELEASED_SERIES }}/language-bindings.html
 
 # Redirect docs.openstack.org index.html subpage pointers to main page
-redirect 301 /install/ /{{RELEASED_SERIES}}/install/
-redirect 301 /basic-install/ /{{RELEASED_SERIES}}/install/
-redirect 301 /run/ /
-redirect 301 /developer/index.html /{{RELEASED_SERIES}}/projects.html
-redirect 301 /cli/ /
+{{ dir_to_page('/install', '/' + RELEASED_SERIES + '/install/') }}
+{{ dir_to_page('/basic-install', '/' + RELEASED_SERIES + '/install/') }}
+{{ dir_to_page('/run', '/') }}
+redirect 301 /developer/index.html /{{ RELEASED_SERIES }}/projects.html
+{{ dir_to_page('/cli', '/') }}
 redirect 301 /api/api-specs.html http://developer.openstack.org/api-guide/quick-start/index.html
 
 # Redirect old Admin Guides to new landing page
-redirectmatch 301 ^/admin-guide/.*$ /{{RELEASED_SERIES}}/admin/
-redirectmatch 301 ^/user-guide-admin/.*$ /{{RELEASED_SERIES}}/admin/
+{{ path_to_released_series('/admin-guide', '/admin/') }}
+{{ path_to_released_series('/user-guide-admin', '/admin/') }}
 
 # A doc generation bug resulted in Google indexing links containing "//", which cause
 # problems with linked content (images/css/etc).  This rule generates a 301 redirect
@@ -30,79 +81,75 @@ redirectmatch 301 ^/user-guide-admin/.*$ /{{RELEASED_SERIES}}/admin/
 redirectmatch 301 (.*)//(.*) $1/$2
 
 # Redirect networking-guide since it is now versioned
-redirect 301 /networking-guide/ /ocata/networking-guide/
+{{ dir_to_page('/networking-guide', '/ocata/networking-guide/') }}
 
 # Redirect old releases content to new location
-redirectmatch 301 "^/releases(.*)$" http://releases.openstack.org$1
+{{ deep_links('/releases', 'http://releases.openstack.org/$1') }}
 
 # redirect all kuryr sub-repositories appropriately
-redirectmatch 301 ^/developer/kuryr-(kubernetes|libnetwork|tempest-plugin)/(.*)$ /kuryr-$1/latest/$2
+{{ deep_links('/developer/kuryr-(kubernetes|libnetwork|tempest-plugin)', '/kuryr-$1/latest/$2') }}
 
 # redirect all kolla sub-repositories appropriately
-redirectmatch 301 ^/developer/kolla-kubernetes/(.*)$ /kolla-kubernetes/latest/$1
+{{ deep_links('/developer/kolla-kubernetes', '/kolla-kubernetes/latest/$1') }}
 
 # Redirect all openstack-ansible repositories appropriately
-redirectmatch 301 ^/developer/(ansible-hardening|openstack-ansible-[^/]+)/(.*)$ /$1/latest/$2
+{{ deep_links('/developer/(ansible-hardening|openstack-ansible-[^/]+)', '/$1/latest/$2') }}
 
 # Redirect some tripleo repositories appropriately
-redirectmatch 301 ^/developer/(tripleo-common|tripleo-quickstart|tripleo-validations)/(.*)$ /$1/latest/$2
+{{ deep_links('/developer/(tripleo-common|tripleo-quickstart|tripleo-validations)', '/$1/latest/$2') }}
 
 # Redirect sahara repositories appropriately
-redirectmatch 301 ^/developer/sahara-tests/(.*)$ /sahara-tests/latest/$1
+{{ deep_links('/developer/sahara-tests', '/sahara-tests/latest/$1') }}
 
 # Redirect removed user guide
-redirectmatch 301 ^/user-guide/.*$ /{{RELEASED_SERIES}}/user/
+{{ path_to_released_series('/user-guide', '/user/') }}
 
 # Redirect removed ops guide
-redirectmatch 301 ^/ops-guide/.*$ /{{RELEASED_SERIES}}/admin/
-redirectmatch 301 ^/ops/.*$ /{{RELEASED_SERIES}}/admin/
-redirectmatch 301 ^/openstack-ops/.*$ /{{RELEASED_SERIES}}/admin/
-redirectmatch 301 ^/trunk/openstack-ops/.*$ /{{RELEASED_SERIES}}/admin/
+{{ path_to_released_series('/ops-guide', '/admin/') }}
+{{ path_to_released_series('/ops', '/admin/') }}
+{{ path_to_released_series('/openstack-ops', '/admin/') }}
+{{ path_to_released_series('/trunk/openstack-ops', '/admin/') }}
 
 # Redirect api list
-redirectmatch 301 ^/api/.*$ /{{RELEASED_SERIES}}/api/
+{{ deep_links('/api', '/' + RELEASED_SERIES + '/api/') }}
 
 # Redirect old security index
-redirectmatch 301 ^/sec/.*$ /security-guide/
-redirectmatch 301 ^/security-guide/content/.*$ /security-guide/
+{{ path_to_page('/sec', '/security-guide/') }}
+{{ path_to_page('/security-guide/content', '/security-guide/') }}
 
 # Redirect to series indexes
-redirectmatch 301 ^/user/.*$ /{{RELEASED_SERIES}}/user/
-redirectmatch 301 ^/latest/user/.*$ /{{SERIES_IN_DEVELOPMENT}}/user/
-redirectmatch 301 ^/admin/.*$ /{{RELEASED_SERIES}}/admin/
-redirectmatch 301 ^/latest/admin/.*$ /{{SERIES_IN_DEVELOPMENT}}/admin/
-redirect 301 /latest/ /{{SERIES_IN_DEVELOPMENT}}/
+{{ path_to_released_series('/user', '/user/') }}
+{{ path_to_page('/latest/user', '/' + SERIES_IN_DEVELOPMENT + '/user/') }}
+{{ path_to_released_series('/admin', '/admin/') }}
+{{ path_to_page('/latest/admin', '/' + SERIES_IN_DEVELOPMENT + '/admin/') }}
+{{ dir_to_page('/latest', '/' + SERIES_IN_DEVELOPMENT + '/') }}
 
 # Redirect some pages users search for
-redirectmatch 301 ^/arch-design/content/.*$ /arch-design/
-redirectmatch 301 ^/image-guide/content/.*$ /image-guide/
-redirectmatch 301 ^/admin-guide-cloud/.*$ /{{RELEASED_SERIES}}/admin/
-redirectmatch 301 ^/trunk/openstack-compute/.*$ /nova/latest/admin/
+{{ path_to_page('/arch-design/content', '/arch-design/') }}
+{{ path_to_page('/image-guide/content', '/image-guide/') }}
+{{ path_to_released_series('/admin-guide-cloud', '/admin/') }}
+{{ path_to_page('/trunk/openstack-compute', '/nova/latest/admin/') }}
 redirect 301 /glossary/content/glossary.html /doc-contrib-guide/common/glossary.html
-redirect 301 /icehouse/training-guides/ /upstream-training/
+{{ dir_to_page('/icehouse/training-guides', '/upstream-training/') }}
 
 # Redirect contributor-guide URL to doc-contrib-guide
-redirectmatch 301 ^/contributor-guide/(.*)$ /doc-contrib-guide/$1
+{{ deep_links('/contributor-guide', '/doc-contrib-guide/$1') }}
 
 # Redirect changed directory name in the Contributor Guide
 redirect 301 /doc-contrib-guide/ui-text-guidelines.html /doc-contrib-guide/ux-ui-guidelines/ui-text-guidelines.html
 redirect 301 /doc-contrib-guide/ui-text-guidelines /doc-contrib-guide/ux-ui-guidelines
 
 # Redirect any deploy guide project directory back to the current stable index
-redirectmatch 301 "^/project-deploy-guide/$" /{{RELEASED_SERIES}}/deploy/
-redirectmatch 301 "^/project-deploy-guide/newton/" /newton/deploy/
-redirectmatch 301 "^/project-deploy-guide/ocata/" /ocata/deploy/
+{{ dir_to_page('/project-deploy-guide/(newton|ocata)', '/$1/deploy/') }}
+{{ path_to_released_series('/project-deploy-guide', '/deploy/') }}
 
 # Redirect old install guide list pages to their new home
-redirectmatch 301 "^/project-install-guide/newton/" /newton/install/
-redirectmatch 301 "^/project-install-guide/ocata/(.*)$" /ocata/install/$1
-redirectmatch 301 ^/kilo/install-guide/.*$ /kilo/
-redirectmatch 301 ^/juno/install-guide/.*$ /juno/
-redirectmatch 301 ^/icehouse/install-guide/.*$ /icehouse/
-redirectmatch 301 ^/havana/install-guide/.*$ /havana/
+{{ path_to_page('/(havana|icehouse|juno|kilo|mitaka)/install-guide', '/$1/') }}
+{{ dir_to_page('/project-install-guide/newton', '/newton/install/') }}
+{{ deep_links('/project-install-guide/ocata', '/ocata/install/$1') }}
 
 # Redirecting infra docs links to new location
-redirectmatch 301 "^/infra/shade(.*)$" /shade/latest$1
+{{ deep_links('/infra/shade', '/shade/latest/$1') }}
 
 # Redirecting old project developer docs to the new layout. If a
 # project has an in-tree .htaccess file, assume it can handle the full
@@ -111,36 +158,34 @@ redirectmatch 301 "^/infra/shade(.*)$" /shade/latest$1
 {% for project in projects|sort(attribute='name') -%}
 {# use separate rules for project.name$ and project.name/(.*)$ because
    some project names are prefixes of other project names (glance and glance_store) #}
-redirectmatch 301 "^/developer/{{project.name}}$" /{{project.name}}/latest/
 {%- if project.has_in_tree_htaccess %}
-redirectmatch 301 "^/developer/{{project.name}}/(.*)$" /{{project.name}}/latest/$1
+{{ deep_links('/developer/' + project.name, '/' + project.name + '/latest/$1') }}
 {%- else %}
-redirectmatch 301 "^/developer/{{project.name}}/.*$" /{{project.name}}/latest/
+{{ path_to_page('/developer/' + project.name, '/' + project.name + '/latest/') }}
 {%- endif %}
 {%- endfor %}
 
 # Redirect old cli-reference to the OSC latest docs
-redirectmatch 301 "^/cli-reference/.*$" /python-openstackclient/latest/
+{{ path_to_page('/cli-reference', '/python-openstackclient/latest/') }}
 
 # Redirects from service-type to code-name
 {% for project in projects -%}
 {%- if project.type == 'service' and project.service_type and (project.service_type|lower != project.name) %}
 {# use separate rules for project.name$ and project.name/(.*)$ because
    some project names are prefixes of other project names (glance and glance_store) #}
-redirectmatch 302 "^/{{project.service_type|lower}}$" /{{project.name}}/latest/
-redirectmatch 302 "^/{{project.service_type|lower}}/.*$" /{{project.name}}/latest/
+{{ path_to_page('/' + project.service_type|lower, '/' + project.name + '/latest/', 302) }}
 {%- endif %}
 {%- endfor %}
 # End service-type redirects
 
 # Redirects from code-name without a series to latest
 {% for repo in REGULAR_REPOS %}
-redirectmatch 301 "^/{{repo.base}}/?$" /{{repo.base}}/latest/
+{{ dir_to_page('/' + repo.base, '/' + repo.base + '/latest/') }}
 {%- endfor %}
 # End latest code-name redirects
 
 # Redirects from infra code-name without a series to location
 {% for repo in INFRA_REPOS %}
-redirectmatch 301 "^/{{repo.base}}/?$" /infra/{{repo.base}}/
+{{ dir_to_page('/' + repo.base, '/infra/' + repo.base + '/') }}
 {%- endfor %}
 # End infra code-name redirects
