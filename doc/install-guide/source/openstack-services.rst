@@ -6,7 +6,7 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
-* `OpenStack Installation Tutorials and Guides for Pike
+* `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
 
 .. Note that this guide is release independent, so we will add more

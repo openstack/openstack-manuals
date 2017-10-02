@@ -16,7 +16,7 @@ Prerequisites
 Before beginning, ensure that you are familiar with the
 documentation for installing the OpenStack Image API service.
 See the *Image service* section in the
-`Installation Tutorials and Guides <https://docs.openstack.org/ocata/install>`_,
+`Installation Guides <https://docs.openstack.org/ocata/install>`_,
 depending on your distribution.
 
 .. _glance-api-pacemaker:

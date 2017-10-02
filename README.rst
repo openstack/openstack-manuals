@@ -23,7 +23,7 @@ It includes these manuals:
  * Configuration Reference
  * Documentation Contributor Guide
  * High Availability Guide
- * Installation Tutorials
+ * Installation Guides
  * Networking Guide
  * Operations Guide
  * Virtual Machine Image Guide

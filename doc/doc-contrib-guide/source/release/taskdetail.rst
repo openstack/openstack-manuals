@@ -4,10 +4,10 @@ Release task detail
 
 This section provides detailed instructions for each release task.
 
-Installation Tutorial testing
+Installation Guide testing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The process for Installation Tutorial testing begins about six weeks before
+The process for Installation Guide testing begins about six weeks before
 release day. First of all, create a new testing page on the wiki, based on
 `the previous one
 <https://wiki.openstack.org/wiki/Documentation/NewtonDocTesting>`_.
@@ -40,7 +40,7 @@ possible that changes might have happened within projects during the
 release that have not been reflected in the documentation.
 
 As release day draws near, and testing progresses, the PTL will make a
-judgment call on whether or not the various Installation Tutorials are
+judgment call on whether or not the various Installation Guides are
 tested sufficiently to be released. In some rare cases, the book either
 has not been tested adequately, or has performed badly in tests, which can
 justify not publishing that book. In this case, the PTL will contact

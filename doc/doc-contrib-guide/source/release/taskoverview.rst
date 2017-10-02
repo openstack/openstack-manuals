@@ -10,7 +10,7 @@ Release day is usually 1300UTC on the `initial release date` listed on the
 
 *Four to six weeks before release*
   Ping packagers to locate pre-release packages to test the Installation
-  Tutorial against, and start looking for willing volunteers to help test.
+  Guide against, and start looking for willing volunteers to help test.
 
 *Four weeks*
   Ping Cross Project Liaisons (CPLs) to check their chapters, and ping

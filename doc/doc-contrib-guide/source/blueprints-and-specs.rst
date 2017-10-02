@@ -93,23 +93,23 @@ Installation Guides:
      - Source location
      - Target location
 
-   * - Installation Tutorial for openSUSE and SUSE Linux Enterprise Server
+   * - Installation Guide for openSUSE and SUSE Linux Enterprise Server
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/ocata/install-guide-obs/
 
-   * - Installation Tutorial for Red Hat Enterprise Linux and CentOS
+   * - Installation Guide for Red Hat Enterprise Linux and CentOS
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/ocata/install-guide-rdo/
 
-   * - Installation Tutorial for Ubuntu 16.04 (LTS)
+   * - Installation Guide for Ubuntu 16.04 (LTS)
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/ocata/install-guide-ubuntu/
 
-   * - Installation Tutorial For Debian With Debconf (is not provided for Ocata)
+   * - Installation Guide For Debian With Debconf (is not provided for Ocata)
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-debconf/
 
-   * - Installation Tutorial For Debian (is not provided for Ocata)
+   * - Installation Guide For Debian (is not provided for Ocata)
      - https://git.openstack.org/cgit/openstack/openstack-manuals/tree/doc/install-guide
      - https://docs.openstack.org/newton/install-guide-debian/
 

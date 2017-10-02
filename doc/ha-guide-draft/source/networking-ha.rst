@@ -4,7 +4,7 @@ Configuring the networking services
 
 Configure networking on each node. See the basic information about
 configuring networking in the Networking service section of the
-`Install Tutorials and Guides <https://docs.openstack.org/ocata/install/>`_,
+`Install Guides <https://docs.openstack.org/ocata/install/>`_,
 depending on your distribution.
 
 OpenStack network nodes contain:

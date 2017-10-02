@@ -2,7 +2,7 @@
 Configuring the compute node
 ============================
 
-The `Installation Tutorials and Guides
+The `Installation Guides
 <https://docs.openstack.org/ocata/install/>`_
 provide instructions for installing multiple compute nodes.
 To make the compute nodes highly available, you must configure the

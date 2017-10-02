@@ -19,6 +19,6 @@ Any configuration options or command line tools should be documented using
 the automated ``openstack-doc-tools``. For more information about these
 automated tools, see the :ref:`doc-tools` chapter.
 
-To create an Installation Tutorial in accordance with the OpenStack
+To create an Installation Guide in accordance with the OpenStack
 Foundation Project Navigator, follow the instructions at
 :ref:`project-install-guide`.

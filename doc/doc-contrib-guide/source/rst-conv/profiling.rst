@@ -2,7 +2,7 @@
 Profiling (conditional content)
 ===============================
 
-Installation Tutorials and Guides has content that depends upon the operating
+Installation Guides has content that depends upon the operating
 systems.
 
 Use the ``only`` directive to specify the content that is operating-system

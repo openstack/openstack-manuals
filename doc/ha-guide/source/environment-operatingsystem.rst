@@ -5,10 +5,10 @@ Installing the operating system
 The first step in setting up your highly available OpenStack cluster
 is to install the operating system on each node.
 Follow the instructions in the *Environment* section of the
-`Installation Tutorials and Guides <https://docs.openstack.org/ocata/install>`_
+`Installation Guides <https://docs.openstack.org/ocata/install>`_
 depending on your distribution.
 
-The OpenStack Installation Tutorials and Guides also include a list of
+The OpenStack Installation Guides also include a list of
 the services that use passwords with important notes about using
 them.
 

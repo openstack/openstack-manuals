@@ -5,7 +5,7 @@ First timers
 ============
 
 One of the best ways to start contributing to OpenStack documentation
-is to walk through the Installation Tutorial and complete it by hand.
+is to walk through the Installation Guide and complete it by hand.
 Keep notes as you go, and offer suggestions for improvement by filing
 documentation bugs at Launchpad.
 

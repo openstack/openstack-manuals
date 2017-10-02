@@ -20,8 +20,8 @@ is listed along with the guides from other projects.
 Newton and Ocata
 ~~~~~~~~~~~~~~~~
 
-For the Newton release, a new method of publishing installation tutorials
-and guides is being implemented. This will allow each big tent project to
+For the Newton release, a new method of publishing installation
+guides is being implemented. This will allow each big tent project to
 create their own installation guide, based on a standard template,
 in their own repository. These guides are then centrally published to
 `docs.openstack.org <https://docs.openstack.org>`_.

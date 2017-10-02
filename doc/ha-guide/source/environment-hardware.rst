@@ -12,11 +12,11 @@ The following are the standard hardware requirements:
 
 - Provider networks: See the *Overview -> Networking Option 1: Provider
   networks* section of the
-  `Install Tutorials and Guides <https://docs.openstack.org/ocata/install>`_
+  `Install Guides <https://docs.openstack.org/ocata/install>`_
   depending on your distribution.
 - Self-service networks: See the *Overview -> Networking Option 2:
   Self-service networks* section of the
-  `Install Tutorials and Guides <https://docs.openstack.org/ocata/install>`_
+  `Install Guides <https://docs.openstack.org/ocata/install>`_
   depending on your distribution.
 
 OpenStack does not require a significant amount of resources and the following

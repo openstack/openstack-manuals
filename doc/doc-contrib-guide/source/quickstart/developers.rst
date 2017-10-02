@@ -40,7 +40,7 @@ quickly and easily:
   ask you to create a blueprint and specification for the change. If you are
   unsure whether your change will require a blueprint or specification, ask
   on the mailing list for guidance.
-* If you want to create a new Installation Tutorial for your big tent
+* If you want to create a new Installation Guide for your big tent
   project, see :doc:`../project-install-guide`.
 * Remember, you can always contact the documentation team through our mailing
   list, or on IRC.

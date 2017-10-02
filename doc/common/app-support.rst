@@ -32,7 +32,7 @@ bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`_.
 The following guides explain how to install an OpenStack cloud and its
 associated components:
 
-* `OpenStack Pike Installation Tutorials and Guides <https://docs.openstack.org/pike/install/>`_
+* `OpenStack Pike Installation Guides <https://docs.openstack.org/pike/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
