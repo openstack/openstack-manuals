@@ -13,9 +13,6 @@ autogenerate_config_docs
   Generates configuration references published at
   https://docs.openstack.org/ocata/config-reference/.
 
-build_environment directory (deprecated)
-  A Vagrant environment for working with the guides.
-
 cleanup directory
   Manually cleans up documentation files.
 
