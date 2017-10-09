@@ -9,13 +9,6 @@ documentation project grouped by repositories they are stored in.
 openstack-doc-tools repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-autogenerate_config_docs
-  Generates configuration references published at
-  https://docs.openstack.org/ocata/config-reference/.
-
-cleanup directory
-  Manually cleans up documentation files.
-
 sitemap
   Generates the ``sitemap.xml`` file.
 
@@ -25,14 +18,6 @@ bin
 
 os_doc_tools directory
 ----------------------
-
-openstack-autohelp
-  A helper script run from the git repository by ``autogenerate_config_docs``.
-
-openstack-auto-commands
-  Generates the command-line interface reference published at
-  https://docs.openstack.org/cli-reference/. A helper script to use this
-  tool is available at ``bin/doc-tools-update-cli-reference``.
 
 openstack-jsoncheck
   Checks JSON files. Used for the API guides.
