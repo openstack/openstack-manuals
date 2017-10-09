@@ -84,7 +84,7 @@ If you like to run individual tests, run:
 
 * ``tox -e checkbuild`` - to actually build the manual
 * ``tox -e checklang`` - to build translated manuals
-* ``tox -e checkniceness`` - to run the niceness tests
+* ``tox -e linters`` - to run the niceness tests
 * ``tox -e linkcheck`` - to run the tests for working remote URLs
 
 The ``tox`` command uses the openstack-doc-tools package to run the

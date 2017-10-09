@@ -172,7 +172,7 @@ command from the base directory of repository:
 
 The following individual checks are also available:
 
-* :command:`tox -e checkniceness` - to run the niceness tests (for example,
+* :command:`tox -e linters` - to run the lint tests (for example,
   to see extra whitespaces)
 * :command:`tox -e checklang` - to check all the translated manuals
 * :command:`tox -e docs` - to build only RST-sourced manuals
