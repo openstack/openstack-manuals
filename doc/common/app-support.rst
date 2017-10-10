@@ -186,6 +186,9 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: Messaging service
    (zaqar) <https://bugs.launchpad.net/zaqar>`_
 
+*  `Bugs: Container service
+   (zun) <https://bugs.launchpad.net/zun>`_
+
 *  `Bugs: OpenStack API Documentation
    (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`_
 
