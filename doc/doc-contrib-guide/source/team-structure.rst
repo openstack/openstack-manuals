@@ -12,6 +12,9 @@ The OpenStack community has the following documentation specialty teams
 with their respective leads:
 
 * :doc:`API <api-guides>`: Anne Gentle
+* `Contributor Guide
+  <https://wiki.openstack.org/wiki/ContributorGuide>`_:
+  Mike Perez
 * `Security Guide
   <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
   Luke Hinds
