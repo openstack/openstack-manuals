@@ -27,7 +27,7 @@ Space and tab characters
 * Do not use tab characters within the code, use space characters instead.
 
 * Do not place space characters at the end of lines. If used,
-  the checkniceness test will fail because of trailing whitespaces.
+  the linters test will fail because of trailing whitespaces.
 
 Indentation
 ~~~~~~~~~~~
