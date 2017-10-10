@@ -52,7 +52,9 @@
       jobs:
         - openstack-tox-linters
         - build-tox-manuals-checkbuild
-    # TODO(jaegerandi): Add post jobs for publishing.
+    post:
+      jobs:
+        - publish-openstack-manuals
 
 - project-template:
     name: openstack-manuals-developer-jobs
@@ -67,7 +69,10 @@
       jobs:
         - openstack-tox-linters
         - build-tox-manuals-checkbuild
-    # TODO(jaegerandi): Add post jobs for publishing.
+    post:
+      jobs:
+        - publish-openstack-manuals-developer
+
 
 - project-template:
     name: openstack-manuals-build-translation
@@ -79,7 +84,9 @@
     gate:
       jobs:
         - build-tox-manuals-checklang
-    # TODO(jaegerandi): Add post jobs for publishing.
+    post:
+      jobs:
+        - publish-openstack-manuals-lang
 
 - project-template:
     name: openstack-manuals-developer-build-translation
@@ -92,7 +99,10 @@
     gate:
       jobs:
         - build-tox-manuals-checklang
-    # TODO(jaegerandi): Add post jobs for publishing.
+    post:
+      jobs:
+        - publish-openstack-manuals-developer-lang
+
 
 # Configuration for this repository, determines which jobs to run.
 - project:
