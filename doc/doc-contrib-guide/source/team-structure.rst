@@ -14,7 +14,7 @@ with their respective leads:
 * :doc:`API <api-guides>`: Anne Gentle
 * `Security Guide
   <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
-  Nathaniel Dillon
+  Luke Hinds
 * `Training Guides <https://wiki.openstack.org/wiki/Training-guides>`_:
   Matjaz Pancur
 * `Training labs
