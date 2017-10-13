@@ -73,8 +73,8 @@ end up at the new home ``docs.openstack.org/nova/latest/user/cells.html``.
 
 .. _git-redirect-generation:
 
-Optional: Generating ``.htaccess`` files from Git
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Optional: Generating .htaccess files from Git
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If creating an initial ``.htaccess``, you can use some Git-fu to automatically
 generate a file containing redirects between the last release and the current

@@ -23,6 +23,7 @@ Use the following guidelines for all types of headings:
 * Use articles in titles, but do not start the title with an article.
 * Avoid using uncommon abbreviations.
 * Do not end a title with a period or colon.
+* Do not use double backticks(``) to highlight something.
 * Add some introductory text between two headings that go directly after each
   other.
 
