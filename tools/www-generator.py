@@ -315,6 +315,7 @@ _GOVERNANCE_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/refe
 _IGNORED_REPOS = [
     'openstack/releases',
     'openstack-infra/releasestatus',
+    'openstack/contributor-guide',
 ]
 
 # List of infra repos that publish to the normal location (/REPO/) and
