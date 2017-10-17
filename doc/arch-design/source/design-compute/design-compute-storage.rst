@@ -144,6 +144,7 @@ configure a distributed file system.
 Possible options include:
 
 * NFS (default for Linux)
+* Ceph
 * GlusterFS
 * MooseFS
 * Lustre
