@@ -15,18 +15,125 @@ displayed on the list of installation, configuration, and other
 guides.
 
 After the script loads the data about the external projects, it scans
-``www/`` for HTML template files. It uses Jinja2_ to convert the
-templates to complete HTML pages, which it writes to the
+``www/`` for HTML template files. It uses `Jinja2 <https://jinja.pocoo.org>`_
+to convert the templates to complete HTML pages, which it writes to the
 ``publish-docs`` output directory.
 
 .. seealso::
 
-   The Jinja2_ documentation includes a guide for template designers
-   that covers the syntax of templates, inheritance between templates,
-   and the various filters and other features available when writing
-   templates.
+   The `Jinja2 <https://jinja.pocoo.org>`_ documentation includes a guide
+   for template designers that covers the syntax of templates, inheritance
+   between templates, and the various filters and other features available
+   when writing templates.
 
-.. _Jinja2: http://jinja.pocoo.org
+The template files
+~~~~~~~~~~~~~~~~~~
+
+The template files in the openstack-manuals repo are all under the
+``www`` directory. They are organized in the same structure used to
+publish to the site, so the path to a published URL corresponds
+directly to a path to the template file that produces it.
+
+Here are a few representative files under ``www/``:
+
+* ``austin``
+
+  * ``index.html`` -- landing page for $series docs (one per series)
+
+* ``de``
+
+  * ``index.html`` -- list of guides translated into $LANG*
+
+* ``errorpage.html``
+
+* ``mitaka`` -- newer series have more complex page organizations; each
+  directory is not identical*
+
+  * ``admin``
+
+    * ``index.html``
+
+  * ``api``
+
+    * ``index.html``
+
+  * ``index.html``
+  * ``user``
+
+    * ``index.html``
+
+* ``pike``
+
+  * ``admin``
+
+    * ``index.html``
+
+  * ``api``
+
+    * ``index.html``
+
+  * ``configuration``
+
+    * ``index.html``
+
+  * ``deploy``
+
+    * ``index.html``
+
+  * ``index.html``
+  * ``install``
+
+    * ``index.html``
+
+  * ``language-bindings.html``
+  * ``projects.html``
+  * ``user``
+
+    * ``index.html``
+
+* ``project-data`` -- YAML files with data about projects in each series
+
+  * ``latest.yaml``
+  * ``mitaka.yaml``
+  * ``newton.yaml``
+  * ``ocata.yaml``
+  * ``pike.yaml``
+  * ``README.rst``
+  * ``schema.yaml``
+
+* ``redirect-tests.txt`` -- input file for `whereto <http://whereto.readthedocs.io/en/latest/>`_
+  to test .htaccess;
+  see http://files.openstack.org/docs-404s/ for a list of recent 404
+  errors
+* ``static`` -- contains files that are not templates (CSS, JS,
+  sitemap, etc.)
+* ``templates`` -- contains reused templates (base pages, partial
+  pages, etc.)
+
+  * ``api_guides.tmpl``
+  * ``base.tmpl``
+  * ``contributor_guides.tmpl``
+  * ``css.tmpl``
+  * ``default.tmpl``
+  * ``dropdown_releases_and_languages.tmpl``
+  * ``footer.tmpl``
+  * ``google_analytics.tmpl``
+  * ``header.tmpl``
+  * ``indexbase.tmpl``
+  * ``navigation.tmpl``
+  * ``ops_and_admin_guides.tmpl``
+  * ``project_guides.tmpl``
+  * ``script_footer.tmpl``
+  * ``script_search.tmpl``
+  * ``series_status.tmpl``
+  * ``swiftype_search_install.tmpl``
+  * ``swiftype_search_mobile.tmpl``
+  * ``swiftype_search.tmpl``
+  * ``training_guides.tmpl``
+  * ``user_guides.tmpl``
+
+.. NOTE(dhellmann): The whereto link will move to docs.o.o as soon as
+   the publishing jobs are updated.
 
 Defining release series
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -270,3 +377,107 @@ loop contexts).
 
   This value is derived from data published from the governance
   repository.
+
+Common tasks
+~~~~~~~~~~~~
+
+How would I change a page?
+--------------------------
+
+1. Look for the TEMPLATE_FILE value in the page source to find which
+   file produces the page
+
+   The source for https://docs.openstack.org/pike/ shows:
+
+   .. code-block:: none
+
+      <!-- TEMPLATE_FILE: openstack-manuals/www/pike/index.html -->
+
+2. Modify the file or one of the other templates from which it
+   inherits.
+
+   ``www/pike/index.html`` has a base template of
+   ``www/templates/indexbase.tmpl`` which contains:
+
+   .. code-block:: none
+
+      {% include "templates/series_status.tmpl" %}
+
+   and that directive pulls in ``www/templates/series_status.tmpl``.
+
+How would I add a new project?
+------------------------------
+
+Modify ``www/project-data/latest.yaml`` to add the new stanza.
+
+Flags for having various types of docs default to off; only list the
+ones that should be turned on.  Set the type for the project to ensure
+it shows up in the correct list(s).
+
+How would I add a new flag to the project metadata?
+---------------------------------------------------
+
+1. Update the schema to allow the flag by changing
+   ``www/project-data/schema.yaml``.
+
+2. Update the documentation team contributor guide to explain the
+   flag's use by modifying
+   ``doc/doc-contribu-guide/source/doc-tools/template-generator.rst``.
+
+3. Update ``www/project-data/latest.yaml`` to set the flag for some project(s).
+
+4. Update/create the template that will use the flag.
+
+How would I add a new page?
+---------------------------
+
+Copy an existing template file to the new name under ``www/`` and then
+modify it.
+
+How does the final release process work?
+----------------------------------------
+
+See :ref:`release-task-detail`.
+
+Testing the build
+-----------------
+
+There are two commands useful for testing the build locally:
+
+.. code-block:: console
+
+   $ tox -e checkbuild
+
+and
+
+.. code-block:: console
+
+   $ tools/test.sh
+
+The test script supports a few options to make it more effective.
+
+``--skip-links``
+  Skip link checks
+``--series SERIES``
+  series to update/test
+``--check-all-links``
+  Check for links with flags set false.
+
+To test template rendering without waiting for link checks:
+
+.. code-block:: console
+
+   $ ./tools/test.sh --skip-links
+
+To test project links only for items listed in latest.yaml:
+
+.. code-block:: console
+
+   $ ./tools/test.sh --series latest
+
+To produce a list of the unset flags for latest.yaml that *could* be
+set (the pages linked do exist):
+
+.. code-block:: console
+
+   $ ./tools/test.sh --check-all-links --series latest

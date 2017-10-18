@@ -1,3 +1,5 @@
+.. _release-task-detail:
+
 ===================
 Release task detail
 ===================
