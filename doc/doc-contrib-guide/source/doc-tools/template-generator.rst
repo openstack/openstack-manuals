@@ -125,26 +125,26 @@ includes particular types of documentation in an expected location, to
 include a link to that documentation on the templated landing pages.
 
 ``has_install_guide``
-    produces a link to docs.o.o/name/latest/install/
+    produces a link to ``docs.o.o/{{name}}/latest/install/``
 
 ``has_api_guide``
-    produces a link to developer.o.o/api-guide/service_type/
+    produces a link to ``developer.o.o/api-guide/{{service_type}}/``
 
 ``has_api_ref``
-    produces a link to developer.o.o/api-ref/service_type/
+    produces a link to ``developer.o.o/api-ref/{{service_type}}/``
 
 ``has_config_ref``
-    produces a link to docs.o.o/name/latest/configuration/
+    produces a link to ``docs.o.o/{{name}}/latest/configuration/``
 
 ``has_in_tree_api_docs``
-    produces a link to docs.o.o/name/latest/api/
+    produces a link to ``docs.o.o/{{name}}/latest/api/``
 
 ``has_admin_guide``
-    produces a link to docs.o.o/name/latest/admin/
+    produces a link to ``docs.o.o/{{name}}/latest/admin/``
 
 ``has_in_tree_htaccess``
     enables full redirects to old paths, not just to the top of
-    /name/latest/
+    ``/{{name}}/latest/``
 
 .. note::
 
