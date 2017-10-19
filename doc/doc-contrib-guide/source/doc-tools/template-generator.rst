@@ -146,6 +146,9 @@ include a link to that documentation on the templated landing pages.
     enables full redirects to old paths, not just to the top of
     ``/{{name}}/latest/``
 
+``has_deployment_guide``
+    produces a link to ``docs.o.o/project-deploy-guide/{{name}}/{{series}}/``
+
 .. note::
 
    The documentation associated with the flags must exist before the
