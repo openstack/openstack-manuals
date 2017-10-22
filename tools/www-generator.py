@@ -434,6 +434,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             fh.write(output.encode('utf8'))
     except (IOError, OSError, UnicodeEncodeError) as e:
         logger.error("writing %s failed: %s" % (target_file, e))
+        raise
 
 
 def main():
@@ -457,7 +458,7 @@ def main():
         environment = jinja2.Environment(loader=loader)
     except Exception as e:
         logger.error("initialising template environment failed: %s" % e)
-        return 1
+        raise
 
     if args.skip_render:
         return 0
