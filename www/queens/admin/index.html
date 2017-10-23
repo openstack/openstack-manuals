@@ -43,6 +43,18 @@
 {%- endfor %}
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="docs-link-sections">
+                        <h3><i class="fa fa-book"></i> Administrator Guides for OpenStack Deployment Tools</h3>
+{% for project in projects|sort(attribute='name') -%}
+{% if project.type == 'deployment' and project.has_admin_guide %}
+                        <a href="/{{project.name}}/latest/admin/">{{project.name}}</a><br />
+                        <p>{{project.service}}</p>
+{% endif %}
+{%- endfor %}
+                    </div>
+                </div>
+
             </div>
             <div class="row docs-contribute-wrapper">
                 <div class="col-lg-12">
