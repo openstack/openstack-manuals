@@ -12,8 +12,8 @@ The Documentation team uses specifications in the `docs-specs repository
 changes. Approved specifications are published at `Documentation Program
 Specifications <https://specs.openstack.org/openstack/docs-specs>`_.
 For tracking purposes, a blueprint is created for each specification. It is
-also good practice to contact the specialty team for the book you want to
-change to discuss your changes before starting work.
+also good practice to contact the project team or subteam for the book you want
+to change to discuss your changes before starting work.
 
 Use blueprints and specifications:
 

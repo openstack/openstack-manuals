@@ -8,12 +8,12 @@ The Documentation project provides documentation for various OpenStack
 projects to promote OpenStack, develop and maintain tools and processes
 to ensure quality and accuracy of documentation.
 
-The OpenStack community has the following documentation specialty teams
+The OpenStack community has the following documentation subteams
 with their respective leads:
 
 * :doc:`API <api-guides>`: Anne Gentle
 * `Contributor Guide
-  <https://wiki.openstack.org/wiki/ContributorGuide>`_:
+  <https://docs.openstack.org/contributors/>`_:
   Mike Perez
 * `Security Guide
   <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:

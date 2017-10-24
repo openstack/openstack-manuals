@@ -148,9 +148,9 @@ your reasons. Being overly cautious is better than being overly confident.
 Try not to merge a patch too quickly, even if it strictly has the correct
 number of votes. Allowing a patch to sit for a couple of days is generally
 helpful, in order to ensure enough people have seen the change. It can also
-be valuable to add speciality team leads or other subject matter experts
-to patches where you feel more specialized knowledge is required to make
-a good decision.
+be valuable to add team leads or other subject matter experts to patches
+where you feel more specialized knowledge is required to make a good
+decision.
 
 A note on review rigor: There are very few guidelines about what a good patch
 looks like, but the general approach is that if it's technically accurate and

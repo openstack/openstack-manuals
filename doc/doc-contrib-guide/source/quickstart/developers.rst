@@ -31,10 +31,11 @@ quickly and easily:
   a patch, you can create a bug with source content or notes, and ask for
   assistance from the docs team on finding the right location for the content.
 * If you know which book you want to modify, get in contact with the
-  appropriate speciality team, listed at :doc:`../team-structure`. They
-  can help you determine where the content should live, and also give you
-  details about upcoming changes to the architecture of those books that
-  might affect your new documentation.
+  `appropriate project team
+  <https://www.openstack.org/software/project-navigator/>`_ or
+  :doc:`subteam <../team-structure>`. They can help you determine where the
+  content should live, and also give you details about upcoming changes to the
+  architecture of those books that might affect your new documentation.
 * If you are intending to make a very large change, such as an entirely
   new section or chapter, or documenting a new project, the core team might
   ask you to create a blueprint and specification for the change. If you are
