@@ -19,13 +19,9 @@ It includes these manuals:
 
  * Administrator Guide
  * Architecture Design Guide
- * Command-Line Interface Reference
- * Configuration Reference
  * Documentation Contributor Guide
  * High Availability Guide
- * Installation Guides
- * Networking Guide
- * Operations Guide
+ * Installation Guide
  * Virtual Machine Image Guide
 
 In addition to the guides, this repository contains:
