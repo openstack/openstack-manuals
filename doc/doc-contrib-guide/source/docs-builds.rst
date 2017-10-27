@@ -266,9 +266,9 @@ that do automatic testing of patches.
 
 The current jobs are:
 
-* gate-openstack-manuals-tox-checkniceness
-* gate-openstack-manuals-tox-doc-publish-checkbuild
-* gate-openstack-manuals-tox-checklang
+* openstack-tox-linters
+* build-tox-manual-checkbuild
+* build-tox-manual-checklang
 
 Checklang job
 -------------
@@ -283,11 +283,7 @@ the Security Guide, HA Guide and Install Guides.
   <https://bugs.launchpad.net/openstack-i18n>`_.
 
 If you want to manually run this check on your local workstation you can use
-the checklang environment (:command:`tox -e checklang`). To use this
-environment, you first have to install the *xml2po* utility on your local
-workstation. xml2po is part of the gnome-doc-utils and can be installed with
-:command:`yum install gnome-doc-utils` (on RedHat-based distributions), or
-:command:`zypper install xml2po` (on SUSE-based distributions).
+the checklang environment (:command:`tox -e checklang`).
 
 .. _docs_builds_eol:
 
