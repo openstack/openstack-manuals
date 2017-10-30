@@ -84,10 +84,10 @@ documentation team worked in conjunction with the OpenStack Foundation, the
 OpenStack Wiki team, and ``ask.openstack.org`` to create consistent messaging
 across all of our properties to ensure users are correctly directed to the
 new Contributor Portal or the particular project's documentation on
-``docs.openstack.org``. Our success metric has shown a 10% increase in positive
-responses from both the COA exam takers and the comments on the user survey.
-Additionally, we had increased traffic (> 20%) to ``docs.openstack.org``,
-which showed greater utilization by the community.
+``docs.openstack.org``. Over the past year, our success metric has shown a 10%
+increase in positive responses from both the COA exam takers and the comments
+on the user survey. Additionally, we had increased traffic (> 20%) to
+``docs.openstack.org``, which showed greater utilization by the community.
 
 Finally, a more comprehensive documentation `archiving lifecycle`_ was
 implemented for releases. Archived content is still available to users who
