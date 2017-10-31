@@ -277,7 +277,7 @@ Setup VMAX drivers
       volume_backend_name = ISCSI_backend
 
       [CONF_GROUP_FC]
-      volume_driver = cinder.volume.drivers.dell_emc.vmax.fc.EMCVMAXFCDriver
+      volume_driver = cinder.volume.drivers.dell_emc.vmax.fc.VMAXFCDriver
       cinder_emc_config_file = /etc/cinder/cinder_emc_config_CONF_GROUP_FC.xml
       volume_backend_name = FC_backend
 
@@ -1443,7 +1443,7 @@ Configure the source and target arrays
 
       enabled_backends = VMAX_FC_REPLICATION
       [VMAX_FC_REPLICATION]
-      volume_driver = cinder.volume.drivers.emc.emc_vmax_FC.EMCVMAXFCDriver
+      volume_driver = cinder.volume.drivers.dell_emc.vmax.fc.VMAXFCDriver
       cinder_emc_config_file = /etc/cinder/cinder_emc_config_VMAX_FC_REPLICATION.xml
       volume_backend_name = VMAX_FC_REPLICATION
       replication_device = target_device_id:000197811111, remote_port_group:os-failover-pg, remote_pool:SRP_1, rdf_group_label: 28_11_07, allow_extend:False
@@ -1556,7 +1556,7 @@ retype, follow these steps:
    .. code-block:: console
 
       [CONF_GROUP_FC]
-      volume_driver = cinder.volume.drivers.dell_emc.vmax.fc.EMCVMAXFCDriver
+      volume_driver = cinder.volume.drivers.dell_emc.vmax.fc.VMAXFCDriver
       cinder_emc_config_file = /etc/cinder/cinder_emc_config_CONF_GROUP_FC.xml
       volume_backend_name = FC_backend
       multi_pool_support = True
