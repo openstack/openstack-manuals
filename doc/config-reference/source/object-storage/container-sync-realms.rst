@@ -16,4 +16,4 @@ Sample container sync realms configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-sync-realms.conf-sample?h=stable/newton
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-sync-realms.conf-sample?h=newton-eol

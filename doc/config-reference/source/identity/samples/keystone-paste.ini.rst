@@ -7,4 +7,4 @@ Interface (WSGI) middleware pipeline for the Identity service:
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone-paste.ini?h=stable/newton
+   https://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone-paste.ini?h=newton-eol

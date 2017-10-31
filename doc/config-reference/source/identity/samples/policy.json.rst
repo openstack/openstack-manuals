@@ -7,4 +7,4 @@ the Identity service:
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/policy.json?h=stable/newton
+   https://git.openstack.org/cgit/openstack/keystone/plain/etc/policy.json?h=newton-eol

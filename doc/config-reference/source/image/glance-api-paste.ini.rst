@@ -9,4 +9,4 @@ You should not need to modify this file.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-api-paste.ini?h=stable/newton
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-api-paste.ini?h=newton-eol

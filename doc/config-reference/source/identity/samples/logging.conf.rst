@@ -10,4 +10,4 @@ For details, see the `Python logging module documentation
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/logging.conf.sample?h=stable/newton
+   https://git.openstack.org/cgit/openstack/keystone/plain/etc/logging.conf.sample?h=newton-eol

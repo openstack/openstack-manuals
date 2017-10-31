@@ -11,4 +11,4 @@ where to publish the events.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/ceilometer/plain/etc/ceilometer/event_pipeline.yaml?h=stable/newton
+   https://git.openstack.org/cgit/openstack/ceilometer/plain/etc/ceilometer/event_pipeline.yaml?h=newton-eol
