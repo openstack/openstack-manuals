@@ -8,7 +8,7 @@ Team and repository tags
 .. Change things from this point on
 
 OpenStack Manuals
-+++++++++++++++++
+-----------------
 
 This repository contains documentation for the OpenStack project.
 
@@ -17,16 +17,15 @@ Guide <https://docs.openstack.org/doc-contrib-guide/>`_.
 
 It includes these manuals:
 
- * Administrator Guide
- * Architecture Design Guide
- * Documentation Contributor Guide
- * High Availability Guide
- * Installation Guide
- * Virtual Machine Image Guide
+* Architecture Design Guide
+* Documentation Contributor Guide
+* High Availability Guide
+* Installation Guide
+* Virtual Machine Image Guide
 
 In addition to the guides, this repository contains:
 
- * docs.openstack.org contents: ``www``
+* docs.openstack.org contents: ``www``
 
 Building
 ========
@@ -101,7 +100,7 @@ Bugs
 
 Bugs should be filed on Launchpad, not GitHub:
 
-   https://bugs.launchpad.net/openstack-manuals
+https://bugs.launchpad.net/openstack-manuals
 
 
 Installing
