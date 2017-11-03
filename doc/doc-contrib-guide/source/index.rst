@@ -23,6 +23,7 @@ Contents
 
    quickstart.rst
    team-structure.rst
+   team-vision.rst
    non-native-english-speakers.rst
    blueprints-and-specs.rst
    project-guides
