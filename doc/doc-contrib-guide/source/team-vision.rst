@@ -84,17 +84,19 @@ documentation team worked in conjunction with the OpenStack Foundation, the
 OpenStack Wiki team, and ``ask.openstack.org`` to create consistent messaging
 across all of our properties to ensure users are correctly directed to the
 new Contributor Portal or the particular project's documentation on
-``docs.openstack.org``. Our success metric seen a 10% increase in positive
+``docs.openstack.org``. Our success metric has shown a 10% increase in positive
 responses from both the COA exam takers and the comments on the user survey.
 Additionally, we had increased traffic (> 20%) to ``docs.openstack.org``,
 which showed greater utilization by the community.
 
-Finally, a more comprehensive documentation archiving lifecycle was
+Finally, a more comprehensive documentation `archiving lifecycle`_ was
 implemented for releases. Archived content is still available to users who
 need it, but we have added CSS overlays to help avoid confusion and ensure it
 is clear when legacy content is being viewed. This addressed problems
 reported by both COA exam takers and operators using older releases that were
 unable to access older documentation.
+
+.. _archiving lifecycle: http://specs.openstack.org/openstack/docs-specs/specs/queens/retention-policy.html
 
 Contributing to documentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
