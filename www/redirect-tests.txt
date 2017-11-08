@@ -53,11 +53,17 @@
      result_prefix -- the start of the new path (should not include /)
      code -- the response code (defaults to 301)
 #}
-{% macro deep_links(path, result_prefix, code=301) -%}
+{% macro deep_links(path, result_prefix, code=301, nosuffix=True) -%}
 {{ path }} {{ code }} {{ result_prefix }}/
 {{ path }}/ {{ code }} {{ result_prefix }}/
 {{ path }}/any-page {{ code }} {{ result_prefix }}/any-page
 {{ path }}/any-page.html {{ code }} {{ result_prefix }}/any-page.html
+{%- if nosuffix %}
+{{ path }}suffix 200
+{{ path }}suffix/ 200
+{{ path }}suffix/any-page 200
+{{ path }}suffix/any-page.html 200
+{% endif -%}
 {%- endmacro %}
 
 # Redirect old top-level HTML pages to the version under most recent
@@ -102,7 +108,7 @@
 
 # Redirect all openstack-ansible repositories appropriately
 {{ deep_links('/developer/ansible-hardening', '/ansible-hardening/latest') }}
-{{ deep_links('/developer/openstack-ansible-foo', '/openstack-ansible-foo/latest') }}
+{{ deep_links('/developer/openstack-ansible-foo', '/openstack-ansible-foo/latest', nosuffix=False) }}
 
 # Redirect some tripleo repositories appropriately
 {{ deep_links('/developer/tripleo-common', '/tripleo-common/latest') }}
