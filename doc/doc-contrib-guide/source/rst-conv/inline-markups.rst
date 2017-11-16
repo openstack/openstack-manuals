@@ -44,7 +44,7 @@ A fragment of code within a line of text.
 +------------------------+---------------------------------------------------+
 | **Markup**             | `````` (double backticks)                         |
 +------------------------+---------------------------------------------------+
-| **Syntax**             | `` ``m1.small`` ``                                |
+| **Syntax**             | ````m1.small````                                  |
 +------------------------+---------------------------------------------------+
 | **Example of output**  | The following command launches an instance with   |
 |                        | the ``m1.small`` flavor.                          |
