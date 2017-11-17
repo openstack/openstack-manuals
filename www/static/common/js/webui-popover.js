@@ -25,7 +25,7 @@
                                 '<div class="webui-popover-inner">'+
                                     '<a href="#" class="close">x</a>'+
                                     '<h3 class="webui-popover-title"></h3>'+
-                                    '<div class="webui-popover-content"><i class="icon-refresh"></i> <p>&nbsp;</p></div>'+
+                                    '<div class="webui-popover-content"><i class="icon-refresh"></i><p>&nbsp;</p></div>'+
                                 '</div>'+
                             '</div>'
         };
