@@ -9,12 +9,10 @@ if [[ $# > 0 ]] ; then
     fi
 fi
 
-# Do not build from stable/mitaka
-#for guide in user-guide admin-guide \
-#    contributor-guide image-guide arch-design cli-reference; do
-#    tools/build-rst.sh doc/$guide --build build \
-#        --target $guide $LINKCHECK
-#done
+for guide in user-guide admin-guide cli-reference; do
+   tools/build-rst.sh doc/$guide --build build \
+       --target "mitaka/$guide" $LINKCHECK
+done
 
 # This marker is needed for infra publishing
 MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID"

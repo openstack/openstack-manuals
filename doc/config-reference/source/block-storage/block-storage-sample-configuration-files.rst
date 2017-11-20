@@ -29,7 +29,7 @@ service.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/api-paste.ini?h=stable/mitaka
+   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/api-paste.ini?h=mitaka-eol
 
 policy.json
 ~~~~~~~~~~~
@@ -39,7 +39,7 @@ to the Block Storage service.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/policy.json?h=stable/mitaka
+   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/policy.json?h=mitaka-eol
 
 rootwrap.conf
 ~~~~~~~~~~~~~
@@ -50,4 +50,4 @@ privileges to those of the root user.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/rootwrap.conf?h=stable/mitaka
+   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/rootwrap.conf?h=mitaka-eol

@@ -11,7 +11,7 @@ Finalize installation
       .. code-block:: console
 
          # curl -o /etc/swift/swift.conf \
-           https://git.openstack.org/cgit/openstack/swift/plain/etc/swift.conf-sample?h=stable/mitaka
+           https://git.openstack.org/cgit/openstack/swift/plain/etc/swift.conf-sample?h=mitaka-eol
 
    #. Edit the ``/etc/swift/swift.conf`` file and complete the following
       actions:

@@ -11,4 +11,4 @@ from the ``CIM_ProcessorAllocationSettingData`` namespace,
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/ovf-metadata.json.sample?h=stable/mitaka
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/ovf-metadata.json.sample?h=mitaka-eol

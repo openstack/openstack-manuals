@@ -1,0 +1,49 @@
+# Shared Zuul v3 definitions for OpenStack CI.
+
+# These jobs are used in api-site, openstack-manuals, and security-doc
+# repositories.
+
+- job:
+    name: build-tox-manuals
+    description: |
+      Base job to build manual related documents. These build jobs
+      invoke a tox command and expect the published content to be in
+      publish-docs directory. This content is published on the root of
+      the website.
+
+      Note that this build job does not create a root-marker file,
+      this has to be done by scripts called from tox.
+    parent: openstack-tox
+    success-url: publish-docs/
+    post-run: playbooks/build-manuals-tox/post.yaml
+    roles:
+      - zuul: openstack-infra/zuul-jobs
+
+- job:
+    name: build-tox-manuals-checkbuild
+    parent: build-tox-manuals
+    vars:
+      tox_envlist: checkbuild
+
+# Templates to easily group jobs.
+- project-template:
+    name: openstack-manuals-jobs
+    description: |
+      Runs jobs for non-translated documents.
+    check:
+      jobs:
+        - openstack-tox-linters
+        - build-tox-manuals-checkbuild
+    gate:
+      jobs:
+        - openstack-tox-linters
+        - build-tox-manuals-checkbuild
+    post:
+      jobs:
+        - publish-openstack-manuals
+
+# Configuration for this repository, determines which jobs to run.
+- project:
+    name: openstack/openstack-manuals
+    templates:
+      - openstack-manuals-jobs

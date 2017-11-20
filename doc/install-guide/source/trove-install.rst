@@ -235,7 +235,7 @@ Install and configure components
 3. Verify that the ``api-paste.ini`` file is present in ``/etc/trove``.
 
    If the file is not present, you can get it from this
-   `location <http://git.openstack.org/cgit/openstack/trove/plain/etc/trove/api-paste.ini?h=stable/mitaka>`__.
+   `location <http://git.openstack.org/cgit/openstack/trove/plain/etc/trove/api-paste.ini?h=mitaka-eol>`__.
 
 4. Edit the ``trove.conf`` file so it includes appropriate values for the
    settings shown below:

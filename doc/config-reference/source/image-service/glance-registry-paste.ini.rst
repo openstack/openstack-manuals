@@ -7,4 +7,4 @@ The Image service's middleware pipeline for its registry is found in the
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry-paste.ini?h=stable/mitaka
+   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry-paste.ini?h=mitaka-eol

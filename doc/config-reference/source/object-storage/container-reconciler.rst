@@ -20,4 +20,4 @@ Sample container sync reconciler configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-reconciler.conf-sample?h=stable/mitaka
+   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-reconciler.conf-sample?h=mitaka-eol
