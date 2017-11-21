@@ -737,10 +737,6 @@
 
          nova-network is deprecated, as are any related configuration options.
 
-   * - ``use_journal`` = ``False``
-
-     - (Boolean) Enable journald for logging. If running in a systemd environment you may wish to enable journal support. Doing so will use the journal native protocol which includes structured metadata in addition to log messages.This option is ignored if log_config_append is set.
-
    * - ``use_stderr`` = ``False``
 
      - (Boolean) Log output to standard error. This option is ignored if log_config_append is set.
