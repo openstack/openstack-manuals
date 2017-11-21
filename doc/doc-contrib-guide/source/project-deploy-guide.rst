@@ -38,7 +38,7 @@ Setting up
 
    .. code-block:: console
 
-      $ cookiecutter https://git.openstack.org/openstack/installguide-cookiecutter.git
+      $ cookiecutter https://git.openstack.org/openstack/installguide-cookiecutter.git --checkout HEAD^1
 
    You will be prompted to answer questions to complete the installation.
    Content is then added to the ``deploy-guide`` directory in the
