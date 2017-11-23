@@ -14,7 +14,7 @@ bugs across OpenStack:
   default area for doc bugs in the openstack-manuals repository.
 
 * `OpenStack Security Guide Documentation
-  <https://launchpad.net/ossp-security-documentation>`_ is used for the
+  <https://bugs.launchpad.net/ossp-security-documentation>`_ is used for the
   security-doc repository.
 
 * `openstack-api-site <https://bugs.launchpad.net/openstack-api-site>`_ is used
