@@ -54,15 +54,7 @@ for guide in networking-guide config-reference; do
         tools/build-rst.sh doc/$guide --build build \
             --target "ocata/$guide" $LINKCHECK
     fi
-    # For stable branches, we need to mark the specific guides.
-    if [ "$ZUUL_REFNAME" != "master" ] ; then
-        echo $MARKER_TEXT > publish-docs/ocata/$guide/.root-marker
-    fi
+    echo $MARKER_TEXT > publish-docs/ocata/$guide/.root-marker
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK $PDF_OPTION
-
-# For master, just mark the root
-if [ "$ZUUL_REFNAME" = "master" ] ; then
-    echo $MARKER_TEXT > publish-docs/.root-marker
-fi
