@@ -18,6 +18,14 @@
     post-run: playbooks/build-manuals-tox/post.yaml
     roles:
       - zuul: openstack-infra/zuul-jobs
+    vars:
+      tox_environment:
+        # The tox job writes the root-marker file directly and thus
+        # needs the following variables set:
+        ZUUL_PROJECT: '{{ zuul.project.name }}'
+        ZUUL_BRANCH: '{{ zuul.branch }}'
+        ZUUL_UUID: '{{ zuul.build }}'
+        ZUUL_NEWREF: '{{ zuul.ref }}'
 
 - job:
     name: build-tox-manuals-checkbuild

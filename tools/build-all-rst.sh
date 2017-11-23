@@ -3,13 +3,13 @@
 mkdir -p publish-docs
 
 # Set this to a sensible value if not set by OpenStack CI.
-if [ -z "$ZUUL_REFNAME" ] ; then
-    ZUUL_REFNAME="master"
+if [ -z "$ZUUL_BRANCH" ] ; then
+    ZUUL_BRANCH="stable/ocata"
 fi
 
 # This marker is needed for infra publishing.
 # Note for stable branches, this needs to be the top of each manual.
-MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_BRANCH Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
 
 LINKCHECK=""
 PDF_OPTION=""
