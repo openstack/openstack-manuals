@@ -20,7 +20,7 @@ done
 
 # This marker is needed for infra publishing.
 # Note for stable branches, this needs to be the top of each manual.
-MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_BRANCH Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_BRANCH Build: $ZUUL_UUID Revision: $ZUUL_NEWREF"
 
 # Draft guides
 # This includes guides that we publish from stable branches
