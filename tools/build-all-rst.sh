@@ -3,13 +3,13 @@
 mkdir -p publish-docs
 
 # Set this to a sensible value if not set by OpenStack CI.
-if [ -z "$ZUUL_REFNAME" ] ; then
-    ZUUL_REFNAME="master"
+if [ -z "$ZUUL_BRANCH" ] ; then
+    ZUUL_BRANCH="master"
 fi
 
 # This marker is needed for infra publishing.
 # Note for stable branches, this needs to be the top of each manual.
-MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_REFNAME Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
+MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_BRANCH Build: $ZUUL_UUID Revision: $ZUUL_NEWREV"
 
 LINKCHECK=""
 PDF_OPTION=""
@@ -44,6 +44,6 @@ for guide in arch-design doc-contrib-guide glossary \
 done
 
 # For master, just mark the root
-if [ "$ZUUL_REFNAME" = "master" ] ; then
+if [ "$ZUUL_BRANCH" = "master" ] ; then
     echo $MARKER_TEXT > publish-docs/.root-marker
 fi
