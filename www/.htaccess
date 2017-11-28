@@ -51,7 +51,7 @@ redirectmatch {{ code }} ^{{ path }}($|/.*$) {{ result }}
      code -- the response code (defaults to 301)
 #}
 {% macro deep_links(path, result, code=301) -%}
-redirectmatch {{ code }} ^{{ path }}/?(.*)$ {{ result }}
+redirectmatch {{ code }} ^{{ path }}(?![^/])/?(.*)$ {{ result }}
 {%- endmacro %}
 
 # Redirect old top-level HTML pages to the version under most recent
