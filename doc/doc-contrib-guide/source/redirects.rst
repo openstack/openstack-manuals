@@ -22,9 +22,15 @@ If including a ``.htaccess`` file in the project, then Sphinx needs to be told
 to include the file in the build output by adding it to the list of `extra`
 files. `This patch`__ for nova shows how that is done by editing
 ``doc/source/conf.py`` to set ``html_extra_path``.  If the path is set to
-``_extras``, then the patch should also create ``doc/source/_extras/.htaccess``
+``_extra``, then the patch should also create ``doc/source/_extra/.htaccess``
 containing the redirects needed. The contents of that file can be written by
 hand, or :ref:`computed with a command <git-redirect-generation>`.
+
+.. note::
+   If you want to take advantage of the :ref:`whereto tool <whereto-tool>`
+   as part of the build-openstack-sphinx-docs job in the gate, you *must*
+   put your ``.htaccess`` file in ``_extra``.  (This isn't a Sphinx
+   requirement, it's a requirement of how the gate job is set up.)
 
 While this file is a real ``.htaccess`` file, it is expected that the file will
 only contain redirects using the ``Redirect`` and ``RedirectMatch`` rules. For
@@ -70,6 +76,36 @@ on ``docs.openstack.org``.
 After the ``has_in_tree_htaccess`` flag change lands, links to URLs like
 ``docs.openstack.org/developer/nova/cells.html`` should (with two redirects)
 end up at the new home ``docs.openstack.org/nova/latest/user/cells.html``.
+
+.. _whereto-tool:
+
+Testing your redirects
+~~~~~~~~~~~~~~~~~~~~~~
+
+Your redirects can be tested using the `whereto`_ tool.  Because you'll
+obviously want them to be tested, the build-openstack-sphinx-docs job
+is already set up to use **whereto** in the gate, and will run **whereto**
+on docs build jobs automatically whenever **whereto** is present in the
+dependency list for a project.  Thus to enable redirect testing, all you need
+to do is add **whereto** to your repository's ``doc/requirements.txt`` or
+``test-requirements.txt`` file.
+
+To get the job to pass, however, you'll have to make sure that the
+build-openstack-sphinx-docs job can find the input files that **whereto**
+expects.  These files are:
+
+* The Apache redirect file.  The build job expects this file to be named
+  ``.htaccess`` and to be located in the ``doc/source/_extra`` directory.
+
+* The test file.  The build job expects this file to be named
+  ``test-redirects.txt`` and to be located in the ``doc/test`` directory.
+
+As a convenience for developers running the build locally, you can add an
+explicit call to **whereto** in your project's ``tox.ini`` file.  (This
+`glance-specs patch`_ provides an example.)
+
+.. _whereto: https://docs.openstack.org/whereto/latest/
+.. _glance-specs patch: https://review.openstack.org/#/c/523472/2/tox.ini
 
 .. _git-redirect-generation:
 
