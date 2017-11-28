@@ -137,5 +137,6 @@ Bugs should be filed on Launchpad, not GitHub:
 
 Installing
 ==========
+
 Refer to http://docs.openstack.org to see where these documents are published
 and to learn more about the OpenStack project.
