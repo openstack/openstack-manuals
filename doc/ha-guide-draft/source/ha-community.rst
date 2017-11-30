@@ -12,6 +12,4 @@ You can contact the HA community directly in `the #openstack-ha
 channel on Freenode IRC <https://wiki.openstack.org/wiki/IRC>`_, or by
 sending mail to the `openstack-dev
 <https://wiki.openstack.org/wiki/Mailing_Lists#Future_Development>`_
-or `openstack-docs
-<http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`_
 mailing list with the ``[HA]`` prefix in the ``Subject`` header.

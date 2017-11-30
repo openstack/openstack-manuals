@@ -21,28 +21,20 @@ Documentation
 For the available OpenStack documentation, see
 `docs.openstack.org <https://docs.openstack.org>`_.
 
-To provide feedback on documentation, join and use the
-openstack-docs@lists.openstack.org mailing list at `OpenStack
-Documentation Mailing
-List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`_,
-join our IRC channel ``#openstack-doc`` on the freenode IRC network,
-or `report a
-bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`_.
+The following guides explain how to install a Proof-of-Concept OpenStack cloud
+and its associated components:
 
-The following guides explain how to install an OpenStack cloud and its
-associated components:
-
-* `OpenStack Pike Installation Guides <https://docs.openstack.org/pike/install/>`_
+* `Pike Installation Guides <https://docs.openstack.org/pike/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
 *  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
 
-*  `Administrator Guide <https://docs.openstack.org/admin-guide/>`_
+*  `Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_
 
-*  `Configuration Reference <https://docs.openstack.org/pike/configuration/>`_
+*  `Pike Configuration Guides <https://docs.openstack.org/pike/configuration/>`_
 
-*  `Networking Guide <https://docs.openstack.org/neutron/latest/admin/>`_
+*  `Pike Networking Guide <https://docs.openstack.org/neutron/pike/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
@@ -52,15 +44,16 @@ The following books explain how to configure and run an OpenStack cloud:
 
 The following book explains how to use the command-line clients:
 
-*  `Command-Line Interface Reference
-   <https://docs.openstack.org/cli-reference/>`_
+*  `Pike API Bindings
+   <https://docs.openstack.org/pike/language-bindings.html>`_
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
-*  `API Guide <https://developer.openstack.org/api-guide/quick-start/>`_
+*  `API Documentation <https://developer.openstack.org/api-guide/quick-start/>`_
 
-The following guide provides how to contribute to OpenStack documentation:
+The following guide provides information on how to contribute to OpenStack
+documentation:
 
 *  `Documentation Contributor Guide <https://docs.openstack.org/doc-contrib-guide/>`_
 
@@ -78,17 +71,6 @@ been answered. If not, ask a new question. Be sure to give a clear,
 concise summary in the title and provide as much detail as possible in
 the description. Paste in your command output or stack traces, links to
 screen shots, and any other information which might be useful.
-
-OpenStack mailing lists
-~~~~~~~~~~~~~~~~~~~~~~~
-
-A great way to get answers and insights is to post your question or
-problematic scenario to the OpenStack mailing list. You can learn from
-and help others who might have similar issues. To subscribe or view the
-archives, go to the `general OpenStack mailing list
-<http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack>`_. If you are
-interested in the other mailing lists for specific projects or development,
-refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
 
 The OpenStack wiki
 ~~~~~~~~~~~~~~~~~~
@@ -195,6 +177,14 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: OpenStack Documentation
    (docs.openstack.org) <https://bugs.launchpad.net/openstack-manuals>`_
 
+Documentation feedback
+~~~~~~~~~~~~~~~~~~~~~~
+
+To provide feedback on documentation, join our IRC channel ``#openstack-doc``
+on the Freenode IRC network, or `report a bug in Launchpad
+<https://bugs.launchpad.net/openstack/+filebug>`_ and choose the particular
+project that the documentation is a part of.
+
 The OpenStack IRC channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -214,15 +204,16 @@ channel. The OpenStack IRC channel is ``#openstack`` on
 ``irc.freenode.net``. You can find a list of all OpenStack IRC channels on
 the `IRC page on the wiki <https://wiki.openstack.org/wiki/IRC>`_.
 
-Documentation feedback
-~~~~~~~~~~~~~~~~~~~~~~
+OpenStack mailing lists
+~~~~~~~~~~~~~~~~~~~~~~~
 
-To provide feedback on documentation, join and use the
-openstack-docs@lists.openstack.org mailing list at `OpenStack
-Documentation Mailing
-List <http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack-docs>`_,
-or `report a
-bug <https://bugs.launchpad.net/openstack-manuals/+filebug>`_.
+A great way to get answers and insights is to post your question or
+problematic scenario to the OpenStack mailing list. You can learn from
+and help others who might have similar issues. To subscribe or view the
+archives, go to the `general OpenStack mailing list
+<http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack>`_. If you are
+interested in the other mailing lists for specific projects or development,
+refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
 
 OpenStack distribution packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -230,12 +221,10 @@ OpenStack distribution packages
 The following Linux distributions provide community-supported packages
 for OpenStack:
 
-*  **Debian:** https://wiki.debian.org/OpenStack
-
 *  **CentOS, Fedora, and Red Hat Enterprise Linux:**
    https://www.rdoproject.org/
 
 *  **openSUSE and SUSE Linux Enterprise Server:**
    https://en.opensuse.org/Portal:OpenStack
 
-*  **Ubuntu:** https://wiki.ubuntu.com/ServerTeam/CloudArchive
+*  **Ubuntu:** https://wiki.ubuntu.com/OpenStack/CloudArchive
