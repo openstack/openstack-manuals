@@ -109,7 +109,7 @@ event data break the defined rules.
 
 Installation and configuration is documented in the
 `Telemetry Alarming installation guide
-<https://docs.openstack.org/project-install-guide/telemetry-alarming/ocata>`_.
+<https://docs.openstack.org/project-install-guide/alarm/ocata>`_.
 
 Telemetry Data Collection service (ceilometer)
 ==============================================
@@ -124,4 +124,4 @@ The Telemetry Data Collection services provide the following functions:
 
 Installation and configuration is documented in the
 `Telemetry Data Collection installation guide
-<https://docs.openstack.org/project-install-guide/telemetry/ocata>`_.
+<https://docs.openstack.org/project-install-guide/meter/ocata>`_.
