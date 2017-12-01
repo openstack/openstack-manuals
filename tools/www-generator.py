@@ -323,6 +323,7 @@ _IGNORED_REPOS = [
 _INFRA_REPOS_EXCEPTION = [
     'openstack-infra/pynotedb',
     'openstack-infra/subunit2sql',
+    'openstack/diskimage-builder',
 ]
 
 
