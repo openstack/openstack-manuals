@@ -34,11 +34,22 @@ Install and configure components
 
    .. end
 
-2. Edit the ``/etc/chrony.conf`` file and comment out or remove all
+2. Configure the ``chrony.conf`` file and comment out or remove all
    but one ``server`` key. Change it to reference the controller node:
 
+   For RHEL, CentOS, or SUSE, edit the ``/etc/chrony.conf`` file:
+
    .. path /etc/chrony.conf
-   .. code-block:: shell
+   .. code-block:: ini
+
+      server controller iburst
+
+   .. end
+
+   For Ubuntu, edit the ``/etc/chrony/chrony.conf`` file:
+
+   .. path /etc/chrony/chrony.conf
+   .. code-block:: ini
 
       server controller iburst
 
