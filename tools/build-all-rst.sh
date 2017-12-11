@@ -46,7 +46,7 @@ PDF_TARGETS=( 'arch-design'\
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
-for guide in networking-guide config-reference; do
+for guide in user-guide admin-guide cli-reference networking-guide config-reference; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target "ocata/$guide" $LINKCHECK $PDF_OPTION
