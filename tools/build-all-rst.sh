@@ -28,7 +28,7 @@ MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_BRANCH Build: $ZUUL_UUID Revision
 # Draft guides
 # This includes guides that we publish from stable branches
 # as versioned like the networking-guide.
-for guide in networking-guide config-reference; do
+for guide in user-guide admin-guide cli-reference networking-guide config-reference; do
     tools/build-rst.sh doc/$guide --build build \
         --target "newton/$guide" $LINKCHECK
     echo $MARKER_TEXT > publish-docs/newton/$guide/.root-marker
