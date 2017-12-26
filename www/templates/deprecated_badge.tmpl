@@ -1,0 +1,39 @@
+{# -*- mode: html -*- #}
+
+<!-- Custom CSS -->
+<link href="{{ CSSDIR }}deprecated-badge.css" rel="stylesheet">
+<script src="{{ SCRIPTDIR }}deprecated-badge.js"></script>
+
+<div id="deprecated-badge" class="deprecated-badge fixed
+    {% if SERIES == RELEASED_SERIES %}
+        deprecated-badge-current
+    {% else %}
+        deprecated-badge-{{ SERIES_INFO.status| lower }}
+    {% endif %}
+    ">
+    <span id="deprecated-badge-close-button" title="close" class="deprecated-badge-close-button">x</span>
+    <div class="container">
+       {% if SERIES_INFO.status == 'obsolete' %}
+           <p class="deprecated-badge-left">
+                This Release is no longer supported by the community. The current, supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}</a>
+           </p>
+       {% elif SERIES_INFO.status == 'EOL' %}
+            <p class="deprecated-badge-left">
+                This Release is no longer supported by the community. The current, supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}</a>
+            </p>
+        {% elif SERIES == RELEASED_SERIES %}
+            <p class="deprecated-badge-left">
+                This is the current, supported release.
+            </p>
+        {% elif SERIES_INFO.status == 'maintained' %}
+            <p class="deprecated-badge-left">
+                This is maintained, but NOT the current release. The current, supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}</a>
+            </p>
+        {% elif SERIES_INFO.status == 'development' %}
+            <p class="deprecated-badge-left">
+                This release is currently under development. The current, supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}</a>
+            </p>
+        {% endif %}
+        <a href="#top" class="deprecated-badge-right"><i class="fa fa-chevron-up" aria-hidden="true"></i>&nbsp;Back to Top</a>
+    </div>
+</div>
