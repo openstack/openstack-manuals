@@ -12,10 +12,10 @@ Reviewing documentation
 OpenStack documentation is treated in the same way as code, and follows the
 standard code review process. To see what documentation changes are ready for
 review, use the `Documentation Program Dashboard
-<http://is.gd/openstackdocsreview>`_. It is organized in groups based on the
-audience for the documentation. To see current proposed changes, make sure
-you register and log into https://review.openstack.org. For more details on
-the review process, see `Code Review
+<https://is.gd/openstackdocsreviewreloaded>`_. It is organized in groups based
+on the audience for the documentation. To see current proposed changes, make
+sure you register and log into https://review.openstack.org. For more details
+on the review process, see `Code Review
 <https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 
 Repositories and core team
@@ -32,8 +32,8 @@ special rules apply:
 * security-doc: has a separate core team consisting of Docs team members and
   Security team members. The rule here is that each patch needs an approval
   by a Docs core and a Security core.
-* training-guides and training-labs: have separate core teams, but also
-  includes the openstack-manuals core team.
+* contributor-guide, training-guides and training-labs: have separate core
+  teams, but also includes the openstack-manuals core team.
 
 The current list of docs cores for openstack-manuals can be found at
 `Group openstack-doc-core
@@ -49,19 +49,18 @@ and `Code Review Guidelines
 Once done, follow the steps below to submit a patch review.
 
 #. Go to the `Documentation Program Dashboard
-   <http://is.gd/openstackdocsreview>`_.
+   <https://is.gd/openstackdocsreviewreloaded>`_.
 #. Select a patch set.
 #. Click a file that was uploaded to view the changes side by side.
 #. If you see some inconsistencies or have questions to the patch owner,
    you can also highlight the line or word in question, and press 'c'
    on your keyboard, which enables commenting directly on that line or word.
    Click :guilabel:`Save` button once you write a draft of your comment.
-#. In the :guilabel:`Jenkins check` section, click the ``checkbuild``
+#. In the :guilabel:`Zuul check` section, click the ``checkbuild``
    gate link (for the openstack-manuals, it is called
-   ``gate-openstack-manuals-tox-doc-publish-checkbuild``) and review the
-   built manuals to see how the change will look on the web page. For a new
-   patch, it takes some time before the OpenStack CI system checks appear on
-   the Gerrit page.
+   ``build-tox-manuals-checkbuild``) and review the built manuals to see how
+   the change will look on the web page. For a new patch, it takes some time
+   before the OpenStack CI system checks appear on the Gerrit page.
    You can also :ref:`build the patch locally <docs_builds_locally>`
    if necessary.
 #. Click :guilabel:`Reply` to vote and enter any comments about your review,
@@ -100,13 +99,10 @@ recognizing valuable team members.
 The process is:
 
 * Every month (usually on the 1st), the documentation PTL draws the top 12
-  names using these reports:
+  names from the `Stackalytics <http://stackalytics.com/>`_ report for
+  openstack-manuals:
 
-  * `Reviews for the last 30 days
-    <http://russellbryant.net/openstack-stats/docs-reviewers-30.txt>`_
-  * `Reviews for the last 90 days
-    <http://russellbryant.net/openstack-stats/docs-reviewers-90.txt>`_
-  * `Openstack Manuals stackalytics
+  * `openstack-manuals Stackalytics
     <http://stackalytics.com/?module=openstack-manuals&metric=commits>`_
 
 * The PTL then consults the existing core team with a list of names to be

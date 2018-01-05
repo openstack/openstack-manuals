@@ -113,15 +113,6 @@ For the instructions on how to set up a repository so that you can work
 on it locally, refer to the `Starting Work on a New Project`_
 of the Infrastructure manual.
 
-.. note::
-
-   Substitute ``<projectname>`` in the examples included in this section
-   with ``openstack-manuals`` as the documentation is mostly stored in
-   the *openstack-manuals* repository. However, if you need specific
-   guide sources, refer to *openstack/api-site*,
-   *openstack/security-guide*, or *openstack/training-guides*
-   repository.
-
 See :ref:`troubleshoot_setup` if you have difficulty with a repository
 setup.
 
@@ -156,7 +147,7 @@ Committing a change
 
      https://review.openstack.org/<COMMIT-NUMBER>
 
-#. In Gerrit, wait for the automatic Jenkins checks to succeed.
+#. In Gerrit, wait for the automatic Zuul checks to succeed.
 
 Celebrate and wait for reviews!
 
@@ -295,7 +286,7 @@ git and git review
   `Resolving merge conflicts after a git rebase
   <https://help.github.com/articles/resolving-merge-conflicts-after-a-git-rebase/>`_.
 
-* ``FAILURE`` in the ``Jenkins check`` section of your commit in Gerrit
+* ``FAILURE`` in the ``Zuul check`` section of your commit in Gerrit
 
   #. Click the link next to the ``FAILURE`` test.
   #. Verify the output of the :file:`console.html`:
