@@ -11,7 +11,7 @@ to ensure quality and accuracy of documentation.
 The OpenStack community has the following documentation subteams
 with their respective leads:
 
-* :doc:`API <api-guides>`: Anne Gentle
+* :doc:`api-site <api-guides>`: *vacant*
 * `Contributor Guide
   <https://docs.openstack.org/contributors/>`_:
   Mike Perez
@@ -27,8 +27,8 @@ with their respective leads:
 The current list of docs cores for openstack-manuals, openstackdocstheme,
 and openstack-doc-tools repositories can be found at
 https://review.openstack.org/#/admin/groups/30,members.
-The api-site, docs-specs, security-doc, training-guides, and training-labs
-repositories have separate core teams.
+The api-site, contributor-guide, docs-specs, security-doc, training-guides,
+and training-labs repositories have separate core teams.
 
 The cross-project liaisons (CPLs) assist with subject matter questions,
 reviews, doc bug triaging, and patching docs.
