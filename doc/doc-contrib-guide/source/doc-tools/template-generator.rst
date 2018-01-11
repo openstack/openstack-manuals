@@ -196,7 +196,10 @@ The ``type`` must be one of the values listed below:
 ``service``
     A REST API service.
 
-``client``
+``cloud-client``
+    A library for talking to a cloud.
+
+``service-client``
     A library for talking to a service.
 
 ``library``

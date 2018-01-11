@@ -12,11 +12,12 @@
   type: service
 - name: python-keystoneclient
   service: Identity service Python Bindings
-  type: client
+  type: service-client
   description: keystone client
 - name: keystoneauth
-  type: library
-  service: Common authentication library for OpenStack clients.
+  type: cloud-client
+  description: keystoneauth
+  service: Common authentication library and REST client for OpenStack.
 - name: keystonemiddleware
   type: library
   service: Middleware provided for integrating with the OpenStack Identity API.
@@ -35,7 +36,7 @@
   has_user_guide: true
 - name: python-glanceclient
   service: Image service Python Bindings
-  type: client
+  type: service-client
   description: glance client
 - name: glance_store
   service: glance backend abstraction library
@@ -54,13 +55,13 @@
 - name: python-novaclient
   service: Compute service Python Bindings
   has_user_guide: true
-  type: client
+  type: service-client
   description: nova client
 - name: os-vif
   type: library
   service: Library for plugging and unplugging virtual interfaces.
 # - name: osc-placement
-#   type: client
+#   type: service-client
 #   service: OpenStackClient plugin for the Nova Placement service.
 #   description: nova placement client
 
@@ -75,7 +76,7 @@
   type: service
 - name: python-neutronclient
   service: Networking service Python Bindings
-  type: client
+  type: service-client
   description: neutron client
 - name: neutron-lib
   type: library
@@ -148,7 +149,7 @@
   type: service
 - name: python-cinderclient
   service: Block Storage service Python Bindings
-  type: client
+  type: service-client
   description: cinder client
 - name: os-brick
   service: library for managing local volume attaches
@@ -156,7 +157,7 @@
   description: cinder backend abstraction library
 - name: python-brick-cinderclient-ext
   service: client for local volume attachement
-  type: client
+  type: service-client
   description: cinder local client
 
 - name: ironic
@@ -170,7 +171,7 @@
   type: service
 - name: python-ironicclient
   service: Bare Metal service Python Bindings
-  type: client
+  type: service-client
   description: ironic client
 
 - name: ironic-inspector
@@ -191,7 +192,7 @@
   type: service
 - name: python-magnumclient
   service: Container Infrastructure Management service Python Bindings
-  type: client
+  type: service-client
   description: magnum client
 
 - name: trove
@@ -203,7 +204,7 @@
   type: service
 - name: python-troveclient
   service: Database service Python Bindings
-  type: client
+  type: service-client
   description: trove client
   has_user_guide: true
 
@@ -218,7 +219,7 @@
   type: service
 - name: python-designateclient
   service: DNS service Python Bindings
-  type: client
+  type: service-client
   description: designate client
   has_install_guide: true
   has_user_guide: true
@@ -240,7 +241,7 @@
   type: service
 - name: python-barbicanclient
   service: Key Manager service Python Bindings
-  type: client
+  type: service-client
   description: barbican client
   has_install_guide: true
 
@@ -255,7 +256,7 @@
   type: service
 - name: python-zaqarclient
   service: Messaging service Python Bindings
-  type: client
+  type: service-client
   description: zaqar client
 
 - name: swift
@@ -267,7 +268,7 @@
   type: service
 - name: python-swiftclient
   service: Object Storage service Python Bindings
-  type: client
+  type: service-client
   description: swift client
 
 - name: heat
@@ -281,7 +282,7 @@
   type: service
 - name: python-heatclient
   service: Orchestration service Python Bindings
-  type: client
+  type: service-client
   description: heat client
 - name: heat-translator
   type: tool
@@ -296,7 +297,7 @@
   type: service
 - name: python-manilaclient
   service: Shared File Systems service Python Bindings
-  type: client
+  type: service-client
   description: manila client
 
 - name: aodh
@@ -308,7 +309,7 @@
   type: service
 - name: python-aodhclient
   service: Telemetry Alarming service Python Bindings
-  type: client
+  type: service-client
   description: aodh client
 
 - name: ceilometer
@@ -320,7 +321,7 @@
   type: service
 - name: python-ceilometerclient
   service: Telemetry Data Collection service Python Bindings
-  type: client
+  type: service-client
   description: ceilometer client
 
 - name: requirements
@@ -338,7 +339,7 @@
   type: service
 - name: python-saharaclient
   service: Data Processing service Python Bindings
-  type: client
+  type: service-client
   description: sahara client
 
 - name: congress
@@ -353,7 +354,7 @@
   service: Governance service Python Bindings
   has_install_guide: true
   has_user_guide: true
-  type: client
+  type: service-client
   description: congress client
 
 - name: watcher
@@ -367,7 +368,7 @@
   has_config_ref: true
 - name: python-watcherclient
   service: Infrastructure Optimization service Python Bindings
-  type: client
+  type: service-client
   description: watcher client
 
 - name: mistral
@@ -380,7 +381,7 @@
   has_config_ref: true
 - name: python-mistralclient
   service: Workflow service Python Bindings
-  type: client
+  type: service-client
   description: mistral client
 
 - name: murano
@@ -393,7 +394,7 @@
   has_admin_guide: true
 - name: python-muranoclient
   service: Application Catalog service Python Bindings
-  type: client
+  type: service-client
   description: murano client
 
 - name: senlin
@@ -406,7 +407,7 @@
   has_config_ref: true
 - name: python-senlinclient
   service: Clustering service Python Bindings
-  type: client
+  type: service-client
   description: senlin client
 
 - name: storlets
@@ -424,7 +425,7 @@
 - name: python-zunclient
   service: Containers service Python Bindings
   has_install_guide: true
-  type: client
+  type: service-client
   description: zun client
 
 - name: tacker
@@ -434,7 +435,7 @@
   has_api_ref: true
 # - name: python-tackerclient
 #   service: NFV Orchestration service Python Bindings
-#   type: client
+#   type: service-client
 #   description: tacker client
 
 - name: cloudkitty
@@ -446,7 +447,7 @@
   has_install_guide: true
 # - name: python-cloudkittyclient
 #   service: Rating service Python Bindings
-#   type: client
+#   type: service-client
 #   description: cloudkitty client
 
 - name: vitrage
@@ -457,7 +458,7 @@
   has_config_ref: true
 - name: python-vitrageclient
   service: RCA (Root Cause Analysis) service Python Bindings
-  type: client
+  type: service-client
   description: vitrage client
 
 - name: searchlight
@@ -473,7 +474,7 @@
   has_user_guide: true
 - name: python-searchlightclient
   service: Search service Python Bindings
-  type: client
+  type: service-client
   description: searchlight client
 
 - name: panko
@@ -484,7 +485,7 @@
   has_in_tree_api_docs: true
 - name: python-pankoclient
   service: Telemetry Event service Python Bindings
-  type: client
+  type: service-client
   description: panko client
 
 - name: automaton
@@ -656,7 +657,7 @@
   has_user_guide: true
 - name: python-octaviaclient
   service: Load-balancer service client
-  type: client
+  type: service-client
   description: octavia client
 
 - name: freezer
@@ -668,7 +669,7 @@
   has_admin_guide: true
 # - name: python-freezerclient
 #   service: Backup, Restore, and Disaster Recovery service client
-#   type: client
+#   type: service-client
 #   description: freezer client
 
 - name: karbor
@@ -682,18 +683,18 @@
 - name: python-karborclient
   service: Data Protection Orchestration Service client
   has_user_guide: true
-  type: client
+  type: service-client
   description: karbor client
 
 # - name: python-monascaclient
 #   service: Monitoring client
-#   type: client
+#   type: service-client
 #   description: monasca client
 
 - name: python-openstackclient
   service: Command line interface to OpenStack
-  type: client
-  description: openstack client
+  type: cloud-client
+  description: OpenStack client
   has_config_ref: true
 - name: cliff
   service: Builds command-line programs in Python.
@@ -708,7 +709,7 @@
 
 # - name: shade
 #   service: Multi-cloud interoperability library
-#   type: client
+#   type: cloud-client
 #   description: shade client library
 #   has_install_guide: true
 #   has_user_guide: true
@@ -723,7 +724,7 @@
   type: service
 - name: python-solumclient
   service: Software Development Lifecycle Automation client
-  type: client
+  type: service-client
   description: solum client
 
 - name: tricircle
@@ -736,7 +737,7 @@
   has_user_guide: true
 - name: python-tricircleclient
   service: Networking automation client
-  type: client
+  type: service-client
   description: tricircle client
 
 - name: openstack-ansible

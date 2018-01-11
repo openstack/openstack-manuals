@@ -25,8 +25,18 @@
                     <div class="docs-link-sections">
                         <h3><i class="fa fa-book"></i>Bindings for the OpenStack APIs</h3>
 {% for project in projects|sort(attribute='service') -%}
-{% if project.type == 'client' %}
+{% if project.type == 'cloud-client' %}
     <a href="/{{project.name}}/{{SERIES}}/">
+    {{project.service}} ({{project.description}})
+    </a><br />
+{% endif %}
+{%- endfor %}
+                    </div>
+                    <div class="docs-link-sections">
+                        <h3><i class="fa fa-book"></i> Bindings for individual OpenStack service APIs</h3>
+{% for project in projects|sort(attribute='service') -%}
+{% if project.type == 'service-client' %}
+    <a href="/{{project.name}}/{{SERIES}}">
     {{project.service}} ({{project.description}})
     </a><br />
 {% endif %}

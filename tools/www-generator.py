@@ -247,7 +247,8 @@ def load_project_data(source_directory,
 
             # client projects must have a description
             project_type = project.get('type')
-            if project_type == 'client' and not project.get('description'):
+            if (project_type in ['cloud-client', 'service-client'] and
+                    not project.get('description')):
                 logger.error(
                     'client project %s has no description',
                     project['name'],
