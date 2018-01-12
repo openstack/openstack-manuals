@@ -26,13 +26,13 @@ Install and configure components
 
      .. code-block:: none
 
-        MEMCACHED_PARAMS="-l 127.0.0.1"
+        MEMCACHED_PARAMS="-l 10.0.0.11"
 
      .. end
 
      .. note::
 
-        Change the existing line ``MEMCACHED_PARAMS="-l 127.0.0.1,::1"``.
+        Change the existing line ``MEMCACHED_PARAMS="-l 127.0.0.1"``.
 
 Finalize installation
 ---------------------
