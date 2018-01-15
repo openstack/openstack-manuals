@@ -110,9 +110,6 @@ download these images.
 * `SUSE Linux Enterprise Server 12 SP1 JeOS
   <https://www.suse.com/products/server/jeos>`_
 
-For openSUSE and SUSE Linux Enterprise Server (SLES), custom images can also
-be built with a web-based tool called `SUSE Studio <https://susestudio.com>`_.
-
 Red Hat Enterprise Linux
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
