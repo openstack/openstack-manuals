@@ -7,27 +7,16 @@ Building documentation
 Clone a repository first
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before building documentation, you must first clone the repo where the files
-reside:
+Before building documentation, you must first clone the repository where the
+files reside.
 
-.. code-block:: console
+For the instructions on how to clone a repository so that you can work
+on it locally, refer to the `Starting Work on a New Project
+<https://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project>`_
+of the Infrastructure manual.
 
-   $ git clone git://git.openstack.org/openstack/openstack-manuals.git
-
-Navigate to the ``openstack-manuals`` directory and create a branch from there
-to do your work:
-
-.. code-block:: console
-
-   $ cd openstack-manuals
-   $ git checkout -b new-branch
-
-The value of ``new-branch`` is any name you want to give to your branch.
-
-To work on a file, use a text editor and open the ``.rst`` file from the same
-navigational path as the path shown in the HTML URL. For example,
-https://docs.openstack.org/doc-contrib-guide/docs-builds.html, is found in the
-folder: ``openstack-manuals/doc/doc-contrib-guide/docs-builds.rst``.
+See :ref:`troubleshoot_setup` if you have difficulty with a repository
+setup.
 
 Refer to :doc:`Writing documentation <writing-docs>` for details on how to
 create content and contribute to the documentation.
@@ -35,12 +24,13 @@ create content and contribute to the documentation.
 Building output locally
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The openstack-manuals project uses a `tox.ini
-<https://git.openstack.org/cgit/openstack/openstack-manuals/tree/tox.ini>`_
-file with specific sections that run jobs using the `Tox
+You can use Linux, MacOS, or Windows to build the Sphinx documentation
+everywhere in OpenStack.
+
+OpenStack project and documentation repositories use a ``tox.ini`` file with
+specific sections that run jobs using the `Tox
 <https://tox.readthedocs.org/en/latest/>`_ tool, a virtualenv-based
-automation of test activities. You can use MacOS, Windows, or Linux to
-build the Sphinx documentation everywhere in OpenStack.
+automation of test activities.
 
 .. _docs_dependencies:
 
@@ -54,23 +44,6 @@ dependencies based on the error messages returned. Continue to run until
 your local environment meets the requirements as listed in ``bindep.txt``
 in the repository.
 
-.. note::
-
-   You cannot run :command:`tox -e bindep` on Mac OS X as it uses a Linux tool
-   to parse the information. `Issue logged here
-   <https://storyboard.openstack.org/#!/story/2000888>`_.
-
-* On MacOS
-
-Open a Terminal window. Make sure you have Python installed. Many contributors
-use the `Homebrew tool instructions
-<http://python-guide-pt-br.readthedocs.io/en/latest/starting/install/osx/>`_.
-
-.. code-block:: console
-
-   $ brew install python
-   $ pip install tox
-
 * On Ubuntu or Debian:
 
   .. code-block:: console
@@ -80,7 +53,7 @@ use the `Homebrew tool instructions
      $ tox -e bindep
      # apt-get install <indicated missing package names>
 
-* On RHEL or CentOS including Fedora:
+* On RHEL or CentOS (replace :command:`yum` with :command:`dnf` on Fedora):
 
   .. code-block:: console
 
@@ -100,134 +73,88 @@ use the `Homebrew tool instructions
 
 .. note::
 
-   This will install all required packages for building both RST and
-   PDF files. If you do not build PDF files, you do not need to install
-   the `texlive <https://www.tug.org/texlive/>`__ packages and
+   Running these commands will install all required packages for building both
+   RST and PDF files. If you do not build PDF files, you do not need to
+   install the `texlive <https://www.tug.org/texlive/>`__ packages and
    `Liberation font family <https://fedorahosted.org/liberation-fonts/>`__.
+
+* On MacOS
+
+  Open a Terminal window. Make sure you have Python installed. Many contributors
+  use the `Homebrew tool instructions
+  <http://docs.python-guide.org/en/latest/starting/install/osx/>`_.
+
+  .. code-block:: console
+
+     $ brew install python
+     $ pip install tox
+
+  .. note::
+
+     You cannot run :command:`tox -e bindep` on Mac OS X as it uses a Linux tool
+     to parse the information. `Issue logged here
+     <https://storyboard.openstack.org/#!/story/2000888>`_.
 
 * On Windows
 
-To the doc build scripts as-is on Windows, first install `Git for Windows`_.
-Make sure you have a working Python environment, and then use Git Bash to run
-all :command:`tox` commands within the repository directory:
+  To the doc build scripts as-is on Windows, first install `Git for Windows`_.
+  Make sure you have a working Python environment, and then use Git Bash to run
+  all :command:`tox` commands within the repository directory:
 
-.. code-block:: console
+  .. code-block:: console
 
-   $ pip install tox
+     $ pip install tox
 
-.. _Git for Windows: https://git-for-windows.github.io/
+.. _Git for Windows: http://gitforwindows.org/
 
-Build workflow
---------------
+.. _docs_builds_manuals:
+
+Build workflow for openstack-manuals
+------------------------------------
 
 Once Tox is installed and configured, execute :command:`tox -e <jobname>`
-to run a particular job.
-
-* To build all docs, open your local openstack-manuals project and run:
-
-  .. code-block:: console
-
-     $ tox -e checkbuild
-
-* To build a specific guide, add the guide folder name to the
-  :command:`tox -e build` command. For example:
-
-  .. code-block:: console
-
-     $ tox -e build -- image-guide
-
-This runs the :command:`sphinx-build` command. When the build is finished,
-it displays in the ``openstack-manuals/publish-docs`` directory.
-You can open the ``.html`` file in a browser to view the resulting output.
-
-If you do not want to use Tox, install the below prerequisites locally:
+to run a particular job. For example, to build all guides in
+openstack-manuals, run the following command:
 
 .. code-block:: console
 
-   # pip install sphinx
-   # pip install openstackdocstheme
+   $ tox -e docs
 
-To get the ``.html`` output locally, switch to the directory containing a
-``conf.py`` and run:
-
-.. code-block:: console
-
-   $ sphinx-build /path/to/source/ path/to/build/
-
-The RST source is built into HTML using Sphinx, so that it is displayed on
-the *docs.openstack.org/<guide-name>*. For example:
-https://docs.openstack.org/image-guide/.
-
-Using Tox to check builds
--------------------------
+The individual Tox jobs you can run are explained in detail in the
+`README file
+<https://git.openstack.org/cgit/openstack/openstack-manuals/tree/README.rst>`_
+in the repository.
 
 As a part of the review process, the OpenStack CI system runs scripts
 to check that the patch is fine. Locally, you can use the Tox tool to
-ensure that a patch works. To check all books, run the following
-command from the base directory of repository:
+ensure that a patch works. To check all guides, run the :command:`tox` command
+from the base directory of repository.
+
+.. _docs_builds_other_repositories:
+
+Build workflow for other repositories with documentation
+--------------------------------------------------------
+
+Once Tox is installed and configured, execute the following command to run the
+``docs`` job:
 
 .. code-block:: console
 
-   $ tox
+   $ tox -e docs
 
-The following individual checks are also available:
-
-* :command:`tox -e linters` - to run the lint tests (for example,
-  to see extra whitespaces)
-* :command:`tox -e checklang` - to check all the translated manuals
-* :command:`tox -e docs` - to build only RST-sourced manuals
-* :command:`tox -e checkbuild` - to build all the manuals. This will also
-  generate a directory ``publish-docs`` that contains the built files for
-  inspection.
-
-.. note::
-
-   * The scripts are not written for Windows, but we encourage
-     cross-platform work on our scripts.
-   * If Tox stops working, try :command:`tox --recreate` to rebuild the
-     environment.
+When the build is finished, it outputs the built documentation to the
+``doc/build`` directory. You can open the built ``.html`` files in a browser
+to review them.
 
 .. _docs_builds_locally:
-
-Generate PDF
-------------
-
-To build a specific guide with a PDF file, use the :command:`tox build`
-command for the guide with the ``pdf`` option. For example:
-
-.. code-block:: console
-
-   $ tox -e build -- image-guide --pdf
-
-PDF builds are accomplished using LaTeX as an intermediate format.
-Currently, you can generate a PDF file for a limited number of guides.
-The supported list is maintained in the `tools/build-all-rst.sh
-<https://git.openstack.org/cgit/openstack/openstack-manuals/tree/tools/build-all-rst.sh#n24>`_
-file.
-
-.. note::
-
-   * PDF builds need additional dependencies. For details, see
-     :ref:`docs_dependencies` section.
 
 Build an existing patch locally
 -------------------------------
 
 To build a patch locally:
 
-#. Change to the directory containing the appropriate repository:
-
-   * openstack-manuals
-   * security-doc
-   * api-site
-
-   For example:
-
-   .. code-block:: console
-
-      $ cd openstack-manuals
-
-#. Create a local branch that contains the particular patch.
+#. In your clone of the appropriate repository, create a local branch that
+   contains the particular patch.
 
    .. code-block:: console
 
@@ -237,13 +164,9 @@ To build a patch locally:
    You can find this number on the patch link,
    ``https://review.openstack.org/#/c/PATCH_ID``.
 
-#. Build all the books that are affected by changes in the patch set:
-
-   .. code-block:: console
-
-      $ tox -e checkbuild
-
-#. Find the build result in ``publish-docs/index.html``.
+#. Build the documentation affected by changes in the patch set. For more
+   information, see :ref:`docs_builds_manuals` and
+   :ref:`docs_builds_other_repositories`.
 
 .. _build_jobs:
 
@@ -252,19 +175,17 @@ Build jobs
 
 The build jobs for documentation are stored in the
 `Project config <https://git.openstack.org/cgit/openstack-infra/project-config>`_
-repository. The :file:`zuul/layout.yaml` file and the
-``jenkins/jobs/manual-jobs.yaml`` or ``jenkins/jobs/api-jobs.yaml``
-file(s) contain the build jobs that build to the docs.openstack.org
-and developer.openstack.org sites, copying built files via FTP.
+repository. The build jobs build to the docs.openstack.org and
+developer.openstack.org sites, copying built files via FTP.
 
-The release specific books are built for the currently supported branches
+The release-specific guides are built for the currently supported branches
 (current and previous releases), development happens on the master branch.
-The continuously released books are only built on the master branch.
+The continuously released guides are only built on the master branch.
 
 Like other projects, the documentation projects use a number of jobs
 that do automatic testing of patches.
 
-The current jobs are:
+For openstack-manuals, the current jobs are:
 
 * openstack-tox-linters
 * build-tox-manual-checkbuild
@@ -274,15 +195,14 @@ Checklang job
 -------------
 
 We only gate on manual/language combinations that are translated
-sufficiently. For example, in openstack-manuals this includes Japanese with
-the Security Guide, HA Guide and Install Guides.
+sufficiently.
 
 * If an import from Zanata fails, we do not approve the import.
 * If any other patch fails, the failure might get ignored.
 * In any case of failure, a bug gets reported against the `i18n project
   <https://bugs.launchpad.net/openstack-i18n>`_.
 
-If you want to manually run this check on your local workstation you can use
+If you want to manually run this check in your clone of openstack-manuals, use
 the checklang environment (:command:`tox -e checklang`).
 
 .. _docs_builds_eol:
@@ -299,23 +219,10 @@ cycle-with-milestones.
 
    The docs repo and the api-site follow the independent release model.
 
-When a release reaches an end-of-life status and is no longer maintained by the
-stable branch maintainers, the docs.openstack.org website redirects requests
-for old content to the latest release. Read more about support phases and
-stable branches in the `Project Team Guide
-<https://docs.openstack.org/project-team-guide/stable-branches.html>`_.
-
 To build documentation from a particular release locally, follow these steps.
 
-#. Clone a copy of the stable branch content locally, if you do not already
-   have a local copy:
-
-   .. code-block:: console
-
-      $ git clone git://git.openstack.org/openstack/openstack-manuals.git
-      $ cd openstack-manuals
-
-#. View the remote tags to see the tags for each release:
+#. In your clone of the appropriate repository, view the remote tags to see
+   the tags for each release:
 
    .. code-block:: console
 
