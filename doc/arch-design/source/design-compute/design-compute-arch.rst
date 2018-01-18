@@ -54,9 +54,11 @@ upgraded to account for increases in
 demand, known as vertical scaling. Upgrading CPUs with more
 cores, or increasing the overall server memory, can add extra needed
 capacity depending on whether the running applications are more CPU
-intensive or memory intensive. Since OpenStack schedules workload placement
-based on capacity and technical requirements, removing compute nodes from
-availability and upgrading them using a rolling upgrade design.
+intensive or memory intensive. We recommend a rolling upgrade of compute
+nodes for redundancy and availability.
+After the upgrade, when compute nodes return to the OpenStack cluster, they
+will be re-scanned and the new resources will be discovered adjusted in the
+OpenStack database.
 
 When selecting a processor, compare features and performance
 characteristics. Some processors include features specific to
