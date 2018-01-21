@@ -7,4 +7,4 @@ to the Shared File Systems service.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/manila/plain/etc/manila/policy.json
+   https://git.openstack.org/cgit/openstack/manila/plain/etc/manila/policy.json?h=stable/ocata
