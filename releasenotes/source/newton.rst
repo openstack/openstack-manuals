@@ -179,7 +179,7 @@ Training guides
 ~~~~~~~~~~~~~~~
 
 * Improved and restructured `Upstream Training <https://docs.openstack.org/upstream-training/>`_
-* Added new chapters in the draft `Training guides <https://docs.openstack.org/draft/training-guides/>`_
+* Added new chapters in the draft Training Guides
 
 Training labs
 ~~~~~~~~~~~~~
