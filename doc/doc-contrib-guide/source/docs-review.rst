@@ -12,32 +12,27 @@ Reviewing documentation
 OpenStack documentation is treated in the same way as code, and follows the
 standard code review process. To see what documentation changes are ready for
 review, use the `Documentation Program Dashboard
-<https://is.gd/openstackdocsreviewreloaded>`_. It is organized in groups based
-on the audience for the documentation. To see current proposed changes, make
-sure you register and log into https://review.openstack.org. For more details
-on the review process, see `Code Review
+<https://is.gd/openstackdocsreviewreloaded>`_ or the appropriate list of
+Gerrit reviews for repositories with documentation.
+
+The Documentation Program Dashboard only lists changes to repositories that
+are managed by the Documentation project or the project's subteams. The
+Dashboard is organized in groups based on the audience for the documentation.
+
+To see current proposed changes, make sure you register and log into
+https://review.openstack.org. For more details on the review process in
+OpenStack, see `Code Review
 <https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 
 Repositories and core team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The OpenStack Documentation team is core for the openstack-manuals,
-openstackdocstheme, and openstack-doc-tools projects.
+The Documentation team is core for a number of repositories managed by the
+Documentation project subteams. A list of those subteams is available from
+:doc:`team-structure`.
 
-For the following repositories that are part of the Documentation program,
-special rules apply:
-
-* docs-specs: has a separate core team,
-  see :doc:`docs-specs <blueprints-and-specs>` section.
-* security-doc: has a separate core team consisting of Docs team members and
-  Security team members. The rule here is that each patch needs an approval
-  by a Docs core and a Security core.
-* contributor-guide, training-guides and training-labs: have separate core
-  teams, but also includes the openstack-manuals core team.
-
-The current list of docs cores for openstack-manuals can be found at
-`Group openstack-doc-core
-<https://review.openstack.org/#/admin/groups/30,members>`_.
+For the security-doc repository, the rule is that each patch needs an approval
+by a Docs core and a Security core.
 
 Reviewing a documentation patch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -48,8 +43,13 @@ and `Code Review Guidelines
 <https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 Once done, follow the steps below to submit a patch review.
 
-#. Go to the `Documentation Program Dashboard
+#. If you want to review patches for the repositories managed by the
+   Documentation project or the project's subteams, go to the
+   `Documentation Program Dashboard
    <https://is.gd/openstackdocsreviewreloaded>`_.
+
+   To review patches for project teams' repositories, use the list of Gerrit
+   changes for the appropriate project.
 #. Select a patch set.
 #. Click a file that was uploaded to view the changes side by side.
 #. If you see some inconsistencies or have questions to the patch owner,
@@ -78,6 +78,11 @@ Once done, follow the steps below to submit a patch review.
    `Peer Review
    <https://docs.openstack.org/infra/manual/developers.html#peer-review>`_
 
+.. note::
+
+   The following information only applies to repositories managed by the
+   Documentation project.
+
 Achieving core reviewer status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -98,23 +103,23 @@ recognizing valuable team members.
 
 The process is:
 
-* Every month (usually on the 1st), the documentation PTL draws the top 12
-  names from the `Stackalytics <http://stackalytics.com/>`_ report for
-  openstack-manuals:
+* Every month (usually on the 1st), the documentation PTL draws the top
+  committers and reviewers from the `Stackalytics <http://stackalytics.com/>`_
+  report for openstack-manuals:
 
   * `openstack-manuals Stackalytics
     <http://stackalytics.com/?module=openstack-manuals&metric=commits>`_
 
-* The PTL then consults the existing core team with a list of names to be
-  removed from and added to the core list. Once an agreement is reached,
-  the changes are made and advertised to the main documentation mailing list.
-  Cores who are being added or removed will be contacted personally before
-  changes are made.
+* The PTL then consults the existing core team and the OpenStack community
+  with a list of names to be removed from and added to the core list. This is
+  done in public by using the openstack-dev@lists.openstack.org mailing list
+  as the primary communication channel. Cores who are being removed will be
+  contacted personally before changes are made.
 
 * Existing core team members can nominate a new core member at any time,
-  with a justification sent to the existing core team:
-  openstack-doc-core@lists.launchpad.net. Three +1 votes from other existing
-  core team members must be achieved for approval.
+  with a justification sent to the openstack-dev@lists.openstack.org mailing
+  list. Three +1 votes from other existing core team members must be achieved
+  for approval.
 
 Core reviewer responsibilities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

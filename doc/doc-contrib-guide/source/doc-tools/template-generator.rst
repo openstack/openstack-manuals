@@ -42,12 +42,12 @@ Here are a few representative files under ``www/``:
 
 * ``de``
 
-  * ``index.html`` -- list of guides translated into $LANG*
+  * ``index.html`` -- list of guides translated into $LANG
 
 * ``errorpage.html``
 
 * ``mitaka`` -- newer series have more complex page organizations; each
-  directory is not identical*
+  directory is unique
 
   * ``admin``
 
@@ -57,7 +57,13 @@ Here are a few representative files under ``www/``:
 
     * ``index.html``
 
+  * ``de``
+
+    * ``index.html`` -- landing page for $series docs translated into $LANG
+
   * ``index.html``
+  * ``language-bindings.html``
+  * ``projects.html``
   * ``user``
 
     * ``index.html``
@@ -91,7 +97,7 @@ Here are a few representative files under ``www/``:
 
     * ``index.html``
 
-* ``project-data`` -- YAML files with data about projects in each series
+* ``project-data`` -- YAML files with data about projects in each $series
 
   * ``latest.yaml``
   * ``mitaka.yaml``
@@ -102,7 +108,7 @@ Here are a few representative files under ``www/``:
   * ``schema.yaml``
 
 * ``redirect-tests.txt`` -- input file for `whereto <http://whereto.readthedocs.io/en/latest/>`_
-  to test .htaccess;
+  to test ``.htaccess``;
   see http://files.openstack.org/docs-404s/ for a list of recent 404
   errors
 * ``static`` -- contains files that are not templates (CSS, JS,
@@ -387,8 +393,8 @@ Common tasks
 How would I change a page?
 --------------------------
 
-1. Look for the TEMPLATE_FILE value in the page source to find which
-   file produces the page
+1. Look for the ``TEMPLATE_FILE`` value in the page source to find which
+   file produces the page.
 
    The source for https://docs.openstack.org/pike/ shows:
 
@@ -440,7 +446,7 @@ modify it.
 How does the final release process work?
 ----------------------------------------
 
-See :ref:`release-task-detail`.
+See :doc:`../release/taskdetail`.
 
 Testing the build
 -----------------

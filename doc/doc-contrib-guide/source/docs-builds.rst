@@ -24,8 +24,9 @@ create content and contribute to the documentation.
 Building output locally
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-You can use Linux, MacOS, or Windows to build the Sphinx documentation
-everywhere in OpenStack.
+Although you can use Linux, MacOS, or Windows to build locally the Sphinx
+documentation for OpenStack, Linux is the preferred build environment as it
+offers the most complete support for documentation building.
 
 OpenStack project and documentation repositories use a ``tox.ini`` file with
 specific sections that run jobs using the `Tox
