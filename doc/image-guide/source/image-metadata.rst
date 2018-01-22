@@ -15,7 +15,8 @@ hosts that satisfy that property.
 .. note::
 
    Compute's ``ImagePropertiesFilter`` value is specified in the
-   ``scheduler_default_filter`` value in the ``/etc/nova/nova.conf`` file.
+   ``enabled_filters`` value in the ``[filter_scheduler]`` section
+   of the ``/etc/nova/nova.conf`` file.
 
 You can add metadata to Image service images by using the
 ``--property key=value`` parameter with the
