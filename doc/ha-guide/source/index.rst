@@ -23,14 +23,15 @@ and assumes that you are familiar with the material in those guides.
    The OpenStack HA team is based on voluntary contributions from
    the OpenStack community. You can contact the HA community
    directly in the #openstack-ha channel on Freenode IRC, or by
-   sending mail to the openstack-dev or openstack-doc mailing list
-   with the [HA] prefix in the subject header.
+   sending mail to the openstack-dev mailing list with the [HA] prefix in
+   the subject header.
 
-   The OpenStack HA community holds `weekly IRC meetings
+   The OpenStack HA community used to hold `weekly IRC meetings
    <https://wiki.openstack.org/wiki/Meetings/HATeamMeeting>`_ to discuss
-   a range of topics relating to HA in OpenStack. Everyone interested is
-   encouraged to attend. The `logs of all previous meetings
-   <http://eavesdrop.openstack.org/meetings/ha/>`_ are available to read.
+   a range of topics relating to HA in OpenStack. The
+   `logs of all past meetings
+   <http://eavesdrop.openstack.org/meetings/ha/>`_ are still available to
+   read.
 
 Contents
 ~~~~~~~~

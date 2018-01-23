@@ -4,35 +4,98 @@
 Documentation bugs
 ==================
 
-The Documentation team tracks all its work through bugs. This section includes
-the detailed overview of documentation bugs specifics.
+The Documentation team tracks some of its work through bugs. This section
+includes the detailed overview of documentation bugs specifics.
 
 The Documentation team uses the following projects for tracking documentation
-bugs across OpenStack:
+bugs for repositories managed by the Documentation project or the project's
+subteams:
 
 * `openstack-manuals <https://bugs.launchpad.net/openstack-manuals>`_ is the
   default area for doc bugs in the openstack-manuals repository.
+
+* `openstack-api-site <https://bugs.launchpad.net/openstack-api-site>`_ is used
+  for the api-site API repository.
+
+* `openstack-contributor-guide <https://bugs.launchpad.net/openstack-contributor-guide>`_
+  is used for the contributor-guide repository.
 
 * `OpenStack Security Guide Documentation
   <https://bugs.launchpad.net/ossp-security-documentation>`_ is used for the
   security-doc repository.
 
-* `openstack-api-site <https://bugs.launchpad.net/openstack-api-site>`_ is used
-  for the api-site API repository.
-
 * `openstack-doc-tools <https://bugs.launchpad.net/openstack-doc-tools>`_ is
   used for the doc-tools and openstackdocstheme repositories.
+
+Documentation bugs for project-specific repositories are tracked in the
+appropriate project's bug tracking area on Launchpad.
 
 .. toctree::
    :maxdepth: 2
 
    doc-impact.rst
 
+Filing a bug
+~~~~~~~~~~~~
+
+Bugs differ depending on:
+
+* The way they are filed:
+
+  * Manually
+  * Automatically (through the DocImpact flag)
+
+* The required changes:
+
+  * Fix spelling errors or formatting
+  * Update existing content
+  * Add new content
+
+.. important::
+
+   Do not file a bug with troubleshooting issues. If you are experiencing
+   problems with your environment, and you are following the installation
+   tutorials, seek assistance from the relevant team and operations
+   specialists on IRC,
+   `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
+   or the OpenStack mailing list.
+
+   For more information about the relevant IRC channels, see the
+   `OpenStack IRC wiki <https://wiki.openstack.org/wiki/IRC>`_.
+
+   For more information about the OpenStack mailing list, see the
+   `Mailing lists wiki <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
+
+   A bug should be filed only if the documentation itself is found to be
+   incorrect.
+
+Working on documentation bugs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Do not work on a documentation bug until it is set to
+'Confirmed'. Ideally, someone other than the reporter will confirm the bug
+for you. Once the changes are made in a patch, they are reviewed and approved,
+just like other OpenStack code.
+
+To pick up a documentation bug or mark a bug as related to the
+documentation, go to `the aggregated list of documentation bugs from all
+OpenStack projects
+<https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
+
+Triaging bugs for openstack-manuals
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The following sections detail the role of the bug triage liaison and the
+process and guidelines of bug triaging for the openstack-manuals repository.
+
+Project-specific repositories follow their respective team's processes and
+guidelines for bug triaging.
+
 Bug triage liaison
-~~~~~~~~~~~~~~~~~~
+------------------
 
 The documentation team assigns bug triage liaisons to ensure all bugs reported
-against OpenStack manuals are triaged in a timely manner.
+against the openstack-manuals repository are triaged in a timely manner.
 
 If you are interested in serving as a bug triage liaison, there are several
 steps you will need to follow in order to be prepared.
@@ -49,7 +112,8 @@ steps you will need to follow in order to be prepared.
 
 #. Sign up for openstack-manuals emails from Launchpad if you have not already:
 
-   #. Navigate to the Launchpad openstack-manuals bug list.
+   #. Navigate to the `Launchpad openstack-manuals bug list
+      <https://bugs.launchpad.net/openstack-manuals>`_.
    #. Click on the right hand side, :guilabel:`Subscribe to bug mail`.
    #. In the pop-up that is displayed, keep the recipient as
       :guilabel:`Yourself`, and name your subscription something useful
@@ -58,28 +122,32 @@ steps you will need to follow in order to be prepared.
       mail for all changes - while informative - will result in several dozen
       emails per day at least.
 
-#. Volunteer during the course of the Docs team meeting, when volunteers to
-   be bug deputy are requested (usually towards the beginning of the meeting).
+#. Volunteer during the course of the Documentation team meeting, when
+   volunteers to be bug deputy are requested.
 
-#. View your scheduled week on the
-   `Bug Triage Team <https://wiki.openstack.org/wiki/Documentation/SpecialityTeams#Bug_Triage_Team>`_
+   Alternatively, use the #openstack-doc IRC channel or the
+   openstack-dev@lists.openstack.org mailing list to contact the documentation
+   core team members.
+
+#. Sign up as a volunteer by adding your name to the bug triaging schedule on the
+   `Bug Triage Team
+   <https://wiki.openstack.org/wiki/Documentation/SpecialityTeams#Bug_Triage_Team>`_
    page.
 
 #. During your scheduled time as a liaison, if it is feasible for your
-   timezone, plan on attending the Docs team meeting. That way if you have
-   any CRITICAL or HIGH bugs, you can address them with the team.
+   timezone, plan on attending the Documentation team meeting. That way if you
+   have any CRITICAL or HIGH bugs, you can address them with the team.
 
 Bug triaging process
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 The process of bug triaging consists of the following steps:
 
 * Check if a bug was filed for a correct component (project). If not,
   either change the project or mark it as ``Invalid``.
   For example, if the bug impacts the project-specific dev-ref, then
-  mark it as ``Invalid``. If a bug is reported against the nova section
-  of the Installation Guide, ensure openstack-manuals is removed, and
-  the nova project is added.
+  mark it as ``Invalid``. If a bug is reported against the nova installation
+  guide, ensure openstack-manuals is removed, and the nova project is added.
 
 * If the reported bug affects the ReST API, tools, openstackdocstheme, or
   the Security Guide, add the relevant project to the affected
@@ -88,8 +156,8 @@ The process of bug triaging consists of the following steps:
   ``openstack-api-site`` and remove ``openstack-manuals``.
 
 * Tag the bug for the appropriate guide. For example, for the
-  ``networking-guide`` remove ``neutron`` from the affected projects if it
-  only affects ``openstack-manuals`` and tag ``networking-guide``.
+  ``image-guide`` remove ``glance`` from the affected projects if it
+  only affects ``openstack-manuals`` and tag ``image-guide``.
 
 * Set the bug to ``Invalid`` if it is a request for support or a
   troubleshooting request.
@@ -163,7 +231,7 @@ Depending on the area a bug affects, it has one or more tags. For example:
 * **low-hanging-fruit** for documentation bugs that are straightforward to fix.
   If you are a newcomer, this is a way to start.
 
-* **sec guide**, **install guide**, **ops-guide**, and other for specific
+* **ha-guide**, **install-guide**, **image-guide**, and other for specific
   guides.
 
 * **infra**, **theme** for documentation bugs that are in the documentation
@@ -173,8 +241,8 @@ Tracking bugs by tag
 --------------------
 
 If you need to regularly track activity relating to particular tags,
-you can set up email subscriptions by visiting `the subscriptions page
-of the launchpad project
+you can set up email subscriptions by visiting
+`the subscriptions page of the Launchpad project
 <https://bugs.launchpad.net/openstack-manuals/+subscriptions>`_:
 
 #. Select :guilabel:`Add a subscription`.
@@ -208,50 +276,3 @@ committer of the change that triggered the bug report, mark it as
 **Wishlist** and ask the committer to read and follow the
 specification and handle it since the documentation team will not
 document third-party drivers.
-
-Filing a bug
-~~~~~~~~~~~~
-
-Bugs differ depending on:
-
-* The way they are filed:
-
-  * Manually
-  * Automatically (through the DocImpact flag)
-
-* The required changes:
-
-  * Fix spelling errors or formatting
-  * Update existing content
-  * Add new content
-
-.. important::
-
-   Do not file a bug with troubleshooting issues. If you are experiencing
-   problems with your environment, and you are following the installation
-   tutorials, seek assistance from the relevant team and operations
-   specialists on IRC,
-   `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
-   or the OpenStack mailing list.
-
-   For more information about the relevant IRC channels, see the
-   `OpenStack IRC wiki <https://wiki.openstack.org/wiki/IRC>`_.
-
-   For more information about the OpenStack mailing list, see the
-   `Mailing lists wiki <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
-
-   A bug should be filed only if the documentation itself is found to be
-   incorrect.
-
-Working on documentation bugs
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Do not work on a documentation bug until it is set to
-'Confirmed'. Ideally, someone other than the reporter will confirm the bug
-for you. Once the changes are made in a patch, they are reviewed and approved,
-just like other OpenStack code.
-
-To pick up a documentation bug or mark a bug as related to the
-documentation, go to `the aggregated list of documentation bugs from all
-OpenStack projects
-<https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
