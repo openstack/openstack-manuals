@@ -193,9 +193,9 @@ wait for the next proposal run.
 The proposal job will update the patch with the next run.
 If you cannot fix the problem, ask for help on the mailing lists:
 
-* openstack-i18n: translation failures
-* openstack-doc: requirements failures, glossary sync failures,
-  and common content sync failures.
+* openstack-i18n@lists.openstack.org: translation failures
+* openstack-dev@lists.openstack.org: requirements failures, glossary sync
+  failures, and common content sync failures.
 
 Considerations for documentation aligned with release cycles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -8,7 +8,9 @@ This section describes the tasks that need to be completed to publish the
 documentation for an OpenStack release. It is intended to be used by the
 PTL and release managers.
 
-Pike release managers are Chason Chan and Petr Kovar.
+The current release manager for Documentation is listed on the
+`Cross Project Liaisons wiki page
+<https://wiki.openstack.org/wiki/CrossProjectLiaisons#Release_management>`_.
 
 .. toctree::
    :maxdepth: 2
