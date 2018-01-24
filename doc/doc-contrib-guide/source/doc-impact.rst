@@ -19,13 +19,14 @@ a deprecated or new feature, a caveat or if you have written docs in the patch,
 add "DocImpact" to a line in your commit message.
 
 This creates a Launchpad bug for the project indicated in the
-``gerrit/projects.yaml`` file in the ``openstack/project-config`` repository.
+``gerrit/projects.yaml`` file in the `openstack-infra/project-config
+<https://git.openstack.org/cgit/openstack-infra/project-config>`_ repository.
 This does not guarantee documentation will be written, but offers visibility of
 the change and tracking. You can also use it as a reminder to yourself to write
 docs for the feature later, or remind yourself to find a writer to write for
 you.
 
-If you are a doc contributor, these are the steps we take once a DocImpact
+If you are a doc contributor, these are the steps we take once a ``DocImpact``
 notification comes to the list.
 
 #. Create a new doc bug in either ``openstack-manuals`` or
@@ -42,8 +43,8 @@ notification comes to the list.
 #. Continue to check on the patch and change the status to ``Confirmed`` once
    merged.
 
-#. Use the information in the Doc bug triaging :ref:`guidelines` section to set
-   priority once it lands.
+#. Use the information in the :ref:`guidelines` section to set priority once it
+   lands.
 
 Writing good commit messages for DocImpact
 ------------------------------------------
@@ -74,11 +75,11 @@ but extra usage information is useful.
 Third-Party DocImpact settings
 ------------------------------
 
-By default, the DocImpact tag creates bugs using the repository name as project
-in Launchpad. To change this behaviour, the ``docimpact-group`` option in
-``projects.yaml`` can be used. For example, if you set project like this:
+By default, the ``DocImpact`` tag creates bugs using the repository name as
+project in Launchpad. To change this behavior, the ``docimpact-group`` option
+in ``projects.yaml`` can be used. For example, if you set project like this:
 
-.. code-block: yaml
+.. code-block:: yaml
 
    - project: stackforge/project-name
      description: Latest and greatest cloud stuff.

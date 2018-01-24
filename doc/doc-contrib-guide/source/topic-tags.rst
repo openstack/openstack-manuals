@@ -4,33 +4,19 @@
 Topic tags
 ==========
 
-We recommend that you add the tags in the head of the git commit
-message or email subject line to show the topic explicitly.
-Based on the topic your request refers to, use the following tags:
-
-[admin-guide]
-  OpenStack Administrator Guide
-
-[api]
-  OpenStack API Guide, API Complete References
+When changing or discussing the contents of the openstack-manuals repository,
+we recommend that you add the tags in the head of the git commit message or
+email subject line to show the topic explicitly. Based on the topic you refer
+to, use the following tags:
 
 [arch-design]
   OpenStack Architecture Design Guide
 
-[cli-ref]
-  OpenStack Command-Line Interface Reference
-
 [common]
   Common contents for several guides in the common directory
 
-[config-ref]
-  OpenStack Configuration Reference
-
-[contributor]
+[doc-contrib]
   OpenStack Documentation Contributor Guide
-
-[firstapp]
-  Writing your first OpenStack application
 
 [ha-guide]
   OpenStack High Availability Guide
@@ -40,18 +26,6 @@ Based on the topic your request refers to, use the following tags:
 
 [install]
   OpenStack Installation Guides
-
-[networking]
-  OpenStack Networking Guide
-
-[ops-guide]
-  OpenStack Operations Guide
-
-[sec-guide]
-  Security Guide
-
-[training]
-  Training labs, Training guides, and Upstream Training materials
 
 [WIP]
   A marker that means the commit is a work in progress
