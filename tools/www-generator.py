@@ -185,7 +185,8 @@ _URLS = [
 def load_project_data(source_directory,
                       check_all_links=False,
                       skip_links=False,
-                      series_to_load=None):
+                      series_to_load=None,
+                      governed_deliverables=[]):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
     series_to_load = series_to_load or []
@@ -215,13 +216,22 @@ def load_project_data(source_directory,
 
         logger.info('loading %s project data from %s', series, filename)
         with open(filename, 'r') as f:
-            data = yaml.safe_load(f.read())
-        for error in validator.iter_errors(data):
+            raw_data = yaml.safe_load(f.read())
+        for error in validator.iter_errors(raw_data):
             logger.error(str(error))
             fail = True
 
         links_to_check = []
-        for project in data:
+        data = []
+        for project in raw_data:
+            deliverable_name = project.get('deliverable-name', project['name'])
+            if (series == 'latest' and
+                    deliverable_name not in governed_deliverables):
+                logger.warning(
+                    ('%s is no longer part of an official project, '
+                     'ignoring in %s'),
+                    deliverable_name, filename)
+                continue
             # If the project has a service-type set, ensure it matches
             # the value in the service-type-authority data.base.
             st = project.get('service_type')
@@ -340,8 +350,10 @@ def _get_official_repos():
     seen_repos = set()
     regular_repos = []
     infra_repos = []
+    deliverables = []
     for t_name, team in data.items():
         for d_name, d_data in team.get('deliverables', {}).items():
+            deliverables.append(d_name)
             if t_name == 'Infrastructure':
                 add = infra_repos.append
             else:
@@ -359,7 +371,7 @@ def _get_official_repos():
                                           'base': repo.rsplit('/')[-1]})
                 elif repo not in _IGNORED_REPOS:
                     add({'name': repo, 'base': repo.rsplit('/')[-1]})
-    return (regular_repos, infra_repos)
+    return (regular_repos, infra_repos, deliverables)
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
@@ -445,13 +457,14 @@ def main():
     args = parse_command_line_arguments()
     logger = initialize_logging(args.debug, args.verbose)
 
+    regular_repos, infra_repos, deliverables = _get_official_repos()
     project_data = load_project_data(
-        args.source_directory,
-        args.check_all_links,
-        args.skip_links,
-        args.series,
+        source_directory=args.source_directory,
+        check_all_links=args.check_all_links,
+        skip_links=args.skip_links,
+        series_to_load=args.series,
+        governed_deliverables=deliverables,
     )
-    regular_repos, infra_repos = _get_official_repos()
 
     # Set up jinja to discover the templates.
     try:
