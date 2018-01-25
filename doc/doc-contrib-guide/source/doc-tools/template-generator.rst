@@ -194,6 +194,11 @@ define the name, service, and type properties.
 
 The ``name`` should be the base name of a git repository.
 
+The ``deliverable-name`` should be the name of the deliverable as
+defined in ``openstack/governance/reference/projects.yaml``. This
+value only needs to be set if the deliverable name does not match the
+project name (such as ``glance_store`` and ``glance-store``).
+
 The ``service`` string should be taken from the governance repository
 definition of the project.
 
