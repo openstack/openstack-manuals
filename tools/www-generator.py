@@ -225,6 +225,7 @@ def load_project_data(source_directory,
         data = []
         for project in raw_data:
             deliverable_name = project.get('deliverable-name', project['name'])
+
             if (series == 'latest' and
                     deliverable_name not in governed_deliverables):
                 logger.warning(
@@ -232,6 +233,9 @@ def load_project_data(source_directory,
                      'ignoring in %s'),
                     deliverable_name, filename)
                 continue
+            logger.info('including %s', deliverable_name)
+            data.append(project)
+
             # If the project has a service-type set, ensure it matches
             # the value in the service-type-authority data.base.
             st = project.get('service_type')
