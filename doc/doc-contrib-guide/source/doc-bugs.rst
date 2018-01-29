@@ -82,6 +82,15 @@ documentation, go to `the aggregated list of documentation bugs from all
 OpenStack projects
 <https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
 
+Working on documentation stories
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+OpenStack projects may use `StoryBoard <https://storyboard.openstack.org/>`_
+to track cross-project tasks. When these tasks involve documentation the tasks
+should be tagged as such, allowing you to view
+`the aggregated list of documentation stories from all OpenStack projects
+<https://storyboard.openstack.org/#!/story/list?status=active&q=documentation%20docs>`_.
+
 Triaging bugs for openstack-manuals
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
