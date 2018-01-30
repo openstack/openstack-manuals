@@ -302,23 +302,24 @@ def load_project_data(source_directory,
                             (url, project['name'], flag, flag_val)
                         )
 
-        logger.info('checking %s links from %s...',
-                    len(links_to_check), filename)
-        pool = multiprocessing.pool.ThreadPool()
-        results = pool.map(_check_url, links_to_check)
+        if links_to_check:
+            logger.info('checking %s links from %s...',
+                        len(links_to_check), filename)
+            pool = multiprocessing.pool.ThreadPool()
+            results = pool.map(_check_url, links_to_check)
 
-        for url, project_name, flag, flag_val, exists, status in results:
-            if flag_val and not exists:
-                logger.error(
-                    '%s set for %s but %s does not exist (%s)',
-                    flag, project_name, url, status,
-                )
-                fail = True
-            elif (not flag_val) and check_all_links and exists:
-                logger.warning(
-                    '%s not set for %s but %s does exist',
-                    flag, project_name, url,
-                )
+            for url, project_name, flag, flag_val, exists, status in results:
+                if flag_val and not exists:
+                    logger.error(
+                        '%s set for %s but %s does not exist (%s)',
+                        flag, project_name, url, status,
+                    )
+                    fail = True
+                elif (not flag_val) and check_all_links and exists:
+                    logger.warning(
+                        '%s not set for %s but %s does exist',
+                        flag, project_name, url,
+                    )
 
         if fail:
             raise ValueError('invalid input in %s' % filename)
