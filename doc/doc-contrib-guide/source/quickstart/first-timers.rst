@@ -19,10 +19,9 @@ The following diagram shows the basic setup workflow:
 Setting up for contribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To get started, complete the following steps:
-
-#. Set up your account and agree to the ``Individual Contributor License
-   Agreement (ICLA)``. See `Account Setup`_ for details.
+To get started, set up your account and agree to the
+``Individual Contributor License Agreement (ICLA)``. See `Account Setup`_ for
+details.
 
 To set up your environment for contributions, proceed with the
 subsections below.
@@ -30,10 +29,13 @@ subsections below.
 Set up a text editor
 --------------------
 
-Use any text editor of your choice to work with the documentation. For
-example:
+Use any text editor of your choice to work with the documentation. It is a
+good idea to choose an editor that supports spell checking and syntax
+highlighting for RST. For example:
 
 * https://wiki.gnome.org/Apps/Gedit
+* https://atom.io/
+* http://www.vim.org/
 * https://wiki.typo3.org/Editors_%28reST%29#Open_source_.28.3D_free_of_cost.29
 
 To keep the documents clean and easy to compare, all of the OpenStack
@@ -61,7 +63,7 @@ Set up git and git-review
 #. Install ``git``. See `GitHub help`_ for details.
 
    If you use Windows to contribute to OpenStack, install
-   `Git for Windows <https://git-for-windows.github.io/>`_.
+   `Git for Windows <http://gitforwindows.org/>`_.
    In the subsequent procedures, run commands from the Git Bash console.
 
 #. Install ``git-review`` so that you are able to submit patches.
@@ -122,10 +124,16 @@ Finding a bug
 After setting up your environment for contribution, it is time to find
 something to work on:
 
-#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs.
+#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs
+   for documentation bugs related to the openstack-manuals repository.
+
+   For project-specific documentation bugs, go to
+   https://bugs.launchpad.net/<projectname>.
 
 #. Find a bug that has been confirmed by another contributor and assign it
    to yourself.
+
+For more information on documentation bugs, see :doc:`../doc-bugs`.
 
 Committing a change
 ~~~~~~~~~~~~~~~~~~~
@@ -135,8 +143,7 @@ Committing a change
 
 #. Fix the bug in the docs.
 
-   Read the :ref:`Writing style <stg_writing_style>` section, also pay
-   attention to the :ref:`RST formatting conventions <rst_conv>` section.
+   Read :doc:`../writing-style`, also pay attention to :doc:`../rst-conv`.
 
 #. Create your commit message. See `Committing a change`_ for details.
 
@@ -152,7 +159,7 @@ Committing a change
 Celebrate and wait for reviews!
 
 .. seealso:: * :ref:`troubleshoot_setup`
-             * :ref:`docs_builds`
+             * :doc:`../docs-builds`
 
 Responding to requests
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -199,7 +206,7 @@ git and git review
 
 * Authenticity error
 
-  The first time that you run git review, you might see this error::
+  The first time that you run :command:`git review`, you might see this error::
 
     The authenticity of host '[review.openstack.org]:29418 ([198.101.231.251]:29418) can't be established.
 
@@ -232,9 +239,9 @@ git and git review
 
     We don't know where your gerrit is. Please manually create a remote named "gerrit" and try again.
 
-  You need to make a git remote that maps to the review.openstack.org ssh port
-  for your repo. For example, for a user with the ``username_example`` username
-  and the openstack-manuals repo, you should run this command::
+  You need to make a git remote that maps to the review.openstack.org SSH port
+  for your repository. For example, for a user with the ``username_example``
+  user name and the openstack-manuals repository, you should run this command::
 
     git remote add gerrit ssh://username_example@review.openstack.org:29418/openstack/openstack-manuals.git
 
@@ -247,8 +254,8 @@ git and git review
   The first time you set up a gerrit remote and try to create a patch for
   review.openstack.org, you may see this message because the tool needs one
   more edit of your commit message in order to automatically insert
-  the *Change-Id*. When this happens, run :code:`git commit -a --amend`,
-  save the commit message and run :code:`git review -v` again.
+  the *Change-Id*. When this happens, run :command:`git commit -a --amend`,
+  save the commit message and run :command:`git review -v` again.
 
 * Permission denied error
 
@@ -315,8 +322,9 @@ Try again when your network connection improves.
 **Accessing gerrit over HTTP/HTTPS**
 
 If you suspect that SSH over non-standards ports might be blocked or need to
-access the web using http/https, you can configure git-review to `use an http
-endpoint instead of ssh <https://docs.openstack.org/infra/manual/developers.html#accessing-gerrit-over-https>`_
+access the web using http/https, you can configure git-review to
+`use an https endpoint instead of ssh
+<https://docs.openstack.org/infra/manual/developers.html#accessing-gerrit-over-https>`_
 as explained in the Infrastructure Manual.
 
 Python
@@ -359,7 +367,7 @@ instead:
 
 .. _`Account Setup`: https://docs.openstack.org/infra/manual/developers.html#account-setup
 .. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
-.. _`Installing git-review`: https://docs.openstack.org/infra/manual/developers.html#installing-git-review
+.. _`Installing git-review`: https://docs.openstack.org/infra/manual/developers.html#install-the-git-review-utility
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
 .. _`OpenStack Foundation`: https://www.openstack.org/join
 .. _`Development Workflow`: https://docs.openstack.org/infra/manual/developers.html#development-workflow

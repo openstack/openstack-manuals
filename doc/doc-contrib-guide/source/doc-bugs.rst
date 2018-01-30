@@ -30,6 +30,13 @@ subteams:
 Documentation bugs for project-specific repositories are tracked in the
 appropriate project's bug tracking area on Launchpad.
 
+OpenStack projects may also use
+`StoryBoard <https://storyboard.openstack.org/>`_ to track cross-project
+tasks involving documentation. For more information, see :ref:`doc_stories`.
+
+Finally, OpenStack developers can use a DocImpact flag to help identify bugs
+that require documentation updates in the openstack-manuals repository.
+
 .. toctree::
    :maxdepth: 2
 
@@ -82,12 +89,14 @@ documentation, go to `the aggregated list of documentation bugs from all
 OpenStack projects
 <https://bugs.launchpad.net/openstack/+bugs?field.tag=documentation>`_.
 
+.. _doc_stories:
+
 Working on documentation stories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 OpenStack projects may use `StoryBoard <https://storyboard.openstack.org/>`_
-to track cross-project tasks. When these tasks involve documentation the tasks
-should be tagged as such, allowing you to view
+to track cross-project tasks. When these tasks involve documentation, the
+tasks should be tagged as such in StoryBoard, allowing you to view
 `the aggregated list of documentation stories from all OpenStack projects
 <https://storyboard.openstack.org/#!/story/list?status=active&q=documentation%20docs>`_.
 
