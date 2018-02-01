@@ -104,11 +104,8 @@ The openSUSE community provides images for `openSUSE
 <http://download.opensuse.org/repositories/Cloud:/Images:/>`_.
 
 SUSE maintains official SUSE Linux Enterprise Server cloud images.
-A valid SUSE Linux Enterprise Server subscription is required to
-download these images.
-
-* `SUSE Linux Enterprise Server 12 SP1 JeOS
-  <https://www.suse.com/products/server/jeos>`_
+Go to `download.suse.com <https://download.suse.com>`_ and search
+for ``SUSE Linux Enterprise Server 12 SP3 JeOS``.
 
 Red Hat Enterprise Linux
 ~~~~~~~~~~~~~~~~~~~~~~~~
