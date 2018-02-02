@@ -213,7 +213,7 @@ Guides for end users
      - https://developer.openstack.org/api-guide/quick-start/
 
    * - OpenStack Command-Line Interface Reference
-     - hhttps://git.openstack.org/cgit/openstack/oslo.config/tree/master/doc/source/cli
+     - https://git.openstack.org/cgit/openstack/oslo.config/tree/doc/source/cli
      - https://docs.openstack.org/cli-reference/
 
    * - OpenStack Project User Guides
