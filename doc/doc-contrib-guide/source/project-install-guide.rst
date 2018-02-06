@@ -8,34 +8,25 @@ Pike and later
 ~~~~~~~~~~~~~~
 
 Each official OpenStack project should maintain an installation guide
-following the layout described in the `documentation migration
-spec`_. When the guide is available, update
-``openstack-manuals/www/project-data/latest.yaml`` to include
+following the layout described in :doc:`project-guides`. When the guide is
+available, update ``openstack-manuals/www/project-data/latest.yaml`` to include
 information about the project and ensure that the
 ``has_install_guide`` flag is set to ``true`` to ensure that the guide
 is listed along with the guides from other projects.
 
-.. _documentation migration spec: http://specs.openstack.org/openstack/docs-specs/specs/pike/os-manuals-migration.html
-
 Newton and Ocata
 ~~~~~~~~~~~~~~~~
 
-For the Newton release, a new method of publishing installation
-guides is being implemented. This will allow each big tent project to
-create their own installation guide, based on a standard template,
-in their own repository. These guides are then centrally published to
+For the Newton and Ocata releases only, big tent projects created their own
+installation guides, based on a standard template, in their own repository.
+These guides were then centrally published to
 `docs.openstack.org <https://docs.openstack.org>`_.
 
 .. warning::
 
-   These instructions are superseded by the `documentation migration
-   spec`_. New installation guides should be created using the layout
-   defined in the spec, rather than the following instructions.
-
-For updates on the progress of this project, see the `Install Guide wiki
-page <https://wiki.openstack.org/wiki/Documentation/InstallGuideWorkItems>`_.
-If you would like to help out, `attend a meeting
-<http://eavesdrop.openstack.org/#Documentation_Install_Team_Meeting>`_.
+   The following instructions are superseded by :doc:`project-guides`. New
+   installation guides should be created using the layout defined in the spec,
+   rather than the following instructions.
 
 Set up project specific installation guides:
 
@@ -147,8 +138,3 @@ After these changes have merged, you can set up the jobs for building.
    This schedules the Install Guide jobs.
 
 #. Commit the changes to the infra repository for review.
-
-To create or update the master index file, create or update the
-``www/RELEASE/install/index.html`` file and the
-``doc/install-guide/source/additional-services.rst`` at the
-``openstack-manuals`` repository.

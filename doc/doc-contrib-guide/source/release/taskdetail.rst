@@ -57,12 +57,12 @@ OpenStack Manuals no longer handles release notes for the project teams.
 However, we do need to write release notes for our documentation. Release
 notes should be added as major changes occur throughout the release, however
 this is often overlooked - both by authors and reviewers - and thus a final
-review is needed to check that all major changes are in. Contact each
-Specialty Team lead, listed at :doc:`../team-structure`, and ask them for
-the notes for the books they look after. The source repository for release
-notes is `openstack-manuals/releasenotes/source/RELEASENAME` and they are
+review is needed to check that all major changes are in. Contact each subteam
+lead, listed at :doc:`../team-structure`, and ask them for the notes for the
+documentation they look after. The source for release notes is
+``openstack-manuals/releasenotes/source/RELEASENAME.rst`` and they are
 published to
-`https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html`.
+``https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html``.
 
 .. _release-www-page-updates:
 
@@ -161,7 +161,7 @@ Make the following changes in the **openstack-manuals** repository:
    pushed at release time, so be prepared to have the release day
    patches ready well ahead of the official release time. You can
    check the current gate status at `Zuul status
-   <http://status.openstack.org/zuul/>`_ to get an idea of the current
+   <http://zuul.openstack.org/>`_ to get an idea of the current
    merge times.
 
 Generate the site map
@@ -203,23 +203,7 @@ To:
 
    This guide documents OpenStack Newton and Mitaka releases.
 
-However, we will keep the documentation on the
-`docs.openstack.org <https://docs.openstack.org/>`_
-page for a while so that the users can refer the guides if necessary.
-
 .. seealso::
 
    See :ref:`docs_builds_eol` for instructions for building
    documentation for versions past their end-of-life.
-
-Removing series landing pages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-To remove the landing pages for a series that has passed its end of
-life date, delete the series directory under ``www`` and remove the
-associated project data file.
-
-.. code-block:: console
-
-   $ git rm -r www/SERIES
-   $ git rm www/project-data/SERIES.yaml

@@ -72,12 +72,6 @@ Setting up
 
 #. Commit the changes to your project repository for review.
 
-To create or update the master index file, create or update the
-``www/project-deploy-guide/RELEASE/index.html`` file at the
-``openstack-manuals`` repository.
-
-For draft (unreleased) version, replace ``RELEASE`` with ``draft``.
-
 After these changes merge, you can set up the jobs for building in the
 OpenStack Infra ``project-config`` repository:
 
@@ -117,6 +111,9 @@ OpenStack Infra ``project-config`` repository:
    This schedules the Deploy Guide jobs.
 
 #. Commit the changes to the infra repository for review.
+
+To update the main index pages with a link to your deployment guide, see
+:doc:`doc-tools/template-generator`.
 
 Deployment guide and installation guide links
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

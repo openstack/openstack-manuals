@@ -12,7 +12,7 @@ Reviewing documentation
 OpenStack documentation is treated in the same way as code, and follows the
 standard code review process. To see what documentation changes are ready for
 review, use the `Documentation Program Dashboard
-<https://is.gd/openstackdocsreviewreloaded>`_ or the appropriate list of
+<https://is.gd/openstackdocsdashboard>`_ or the appropriate list of
 Gerrit reviews for repositories with documentation.
 
 The Documentation Program Dashboard only lists changes to repositories that
@@ -46,7 +46,7 @@ Once done, follow the steps below to submit a patch review.
 #. If you want to review patches for the repositories managed by the
    Documentation project or the project's subteams, go to the
    `Documentation Program Dashboard
-   <https://is.gd/openstackdocsreviewreloaded>`_.
+   <https://is.gd/openstackdocsdashboard>`_.
 
    To review patches for project teams' repositories, use the list of Gerrit
    changes for the appropriate project.

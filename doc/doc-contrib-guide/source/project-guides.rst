@@ -86,4 +86,3 @@ by the documentation team.
 
    project-install-guide.rst
    project-deploy-guide.rst
-   landing-pages.rst

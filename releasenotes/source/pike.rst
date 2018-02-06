@@ -29,11 +29,6 @@ Contributor Guide
 * Updated guide to be relevant for updated openstack-manuals.
 * General bug fixes and updates.
 
-API Guides
-~~~~~~~~~~
-
-* TBD
-
 Security Guide
 ~~~~~~~~~~~~~~
 
@@ -41,40 +36,9 @@ Security Guide
 * Rework of 'node hardening' section
 * Various fixes such as grammar and incorrect hyperlinks
 
-Training Guides
-~~~~~~~~~~~~~~~
-
-* TBD
-
 Training Labs
 ~~~~~~~~~~~~~
 
 * Support for the new OpenStack release will be available shortly
   after the release of Pike.
 * Various bug fixes and minor improvements in the host scripts.
-
-Translations
-~~~~~~~~~~~~
-
-Besides updating the existing translated manuals,
-the Internationalization (i18n) team added the following new manuals:
-
-* German:
-
-  * TBD
-
-* Indonesian:
-
-  * TBD.
-
-* Japanese:
-
-  * TBD
-
-* Korean:
-
-  * TBD
-
-* Simplified Chinese:
-
-  * TBD

@@ -5,11 +5,8 @@ Topic structure
 ===============
 
 The OpenStack community welcomes all contributors to documentation. This
-section provides recommendations on how to structure the content that you
-submit to the ``openstack-manuals`` repository.
-
-Organize technical information in topics. Use the principles of topic-based
-authoring in all technical publications.
+section provides ideas on how to structure the content for an OpenStack
+project by using the principles of topic-based authoring.
 
 Topic-based authoring is a method of content creation in which information
 is structured in small chunks of a particular type. In contrast to
