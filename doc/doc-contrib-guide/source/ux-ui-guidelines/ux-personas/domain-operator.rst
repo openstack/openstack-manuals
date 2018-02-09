@@ -25,7 +25,7 @@ Taylor performs the following tasks very frequently:
   used.
 
 * Managing users: Defines the number of users with access to the cloud
-  services. They manages the access and rights of users for the entire cloud
+  services. They manage the access and rights of users for the entire cloud
   services.
 
 * Ensuring SLA compliance: Monitors the various policies and support tickets
