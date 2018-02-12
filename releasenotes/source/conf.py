@@ -57,7 +57,7 @@ project = u'OpenStack Documentation Team Release Notes'
 repository_name = "openstack/openstack-manuals"
 bug_project = 'openstack-manuals'
 bug_tag = u'releasenotes'
-copyright = u'2017, OpenStack contributors'
+copyright = u'2017-2018, OpenStack contributors'
 
 # Release notes are version independent.
 # The short X.Y version.

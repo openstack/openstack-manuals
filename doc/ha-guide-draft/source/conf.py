@@ -55,7 +55,7 @@ repository_name = "openstack/openstack-manuals"
 bug_project = 'openstack-manuals'
 project = u'High Availability Guide Draft'
 bug_tag = u'ha-guide-draft'
-copyright = u'2017, OpenStack contributors'
+copyright = u'2017-2018, OpenStack contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

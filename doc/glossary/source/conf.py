@@ -57,7 +57,7 @@ repository_name = 'openstack/openstack-manuals'
 project = u'Glossary'
 bug_tag = u'glossary'
 
-copyright = u'2015-2017, OpenStack contributors'
+copyright = u'2015-2018, OpenStack contributors'
 
 
 # The version info for the project you're documenting, acts as replacement for

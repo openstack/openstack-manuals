@@ -58,7 +58,7 @@ bug_project = 'openstack-manuals'
 project = u'Documentation Contributor Guide'
 bug_tag = u'doc-contrib-guide'
 
-copyright = u'2015-2017, OpenStack contributors'
+copyright = u'2015-2018, OpenStack contributors'
 
 
 # The version info for the project you're documenting, acts as replacement for
