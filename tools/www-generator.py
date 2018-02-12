@@ -54,11 +54,11 @@ SERIES_INFO = {
     'kilo': SeriesInfo(date='April 2015', status='EOL'),
     'liberty': SeriesInfo(date='October 2015', status='EOL'),
     'mitaka': SeriesInfo(date='April 2016', status='EOL'),
-    'newton': SeriesInfo(date='October 2016', status='maintained'),
+    'newton': SeriesInfo(date='October 2016', status='EOL'),
     'ocata': SeriesInfo(date='February 2017', status='maintained'),
     'pike': SeriesInfo(date='August 2017', status='maintained'),
     'queens': SeriesInfo(date='March 2018', status='development'),
-    # 'rocky': SeriesInfo(),
+    'rocky': SeriesInfo(date='August 2018', status='development'),
 }
 
 # Build a list of the series that are not the current series being

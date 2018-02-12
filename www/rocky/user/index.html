@@ -1,0 +1,71 @@
+{% set projects = PROJECT_DATA[SERIES] %}
+{% extends "templates/base.tmpl" %}
+{% block pagetitle %}{{SERIES_TITLE}} User Guides{% endblock %}
+{% block title %}
+<a href="https://docs.openstack.org">Documentation</a> &gt; User Guides
+{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+    <div class="top-docs-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <h1>OpenStack {{SERIES_TITLE}} Project User Guides</h1>
+                <p>
+                This page contains project-specific documentation for
+                using OpenStack services and libraries.
+                </p>
+       </div>
+    </div>
+</div>
+<div class="mid-docs-wrapper" id="docs-main-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            </div>
+        </div>
+        <div class="row docs-toc">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="docs-link-sections">
+                <h3><i class="fa fa-cog"></i>User Guides for OpenStack Services</h3>
+{% for project in projects|sort(attribute='service') %}
+{% if project.type in ['service', 'other'] and project.has_user_guide %}
+                <a href="/{{project.name}}/{{SERIES}}/user/">
+                  {{project.service}} ({{project.name}})</a><br />
+{% endif %}
+{% endfor %}
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="docs-link-sections">
+                <h3><i class="fa fa-cog"></i>User Guides for OpenStack Deployment Tools</h3>
+{% for project in projects|sort(attribute='service') %}
+{% if project.type in ['deployment'] and project.has_user_guide %}
+                <a href="/{{project.name}}/latest/user/">
+                  {{project.service}} ({{project.name}})</a><br />
+{% endif %}
+{% endfor %}
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="docs-link-sections">
+                <h3><i class="fa fa-cog"></i>Client Libraries</h3>
+                <p>Refer to <a href="../language-bindings.html">the
+                language bindings list</a> for Python client library
+                documentation and the Unified OpenStack command line
+                client.</p>
+              </div>
+            </div>
+
+        <div class="row docs-contribute-wrapper">
+            <div class="col-lg-12">
+                <p>Documentation treated like code, powered by the community - interested?</p>
+                <a href="/doc-contrib-guide/" class="overview-btn contribute-btn">How To Contribute <i class="fa fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
