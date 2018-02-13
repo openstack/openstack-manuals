@@ -87,6 +87,15 @@ Install and configure components
 
    .. end
 
+   Reload systemd service files with:
+
+   .. code-block:: console
+
+      # systemctl daemon-reload
+
+   .. end
+
+
 Finalize installation
 ---------------------
 
