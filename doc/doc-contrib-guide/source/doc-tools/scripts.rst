@@ -3,8 +3,45 @@ Scripts overview
 ================
 
 This section provides an overview of scripts used by the OpenStack
-documentation project grouped by repositories they are stored in.
+documentation project, writers and developers, grouped by components they are
+part of.
 
+oslo.config
+~~~~~~~~~~~
+
+The oslo.config library provides two extensions, a configuration documentation
+directive and a configuration generator hook.
+
+For more information, see `Sphinx Integration for oslo.config
+<https://docs.openstack.org/oslo.config/latest/reference/sphinxext.html>`_
+and `Sphinx Oslo Sample Config Generation
+<https://docs.openstack.org/oslo.config/latest/reference/sphinxconfiggen.html>`_.
+
+oslo.policy
+~~~~~~~~~~~
+
+The oslo.policy library provides two extensions, a policy documentation
+directive and a policy generator hook.
+
+For more information, see `Sphinx Oslo Sample Policy Generation
+<https://docs.openstack.org/oslo.policy/latest/user/sphinxpolicygen.html>`_.
+
+cliff
+~~~~~
+
+The cliff framework provides a directive to document multiple commands.
+
+For more information, see `Sphinx Integration for cliff
+<https://docs.openstack.org/cliff/latest/user/sphinxext.html>`_.
+
+stevedore
+~~~~~~~~~
+
+The stevedore library provides a single directive for listing plugins for an
+entrypoint.
+
+For more information, see `Sphinx Integration for stevedore
+<https://docs.openstack.org/stevedore/latest/user/sphinxext.html>`_.
 
 openstack-doc-tools repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,7 +78,6 @@ sync-projects.sh
 publishdocs.sh
   Publishdocs job uses this script to publish documentation to
   https://docs.openstack.org/.
-
 
 Notes
 ~~~~~

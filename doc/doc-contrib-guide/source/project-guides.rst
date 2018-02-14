@@ -14,7 +14,7 @@ high-level groupings that have evolved over the last years.
 Within each top-level directory, project teams are free to organize
 their content however seems most appropriate to them.
 
-This is the proposed layout for phase 1 (pike):
+This is the layout implemented in Pike and later:
 
 * ``doc/source/``
 

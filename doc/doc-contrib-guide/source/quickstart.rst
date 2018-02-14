@@ -14,4 +14,3 @@ use case.
 
    quickstart/first-timers.rst
    quickstart/developers.rst
-   quickstart/new-projects.rst
