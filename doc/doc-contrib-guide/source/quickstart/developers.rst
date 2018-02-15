@@ -9,10 +9,10 @@ important that you also document that new feature.
 This is also true if you are adding or changing configuration options,
 commands, or other user-facing components.
 
-Many of these types of changes are handled automatically by
-``openstack-doc-tools``, and published to the Configuration Reference
-and Command-Line Reference. For more information about these automated
-tools, see the :ref:`doc-tools` chapter.
+Many of these types of changes are handled automatically by directives and
+configuration generators provided by libraries such as oslo.config and
+oslo.policy, and published as part of the project-specific documentation.
+For more information about these automated tools, see :ref:`doc-tools`.
 
 If you are contributing documentation to the main openstack-manuals
 repository, there are a few things you can do to help your patch merge
@@ -41,7 +41,5 @@ quickly and easily:
   ask you to create a blueprint and specification for the change. If you are
   unsure whether your change will require a blueprint or specification, ask
   on the mailing list for guidance.
-* If you want to create a new Installation Guide for your big tent
-  project, see :doc:`../project-install-guide`.
 * Remember, you can always contact the documentation team through our mailing
   list, or on IRC.
