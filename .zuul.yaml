@@ -4,7 +4,8 @@
 # repositories.
 
 - job:
-    name: build-tox-manuals
+    name: build-tox-manuals-base
+    abstract: true
     description: |
       Base job to build manual related documents. These build jobs
       invoke a tox command and expect the published content to be in
@@ -29,7 +30,7 @@
 
 - job:
     name: build-tox-manuals-checkbuild
-    parent: build-tox-manuals
+    parent: build-tox-manuals-base
     description: |
       Build manuals using "checkbuild" tox environment.
     vars:
@@ -37,7 +38,7 @@
 
 - job:
     name: build-tox-manuals-checklang
-    parent: build-tox-manuals
+    parent: build-tox-manuals-base
     description: |
       Build translated manuals using "checklang" tox environment.
     vars:
