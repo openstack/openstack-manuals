@@ -19,6 +19,7 @@ Install and configure components
    .. end
 
 2. Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file
+   (backup existing configuration files in ``/etc/my.cnf.d/`` if needed)
    and complete the following actions:
 
    - Create a ``[mysqld]`` section, and set the ``bind-address``
