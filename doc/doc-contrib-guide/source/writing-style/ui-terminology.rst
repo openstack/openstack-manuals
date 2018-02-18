@@ -30,6 +30,9 @@ When documenting actions that readers must perform in a command-line interface
   the output. Use ellipses (...) to show that the page displays a portion of
   the output.
 
+* Always use the OpenStack Client ``openstack`` for CLI commands rather than
+  per-project CLI tools such as ``nova``.
+
 * Depending on whether you describe CLI actions in the running text or
   in procedures, consider the following usage:
 
@@ -43,9 +46,10 @@ When documenting actions that readers must perform in a command-line interface
          between the two devices.
        - You can use the :command:`ping` command to verify the network
          connection between the two devices.
-     * - You can use :command:`nova image-create` command to take a snapshot.
-       - You can use the :command:`nova image-create` command to take
-         a snapshot.
+     * - You can use :command:`openstack server image create` command to take a
+         snapshot.
+       - You can use the :command:`openstack server image create` command to
+         take a snapshot.
 
   |
 

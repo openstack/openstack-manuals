@@ -13,9 +13,8 @@ Follow these guidelines:
 
 * **Use "--option ARGUMENT"**
 
-  The OpenStack CLI commands such as ``keystone`` support both
-  ``--option ARGUMENT`` and ``--option=ARGUMENT``. In technical publications,
-  use ``--option ARGUMENT``.
+  The OpenStack CLI supports both ``--option ARGUMENT`` and
+  ``--option=ARGUMENT``. In technical publications, use ``--option ARGUMENT``.
 
 * **Use "." to source script files**
 
