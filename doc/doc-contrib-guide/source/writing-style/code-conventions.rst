@@ -38,14 +38,3 @@ Follow these guidelines:
   .. code-block:: none
 
      Replace ``PASSWORD`` with a suitable password.
-
-.. note::
-
-   Nova exposes both its own API and an EC2-compatible API. Therefore, you can
-   complete many tasks by using either the nova CLI or ``euca2ools``.
-
-When documenting ``euca2ools``, limit the content to the following topics:
-
-* Tasks required to get credentials to work with ``euca2ools``
-* Explain the difference in operation between the Amazon EC2 and
-  OpenStack endpoints when you access them through EC2.
