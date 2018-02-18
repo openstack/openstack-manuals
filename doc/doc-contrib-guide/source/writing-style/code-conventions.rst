@@ -17,12 +17,6 @@ Follow these guidelines:
   ``--option ARGUMENT`` and ``--option=ARGUMENT``. In technical publications,
   use ``--option ARGUMENT``.
 
-* **Use "." to source script files**
-
-  When you have to source a script file, for example, a credentials file to
-  gain access to user-only or admin-only CLI commands, use ``.`` instead of
-  ``source``.
-
 * **Use capital letters with underscores for parameters**
 
   When you write parameters in an example command,
