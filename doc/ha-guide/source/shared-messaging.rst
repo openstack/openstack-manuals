@@ -234,7 +234,7 @@ Use these steps to configurate all services using RabbitMQ:
    .. code-block:: ini
 
       transport_url = rabbit://RABBIT_USER:RABBIT_PASS@rabbit1:5672,
-      RABBIT_USER:RABBIT_PASS@rabbit2:5672,RABBIT_USER:RABBIT_PASS@rabbit3:5672
+      RABBIT_USER:RABBIT_PASS@rabbit2:5672
 
    Replace ``RABBIT_USER`` with RabbitMQ username and ``RABBIT_PASS`` with
    password for respective RabbitMQ host. For more information, see
