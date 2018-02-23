@@ -8,6 +8,7 @@ release notes (currently openstackdocstheme and openstack-doc-tools).
 Thus this file covers the content of the following repositories:
 
 * api-site
+* contributor-guide
 * openstack-manuals
 * security-guide
 * training-guide
@@ -19,6 +20,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   queens.rst
    pike.rst
    ocata.rst
    newton.rst
