@@ -8,12 +8,11 @@ locations:
 
 * `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
+* `OpenStack Installation Guides for Queens
+  <https://docs.openstack.org/queens/install/>`_
 
-.. Note that this guide is release independent, so we will add more
-   entries to the list above.
-
-Minimal deployment
-==================
+Minimal deployment for Pike
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At a minimum, you need to install the following services. Install the services
 in the order specified below:
@@ -32,3 +31,24 @@ minimal deployment services:
 
 * Dashboard – `horizon installation for Pike <https://docs.openstack.org/horizon/pike/install/>`_
 * Block Storage service – `cinder installation for Pike <https://docs.openstack.org/cinder/pike/install/>`_
+
+Minimal deployment for Queens
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Queens
+  <https://docs.openstack.org/keystone/queens/install/>`_
+* Image service – `glance installation for Queens
+  <https://docs.openstack.org/glance/queens/install/>`_
+* Compute service – `nova installation for Queens
+  <https://docs.openstack.org/nova/queens/install/>`_
+* Networking service – `neutron installation for Queens
+  <https://docs.openstack.org/neutron/queens/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Queens <https://docs.openstack.org/horizon/queens/install/>`_
+* Block Storage service – `cinder installation for Queens <https://docs.openstack.org/cinder/queens/install/>`_

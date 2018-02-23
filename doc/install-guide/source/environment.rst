@@ -10,6 +10,8 @@ one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to `Object Storage Installation Guide for Pike
 <https://docs.openstack.org/swift/pike/install/>`_
+or `Object Storage Installation Guide for Queens
+<https://docs.openstack.org/swift/queens/install/>`_
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
@@ -68,7 +70,9 @@ of nested VMs.
    interface.
 
 For more information about system requirements, see the
-`OpenStack Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_.
+`OpenStack Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_
+or the
+`OpenStack Queens Administrator Guides <https://docs.openstack.org/queens/admin/>`_.
 
 .. toctree::
    :maxdepth: 1

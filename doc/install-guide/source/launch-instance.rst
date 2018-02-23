@@ -14,10 +14,16 @@ tools on the controller node. However, you can follow the instructions
 on any host that the tools are installed.
 For more information on the CLI tools, see the
 `OpenStackClient documentation for Pike
-<https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/server.html#server-create>`__.
+<https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/server.html#server-create>`_
+or the
+`OpenStackClient documentation for Queens
+<https://docs.openstack.org/python-openstackclient/queens/cli/command-objects/server.html#server-create>`_.
 To use the dashboard, see the
 `Dashboard User Documentation for Pike
-<https://docs.openstack.org/horizon/pike/user/>`__.
+<https://docs.openstack.org/horizon/pike/user/>`_
+or the
+`Dashboard User Documentation for Queens
+<https://docs.openstack.org/horizon/queens/user/>`_.
 
 .. _launch-instance-networks:
 
@@ -220,7 +226,10 @@ a stack that launches an instance.
 
 For more information, see the
 `Orchestration installation guide for Pike
-<https://docs.openstack.org/heat/pike/>`_.
+<https://docs.openstack.org/heat/pike/install/>`_
+or the
+`Orchestration installation guide for Queens
+<https://docs.openstack.org/heat/queens/install/>`_.
 
 Shared File Systems
 -------------------
@@ -230,4 +239,7 @@ a share and mount it in an instance.
 
 For more information, see the
 `Shared File Systems installation guide for Pike
-<https://docs.openstack.org/manila/pike/>`_.
+<https://docs.openstack.org/manila/pike/install/>`_
+or the
+`Shared File Systems installation guide for Queens
+<https://docs.openstack.org/manila/queens/install/>`_.

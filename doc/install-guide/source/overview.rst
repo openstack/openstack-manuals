@@ -58,10 +58,17 @@ follows:
 * Overlay (tunnel) traffic for self-service networks traverses the management
   network instead of a dedicated network.
 
-For more information on production architectures, see the
+For more information on production architectures for Pike, see the
 `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_,
 `OpenStack Networking Guide for Pike <https://docs.openstack.org/neutron/pike/admin/>`_,
-and `OpenStack Administrator Guides for Pike <https://docs.openstack.org/pike/admin/>`_.
+and
+`OpenStack Administrator Guides for Pike <https://docs.openstack.org/pike/admin/>`_.
+
+For more information on production architectures for Queens, see the
+`Architecture Design Guide <https://docs.openstack.org/arch-design/>`_,
+`OpenStack Networking Guide for Queens <https://docs.openstack.org/neutron/queens/admin/>`_,
+and
+`OpenStack Administrator Guides for Queens <https://docs.openstack.org/queens/admin/>`_.
 
 .. _figure-hwreqs:
 

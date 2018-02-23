@@ -24,17 +24,17 @@ For the available OpenStack documentation, see
 The following guides explain how to install a Proof-of-Concept OpenStack cloud
 and its associated components:
 
-* `Pike Installation Guides <https://docs.openstack.org/pike/install/>`_
+* `Queens Installation Guides <https://docs.openstack.org/queens/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
 *  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
 
-*  `Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_
+*  `Queens Administrator Guides <https://docs.openstack.org/queens/admin/>`_
 
-*  `Pike Configuration Guides <https://docs.openstack.org/pike/configuration/>`_
+*  `Queens Configuration Guides <https://docs.openstack.org/queens/configuration/>`_
 
-*  `Pike Networking Guide <https://docs.openstack.org/neutron/pike/admin/>`_
+*  `Queens Networking Guide <https://docs.openstack.org/neutron/queens/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
@@ -44,8 +44,8 @@ The following books explain how to configure and run an OpenStack cloud:
 
 The following book explains how to use the command-line clients:
 
-*  `Pike API Bindings
-   <https://docs.openstack.org/pike/language-bindings.html>`_
+*  `Queens API Bindings
+   <https://docs.openstack.org/queens/language-bindings.html>`_
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
