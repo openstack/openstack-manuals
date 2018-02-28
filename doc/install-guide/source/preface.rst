@@ -24,7 +24,7 @@ are included.
    `OpenStack Training Labs <https://docs.openstack.org/training_labs/>`_.
 
 This guide documents the installation of OpenStack starting with the
-Pike release. It will cover multiple releases in the future.
+Pike release. It covers multiple releases.
 
 .. warning::
 

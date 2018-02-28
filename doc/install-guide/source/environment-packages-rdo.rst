@@ -69,6 +69,14 @@ Enable the OpenStack repository
 
   .. end
 
+  **When installing the Queens release, run:**
+
+  .. code-block:: console
+
+     # yum install centos-release-openstack-queens
+
+  .. end
+
 * On RHEL, download and install the RDO repository RPM to enable the
   OpenStack repository.
 
