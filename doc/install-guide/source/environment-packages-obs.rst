@@ -27,6 +27,14 @@ Enable the OpenStack repository
 * Enable the Open Build Service repositories based on your openSUSE or
   SLES version, and on the version of OpenStack you want to install:
 
+  **On openSUSE for OpenStack Queens:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Queens/openSUSE_Leap_42.3 Queens
+
+  .. end
+
   **On openSUSE for OpenStack Pike:**
 
   .. code-block:: console
@@ -49,6 +57,14 @@ Enable the OpenStack repository
         # zypper rm patterns-openSUSE-minimal_base-conflicts
 
      .. end
+
+  **On SLES for OpenStack Queens:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Queens/SLE_12_SP3 Queens
+
+  .. end
 
   **On SLES for OpenStack Pike:**
 
