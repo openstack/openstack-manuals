@@ -107,6 +107,10 @@ SUSE maintains official SUSE Linux Enterprise Server cloud images.
 Go to `download.suse.com <https://download.suse.com>`_ and search
 for ``SUSE Linux Enterprise Server 12 SP3 JeOS``.
 
+.. note::
+
+   In a openSUSE cloud image, the login account is ``opensuse``.
+
 Red Hat Enterprise Linux
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
