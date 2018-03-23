@@ -54,6 +54,16 @@ redirectmatch {{ code }} ^{{ path }}($|/.*$) {{ result }}
 redirectmatch {{ code }} ^{{ path }}(?![^/])/?(.*)$ {{ result }}
 {%- endmacro %}
 
+{# Macro to handle project renames.
+
+   Arguments:
+     old -- The previous name of the project.
+     new -- The new name of the project.
+#}
+{% macro rename_project(old, new) -%}
+{{ deep_links('/' + old, '/' + new + '/$1') }}
+{%- endmacro %}
+
 # Redirect old top-level HTML pages to the version under most recent
 # full release.
 redirectmatch 301 ^/$ /{{ RELEASED_SERIES }}/
@@ -201,3 +211,7 @@ redirectmatch 301 /infra/zuul/feature/zuulv3(.*)$ /infra/zuul$1
 # https://docs.openstack.org/infra/nodepool
 redirectmatch 301 /infra/nodepool/feature/zuulv3(.*)$ /infra/nodepool$1
 # End redirect nodepool/feature/zuulv3
+
+# Redirect from python-openstacksdk to openstacksdk
+{{ rename_project('python-openstacksdk', 'openstacksdk') }}
+# End redirect for openstacksdk
