@@ -25,7 +25,7 @@ subteams:
   security-doc repository.
 
 * `openstack-doc-tools <https://bugs.launchpad.net/openstack-doc-tools>`_ is
-  used for the doc-tools and openstackdocstheme repositories.
+  used for the openstack-doc-tools and openstackdocstheme repositories.
 
 Documentation bugs for project-specific repositories are tracked in the
 appropriate project's bug tracking area on Launchpad.

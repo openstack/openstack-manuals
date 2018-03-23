@@ -6,6 +6,17 @@ This section provides an overview of scripts used by the OpenStack
 documentation project, writers and developers, grouped by components they are
 part of.
 
+openstackdocstheme
+~~~~~~~~~~~~~~~~~~
+
+openstackdocstheme is a theme and extension support for Sphinx documentation
+that is published to docs.openstack.org and developer.openstack.org. It
+provides an external link helper to automatically build links that change when
+branches are created for each release series.
+
+For more information, see
+`External Link Helper <https://docs.openstack.org/openstackdocstheme/latest/#external-link-helper>`_.
+
 oslo.config
 ~~~~~~~~~~~
 
