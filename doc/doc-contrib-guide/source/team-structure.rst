@@ -22,7 +22,7 @@ with their respective leads:
   Matjaz Pancur
 * `Training labs
   <https://wiki.openstack.org/wiki/Documentation/training-labs>`_:
-  Pranav Salunke, Roger Luethi
+  Roger Luethi, Julen Larrucea
 
 The current list of docs cores for openstack-manuals, openstackdocstheme,
 and openstack-doc-tools repositories can be found at
