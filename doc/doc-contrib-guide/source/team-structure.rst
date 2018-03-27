@@ -28,12 +28,9 @@ The current list of docs cores for openstack-manuals, openstackdocstheme,
 and openstack-doc-tools repositories can be found at
 https://review.openstack.org/#/admin/groups/30,members.
 
-The api-site, contributor-guide, docs-specs, security-doc, training-guides,
-and training-labs repositories have separate core teams but also include the
-openstack-manuals core team.
-
-The docs-specs repository has a separate core team, see
-:doc:`blueprints-and-specs` for details.
+The api-site, contributor-guide, security-doc, training-guides, and
+training-labs repositories have separate core teams but also include the
+docs core team.
 
 The cross-project liaisons (CPLs) assist with subject matter questions,
 reviews, doc bug triaging, and patching docs.

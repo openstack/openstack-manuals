@@ -22,9 +22,9 @@ Use blueprints and specifications:
   addition of the API reference site.
 * For work that should definitely be discussed at a project teams gathering.
 
-A specification needs two +2 votes from the docs-specs-core team.
-See the current list of `docs-specs core team
-<https://review.openstack.org/#/admin/groups/384,members>`_.
+A specification needs two +2 votes from the docs core team. See the current
+list of `docs core team members
+<https://review.openstack.org/#/admin/groups/30,members>`_.
 
 Use bugs against a particular repository with documentation:
 
