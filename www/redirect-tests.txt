@@ -66,6 +66,16 @@
 {% endif -%}
 {%- endmacro %}
 
+{# Macro to handle project renames.
+
+   Arguments:
+     old -- The previous name of the project.
+     new -- The new name of the project.
+#}
+{% macro rename_project(old, new) -%}
+{{ deep_links('/' + old, '/' + new) }}
+{%- endmacro %}
+
 # Redirect old top-level HTML pages to the version under most recent
 # full release.
 / 301 /{{ RELEASED_SERIES }}/
@@ -230,3 +240,7 @@
 # https://docs.openstack.org/infra/nodepool
 # End redirect nodepool/feature/zuulv3
 /infra/nodepool/feature/zuulv3/index.html 301 /infra/nodepool/index.html
+
+# Redirect from python-openstacksdk to openstacksdk
+{{ rename_project('python-openstacksdk', 'openstacksdk') }}
+# End redirect for openstacksdk
