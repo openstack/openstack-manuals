@@ -123,7 +123,7 @@ Edit the ``/etc/cinder/cinder.conf`` file. For example, on a RHEL-based system:
    [keystone_authtoken]
    # 10.0.0.11 is the Keystone VIP
    identity_uri = http://10.0.0.11:35357/
-   auth_uri = http://10.0.0.11:5000/
+   www_authenticate_uri = http://10.0.0.11:5000/
    admin_tenant_name = service
    admin_user = cinder
    admin_password = CINDER_PASS
