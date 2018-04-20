@@ -16,7 +16,7 @@ Both the central and the compute agent can run in an HA deployment.
 This means that multiple instances of these services can run in
 parallel with workload partitioning among these running instances.
 
-The `Tooz <https://pypi.python.org/pypi/tooz>`_ library provides
+The `Tooz <https://pypi.org/project/tooz>`_ library provides
 the coordination within the groups of service instances.
 It provides an API above several back ends that can be used for building
 distributed applications.
