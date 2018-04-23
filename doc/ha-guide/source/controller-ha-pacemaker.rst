@@ -499,6 +499,11 @@ to get a summary of the health of the communication rings:
 Use the :command:`corosync-objctl` utility to dump the Corosync cluster
 member list:
 
+.. note::
+
+   If you are using Corosync version 2, use the :command:`corosync-cmapctl`
+   utility instead of :command:`corosync-objctl`; it is a direct replacement.
+
 .. code-block:: console
 
    # corosync-objctl runtime.totem.pg.mrp.srp.members
@@ -511,11 +516,6 @@ member list:
 
 You should see a ``status=joined`` entry for each of your constituent
 cluster nodes.
-
-.. note::
-
-   If you are using Corosync version 2, use the :command:`corosync-cmapctl`
-   utility instead of :command:`corosync-objctl`; it is a direct replacement.
 
 .. _pacemaker-start:
 
