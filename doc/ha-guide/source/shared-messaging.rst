@@ -54,25 +54,25 @@ you are using.
 
 For Ubuntu or Debian:
 
-.. code-block: console
+.. code-block:: console
 
    # apt-get install rabbitmq-server
 
 For RHEL, Fedora, or CentOS:
 
-.. code-block: console
+.. code-block:: console
 
    # yum install rabbitmq-server
 
 For openSUSE:
 
-.. code-block: console
+.. code-block:: console
 
    # zypper install rabbitmq-server
 
 For SLES 12:
 
-.. code-block: console
+.. code-block:: console
 
    # zypper addrepo -f obs://Cloud:OpenStack:Kilo/SLE_12 Kilo
    [Verify the fingerprint of the imported GPG key. See below.]
