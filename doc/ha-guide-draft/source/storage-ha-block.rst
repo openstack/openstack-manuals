@@ -183,8 +183,10 @@ and define your endpoint. For example:
 
 .. code-block:: console
 
-   $ openstack endpoint create volume --region $KEYSTONE_REGION \
-   --publicurl 'http://PUBLIC_VIP:8776/v1/%(tenant_id)s' \
-   --adminurl 'http://10.0.0.11:8776/v1/%(tenant_id)s' \
-   --internalurl 'http://10.0.0.11:8776/v1/%(tenant_id)s'
+   $ openstack endpoint create --region $KEYSTONE_REGION \
+     volumev2 public http://PUBLIC_VIP:8776/v2/%\(project_id\)s
+   $ openstack endpoint create --region $KEYSTONE_REGION \
+     volumev2 admin http://10.0.0.11:8776/v2/%\(project_id\)s
+   $ openstack endpoint create --region $KEYSTONE_REGION \
+     volumev2 internal http://10.0.0.11:8776/v2/%\(project_id\)s
 
