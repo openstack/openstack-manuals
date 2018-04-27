@@ -176,7 +176,7 @@ To build a broker, ensure that all nodes have the same Erlang cookie file.
       # rabbitmqctl stop_app
       Stopping node rabbit@NODE...
       ...done.
-      # rabbitmqctl join_cluster --ram rabbit@rabbit1
+      # rabbitmqctl join_cluster rabbit@rabbit1
       # rabbitmqctl start_app
       Starting node rabbit@NODE ...
       ...done.
@@ -184,7 +184,9 @@ To build a broker, ensure that all nodes have the same Erlang cookie file.
 .. note::
 
    The default node type is a disc node. In this guide, nodes
-   join the cluster as RAM nodes.
+   join the cluster as disc nodes. Also, nodes can join the cluster
+   as RAM nodes. For more details about this feature, check
+   `Clusters with RAM nodes <https://www.rabbitmq.com/clustering.html#ram-nodes>`_.
 
 #. Verify the cluster status:
 
