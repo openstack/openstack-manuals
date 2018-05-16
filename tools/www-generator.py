@@ -135,6 +135,11 @@ def parse_command_line_arguments():
                         action='store_true',
                         help='only test links, do not render templates',
                         )
+    parser.add_argument('--strict',
+                        default=False,
+                        action='store_true',
+                        help='treat warnings as errors',
+                        )
     return parser.parse_args()
 
 
@@ -186,7 +191,8 @@ def load_project_data(source_directory,
                       check_all_links=False,
                       skip_links=False,
                       series_to_load=None,
-                      governed_deliverables=[]):
+                      governed_deliverables=[],
+                      strict=False):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
     series_to_load = series_to_load or []
@@ -228,10 +234,16 @@ def load_project_data(source_directory,
 
             if (series == 'latest' and
                     deliverable_name not in governed_deliverables):
-                logger.warning(
-                    ('%s is no longer part of an official project, '
-                     'ignoring in %s'),
-                    deliverable_name, filename)
+                msg = ('{} is no longer part of an official project, '
+                       '{} in {}').format(
+                           deliverable_name,
+                           'error' if strict else 'ignoring',
+                           filename)
+                logger.warning(msg)
+                if strict:
+                    logger.info('Known deliverables: %s',
+                                sorted(governed_deliverables))
+                    raise RuntimeError(msg)
                 continue
             logger.info('including %s', deliverable_name)
             data.append(project)
@@ -316,10 +328,11 @@ def load_project_data(source_directory,
                     )
                     fail = True
                 elif (not flag_val) and check_all_links and exists:
-                    logger.warning(
-                        '%s not set for %s but %s does exist',
-                        flag, project_name, url,
-                    )
+                    msg = '{} not set for {} but {} does exist'.format(
+                        flag, project_name, url)
+                    logger.warning(msg)
+                    if strict:
+                        raise RuntimeError(msg)
 
         if fail:
             raise ValueError('invalid input in %s' % filename)
@@ -469,6 +482,7 @@ def main():
         skip_links=args.skip_links,
         series_to_load=args.series,
         governed_deliverables=deliverables,
+        strict=args.strict,
     )
 
     # Set up jinja to discover the templates.
