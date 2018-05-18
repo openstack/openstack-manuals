@@ -11,3 +11,4 @@ services:
 
 .. image:: figures/openstack_kilo_conceptual_arch.png
    :alt: OpenStack conceptual architecture
+   :width: 100%
