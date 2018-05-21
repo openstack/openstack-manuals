@@ -154,9 +154,10 @@ The basic steps are:
       [testenv:api-ref]
       # This environment is called from CI scripts to test and publish
       # the API Ref to developer.openstack.org.
+      whitelist_externals = rm
       commands =
-      rm -rf api-ref/build
-      sphinx-build -W -b html -d api-ref/build/doctrees api-ref/source api-ref/build/html
+              rm -rf api-ref/build
+              sphinx-build -W -b html -d api-ref/build/doctrees api-ref/source api-ref/build/html
 
 #. Test the ``tox.ini`` changes by running this tox command:
 
