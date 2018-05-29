@@ -35,7 +35,7 @@ Install and configure components
    .. end
 
 2. Configure the ``chrony.conf`` file and comment out or remove all
-   but one ``server`` key. Change it to reference the controller node:
+   but one ``server`` key. Change it to reference the controller node.
 
    For RHEL, CentOS, or SUSE, edit the ``/etc/chrony.conf`` file:
 
