@@ -14,7 +14,7 @@ with their respective leads:
 * :doc:`api-site <api-guides>`: *vacant*
 * `Contributor Guide
   <https://docs.openstack.org/contributors/>`_:
-  Mike Perez
+  Kendall Nelson
 * `Security Guide
   <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
   Luke Hinds
