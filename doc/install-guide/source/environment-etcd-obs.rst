@@ -1,12 +1,13 @@
+=============
 Etcd for SUSE
-~~~~~~~~~~~~~
+=============
 
 Right now, there is no distro package available for etcd3. This guide uses
 the tarball installation as a workaround until proper distro packages are
 available.
 
 Install and configure components
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Install etcd:
 
@@ -100,7 +101,7 @@ Install and configure components
 
 
 Finalize installation
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 #. Enable and start the etcd service:
 

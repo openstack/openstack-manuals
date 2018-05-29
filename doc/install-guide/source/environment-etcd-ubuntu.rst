@@ -2,53 +2,22 @@
 Etcd for Ubuntu
 ===============
 
-Right now, there is no distro package available for etcd3. This guide uses
-the tarball installation as a workaround until proper distro packages are
-available.
+OpenStack services may use Etcd, a distributed reliable key-value store
+for distributed key locking, storing configuration, keeping track of service
+live-ness and other scenarios.
 
 Install and configure components
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Install etcd:
+#. Install the package:
 
-   - Create etcd user:
+   .. code-block:: console
 
-     .. code-block:: console
+      # apt install etcd
 
-        # groupadd --system etcd
-        # useradd --home-dir "/var/lib/etcd" \
-              --system \
-              --shell /bin/false \
-              -g etcd \
-              etcd
+   .. end
 
-     .. end
-
-   - Create the necessary directories:
-
-     .. code-block:: console
-
-        # mkdir -p /etc/etcd
-        # chown etcd:etcd /etc/etcd
-        # mkdir -p /var/lib/etcd
-        # chown etcd:etcd /var/lib/etcd
-
-     .. end
-
-   - Download and install the etcd tarball:
-
-     .. code-block:: console
-
-        # ETCD_VER=v3.2.7
-        # rm -rf /tmp/etcd && mkdir -p /tmp/etcd
-        # curl -L https://github.com/coreos/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
-        # tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz -C /tmp/etcd --strip-components=1
-        # cp /tmp/etcd/etcd /usr/bin/etcd
-        # cp /tmp/etcd/etcdctl /usr/bin/etcdctl
-
-     .. end
-
-2. Create and edit the ``/etc/etcd/etcd.conf.yml`` file
+#. Edit the ``/etc/etcd/etcd.conf.yml`` file
    and set the ``initial-cluster``, ``initial-advertise-peer-urls``,
    ``advertise-client-urls``, ``listen-client-urls`` to the management
    IP address of the controller node to enable access by other nodes via
@@ -68,7 +37,7 @@ Install and configure components
 
    .. end
 
-3. Create and edit the ``/lib/systemd/system/etcd.service`` file:
+#. Create and edit the ``/lib/systemd/system/etcd.service`` file:
 
    .. code-block:: ini
 
@@ -89,7 +58,7 @@ Install and configure components
    .. end
 
 Finalize installation
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 #. Enable and start the etcd service:
 
