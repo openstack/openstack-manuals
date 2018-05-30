@@ -79,7 +79,7 @@ files, ``console`` for console inputs and outputs, and so on.
 
 **Input**
 
-.. code-block:: none
+.. code-block:: rst
 
    .. path /path/to/config/file
    .. code-block:: ini
@@ -92,6 +92,8 @@ files, ``console`` for console inputs and outputs, and so on.
 
    .. end
 
+.. end
+
 **Output**
 
 .. code-block:: ini
@@ -102,12 +104,54 @@ files, ``console`` for console inputs and outputs, and so on.
    [DEFAULT]
    # List of directories to load filter definitions from (separated by ',').
 
+.. end
+
 .. note::
 
    When you write the command example, you should write the input and output
    as it is from the console in one code block, not add an extra blank line,
    not split them into input block and output block.
    You can omit the output where appropriate.
+
+Options of code-block directive
+-------------------------------
+
+You can add line numbers to code examples with the ``:linenos:`` parameter and
+highlight some specific lines with the ``:emphasize-lines:`` parameter:
+
+**Input**
+
+.. code-block:: rst
+
+   .. code-block:: python
+      :linenos:
+      :emphasize-lines: 3,5-6
+
+      def some_function():
+          interesting = False
+          print 'This line is highlighted.'
+          print 'This one is not...'
+          print '...but this one is.'
+          print 'This one is highlighted too.'
+
+   .. end
+
+.. end
+
+**Output**
+
+.. code-block:: python
+   :linenos:
+   :emphasize-lines: 3,5-6
+
+   def some_function():
+       interesting = False
+       print 'This line is highlighted.'
+       print 'This one is not...'
+       print '...but this one is.'
+       print 'This one is highlighted too.'
+
+.. end
 
 .. _remote-block:
 
@@ -133,7 +177,7 @@ content from a remote URL (``http`` or ``https``).
 
 **Input**
 
-.. code-block:: none
+.. code-block:: rst
 
    .. path /path/to/config/file
    .. remote-code-block:: ini

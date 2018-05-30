@@ -53,7 +53,7 @@ syntax format.
 
   * Example 2: Configure a configuration file.
 
-    .. code-block:: none
+    .. code-block:: rst
 
       .. path /etc/keystone/keystone.conf
       .. code-block:: ini
@@ -68,7 +68,7 @@ syntax format.
 
 * The ``only`` tags should be closed with ``endonly``.
 
-  .. code-block:: none
+  .. code-block:: rst
 
     .. only:: ubuntu or debian
 
