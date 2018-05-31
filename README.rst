@@ -7,8 +7,9 @@ Team and repository tags
 
 .. Change things from this point on
 
+=================
 OpenStack Manuals
------------------
+=================
 
 This repository contains documentation for the OpenStack project.
 
