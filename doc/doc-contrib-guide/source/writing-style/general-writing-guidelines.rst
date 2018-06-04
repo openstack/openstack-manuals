@@ -5,19 +5,15 @@ General writing guidelines
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow these guidelines to ensure readability and consistency of the
-OpenStack documentation. In addition to these guidelines, the
-`IBM Style Guide <http://www.redbooks.ibm.com/Redbooks.nsf/ibmpressisbn/9780132101301?Open>`_
-is used. In case of conflicts between the IBM style guide and these
-guidelines, these pages take precedence.
+OpenStack documentation.
 
 Use standard English
 --------------------
 
 Use standard United States (U.S.) English throughout all technical
-publications.
-When in doubt about the spelling of a word, consult the
-`Merriam-Webster's Collegiate Dictionary` and the `IBM Style Guide
-<http://www.redbooks.ibm.com/Redbooks.nsf/ibmpressisbn/9780132101301?Open>`_.
+publications. When in doubt about the spelling of a word, consult the
+`Merriam-Webster's Collegiate Dictionary` and the
+`IBM developerWorks editorial style guide <https://www.ibm.com/developerworks/library/styleguidelines/>`_.
 
 .. _write_in_active_voice:
 
