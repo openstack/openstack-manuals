@@ -40,7 +40,7 @@ workloads and protects the operating system.
 
 .. tip::
 
-  When CPU pinning is requested for for a guest, it is assumed
+  When CPU pinning is requested for a guest, it is assumed
   there is no overcommit (or, an overcommit ratio of 1.0). When dedicated
   resourcing is not requested for a workload, the normal overcommit ratios
   are applied.
