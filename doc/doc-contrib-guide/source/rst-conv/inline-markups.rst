@@ -21,7 +21,9 @@ To insert a semantic markup into your document, use the syntax below.
 
 .. code-block:: rst
 
-  :markup:`inline text`
+   :markup:`inline text`
+
+.. end
 
 Application
 ~~~~~~~~~~~
