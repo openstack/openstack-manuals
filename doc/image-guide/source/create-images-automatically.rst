@@ -208,3 +208,46 @@ To import it into libvirt with :command:`virsh`:
 
    # virt-install --name fedora --ram 2048 \
      --disk path=image.qcow2,format=qcow2 --import
+
+openstack-debian-images
+~~~~~~~~~~~~~~~~~~~~~~~
+
+`openstack-debian-images <https://packages.debian.org/openstack-debian-images>`_
+is the tool Debian uses to create its official OpenStack image. It is made of
+a single very simple shell script that is easy to understand and modify.
+It supports Grub and Syslinux, BIOS or EFI, amd64 and arm64 arch.
+
+openstack-debian-images can also be used to create a bootable image directly
+on a hard disk, instead of using the Debian installer.
+
+To build an image, type this:
+
+.. code-block:: console
+
+   # build-openstack-debian-image --release stretch
+
+More parameters can be added to further customize the image:
+
+.. code-block:: console
+
+   # build-openstack-debian-image --release stretch \
+     --hook-script /root/my-hook-script.sh \
+     --debootstrap-url http://ftp.fr.debian.org \
+     --sources.list-mirror http://ftp.fr.debian.org \
+     --login myusername \
+     --extra-packages vim,emacs
+
+The file ``/root/my-hook-script.sh`` will recieve 2 environment variable:
+``BODI_CHROOT_PATH`` path where the image is mounted, and ``BODI_RELEASE``
+which is the name of the Debian release that is being bootstraped. Here's
+an example for customizing the motd:
+
+.. code-block:: console
+
+   # #!/bin/sh
+     set -e
+     echo "My message" >${BODI_CHROOT_PATH}/etc/motd
+
+This hook script will conveniently be called at the correct moment of the
+build process, when everything is installed, but before unmounting the
+partition.
