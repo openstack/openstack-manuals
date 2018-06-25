@@ -1,12 +1,13 @@
+========================
 Etcd for RHEL and CentOS
-~~~~~~~~~~~~~~~~~~~~~~~~
+========================
 
 OpenStack services may use Etcd, a distributed reliable key-value store
 for distributed key locking, storing configuration, keeping track of service
 live-ness and other scenarios.
 
 Install and configure components
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #. Install the package:
 
@@ -39,7 +40,7 @@ Install and configure components
 
 
 Finalize installation
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 #. Enable and start the etcd service:
 
