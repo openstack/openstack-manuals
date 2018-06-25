@@ -211,7 +211,7 @@ parameters that you must define to avoid conflicts.
 
      innodb_flush_log_at_trx_commit=0
 
-  Setting this parameter to ``1`` or ``2`` can improve
+  Setting this parameter to ``0`` or ``2`` can improve
   performance, but it introduces certain dangers. Operating system failures can
   erase the last second of transactions. While you can recover this data
   from another node, if the cluster goes down at the same time
