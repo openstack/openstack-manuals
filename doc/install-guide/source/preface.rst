@@ -16,6 +16,7 @@ Explanations of configuration options and sample configuration files
 are included.
 
 .. note::
+
    The Training Labs scripts provide an automated way of deploying the
    cluster described in this Installation Guide into VirtualBox or KVM
    VMs. You will need a desktop computer or a laptop with at least 8
@@ -33,26 +34,27 @@ Pike release. It covers multiple releases.
    may not work with final versions. Please help us make this guide better
    by reporting any errors you encounter.
 
-Operating Systems
+Operating systems
 ~~~~~~~~~~~~~~~~~
 
-openSUSE and SUSE Linux Enterprise Server
-+++++++++++++++++++++++++++++++++++++++++
+Currently, this guide describes OpenStack installation for the following
+Linux distributions:
 
-This guide will show you how to install OpenStack by using packages
-on openSUSE Leap 42.3 and SUSE Linux Enterprise Server 12 SP3
-through the Open Build Service Cloud repository.
+openSUSE and SUSE Linux Enterprise Server
+  You can install OpenStack by using packages on openSUSE Leap 42.3 and
+  SUSE Linux Enterprise Server 12 SP3 through the Open Build Service Cloud
+  repository.
 
 Red Hat Enterprise Linux and CentOS
-+++++++++++++++++++++++++++++++++++
-
-This guide will show you how to install OpenStack by using packages
-available on Red Hat Enterprise Linux 7 and its derivatives through
-the RDO repository.
+  You can install OpenStack by using packages available on Red Hat
+  Enterprise Linux 7 and its derivatives through the RDO repository.
 
 Ubuntu
-++++++
+  You can walk through an installation by using packages available through
+  Canonical's Ubuntu Cloud archive repository for Ubuntu 16.04 (LTS).
 
-This guide will walk through an installation by using packages
-available through Canonical's Ubuntu Cloud archive repository for
-Ubuntu 16.04 (LTS).
+  .. note::
+
+     The Ubuntu Cloud Archive pockets for Pike and Queens provide
+     OpenStack packages for Ubuntu 16.04 LTS; OpenStack Queens is
+     installable direct using Ubuntu 18.04 LTS.
