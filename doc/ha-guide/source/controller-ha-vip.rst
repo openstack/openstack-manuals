@@ -20,4 +20,4 @@ For ``pcs``:
 .. code-block:: console
 
    # pcs resource create vip ocf:heartbeat:IPaddr2 \
-     params ip="10.0.0.11" cidr_netmask="24" op monitor interval="30s"
+     ip="10.0.0.11" cidr_netmask="24" op monitor interval="30s"
