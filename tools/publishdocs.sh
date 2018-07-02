@@ -27,7 +27,7 @@ tools/build-all-rst.sh --pdf
 # Build the www pages so that openstack-indexpage creates a link to
 # www/www-index.html.
 if [ "$PUBLISH" = "build" ] ; then
-    python tools/www-generator.py --source-directory www/ \
+    python3 tools/www-generator.py --source-directory www/ \
         --output-directory publish-docs/www/
     rsync -a www/static/ publish-docs/www/
     # publish-docs/www-index.html is the trigger for openstack-indexpage
@@ -35,7 +35,7 @@ if [ "$PUBLISH" = "build" ] ; then
     mv publish-docs/www/www-index.html publish-docs/www-index.html
 fi
 if [ "$PUBLISH" = "publish" ] ; then
-    python tools/www-generator.py --source-directory www/ \
+    python3 tools/www-generator.py --source-directory www/ \
         --output-directory publish-docs
     rsync -a www/static/ publish-docs/
     # Don't publish these files
