@@ -164,15 +164,16 @@ The basic steps are:
 
       $ tox -e api-ref
 
-#. Create a build job similar to the nova job for your project. Examples:
-   https://review.openstack.org/#/c/305464/ and
-   https://review.openstack.org/#/c/305485/.
+#. Add the ``api-ref-jobs`` template to your project, patch the
+   `zuul.d/projects.yaml <https://git.openstack.org/cgit/openstack-infra/project-config/tree/zuul.d/projects.yaml>`__
+   file stored in ``openstack-infra/project-config`` repository.
 
 After the source files and build jobs exist, the docs are built to
 `developer.openstack.org`_.
 
 If your document is completely new, you need to add links to it from the API
-landing page and the OpenStack Governance reference document, projects.yaml.
+landing page and the OpenStack Governance reference document,
+``projects.yaml``.
 
 To add a link to the project's API docs to the API landing page, patch the
 ``index.rst`` file stored in the `openstack/api-site repository`_.
