@@ -215,9 +215,7 @@ when creating the ``provider`` network.
 
    .. code-block:: console
 
-      $ neutron router-interface-add router selfservice
-
-      Added interface bff6605d-824c-41f9-b744-21d128fc86e1 to router router.
+      $ openstack router add subnet router selfservice
 
    .. end
 
@@ -225,9 +223,7 @@ when creating the ``provider`` network.
 
    .. code-block:: console
 
-      $ neutron router-gateway-set router provider
-
-      Set gateway for router router
+      $ openstack router set router --external-gateway provider
 
    .. end
 
@@ -265,18 +261,14 @@ creation examples.
 
    .. code-block:: console
 
-      $ neutron router-port-list router
+      $ openstack port list --router router
 
-      +--------------------------------------+------+-------------------+------------------------------------------+
-      | id                                   | name | mac_address       | fixed_ips                                |
-      +--------------------------------------+------+-------------------+------------------------------------------+
-      | bff6605d-824c-41f9-b744-21d128fc86e1 |      | fa:16:3e:2f:34:9b | {"subnet_id":                            |
-      |                                      |      |                   | "3482f524-8bff-4871-80d4-5774c2730728",  |
-      |                                      |      |                   | "ip_address": "172.16.1.1"}              |
-      | d6fe98db-ae01-42b0-a860-37b1661f5950 |      | fa:16:3e:e8:c1:41 | {"subnet_id":                            |
-      |                                      |      |                   | "5cc70da8-4ee7-4565-be53-b9c011fca011",  |
-      |                                      |      |                   | "ip_address": "203.0.113.102"}           |
-      +--------------------------------------+------+-------------------+------------------------------------------+
+      +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------+--------+
+      | ID                                   | Name | MAC Address       | Fixed IP Addresses                                                            | Status |
+      +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------+--------+
+      | bff6605d-824c-41f9-b744-21d128fc86e1 |      | fa:16:3e:2f:34:9b | ip_address='172.16.1.1', subnet_id='3482f524-8bff-4871-80d4-5774c2730728'     | ACTIVE |
+      | d6fe98db-ae01-42b0-a860-37b1661f5950 |      | fa:16:3e:e8:c1:41 | ip_address='203.0.113.102', subnet_id='5cc70da8-4ee7-4565-be53-b9c011fca011'  | ACTIVE |
+      +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------+--------+
 
    .. end
 
