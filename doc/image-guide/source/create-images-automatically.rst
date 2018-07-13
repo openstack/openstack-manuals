@@ -171,15 +171,6 @@ allows building of images based on openSUSE, SUSE Linux Enterprise,
 and Red Hat Enterprise Linux. The `openSUSE Documentation
 <https://doc.opensuse.org/#kiwi-doc>`_ explains how to use KIWI.
 
-SUSE Studio
-~~~~~~~~~~~
-
-`SUSE Studio <http://susestudio.com>`_ is a web application
-for building and testing software applications in a web browser.
-It supports the creation of physical, virtual or cloud-based
-applications and includes support for building images for OpenStack
-based clouds using SUSE Linux Enterprise and openSUSE as distributions.
-
 virt-builder
 ~~~~~~~~~~~~
 
