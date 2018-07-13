@@ -97,7 +97,8 @@ Configuration page
 <https://www.elastic.co/guide/en/logstash/current/configuration-file-structure.html>`_.
 
 OpenStack input, output and filter examples can be found at
-https://github.com/sorantis/elkstack/tree/master/elk/logstash.
+`sorantis/elkstack
+<https://github.com/sorantis/elkstack/tree/master/elk/logstash>`_.
 
 Once a configuration is complete, Kibana can be used as a visualization tool
 for OpenStack and system logging. This will allow operators to configure custom
