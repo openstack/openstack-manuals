@@ -373,7 +373,7 @@ OpenStack Identity provides authentication decisions and user attribute
 information, which is then used by the other OpenStack services to
 perform authorization. The policy is set in the ``policy.json`` file.
 For information on how to configure these, see `Managing Projects and Users
-<https://docs.openstack.org/ops-guide/ops-projects-users.html>`_ in the
+<https://docs.openstack.org/operations-guide/ops-projects-users.html>`_ in the
 OpenStack Operations Guide.
 
 OpenStack Identity supports different plug-ins for authentication
