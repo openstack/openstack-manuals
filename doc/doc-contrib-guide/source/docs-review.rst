@@ -20,7 +20,8 @@ are managed by the Documentation project or the project's subteams. The
 Dashboard is organized in groups based on the audience for the documentation.
 
 To see current proposed changes, make sure you register and log into
-https://review.openstack.org. For more details on the review process in
+`review.openstack Code Review
+<https://review.openstack.org>`_. For more details on the review process in
 OpenStack, see `Code Review
 <https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
 
