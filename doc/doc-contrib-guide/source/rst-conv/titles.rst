@@ -9,9 +9,9 @@ levels within one file using the following non-alphanumeric characters:
 
 * **Heading 1** - underline and overline with equal signs;
 
-  * **Heading 2** - underline with tildes;
+  * **Heading 2** - underline with dashes;
 
-    * **Heading 3** - underline with dashes.
+    * **Heading 3** - underline with tildes.
 
 **Input**
 
@@ -26,7 +26,7 @@ levels within one file using the following non-alphanumeric characters:
    Can include several focused Heading-2-sections.
 
    Heading 2
-   ~~~~~~~~~
+   ---------
 
    Body of the second level section that gives detailed explanation of one
    of the aspects of the subject. Can include several Heading-3-sections.
@@ -36,7 +36,7 @@ levels within one file using the following non-alphanumeric characters:
    For example, "Associate floating IP addresses".
 
    Heading 3
-   ---------
+   ~~~~~~~~~
 
    Body of the third level section.
    It includes very specific content, and occurs mainly in guides containing
