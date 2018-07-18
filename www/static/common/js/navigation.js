@@ -1,21 +1,3 @@
-// Open header search bar
-$(function() {
-  $(".search-icon").click(function() {
-    $(".navbar-main").toggleClass("show");
-    $(".search-container").toggleClass("show");
-    $(".search-icon").toggleClass("show");
-    $('.custom-search-box').focus();
-  });
-});
-
-// Close header search bar
-$(function() {
-  $(".close-search").click(function() {
-    $(".navbar-main").toggleClass("show");
-    $(".search-container").toggleClass("show")
-    $(".search-icon").toggleClass("show");
-  });
-});
 
 // Open header drop downs on hover
 jQuery(document).ready(function(){
@@ -30,6 +12,7 @@ jQuery(document).ready(function(){
         $('ul.navbar-main li ul.dropdown-menu').removeClass('dropdown-hover');
     }
 });
+
 jQuery(window).resize(function () {
     if (jQuery(window).width() > 767) {
         $('ul.navbar-main li ul.dropdown-menu').addClass('dropdown-hover');
@@ -42,24 +25,6 @@ jQuery(window).resize(function () {
         $('ul.navbar-main li ul.dropdown-menu').removeClass('dropdown-hover');
     }
 });
-
-// Remove Search text in smaller browser windows
-jQuery(document).ready(function(){
-    if (jQuery(window).width() < 1050) {
-        $('#search-label').text('');
-    } else {
-        $('#search-label').text('Search');
-    }
-});
-
-jQuery(window).resize(function () {
-    if (jQuery(window).width() < 1050) {
-        $('#search-label').text('');
-    } else {
-        $('#search-label').text('Search');
-    }
-});
-
 
 
 

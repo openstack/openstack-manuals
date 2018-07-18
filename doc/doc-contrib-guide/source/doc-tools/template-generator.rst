@@ -132,9 +132,9 @@ Here are a few representative files under ``www/``:
   * ``script_footer.tmpl``
   * ``script_search.tmpl``
   * ``series_status.tmpl``
-  * ``swiftype_search_install.tmpl``
-  * ``swiftype_search_mobile.tmpl``
-  * ``swiftype_search.tmpl``
+  * ``os_search_install.tmpl``
+  * ``os_search_mobile.tmpl``
+  * ``os_search.tmpl``
   * ``training_guides.tmpl``
   * ``user_guides.tmpl``
 
