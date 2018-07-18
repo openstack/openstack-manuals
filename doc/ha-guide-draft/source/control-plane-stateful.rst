@@ -25,7 +25,7 @@ There are three implementations of Galera Cluster available to you:
 - `MariaDB Galera Cluster <https://mariadb.org/>`_: The MariaDB
   implementation of Galera Cluster, which is commonly supported in
   environments based on Red Hat distributions.
-- `Percona XtraDB Cluster <http://www.percona.com/>`_: The XtraDB
+- `Percona XtraDB Cluster <https://www.percona.com/>`_: The XtraDB
   implementation of Galera Cluster from Percona.
 
 In addition to Galera Cluster, you can also achieve high availability
