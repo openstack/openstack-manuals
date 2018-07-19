@@ -113,6 +113,12 @@ Bugs should be filed on Launchpad, not GitHub:
 https://bugs.launchpad.net/openstack-manuals
 
 
+Release Notes
+=============
+
+https://docs.openstack.org/releasenotes/openstack-manuals
+
+
 Installing
 ==========
 
