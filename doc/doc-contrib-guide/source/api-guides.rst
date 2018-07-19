@@ -38,8 +38,8 @@ If your project does not have any documentation, you can find a suggested
 outline in the `API documentation guidelines`_. The Compute project has
 examples to follow:
 
-* https://git.openstack.org/cgit/openstack/nova/tree/api-guide
-* https://git.openstack.org/cgit/openstack/nova/tree/api-ref
+* `OpenStack nova api-guide <https://git.openstack.org/cgit/openstack/nova/tree/api-guide>`_
+* `OpenStack nova api-ref <https://git.openstack.org/cgit/openstack/nova/tree/api-ref>`_
 
 For service names, you must adhere to the official name for the service as
 indicated in the governance repository in the ``reference/projects.yaml``
