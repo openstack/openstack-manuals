@@ -185,7 +185,7 @@ documentation, patch the ``reference/projects.yaml`` file in the
 
 
 .. _`developer.openstack.org`: https://developer.openstack.org
-.. _`wadl2rst`: http://github.com/annegentle/wadl2rst
+.. _`wadl2rst`: https://github.com/annegentle/wadl2rst
 .. _`Compute API Guide`: https://developer.openstack.org/api-guide/compute
 .. _`example patch`: https://review.openstack.org/#/c/233446/
 .. _`API documentation guidelines`: https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
