@@ -5,7 +5,8 @@ Queens release
 Documentation Contributor Guide
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Available from https://docs.openstack.org/doc-contrib-guide/.
+Available from the `OpenStack Documentation Contributor Guide
+<https://docs.openstack.org/doc-contrib-guide/>`_.
 
 * Renamed from Contributor Guide to Documentation Contributor Guide to
   distinguish this document from the new document aimed at all new OpenStack
@@ -17,7 +18,8 @@ Available from https://docs.openstack.org/doc-contrib-guide/.
 Contributor Guide
 ~~~~~~~~~~~~~~~~~
 
-Available from https://docs.openstack.org/contributors/.
+Available from the `OpenStack Contributor Guide
+<https://docs.openstack.org/contributors/>`_.
 
 * This is a new document that aims to provide common documentation for all
   OpenStack Contributors and help with on-boarding efforts.
@@ -25,7 +27,8 @@ Available from https://docs.openstack.org/contributors/.
 Security Guide
 ~~~~~~~~~~~~~~
 
-Available from https://docs.openstack.org/security-guide/.
+Available from the `OpenStack Security Guide
+<https://docs.openstack.org/security-guide/>`_.
 
 * TBD
 
