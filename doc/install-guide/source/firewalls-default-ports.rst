@@ -47,7 +47,7 @@ ports that each OpenStack service uses:
      - 8386
      - publicurl and adminurl
    * - Identity service (``keystone``) administrative endpoint
-     - 35357
+     - 5000
      - adminurl
    * - Identity service public endpoint
      - 5000

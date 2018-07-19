@@ -98,17 +98,7 @@ Configuring HAProxy
          server controller2 10.0.0.13:9191 check inter 2000 rise 2 fall 5
          server controller3 10.0.0.14:9191 check inter 2000 rise 2 fall 5
 
-        listen keystone_admin_cluster
-         bind <Virtual IP>:35357
-         balance  source
-         option  tcpka
-         option  httpchk
-         option  tcplog
-         server controller1 10.0.0.12:35357 check inter 2000 rise 2 fall 5
-         server controller2 10.0.0.13:35357 check inter 2000 rise 2 fall 5
-         server controller3 10.0.0.14:35357 check inter 2000 rise 2 fall 5
-
-        listen keystone_public_internal_cluster
+        listen keystone_admin_public_internal_cluster
          bind <Virtual IP>:5000
          balance  source
          option  tcpka
