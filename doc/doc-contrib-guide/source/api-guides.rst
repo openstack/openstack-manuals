@@ -180,7 +180,7 @@ To add a link to the project's API docs to the API landing page, patch the
 
 To ensure the openstack/governance repository has the correct link to your API
 documentation, patch the ``reference/projects.yaml`` file in the
-`openstack/governance repository`.
+`openstack/governance repository`_.
 
 
 
