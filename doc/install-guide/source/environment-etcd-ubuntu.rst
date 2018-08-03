@@ -9,7 +9,7 @@ live-ness and other scenarios.
 Install and configure components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-#. Install the package:
+#. Install the ``etcd`` package:
 
    .. code-block:: console
 
@@ -17,43 +17,23 @@ Install and configure components
 
    .. end
 
-#. Edit the ``/etc/etcd/etcd.conf.yml`` file
-   and set the ``initial-cluster``, ``initial-advertise-peer-urls``,
-   ``advertise-client-urls``, ``listen-client-urls`` to the management
-   IP address of the controller node to enable access by other nodes via
-   the management network:
+#. Edit the ``/etc/default/etcd`` file and set the ``ETCD_INITIAL_CLUSTER``,
+   ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``,
+   ``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the
+   controller node to enable access by other nodes via the management
+   network:
 
-   .. code-block:: yaml
+   .. code-block:: none
 
-      name: controller
-      data-dir: /var/lib/etcd
-      initial-cluster-state: 'new'
-      initial-cluster-token: 'etcd-cluster-01'
-      initial-cluster: controller=http://10.0.0.11:2380
-      initial-advertise-peer-urls: http://10.0.0.11:2380
-      advertise-client-urls: http://10.0.0.11:2379
-      listen-peer-urls: http://0.0.0.0:2380
-      listen-client-urls: http://10.0.0.11:2379
-
-   .. end
-
-#. Create and edit the ``/lib/systemd/system/etcd.service`` file:
-
-   .. code-block:: ini
-
-      [Unit]
-      After=network.target
-      Description=etcd - highly-available key value store
-
-      [Service]
-      LimitNOFILE=65536
-      Restart=on-failure
-      Type=notify
-      ExecStart=/usr/bin/etcd --config-file /etc/etcd/etcd.conf.yml
-      User=etcd
-
-      [Install]
-      WantedBy=multi-user.target
+      ETCD_NAME="controller"
+      ETCD_DATA_DIR="/var/lib/etcd"
+      ETCD_INITIAL_CLUSTER_STATE="new"
+      ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-01"
+      ETCD_INITIAL_CLUSTER="controller=http://10.0.0.11:2380"
+      ETCD_INITIAL_ADVERTISE_PEER_URLS="http://10.0.0.11:2380"
+      ETCD_ADVERTISE_CLIENT_URLS="http://10.0.0.11:2379"
+      ETCD_LISTEN_PEER_URLS="http://0.0.0.0:2380"
+      ETCD_LISTEN_CLIENT_URLS="http://10.0.0.11:2379"
 
    .. end
 
