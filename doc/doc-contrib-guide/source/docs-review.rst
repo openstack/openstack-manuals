@@ -4,11 +4,6 @@
 Reviewing documentation
 =======================
 
-.. toctree::
-   :maxdepth: 1
-
-   docs-review-guidelines.rst
-
 OpenStack documentation is treated in the same way as code, and follows the
 standard code review process. To see what documentation changes are ready for
 review, use the `Documentation Program Dashboard
@@ -24,6 +19,14 @@ To see current proposed changes, make sure you register and log into
 <https://review.openstack.org>`_. For more details on the review process in
 OpenStack, see `Code Review
 <https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+
+Review guidelines
+~~~~~~~~~~~~~~~~~
+
+.. toctree::
+   :maxdepth: 1
+
+   docs-review-guidelines.rst
 
 Repositories and core team
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
