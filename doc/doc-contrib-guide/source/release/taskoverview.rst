@@ -8,10 +8,6 @@ each task. The schedule is expressed in terms of `time before release day`.
 Release day is usually 1300UTC on the `initial release date` listed on the
 `release schedule <https://releases.openstack.org>`_.
 
-*Four to six weeks before release*
-  Ping packagers to locate pre-release packages to test the Installation
-  Guides against, and start looking for willing volunteers to help test.
-
 *Two to four weeks*
   Ping subteam leads to review and update release notes for openstack-manuals.
 

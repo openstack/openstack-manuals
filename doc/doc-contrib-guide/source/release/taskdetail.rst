@@ -6,49 +6,50 @@ Release task detail
 
 This section provides detailed instructions for each release task.
 
-Installation Guide testing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Installation Guides testing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The process for Installation Guide testing begins about six weeks before
-release day. First of all, create a new testing page on the wiki, based on
-`the previous one
-<https://wiki.openstack.org/wiki/Documentation/NewtonDocTesting>`_.
+Testing Installation Guides for a release series is handled by each project
+team's members or individual documentation contributors.
 
-You will need to locate pre-release packages for each distribution, and
-disseminate information about obtaining the packages for testing purposes.
-The current list of packaging contacts:
+When testing installation documentation for a project, it is important to test
+it together with other related projects by using their project-specific
+installation docs. This is best achieved by following the instructions from
+the common
+`OpenStack Installation Guide <https://docs.openstack.org/install-guide/>`_.
 
-* openSUSE/SLES: Pranav Salunke (dguitarbite)
-* RDO/CentOS: Petr Kovar and Haïkel Guémar
-* Ubuntu: James Page
+Remember that all project installation documentation must be based on the
+common OpenStack Installation Guide and must link back to that Guide.
+
+A list of all project installation guides for the release series under
+development is available from https://docs.openstack.org/latest/install/.
+
+For convenience, an `Installation Guides Review Inbox`_ is provided. The Inbox
+offers an overview of currently open changes that touch files under
+``doc/source/install/`` in project team repositories.
+
+.. _`Installation Guides Review Inbox`:
+   https://review.openstack.org/#/dashboard/?foreach=file%3A%22%5Edoc%5C%2Fsou
+   rce%5C%2Finstall%5C%2F.%2A%22%0Astatus%3Aopen%0ANOT+owner%3Aself%0ANOT+labe
+   l%3AWorkflow%3C%3D%2D1%0Alabel%3AVerified%3E%3D1%2Czuul%0ANOT+reviewedby%3A
+   self&title=Installation+Guides+Review+Inbox&Needs+final+%2B2=label%3ACode%2
+   DReview%3E%3D2+limit%3A50+NOT+label%3ACode%2DReview%3C%3D%2D1%2Cself&Passed
+   +Zuul%2C+No+Negative+Feedback+%28Small+Fixes%29=NOT+label%3ACode%2DReview%3
+   E%3D2+NOT+label%3ACode%2DReview%3C%3D%2D1+delta%3A%3C%3D10&Passed+Zuul%2C+N
+   o+Negative+Feedback=NOT+label%3ACode%2DReview%3E%3D2+NOT+label%3ACode%2DRev
+   iew%3C%3D%2D1+delta%3A%3E10&Needs+Feedback+%28Changes+older+than+5+days+tha
+   t+have+not+been+reviewed+by+anyone%29=NOT+label%3ACode%2DReview%3C%3D%2D1+N
+   OT+label%3ACode%2DReview%3E%3D1+age%3A5d&You+are+a+reviewer%2C+but+haven%27
+   t+voted+in+the+current+revision=NOT+label%3ACode%2DReview%3C%3D%2D1%2Cself+
+   NOT+label%3ACode%2DReview%3E%3D1%2Cself+reviewer%3Aself&Wayward+Changes+%28
+   Changes+with+no+code+review+in+the+last+2+days%29=NOT+is%3Areviewed+age%3
+   A2d
 
 As soon as pre-release packages are available, you can start testing. Testers
-should look at the current draft version of the document, and attempt to
-run each command on the pre-release package. If you are able to run the
-instructions in the book successfully, then place a green tick in the
-matrix, noting which version you tested against. If a command cannot be run,
-and it is confirmed to be a bug in the documentation, add a note in the
-`Issues` section, so that the book can be updated.
-
-.. note::
-
-   Testers should avoid raising bugs against the book at this stage, to ensure
-   that the fix lands before release. Instead, list the details on the testing
-   wiki page, so other testers are aware of it.
-
-It is also important to ask Cross Project Liaisons (CPLs) to check the
-chapters or project-specific guides that relate to their projects. It is
-possible that changes might have happened within projects during the
-release that have not been reflected in the documentation.
-
-As release day draws near, and testing progresses, the PTL will make a
-judgment call on whether or not the various Installation Guides are
-tested sufficiently to be released. In some rare cases, the book either
-has not been tested adequately, or has performed badly in tests, which can
-justify not publishing that book. In this case, the PTL will contact
-relevant parties to let them know of the decision, and work with them to
-get the book to an adequate level to be published at some point after
-release day.
+should look at the current latest version of the document, and attempt to run
+each command on the pre-release package. If a command cannot be run, and it is
+confirmed to be a bug in the documentation, file a bug against the appropriate
+project in Launchpad.
 
 Release Notes
 ~~~~~~~~~~~~~
@@ -56,10 +57,13 @@ Release Notes
 OpenStack Manuals no longer handles release notes for the project teams.
 However, we do need to write release notes for our documentation. Release
 notes should be added as major changes occur throughout the release, however
-this is often overlooked - both by authors and reviewers - and thus a final
-review is needed to check that all major changes are in. Contact each subteam
-lead, listed at :doc:`../team-structure`, and ask them for the notes for the
-documentation they look after. The source for release notes is
+this is often overlooked – both by authors and reviewers – and thus a final
+review is needed to check that all major changes are in.
+
+Contact each subteam lead, listed at :doc:`../team-structure`, and ask them
+for the notes for the documentation they look after.
+
+The source for release notes is
 ``openstack-manuals/releasenotes/source/RELEASENAME.rst`` and they are
 published to
 ``https://docs.openstack.org/releasenotes/openstack-manuals/RELEASENAME.html``.
