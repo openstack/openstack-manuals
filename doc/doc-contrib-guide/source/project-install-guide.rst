@@ -77,7 +77,10 @@ Set up project specific installation guides:
    .. code-block:: ini
 
       [testenv:install-guide]
-      commands = sphinx-build -a -E -W -d install-guide/build/doctrees -b html install-guide/source install-guide/build/html
+      whitelist_externals = rm
+      commands =
+              rm -rf install-guide/build
+              sphinx-build -a -E -W -d install-guide/build/doctrees -b html install-guide/source install-guide/build/html
 
 #. Add the python package ``openstackdocstheme``  to the
    ``test-requirements.txt`` file. Copy the exact requirement line from the

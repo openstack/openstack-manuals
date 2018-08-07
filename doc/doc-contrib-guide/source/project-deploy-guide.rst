@@ -50,7 +50,10 @@ Setting up
    .. code-block:: ini
 
       [testenv:deploy-guide]
-      commands = sphinx-build -a -E -W -d deploy-guide/build/doctrees -b html deploy-guide/source deploy-guide/build/html
+      whitelist_externals = rm
+      commands =
+              rm -rf deploy-guide/build
+              sphinx-build -a -E -W -d deploy-guide/build/doctrees -b html deploy-guide/source deploy-guide/build/html
 
 
 #. Add your deployment guide content, and test the build locally with ``tox``:
