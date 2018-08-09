@@ -1,0 +1,904 @@
+---
+# Schema: See schema.yaml and README.txt
+
+- name: keystone
+  service: Identity service
+  service_type: identity
+  has_install_guide: true
+  has_api_ref: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
+  type: service
+- name: python-keystoneclient
+  service: Identity service Python Bindings
+  type: service-client
+  description: keystone client
+- name: keystoneauth
+  type: cloud-client
+  description: keystoneauth
+  service: Common authentication library and REST client for OpenStack.
+- name: keystonemiddleware
+  type: library
+  service: Middleware provided for integrating with the OpenStack Identity API.
+- name: pycadf
+  type: library
+  service: Creates CADF events to capture cloud-related events.
+
+- name: glance
+  service: Image service
+  service_type: image
+  has_install_guide: true
+  has_api_ref: true
+  has_config_ref: true
+  has_admin_guide: true
+  type: service
+  has_user_guide: true
+  has_in_tree_htaccess: true
+- name: python-glanceclient
+  service: Image service Python Bindings
+  type: service-client
+  description: glance client
+- name: glance_store
+  deliverable-name: glance-store
+  service: glance backend abstraction library
+  type: library
+  has_user_guide: true
+
+- name: nova
+  service: Compute service
+  service_type: compute
+  has_api_ref: true
+  has_api_guide: true
+  has_install_guide: true
+  has_config_ref: true
+  has_admin_guide: true
+  has_user_guide: true
+  has_in_tree_htaccess: true
+  type: service
+- name: python-novaclient
+  service: Compute service Python Bindings
+  has_user_guide: true
+  type: service-client
+  description: nova client
+- name: os-traits
+  type: library
+  service: Library containing standardized trait strings.
+- name: os-vif
+  type: library
+  service: Library for plugging and unplugging virtual interfaces.
+# - name: osc-placement
+#   type: service-client
+#   service: OpenStackClient plugin for the Nova Placement service.
+#   description: nova placement client
+
+- name: neutron
+  service: Networking service
+  service_type: network
+  has_api_ref: true # currently published under neutron-lib
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  type: service
+- name: python-neutronclient
+  service: Networking service Python Bindings
+  type: service-client
+  description: neutron client
+- name: neutron-lib
+  type: library
+  service: Library provided for integrating with the OpenStack Networking platform.
+  has_install_guide: true
+  has_user_guide: true
+
+- name: networking-bagpipe
+  service: BaGPipe backend
+  type: networking
+  has_install_guide: true
+  has_user_guide: true
+- name: networking-bgpvpn
+  service: BGP-MPLS VPN Networking service Plug-in
+  type: networking
+  has_install_guide: true
+  has_user_guide: true
+- name: neutron-dynamic-routing
+  service: Dynamic Routing service Plug-in
+  type: networking
+  has_install_guide: true
+  has_admin_guide: true
+- name: neutron-fwaas
+  service: Firewall-as-a-Service Plug-in
+  type: networking
+  has_install_guide: true
+- name: neutron-vpnaas
+  service: VPN-as-a-Service Plug-in
+  type: networking
+- name: networking-midonet
+  service: MidoNet Networking service Plug-in
+  type: networking
+  has_install_guide: true
+  has_config_ref: true
+- name: networking-odl
+  service: OpenDaylight(ODL) Networking service Plug-in
+  type: networking
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+- name: networking-ovn
+  service: OVN Networking service Plug-in
+  type: networking
+  has_install_guide: true
+  has_admin_guide: true
+- name: networking-sfc
+  service: Service Function Chaining Networking service Plug-in
+  type: networking
+  has_install_guide: true
+  has_config_ref: true
+  has_user_guide: true
+
+- name: horizon
+  service: Dashboard
+  has_install_guide: true
+  has_config_ref: true
+  has_admin_guide: true
+  has_user_guide: true
+  type: service
+# - name: django_openstack_auth
+#   service: pluggable Django authentication backend for authenticating with Keystone
+#   type: library
+#   has_install_guide: true
+#   has_config_ref: true
+
+- name: cinder
+  service: Block Storage service
+  service_type: block-storage
+  has_install_guide: true
+  has_api_ref: true
+  has_admin_guide: true
+  has_config_ref: true
+  type: service
+- name: python-cinderclient
+  service: Block Storage service Python Bindings
+  type: service-client
+  description: cinder client
+- name: os-brick
+  service: library for managing local volume attaches
+  type: library
+  description: cinder backend abstraction library
+- name: python-brick-cinderclient-ext
+  service: client for local volume attachement
+  type: service-client
+  description: cinder local client
+
+- name: ironic
+  service: Bare Metal service
+  service_type: baremetal
+  has_install_guide: true
+  has_api_ref: true
+  has_admin_guide: true
+  has_user_guide: true
+  has_config_ref: true
+  type: service
+- name: python-ironicclient
+  service: Bare Metal service Python Bindings
+  type: service-client
+  description: ironic client
+
+- name: ironic-inspector
+  service: Bare Metal Introspection service
+  type: baremetal
+  has_install_guide: true
+  has_admin_guide: true
+  has_user_guide: true
+- name: python-ironic-inspector-client
+  service: Bare Metal Introspection service Python Bindings
+  type: service-client
+  description: ironic-inspector client
+
+- name: bifrost
+  service: Ansible roles and playbooks to enable a standalone Ironic install
+  type: baremetal
+
+- name: sushy
+  service: Python library to communicate with Redfish based systems
+  type: baremetal
+
+- name: ironic-python-agent
+  service: Python agent for provisioning and deprovisioning Bare Metal servers
+  type: baremetal
+
+- name: magnum
+  service: Container Infrastructure Management service
+  service_type: container-infrastructure-management
+  has_api_ref: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
+  type: service
+- name: python-magnumclient
+  service: Container Infrastructure Management service Python Bindings
+  type: service-client
+  description: magnum client
+
+- name: trove
+  service: Database service
+  service_type: database
+  has_install_guide: true
+  has_admin_guide: true
+  has_user_guide: true
+  has_api_ref: true
+  type: service
+- name: python-troveclient
+  service: Database service Python Bindings
+  type: service-client
+  description: trove client
+  has_user_guide: true
+
+- name: designate
+  service: DNS service
+  service_type: dns
+  has_admin_guide: true
+  has_api_ref: true
+  has_user_guide: true
+  has_install_guide: true
+  has_config_ref: true
+  type: service
+- name: python-designateclient
+  service: DNS service Python Bindings
+  type: service-client
+  description: designate client
+  has_install_guide: true
+  has_user_guide: true
+
+- name: ec2-api
+  service: EC2 API compatibility layer
+  service_type: ec2-api
+  has_api_ref: true
+  has_install_guide: true
+  has_config_ref: true
+  type: service
+
+- name: barbican
+  service: Key Manager service
+  service_type: key-manager
+  has_api_guide: true
+  has_api_ref: true
+  has_in_tree_api_docs: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  type: service
+- name: python-barbicanclient
+  service: Key Manager service Python Bindings
+  type: service-client
+  description: barbican client
+  has_install_guide: true
+
+- name: zaqar
+  service: Messaging service
+  service_type: message
+  has_admin_guide: true
+  has_api_ref: true
+  has_install_guide: true
+  has_user_guide: true
+  has_config_ref: true
+  type: service
+- name: python-zaqarclient
+  service: Messaging service Python Bindings
+  type: service-client
+  description: zaqar client
+
+# - name: swift
+#   service: Object Storage service
+#   service_type: object-store
+#   has_admin_guide: true
+#   has_install_guide: true
+#   has_api_ref: true
+#   type: service
+- name: python-swiftclient
+  service: Object Storage service Python Bindings
+  type: service-client
+  description: swift client
+
+- name: heat
+  service: Orchestration service
+  service_type: orchestration
+  has_in_tree_api_docs: true
+  has_api_ref: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_in_tree_htaccess: true
+  type: service
+- name: python-heatclient
+  service: Orchestration service Python Bindings
+  type: service-client
+  description: heat client
+- name: heat-translator
+  type: tool
+  service: Translate non-heat templates to heat Orchestration Template
+- name: tosca-parser
+  type: tool
+  service: Parser for TOSCA Simple Profile in YAML
+
+- name: manila
+  service: Shared File Systems service
+  service_type: shared-file-system
+  has_admin_guide: true
+  has_api_ref: true
+  has_config_ref: true
+  has_install_guide: true
+  has_user_guide: true
+  type: service
+- name: python-manilaclient
+  service: Shared File Systems service Python Bindings
+  type: service-client
+  description: manila client
+
+- name: aodh
+  service: Telemetry Alarming services
+  service_type: alarm
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  type: service
+- name: python-aodhclient
+  service: Telemetry Alarming service Python Bindings
+  type: service-client
+  description: aodh client
+
+- name: ceilometer
+  service: Telemetry Data Collection service
+  service_type: meter
+  has_admin_guide: true
+  has_install_guide: true
+  has_config_ref: true
+  type: service
+
+- name: requirements
+  service: Global requirements for OpenStack
+  type: tool
+
+- name: sahara
+  service: Data Processing service
+  service_type: data-processing
+  has_admin_guide: true
+  has_api_ref: true
+  has_config_ref: true
+  has_install_guide: true
+  has_user_guide: true
+  has_in_tree_htaccess: true
+  type: service
+- name: python-saharaclient
+  service: Data Processing service Python Bindings
+  type: service-client
+  description: sahara client
+
+- name: congress
+  service: Governance service
+  service_type: operator-policy
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
+  type: service
+- name: python-congressclient
+  service: Governance service Python Bindings
+  has_install_guide: true
+  has_user_guide: true
+  type: service-client
+  description: congress client
+
+- name: watcher
+  service: Infrastructure Optimization service
+  service_type: resource-optimization
+  type: service
+  has_in_tree_api_docs: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_user_guide: true
+  has_config_ref: true
+  has_api_ref: true
+- name: python-watcherclient
+  service: Infrastructure Optimization service Python Bindings
+  type: service-client
+  description: watcher client
+
+- name: mistral
+  service: Workflow service
+  service_type: workflow
+  type: service
+  has_install_guide: true
+  has_in_tree_api_docs: true
+  has_admin_guide: true
+  has_config_ref: true
+- name: python-mistralclient
+  service: Workflow service Python Bindings
+  type: service-client
+  description: mistral client
+
+- name: murano
+  service: Application Catalog service
+  service_type: application-catalog
+  type: service
+  has_install_guide: true
+  has_api_ref: true
+  has_admin_guide: true
+  has_config_ref: true
+# - name: python-muranoclient
+#   service: Application Catalog service Python Bindings
+#   type: service-client
+#   description: murano client
+
+- name: senlin
+  service: Clustering service
+  service_type: clustering
+  type: service
+  has_install_guide: true
+  has_api_ref: true
+  has_admin_guide: true
+  has_config_ref: true
+- name: python-senlinclient
+  service: Clustering service Python Bindings
+  type: service-client
+  description: senlin client
+
+# - name: storlets
+#   service: Compute inside Object Storage service
+#   type: other
+
+- name: zun
+  service: Containers service
+  service_type: application-container
+  has_admin_guide: true
+  has_api_ref: true
+  has_install_guide: true
+  has_config_ref: true
+  type: service
+- name: python-zunclient
+  service: Containers service Python Bindings
+  has_install_guide: true
+  type: service-client
+  description: zun client
+
+- name: tacker
+  service: NFV Orchestration service
+  service_type: nfv-orchestration
+  has_admin_guide: true
+  has_api_ref: true
+  has_install_guide: true
+  has_config_ref: true
+  has_user_guide: true
+  type: service
+- name: python-tackerclient
+  service: NFV Orchestration service Python Bindings
+  type: service-client
+  description: tacker client
+
+# - name: cloudkitty
+#   service: Rating service
+#   service_type: rating
+#   type: service
+#   has_admin_guide: true
+#   has_config_ref: true
+#   has_install_guide: true
+# - name: python-cloudkittyclient
+#   service: Rating service Python Bindings
+#   type: service-client
+#   description: cloudkitty client
+
+- name: vitrage
+  service: RCA (Root Cause Analysis) service
+  service_type: root-cause-analysis
+  has_config_ref: true
+  has_install_guide: true
+  type: service
+- name: python-vitrageclient
+  service: RCA (Root Cause Analysis) service Python Bindings
+  type: service-client
+  description: vitrage client
+
+- name: panko
+  service: Telemetry Event service
+  service_type: event
+  type: service
+  has_install_guide: true
+  has_in_tree_api_docs: true
+- name: python-pankoclient
+  service: Telemetry Event service Python Bindings
+  type: service-client
+  description: panko client
+
+- name: automaton
+  service: Friendly state machines for Python.
+  type: library
+  has_install_guide: true
+  has_user_guide: true
+- name: castellan
+  service: Key Manager interface abstraction
+  type: library
+  has_install_guide: true
+  has_user_guide: true
+- name: debtcollector
+  type: library
+  service:
+    A collection of Python deprecation patterns and strategies that
+    help you collect your technical debt in a non-destructive manner.
+  has_install_guide: true
+  has_user_guide: true
+- name: futurist
+  type: library
+  service:
+    Asynchronous code from the future, helping you build out your
+    applications to handle asynchronous and periodic work in a nice
+    manner.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.cache
+  type: library
+  service: Cache management library.
+  has_config_ref: true
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.concurrency
+  type: library
+  service: External process management and task synchronization.
+  has_user_guide: true
+  has_install_guide: true
+  has_config_ref: true
+- name: oslo.config
+  type: library
+  service: Configuration option parsing from the command line or configuration files.
+  has_config_ref: true
+- name: oslo.context
+  type: library
+  service: Helpers to maintain useful information about a request context.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.db
+  type: library
+  service: Database connectivity.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.i18n
+  type: library
+  service: Internationalization and translation.
+  has_user_guide: true
+- name: oslo.log
+  type: library
+  service: A logging configuration library.
+  has_config_ref: true
+  has_install_guide: true
+  has_admin_guide: true
+  has_user_guide: true
+- name: oslo.messaging
+  type: library
+  service: Inter-process communication.
+  has_admin_guide: true
+  has_user_guide: true
+  has_config_ref: true
+- name: oslo.middleware
+  type: library
+  service: WSGI middleware library for web service development.
+  has_config_ref: true
+  has_install_guide: true
+  has_admin_guide: true
+- name: oslo.policy
+  type: library
+  service: Common policy enforcement.
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
+- name: oslo.privsep
+  type: library
+  service: library for privilege separation
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.reports
+  type: library
+  service: Error report framework for projects.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.rootwrap
+  type: library
+  service: Fine filtering of shell commands to run as root.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.serialization
+  type: library
+  service: Serialization with special handling for some common types.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.service
+  type: library
+  service: Library for running and managing OpenStack services.
+  has_config_ref: true
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.utils
+  type: library
+  service: Library of common low-level utility modules.
+  has_install_guide: true
+  has_user_guide: true
+- name: oslo.versionedobjects
+  type: library
+  service: Database and RPC object schema versioning.
+  has_install_guide: true
+  has_config_ref: true
+  has_user_guide: true
+- name: oslo.vmware
+  type: library
+  service: Common functionality required by VMware drivers in several projects.
+  has_install_guide: true
+  has_user_guide: true
+# - name: oslosphinx
+#   type: library
+#   service: Theme and extension support for Sphinx documentation.
+- name: oslotest
+  type: library
+  service: Unit test and fixture framework.
+  has_install_guide: true
+  has_user_guide: true
+- name: osprofiler
+  type: library
+  service: Cross-Project profiling library.
+  has_user_guide: true
+# - name: pbr
+#   type: library
+#   service: Manages setuptools packaging needs in a consistent way.
+#   has_user_guide: true
+- name: stevedore
+  type: library
+  service: Manages dynamic plug-ins for Python applications.
+  has_install_guide: true
+  has_user_guide: true
+- name: taskflow
+  type: library
+  service: Makes task execution easy, consistent, and reliable.
+  has_user_guide: true
+- name: tooz
+  type: library
+  service:
+    Distributed primitives like group membership protocol, lock
+    service and leader elections.
+  has_user_guide: true
+  has_install_guide: true
+
+- name: octavia
+  service: Load-balancer service
+  service_type: load-balancer
+  has_install_guide: true
+  has_api_ref: true
+  has_config_ref: true
+  has_admin_guide: true
+  type: service
+  has_user_guide: true
+- name: python-octaviaclient
+  service: Load-balancer service client
+  type: service-client
+  description: octavia client
+
+# - name: karbor
+#   service: Data Protection Orchestration Service
+#   service_type: data-protection-orchestration
+#   has_api_ref: true
+#   has_install_guide: true
+#   has_config_ref: true
+#   has_admin_guide: true
+#   type: service
+- name: python-karborclient
+  service: Data Protection Orchestration Service client
+  has_user_guide: true
+  type: service-client
+  description: karbor client
+
+- name: blazar
+  service: Resource reservation service
+  service_type: reservation
+  has_api_ref: true
+  has_install_guide: true
+  has_config_ref: true
+  has_admin_guide: true
+  has_user_guide: true
+  type: service
+
+- name: monasca-api
+  service: Monitoring service
+  type: service
+  service_type: monitoring
+  has_api_ref: false
+  has_install_guide: false
+  has_config_ref: false
+  has_admin_guide: false
+  has_user_guide: false
+
+- name: python-monascaclient
+  service: Monitoring service client
+  type: service-client
+  description: monasca client
+
+- name: python-openstackclient
+  service: Command line interface to OpenStack
+  type: cloud-client
+  description: OpenStack client
+  has_config_ref: true
+- name: cliff
+  service: Builds command-line programs in Python.
+  type: library
+  has_install_guide: true
+  has_user_guide: true
+- name: os-client-config
+  service: Library for collecting client configuration for using an OpenStack cloud
+  type: library
+  has_install_guide: true
+  has_user_guide: true
+
+- name: shade
+  service: Multi-cloud interoperability library
+  type: cloud-client
+  description: shade client library
+  has_install_guide: true
+  has_user_guide: true
+
+- name: openstacksdk
+  service: Client library for building applications to work with OpenStack clouds
+  type: cloud-client
+  description: openstacksdk client library
+  has_install_guide: true
+  has_user_guide: true
+
+- name: solum
+  service: Software Development Lifecycle Automation service
+  service_type: application-deployment
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
+  type: service
+- name: python-solumclient
+  service: Software Development Lifecycle Automation client
+  type: service-client
+  description: solum client
+
+- name: tricircle
+  service: Networking automation across Neutron service
+  service_type: multi-region-network-automation
+  has_install_guide: true
+  has_admin_guide: true
+  has_config_ref: true
+  has_user_guide: true
+  type: service
+# - name: python-tricircleclient
+#   service: Networking automation client
+#   type: service-client
+#   description: tricircle client
+
+# - name: os-win
+#   service: Windows / Hyper-V library for OpenStack projects.
+#   type: library
+
+- name: qinling
+  service: Function as a Service for OpenStack
+  service_type: function-engine
+  type: service
+  has_admin_guide: true
+
+# - name: openstackdocstheme
+#   service: Theme and extension support for Sphinx documentation for official projects
+#   type: library
+
+# - name: os-api-ref
+#   service: Sphinx extension to support OpenStack API reference pages creation
+#   type: library
+
+# - name: coverage2sql
+#   service: Tooling for converting coverage data into a SQL DB
+#   type: tool
+
+# - name: diskimage-builder
+#   service: Image building tools for OpenStack
+#   type: tool
+
+# - name: devstack
+#   service: DevStack
+#   type: tool
+
+# - name: os-testr
+#   service: Tooling for interacting with testr
+#   type: tool
+
+# - name: pymod2pkg
+#   service: Python module name to package name map
+#   type: tool
+
+# - name: renderspec
+#   service: RPM .spec template renderer
+#   type: tool
+
+# - name: reno
+#   service: Release Notes Manager
+#   type: tool
+#   has_install_guide: true
+#   has_user_guide: true
+
+# - name: tempest
+#   service: Tempest Test Suite for OpenStack
+#   type: tool
+
+# - name: bashate
+#   service: Linter for bash scripts.
+#   type: tool
+#   has_install_guide: true
+#   has_user_guide: true
+
+# - name: grenade
+#   service: Test harness to exercise the upgrade process between releases.
+#   type: tool
+
+# - name: hacking
+#   service: Hacking guideline enforcement
+#   type: tool
+
+# - name: refstack
+#   service: Toolset for testing interoperability between OpenStack clouds.
+#   type: tool
+
+# - name: syntribos
+#   service: Automated API security testing tool.
+#   type: tool
+
+# - name: charm-guide
+#   type: deployment
+#   service: Deploying OpenStack using Juju Charms
+
+# - name: kolla
+#   type: deployment
+#   service: Providing production-ready containers and deployment tools for operating OpenStack clouds
+#   has_admin_guide: true
+# - name: kolla-ansible
+#   service: Deploying OpenStack using Ansible in Docker Containers (kolla)
+#   type: deployment
+#   has_admin_guide: true
+#   has_user_guide: true
+#   has_deployment_guide: true
+
+- name: openstack-ansible
+  type: deployment
+  service: OpenStack-Ansible Deployment
+  has_admin_guide: true
+  has_user_guide: true
+  has_deployment_guide: true
+# - name: tripleo-docs
+#   type: deployment
+#   service: Deploying OpenStack with TripleO
+#   has_install_guide: true
+# - name: puppet-openstack-guide
+#   type: deployment
+#   service: Puppet modules for deployment
+#   has_install_guide: true
+
+# - name: i18n
+#   type: other
+#   service: Internationalization of OpenStack projects and documents
+
+- name: kuryr
+  service: Bridge between container framework and OpenStack abstractions
+  type: service
+
+# - name: pynotedb
+#   service: Python parser for notedb
+#   type: tool
+
+# - name: subunit2sql
+#   service: Tooling for converting subunit streams into a SQL DB
+#   type: tool
+
+# - name: charm-deployment-guide
+#   service: OpenStack Charms Deployment
+#   type: deployment
+#   has_deployment_guide: true
+
+# Projects that do not appear in the service-types-authority list:
+# - kuryr
+# - dragonflow
