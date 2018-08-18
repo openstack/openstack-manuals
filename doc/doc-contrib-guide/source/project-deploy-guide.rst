@@ -141,4 +141,5 @@ Usage for the deploy guide is as follows:
    :deploy_guide:`Link title text <last-part-of-url.html>`
 
 For an example, and more information, please review the following
-OpenStack-Ansible patch: https://review.openstack.org/#/c/417976/
+OpenStack-Ansible patch: `Add conditional branch names for docs links
+<https://review.openstack.org/#/c/417976/>`_
