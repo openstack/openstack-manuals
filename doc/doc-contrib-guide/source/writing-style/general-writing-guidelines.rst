@@ -7,6 +7,25 @@ General writing guidelines
 Follow these guidelines to ensure readability and consistency of the
 OpenStack documentation.
 
+Copyright and licensing
+-----------------------
+
+OpenStack requires contributions to be released under the
+Apache 2.0 license, and have licensing information in the header when
+uploaded to the public code repository. This submission method makes
+all contributions immediately available to all community members
+under the Apache 2.0 license. See
+`Licensing requirements <https://governance.openstack.org/tc/reference/licensing.html>`_
+for more information.
+
+Except where otherwise noted, documents are licensed under Creative Commons
+Attribution 3.0 License. Individual documentation files do not require a
+copyright licensing notice.
+
+For information on trademarking, see the
+`OpenStack® Trademark Policy <https://www.openstack.org/brand/openstack-trademark-policy>`_
+for more information.
+
 Use standard English
 --------------------
 
