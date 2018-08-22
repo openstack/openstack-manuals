@@ -42,7 +42,7 @@ Making the RabbitMQ service highly available involves the following steps:
    option. For more information, read the `core issue
    <http://people.redhat.com/jeckersb/private/vip-failover-tcp-persist.html>`_.
    For more detail, read the `history and solution
-   <http://john.eckersberg.com/improving-ha-failures-with-tcp-timeouts.html>`_.
+   <http://greenstack.die.upm.es/2015/03/02/improving-ha-failures-with-tcp-timeouts/>`_.
 
 .. _rabbitmq-install:
 
