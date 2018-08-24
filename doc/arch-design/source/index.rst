@@ -37,7 +37,7 @@ Before reading this book, we recommend:
 For information about deploying and operating OpenStack, see the
 `Installation Guides <https://docs.openstack.org/ocata/install/>`_,
 `Deployment Guides <https://docs.openstack.org/ocata/deploy/>`_,
-and the `OpenStack Operations Guide <https://docs.openstack.org/ops-guide/>`_.
+and the `OpenStack Operations Guide <https://docs.openstack.org/operations-guide/>`_.
 
 Contents
 ~~~~~~~~
