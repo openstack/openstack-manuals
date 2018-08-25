@@ -11,10 +11,10 @@ As the cloud environment grows, the amount of log data increases exponentially.
 Enabling debugging on either the OpenStack services or the operating system
 further compounds the data issues.
 
-Logging is described in more detail in the `Operations Guide
-<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`_. However,
-it is an important design consideration to take into account before commencing
-operations of your cloud.
+Logging is described in more detail in the `Logging and Monitoring
+<https://docs.openstack.org/operations-guide/ops-logging-monitoring.html>`_.
+However, it is an important design consideration to take into account before
+commencing operations of your cloud.
 
 OpenStack produces a great deal of useful logging information, but for
 the information to be useful for operations purposes, you should consider
