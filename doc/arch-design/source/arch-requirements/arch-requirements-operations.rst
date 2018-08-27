@@ -156,7 +156,7 @@ Reliability and availability
 
 For more information on
 managing and maintaining your OpenStack environment, see the
-`OpenStack Operations Guide <https://docs.openstack.org/ops-guide/index.html>`_.
+`OpenStack Operations Guide <https://docs.openstack.org/operations-guide/>`_.
 
 Logging and monitoring
 ----------------------
@@ -177,7 +177,7 @@ Specific meters that are critically important to capture include:
 
 Logging and monitoring does not significantly differ for a multi-site OpenStack
 cloud. The tools described in the `Logging and monitoring
-<https://docs.openstack.org/ops-guide/ops-logging-monitoring.html>`__ in
+<https://docs.openstack.org/operations-guide/ops-logging-monitoring.html>`__ in
 the Operations Guide remain applicable. Logging and monitoring can be provided
 on a per-site basis, and in a common centralized location.
 
