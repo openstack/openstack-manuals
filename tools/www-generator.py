@@ -70,12 +70,15 @@ PAST_SERIES = [
     if info.status != 'development'
 ]
 
-# Find the most recently released series.
-RELEASED_SERIES = [
+# Find the currently maintained series.
+MAINTAINED_SERIES = [
     name
     for name, info in sorted(SERIES_INFO.items())
     if info.status == 'maintained'
-][-1]
+]
+
+# Find the most recently released series.
+RELEASED_SERIES = MAINTAINED_SERIES[-1]
 
 # Find the series being developed.
 SERIES_IN_DEVELOPMENT = [
@@ -436,6 +439,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             ALL_SERIES=ALL_SERIES,
             PAST_SERIES=PAST_SERIES,
             RELEASED_SERIES=RELEASED_SERIES,
+            MAINTAINED_SERIES=MAINTAINED_SERIES,
             SERIES_IN_DEVELOPMENT=SERIES_IN_DEVELOPMENT,
             TOPDIR=topdir,
             SCRIPTDIR=scriptdir,
