@@ -58,7 +58,7 @@ SERIES_INFO = {
     'ocata': SeriesInfo(date='February 2017', status='maintained'),
     'pike': SeriesInfo(date='August 2017', status='maintained'),
     'queens': SeriesInfo(date='March 2018', status='maintained'),
-    'rocky': SeriesInfo(date='August 2018', status='development'),
+    'rocky': SeriesInfo(date='August 2018', status='maintained'),
     'stein': SeriesInfo(date='April 2019', status='development'),
 }
 
