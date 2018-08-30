@@ -138,10 +138,10 @@ Attach the volume to an instance
       to use the volume.
 
 For more information about how to manage volumes, see the
-`python-openstackclient documentation for Pike
-<https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/volume.html>`_
+`python-openstackclient documentation for Pike <https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/volume.html>`_,
+the
+`python-openstackclient documentation for Queens <https://docs.openstack.org/python-openstackclient/queens/cli/command-objects/volume.html>`_,
 or the
-`python-openstackclient documentation for Queens
-<https://docs.openstack.org/python-openstackclient/queens/cli/command-objects/volume.html>`_.
+`python-openstackclient documentation for Rocky <https://docs.openstack.org/python-openstackclient/rocky/cli/command-objects/volume.html>`_.
 
 Return to :ref:`launch-instance`.

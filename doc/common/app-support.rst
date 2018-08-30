@@ -24,17 +24,17 @@ For the available OpenStack documentation, see
 The following guides explain how to install a Proof-of-Concept OpenStack cloud
 and its associated components:
 
-* `Queens Installation Guides <https://docs.openstack.org/queens/install/>`_
+* `Rocky Installation Guides <https://docs.openstack.org/rocky/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
 *  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
 
-*  `Queens Administrator Guides <https://docs.openstack.org/queens/admin/>`_
+*  `Rocky Administrator Guides <https://docs.openstack.org/rocky/admin/>`_
 
-*  `Queens Configuration Guides <https://docs.openstack.org/queens/configuration/>`_
+*  `Rocky Configuration Guides <https://docs.openstack.org/rocky/configuration/>`_
 
-*  `Queens Networking Guide <https://docs.openstack.org/neutron/queens/admin/>`_
+*  `Rocky Networking Guide <https://docs.openstack.org/neutron/rocky/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
@@ -44,8 +44,8 @@ The following books explain how to configure and run an OpenStack cloud:
 
 The following book explains how to use the command-line clients:
 
-*  `Queens API Bindings
-   <https://docs.openstack.org/queens/language-bindings.html>`_
+*  `Rocky API Bindings
+   <https://docs.openstack.org/rocky/language-bindings.html>`_
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:

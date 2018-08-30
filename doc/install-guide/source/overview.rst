@@ -70,6 +70,12 @@ For more information on production architectures for Queens, see the
 and
 `OpenStack Administrator Guides for Queens <https://docs.openstack.org/queens/admin/>`_.
 
+For more information on production architectures for Rocky, see the
+`Architecture Design Guide <https://docs.openstack.org/arch-design/>`_,
+`OpenStack Networking Guide for Rocky <https://docs.openstack.org/neutron/rocky/admin/>`_,
+and
+`OpenStack Administrator Guides for Rocky <https://docs.openstack.org/rocky/admin/>`_.
+
 .. _figure-hwreqs:
 
 .. figure:: figures/hwreqs.png
