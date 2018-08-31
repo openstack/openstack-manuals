@@ -342,6 +342,7 @@ def load_project_data(source_directory,
 
 
 _GOVERNANCE_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/projects.yaml'  # noqa
+_GOVERNANCE_SIGS_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/sigs-repos.yaml'  # noqa
 _IGNORED_REPOS = [
     'openstack/releases',
     'openstack-infra/releasestatus',
@@ -364,12 +365,21 @@ def _get_official_repos():
     member is the list of infra repos.
 
     """
-    raw = requests.get(_GOVERNANCE_URL)
-    data = yaml.safe_load(raw.text)
     seen_repos = set()
     regular_repos = []
     infra_repos = []
     deliverables = []
+
+    # Project team repositories are organized as
+    #
+    #   team:
+    #     deliverables:
+    #       name:
+    #         repos:
+    #           - name
+    #
+    raw = requests.get(_GOVERNANCE_URL)
+    data = yaml.safe_load(raw.text)
     for t_name, team in data.items():
         for d_name, d_data in team.get('deliverables', {}).items():
             deliverables.append(d_name)
@@ -390,6 +400,29 @@ def _get_official_repos():
                                           'base': repo.rsplit('/')[-1]})
                 elif repo not in _IGNORED_REPOS:
                     add({'name': repo, 'base': repo.rsplit('/')[-1]})
+
+    # SIG repositories are organized as
+    #
+    #   name:
+    #     - repo: name
+    #
+    raw = requests.get(_GOVERNANCE_SIGS_URL)
+    data = yaml.safe_load(raw.text)
+    for sig_name, sig_data in data.items():
+        for repo in sig_data:
+            name = repo['repo']
+            base = name.rsplit('/')[-1]
+            if name in seen_repos:
+                continue
+            regular_repos.append({
+                'name': name,
+                'base': base,
+            })
+            seen_repos.add(name)
+            # Treat sig repos as deliverables so they do not trigger
+            # a warning for not appearing to be official.
+            deliverables.append(base)
+
     return (regular_repos, infra_repos, deliverables)
 
 
