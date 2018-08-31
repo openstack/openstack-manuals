@@ -8,10 +8,11 @@ node using the example architecture.
 Although most environments include Identity, Image service, Compute, at least
 one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
-skip to `Object Storage Installation Guide for Pike
-<https://docs.openstack.org/swift/pike/install/>`_
-or `Object Storage Installation Guide for Queens
-<https://docs.openstack.org/swift/queens/install/>`_
+skip to
+`Object Storage Installation Guide for Pike <https://docs.openstack.org/swift/pike/install/>`_,
+`Object Storage Installation Guide for Queens <https://docs.openstack.org/swift/queens/install/>`_,
+or
+`Object Storage Installation Guide for Rocky <https://docs.openstack.org/swift/rocky/install/>`_
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
@@ -70,9 +71,11 @@ of nested VMs.
    interface.
 
 For more information about system requirements, see the
-`OpenStack Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_
+`OpenStack Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_,
+the
+`OpenStack Queens Administrator Guides <https://docs.openstack.org/queens/admin/>`_,
 or the
-`OpenStack Queens Administrator Guides <https://docs.openstack.org/queens/admin/>`_.
+`OpenStack Rocky Administrator Guides <https://docs.openstack.org/rocky/admin/>`_.
 
 .. toctree::
    :maxdepth: 1

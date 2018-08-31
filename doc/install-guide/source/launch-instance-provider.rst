@@ -268,11 +268,11 @@ Access the instance remotely
    .. end
 
 If your instance does not launch or seem to work as you expect, see the
-`Troubleshoot Compute documentation for Pike
-<https://docs.openstack.org/nova/pike/admin/support-compute.html>`_
+`Troubleshoot Compute documentation for Pike <https://docs.openstack.org/nova/pike/admin/support-compute.html>`_,
+the
+`Troubleshoot Compute documentation for Queens <https://docs.openstack.org/nova/queens/admin/support-compute.html>`_,
 or the
-`Troubleshoot Compute documentation for Queens
-<https://docs.openstack.org/nova/queens/admin/support-compute.html>`_
+`Troubleshoot Compute documentation for Rocky <https://docs.openstack.org/nova/rocky/admin/support-compute.html>`_
 for more information or use one of
 the :doc:`many other options <common/app-support>`
 to seek assistance. We want your first installation to work!

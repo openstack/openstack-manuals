@@ -9,21 +9,24 @@ instances. Networking option 1 includes one provider (external) network
 with one instance that uses it. Networking option 2 includes one provider
 network with one instance that uses it and one self-service (private)
 network with one instance that uses it.
+
 The instructions in this section use command-line interface (CLI)
 tools on the controller node. However, you can follow the instructions
 on any host that the tools are installed.
+
 For more information on the CLI tools, see the
-`OpenStackClient documentation for Pike
-<https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/server.html#server-create>`_
+`OpenStackClient documentation for Pike <https://docs.openstack.org/python-openstackclient/pike/cli/command-objects/server.html#server-create>`_,
+the
+`OpenStackClient documentation for Queens <https://docs.openstack.org/python-openstackclient/queens/cli/command-objects/server.html#server-create>`_,
 or the
-`OpenStackClient documentation for Queens
-<https://docs.openstack.org/python-openstackclient/queens/cli/command-objects/server.html#server-create>`_.
+`OpenStackClient documentation for Rocky <https://docs.openstack.org/python-openstackclient/rocky/cli/command-objects/server.html#server-create>`_.
+
 To use the dashboard, see the
-`Dashboard User Documentation for Pike
-<https://docs.openstack.org/horizon/pike/user/>`_
+`Dashboard User Documentation for Pike <https://docs.openstack.org/horizon/pike/user/>`_,
+the
+`Dashboard User Documentation for Queens <https://docs.openstack.org/horizon/queens/user/>`_,
 or the
-`Dashboard User Documentation for Queens
-<https://docs.openstack.org/horizon/queens/user/>`_.
+`Dashboard User Documentation for Rocky <https://docs.openstack.org/horizon/rocky/user/>`_.
 
 .. _launch-instance-networks:
 
@@ -225,11 +228,11 @@ If your environment includes the Orchestration service, you can create
 a stack that launches an instance.
 
 For more information, see the
-`Orchestration installation guide for Pike
-<https://docs.openstack.org/heat/pike/install/>`_
+`Orchestration installation guide for Pike <https://docs.openstack.org/heat/pike/install/>`_,
+the
+`Orchestration installation guide for Queens <https://docs.openstack.org/heat/queens/install/>`_,
 or the
-`Orchestration installation guide for Queens
-<https://docs.openstack.org/heat/queens/install/>`_.
+`Orchestration installation guide for Rocky <https://docs.openstack.org/heat/rocky/install/>`_.
 
 Shared File Systems
 -------------------
@@ -238,8 +241,8 @@ If your environment includes the Shared File Systems service, you can create
 a share and mount it in an instance.
 
 For more information, see the
-`Shared File Systems installation guide for Pike
-<https://docs.openstack.org/manila/pike/install/>`_
+`Shared File Systems installation guide for Pike <https://docs.openstack.org/manila/pike/install/>`_,
+the
+`Shared File Systems installation guide for Queens <https://docs.openstack.org/manila/queens/install/>`_,
 or the
-`Shared File Systems installation guide for Queens
-<https://docs.openstack.org/manila/queens/install/>`_.
+`Shared File Systems installation guide for Rocky <https://docs.openstack.org/manila/rocky/install/>`_.
