@@ -7,13 +7,19 @@ underlying hardware. The hypervisor creates, manages, and monitors
 virtual machines. OpenStack Compute (nova) supports many hypervisors to various
 degrees, including:
 
+* `Ironic <https://docs.openstack.org/ironic/latest/>`_
 * `KVM <https://www.linux-kvm.org/page/Main_Page>`_
 * `LXC <https://linuxcontainers.org/>`_
 * `QEMU <https://wiki.qemu.org/Main_Page>`_
-* `VMware ESX/ESXi <https://www.vmware.com/support/vsphere-hypervisor>`_
-* `Xen <https://www.xenproject.org/>`_
-* `Hyper-V <https://technet.microsoft.com/en-us/library/hh831531.aspx>`_
-* `Docker <https://www.docker.com/>`_
+* `VMware ESX/ESXi <https://www.vmware.com/support/vsphere-hypervisor.html>`_
+* `Xen (using libvirt) <https://www.xenproject.org>`_
+* `XenServer <https://xenserver.org>`_
+* `Hyper-V
+  <https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/hyper-v-technology-overview>`_
+* `PowerVM <https://www.ibm.com/us-en/marketplace/ibm-powervm>`_
+* `UML <http://user-mode-linux.sourceforge.net>`_
+* `Virtuozzo <https://www.virtuozzo.com/products/vz7.html>`_
+* `zVM <https://www.ibm.com/it-infrastructure/z/zvm>`_
 
 An important factor in your choice of hypervisor is your current organization's
 hypervisor usage or experience. Also important is the hypervisor's feature
