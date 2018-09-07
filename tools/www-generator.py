@@ -350,6 +350,7 @@ _IGNORED_REPOS = [
     'openstack/releases',
     'openstack-infra/releasestatus',
     'openstack/contributor-guide',
+    'openstack/operations-guide',
 ]
 
 # List of infra repos that publish to the normal location (/REPO/) and
@@ -416,6 +417,8 @@ def _get_official_repos():
             name = repo['repo']
             base = name.rsplit('/')[-1]
             if name in seen_repos:
+                continue
+            if name in _IGNORED_REPOS:
                 continue
             regular_repos.append({
                 'name': name,
