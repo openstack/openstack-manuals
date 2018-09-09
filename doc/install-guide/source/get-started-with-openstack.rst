@@ -17,7 +17,7 @@ The OpenStack services
 ======================
 
 The
-`OpenStack project navigator <https://www.openstack.org/software/project-navigator>`_
+`OpenStack project navigator <https://www.openstack.org/software/project-navigator/openstack-components>`_
 lets you browse the OpenStack services that make up the OpenStack architecture.
 The services are categorized per the service type and release series.
 
