@@ -282,6 +282,12 @@ def load_project_data(source_directory,
         for project in raw_data:
             deliverable_name = project.get('deliverable-name', project['name'])
 
+            # Set the defaults for the flags so that the templates can
+            # assume the flags with true defaults are defined.
+            for url_info in _URLS:
+                if url_info.flag_name not in project:
+                    project[url_info.flag_name] = url_info.default
+
             if (series == 'latest' and
                     deliverable_name not in governed_deliverables):
                 msg = ('{} is no longer part of an official project, '
