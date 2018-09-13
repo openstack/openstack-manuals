@@ -30,7 +30,7 @@
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i>OpenStack Services</h3>
 {% for project in projects|sort(attribute='service') %}
-{% if project.type in ['service', 'other'] %}
+{% if project.type in ['service', 'other'] and project.has_project_guide %}
         <a href="/{{project.name}}/{{SERIES}}/">
             {{project.service}} ({{project.name}})</a><br />
 {% endif %}
@@ -40,7 +40,7 @@
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i>Bare Metal Sub Projects</h3>
 {% for project in projects|sort(attribute='service') %}
-{% if project.type == 'baremetal' %}
+{% if project.type == 'baremetal' and project.has_project_guide %}
         <a href="/{{project.name}}/{{SERIES}}/">
             {{project.service}} ({{project.name}})</a><br />
 {% endif %}
@@ -50,7 +50,7 @@
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i>Networking Sub Projects</h3>
 {% for project in projects|sort(attribute='service') %}
-{% if project.type == 'networking' %}
+{% if project.type == 'networking' and project.has_project_guide %}
         <a href="/{{project.name}}/{{SERIES}}/">
             {{project.service}} ({{project.name}})</a><br />
 {% endif %}
@@ -60,7 +60,7 @@
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i>Deployment Projects</h3>
 {% for project in projects|sort(attribute='service') %}
-{% if project.type == 'deployment' %}
+{% if project.type == 'deployment' and project.has_project_guide %}
         <a href="/{{project.name}}/{{SERIES}}/">
             {{project.service}}</a><br />
 {% endif %}
@@ -72,7 +72,7 @@
     <div class="docs-link-sections">
         <h3><i class="fa fa-cog"></i>Contributor Tools</h3>
 {% for project in projects|sort(attribute='name') %}
-{% if project.type in ['tool'] %}
+{% if project.type in ['tool'] and project.has_project_guide %}
         <a href="/{{project.name}}/{{SERIES}}/">{{project.name}}</a><br />
         <p>{{project.service}} </p>
 {% endif %}
@@ -85,7 +85,7 @@
     <div class="docs-link-sections">
         <h3><i class="fa fa-pencil"></i>Using Libraries</h3>
 {% for project in projects|sort(attribute='name') %}
-{% if project.type == 'library' %}
+{% if project.type == 'library' and project.has_project_guide %}
         <a href="/{{project.name}}/{{SERIES}}/">{{project.name}}</a><br />
         <p>{{project.service}}</p>
 {% endif %}
