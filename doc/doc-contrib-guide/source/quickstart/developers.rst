@@ -32,7 +32,7 @@ quickly and easily:
   assistance from the docs team on finding the right location for the content.
 * If you know which book you want to modify, get in contact with the
   `appropriate project team
-  <https://www.openstack.org/software/project-navigator/>`_ or
+  <https://www.openstack.org/software/project-navigator/openstack-components>`_ or
   :doc:`subteam <../team-structure>`. They can help you determine where the
   content should live, and also give you details about upcoming changes to the
   architecture of those books that might affect your new documentation.
