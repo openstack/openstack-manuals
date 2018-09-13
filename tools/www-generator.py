@@ -144,6 +144,11 @@ def parse_command_line_arguments():
                         action='store_true',
                         help='treat warnings as errors',
                         )
+    parser.add_argument('--project',
+                        default=[],
+                        action='append',
+                        help='project to check (defaults to all)',
+                        )
     return parser.parse_args()
 
 
@@ -227,7 +232,8 @@ def load_project_data(source_directory,
                       skip_links=False,
                       series_to_load=None,
                       governed_deliverables=[],
-                      strict=False):
+                      strict=False,
+                      projects_to_check=[]):
     "Return a dict with project data grouped by series."
     logger = logging.getLogger()
     series_to_load = series_to_load or []
@@ -318,7 +324,11 @@ def load_project_data(source_directory,
 
             # If the project claims to have a separately published guide
             # of some sort, look for it before allowing the flag to stand.
-            if not skip_links:
+            check_links_this_project = (
+                deliverable_name in projects_to_check
+                or not projects_to_check
+            )
+            if check_links_this_project and not skip_links:
                 for url_info in _URLS:
                     if url_info.flag_name is None:
                         flag_val = True
@@ -560,6 +570,7 @@ def main():
         series_to_load=args.series,
         governed_deliverables=deliverables,
         strict=args.strict,
+        projects_to_check=args.project,
     )
 
     # Set up jinja to discover the templates.
