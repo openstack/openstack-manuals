@@ -28,12 +28,11 @@ done
 
 # PDF targets for Install guides are dealt in build-install-guides-rst.sh
 PDF_TARGETS=( 'arch-design'\
-              'ha-guide' \
               'image-guide' \
               'install-guide')
 
 for guide in arch-design doc-contrib-guide glossary \
-    ha-guide ha-guide-draft image-guide install-guide; do
+    ha-guide-draft image-guide install-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target $guide $LINKCHECK $PDF_OPTION
