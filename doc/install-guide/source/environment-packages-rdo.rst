@@ -77,6 +77,14 @@ Enable the OpenStack repository
 
   .. end
 
+  **When installing the Rocky release, run:**
+
+  .. code-block:: console
+
+       # yum install centos-release-openstack-rocky
+
+  .. end
+
 * On RHEL, download and install the RDO repository RPM to enable the
   OpenStack repository.
 
