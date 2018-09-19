@@ -20,6 +20,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   rocky.rst
    queens.rst
    pike.rst
    ocata.rst
