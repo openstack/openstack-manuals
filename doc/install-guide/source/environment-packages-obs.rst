@@ -27,21 +27,23 @@ Enable the OpenStack repository
 * Enable the Open Build Service repositories based on your openSUSE or
   SLES version, and on the version of OpenStack you want to install:
 
-  **On openSUSE for OpenStack Queens:**
+  **On openSUSE for OpenStack Rocky:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Rocky/openSUSE_Leap_15.0 Rocky
+
+**On openSUSE for OpenStack Queens:**
 
   .. code-block:: console
 
      # zypper addrepo -f obs://Cloud:OpenStack:Queens/openSUSE_Leap_42.3 Queens
-
-  .. end
 
   **On openSUSE for OpenStack Pike:**
 
   .. code-block:: console
 
      # zypper addrepo -f obs://Cloud:OpenStack:Pike/openSUSE_Leap_42.3 Pike
-
-  .. end
 
   .. note::
 
@@ -56,23 +58,23 @@ Enable the OpenStack repository
 
         # zypper rm patterns-openSUSE-minimal_base-conflicts
 
-     .. end
+  **On SLES for OpenStack Rocky:**
 
-  **On SLES for OpenStack Queens:**
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Queens/SLE_12_SP4 Rocky
+
+**On SLES for OpenStack Queens:**
 
   .. code-block:: console
 
      # zypper addrepo -f obs://Cloud:OpenStack:Queens/SLE_12_SP3 Queens
-
-  .. end
 
   **On SLES for OpenStack Pike:**
 
   .. code-block:: console
 
      # zypper addrepo -f obs://Cloud:OpenStack:Pike/SLE_12_SP3 Pike
-
-  .. end
 
   .. note::
 
@@ -86,7 +88,6 @@ Enable the OpenStack repository
         Key Created:      2015-12-16T16:48:37 CET
         Key Expires:      2018-02-23T16:48:37 CET
 
-     .. end
 
 Finalize the installation
 -------------------------
@@ -96,8 +97,6 @@ Finalize the installation
    .. code-block:: console
 
       # zypper refresh && zypper dist-upgrade
-
-   .. end
 
    .. note::
 
@@ -109,5 +108,3 @@ Finalize the installation
    .. code-block:: console
 
       # zypper install python-openstackclient
-
-   .. end
