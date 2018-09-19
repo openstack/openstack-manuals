@@ -30,16 +30,12 @@ Enable the OpenStack repository
    # apt install software-properties-common
    # add-apt-repository cloud-archive:queens
 
-.. end
-
 **OpenStack Pike:**
 
 .. code-block:: console
 
    # apt install software-properties-common
    # add-apt-repository cloud-archive:pike
-
-.. end
 
 .. note::
 
@@ -58,8 +54,6 @@ Finalize the installation
 
       # apt update && apt dist-upgrade
 
-   .. end
-
    .. note::
 
       If the upgrade process includes a new kernel, reboot your host
@@ -70,5 +64,3 @@ Finalize the installation
    .. code-block:: console
 
       # apt install python-openstackclient
-
-   .. end
