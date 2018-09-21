@@ -18,9 +18,6 @@ to, use the following tags:
 [doc-contrib]
   OpenStack Documentation Contributor Guide
 
-[ha-guide]
-  OpenStack High Availability Guide
-
 [image-guide]
   OpenStack Virtual Machine Image Guide
 

@@ -496,7 +496,7 @@ servers and load balancing. HAProxy is one method of providing load
 balancing and high availability and is often combined with keepalived
 or pacemaker to ensure the HAProxy service maintains a stable VIP.
 Sample HAProxy configurations can be found in the `OpenStack HA Guide.
-<https://docs.openstack.org/ha-guide/controller-ha-haproxy.html#configuring-haproxy>`_.
+<https://docs.openstack.org/ha-guide/>`_.
 
 Replication
 -----------
