@@ -51,8 +51,6 @@ Prerequisites
       # subscription-manager repos --enable=rhel-7-server-optional-rpms \
         --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms
 
-   .. end
-
 Enable the OpenStack repository
 -------------------------------
 
@@ -61,13 +59,11 @@ Enable the OpenStack repository
   default, so you can simply install the package to enable the OpenStack
   repository.
 
-  **When installing the Pike release, run:**
+  **When installing the Rocky release, run:**
 
   .. code-block:: console
 
-     # yum install centos-release-openstack-pike
-
-  .. end
+       # yum install centos-release-openstack-rocky
 
   **When installing the Queens release, run:**
 
@@ -75,15 +71,11 @@ Enable the OpenStack repository
 
      # yum install centos-release-openstack-queens
 
-  .. end
-
-  **When installing the Rocky release, run:**
+  **When installing the Pike release, run:**
 
   .. code-block:: console
 
-       # yum install centos-release-openstack-rocky
-
-  .. end
+     # yum install centos-release-openstack-pike
 
 * On RHEL, download and install the RDO repository RPM to enable the
   OpenStack repository.
@@ -91,8 +83,6 @@ Enable the OpenStack repository
   .. code-block:: console
 
      # yum install https://rdoproject.org/repos/rdo-release.rpm
-
-  .. end
 
   The RDO repository RPM installs the latest available OpenStack release.
 
@@ -105,8 +95,6 @@ Finalize the installation
 
       # yum upgrade
 
-   .. end
-
    .. note::
 
       If the upgrade process includes a new kernel, reboot your host
@@ -118,8 +106,6 @@ Finalize the installation
 
       # yum install python-openstackclient
 
-   .. end
-
 3. RHEL and CentOS enable :term:`SELinux` by default. Install the
    ``openstack-selinux`` package to automatically manage security
    policies for OpenStack services:
@@ -127,5 +113,3 @@ Finalize the installation
    .. code-block:: console
 
       # yum install openstack-selinux
-
-   .. end
