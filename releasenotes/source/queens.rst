@@ -24,14 +24,6 @@ Available from the `OpenStack Contributor Guide
 * This is a new document that aims to provide common documentation for all
   OpenStack Contributors and help with on-boarding efforts.
 
-Security Guide
-~~~~~~~~~~~~~~
-
-Available from the `OpenStack Security Guide
-<https://docs.openstack.org/security-guide/>`_.
-
-* TBD
-
 Translations
 ~~~~~~~~~~~~
 
