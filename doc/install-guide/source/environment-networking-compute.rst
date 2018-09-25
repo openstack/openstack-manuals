@@ -36,8 +36,6 @@ Configure network interfaces
         up ip link set dev $IFACE up
         down ip link set dev $IFACE down
 
-     .. end
-
    For RHEL or CentOS:
 
    * Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file
@@ -53,8 +51,6 @@ Configure network interfaces
         ONBOOT="yes"
         BOOTPROTO="none"
 
-     .. end
-
    For SUSE:
 
    * Edit the ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME`` file to
@@ -65,8 +61,6 @@ Configure network interfaces
 
         STARTMODE='auto'
         BOOTPROTO='static'
-
-     .. end
 
 #. Reboot the system to activate the changes.
 

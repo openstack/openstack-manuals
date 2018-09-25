@@ -90,10 +90,6 @@ files, ``console`` for console inputs and outputs, and so on.
       [DEFAULT]
       # List of directories to load filter definitions from (separated by ',').
 
-   .. end
-
-.. end
-
 **Output**
 
 .. code-block:: ini
@@ -103,8 +99,6 @@ files, ``console`` for console inputs and outputs, and so on.
 
    [DEFAULT]
    # List of directories to load filter definitions from (separated by ',').
-
-.. end
 
 .. note::
 
@@ -134,10 +128,6 @@ highlight some specific lines with the ``:emphasize-lines:`` parameter:
           print '...but this one is.'
           print 'This one is highlighted too.'
 
-   .. end
-
-.. end
-
 **Output**
 
 .. code-block:: python
@@ -150,8 +140,6 @@ highlight some specific lines with the ``:emphasize-lines:`` parameter:
        print 'This one is not...'
        print '...but this one is.'
        print 'This one is highlighted too.'
-
-.. end
 
 .. _remote-block:
 
@@ -183,8 +171,6 @@ content from a remote URL (``http`` or ``https``).
    .. remote-code-block:: ini
 
       https://git.openstack.org/cgit/openstack/nova/tree/etc/nova/api-paste.ini?h=stable/ocata
-
-   .. end
 
 **Output**
 

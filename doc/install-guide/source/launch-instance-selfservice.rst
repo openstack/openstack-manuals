@@ -16,8 +16,6 @@ name, network, security group, key, and instance name.
 
       $ . demo-openrc
 
-   .. end
-
 #. A flavor specifies a virtual resource allocation profile which
    includes processor, memory, and storage.
 
@@ -32,8 +30,6 @@ name, network, security group, key, and instance name.
       +----+---------+-----+------+-----------+-------+-----------+
       | 0  | m1.nano |  64 |    1 |         0 |     1 | True      |
       +----+---------+-----+------+-----------+-------+-----------+
-
-   .. end
 
    .. note::
 
@@ -51,8 +47,6 @@ name, network, security group, key, and instance name.
       | 390eb5f7-8d49-41ec-95b7-68c0d5d54b34 | cirros | active |
       +--------------------------------------+--------+--------+
 
-   .. end
-
    This instance uses the ``cirros`` image.
 
 #. List available networks:
@@ -68,8 +62,6 @@ name, network, security group, key, and instance name.
       | b5b6993c-ddf9-40e7-91d0-86806a42edb8 | provider    | 310911f6-acf0-4a47-824e-3032916582ff |
       +--------------------------------------+-------------+--------------------------------------+
 
-   .. end
-
    This instance uses the ``selfservice`` self-service network. However, you
    must reference this network using the ID instead of the name.
 
@@ -84,8 +76,6 @@ name, network, security group, key, and instance name.
       +--------------------------------------+---------+------------------------+
       | dd2b614c-3dad-48ed-958b-b155a3b38515 | default | Default security group |
       +--------------------------------------+---------+------------------------+
-
-   .. end
 
    This instance uses the ``default`` security group.
 
@@ -132,8 +122,6 @@ name, network, security group, key, and instance name.
       | user_id                              | 58126687cbcc4888bfa9ab73a2256f27      |
       +--------------------------------------+---------------------------------------+
 
-   .. end
-
 #. Check the status of your instance:
 
    .. code-block:: console
@@ -146,8 +134,6 @@ name, network, security group, key, and instance name.
       | 113c5892-e58e-4093-88c7-e33f502eaaa4 | selfservice-instance | ACTIVE | selfservice=172.16.1.3 |
       | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf | provider-instance    | ACTIVE | provider=203.0.113.103 |
       +--------------------------------------+----------------------+--------+------------------------+
-
-   .. end
 
    The status changes from ``BUILD`` to ``ACTIVE`` when the build process
    successfully completes.
@@ -168,8 +154,6 @@ Access the instance using a virtual console
       | type  | novnc                                                                           |
       | url   | http://controller:6080/vnc_auto.html?token=5eeccb47-525c-4918-ac2a-3ad1e9f1f493 |
       +-------+---------------------------------------------------------------------------------+
-
-   .. end
 
    .. note::
 
@@ -198,8 +182,6 @@ Access the instance using a virtual console
       4 packets transmitted, 4 received, 0% packet loss, time 2998ms
       rtt min/avg/max/mdev = 0.357/0.451/0.504/0.055 ms
 
-   .. end
-
 #. Verify access to the internet:
 
    .. code-block:: console
@@ -215,8 +197,6 @@ Access the instance using a virtual console
       --- openstack.org ping statistics ---
       4 packets transmitted, 4 received, 0% packet loss, time 3003ms
       rtt min/avg/max/mdev = 17.431/17.575/17.734/0.143 ms
-
-   .. end
 
 Access the instance remotely
 ----------------------------
@@ -245,15 +225,11 @@ Access the instance remotely
       | updated_at          | 2017-01-20T17:29:16Z                 |
       +---------------------+--------------------------------------+
 
-   .. end
-
 #. Associate the floating IP address with the instance:
 
    .. code-block:: console
 
       $ openstack server add floating ip selfservice-instance 203.0.113.104
-
-   .. end
 
    .. note::
 
@@ -272,8 +248,6 @@ Access the instance remotely
       | 181c52ba-aebc-4c32-a97d-2e8e82e4eaaf | provider-instance    | ACTIVE | provider=203.0.113.103                |
       +--------------------------------------+----------------------+--------+---------------------------------------+
 
-   .. end
-
 #. Verify connectivity to the instance via floating IP address from
    the controller node or any host on the provider physical network:
 
@@ -291,8 +265,6 @@ Access the instance remotely
       4 packets transmitted, 4 received, 0% packet loss, time 3002ms
       rtt min/avg/max/mdev = 0.929/1.539/3.183/0.951 ms
 
-   .. end
-
 #. Access your instance using SSH from the controller node or any
    host on the provider physical network:
 
@@ -304,8 +276,6 @@ Access the instance remotely
       RSA key fingerprint is ed:05:e9:e7:52:a0:ff:83:68:94:c7:d1:f2:f8:e2:e9.
       Are you sure you want to continue connecting (yes/no)? yes
       Warning: Permanently added '203.0.113.104' (RSA) to the list of known hosts.
-
-   .. end
 
 If your instance does not launch or seem to work as you expect, see the
 `Troubleshoot Compute documentation for Pike <https://docs.openstack.org/nova/pike/admin/support-compute.html>`_,

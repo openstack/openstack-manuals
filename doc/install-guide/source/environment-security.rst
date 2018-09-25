@@ -17,8 +17,6 @@ following command:
 
    $ openssl rand -hex 10
 
-.. end
-
 For OpenStack services, this guide uses ``SERVICE_PASS`` to reference
 service account passwords and ``SERVICE_DBPASS`` to reference database
 passwords.

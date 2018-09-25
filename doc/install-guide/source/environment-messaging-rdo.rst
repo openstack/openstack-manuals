@@ -23,8 +23,6 @@ Install and configure components
 
       # yum install rabbitmq-server
 
-   .. end
-
 2. Start the message queue service and configure it to start when the
    system boots:
 
@@ -33,8 +31,6 @@ Install and configure components
       # systemctl enable rabbitmq-server.service
       # systemctl start rabbitmq-server.service
 
-   .. end
-
 3. Add the ``openstack`` user:
 
    .. code-block:: console
@@ -42,8 +38,6 @@ Install and configure components
       # rabbitmqctl add_user openstack RABBIT_PASS
 
       Creating user "openstack" ...
-
-   .. end
 
    Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -55,5 +49,3 @@ Install and configure components
       # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
       Setting permissions for user "openstack" in vhost "/" ...
-
-   .. end

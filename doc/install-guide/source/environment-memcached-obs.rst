@@ -15,8 +15,6 @@ Install and configure components
 
       # zypper install memcached python-python-memcached
 
-   .. end
-
 2. Edit the ``/etc/sysconfig/memcached`` file and complete the
    following actions:
 
@@ -27,8 +25,6 @@ Install and configure components
      .. code-block:: none
 
         MEMCACHED_PARAMS="-l 10.0.0.11"
-
-     .. end
 
      .. note::
 
@@ -44,5 +40,3 @@ Finalize installation
 
      # systemctl enable memcached.service
      # systemctl start memcached.service
-
-  .. end

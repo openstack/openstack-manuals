@@ -20,8 +20,6 @@ among the nodes before proceeding further.
       4 packets transmitted, 4 received, 0% packet loss, time 3022ms
       rtt min/avg/max/mdev = 17.489/17.715/18.346/0.364 ms
 
-   .. end
-
 #. From the *controller* node, test access to the management interface on the
    *compute* node:
 
@@ -39,8 +37,6 @@ among the nodes before proceeding further.
       4 packets transmitted, 4 received, 0% packet loss, time 3000ms
       rtt min/avg/max/mdev = 0.202/0.217/0.263/0.030 ms
 
-   .. end
-
 #. From the *compute* node, test access to the Internet:
 
    .. code-block:: console
@@ -56,8 +52,6 @@ among the nodes before proceeding further.
       --- openstack.org ping statistics ---
       4 packets transmitted, 4 received, 0% packet loss, time 3022ms
       rtt min/avg/max/mdev = 17.489/17.715/18.346/0.364 ms
-
-   .. end
 
 #. From the *compute* node, test access to the management interface on the
    *controller* node:
@@ -75,8 +69,6 @@ among the nodes before proceeding further.
       --- controller ping statistics ---
       4 packets transmitted, 4 received, 0% packet loss, time 3000ms
       rtt min/avg/max/mdev = 0.202/0.217/0.263/0.030 ms
-
-   .. end
 
 .. note::
 

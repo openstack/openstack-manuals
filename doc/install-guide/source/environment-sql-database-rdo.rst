@@ -16,8 +16,6 @@ Install and configure components
 
       # yum install mariadb mariadb-server python2-PyMySQL
 
-   .. end
-
 2. Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file
    (backup existing configuration files in ``/etc/my.cnf.d/`` if needed)
    and complete the following actions:
@@ -40,8 +38,6 @@ Install and configure components
         collation-server = utf8_general_ci
         character-set-server = utf8
 
-     .. end
-
 Finalize installation
 ---------------------
 
@@ -53,8 +49,6 @@ Finalize installation
       # systemctl enable mariadb.service
       # systemctl start mariadb.service
 
-   .. end
-
 2. Secure the database service by running the ``mysql_secure_installation``
    script. In particular, choose a suitable password for the database
    ``root`` account:
@@ -62,5 +56,3 @@ Finalize installation
    .. code-block:: console
 
       # mysql_secure_installation
-
-   .. end

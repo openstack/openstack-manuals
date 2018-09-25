@@ -15,8 +15,6 @@ Install and configure components
 
       # apt install etcd
 
-   .. end
-
 #. Edit the ``/etc/default/etcd`` file and set the ``ETCD_INITIAL_CLUSTER``,
    ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``,
    ``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the
@@ -35,8 +33,6 @@ Install and configure components
       ETCD_LISTEN_PEER_URLS="http://0.0.0.0:2380"
       ETCD_LISTEN_CLIENT_URLS="http://10.0.0.11:2379"
 
-   .. end
-
 Finalize installation
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -46,5 +42,3 @@ Finalize installation
 
       # systemctl enable etcd
       # systemctl start etcd
-
-   .. end

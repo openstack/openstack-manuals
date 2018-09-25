@@ -25,8 +25,6 @@ Install and configure components
 
       # apt install mariadb-server python-pymysql
 
-   .. end
-
 2. Create and edit the ``/etc/mysql/mariadb.conf.d/99-openstack.cnf`` file
    and complete the following actions:
 
@@ -47,8 +45,6 @@ Install and configure components
         collation-server = utf8_general_ci
         character-set-server = utf8
 
-     .. end
-
 Finalize installation
 ---------------------
 
@@ -58,8 +54,6 @@ Finalize installation
 
       # service mysql restart
 
-   .. end
-
 2. Secure the database service by running the ``mysql_secure_installation``
    script. In particular, choose a suitable password for the database
    ``root`` account:
@@ -67,5 +61,3 @@ Finalize installation
    .. code-block:: console
 
       # mysql_secure_installation
-
-   .. end

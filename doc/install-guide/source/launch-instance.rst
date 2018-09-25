@@ -76,8 +76,6 @@ purposes.
    | vcpus                      | 1       |
    +----------------------------+---------+
 
-.. end
-
 Generate a key pair
 -------------------
 
@@ -90,8 +88,6 @@ must add a public key to the Compute service.
    .. code-block:: console
 
       $ . demo-openrc
-
-   .. end
 
 #. Generate a key pair and add a public key:
 
@@ -107,8 +103,6 @@ must add a public key to the Compute service.
       | name        | mykey                                           |
       | user_id     | 58126687cbcc4888bfa9ab73a2256f27                |
       +-------------+-------------------------------------------------+
-
-   .. end
 
    .. note::
 
@@ -126,8 +120,6 @@ must add a public key to the Compute service.
       +-------+-------------------------------------------------+
       | mykey | ee:3d:2e:97:d4:e2:6a:54:6d:0d:ce:43:39:2c:ba:4d |
       +-------+-------------------------------------------------+
-
-   .. end
 
 Add security group rules
 ------------------------
@@ -165,8 +157,6 @@ secure shell (SSH).
        | updated_at        | 2017-03-30T00:46:43Z                 |
        +-------------------+--------------------------------------+
 
-    .. end
-
   * Permit secure shell (SSH) access:
 
     .. code-block:: console
@@ -192,8 +182,6 @@ secure shell (SSH).
        | security_group_id | 89ff5c84-e3d1-46bb-b149-e621689f0696 |
        | updated_at        | 2017-03-30T00:43:35Z                 |
        +-------------------+--------------------------------------+
-
-    .. end
 
 Launch an instance
 ------------------

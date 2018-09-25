@@ -22,8 +22,6 @@ Install and configure components
               -g etcd \
               etcd
 
-     .. end
-
    - Create the necessary directories:
 
      .. code-block:: console
@@ -32,8 +30,6 @@ Install and configure components
         # chown etcd:etcd /etc/etcd
         # mkdir -p /var/lib/etcd
         # chown etcd:etcd /var/lib/etcd
-
-     .. end
 
    - Download and install the etcd tarball:
 
@@ -48,8 +44,6 @@ Install and configure components
               -C /tmp/etcd --strip-components=1
         # cp /tmp/etcd/etcd /usr/bin/etcd
         # cp /tmp/etcd/etcdctl /usr/bin/etcdctl
-
-     .. end
 
 2. Create and edit the ``/etc/etcd/etcd.conf.yml`` file
    and set the ``initial-cluster``, ``initial-advertise-peer-urls``,
@@ -69,8 +63,6 @@ Install and configure components
       listen-peer-urls: http://0.0.0.0:2380
       listen-client-urls: http://10.0.0.11:2379
 
-   .. end
-
 3. Create and edit the ``/usr/lib/systemd/system/etcd.service`` file:
 
    .. code-block:: ini
@@ -89,15 +81,11 @@ Install and configure components
       [Install]
       WantedBy=multi-user.target
 
-   .. end
-
    Reload systemd service files with:
 
    .. code-block:: console
 
       # systemctl daemon-reload
-
-   .. end
 
 
 Finalize installation
@@ -109,5 +97,3 @@ Finalize installation
 
       # systemctl enable etcd
       # systemctl start etcd
-
-   .. end
