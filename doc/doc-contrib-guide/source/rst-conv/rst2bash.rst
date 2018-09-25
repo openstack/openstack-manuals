@@ -53,13 +53,3 @@ syntax format.
         [DEFAULT]
         ...
         debug = True
-
-* The ``only`` tags should be closed with ``endonly``.
-
-  .. code-block:: rst
-
-    .. only:: ubuntu or debian
-
-        All related content.
-
-    .. endonly
