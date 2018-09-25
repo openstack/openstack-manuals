@@ -15,8 +15,6 @@ Install and configure components
 
       # yum install etcd
 
-   .. end
-
 2. Edit the ``/etc/etcd/etcd.conf`` file and set the ``ETCD_INITIAL_CLUSTER``,
    ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``,
    ``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the controller
@@ -36,8 +34,6 @@ Install and configure components
       ETCD_INITIAL_CLUSTER_TOKEN="etcd-cluster-01"
       ETCD_INITIAL_CLUSTER_STATE="new"
 
-   .. end
-
 
 Finalize installation
 ~~~~~~~~~~~~~~~~~~~~~
@@ -48,5 +44,3 @@ Finalize installation
 
       # systemctl enable etcd
       # systemctl start etcd
-
-   .. end

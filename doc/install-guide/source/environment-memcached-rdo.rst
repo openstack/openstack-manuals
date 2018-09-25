@@ -15,8 +15,6 @@ Install and configure components
 
       # yum install memcached python-memcached
 
-   .. end
-
 2. Edit the ``/etc/sysconfig/memcached`` file and complete the
    following actions:
 
@@ -27,8 +25,6 @@ Install and configure components
      .. code-block:: none
 
         OPTIONS="-l 127.0.0.1,::1,controller"
-
-     .. end
 
      .. note::
 
@@ -44,5 +40,3 @@ Finalize installation
 
      # systemctl enable memcached.service
      # systemctl start memcached.service
-
-  .. end

@@ -35,8 +35,6 @@ The valid tags for the ``only`` directive are:
 
          # apt-get install chrony
 
-      .. end
-
    .. endonly
 
    .. only:: rdo
@@ -44,8 +42,6 @@ The valid tags for the ``only`` directive are:
       .. code-block:: console
 
          # yum install chrony
-
-      .. end
 
    .. endonly
 
@@ -58,16 +54,12 @@ The valid tags for the ``only`` directive are:
          # zypper addrepo http://download.opensuse.org/repositories/network:time/openSUSE_13.2/network:time.repo
          ...
 
-      .. end
-
       On SLES:
 
       .. code-block:: console
 
          # zypper addrepo http://download.opensuse.org/repositories/network:time/SLE_12/network:time.repo
          ...
-
-      .. end
 
    .. endonly
 

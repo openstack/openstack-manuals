@@ -24,15 +24,11 @@ Install and configure components
 
       # yum install chrony
 
-   .. end
-
    For SUSE:
 
    .. code-block:: console
 
       # zypper install chrony
-
-   .. end
 
 2. Configure the ``chrony.conf`` file and comment out or remove all
    but one ``server`` key. Change it to reference the controller node.
@@ -44,16 +40,12 @@ Install and configure components
 
       server controller iburst
 
-   .. end
-
    For Ubuntu, edit the ``/etc/chrony/chrony.conf`` file:
 
    .. path /etc/chrony/chrony.conf
    .. code-block:: ini
 
       server controller iburst
-
-   .. end
 
 3. Comment out the ``pool 2.debian.pool.ntp.org offline iburst`` line.
 
@@ -65,13 +57,9 @@ Install and configure components
 
       # service chrony restart
 
-   .. end
-
    For RHEL, CentOS, or SUSE:
 
    .. code-block:: console
 
       # systemctl enable chronyd.service
       # systemctl start chronyd.service
-
-   .. end

@@ -28,10 +28,6 @@ syntax format.
 
           $ echo "Hello, World!"
 
-      .. end
-
-  .. end
-
 * The ``code-block`` tags which rely on path should have ``path``
   tag one line above without a line break as shown below. May it
   be some code which has to be run from a specific folder or a
@@ -47,10 +43,6 @@ syntax format.
         $ echo "Run a command from a specific folder"
         $ chmod -R +rx bin
 
-      .. end
-
-    .. end
-
   * Example 2: Configure a configuration file.
 
     .. code-block:: rst
@@ -62,10 +54,6 @@ syntax format.
         ...
         debug = True
 
-      .. end
-
-    .. end
-
 * The ``only`` tags should be closed with ``endonly``.
 
   .. code-block:: rst
@@ -75,5 +63,3 @@ syntax format.
         All related content.
 
     .. endonly
-
-  .. end

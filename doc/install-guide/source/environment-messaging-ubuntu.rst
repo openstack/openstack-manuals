@@ -23,8 +23,6 @@ Install and configure components
 
       # apt install rabbitmq-server
 
-   .. end
-
 2. Add the ``openstack`` user:
 
    .. code-block:: console
@@ -32,8 +30,6 @@ Install and configure components
       # rabbitmqctl add_user openstack RABBIT_PASS
 
       Creating user "openstack" ...
-
-   .. end
 
    Replace ``RABBIT_PASS`` with a suitable password.
 
@@ -45,5 +41,3 @@ Install and configure components
       # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
       Setting permissions for user "openstack" in vhost "/" ...
-
-   .. end

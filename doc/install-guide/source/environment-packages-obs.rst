@@ -33,7 +33,7 @@ Enable the OpenStack repository
 
      # zypper addrepo -f obs://Cloud:OpenStack:Rocky/openSUSE_Leap_15.0 Rocky
 
-**On openSUSE for OpenStack Queens:**
+  **On openSUSE for OpenStack Queens:**
 
   .. code-block:: console
 
@@ -64,7 +64,7 @@ Enable the OpenStack repository
 
      # zypper addrepo -f obs://Cloud:OpenStack:Queens/SLE_12_SP4 Rocky
 
-**On SLES for OpenStack Queens:**
+  **On SLES for OpenStack Queens:**
 
   .. code-block:: console
 
@@ -87,7 +87,6 @@ Enable the OpenStack repository
         Key Fingerprint:  35B34E18 ABC1076D 66D5A86B 893A90DA D85F9316
         Key Created:      2015-12-16T16:48:37 CET
         Key Expires:      2018-02-23T16:48:37 CET
-
 
 Finalize the installation
 -------------------------

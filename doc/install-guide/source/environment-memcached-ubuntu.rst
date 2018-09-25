@@ -16,8 +16,6 @@ Install and configure components
 
       # apt install memcached python-memcache
 
-   .. end
-
 2. Edit the ``/etc/memcached.conf`` file and configure the
    service to use the management IP address of the controller node.
    This is to enable access by other nodes via the management network:
@@ -25,8 +23,6 @@ Install and configure components
    .. code-block:: none
 
       -l 10.0.0.11
-
-   .. end
 
    .. note::
 
@@ -40,5 +36,3 @@ Finalize installation
   .. code-block:: console
 
      # service memcached restart
-
-  .. end

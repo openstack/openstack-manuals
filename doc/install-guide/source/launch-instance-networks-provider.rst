@@ -37,8 +37,6 @@ Create the provider network
 
       $ . admin-openrc
 
-   .. end
-
 #. Create the network:
 
    .. code-block:: console
@@ -79,8 +77,6 @@ Create the provider network
       | updated_at                | 2017-03-14T14:37:39Z                 |
       +---------------------------+--------------------------------------+
 
-   .. end
-
    The ``--share`` option allows all projects to use the virtual network.
 
    The ``--external`` option defines the virtual network to be external. If
@@ -99,16 +95,12 @@ Create the provider network
       [ml2_type_flat]
       flat_networks = provider
 
-   .. end
-
    ``linuxbridge_agent.ini``:
 
    .. code-block:: ini
 
       [linux_bridge]
       physical_interface_mappings = provider:eth1
-
-   .. end
 
 #. Create a subnet on the network:
 
@@ -118,8 +110,6 @@ Create the provider network
         --allocation-pool start=START_IP_ADDRESS,end=END_IP_ADDRESS \
         --dns-nameserver DNS_RESOLVER --gateway PROVIDER_NETWORK_GATEWAY \
         --subnet-range PROVIDER_NETWORK_CIDR provider
-
-   .. end
 
    Replace ``PROVIDER_NETWORK_CIDR`` with the subnet on the provider
    physical network in CIDR notation.
@@ -174,8 +164,6 @@ Create the provider network
       | subnetpool_id     | None                                 |
       | updated_at        | 2017-03-29T05:48:29Z                 |
       +-------------------+--------------------------------------+
-
-   .. end
 
 Return to :ref:`Launch an instance - Create virtual networks
 <launch-instance-networks>`.

@@ -19,8 +19,6 @@ node, can take several minutes to synchronize.
       ^- 192.0.2.11                    2   7    12   137  -2814us[-3000us] +/-   43ms
       ^* 192.0.2.12                    2   6   177    46    +17us[  -23us] +/-   68ms
 
-   .. end
-
    Contents in the *Name/IP address* column should indicate the hostname or IP
    address of one or more NTP servers. Contents in the *MS* column should indicate
    *\** for the server to which the NTP service is currently synchronized.
@@ -35,8 +33,6 @@ node, can take several minutes to synchronize.
       MS Name/IP address         Stratum Poll Reach LastRx Last sample
       ===============================================================================
       ^* controller                    3    9   377   421    +15us[  -87us] +/-   15ms
-
-   .. end
 
    Contents in the *Name/IP address* column should indicate the hostname of the
    controller node.

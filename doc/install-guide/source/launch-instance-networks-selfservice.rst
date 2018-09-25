@@ -43,8 +43,6 @@ Create the self-service network
 
       $ . demo-openrc
 
-   .. end
-
 #. Create the network:
 
    .. code-block:: console
@@ -78,8 +76,6 @@ Create the self-service network
       | updated_at              | 2016-11-04T18:20:59Z                 |
       +-------------------------+--------------------------------------+
 
-   .. end
-
    Non-privileged users typically cannot supply additional parameters to
    this command. The service automatically chooses parameters using
    information from the following files:
@@ -94,8 +90,6 @@ Create the self-service network
       [ml2_type_vxlan]
       vni_ranges = 1:1000
 
-   .. end
-
 #. Create a subnet on the network:
 
    .. code-block:: console
@@ -103,8 +97,6 @@ Create the self-service network
       $ openstack subnet create --network selfservice \
         --dns-nameserver DNS_RESOLVER --gateway SELFSERVICE_NETWORK_GATEWAY \
         --subnet-range SELFSERVICE_NETWORK_CIDR selfservice
-
-   .. end
 
    Replace ``DNS_RESOLVER`` with the IP address of a DNS resolver. In
    most cases, you can use one from the ``/etc/resolv.conf`` file on
@@ -156,8 +148,6 @@ Create the self-service network
       | updated_at        | 2016-11-04T18:30:54Z                 |
       +-------------------+--------------------------------------+
 
-   .. end
-
 Create a router
 ---------------
 
@@ -178,8 +168,6 @@ when creating the ``provider`` network.
    .. code-block:: console
 
       $ . demo-openrc
-
-   .. end
 
 #. Create the router:
 
@@ -209,23 +197,17 @@ when creating the ``provider`` network.
       | updated_at              | 2016-11-04T18:32:56Z                 |
       +-------------------------+--------------------------------------+
 
-   .. end
-
 #. Add the self-service network subnet as an interface on the router:
 
    .. code-block:: console
 
       $ openstack router add subnet router selfservice
 
-   .. end
-
 #. Set a gateway on the provider network on the router:
 
    .. code-block:: console
 
       $ openstack router set router --external-gateway provider
-
-   .. end
 
 Verify operation
 ----------------
@@ -241,8 +223,6 @@ creation examples.
 
       $ . admin-openrc
 
-   .. end
-
 #. List network namespaces. You should see one ``qrouter`` namespace and two
    ``qdhcp`` namespaces.
 
@@ -253,8 +233,6 @@ creation examples.
       qrouter-89dd2083-a160-4d75-ab3a-14239f01ea0b
       qdhcp-7c6f9b37-76b4-463e-98d8-27e5686ed083
       qdhcp-0e62efcd-8cee-46c7-b163-d8df05c3c5ad
-
-   .. end
 
 #. List ports on the router to determine the gateway IP address on the
    provider network:
@@ -269,8 +247,6 @@ creation examples.
       | bff6605d-824c-41f9-b744-21d128fc86e1 |      | fa:16:3e:2f:34:9b | ip_address='172.16.1.1', subnet_id='3482f524-8bff-4871-80d4-5774c2730728'     | ACTIVE |
       | d6fe98db-ae01-42b0-a860-37b1661f5950 |      | fa:16:3e:e8:c1:41 | ip_address='203.0.113.102', subnet_id='5cc70da8-4ee7-4565-be53-b9c011fca011'  | ACTIVE |
       +--------------------------------------+------+-------------------+-------------------------------------------------------------------------------+--------+
-
-   .. end
 
 #. Ping this IP address from the controller node or any host on the physical
    provider network:
@@ -287,8 +263,6 @@ creation examples.
 
       --- 203.0.113.102 ping statistics ---
       rtt min/avg/max/mdev = 0.165/0.297/0.619/0.187 ms
-
-   .. end
 
 Return to :ref:`Launch an instance - Create virtual networks
 <launch-instance-networks>`.

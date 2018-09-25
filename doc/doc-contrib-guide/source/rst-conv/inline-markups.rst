@@ -23,8 +23,6 @@ To insert a semantic markup into your document, use the syntax below.
 
    :markup:`inline text`
 
-.. end
-
 Application
 ~~~~~~~~~~~
 

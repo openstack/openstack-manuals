@@ -17,23 +17,17 @@ Install and configure components
 
       # apt install chrony
 
-   .. end
-
    For RHEL or CentOS:
 
    .. code-block:: console
 
       # yum install chrony
 
-   .. end
-
    For SUSE:
 
    .. code-block:: console
 
       # zypper install chrony
-
-   .. end
 
 2. Edit the ``chrony.conf`` file and add, change, or remove the following keys
    as necessary for your environment.
@@ -45,16 +39,12 @@ Install and configure components
 
       server NTP_SERVER iburst
 
-   .. end
-
    For Ubuntu, edit the ``/etc/chrony/chrony.conf`` file:
 
    .. path /etc/chrony/chrony.conf
    .. code-block:: ini
 
       server NTP_SERVER iburst
-
-   .. end
 
    Replace ``NTP_SERVER`` with the hostname or IP address of a
    suitable more accurate (lower stratum) NTP server. The
@@ -74,8 +64,6 @@ Install and configure components
 
       allow 10.0.0.0/24
 
-   .. end
-
    If necessary, replace ``10.0.0.0/24`` with a description of your
    subnet.
 
@@ -87,13 +75,9 @@ Install and configure components
 
       # service chrony restart
 
-   .. end
-
    For RHEL, CentOS, or SUSE:
 
    .. code-block:: console
 
       # systemctl enable chronyd.service
       # systemctl start chronyd.service
-
-   .. end
