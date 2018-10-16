@@ -35,14 +35,12 @@ Install and configure components
 
    For RHEL, CentOS, or SUSE, edit the ``/etc/chrony.conf`` file:
 
-   .. path /etc/chrony.conf
    .. code-block:: ini
 
       server controller iburst
 
    For Ubuntu, edit the ``/etc/chrony/chrony.conf`` file:
 
-   .. path /etc/chrony/chrony.conf
    .. code-block:: ini
 
       server controller iburst

@@ -25,7 +25,6 @@ Install and configure components
      additional keys to enable useful options and the UTF-8
      character set:
 
-     .. path /etc/my.cnf.d/openstack.cnf
      .. code-block:: ini
 
         [mysqld]
