@@ -2695,7 +2695,7 @@ O
    Ocata
 
       The code name for the fifteenth release of OpenStack. The
-      design summit will take place in Barcelona, Spain. Ocata is
+      design summit took place in Barcelona, Spain. Ocata is
       a beach north of Barcelona.
 
    Octavia
@@ -2754,7 +2754,7 @@ O
       Each OpenStack release has a code name. Code names ascend in
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
-      Mitaka, Newton, Ocata, Pike, Queens, and Rocky.
+      Mitaka, Newton, Ocata, Pike, Queens, Rocky, and Stein.
       Code names are cities or counties near where the
       corresponding OpenStack design summit took place. An
       exception, called the Waldon exception, is granted to
@@ -2857,8 +2857,8 @@ P
 
    Pike
 
-      The code name for the sixteenth release of OpenStack. The design
-      summit will take place in Boston, Massachusetts, US. The release
+      The code name for the sixteenth release of OpenStack. The OpenStack
+      summit took place in Boston, Massachusetts, US. The release
       is named after the Massachusetts Turnpike, abbreviated commonly
       as the Mass Pike, which is the easternmost stretch of
       Interstate 90.
@@ -3048,7 +3048,7 @@ Q
    Queens
 
       The code name for the seventeenth release of OpenStack. The
-      design summit will take place in Sydney, Australia. The release
+      OpenStack summit took place in Sydney, Australia. The release
       is named after the Queens Pound river in the South Coast region
       of New South Wales.
 
@@ -3247,7 +3247,7 @@ R
    Rocky
 
       The code name for the eightteenth release of OpenStack. The
-      design summit will take place in Vancouver, Kanada. The release
+      OpenStack summit took place in Vancouver, Canada. The release
       is named after the Rocky Mountains.
 
    role
@@ -3619,6 +3619,12 @@ S
 
       WSGI middleware component of Object Storage that serves
       container data as a static web page.
+
+   Stein
+
+      The code name for the nineteenth release of OpenStack. The
+      OpenStack Summit took place in Berlin, Germany. The release is
+      named after the street Steinstraße in Berlin.
 
    storage back end
 
