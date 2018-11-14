@@ -2754,7 +2754,8 @@ O
       Each OpenStack release has a code name. Code names ascend in
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
-      Mitaka, Newton, Ocata, Pike, Queens, Rocky, and Stein.
+      Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
+      and Train.
       Code names are cities or counties near where the
       corresponding OpenStack design summit took place. An
       exception, called the Waldon exception, is granted to
@@ -3806,6 +3807,22 @@ T
 
       Community project used to run automated tests against the
       OpenStack API.
+
+   Train
+
+      The code name for the twentieth release of OpenStack. The
+      OpenStack Infrastructure Summit will take place in Denver,
+      Colorado, US.
+
+      Two Project Team Gathering meetings in Denver were held at a
+      hotel next to the train line from downtown to the airport. The
+      crossing signals there had some sort of malfunction in the past
+      causing them to not stop the cars when a train was coming
+      properly. As a result the trains were required to blow their
+      horns when passing through that area. Obviously staying in a
+      hotel, by trains that are blowing their horns 24/7 was less than
+      ideal. As a result, many jokes popped up about Denver and
+      trains - and thus the release is called train.
 
    transaction ID
 
