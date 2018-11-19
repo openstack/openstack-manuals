@@ -114,16 +114,17 @@ The process is:
   * `openstack-manuals Stackalytics
     <http://stackalytics.com/?module=openstack-manuals&metric=commits>`_
 
-* The PTL then consults the existing core team and the OpenStack community
-  with a list of names to be removed from and added to the core list. This is
-  done in public by using the openstack-dev@lists.openstack.org mailing list
-  as the primary communication channel. Cores who are being removed will be
-  contacted personally before changes are made.
+* The PTL then consults the existing core team and the OpenStack
+  community with a list of names to be removed from and added to the
+  core list. This is done in public by using the
+  openstack-discuss@lists.openstack.org mailing list as the primary
+  communication channel. Cores who are being removed will be contacted
+  personally before changes are made.
 
-* Existing core team members can nominate a new core member at any time,
-  with a justification sent to the openstack-dev@lists.openstack.org mailing
-  list. Three +1 votes from other existing core team members must be achieved
-  for approval.
+* Existing core team members can nominate a new core member at any
+  time, with a justification sent to the
+  openstack-discuss@lists.openstack.org mailing list. Three +1 votes
+  from other existing core team members must be achieved for approval.
 
 Core reviewer responsibilities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -144,8 +144,8 @@ steps you will need to follow in order to be prepared.
    volunteers to be bug deputy are requested.
 
    Alternatively, use the #openstack-doc IRC channel or the
-   openstack-dev@lists.openstack.org mailing list to contact the documentation
-   core team members.
+   openstack-discuss@lists.openstack.org mailing list to contact the
+   documentation core team members.
 
 #. Sign up as a volunteer by adding your name to the bug triaging schedule on the
    `Bug Triage Team
