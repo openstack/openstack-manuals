@@ -32,7 +32,7 @@ PDF_TARGETS=( 'arch-design'\
               'install-guide')
 
 for guide in arch-design doc-contrib-guide glossary \
-    ha-guide-draft image-guide install-guide; do
+    image-guide install-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target $guide $LINKCHECK $PDF_OPTION
