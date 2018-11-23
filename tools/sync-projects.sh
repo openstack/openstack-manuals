@@ -49,6 +49,9 @@ case "$PROJECT_DIR" in
         copy_rst common
         copy_rst_trans common
         ;;
+    ha-guide|operations-guide)
+        copy_rst doc/source/common
+        ;;
     *)
         echo "$PROJECT_DIR not handled"
         exit 1
