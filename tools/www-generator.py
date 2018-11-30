@@ -23,6 +23,8 @@ import os.path
 import re
 import sys
 
+from openstack_governance import governance
+
 from bs4 import BeautifulSoup
 import jinja2
 import jsonschema
@@ -433,65 +435,38 @@ def _get_official_repos():
     seen_repos = set()
     regular_repos = []
     infra_repos = []
-    deliverables = []
+    deliverables = set()
 
-    # Project team repositories are organized as
-    #
-    #   team:
-    #     deliverables:
-    #       name:
-    #         repos:
-    #           - name
-    #
-    raw = requests.get(_GOVERNANCE_URL)
-    data = yaml.safe_load(raw.text)
-    for t_name, team in data.items():
-        for d_name, d_data in team.get('deliverables', {}).items():
-            deliverables.append(d_name)
-            if t_name == 'Infrastructure':
-                add = infra_repos.append
-            else:
-                add = regular_repos.append
-            for repo in d_data.get('repos', []):
-                if repo in seen_repos:
-                    # Sometimes the governance data ends up with
-                    # duplicates, but we don't want duplicate rules to
-                    # be generated.
-                    continue
-                seen_repos.add(repo)
-                # Overwrite infra list for a few repositories
-                if repo in _INFRA_REPOS_EXCEPTION:
-                    regular_repos.append({'name': repo,
-                                          'base': repo.rsplit('/')[-1]})
-                elif repo not in _IGNORED_REPOS:
-                    add({'name': repo, 'base': repo.rsplit('/')[-1]})
+    # NOTE(dhellmann): We could get fancy and support loading
+    # governance data from a local repo so we could support zuul's
+    # Depends-On feature to link together patches, but that would
+    # complicate the build environment needed for an individual
+    # developer, so we just always pull from the remote repo for now.
+    gov_data = governance.Governance.from_remote_repo()
 
-    # SIG repositories are organized as
-    #
-    #   name:
-    #     - repo: name
-    #
-    for url in [_GOVERNANCE_SIGS_URL, _GOVERNANCE_FOUNDATION_URL]:
-        raw = requests.get(url)
-        data = yaml.safe_load(raw.text)
-        for sig_name, sig_data in data.items():
-            for repo in sig_data:
-                name = repo['repo']
-                base = name.rsplit('/')[-1]
-                if name in seen_repos:
-                    continue
-                if name in _IGNORED_REPOS:
-                    continue
-                regular_repos.append({
-                    'name': name,
-                    'base': base,
-                })
-                seen_repos.add(name)
-                # Treat sig repos as deliverables so they do not trigger
-                # a warning for not appearing to be official.
-                deliverables.append(base)
+    for repository in gov_data.get_repositories():
+        repo = repository.name
+        base = repo.rsplit('/')[-1]
 
-    return (regular_repos, infra_repos, deliverables)
+        if repo in seen_repos:
+            # Sometimes the governance data ends up with
+            # duplicates, but we don't want duplicate rules to
+            # be generated.
+            continue
+        seen_repos.add(repo)
+        deliverables.add(repository.deliverable.name)
+
+        if repository.deliverable.team.name == 'Infrastructure':
+            add = infra_repos.append
+        else:
+            add = regular_repos.append
+        # Overwrite infra list for a few repositories
+        if repo in _INFRA_REPOS_EXCEPTION:
+            regular_repos.append({'name': repo, 'base': base})
+        elif repo not in _IGNORED_REPOS:
+            add({'name': repo, 'base': base})
+
+    return (regular_repos, infra_repos, list(sorted(deliverables)))
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
