@@ -27,11 +27,10 @@ while [[ $# > 0 ]] ; do
 done
 
 # PDF targets for Install guides are dealt in build-install-guides-rst.sh
-PDF_TARGETS=( 'arch-design'\
-              'image-guide' \
+PDF_TARGETS=( 'image-guide' \
               'install-guide')
 
-for guide in arch-design doc-contrib-guide glossary \
+for guide in doc-contrib-guide glossary \
     image-guide install-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
