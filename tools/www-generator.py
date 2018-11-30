@@ -405,6 +405,7 @@ def load_project_data(source_directory,
 
 _GOVERNANCE_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/projects.yaml'  # noqa
 _GOVERNANCE_SIGS_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/sigs-repos.yaml'  # noqa
+_GOVERNANCE_FOUNDATION_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/foundation-board-repos.yaml'  # noqa
 _IGNORED_REPOS = [
     'openstack/releases',
     'openstack-infra/releasestatus',
@@ -470,24 +471,25 @@ def _get_official_repos():
     #   name:
     #     - repo: name
     #
-    raw = requests.get(_GOVERNANCE_SIGS_URL)
-    data = yaml.safe_load(raw.text)
-    for sig_name, sig_data in data.items():
-        for repo in sig_data:
-            name = repo['repo']
-            base = name.rsplit('/')[-1]
-            if name in seen_repos:
-                continue
-            if name in _IGNORED_REPOS:
-                continue
-            regular_repos.append({
-                'name': name,
-                'base': base,
-            })
-            seen_repos.add(name)
-            # Treat sig repos as deliverables so they do not trigger
-            # a warning for not appearing to be official.
-            deliverables.append(base)
+    for url in [_GOVERNANCE_SIGS_URL, _GOVERNANCE_FOUNDATION_URL]:
+        raw = requests.get(url)
+        data = yaml.safe_load(raw.text)
+        for sig_name, sig_data in data.items():
+            for repo in sig_data:
+                name = repo['repo']
+                base = name.rsplit('/')[-1]
+                if name in seen_repos:
+                    continue
+                if name in _IGNORED_REPOS:
+                    continue
+                regular_repos.append({
+                    'name': name,
+                    'base': base,
+                })
+                seen_repos.add(name)
+                # Treat sig repos as deliverables so they do not trigger
+                # a warning for not appearing to be official.
+                deliverables.append(base)
 
     return (regular_repos, infra_repos, deliverables)
 
