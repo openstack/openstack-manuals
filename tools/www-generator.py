@@ -405,9 +405,6 @@ def load_project_data(source_directory,
     return project_data
 
 
-_GOVERNANCE_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/projects.yaml'  # noqa
-_GOVERNANCE_SIGS_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/sigs-repos.yaml'  # noqa
-_GOVERNANCE_FOUNDATION_URL = 'http://git.openstack.org/cgit/openstack/governance/plain/reference/foundation-board-repos.yaml'  # noqa
 _IGNORED_REPOS = [
     'openstack/releases',
     'openstack-infra/releasestatus',
