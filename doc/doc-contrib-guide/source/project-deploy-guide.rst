@@ -98,7 +98,7 @@ OpenStack Infra ``project-config`` repository:
              service: <service-name>
 
    ``project-name`` and ``service-name`` are the project name, and the
-   specific serivce name. One example is orchestration for heat.
+   specific service name. One example is orchestration for heat.
 
    This defines the jobs using the JJB ``deploy-guide-jobs`` job-template.
 
