@@ -17,28 +17,28 @@
     ">
     <span id="deprecated-badge-close-button" title="close" class="deprecated-badge-close-button">x</span>
     <div class="container">
-       {% if SERIES_INFO.status == 'obsolete' %}
-           <p class="deprecated-badge-left">
-                This release is no longer supported by the community. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
-           </p>
-       {% elif SERIES_INFO.status == 'EOL' %}
-            <p class="deprecated-badge-left">
-                This release is no longer supported by the community. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
-            </p>
-        {% elif SERIES == RELEASED_SERIES %}
-            <p class="deprecated-badge-left">
-                This is the current supported release.
-            </p>
-        {% elif SERIES_INFO.status == 'maintained' %}
-            <p class="deprecated-badge-left">
-                This is maintained, but <strong>not</strong> the current release. The current supported
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            {% if SERIES_PATH_PREFIX %}
+            <p>Currently viewing</p>
+            {% include 'templates/switch_releases.tmpl' %}
+            <p>
+            {% if SERIES_INFO.status == 'obsolete' %}
+                which is no longer supported by the community. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+                </p>
+            {% elif SERIES_INFO.status == 'EOL' %}
+                which is no longer supported by the community. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+            {% elif SERIES == RELEASED_SERIES %}
+                which is the current supported release.
+            {% elif SERIES_INFO.status == 'maintained' %}
+                which is maintained, but old. The current supported
                 release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+            {% elif SERIES_INFO.status == 'development' %}
+                which is in development. The current supported release is
+                    <a href="/{{RELEASED_SERIES}}">{{RELEASED_SERIES.capitalize()}}.</a>
+            {% endif %}
             </p>
-        {% elif SERIES_INFO.status == 'development' %}
-            <p class="deprecated-badge-left">
-                This release is under development. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
-            </p>
-        {% endif %}
-        <a href="#top" class="deprecated-badge-right"><i class="fa fa-chevron-up" aria-hidden="true"></i>&nbsp;Back to Top</a>
+            {% endif %}
+            <a href="#top" class="deprecated-badge-right"><i class="fa fa-chevron-up" aria-hidden="true"></i>&nbsp;Back to Top</a>
+        </div>
     </div>
 </div>

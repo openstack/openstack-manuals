@@ -1,0 +1,42 @@
+                <div class="dropdown docs-dropdown">
+                    <a data-toggle="dropdown" href="#">
+                    {% if SERIES_INFO.status == 'development' %}
+                        {{SERIES_IN_DEVELOPMENT|title}}
+                    {% else %}
+                        {{SERIES|title}}
+                    {% endif %}
+                    <i class="fa fa-caret-down fa-3"></i></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                        {% if SERIES_INFO.status == 'development' %}
+                        <li role="presentation" class="current">
+                            <span role="menuitem" tabindex="-1">
+                                {{SERIES_IN_DEVELOPMENT|title}}
+                                (viewing, in development)</span>
+                        </li>
+                        {% else %}
+                        <li role="presentation">
+                            {% set devtarget=TEMPLATE_FILE.replace(SERIES_PATH_PREFIX, SERIES_IN_DEVELOPMENT) %}
+                            <a role="menuitem" tabindex="-1"
+                               href="{{TOPDIR}}{{devtarget}}">{{SERIES_IN_DEVELOPMENT|title}}
+                               (in development)</a>
+                            {% endif %}
+                        </li>
+                    {% for series_name in PAST_SERIES|reverse %}
+                        {% set target=TEMPLATE_FILE.replace(SERIES_PATH_PREFIX, series_name) %}
+                        {% if series_name == SERIES %}
+                        <li role="presentation" class="current">
+                            {{series_name|title}}
+                            {% if series_name == RELEASED_SERIES %}
+                                (viewing, current release)
+                            {% else %}
+                                (viewing)
+                            {% endif %}
+                        {% elif TEMPLATE_FILES[target] %}
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1"
+                               href="{{TOPDIR}}{{target}}">{{series_name|title}}{% if series_name == RELEASED_SERIES %} (current release){% endif %}</a>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
