@@ -29,6 +29,7 @@ from bs4 import BeautifulSoup
 import jinja2
 import jsonschema
 import os_service_types
+import percache
 import requests
 import yaml
 
@@ -93,6 +94,8 @@ SERIES_IN_DEVELOPMENT = [
 ALL_SERIES = list(sorted(SERIES_INFO.keys()))
 
 SERIES_PAT = re.compile('^(' + '|'.join(ALL_SERIES) + ')/')
+
+cache = percache.Cache("./OS_GOVERNANCE_DATA_CACHE")
 
 
 def initialize_logging(debug, verbose):
@@ -238,6 +241,7 @@ _URLS = [
 ]
 
 
+@cache
 def load_project_data(source_directory,
                       check_all_links=False,
                       skip_links=False,
@@ -424,6 +428,7 @@ _INFRA_REPOS_EXCEPTION = [
 ]
 
 
+@cache
 def _get_official_repos():
     """Return a tuple containing lists of all official repos.
 
@@ -552,7 +557,9 @@ def main():
     args = parse_command_line_arguments()
     logger = initialize_logging(args.debug, args.verbose)
 
+    logger.debug("getting official repos ...")
     regular_repos, infra_repos, deliverables = _get_official_repos()
+    logger.debug("loading project data ...")
     project_data = load_project_data(
         source_directory=args.source_directory,
         check_all_links=args.check_all_links,
