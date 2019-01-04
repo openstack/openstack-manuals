@@ -62,7 +62,7 @@ Enable the OpenStack repository
 
   .. code-block:: console
 
-     # zypper addrepo -f obs://Cloud:OpenStack:Queens/SLE_12_SP4 Rocky
+     # zypper addrepo -f obs://Cloud:OpenStack:Rocky/SLE_12_SP4 Rocky
 
   **On SLES for OpenStack Queens:**
 
