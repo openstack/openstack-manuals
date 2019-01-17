@@ -33,10 +33,10 @@ Use any text editor of your choice to work with the documentation. It is a
 good idea to choose an editor that supports spell checking and syntax
 highlighting for RST. For example:
 
-* https://wiki.gnome.org/Apps/Gedit
-* https://atom.io/
-* http://www.vim.org/
-* https://wiki.typo3.org/Editors_%28reST%29#Open_source_.28.3D_free_of_cost.29
+* `Gedit GNOME Wiki <https://wiki.gnome.org/Apps/Gedit>`_
+* `Atom <https://atom.io/>`_
+* `Vim <http://www.vim.org/>`_
+* `Editors(reST) <https://wiki.typo3.org/Editors_%28reST%29#Open_source_.28.3D_free_of_cost.29>`_
 
 To keep the documents clean and easy to compare, all of the OpenStack
 projects require that text is wrapped at `79 characters maximum`_,
@@ -124,7 +124,7 @@ Finding a bug
 After setting up your environment for contribution, it is time to find
 something to work on:
 
-#. Go to the bug lists at https://bugs.launchpad.net/openstack-manuals/+bugs
+#. Go to the bug lists at `Bugs:openstack-manuals <https://bugs.launchpad.net/openstack-manuals/+bugs>`_
    for documentation bugs related to the openstack-manuals repository.
 
    For project-specific documentation bugs, go to
@@ -266,9 +266,11 @@ git and git review
      Permission denied (publickey).
 
   Double check the :guilabel:`Settings` page at
-  https://review.openstack.org to make sure your public key on the computer
+  https://review.openstack.org/
+  to make sure your public key on the computer
   or virtual server has been copied to SSH public keys on
-  https://review.openstack.org/#/settings/ssh-keys. If you have not adjusted
+  `SSH Public Keys <https://review.openstack.org/#/settings/ssh-keys>`_.
+  If you have not adjusted
   your ``.ssh`` configuration, your system may not be connecting using
   the correct key for gerrit.
 
@@ -385,3 +387,4 @@ instead:
 .. _`Committing a change`: https://docs.openstack.org/infra/manual/developers.html#committing-a-change
 .. _`Submitting a Change for Review`: https://docs.openstack.org/infra/manual/developers.html#submitting-a-change-for-review
 .. _`Updating a Change`: https://docs.openstack.org/infra/manual/developers.html#updating-a-change
+
