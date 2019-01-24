@@ -6,6 +6,8 @@ OpenStack services may use Etcd, a distributed reliable key-value store
 for distributed key locking, storing configuration, keeping track of service
 live-ness and other scenarios.
 
+The etcd service runs on the controller node.
+
 Install and configure components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
