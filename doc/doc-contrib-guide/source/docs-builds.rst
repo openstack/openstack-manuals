@@ -45,6 +45,14 @@ dependencies based on the error messages returned. Continue to run until
 your local environment meets the requirements as listed in ``bindep.txt``
 in the repository.
 
+.. important::
+
+   Ensure you run ``bindep`` in each individual project repository that you
+   clone if you want to build the documentation.
+
+   For more information on ``bindep`` and packages, see `Package Requirements
+   <https://docs.openstack.org/infra/manual/drivers.html#package-requirements>`_.
+
 * On Ubuntu or Debian:
 
   .. code-block:: console
