@@ -16,6 +16,12 @@ services also support other SQL databases including
    the root user no longer uses a password for local access to
    the server.
 
+.. note::
+
+   As of Ubuntu 18.04, the ``mariadb-server`` package is no longer
+   available from the default repository. To install successfully,
+   enable the ``Universe`` repository on Ubuntu.
+
 Install and configure components
 --------------------------------
 
