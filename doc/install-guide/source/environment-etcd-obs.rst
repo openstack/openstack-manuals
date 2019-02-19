@@ -6,6 +6,8 @@ Right now, there is no distro package available for etcd3. This guide uses
 the tarball installation as a workaround until proper distro packages are
 available.
 
+The etcd service runs on the controller node.
+
 Install and configure components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
