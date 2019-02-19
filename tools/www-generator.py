@@ -474,7 +474,7 @@ def _get_official_repos():
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
-                    template_file, output_directory, extra={}):
+                    template_files, template_file, output_directory, extra={}):
     logger = logging.getLogger()
     logger.info("generating %s", template_file)
 
@@ -490,15 +490,18 @@ def render_template(environment, project_data, regular_repos, infra_repos,
     series_match = SERIES_PAT.match(template_file)
     if series_match:
         series = series_match.groups()[0]
+        series_path_prefix = series
         series_title = series.title()
         series_info = SERIES_INFO[series]
         if series == SERIES_IN_DEVELOPMENT:
             series = 'latest'
     else:
         series = None
+        series_path_prefix = None
         series_title = ''
         series_info = SeriesInfo('', '')
-    logger.info('series = %s', series)
+    logger.info('series = %s, path prefix = %s, title = %s',
+                series, series_path_prefix, series_title)
 
     try:
         template = environment.get_template(template_file)
@@ -511,6 +514,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
         output = template.render(
             PROJECT_DATA=project_data,
             TEMPLATE_FILE=template_file,
+            TEMPLATE_FILES={f: True for f in template_files},
             REGULAR_REPOS=regular_repos,
             INFRA_REPOS=infra_repos,
             ALL_SERIES=ALL_SERIES,
@@ -523,6 +527,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             CSSDIR=cssdir,
             IMAGEDIR=imagedir,
             SERIES=series,
+            SERIES_PATH_PREFIX=series_path_prefix,
             SERIES_TITLE=series_title,
             SERIES_INFO=series_info,
             **extra
@@ -585,7 +590,8 @@ def main():
     # Render the templates.
     output_pages = []
     page_list_template = None
-    for template_file in environment.list_templates():
+    template_files = environment.list_templates()
+    for template_file in template_files:
         if (template_file.startswith('static/') or
                 template_file.startswith('templates/')):
             logger.info('ignoring %s', template_file)
@@ -600,6 +606,7 @@ def main():
             project_data,
             regular_repos,
             infra_repos,
+            template_files,
             template_file,
             args.output_directory,
         )
@@ -612,6 +619,7 @@ def main():
             project_data,
             regular_repos,
             infra_repos,
+            template_files,
             page_list_template,
             args.output_directory,
             extra={

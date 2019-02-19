@@ -121,7 +121,7 @@ Here are a few representative files under ``www/``:
   * ``contributor_guides.tmpl``
   * ``css.tmpl``
   * ``default.tmpl``
-  * ``dropdown_releases_and_languages.tmpl``
+  * ``dropdown_languages.tmpl``
   * ``footer.tmpl``
   * ``google_analytics.tmpl``
   * ``header.tmpl``
