@@ -1,0 +1,44 @@
+{# -*- mode: html -*- #}
+
+<!-- Custom CSS -->
+{# reason to not use the CSSDIR its because introduces a relative path #}
+{# not an absolute, so when its included on docthemes, its tried to include the css #}
+{# from a wrong path instead of the right one #}
+
+<link href="https://docs.openstack.org/common/css/deprecated-badge.css" rel="stylesheet">
+<script src="https://docs.openstack.org/common/js/deprecated-badge.js"></script>
+
+<div id="deprecated-badge" class="deprecated-badge fixed
+    {% if SERIES == RELEASED_SERIES %}
+        deprecated-badge-current
+    {% else %}
+        deprecated-badge-{{ SERIES_INFO.status| lower }}
+    {% endif %}
+    ">
+    <span id="deprecated-badge-close-button" title="close" class="deprecated-badge-close-button">x</span>
+    <div class="container">
+       {% if SERIES_INFO.status == 'obsolete' %}
+           <p class="deprecated-badge-left">
+                This release is no longer supported by the community. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+           </p>
+       {% elif SERIES_INFO.status == 'EOL' %}
+            <p class="deprecated-badge-left">
+                This release is no longer supported by the community. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+            </p>
+        {% elif SERIES == RELEASED_SERIES %}
+            <p class="deprecated-badge-left">
+                This is the current supported release.
+            </p>
+        {% elif SERIES_INFO.status == 'maintained' %}
+            <p class="deprecated-badge-left">
+                This is maintained, but <strong>not</strong> the current release. The current supported
+                release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+            </p>
+        {% elif SERIES_INFO.status == 'development' %}
+            <p class="deprecated-badge-left">
+                This release is under development. The current supported release is <a href="/{{RELEASED_SERIES}}/">{{RELEASED_SERIES.capitalize()}}.</a>
+            </p>
+        {% endif %}
+        <a href="#top" class="deprecated-badge-right"><i class="fa fa-chevron-up" aria-hidden="true"></i>&nbsp;Back to Top</a>
+    </div>
+</div>
