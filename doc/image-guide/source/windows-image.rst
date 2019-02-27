@@ -11,9 +11,8 @@ using the :command:`virt-install` command and the KVM hypervisor.
       Evaluation images are available on the `Microsoft website
       <http://www.microsoft.com/en-us/evalcenter/
       evaluate-windows-server-2012>`_ (registration required).
-   #. Download the signed VirtIO drivers ISO from the
-      `Fedora website <https://fedoraproject.org/wiki/
-      Windows_Virtio_Drivers#Direct_download>`_.
+   #. Download the signed VirtIO drivers ISO from the `Fedora website
+      <https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/index.html>`_.
    #. Create a 15 GB qcow2 image:
 
       .. code-block:: console
