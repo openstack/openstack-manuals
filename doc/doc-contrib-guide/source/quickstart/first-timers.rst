@@ -9,19 +9,15 @@ is to walk through the Installation Guide and complete it by hand.
 Keep notes as you go, and offer suggestions for improvement by filing
 documentation bugs at Launchpad.
 
-The following diagram shows the basic setup workflow:
-
-.. image:: ../figures/workflow-diagram.png
-      :alt: Workflow diagram
-
 .. _setting_up_for_contribution:
 
 Setting up for contribution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To get started, set up your account and agree to the
-``Individual Contributor License Agreement (ICLA)``. See `Account Setup`_ for
-details.
+To get started, first `set up your OpenStack account
+<https://docs.openstack.org/contributors/common/accounts.html>`_ and
+then `set up Gerrit
+<https://docs.openstack.org/contributors/common/setup-gerrit.html>`_.
 
 To set up your environment for contributions, proceed with the
 subsections below.
@@ -367,7 +363,6 @@ instead:
 
 .. Links
 
-.. _`Account Setup`: https://docs.openstack.org/infra/manual/developers.html#account-setup
 .. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
 .. _`Installing git-review`: https://docs.openstack.org/infra/manual/developers.html#install-the-git-review-utility
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
