@@ -173,7 +173,7 @@ Clone the tools repo.
 
 .. code-block:: console
 
-    $ git clone git://git.openstack.org/openstack/openstack-doc-tools
+    $ git clone https://git.openstack.org/openstack/openstack-doc-tools
     $ cd openstack-doc-tools/bin
 
 Run the automated script. This will generate a virtual environment.
@@ -221,7 +221,7 @@ generate a proper file.
 .. code-block:: console
 
     $ pushd <work_dir>
-    $ git clone git://git.openstack.org/openstack/openstack-doc-tools
+    $ git clone https://git.openstack.org/openstack/openstack-doc-tools
     $ cd openstack-doc-tools
     $ pip install .
     $ popd
