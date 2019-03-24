@@ -36,7 +36,7 @@ To update CLI documentation and automatically submit a change request:
 
    .. code-block:: console
 
-      $ git clone git://git.openstack.org/openstack/openstack-doc-tools
+      $ git clone https://git.openstack.org/openstack/openstack-doc-tools
       $ cd openstack-doc-tools/bin
 
 #. Run the automated script:
@@ -86,7 +86,7 @@ To re-generate CLI documentation and submit it manually:
    .. code-block:: console
 
       $ pushd <work_dir>
-      $ git clone git://git.openstack.org/openstack/openstack-doc-tools
+      $ git clone https://git.openstack.org/openstack/openstack-doc-tools
       $ cd openstack-doc-tools
       $ pip install .
       $ cd ..

@@ -287,7 +287,7 @@ To build documentation from a particular release locally, follow these steps.
 
    .. code-block:: console
 
-      $ git clone git://git.openstack.org/openstack/openstack-manuals.git
+      $ git clone https://git.openstack.org/openstack/openstack-manuals.git
       $ cd openstack-manuals
 
 #. View the remote tags to see the tags for each release:
