@@ -12,7 +12,7 @@ Governance tag documentation guidelines
 The ``docs:follows-policy`` tag indicates that the OpenStack Documentation team
 and the project team associated with the tagged deliverable verify that the
 project's documentation in the `openstack-manuals
-<https://review.openstack.org/#/admin/projects/openstack/openstack-manuals>`_
+<https://review.opendev.org/#/admin/projects/openstack/openstack-manuals>`_
 repository is accurate and current.
 
 Definition
@@ -53,7 +53,7 @@ The project team either:
 *or*
 
 * provides a fix to the `openstack-manuals
-  <https://review.openstack.org/#/admin/projects/openstack/openstack-manuals>`_
+  <https://review.opendev.org/#/admin/projects/openstack/openstack-manuals>`_
   repo. If patch is submitted, this action would require an additional +1 by
   the relevant project team for such issues before approval.
 
@@ -69,7 +69,7 @@ the team project and either:
 *or*
 
 * provides a fix to the `openstack-manuals
-  <https://review.openstack.org/#/admin/projects/openstack/openstack-manuals>`_
+  <https://review.opendev.org/#/admin/projects/openstack/openstack-manuals>`_
   repo. If patch is submitted, this action would require an additional +1 by
   the relevant project team for such issues before approval.
 

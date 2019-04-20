@@ -236,7 +236,7 @@ The ``type`` must be one of the values listed below:
 An entry can also optionally define ``service_type``, which must match
 the value associated with the name in the `service-types-authority
 repository
-<http://git.openstack.org/cgit/openstack/service-types-authority/>`_.
+<http://opendev.org/openstack/service-types-authority/>`_.
 
 Entries with ``type`` set to ``client`` should include a ``description``
 field with a short description, such as "keystone client".

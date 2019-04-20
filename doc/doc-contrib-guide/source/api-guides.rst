@@ -38,8 +38,8 @@ If your project does not have any documentation, you can find a suggested
 outline in the `API documentation guidelines`_. The Compute project has
 examples to follow:
 
-* `OpenStack nova api-guide <https://git.openstack.org/cgit/openstack/nova/tree/api-guide>`_
-* `OpenStack nova api-ref <https://git.openstack.org/cgit/openstack/nova/tree/api-ref>`_
+* `OpenStack nova api-guide <https://opendev.org/openstack/nova/src/branch/master/api-guide>`_
+* `OpenStack nova api-ref <https://opendev.org/openstack/nova/src/branch/master/api-ref>`_
 
 For service names, you must adhere to the official name for the service as
 indicated in the governance repository in the ``reference/projects.yaml``
@@ -166,8 +166,8 @@ The basic steps are:
       $ tox -e api-ref
 
 #. Add the ``api-ref-jobs`` template to your project, patch the
-   `zuul.d/projects.yaml <https://git.openstack.org/cgit/openstack-infra/project-config/tree/zuul.d/projects.yaml>`__
-   file stored in ``openstack-infra/project-config`` repository.
+   `zuul.d/projects.yaml <https://opendev.org/openstack/project-config/src/branch/master/zuul.d/projects.yaml>`__
+   file stored in ``openstack/project-config`` repository.
 
 After the source files and build jobs exist, the docs are built to
 `developer.openstack.org`_.
@@ -188,12 +188,12 @@ documentation, patch the ``reference/projects.yaml`` file in the
 .. _`developer.openstack.org`: https://developer.openstack.org
 .. _`wadl2rst`: https://github.com/annegentle/wadl2rst
 .. _`Compute API Guide`: https://developer.openstack.org/api-guide/compute
-.. _`example patch`: https://review.openstack.org/#/c/233446/
+.. _`example patch`: https://review.opendev.org/#/c/233446/
 .. _`API documentation guidelines`: https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
 .. _`microversions`: https://developer.openstack.org/api-guide/compute/microversions.html
 .. _`API Quick Start page`: https://developer.openstack.org/api-guide/quick-start/
 .. _`cycle-with-milestones release model`: https://releases.openstack.org/reference/release_models.html#cycle-with-milestones
 .. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py
-.. _`openstack/api-site repository`: https://git.openstack.org/cgit/openstack/api-site/tree/api-quick-start/source/index.rst
-.. _`openstack/governance repository`: https://git.openstack.org/cgit/openstack/governance/tree/reference/projects.yaml
+.. _`openstack/api-site repository`: https://opendev.org/openstack/api-site/src/branch/master/api-quick-start/source/index.rst
+.. _`openstack/governance repository`: https://opendev.org/openstack/governance/src/branch/master/reference/projects.yaml
 

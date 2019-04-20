@@ -29,7 +29,7 @@ offers an overview of currently open changes that touch files under
 ``doc/source/install/`` in project team repositories.
 
 .. _`Installation Guides Review Inbox`:
-   https://review.openstack.org/#/dashboard/?foreach=file%3A%22%5Edoc%5C%2Fsou
+   https://review.opendev.org/#/dashboard/?foreach=file%3A%22%5Edoc%5C%2Fsou
    rce%5C%2Finstall%5C%2F.%2A%22%0Astatus%3Aopen%0ANOT+owner%3Aself%0ANOT+labe
    l%3AWorkflow%3C%3D%2D1%0Alabel%3AVerified%3E%3D1%2Czuul%0ANOT+reviewedby%3A
    self&title=Installation+Guides+Review+Inbox&Needs+final+%2B2=label%3ACode%2

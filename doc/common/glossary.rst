@@ -9,7 +9,7 @@ vocabulary for OpenStack-related concepts.
 
 To add to OpenStack glossary, clone the `openstack/openstack-manuals
 repository
-<https://git.openstack.org/cgit/openstack/openstack-manuals>`__ and
+<https://opendev.org/openstack/openstack-manuals>`__ and
 update the source file ``doc/common/glossary.rst`` through the
 OpenStack contribution process.
 

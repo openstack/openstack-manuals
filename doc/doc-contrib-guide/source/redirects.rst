@@ -52,7 +52,7 @@ This file will ensure redirects are in place for paths such as
 ``/nova/latest/aggregates.html`` to ``/nova/latest/user/aggregates.html``, and
 ``/nova/latest/cells.html`` to ``/nova/latest/user/cells.html``.
 
-__ https://review.openstack.org/#/c/487932/5/doc/source/conf.py
+__ https://review.opendev.org/#/c/487932/5/doc/source/conf.py
 
 Enable detailed redirects for your project
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,7 +105,7 @@ explicit call to **whereto** in your project's ``tox.ini`` file.  (This
 `glance-specs patch`_ provides an example.)
 
 .. _whereto: https://docs.openstack.org/whereto/latest/
-.. _glance-specs patch: https://review.openstack.org/#/c/523472/2/tox.ini
+.. _glance-specs patch: https://review.opendev.org/#/c/523472/2/tox.ini
 
 .. _git-redirect-generation:
 

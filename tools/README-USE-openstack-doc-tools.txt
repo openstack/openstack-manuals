@@ -1,7 +1,7 @@
 The tools directory has been moved to a separate repository,
 openstack-doc-tools:
 
-https://git.openstack.org/cgit/openstack/openstack-doc-tools
+https://opendev.org/openstack/openstack-doc-tools
 
 Please do not make changes here, commit instead to openstack-doc-tools
 unless you need those for gating jobs.

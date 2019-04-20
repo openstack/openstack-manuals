@@ -26,7 +26,7 @@ with their respective leads:
 
 The current list of docs cores for openstack-manuals, openstackdocstheme,
 and openstack-doc-tools repositories can be found at
-https://review.openstack.org/#/admin/groups/30,members.
+https://review.opendev.org/#/admin/groups/30,members.
 
 The api-site, contributor-guide, security-doc, training-guides, and
 training-labs repositories have separate core teams but also include the

@@ -98,7 +98,7 @@ Installation guide
   service (magnum), Messaging service (zaqar), Key Manager service (barbican),
   and Bare Metal service (ironic).
 
-* Created `cookiecutter <https://git.openstack.org/cgit/openstack/installguide-cookiecutter/>`_
+* Created `cookiecutter <https://opendev.org/openstack/installguide-cookiecutter/>`_
   tool to ensure project specific guides have a consistent structure.
 
 Networking guide

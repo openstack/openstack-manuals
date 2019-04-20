@@ -32,7 +32,7 @@ variables or adding elements to the command-line:
 
 This example creates the image as before, but for arm architecture.
 More elements are available in the `git source directory
-<https://git.openstack.org/cgit/openstack/diskimage-builder/tree/elements>`_
+<https://opendev.org/openstack/diskimage-builder/src/branch/master/diskimage_builder/elements>`_
 and documented in the `diskimage-builder elements documentation
 <https://docs.openstack.org/diskimage-builder/latest/elements.html>`_.
 

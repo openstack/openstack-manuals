@@ -5,7 +5,7 @@ Blueprints and specifications
 =============================
 
 The Documentation team uses specifications in the `docs-specs repository
-<https://git.openstack.org/cgit/openstack/docs-specs>`_ to maintain large
+<https://opendev.org/openstack/docs-specs>`_ to maintain large
 changes. Approved specifications are published at `Documentation Program
 Specifications <https://specs.openstack.org/openstack/docs-specs>`_.
 For tracking purposes, a blueprint is created for each specification.
@@ -24,7 +24,7 @@ Use blueprints and specifications:
 
 A specification needs two +2 votes from the docs core team. See the current
 list of `docs core team members
-<https://review.openstack.org/#/admin/groups/30,members>`_.
+<https://review.opendev.org/#/admin/groups/30,members>`_.
 
 Use bugs against a particular repository with documentation:
 

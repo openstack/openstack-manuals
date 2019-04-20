@@ -98,7 +98,7 @@ Set up SSH
 
       $ notepad ~/.ssh/id_rsa.pub
 
-#. Sign into gerrit at https://review.openstack.org/.
+#. Sign into gerrit at https://review.opendev.org/.
 
 #. In the upper right, click your username. Click the `Settings > SSH Public
    Keys`_ page. Click ``Add Key``. Paste the key in the ``Add SSH Public Key``
@@ -143,12 +143,12 @@ Committing a change
 
 #. Create your commit message. See `Committing a change`_ for details.
 
-#. Create a patch for review.openstack.org following the `Submitting a Change
+#. Create a patch for review.opendev.org following the `Submitting a Change
    for Review`_ instructions.
 
 #. Follow the URL returned from ``git-review`` to check your commit::
 
-     https://review.openstack.org/<COMMIT-NUMBER>
+     https://review.opendev.org/<COMMIT-NUMBER>
 
 #. In Gerrit, wait for the automatic Zuul checks to succeed.
 
@@ -165,7 +165,7 @@ they approve the patch.
 
 To submit changes to your patch, proceed with the following steps:
 
-#. Copy the commit number from the review.openstack.org URL.
+#. Copy the commit number from the review.opendev.org URL.
 
 #. At the command line, change into your local copy of the repository.
 
@@ -204,7 +204,7 @@ git and git review
 
   The first time that you run :command:`git review`, you might see this error::
 
-    The authenticity of host '[review.openstack.org]:29418 ([198.101.231.251]:29418) can't be established.
+    The authenticity of host '[review.opendev.org]:29418 ([104.130.246.32]:29418) can't be established.
 
   Type *yes* (all three letters) at the prompt.
 
@@ -218,7 +218,7 @@ git and git review
      Enter your gerrit username:
 
   Enter the user name that matches the user name in the :guilabel:`Settings`
-  page at review.openstack.org.
+  page at review.opendev.org.
 
 * Not a git repository error
 
@@ -235,11 +235,11 @@ git and git review
 
     We don't know where your gerrit is. Please manually create a remote named "gerrit" and try again.
 
-  You need to make a git remote that maps to the review.openstack.org SSH port
+  You need to make a git remote that maps to the review.opendev.org SSH port
   for your repository. For example, for a user with the ``username_example``
   user name and the openstack-manuals repository, you should run this command::
 
-    git remote add gerrit ssh://username_example@review.openstack.org:29418/openstack/openstack-manuals.git
+    git remote add gerrit ssh://username_example@review.opendev.org:29418/openstack/openstack-manuals.git
 
 * Remote rejected error
 
@@ -248,7 +248,7 @@ git and git review
     ! [remote rejected] HEAD -> refs/publish/master/addopenstackdocstheme (missing Change-Id in commit message footer)
 
   The first time you set up a gerrit remote and try to create a patch for
-  review.openstack.org, you may see this message because the tool needs one
+  review.opendev.org, you may see this message because the tool needs one
   more edit of your commit message in order to automatically insert
   the *Change-Id*. When this happens, run :command:`git commit -a --amend`,
   save the commit message and run :command:`git review -v` again.
@@ -262,10 +262,10 @@ git and git review
      Permission denied (publickey).
 
   Double check the :guilabel:`Settings` page at
-  https://review.openstack.org/
+  https://review.opendev.org/
   to make sure your public key on the computer
   or virtual server has been copied to SSH public keys on
-  `SSH Public Keys <https://review.openstack.org/#/settings/ssh-keys>`_.
+  `SSH Public Keys <https://review.opendev.org/#/settings/ssh-keys>`_.
   If you have not adjusted
   your ``.ssh`` configuration, your system may not be connecting using
   the correct key for gerrit.
@@ -375,8 +375,8 @@ instead:
 .. _`Python 2.7 environment`: http://docs.python-guide.org/en/latest/starting/install/win/
 .. _`79 characters maximum`: https://www.python.org/dev/peps/pep-0008/#maximum-line-length
 .. _`GitHub help`: https://help.github.com/articles/set-up-git
-.. _`Settings page on gerrit`: https://review.openstack.org/#/settings/
-.. _`Settings > SSH Public Keys`: https://review.openstack.org/#/settings/ssh-keys
+.. _`Settings page on gerrit`: https://review.opendev.org/#/settings/
+.. _`Settings > SSH Public Keys`: https://review.opendev.org/#/settings/ssh-keys
 .. _`Starting Work on a New Project`: https://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project
 .. _`Starting a Change`: https://docs.openstack.org/infra/manual/developers.html#starting-a-change
 .. _`Committing a change`: https://docs.openstack.org/infra/manual/developers.html#committing-a-change

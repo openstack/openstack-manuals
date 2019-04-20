@@ -38,7 +38,7 @@ Setting up
 
    .. code-block:: console
 
-      $ cookiecutter https://git.openstack.org/openstack/installguide-cookiecutter.git --checkout HEAD^1
+      $ cookiecutter https://opendev.org/openstack/installguide-cookiecutter.git --checkout HEAD^1
 
    You will be prompted to answer questions to complete the installation.
    Content is then added to the ``deploy-guide`` directory in the
@@ -67,7 +67,7 @@ Setting up
 #. Add the Python package ``openstackdocstheme``  to the
    ``test-requirements.txt`` file. Copy the exact requirement line from the
    `global file
-   <https://git.openstack.org/cgit/openstack/requirements/tree/global-requirements.txt>`_:
+   <https://opendev.org/openstack/requirements/src/branch/master/global-requirements.txt>`_:
 
    .. code-block:: none
 
@@ -82,7 +82,7 @@ OpenStack Infra ``project-config`` repository:
 
    .. code-block:: console
 
-      $ git clone https://git.openstack.org/openstack-infra/project-config
+      $ git clone https://opendev.org/openstack/project-config
 
 #. In ``jenkins/jobs/projects.yaml``, add ``deploy-guide-jobs`` within the
    entry for your project:
@@ -142,4 +142,4 @@ Usage for the deploy guide is as follows:
 
 For an example, and more information, please review the following
 OpenStack-Ansible patch: `Add conditional branch names for docs links
-<https://review.openstack.org/#/c/417976/>`_
+<https://review.opendev.org/#/c/417976/>`_

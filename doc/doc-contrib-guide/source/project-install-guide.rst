@@ -42,7 +42,7 @@ Set up project specific installation guides:
 
    .. code-block:: console
 
-      $ cookiecutter https://git.openstack.org/openstack/installguide-cookiecutter.git
+      $ cookiecutter https://opendev.org/openstack/installguide-cookiecutter.git
 
    You will be prompted to answer the following questions to complete the
    installation:
@@ -85,7 +85,7 @@ Set up project specific installation guides:
 #. Add the python package ``openstackdocstheme``  to the
    ``test-requirements.txt`` file. Copy the exact requirement line from the
    `global file
-   <https://git.openstack.org/cgit/openstack/requirements/tree/global-requirements.txt>`_:
+   <https://opendev.org/openstack/requirements/src/branch/master/global-requirements.txt>`_:
 
    .. code-block:: none
 
@@ -109,7 +109,7 @@ After these changes have merged, you can set up the jobs for building.
 
    .. code-block:: console
 
-      $ git clone https://git.openstack.org/openstack-infra/project-config
+      $ git clone https://opendev.org/openstack/project-config
 
 #. In ``jenkins/jobs/projects.yaml``, add ``install-guide-jobs`` within the
    entry for your project:

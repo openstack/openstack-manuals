@@ -14,4 +14,4 @@ For the steps required to trigger a release, see the openstack/releases `README
 
 For a review example triggering a new package release, see
 `Change 448891: Release openstackdocstheme 1.7.0
-<https://review.openstack.org/#/c/448891/>`_.
+<https://review.opendev.org/#/c/448891/>`_.

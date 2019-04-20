@@ -131,7 +131,7 @@ openstack-manuals, run the following command:
 
 The individual Tox jobs you can run are explained in detail in the
 `README file
-<https://git.openstack.org/cgit/openstack/openstack-manuals/tree/README.rst>`_
+<https://opendev.org/openstack/openstack-manuals/src/branch/master/README.rst>`_
 in the repository.
 
 As a part of the review process, the OpenStack CI system runs scripts
@@ -171,7 +171,7 @@ To build a patch locally:
 
    Where the value of ``PATCH_ID`` is a Gerrit commit number.
    You can find this number on the patch link,
-   ``https://review.openstack.org/#/c/PATCH_ID``.
+   ``https://review.opendev.org/#/c/PATCH_ID``.
 
 #. Build the documentation affected by changes in the patch set. For more
    information, see :ref:`docs_builds_manuals` and
@@ -183,7 +183,7 @@ Build jobs
 ~~~~~~~~~~
 
 The build jobs for documentation are stored in the
-`Project config <https://git.openstack.org/cgit/openstack-infra/project-config>`_
+`project-config <https://opendev.org/openstack/project-config>`_
 repository. The build jobs build to the docs.openstack.org and
 developer.openstack.org sites, copying built files via FTP.
 
