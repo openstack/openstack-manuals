@@ -155,6 +155,11 @@ def parse_command_line_arguments():
                         action='append',
                         help='project to check (defaults to all)',
                         )
+    parser.add_argument('--publish',
+                        default=False,
+                        action='store_true',
+                        help='use absolute paths for publish environment',
+                        )
     return parser.parse_args()
 
 
@@ -475,18 +480,25 @@ def _get_official_repos():
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
-                    template_files, template_file, output_directory, extra={}):
+                    template_files, template_file, output_directory,
+                    is_publish, extra={}):
     logger = logging.getLogger()
     logger.info("generating %s", template_file)
 
     # Determine the relative path to a few common directories so
     # we don't need to set them in the templates.
-    topdir = os.path.relpath(
-        '.', os.path.dirname(template_file),
-    ).rstrip('/') + '/'
-    scriptdir = os.path.join(topdir, 'common', 'js').rstrip('/') + '/'
-    cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
-    imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
+    if is_publish:
+        topdir = 'https://docs.openstack.org/'
+        scriptdir = topdir + 'common/js/'
+        cssdir = topdir + 'common/css/'
+        imagedir = topdir + 'common/images/'
+    else:
+        topdir = os.path.relpath(
+            '.', os.path.dirname(template_file),
+        ).rstrip('/') + '/'
+        scriptdir = os.path.join(topdir, 'common', 'js').rstrip('/') + '/'
+        cssdir = os.path.join(topdir, 'common', 'css').rstrip('/') + '/'
+        imagedir = os.path.join(topdir, 'common', 'images').rstrip('/') + '/'
 
     series_match = SERIES_PAT.match(template_file)
     if series_match:
@@ -610,6 +622,7 @@ def main():
             template_files,
             template_file,
             args.output_directory,
+            args.publish
         )
         output_pages.append(template_file)
 
@@ -623,6 +636,7 @@ def main():
             template_files,
             page_list_template,
             args.output_directory,
+            args.publish,
             extra={
                 'file_list': output_pages,
             },

@@ -36,7 +36,7 @@ if [ "$PUBLISH" = "build" ] ; then
 fi
 if [ "$PUBLISH" = "publish" ] ; then
     python3 tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs
+        --output-directory publish-docs --publish
     rsync -a www/static/ publish-docs/
     # Don't publish these files
     rm publish-docs/www-index.html
