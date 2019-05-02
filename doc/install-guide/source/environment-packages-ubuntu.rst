@@ -2,13 +2,13 @@ OpenStack packages for Ubuntu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ubuntu releases OpenStack with each Ubuntu release. Ubuntu LTS releases
-are provided every 2 years. OpenStack packages from interim releases of
+are provided every two years. OpenStack packages from interim releases of
 Ubuntu are made available to the prior Ubuntu LTS via the Ubuntu Cloud
 Archive.
 
 OpenStack Queens is available directly using Ubuntu 18.04 LTS and
 OpenStack Mitaka is available directly using Ubuntu 16.04 LTS without
-having to enable an Ubuntu Cloud Archive pocket.
+having to enable an Ubuntu Cloud Archive repository.
 
 .. note::
 
@@ -26,14 +26,19 @@ having to enable an Ubuntu Cloud Archive pocket.
    impact your OpenStack environment.
 
 
-Enable the Ubuntu Cloud Archive pocket as needed
-------------------------------------------------
+Enable the repository for Ubuntu Cloud Archive
+----------------------------------------------
+
+**OpenStack Stein for Ubuntu 18.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:stein
 
 **OpenStack Rocky for Ubuntu 18.04 LTS:**
 
 .. code-block:: console
 
-   # apt install software-properties-common
    # add-apt-repository cloud-archive:rocky
 
 **OpenStack Queens for Ubuntu 16.04 LTS:**
@@ -42,6 +47,9 @@ Enable the Ubuntu Cloud Archive pocket as needed
 
    # apt install software-properties-common
    # add-apt-repository cloud-archive:queens
+
+Note that OpenStack Queens is included in Ubuntu 18.04 LTS without
+enabling the Ubuntu Cloud Archive.
 
 **OpenStack Pike for Ubuntu 16.04 LTS:**
 
@@ -60,7 +68,7 @@ Enable the Ubuntu Cloud Archive pocket as needed
 Finalize the installation
 -------------------------
 
-1. Upgrade the packages on all nodes:
+1. Upgrade packages on all nodes:
 
    .. code-block:: console
 
