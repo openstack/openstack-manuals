@@ -42,7 +42,8 @@ Linux distributions:
 
 openSUSE and SUSE Linux Enterprise Server
   You can install OpenStack by using packages on openSUSE Leap 42.3, openSUSE
-  Leap 15, and SUSE Linux Enterprise Server 12 SP4 through the Open Build
+  Leap 15, SUSE Linux Enterprise Server 12 SP4, SUSE Linux Enterprise
+  Server 15 through the Open Build
   Service Cloud repository.
 
 Red Hat Enterprise Linux and CentOS
