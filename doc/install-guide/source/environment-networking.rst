@@ -68,6 +68,11 @@ variations, this guide refers to the first interface as the
 interface with the lowest number and the second interface as the
 interface with the highest number.
 
+.. note::
+
+   Ubuntu has changed the network interface naming concept.
+   Refer `Changing Network Interfaces name Ubuntu 16.04 <https://askubuntu.com/questions/767786/changing-network-interfaces-name-ubuntu-16-04>`_.
+
 Unless you intend to use the exact configuration provided in this
 example architecture, you must modify the networks in this procedure to
 match your environment. Each node must resolve the other nodes by
