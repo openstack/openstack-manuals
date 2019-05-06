@@ -24,6 +24,10 @@ ari
 iso
  An archive format for the data contents of an optical disc,
  such as CD-ROM.
+ploop
+ A kernel block device, similar to the traditional loop device but with
+ more features added, such as dynamic disk space allocation, stackable
+ images, online resize, snapshotting, and live migration helper.
 qcow2
  Supported by the QEMU emulator that can expand dynamically
  and supports Copy on Write.
