@@ -9,10 +9,15 @@ Although most environments include Identity, Image service, Compute, at least
 one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to
-`Object Storage Installation Guide for Pike <https://docs.openstack.org/swift/pike/install/>`_,
-`Object Storage Installation Guide for Queens <https://docs.openstack.org/swift/queens/install/>`_,
-or
-`Object Storage Installation Guide for Rocky <https://docs.openstack.org/swift/rocky/install/>`_
+
+* `Object Storage Installation Guide for Stein <https://docs.openstack.org/swift/stein/install/>`_
+
+* `Object Storage Installation Guide for Rocky <https://docs.openstack.org/swift/rocky/install/>`_
+
+* `Object Storage Installation Guide for Queens <https://docs.openstack.org/swift/queens/install/>`_
+
+* `Object Storage Installation Guide for Pike <https://docs.openstack.org/swift/pike/install/>`_
+
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
