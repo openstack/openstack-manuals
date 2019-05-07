@@ -69,9 +69,17 @@ The Fedora project maintains a list of official cloud images at
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
-Cloudbase Solutions hosts `Windows Cloud Images
-<https://cloudbase.it/windows-cloud-images/>`_
-that runs on Hyper-V, KVM, and XenServer/XCP.
+Cloudbase Solutions provides the last available trial version
+of `Windows Server 2012 R2 <https://cloudbase.it/windows-cloud-images/>`_.
+This image includes cloudbase-init plus VirtIO drivers on KVM.
+You can build your own image based on Windows Server 2016, 2019,
+Windows 10 etc) with `Cloudbase Imaging Tools <https://github.com/cloudbase/windows-openstack-imaging-tools/>`_.
+
+ISO files for Windows 10 are available on `Microsoft Windows 10 Downloadpage <https://www.microsoft.com/en-us/software-download/windows10>`_
+and `Microsoft Evaluation Center <https://www.microsoft.com/evalcenter/evaluate-windows-10-enterprise>`_.
+
+`Fedora Virtio <https://docs.fedoraproject.org/en-US/quick-docs/creating-windows-virtual-machines-using-virtio-drivers/index.html#virtio-win-direct-downloads>`_
+provides also Windows images.
 
 Ubuntu
 ~~~~~~
