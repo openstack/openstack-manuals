@@ -2,7 +2,7 @@
 Example: Ubuntu image
 =====================
 
-This example installs an Ubuntu 14.04 (Trusty Tahr) image.
+This example installs an Ubuntu 18.04 (Bionic Beaver) image.
 To create an image for a different version of Ubuntu,
 follow these steps with the noted differences.
 
@@ -11,8 +11,8 @@ Download an Ubuntu installation ISO
 
 Because the goal is to make the smallest possible base image,
 this example uses the network installation ISO.
-The Ubuntu 64-bit 14.04 network installation ISO is at the `Ubuntu download
-page <http://archive.ubuntu.com/ubuntu/dists/trusty/main/installer-amd64/current/images/netboot/mini.iso>`_.
+The Ubuntu 64-bit 18.04 network installation ISO is at the `Ubuntu download
+page <http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso>`_.
 
 Start the installation process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,7 +22,7 @@ or :command:`virt-install` as described in the previous section.
 If you use :command:`virt-install`, do not forget to connect
 your VNC client to the virtual machine.
 
-Assume that the name of your virtual machine image is ``ubuntu-14.04``,
+Assume that the name of your virtual machine image is ``ubuntu-18.04``,
 which you need to know when you use :command:`virsh` commands
 to manipulate the state of the image.
 
@@ -31,13 +31,17 @@ the commands should look something like this:
 
 .. code-block:: console
 
-   # qemu-img create -f qcow2 /tmp/trusty.qcow2 10G
-   # virt-install --virt-type kvm --name trusty --ram 1024 \
-     --cdrom=/data/isos/trusty-64-mini.iso \
-     --disk /tmp/trusty.qcow2,format=qcow2 \
+   # wget -o /var/lib/libvirt/boot/bionic-mini.iso \
+     http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
+   # chown libvirt-qemu:kvm /var/lib/libvirt/boot/bionic-mini.iso
+   # qemu-img create -f qcow2 /var/lib/libvirt/images/bionic.qcow2 10G
+   # chown libvirt-qemu:kvm /var/lib/libvirt/images/bionic.qcow2
+   # virt-install --virt-type kvm --name bionic --ram 1024 \
+     --cdrom=/var/lib/libvirt/boot/bionic-mini.iso \
+     --disk /var/lib/libvirt/images/bionic.qcow2,bus=virtio,size=10,format=qcow2 \
      --network network=default \
      --graphics vnc,listen=0.0.0.0 --noautoconsole \
-     --os-type=linux --os-variant=ubuntutrusty
+     --os-type=linux --os-variant=ubuntu18.04
 
 Step through the installation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,65 +111,12 @@ to the master boot record.
 For more information on configuring Grub, see the section
 called ":ref:`write-to-console`".
 
-Detach the CD-ROM and reboot
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Select the defaults for all of the remaining options. When the
-installation is complete, you will be prompted to remove the CD-ROM.
-
-.. figure:: figures/ubuntu-finished.png
-   :width: 100%
-
-.. note::
-
-   There is a known bug in Ubuntu 14.04; when you select ``Continue``,
-   the virtual machine will shut down, even though it says it will reboot.
-
-To eject a disk using :command:`virsh`, libvirt requires that
-you attach an empty disk at the same target that the CDROM
-was previously attached, which should be ``hdc``.
-You can confirm the appropriate target using the
-:command:`virsh dumpxml vm-image` command.
-
-.. code-block:: console
-
-   # virsh dumpxml trusty
-   <domain type='kvm'>
-     <name>trusty</name>
-   ...
-       <disk type='block' device='cdrom'>
-       <driver name='qemu' type='raw'/>
-       <target dev='hdc' bus='ide'/>
-       <readonly/>
-       <address type='drive' controller='0' bus='1' target='0' unit='0'/>
-     </disk>
-   ...
-   </domain>
-
-Run the following commands in the host as root to start up
-the machine again as paused, eject the disk and resume.
-If you are using ``virt-manager``, you may use the GUI instead.
-
-.. code-block:: console
-
-   # virsh start trusty --paused
-   # virsh attach-disk --type cdrom --mode readonly trusty "" hdc
-   # virsh resume trusty
-
-.. note::
-
-   In the previous example, you paused the instance, ejected
-   the disk, and unpaused the instance. In theory, you could have
-   ejected the disk at the :guilabel:`Installation complete` screen.
-   However, our testing indicates that the Ubuntu installer
-   locks the drive so that it cannot be ejected at that point.
-
 Log in to newly created image
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you boot for the first time after install, it may ask
 you about authentication tools, you can just choose :guilabel:`Exit`.
-Then, log in as root using the root password you specified.
+Then, log in as admin user using the password you specified.
 
 Install cloud-init
 ~~~~~~~~~~~~~~~~~~
@@ -178,7 +129,7 @@ Install the ``cloud-init`` package:
 
 .. code-block:: console
 
-   # apt-get install cloud-init
+   # apt install cloud-init
 
 When building Ubuntu images :command:`cloud-init` must be
 explicitly configured for the metadata source in use.
@@ -233,7 +184,7 @@ It will clean up a virtual machine image in place:
 
 .. code-block:: console
 
-   # virt-sysprep -d trusty
+   # virt-sysprep -d bionic
 
 Undefine the libvirt domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -244,13 +195,14 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
 
 .. code-block:: console
 
-   # virsh undefine trusty
+   # virsh undefine bionic
 
 Image is complete
 ~~~~~~~~~~~~~~~~~
 
 The underlying image file that you created with the
-:command:`qemu-img create` command, such as ``/tmp/trusty.qcow2``,
+:command:`qemu-img create` command, such as
+``/var/lib/libvirt/images/bionic.qcow2``,
 is now ready for uploading to the Image service by using the
 :command:`openstack image create` command. For more information,
 see the `Glance User Guide <https://docs.openstack.org/glance/latest/user/index.html>`__.
