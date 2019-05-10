@@ -299,22 +299,27 @@ loop contexts).
   extract the correct subset of the data.
 
 ``TOPDIR``
-  The relative path to the top of the build output. This is useful for
+  The path to the top of the build output (relative path by default and
+  absolute URL with ``--publish`` option). This is useful for
   building paths between output pages in a way that allows those pages
   to move around later.
 
 ``SCRIPTDIR``
-  The relative path to the location of the JavaScript directory in the
-  build output. This is useful for building links to JavaScript files.
+  The path to the location of the JavaScript directory in the
+  build output (relative path by default and absolute URL with
+  ``--publish`` option).
+  This is useful for building links to JavaScript files.
 
 ``CSSDIR``
-  The relative path to the location of the directory containing the
-  CSS files in the build output. This is useful for building links to
+  The path to the location of the directory containing the
+  CSS files in the build output (relative path by default and absolute URL
+  with ``--publish`` option). This is useful for building links to
   CSS files.
 
 ``IMAGEDIR``
-  The relative path to the location of the directory containing image
-  files in the build output. This is useful for building links to
+  The path to the location of the directory containing image
+  files in the build output (relative path by default and absolute URL
+  with ``--publish`` option). This is useful for building links to
   images.
 
 ``SERIES``
