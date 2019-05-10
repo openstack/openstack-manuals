@@ -18,6 +18,8 @@ distribution, see the documentation.
      <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Config_Using_CLI.html>`__
    * `SLES 12
      <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
+     or `SLES 15
+     <https://www.suse.com/documentation/sles-15/book_sle_admin/data/sec_network_manconf.html>`__
      or `openSUSE
      <https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.network.html>`__ Network Configuration
 
