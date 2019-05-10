@@ -6,33 +6,56 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
-* `OpenStack Installation Guides for Pike
-  <https://docs.openstack.org/pike/install/>`_
-* `OpenStack Installation Guides for Queens
-  <https://docs.openstack.org/queens/install/>`_
+* `OpenStack Installation Guides for Stein
+  <https://docs.openstack.org/stein/install/>`_
 * `OpenStack Installation Guides for Rocky
   <https://docs.openstack.org/rocky/install/>`_
+* `OpenStack Installation Guides for Queens
+  <https://docs.openstack.org/queens/install/>`_
+* `OpenStack Installation Guides for Pike
+  <https://docs.openstack.org/pike/install/>`_
 
-Minimal deployment for Pike
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Minimal deployment for Stein
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At a minimum, you need to install the following services. Install the services
 in the order specified below:
 
-* Identity service – `keystone installation for Pike
-  <https://docs.openstack.org/keystone/pike/install/>`_
-* Image service – `glance installation for Pike
-  <https://docs.openstack.org/glance/pike/install/>`_
-* Compute service – `nova installation for Pike
-  <https://docs.openstack.org/nova/pike/install/>`_
-* Networking service – `neutron installation for Pike
-  <https://docs.openstack.org/neutron/pike/install/>`_
+* Identity service – `keystone installation for Stein
+  <https://docs.openstack.org/keystone/stein/install/>`_
+* Image service – `glance installation for Stein
+  <https://docs.openstack.org/glance/stein/install/>`_
+* Compute service – `nova installation for Stein
+  <https://docs.openstack.org/nova/stein/install/>`_
+* Networking service – `neutron installation for Stein
+  <https://docs.openstack.org/neutron/stein/install/>`_
 
 We advise to also install the following components after you have installed the
 minimal deployment services:
 
-* Dashboard – `horizon installation for Pike <https://docs.openstack.org/horizon/pike/install/>`_
-* Block Storage service – `cinder installation for Pike <https://docs.openstack.org/cinder/pike/install/>`_
+* Dashboard – `horizon installation for Stein <https://docs.openstack.org/horizon/stein/install/>`_
+* Block Storage service – `cinder installation for Stein <https://docs.openstack.org/cinder/stein/install/>`_
+
+Minimal deployment for Rocky
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Rocky
+  <https://docs.openstack.org/keystone/rocky/install/>`_
+* Image service – `glance installation for Rocky
+  <https://docs.openstack.org/glance/rocky/install/>`_
+* Compute service – `nova installation for Rocky
+  <https://docs.openstack.org/nova/rocky/install/>`_
+* Networking service – `neutron installation for Rocky
+  <https://docs.openstack.org/neutron/rocky/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Rocky <https://docs.openstack.org/horizon/rocky/install/>`_
+* Block Storage service – `cinder installation for Rocky <https://docs.openstack.org/cinder/rocky/install/>`_
 
 Minimal deployment for Queens
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,23 +78,23 @@ minimal deployment services:
 * Dashboard – `horizon installation for Queens <https://docs.openstack.org/horizon/queens/install/>`_
 * Block Storage service – `cinder installation for Queens <https://docs.openstack.org/cinder/queens/install/>`_
 
-Minimal deployment for Rocky
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Minimal deployment for Pike
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At a minimum, you need to install the following services. Install the services
 in the order specified below:
 
-* Identity service – `keystone installation for Rocky
-  <https://docs.openstack.org/keystone/rocky/install/>`_
-* Image service – `glance installation for Rocky
-  <https://docs.openstack.org/glance/rocky/install/>`_
-* Compute service – `nova installation for Rocky
-  <https://docs.openstack.org/nova/rocky/install/>`_
-* Networking service – `neutron installation for Rocky
-  <https://docs.openstack.org/neutron/rocky/install/>`_
+* Identity service – `keystone installation for Pike
+  <https://docs.openstack.org/keystone/pike/install/>`_
+* Image service – `glance installation for Pike
+  <https://docs.openstack.org/glance/pike/install/>`_
+* Compute service – `nova installation for Pike
+  <https://docs.openstack.org/nova/pike/install/>`_
+* Networking service – `neutron installation for Pike
+  <https://docs.openstack.org/neutron/pike/install/>`_
 
 We advise to also install the following components after you have installed the
 minimal deployment services:
 
-* Dashboard – `horizon installation for Rocky <https://docs.openstack.org/horizon/rocky/install/>`_
-* Block Storage service – `cinder installation for Rocky <https://docs.openstack.org/cinder/rocky/install/>`_
+* Dashboard – `horizon installation for Pike <https://docs.openstack.org/horizon/pike/install/>`_
+* Block Storage service – `cinder installation for Pike <https://docs.openstack.org/cinder/pike/install/>`_
