@@ -107,7 +107,7 @@ Here are a few representative files under ``www/``:
   * ``README.rst``
   * ``schema.yaml``
 
-* ``redirect-tests.txt`` -- input file for `whereto <http://whereto.readthedocs.io/en/latest/>`_
+* ``redirect-tests.txt`` -- input file for `whereto <https://docs.openstack.org/whereto/>`_
   to test ``.htaccess``;
   see http://files.openstack.org/docs-404s/ for a list of recent 404
   errors

@@ -11,8 +11,7 @@ console from a VNC client installed on your local machine.
 
 Because VNC is a standard protocol, there are multiple clients
 available that implement the VNC spec, including
-`TigerVNC <http://sourceforge.net/apps/mediawiki/tigervnc/
-index.php?title=Welcome_to_TigerVNC>`_ (multiple platforms),
+`TigerVNC <https://tigervnc.org/>`_ (multiple platforms),
 `TightVNC <http://tightvnc.com/>`_ (multiple platforms),
 `RealVNC <http://realvnc.com/>`_ (multiple platforms),
 `Chicken <http://sourceforge.net/projects/chicken/>`_ (Mac OS X),

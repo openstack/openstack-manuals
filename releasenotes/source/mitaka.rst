@@ -13,19 +13,19 @@ Configuration Reference
 High Availability Guide
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-* Added the `Highly available Shared File Systems API <https://docs.openstack.org/ha-guide/storage-ha-file-systems.html>`_
+* Added the `Highly available Shared File Systems API  <https://docs.openstack.org/ha-guide/storage-ha-file-systems.html>`_
   section.
 
-* Improved `Pacemaker/Corosync cluster <https://docs.openstack.org/ha-guide/controller-ha-pacemaker.html>`_
-  installation and configuration details.
+* Improved Pacemaker/Corosync cluster installation and configuration
+  details.
 
-* Documented the `Pacemaker cluster manager <https://docs.openstack.org/ha-guide/intro-ha-arch-pacemaker.html>`_
-  and Keepalived architecture details and limitations.
+* Documented the Pacemaker cluster manager and Keepalived architecture
+  details and limitations.
 
-* Added the `MariaDB Galera cluster <https://docs.openstack.org/ha-guide/shared-database.html>`_
-  installation, configuration, and management details.
+* Added the MariaDB Galera cluster installation, configuration, and
+  management details.
 
-* Improved the `RabbitMQ section <https://docs.openstack.org/ha-guide/shared-messaging.html>`_.
+* Improved the RabbitMQ section.
 
 Installation Guide
 ~~~~~~~~~~~~~~~~~~
