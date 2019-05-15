@@ -33,7 +33,13 @@ Install and configure components
         # mkdir -p /var/lib/etcd
         # chown etcd:etcd /var/lib/etcd
 
-   - Download and install the etcd tarball:
+   - Determine your system architecture:
+
+     .. code-block:: console
+
+        # uname -m
+
+   - Download and install the etcd tarball for x86_64/amd64:
 
      .. code-block:: console
 
@@ -43,6 +49,20 @@ Install and configure components
               https://github.com/coreos/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-amd64.tar.gz \
               -o /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz
         # tar xzvf /tmp/etcd-${ETCD_VER}-linux-amd64.tar.gz \
+              -C /tmp/etcd --strip-components=1
+        # cp /tmp/etcd/etcd /usr/bin/etcd
+        # cp /tmp/etcd/etcdctl /usr/bin/etcdctl
+
+     Or download and install the etcd tarball for arm64:
+
+     .. code-block:: console
+
+        # ETCD_VER=v3.2.7
+        # rm -rf /tmp/etcd && mkdir -p /tmp/etcd
+        # curl -L \
+              https://github.com/coreos/etcd/releases/download/${ETCD_VER}/etcd-${ETCD_VER}-linux-arm64.tar.gz \
+              -o /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz
+        # tar xzvf /tmp/etcd-${ETCD_VER}-linux-arm64.tar.gz \
               -C /tmp/etcd --strip-components=1
         # cp /tmp/etcd/etcd /usr/bin/etcd
         # cp /tmp/etcd/etcdctl /usr/bin/etcdctl
@@ -74,6 +94,8 @@ Install and configure components
       Description=etcd - highly-available key value store
 
       [Service]
+      # Uncomment this on ARM64.
+      # Environment="ETCD_UNSUPPORTED_ARCH=arm64"
       LimitNOFILE=65536
       Restart=on-failure
       Type=notify
