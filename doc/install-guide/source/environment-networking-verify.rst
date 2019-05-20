@@ -8,17 +8,17 @@ among the nodes before proceeding further.
 
    .. code-block:: console
 
-      # ping -c 4 openstack.org
+      # ping -c 4 docs.openstack.org
+      PING files02.openstack.org (23.253.125.17) 56(84) bytes of data.
+      64 bytes from files02.openstack.org (23.253.125.17): icmp_seq=1 ttl=43 time=125 ms
+      64 bytes from files02.openstack.org (23.253.125.17): icmp_seq=2 ttl=43 time=125 ms
+      64 bytes from files02.openstack.org (23.253.125.17): icmp_seq=3 ttl=43 time=125 ms
+      64 bytes from files02.openstack.org (23.253.125.17): icmp_seq=4 ttl=43 time=125 ms
 
-      PING openstack.org (174.143.194.225) 56(84) bytes of data.
-      64 bytes from 174.143.194.225: icmp_seq=1 ttl=54 time=18.3 ms
-      64 bytes from 174.143.194.225: icmp_seq=2 ttl=54 time=17.5 ms
-      64 bytes from 174.143.194.225: icmp_seq=3 ttl=54 time=17.5 ms
-      64 bytes from 174.143.194.225: icmp_seq=4 ttl=54 time=17.4 ms
 
-      --- openstack.org ping statistics ---
-      4 packets transmitted, 4 received, 0% packet loss, time 3022ms
-      rtt min/avg/max/mdev = 17.489/17.715/18.346/0.364 ms
+      --- files02.openstack.org ping statistics ---
+      4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+      rtt min/avg/max/mdev = 125.192/125.282/125.399/0.441 ms
 
 #. From the *controller* node, test access to the management interface on the
    *compute* node:
