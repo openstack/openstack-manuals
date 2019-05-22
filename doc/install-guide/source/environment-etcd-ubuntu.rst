@@ -17,6 +17,12 @@ Install and configure components
 
       # apt install etcd
 
+   .. note::
+
+      As of Ubuntu 18.04, the ``etcd`` package is no longer
+      available from the default repository. To install successfully,
+      enable the ``Universe`` repository on Ubuntu.
+
 #. Edit the ``/etc/default/etcd`` file and set the ``ETCD_INITIAL_CLUSTER``,
    ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``,
    ``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the
