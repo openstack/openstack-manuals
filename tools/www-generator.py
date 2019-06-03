@@ -417,7 +417,7 @@ def load_project_data(source_directory,
 
 _IGNORED_REPOS = [
     'openstack/releases',
-    'openstack-infra/releasestatus',
+    'openstack/releasestatus',
     'openstack/contributor-guide',
     'openstack/operations-guide',
     'openstack/ha-guide',
@@ -428,8 +428,8 @@ _IGNORED_REPOS = [
 # List of infra repos that publish to the normal location (/REPO/) and
 # not to /infra/REPO.
 _INFRA_REPOS_EXCEPTION = [
-    'openstack-infra/pynotedb',
-    'openstack-infra/subunit2sql',
+    'opendev/pynotedb',
+    'opendev/subunit2sql',
     'openstack/diskimage-builder',
 ]
 
