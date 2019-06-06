@@ -81,6 +81,14 @@ Finalize the installation
 
 2. Install the OpenStack client:
 
+   **OpenStack Stein for Ubuntu 18.04 LTS:**
+
+   .. code-block:: console
+
+      # apt install python3-openstackclient
+
+   **Others:**
+
    .. code-block:: console
 
       # apt install python-openstackclient
