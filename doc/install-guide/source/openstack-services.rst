@@ -25,6 +25,8 @@ in the order specified below:
   <https://docs.openstack.org/keystone/stein/install/>`_
 * Image service – `glance installation for Stein
   <https://docs.openstack.org/glance/stein/install/>`_
+* Placement service – `placement installation for Stein
+  <https://docs.openstack.org/placement/stein/install/>`_
 * Compute service – `nova installation for Stein
   <https://docs.openstack.org/nova/stein/install/>`_
 * Networking service – `neutron installation for Stein

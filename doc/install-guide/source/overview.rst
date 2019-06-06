@@ -86,11 +86,11 @@ and
 Controller
 ----------
 
-The controller node runs the Identity service, Image service, management
-portions of Compute, management portion of Networking, various Networking
-agents, and the Dashboard. It also includes supporting services such as
-an SQL database, :term:`message queue`, and :term:`NTP <Network Time Protocol
-(NTP)>`.
+The controller node runs the Identity service, Image service, Placement
+service, management portions of Compute, management portion of Networking,
+various Networking agents, and the Dashboard. It also includes supporting
+services such as an SQL database, :term:`message queue`, and
+:term:`NTP <Network Time Protocol (NTP)>`.
 
 Optionally, the controller node runs portions of the Block Storage, Object
 Storage, Orchestration, and Telemetry services.
