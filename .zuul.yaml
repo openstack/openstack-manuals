@@ -65,24 +65,6 @@
         - publish-openstack-manuals
 
 - project-template:
-    name: openstack-manuals-developer-jobs
-    description: |
-      Runs jobs for non-translated documents.
-      This will publish content to developer.openstack.org.
-    check:
-      jobs:
-        - openstack-tox-linters
-        - build-tox-manuals-checkbuild
-    gate:
-      jobs:
-        - openstack-tox-linters
-        - build-tox-manuals-checkbuild
-    post:
-      jobs:
-        - publish-openstack-manuals-developer
-
-
-- project-template:
     name: openstack-manuals-build-translation
     description: |
       Runs jobs to build translated documents.
@@ -95,21 +77,6 @@
     post:
       jobs:
         - publish-openstack-manuals-lang
-
-- project-template:
-    name: openstack-manuals-developer-build-translation
-    description: |
-      Runs jobs to build translated documents.
-      This will publish content to developer.openstack.org.
-    check:
-      jobs:
-        - build-tox-manuals-checklang
-    gate:
-      jobs:
-        - build-tox-manuals-checklang
-    post:
-      jobs:
-        - publish-openstack-manuals-developer-lang
 
 # Configuration for this repository, determines which jobs to run.
 - project:
