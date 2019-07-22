@@ -59,15 +59,7 @@ fi
 
 rm -f ${DIRECTORY}/source/locale/$DOCNAME.pot
 
-# We need to extract all strings, so add all supported tags
-TAG=""
-if [ ${DOCNAME} = "install-guide" ] ; then
-    TAG="-t obs -t rdo -t ubuntu -t debian"
-fi
-if [ ${DOCNAME} = "firstapp" ] ; then
-    TAG="-t libcloud -t dotnet -t fog -t pkgcloud -t shade"
-fi
-sphinx-build -j $NUMBER_OF_CORES -b gettext $TAG ${DIRECTORY}/source/ \
+sphinx-build -j $NUMBER_OF_CORES -b gettext ${DIRECTORY}/source/ \
     ${DIRECTORY}/source/locale/
 
 if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common" ]] ; then
