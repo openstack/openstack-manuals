@@ -167,7 +167,3 @@ To begin sending API requests, use one of the following methods:
    :maxdepth: 2
 
    api-quick-start
-
-
-
-

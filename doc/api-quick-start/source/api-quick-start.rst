@@ -46,44 +46,45 @@ Authenticate
 
 The payload of credentials to authenticate contains these parameters:
 
-+-----------------------+----------------+--------------------------------------+
-| Parameter             | Type           | Description                          |
-+=======================+================+======================================+
-| *User Domain*         |     string     | The Domain of the user.              |
-| (required)            |                |                                      |
-+-----------------------+----------------+--------------------------------------+
-| username (required)   |     string     | The user name. If you do not provide |
-|                       |                | a user name and password, you must   |
-|                       |                | provide a token.                     |
-+-----------------------+----------------+--------------------------------------+
-| password (required)   |     string     | The password for the user.           |
-+-----------------------+----------------+--------------------------------------+
-| *Project Domain*      |     string     | The Domain of the project. This is a |
-| (optional)            |                | required part of the scope object.   |
-+-----------------------+----------------+--------------------------------------+
-| *Project Name*        |     string     | The project name. Both the           |
-| (optional)            |                | *Project ID* and *Project Name*      |
-|                       |                | are optional.                        |
-+-----------------------+----------------+--------------------------------------+
-| *Project ID*          |     string     | The project ID. Both the *project ID*|
-| (optional)            |                | and *Project Name* are optional. But |
-|                       |                | one of them is required along with   |
-|                       |                | the *Project Domain*. They are       |
-|                       |                | wrapped under a scope object.        |
-|                       |                | If you do not know the project name  |
-|                       |                | or ID, send a request without any    |
-|                       |                | scope object.                        |
-+-----------------------+----------------+--------------------------------------+
+.. list-table:: Credential parameters
+   :widths: 10 10 40
+   :header-rows: 1
 
+   * - Parameter
+     - Type
+     - Description
+   * - *User Domain* (required)
+     - string
+     - The Domain of the user.
+   * - username (required)
+     - string
+     - The user name. If you do not provide a user name and password, you
+       must provide a token.
+   * - password (required)
+     - string
+     - The password for the user.
+   * - *Project Domain* (optional)
+     - string
+     - The Domain of the project. This is a required part of the scope object.
+   * - *Project Name* (optional)
+     - string
+     - The project name. Both the *Project ID* and *Project Name* are optional.
+   * - *Project ID* (optional)
+     - string
+     - The project ID. Both the *project ID* and *Project Name* are
+       optional. But one of them is required along with the *Project
+       Domain*. They are wrapped under a scope object. If you do not know
+       the project name or ID, send a request without any scope object.
 
 In a typical OpenStack deployment that runs Identity, you can specify your
 project name, and user name and password credentials to authenticate.
 
-First, export your project name to the ``OS_PROJECT_NAME`` environment variable,
-your project domain name to the ``OS_PROJECT_DOMAIN_NAME`` environment variable,
-your user name to the ``OS_USERNAME`` environment variable, your password to the
-``OS_PASSWORD`` environment variable and your user domain name to the
-``OS_USER_DOMAIN_NAME`` environment variable.
+First, export your project name to the ``OS_PROJECT_NAME`` environment
+variable, your project domain name to the ``OS_PROJECT_DOMAIN_NAME``
+environment variable, your user name to the ``OS_USERNAME``
+environment variable, your password to the ``OS_PASSWORD`` environment
+variable and your user domain name to the ``OS_USER_DOMAIN_NAME``
+environment variable.
 
 The example below uses an endpoint from an installation of Ocata by following
 the installation guide. However, you can also use ``$OS_AUTH_URL`` as an
@@ -192,14 +193,15 @@ though it can be configured differently - see
 the `expiration <https://docs.openstack.org/keystone/latest/configuration/config-options.html#token.expiration>`__ option in the
 the *Identity Service Configuration Guide*.
 
-Export the project name to the ``OS_PROJECT_NAME`` environment variable. For example:
+Export the project name to the ``OS_PROJECT_NAME`` environment
+variable. For example:
 
 .. code-block:: console
 
    export OS_PROJECT_NAME=demo
 
-Then, use the Compute API to list flavors, substituting the Compute API endpoint with
-one containing your project ID below:
+Then, use the Compute API to list flavors, substituting the Compute
+API endpoint with one containing your project ID below:
 
 .. code-block:: console
 
@@ -572,4 +574,3 @@ command with the image and flavor IDs and the server name:
    For information about the default ports that the OpenStack components use,
    see `Firewalls and default ports <https://docs.openstack.org/install-guide/firewalls-default-ports.html>`_
    in the *OpenStack Installation Guide*.
-
