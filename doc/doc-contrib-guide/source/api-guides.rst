@@ -191,7 +191,7 @@ documentation, patch the ``reference/projects.yaml`` file in the
 .. _`example patch`: https://review.opendev.org/#/c/233446/
 .. _`API documentation guidelines`: https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
 .. _`microversions`: https://developer.openstack.org/api-guide/compute/microversions.html
-.. _`API Quick Start page`: https://developer.openstack.org/api-guide/quick-start/
+.. _`API Quick Start page`: https://docs.openstack.org/api-quick-start/
 .. _`cycle-with-milestones release model`: https://releases.openstack.org/reference/release_models.html#cycle-with-milestones
 .. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py
 .. _`openstack/api-site repository`: https://opendev.org/openstack/api-site/src/branch/master/api-quick-start/source/index.rst

@@ -31,7 +31,7 @@ PDF_TARGETS=( 'image-guide' \
               'install-guide')
 
 for guide in doc-contrib-guide glossary \
-    image-guide install-guide; do
+    api-quick-start image-guide install-guide; do
     if [[ ${PDF_TARGETS[*]} =~ $guide ]]; then
         tools/build-rst.sh doc/$guide --build build \
             --target $guide $LINKCHECK $PDF_OPTION
