@@ -9,7 +9,8 @@ Source files for developer.openstack.org
 
 The `developer.openstack.org`_ web site is intended for application developers
 using the OpenStack APIs to build upon. It contains links to multiple SDKs for
-specific programming languages, API references, and API Guides.
+specific programming languages. The API references and API Guides are
+stored on `docs.openstack.org`_.
 
 For existing APIs, the reference information comes from RST and YAML source
 files. The RST and YAML files get stored in your project repository in an
@@ -153,11 +154,11 @@ The basic steps are:
 
       [testenv:api-ref]
       # This environment is called from CI scripts to test and publish
-      # the API Ref to developer.openstack.org.
+      # the API Ref to docs.openstack.org.
       whitelist_externals = rm
       commands =
-              rm -rf api-ref/build
-              sphinx-build -W -b html -d api-ref/build/doctrees api-ref/source api-ref/build/html
+        rm -rf api-ref/build
+        sphinx-build -W -b html -d api-ref/build/doctrees api-ref/source api-ref/build/html
 
 #. Test the ``tox.ini`` changes by running this tox command:
 
@@ -170,7 +171,7 @@ The basic steps are:
    file stored in ``openstack/project-config`` repository.
 
 After the source files and build jobs exist, the docs are built to
-`developer.openstack.org`_.
+`docs.openstack.org`_.
 
 If your document is completely new, you need to add links to it from the API
 landing page and the OpenStack Governance reference document,
@@ -186,11 +187,12 @@ documentation, patch the ``reference/projects.yaml`` file in the
 
 
 .. _`developer.openstack.org`: https://developer.openstack.org
+.. _`docs.openstack.org`: https://docs.openstack.org
 .. _`wadl2rst`: https://github.com/annegentle/wadl2rst
-.. _`Compute API Guide`: https://developer.openstack.org/api-guide/compute
+.. _`Compute API Guide`: https://docs.openstack.org/api-guide/compute
 .. _`example patch`: https://review.opendev.org/#/c/233446/
 .. _`API documentation guidelines`: https://specs.openstack.org/openstack/api-wg/guidelines/api-docs.html
-.. _`microversions`: https://developer.openstack.org/api-guide/compute/microversions.html
+.. _`microversions`: https://docs.openstack.org/api-guide/compute/microversions.html
 .. _`API Quick Start page`: https://docs.openstack.org/api-quick-start/
 .. _`cycle-with-milestones release model`: https://releases.openstack.org/reference/release_models.html#cycle-with-milestones
 .. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py

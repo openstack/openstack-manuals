@@ -90,9 +90,9 @@ API Guides
 
 * New, cleaner `developer.openstack.org <https://developer.openstack.org>`_
   landing page.
-* `API Quick Start <https://developer.openstack.org/api-guide/quick-start/>`_
+* `API Quick Start <https://docs.openstack.org/api-quick-start/>`_
   converted to RST with theme styling to match.
-* `Compute API Guide <https://developer.openstack.org/api-guide/compute/>`_
+* `Compute API Guide <https://docs.openstack.org/api-guide/compute/>`_
   now built from nova source tree.
 * Built draft swagger files.
 * Created templates for writing API guides for projects teams available

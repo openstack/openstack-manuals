@@ -41,10 +41,10 @@ API guides
 
 * The API reference documentation has been moved from the api-site
   repository to project specific repositories. The collection of API docs
-  is now available on the `OpenStack API Documentation <https://developer.openstack.org/api-guide/quick-start/>`_.
+  is now available on the `OpenStack API Documentation <https://docs.openstack.org/api-quick-start/>`_.
 
-* The `Compute API <https://developer.openstack.org/api-ref/compute/>`_ and
-  `DNS API <https://developer.openstack.org/api-ref/dns/>`__ sites offer great
+* The `Compute API <https://docs.openstack.org/api-ref/compute/>`_ and
+  `DNS API <https://docs.openstack.org/api-ref/dns/>`__ sites offer great
   examples of the new API reference, maintained by the project team rather
   than a central docs team.
 
