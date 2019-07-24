@@ -50,7 +50,7 @@ The following book explains how to use the command-line clients:
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
 
-*  `API Documentation <https://developer.openstack.org/api-guide/quick-start/>`_
+*  `API Documentation <https://docs.openstack.org/api-quick-start/>`_
 
 The following guide provides information on how to contribute to OpenStack
 documentation:

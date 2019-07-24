@@ -20,6 +20,7 @@ Contents
 .. toctree::
    :maxdepth: 2
 
+   train.rst
    rocky.rst
    queens.rst
    pike.rst
