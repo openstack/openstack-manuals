@@ -229,13 +229,13 @@ _URLS = [
     URLSettings(
         flag_name='has_api_ref',
         types=['service'],
-        template='https://developer.openstack.org/api-ref/{service_type}/index.html',  # noqa
+        template='https://docs.openstack.org/api-ref/{service_type}/index.html',  # noqa
         default=False,
     ),
     URLSettings(
         flag_name='has_api_guide',
         types=['service'],
-        template='https://developer.openstack.org/api-guide/{service_type}/index.html',  # noqa
+        template='https://docs.openstack.org/api-guide/{service_type}/index.html',  # noqa
         default=False,
     ),
     URLSettings(
