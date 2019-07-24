@@ -10,7 +10,7 @@ openstackdocstheme
 ~~~~~~~~~~~~~~~~~~
 
 openstackdocstheme is a theme and extension support for Sphinx documentation
-that is published to docs.openstack.org and developer.openstack.org. It
+that is published to docs.openstack.org. It
 provides an external link helper to automatically build links that change when
 branches are created for each release series.
 

@@ -180,7 +180,7 @@ Send API requests
 
 This section shows how to make some basic Compute API calls. For a complete
 list of Compute API calls, see
-`Compute API <https://developer.openstack.org/api-ref/compute/>`__.
+`Compute API <https://docs.openstack.org/api-ref/compute/>`__.
 
 Export the token ID to the ``OS_TOKEN`` environment variable. For example:
 

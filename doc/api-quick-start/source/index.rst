@@ -27,7 +27,7 @@ complete other actions in your OpenStack cloud.
    The notation '(microversions)' next to the link to an API reference
    indicates that the API follows a `pattern established by the Compute
    service
-   <https://developer.openstack.org/api-guide/compute/microversions.html>`__
+   <https://docs.openstack.org/api-guide/compute/microversions.html>`__
    to enable small, documented changes to the API on a resource-by-resource
    basis.
 
@@ -36,67 +36,67 @@ complete other actions in your OpenStack cloud.
 Current API versions
 --------------------
 
-`Acceleration API v1 <https://developer.openstack.org/api-ref/accelerator/v1/>`__
+`Acceleration API v1 <https://docs.openstack.org/api-ref/accelerator/v1/>`__
 
-`Application Catalog API v1 <https://developer.openstack.org/api-ref/application-catalog/v1/>`__
+`Application Catalog API v1 <https://docs.openstack.org/api-ref/application-catalog/v1/>`__
 
-`Application Container Service API <https://developer.openstack.org/api-ref/application-container/>`__ (microversions)
+`Application Container Service API <https://docs.openstack.org/api-ref/application-container/>`__ (microversions)
 
-`Backup API v1 <https://developer.openstack.org/api-ref/backup/v1/>`__
+`Backup API v1 <https://docs.openstack.org/api-ref/backup/v1/>`__
 
-`Bare Metal API v1 <https://developer.openstack.org/api-ref/baremetal/>`__ (microversions)
+`Bare Metal API v1 <https://docs.openstack.org/api-ref/baremetal/>`__ (microversions)
 
-`Block Storage API v3 <https://developer.openstack.org/api-ref/block-storage/v3/>`__ (microversions)
+`Block Storage API v3 <https://docs.openstack.org/api-ref/block-storage/v3/>`__ (microversions)
 
 .. note:: The Block Storage API v3 is functionally identical to the
    Block Storage API v2. Subsequent API v3 microversions, such as v3.1,
    differ from API v2.
 
-`Clustering API v1 <https://developer.openstack.org/api-ref/clustering/>`__
+`Clustering API v1 <https://docs.openstack.org/api-ref/clustering/>`__
 
-`Compute API <https://developer.openstack.org/api-ref/compute/>`__ (microversions)
+`Compute API <https://docs.openstack.org/api-ref/compute/>`__ (microversions)
 
-`Container Infrastructure Management API <https://developer.openstack.org/api-ref/container-infrastructure-management/>`__ (microversions)
+`Container Infrastructure Management API <https://docs.openstack.org/api-ref/container-infrastructure-management/>`__ (microversions)
 
-`Data Processing v1.1 <https://developer.openstack.org/api-ref/data-processing/>`__
+`Data Processing v1.1 <https://docs.openstack.org/api-ref/data-processing/>`__
 
-`Data Protection Orchestration v1 <https://developer.openstack.org/api-ref/data-protection-orchestration/>`__
+`Data Protection Orchestration v1 <https://docs.openstack.org/api-ref/data-protection-orchestration/>`__
 
-`Database Service API v1.0 <https://developer.openstack.org/api-ref/database/>`__
+`Database Service API v1.0 <https://docs.openstack.org/api-ref/database/>`__
 
-`Domain Name Server (DNS) API v2 <https://developer.openstack.org/api-ref/dns/>`__
+`Domain Name Server (DNS) API v2 <https://docs.openstack.org/api-ref/dns/>`__
 
-`EC2 API Service <https://developer.openstack.org/api-ref/ec2-api/>`__
+`EC2 API Service <https://docs.openstack.org/api-ref/ec2-api/>`__
 
-`Function Engine <https://developer.openstack.org/api-ref/function-engine/>`__
+`Function Engine <https://docs.openstack.org/api-ref/function-engine/>`__
 
-`Identity API v3 <https://developer.openstack.org/api-ref/identity/v3>`__
+`Identity API v3 <https://docs.openstack.org/api-ref/identity/v3>`__
 
-`Identity API v3 extensions <https://developer.openstack.org/api-ref/identity/v3-ext>`__
+`Identity API v3 extensions <https://docs.openstack.org/api-ref/identity/v3-ext>`__
 
-`Image service API v2 <https://developer.openstack.org/api-ref/image/v2>`__
+`Image service API v2 <https://docs.openstack.org/api-ref/image/v2>`__
 
 `Key Manager API v1 <https://docs.openstack.org/barbican/latest/api/>`__
 
-`Load Balancer API v2 <https://developer.openstack.org/api-ref/load-balancer/v2>`__
+`Load Balancer API v2 <https://docs.openstack.org/api-ref/load-balancer/v2>`__
 
-`Messaging API v2 <https://developer.openstack.org/api-ref/message>`__
+`Messaging API v2 <https://docs.openstack.org/api-ref/message>`__
 
-`Networking API v2.0 <https://developer.openstack.org/api-ref/network/v2>`__
+`Networking API v2.0 <https://docs.openstack.org/api-ref/network/v2>`__
 
-`NFV Orchestration API v1.0 <https://developer.openstack.org/api-ref/nfv-orchestration/v1/>`__
+`NFV Orchestration API v1.0 <https://docs.openstack.org/api-ref/nfv-orchestration/v1/>`__
 
-`Object Storage API v1 <https://developer.openstack.org/api-ref/object-store>`__
+`Object Storage API v1 <https://docs.openstack.org/api-ref/object-store>`__
 
-`Orchestration API v1 <https://developer.openstack.org/api-ref/orchestration/v1/>`__
+`Orchestration API v1 <https://docs.openstack.org/api-ref/orchestration/v1/>`__
 
-`Placement API <https://developer.openstack.org/api-ref/placement/>`__ (microversions)
+`Placement API <https://docs.openstack.org/api-ref/placement/>`__ (microversions)
 
-`Resource Optimization API v1 <https://developer.openstack.org/api-ref/resource-optimization>`__
+`Resource Optimization API v1 <https://docs.openstack.org/api-ref/resource-optimization>`__
 
-`Search API v1 <https://developer.openstack.org/api-ref/search>`__
+`Search API v1 <https://docs.openstack.org/api-ref/search>`__
 
-`Shared File Systems API v2 <https://developer.openstack.org/api-ref/shared-file-system>`__ (microversions)
+`Shared File Systems API v2 <https://docs.openstack.org/api-ref/shared-file-system>`__ (microversions)
 
 .. note:: The Shared File Systems API v1 is functionally identical to the
    Shared File Systems API v2. Subsequent API v2 microversions, such as v2.1,
@@ -109,13 +109,13 @@ Supported API versions
 Deprecated API versions
 -----------------------
 
-`Block Storage API v2 <https://developer.openstack.org/api-ref/block-storage/v2/>`__
+`Block Storage API v2 <https://docs.openstack.org/api-ref/block-storage/v2/>`__
 
 .. note:: The Block Storage API v3 is functionally identical to the
    Block Storage API v2. Subsequent API v3 microversions, such as v3.1,
    differ from API v2.
 
-`Identity API v2.0 extensions <https://developer.openstack.org/api-ref/identity/v2-ext>`__
+`Identity API v2.0 extensions <https://docs.openstack.org/api-ref/identity/v2-ext>`__
 
 .. todo: telemetry link
 
