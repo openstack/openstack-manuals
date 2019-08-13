@@ -2735,6 +2735,21 @@ O
 
       Provides support for Open vSwitch in Networking.
 
+   OpenDev
+      `OpenDev <https://opendev.org>`__ is a space for collaborative
+      Open Source software development.
+
+      OpenDev’s mission is to provide project hosting, continuous
+      integration tooling, and virtual collaboration spaces for Open
+      Source software projects. OpenDev is itself self hosted on this
+      set of tools including code review, continuous integration,
+      etherpad, wiki, code browsing and so on. This means that OpenDev
+      itself is run like an open source project, you can join us and
+      help run the system. Additionally, all of the services run are
+      Open Source software themselves.
+
+      The OpenStack project is the largest project using OpenDev.
+
    OpenLDAP
 
       An open source LDAP server. Supported by both Compute and
@@ -4183,5 +4198,9 @@ Z
 
    Zuul
 
-      Tool used in OpenStack development to ensure correctly ordered
-      testing of changes in parallel.
+      `Zuul <https://zuul-ci.org>`__ is an open source CI/CD
+      platform specializing in gating changes across multiple systems
+      and applications before landing a single patch.
+
+      Zuul is used for OpenStack development to ensure that only
+      tested code gets merged.
