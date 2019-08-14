@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 # Set this to a sensible value if not set by OpenStack CI.
 if [ -z "$ZUUL_BRANCH" ] ; then
@@ -54,7 +54,7 @@ for guide in user-guide admin-guide cli-reference networking-guide config-refere
         tools/build-rst.sh doc/$guide --build build \
             --target "ocata/$guide" $LINKCHECK
     fi
-    echo $MARKER_TEXT > publish-docs/ocata/$guide/.root-marker
+    echo $MARKER_TEXT > publish-docs/html/ocata/$guide/.root-marker
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK $PDF_OPTION

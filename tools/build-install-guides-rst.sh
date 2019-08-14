@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 # Do not build  debian debconf for now, there're no Ocata packages at all.
 INDEX=doc/install-guide/source/index.rst
@@ -72,6 +72,6 @@ for tag in $TAGS; do
     fi
     # Add this for stable branches
     if [ "$ZUUL_REFNAME" != "master" ] ; then
-        echo $MARKER_TEXT > publish-docs/$TARGET/.root-marker
+        echo $MARKER_TEXT > publish-docs/html/$TARGET/.root-marker
     fi
 done
