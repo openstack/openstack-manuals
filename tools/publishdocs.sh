@@ -40,7 +40,7 @@ if [ "$PUBLISH" = "publish" ] ; then
     rsync -a www/static/ publish-docs/html/
     # Don't publish these files
     rm publish-docs/html/www-index.html
-    rm publish-docs/html/redirect-tests.txt
+    rm -rf publish-docs/html/project-data
 fi
 
 if [ "$PUBLISH" = "build" ] ; then

@@ -14,13 +14,13 @@
 
       Note that this build job does not create a root-marker file,
       this has to be done by scripts called from tox.
-    parent: openstack-tox
+    parent: opendev-tox-docs
     nodeset: ubuntu-bionic
     success-url: publish-docs/html/
-    post-run: playbooks/build-manuals-tox/post.yaml
     roles:
       - zuul: zuul/zuul-jobs
     vars:
+      sphinx_build_dir: 'publish-docs'
       tox_environment:
         # The tox job writes the root-marker file directly and thus
         # needs the following variables set:
@@ -30,20 +30,22 @@
         ZUUL_NEWREF: '{{ zuul.ref }}'
 
 - job:
+    # TODO(AJaeger): Rename to publishdocs
     name: build-tox-manuals-checkbuild
     parent: build-tox-manuals-base
     description: |
-      Build manuals using "checkbuild" tox environment.
+      Build manuals using "publishdocs" tox environment.
     vars:
-      tox_envlist: checkbuild
+      tox_envlist: publishdocs
 
 - job:
+    # TODO(AJaeger): Rename to publishlang
     name: build-tox-manuals-checklang
     parent: build-tox-manuals-base
     description: |
-      Build translated manuals using "checklang" tox environment.
+      Build translated manuals using "publishlang" tox environment.
     vars:
-      tox_envlist: checklang
+      tox_envlist: publishlang
     files:
       - ^.*\.po$
       - ^.*\.pot$
@@ -68,7 +70,7 @@
         - build-tox-manuals-checkbuild
     post:
       jobs:
-        - publish-openstack-manuals
+        - promote-openstack-manuals
 
 - project-template:
     name: openstack-manuals-developer-jobs
