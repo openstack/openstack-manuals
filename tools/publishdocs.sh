@@ -19,7 +19,7 @@ if [[ -z "$PUBLISH" ]] ; then
     exit 1
 fi
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 # Build all RST guides including PDF files
 tools/build-all-rst.sh --pdf
@@ -28,22 +28,22 @@ tools/build-all-rst.sh --pdf
 # www/www-index.html.
 if [ "$PUBLISH" = "build" ] ; then
     python3 tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs/www/
-    rsync -a www/static/ publish-docs/www/
-    # publish-docs/www-index.html is the trigger for openstack-indexpage
+        --output-directory publish-docs/html/www/
+    rsync -a www/static/ publish-docs/html/www/
+    # publish-docs/html/www-index.html is the trigger for openstack-indexpage
     # to include the file.
-    mv publish-docs/www/www-index.html publish-docs/www-index.html
+    mv publish-docs/html/www/www-index.html publish-docs/html/www-index.html
 fi
 if [ "$PUBLISH" = "publish" ] ; then
     python3 tools/www-generator.py --source-directory www/ \
-        --output-directory publish-docs --publish
-    rsync -a www/static/ publish-docs/
+        --output-directory publish-docs/html --publish
+    rsync -a www/static/ publish-docs/html/
     # Don't publish these files
-    rm publish-docs/www-index.html
-    rm publish-docs/redirect-tests.txt
+    rm publish-docs/html/www-index.html
+    rm publish-docs/html/redirect-tests.txt
 fi
 
 if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
-    openstack-indexpage publish-docs
+    openstack-indexpage publish-docs/html
 fi

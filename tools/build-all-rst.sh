@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 # Set this to a sensible value if not set by OpenStack CI.
 if [ -z "$ZUUL_BRANCH" ] ; then
@@ -43,5 +43,5 @@ done
 
 # For master, just mark the root
 if [ "$ZUUL_BRANCH" = "master" ] ; then
-    echo $MARKER_TEXT > publish-docs/.root-marker
+    echo $MARKER_TEXT > publish-docs/html/.root-marker
 fi

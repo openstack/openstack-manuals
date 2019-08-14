@@ -9,14 +9,14 @@
     description: |
       Base job to build manual related documents. These build jobs
       invoke a tox command and expect the published content to be in
-      publish-docs directory. This content is published on the root of
+      publish-docs/html directory. This content is published on the root of
       the website.
 
       Note that this build job does not create a root-marker file,
       this has to be done by scripts called from tox.
     parent: openstack-tox
     nodeset: ubuntu-bionic
-    success-url: publish-docs/
+    success-url: publish-docs/html/
     post-run: playbooks/build-manuals-tox/post.yaml
     roles:
       - zuul: zuul/zuul-jobs

@@ -17,7 +17,7 @@ DIRECTORY=$1
 if [ -z "$DIRECTORY" ] ; then
     echo "usage $0 DIRECTORY options"
     echo "Options are:"
-    echo "--target TARGET: Copy files to publish-docs/$TARGET"
+    echo "--target TARGET: Copy files to publish-docs/html/$TARGET"
     echo "--build BUILD: Name of build directory"
     echo "--linkcheck: Check validity of links instead of building"
     echo "--pdf: PDF file generation"
@@ -88,9 +88,9 @@ else
 
     # Copy RST (and PDF)
     if [ "$TARGET" != "" ] ; then
-        mkdir -p publish-docs/$TARGET
-        rsync -a $BUILD_DIR/ publish-docs/$TARGET/
+        mkdir -p publish-docs/html/$TARGET
+        rsync -a $BUILD_DIR/ publish-docs/html/$TARGET/
         # Remove unneeded build artefact
-        rm -f publish-docs/$TARGET/.buildinfo
+        rm -f publish-docs/html/$TARGET/.buildinfo
     fi
 fi

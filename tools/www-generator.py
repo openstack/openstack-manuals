@@ -127,7 +127,7 @@ def parse_command_line_arguments():
     parser.add_argument("--source-directory", type=str,
                         default='www', help='Set source directory.')
     parser.add_argument("--output-directory", type=str,
-                        default='publish-docs/www',
+                        default='publishdocs/html/www',
                         help='Set output directory.')
     parser.add_argument("--check-all-links", action="store_true",
                         default=False,

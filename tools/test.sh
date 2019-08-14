@@ -1,9 +1,9 @@
 #!/bin/bash -xe
 
-if [[ -d publish-docs/www/ ]]; then
-    output=publish-docs/www
+if [[ -d publish-docs/html/www/ ]]; then
+    output=publish-docs/html/www
 else
-    output=publish-docs/
+    output=publish-docs/html/
 fi
 
 .tox/checkbuild/bin/python tools/www-generator.py --verbose --source-directory www/ \
@@ -12,8 +12,8 @@ fi
 if [[ $? -eq 0 ]]; then
     rsync -a www/static/ $output
 fi
-# publish-docs/www-index.html is the trigger for openstack-indexpage
+# publish-docs/html/www-index.html is the trigger for openstack-indexpage
 # to include the file.
-#mv publish-docs/www/www-index.html publish-docs/www-index.html
+#mv publish-docs/html/www/www-index.html publish-docs/html/www-index.html
 
 .tox/checkbuild/bin/whereto $output/.htaccess $output/redirect-tests.txt
