@@ -23,4 +23,4 @@ Sample container server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-server.conf-sample?h=newton-eol
+   https://opendev.org/openstack/swift/raw/tag/newton-eol/etc/container-server.conf-sample

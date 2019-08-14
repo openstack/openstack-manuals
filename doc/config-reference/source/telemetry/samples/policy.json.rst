@@ -7,4 +7,4 @@ to the Telemetry service.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/ceilometer/plain/etc/ceilometer/policy.json?h=newton-eol
+   https://opendev.org/openstack/ceilometer/raw/tag/newton-eol/etc/ceilometer/policy.json

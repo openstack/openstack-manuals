@@ -4,4 +4,4 @@ glance-swift.conf
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-swift.conf.sample?h=newton-eol
+   https://opendev.org/openstack/glance/raw/tag/newton-eol/etc/glance-swift.conf.sample

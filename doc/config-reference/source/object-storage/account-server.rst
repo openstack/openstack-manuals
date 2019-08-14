@@ -22,4 +22,4 @@ Sample account server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/account-server.conf-sample?h=newton-eol
+   https://opendev.org/openstack/swift/raw/tag/newton-eol/etc/account-server.conf-sample

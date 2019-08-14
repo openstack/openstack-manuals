@@ -7,4 +7,4 @@ options:
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone.conf.sample?h=newton-eol
+   https://opendev.org/openstack/keystone/raw/tag/newton-eol/etc/keystone.conf.sample

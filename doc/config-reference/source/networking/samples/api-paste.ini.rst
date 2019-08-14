@@ -7,4 +7,4 @@ gateway interface (WSGI).
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/neutron/plain/etc/api-paste.ini?h=newton-eol
+   https://opendev.org/openstack/neutron/raw/tag/newton-eol/etc/api-paste.ini

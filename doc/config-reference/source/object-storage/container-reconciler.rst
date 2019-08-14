@@ -20,4 +20,4 @@ Sample container sync reconciler configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-reconciler.conf-sample?h=newton-eol
+   https://opendev.org/openstack/swift/raw/tag/newton-eol/etc/container-reconciler.conf-sample

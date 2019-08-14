@@ -15,4 +15,4 @@ are found in the ``glance-manage.conf`` file.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-manage.conf?h=newton-eol
+   https://opendev.org/openstack/glance/raw/tag/newton-eol/etc/glance-manage.conf

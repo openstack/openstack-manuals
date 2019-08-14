@@ -19,32 +19,7 @@ if [[ -z "$PUBLISH" ]] ; then
     exit 1
 fi
 
-# Copy files from draft to named branch and replace all links from
-# draft with links to the branch
-function copy_to_branch {
-    BRANCH=$1
-
-    if [ -e publish-docs/draft ] ; then
-
-        # Copy files over
-        mkdir -p publish-docs/$BRANCH
-        cp -a publish-docs/draft/* publish-docs/$BRANCH/
-        # We don't need this file
-        rm -f publish-docs/$BRANCH/draft-index.html
-        # We don't need these draft guides on the branch
-        rm -rf publish-docs/$BRANCH/arch-design-draft
-        rm -rf publish-docs/$BRANCH/ops-guide
-
-        for f in $(find publish-docs/$BRANCH -name "atom.xml"); do
-            sed -i -e "s|/draft/|/$BRANCH/|g" $f
-        done
-        for f in $(find publish-docs/$BRANCH -name "*.html"); do
-            sed -i -e "s|/draft/|/$BRANCH/|g" $f
-        done
-    fi
-}
-
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 # Build all RST guides
 tools/build-all-rst.sh
@@ -76,5 +51,5 @@ tools/build-all-rst.sh
 
 if [ "$PUBLISH" = "build" ] ; then
     # Create index page for viewing
-    openstack-indexpage publish-docs
+    openstack-indexpage publish-docs/html
 fi

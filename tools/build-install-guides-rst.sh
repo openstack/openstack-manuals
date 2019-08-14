@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 TAGS=${1:-obs rdo ubuntu debian debconf}
 INDEX=doc/install-guide/source/index.rst
@@ -46,5 +46,5 @@ for tag in $TAGS; do
         tools/build-rst.sh doc/install-guide \
             --tag ${tag} --target "newton/install-guide-${tag}" $LINKCHECK
     fi
-    echo $MARKER_TEXT > publish-docs/newton/install-guide-${tag}/.root-marker
+    echo $MARKER_TEXT > publish-docs/html/newton/install-guide-${tag}/.root-marker
 done

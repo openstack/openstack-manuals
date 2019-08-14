@@ -9,4 +9,4 @@ This file must be modified after installation.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-registry.conf?h=newton-eol
+   https://opendev.org/openstack/glance/raw/tag/newton-eol/etc/glance-registry.conf

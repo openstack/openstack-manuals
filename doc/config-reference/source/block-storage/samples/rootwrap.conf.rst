@@ -8,4 +8,4 @@ privileges to those of the root user.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/cinder/plain/etc/cinder/rootwrap.conf?h=newton-eol
+   https://opendev.org/openstack/cinder/raw/tag/newton-eol/etc/cinder/rootwrap.conf
