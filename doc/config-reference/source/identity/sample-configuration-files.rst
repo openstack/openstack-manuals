@@ -13,7 +13,7 @@ options:
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone.conf.sample?h=mitaka-eol
+   https://opendev.org/openstack/keystone/raw/tag/mitaka-eol/etc/keystone.conf.sample
 
 keystone-paste.ini
 ~~~~~~~~~~~~~~~~~~
@@ -23,7 +23,7 @@ Interface (WSGI) middleware pipeline for the Identity service:
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/keystone-paste.ini?h=mitaka-eol
+   https://opendev.org/openstack/keystone/raw/tag/mitaka-eol/etc/keystone-paste.ini
 
 logging.conf
 ~~~~~~~~~~~~
@@ -36,7 +36,7 @@ For details, see the `Python logging module documentation
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/logging.conf.sample?h=mitaka-eol
+   https://opendev.org/openstack/keystone/raw/tag/mitaka-eol/etc/logging.conf.sample
 
 policy.json
 ~~~~~~~~~~~
@@ -46,4 +46,4 @@ the Identity service:
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/keystone/plain/etc/policy.json?h=mitaka-eol
+   https://opendev.org/openstack/keystone/raw/tag/mitaka-eol/etc/policy.json

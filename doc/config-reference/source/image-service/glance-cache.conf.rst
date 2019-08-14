@@ -7,4 +7,4 @@ are found in the ``glance-cache.conf`` file.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-cache.conf?h=mitaka-eol
+   https://opendev.org/openstack/glance/raw/tag/mitaka-eol/etc/glance-cache.conf

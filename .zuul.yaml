@@ -8,17 +8,17 @@
     description: |
       Base job to build manual related documents. These build jobs
       invoke a tox command and expect the published content to be in
-      publish-docs directory. This content is published on the root of
+      publish-docs/html directory. This content is published on the root of
       the website.
 
       Note that this build job does not create a root-marker file,
       this has to be done by scripts called from tox.
-    parent: openstack-tox
-    success-url: publish-docs/
-    post-run: playbooks/build-manuals-tox/post.yaml
+    parent: opendev-tox-docs
+    success-url: publish-docs/html/
     roles:
       - zuul: zuul/zuul-jobs
     vars:
+      sphinx_build_dir: 'publish-docs'
       tox_environment:
         # The tox job writes the root-marker file directly and thus
         # needs the following variables set:
@@ -28,10 +28,10 @@
         ZUUL_NEWREF: '{{ zuul.ref }}'
 
 - job:
-    name: build-tox-manuals-checkbuild
+    name: build-tox-manuals-publishdocs
     parent: build-tox-manuals
     vars:
-      tox_envlist: checkbuild
+      tox_envlist: publishdocs
 
 # Templates to easily group jobs.
 - project-template:
@@ -41,14 +41,14 @@
     check:
       jobs:
         - openstack-tox-linters
-        - build-tox-manuals-checkbuild
+        - build-tox-manuals-publishdocs
     gate:
       jobs:
         - openstack-tox-linters
-        - build-tox-manuals-checkbuild
-    post:
+        - build-tox-manuals-publishdocs
+    promote:
       jobs:
-        - publish-openstack-manuals
+        - promote-openstack-manuals
 
 # Configuration for this repository, determines which jobs to run.
 - project:

@@ -7,4 +7,4 @@ that apply to the Compute service.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/nova/plain/etc/nova/policy.json?h=mitaka-eol
+   https://opendev.org/openstack/nova/raw/tag/mitaka-eol/etc/nova/policy.json

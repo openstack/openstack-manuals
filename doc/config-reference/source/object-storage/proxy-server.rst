@@ -29,4 +29,4 @@ Sample proxy server configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/proxy-server.conf-sample?h=mitaka-eol
+   https://opendev.org/openstack/swift/raw/tag/mitaka-eol/etc/proxy-server.conf-sample

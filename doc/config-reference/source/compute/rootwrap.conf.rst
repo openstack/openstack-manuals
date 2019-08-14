@@ -12,4 +12,4 @@ to sudo only. Configure the ``disable_rootwrap`` option in the
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/nova/plain/etc/nova/rootwrap.conf?h=mitaka-eol
+   https://opendev.org/openstack/nova/raw/tag/mitaka-eol/etc/nova/rootwrap.conf

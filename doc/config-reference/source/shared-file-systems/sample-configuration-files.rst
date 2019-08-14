@@ -25,7 +25,7 @@ service.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/manila/plain/etc/manila/api-paste.ini?h=mitaka-eol
+   https://opendev.org/openstack/manila/raw/tag/mitaka-eol/etc/manila/api-paste.ini
 
 policy.json
 -----------
@@ -35,7 +35,7 @@ to the Shared File Systems service.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/manila/plain/etc/manila/policy.json?h=mitaka-eol
+   https://opendev.org/openstack/manila/raw/tag/mitaka-eol/etc/manila/policy.json
 
 rootwrap.conf
 -------------
@@ -46,4 +46,4 @@ its privileges to those of the root user.
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/manila/plain/etc/manila/rootwrap.conf?h=mitaka-eol
+   https://opendev.org/openstack/manila/raw/tag/mitaka-eol/etc/manila/rootwrap.conf

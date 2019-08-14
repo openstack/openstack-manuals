@@ -7,4 +7,4 @@ The Compute service stores its API configuration settings in the
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/nova/plain/etc/nova/api-paste.ini?h=mitaka-eol
+   https://opendev.org/openstack/nova/raw/tag/mitaka-eol/etc/nova/api-paste.ini

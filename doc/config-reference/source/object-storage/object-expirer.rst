@@ -20,4 +20,4 @@ Sample object expirer configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/object-expirer.conf-sample?h=mitaka-eol
+   https://opendev.org/openstack/swift/raw/tag/mitaka-eol/etc/object-expirer.conf-sample

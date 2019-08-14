@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 TAGS=${1:-obs rdo ubuntu}
 INDEX=doc/install-guide/source/index.rst
@@ -44,5 +44,5 @@ for tag in $TAGS; do
     tools/build-rst.sh doc/install-guide  \
         $GLOSSARY --tag ${tag} --target "mitaka/install-guide-${tag}" \
         $LINKCHECK
-    echo $MARKER_TEXT > publish-docs/mitaka/install-guide-${tag}/.root-marker
+    echo $MARKER_TEXT > publish-docs/html/mitaka/install-guide-${tag}/.root-marker
 done

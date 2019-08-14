@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p publish-docs
+mkdir -p publish-docs/html
 
 LINKCHECK=""
 if [[ $# > 0 ]] ; then
@@ -29,7 +29,7 @@ MARKER_TEXT="Project: $ZUUL_PROJECT Ref: $ZUUL_BRANCH Build: $ZUUL_UUID Revision
 for guide in user-guide admin-guide cli-reference networking-guide config-reference ; do
     tools/build-rst.sh doc/$guide --build build \
         --target "mitaka/$guide" $LINKCHECK
-    echo $MARKER_TEXT > publish-docs/mitaka/$guide/.root-marker
+    echo $MARKER_TEXT > publish-docs/html/mitaka/$guide/.root-marker
 done
 
 tools/build-install-guides-rst.sh $LINKCHECK

@@ -16,4 +16,4 @@ Sample container sync realms configuration file
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/swift/plain/etc/container-sync-realms.conf-sample?h=mitaka-eol
+   https://opendev.org/openstack/swift/raw/tag/mitaka-eol/etc/container-sync-realms.conf-sample

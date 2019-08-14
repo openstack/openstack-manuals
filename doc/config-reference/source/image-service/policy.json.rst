@@ -7,4 +7,4 @@ apply to the Image service.
 
 .. remote-code-block:: json
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/policy.json?h=mitaka-eol
+   https://opendev.org/openstack/glance/raw/tag/mitaka-eol/etc/policy.json

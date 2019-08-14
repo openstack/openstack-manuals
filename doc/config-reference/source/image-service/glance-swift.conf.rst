@@ -4,4 +4,4 @@ glance-swift.conf
 
 .. remote-code-block:: ini
 
-   https://git.openstack.org/cgit/openstack/glance/plain/etc/glance-swift.conf.sample?h=mitaka-eol
+   https://opendev.org/openstack/glance/raw/tag/mitaka-eol/etc/glance-swift.conf.sample
