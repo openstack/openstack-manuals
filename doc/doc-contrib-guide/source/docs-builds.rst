@@ -197,11 +197,11 @@ that do automatic testing of patches.
 For openstack-manuals, the current jobs are:
 
 * openstack-tox-linters
-* build-tox-manual-checkbuild
-* build-tox-manual-checklang
+* build-tox-manual-publishdocs
+* build-tox-manual-publishlang
 
-Checklang job
--------------
+Publishlang job
+---------------
 
 We only gate on manual/language combinations that are translated
 sufficiently.
@@ -212,7 +212,7 @@ sufficiently.
   <https://bugs.launchpad.net/openstack-i18n>`_.
 
 If you want to manually run this check in your clone of openstack-manuals, use
-the checklang environment (:command:`tox -e checklang`).
+the publishlang environment (:command:`tox -e publishlang`).
 
 .. _docs_builds_eol:
 

@@ -85,9 +85,9 @@ CI jobs.
 
 If you like to run individual tests, run:
 
-* ``tox -e checkbuild`` - to actually build the manual; this also generates a
+* ``tox -e publishdocs`` - to actually build the manual; this also generates a
   directory ``publish-docs`` that contains the built files for inspection
-* ``tox -e checklang`` - to build translated manuals
+* ``tox -e publishlang`` - to build translated manuals
 * ``tox -e linters`` - to run the niceness tests, for example, to see extra
   whitespaces
 * ``tox -e linkcheck`` - to run the tests for working remote URLs

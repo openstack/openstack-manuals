@@ -6,7 +6,7 @@ else
     output=publish-docs/html/
 fi
 
-.tox/checkbuild/bin/python tools/www-generator.py --verbose --source-directory www/ \
+.tox/publishdocs/bin/python tools/www-generator.py --verbose --source-directory www/ \
         --output-directory $output $@
 
 if [[ $? -eq 0 ]]; then
@@ -16,4 +16,4 @@ fi
 # to include the file.
 #mv publish-docs/html/www/www-index.html publish-docs/html/www-index.html
 
-.tox/checkbuild/bin/whereto $output/.htaccess $output/redirect-tests.txt
+.tox/publishdocs/bin/whereto $output/.htaccess $output/redirect-tests.txt

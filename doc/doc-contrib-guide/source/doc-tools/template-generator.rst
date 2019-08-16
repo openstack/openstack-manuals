@@ -465,7 +465,7 @@ There are two commands useful for testing the build locally:
 
 .. code-block:: console
 
-   $ tox -e checkbuild
+   $ tox -e publishdocs
 
 and
 

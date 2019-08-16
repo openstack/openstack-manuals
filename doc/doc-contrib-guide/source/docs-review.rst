@@ -60,9 +60,9 @@ Once done, follow the steps below to submit a patch review.
    you can also highlight the line or word in question, and press 'c'
    on your keyboard, which enables commenting directly on that line or word.
    Click :guilabel:`Save` button once you write a draft of your comment.
-#. In the :guilabel:`Zuul check` section, click the ``checkbuild``
+#. In the :guilabel:`Zuul check` section, click the ``publishdocs``
    gate link (for the openstack-manuals, it is called
-   ``build-tox-manuals-checkbuild``) and review the built manuals to see how
+   ``build-tox-manuals-publishdocs``) and review the built manuals to see how
    the change will look on the web page. For a new patch, it takes some time
    before the OpenStack CI system checks appear on the Gerrit page.
    You can also :ref:`build the patch locally <docs_builds_locally>`

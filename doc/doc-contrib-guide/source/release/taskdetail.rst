@@ -134,7 +134,7 @@ Make the following changes in the **openstack-manuals** repository:
    templates for the release being completed will use the data from
    the file created in the previous step.
 
-#. Test the build locally with ``tox -e checkbuild``.
+#. Test the build locally with ``tox -e publishdocs``.
 
    If any project links are missing and cause the template generator
    to fail, set the flags to disable linking to those docs. For
