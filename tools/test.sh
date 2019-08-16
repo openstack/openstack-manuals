@@ -12,8 +12,5 @@ fi
 if [[ $? -eq 0 ]]; then
     rsync -a www/static/ $output
 fi
-# publish-docs/html/www-index.html is the trigger for openstack-indexpage
-# to include the file.
-#mv publish-docs/html/www/www-index.html publish-docs/html/www-index.html
 
 .tox/publishdocs/bin/whereto $output/.htaccess $output/redirect-tests.txt

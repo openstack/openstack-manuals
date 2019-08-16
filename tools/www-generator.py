@@ -602,17 +602,11 @@ def main():
 
     # Render the templates.
     output_pages = []
-    page_list_template = None
     template_files = environment.list_templates()
     for template_file in template_files:
         if (template_file.startswith('static/') or
                 template_file.startswith('templates/')):
             logger.info('ignoring %s', template_file)
-            continue
-        if template_file.endswith('www-index.html'):
-            # Process this one at the end, so we have the full list of
-            # other output files.
-            page_list_template = template_file
             continue
         render_template(
             environment,
@@ -625,22 +619,6 @@ def main():
             args.publish
         )
         output_pages.append(template_file)
-
-    if page_list_template is not None:
-        output_pages.sort()
-        render_template(
-            environment,
-            project_data,
-            regular_repos,
-            infra_repos,
-            template_files,
-            page_list_template,
-            args.output_directory,
-            args.publish,
-            extra={
-                'file_list': output_pages,
-            },
-        )
 
     return 0
 
