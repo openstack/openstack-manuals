@@ -44,7 +44,7 @@
       Build translated manuals using "publishlang" tox environment.
     vars:
       tox_envlist: publishlang
-    files:
+    files: &files-publishlang
       - ^.*\.po$
       - ^.*\.pot$
       - ^.*requirements.txt$
@@ -97,7 +97,8 @@
         - build-tox-manuals-publishlang
     promote:
       jobs:
-        - promote-openstack-manuals-lang
+        - promote-openstack-manuals-lang:
+            files: *files-publishlang
 
 # Configuration for this repository, determines which jobs to run.
 - project:
