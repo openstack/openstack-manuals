@@ -64,12 +64,6 @@ bin
   Contains scripts for building documents in the ``openstack-manuals``
   repository. Used inside the tox environments.
 
-os_doc_tools directory
-----------------------
-
-openstack-jsoncheck
-  Checks JSON files. Used for the API guides.
-
 
 openstack-manuals repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
