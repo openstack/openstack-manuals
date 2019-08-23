@@ -4,7 +4,7 @@ OpenStack Manuals
 This repository contains documentation for the OpenStack project.
 
 For more details, see the `OpenStack Documentation Contributor
-Guide <http://docs.openstack.org/contributor-guide/>`_.
+Guide <http://docs.openstack.org/doc-contrib-guide/>`_.
 
 It includes these manuals:
 
