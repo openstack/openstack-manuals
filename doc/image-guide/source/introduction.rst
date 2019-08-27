@@ -2,12 +2,6 @@
 Introduction
 ============
 
-.. toctree::
-   :maxdepth: 1
-
-   image-formats.rst
-   image-metadata.rst
-
 An OpenStack Compute cloud is not very useful unless you have virtual
 machine images (which some people call "virtual appliances").
 This guide describes how to obtain, create, and modify virtual machine
@@ -21,109 +15,220 @@ instead of virtual machine image.
 A virtual machine image is a single file which contains a virtual disk
 that has a bootable operating system installed on it.
 
-Virtual machine images come in different formats, some of which are
-described below.
+Disk and container formats for images
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-AKI/AMI/ARI
- The `AKI/AMI/ARI
- <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html>`_
- format was the initial image format supported by Amazon EC2.
- The image consists of three files:
+Virtual machine images come in different *formats*.  A format describes the way
+the bits making up a file are arranged on the storage medium.  Knowledge of a
+format is required in order for a consumer to interpret the content of the file
+correctly (rather than to simply view it as a bunch of bits).
 
- AKI (Amazon Kernel Image)
-  A kernel file that the hypervisor will load initially to boot the image.
-  For a Linux machine, this would be a ``vmlinuz`` file.
+When considering a stored virtual machine image, there are two types of format
+that can come into play.
 
- AMI (Amazon Machine Image)
-  This is a virtual machine image in raw format, as described above.
+container format
+    The stored file may be a *container* that contains the virtual disk.  For
+    example, the virtual disk may be contained in a ``tar`` file which must
+    be opened before the disk can be retrieved.  It's possible, however, that
+    the virtual disk is not contained in a file, but is just stored as-is by
+    the Image Service.
 
- ARI (Amazon Ramdisk Image)
-  An optional ramdisk file mounted at boot time.
-  For a Linux machine, this would be an ``initrd`` file.
+disk format
+    The virtual disk itself has its bits arranged in some format.  A consuming
+    service must know what this format is before it can effectively use the
+    virtual disk.
 
-ISO
- The `ISO
- <http://www.ecma-international.org/publications/standards/Ecma-119.htm>`_
- format is a disk image formatted with the read-only ISO 9660 (also known
- as ECMA-119) filesystem commonly used for CDs and DVDs.
- While we do not normally think of ISO as a virtual machine image format,
- since ISOs contain bootable filesystems with an installed operating system,
- you can treat them the same as you treat other virtual machine image files.
+Image metadata
+~~~~~~~~~~~~~~
 
-OVF
- `OVF <http://dmtf.org/sites/default/files/OVF_Overview_Document_2010.pdf>`_
- (Open Virtualization Format) is a packaging format for virtual machines,
- defined by the Distributed Management Task Force (DMTF) standards group.
- An OVF package contains one or more image files, a ``.ovf`` XML metadata file
- that contains information about the virtual machine, and possibly other
- files as well.
+Image metadata (also known as "image properties") provide information about the
+virtual disk stored by the Image service.  The metadata is stored as part of
+the image record associated with the image data by the Image service.  Image
+metadata can help end users determine the nature of an image, and is used by
+associated OpenStack components and drivers which interface with the Image
+service.
 
- An OVF package can be distributed in different ways. For example,
- it could be distributed as a set of discrete files, or as a tar archive
- file with an ``.ova`` (open virtual appliance/application) extension.
+So that image consumers can easily identify the container and disk format of
+images, the image service has set aside particular metadata keys for these.
+Not surprisingly, these are named ``container_format`` and ``disk_format``.
+The legal values for each of these are specified in the Image service's Image
+schema, which you can obtain in any OpenStack installation by making the
+following API call::
 
- OpenStack Compute does not currently have support for OVF packages,
- so you will need to extract the image file(s) from an OVF package
- if you wish to use it with OpenStack.
+  GET /v2/schemas/image
 
-QCOW2
- The `QCOW2 <http://en.wikibooks.org/wiki/QEMU/Images>`_
- (QEMU copy-on-write version 2) format is commonly used with the
- KVM hypervisor.
- It has some additional features over the raw format, such as:
+The supported formats may vary across OpenStack clouds.  The formats accepted
+by a particular cloud will be specified in that cloud's get-schema response to
+the Images API.
 
- * Using sparse representation, so the image size is smaller.
- * Support for snapshots.
+.. note::
 
- Because qcow2 is sparse, qcow2 images are typically smaller than
- raw images. Smaller images mean faster uploads, so it is often
- faster to convert a raw image to qcow2 for uploading instead of
- uploading the raw file directly.
+   The image schema lists the legal identifiers for container and disk formats.
+   To understand what these identifiers refer to, consult the
+   `Disk and Container Formats
+   <https://docs.openstack.org/glance/latest/user/formats.html>`_
+   section of the Glance User Guide.
 
- .. note::
+Image metadata can also determine the scheduling of hosts.  If specific
+metadata are set on an image (possible metadata are architecture, hypervisor
+type, and virtual machine mode), and Compute is configured so that the
+``ImagePropertiesFilter`` scheduler filter is enabled (default), then the
+scheduler only considers compute hosts that satisfy the specified properties.
 
-    Because raw images do not support snapshots, OpenStack Compute
-    will automatically convert raw image files to qcow2 as needed.
+.. note::
 
-Raw
- The ``raw`` image format is the simplest one, and is natively
- supported by both KVM and Xen hypervisors.
- You can think of a raw image as being the bit-equivalent of
- a block device file, created as if somebody had copied, say,
- ``/dev/sda`` to a file using the :command:`dd` command.
+   Compute's ``ImagePropertiesFilter`` value is specified in the
+   ``enabled_filters`` value in the ``[filter_scheduler]`` section
+   of the ``/etc/nova/nova.conf`` file.
 
- .. note::
+Other Compute scheduler filters may also be affected by image metadata.
+For a complete list of valid property keys and values, refer to the
+`Useful image properties
+<https://docs.openstack.org/glance/latest/admin/useful-image-properties.html>`_
+section of the Glance Administration Guide.
 
-    We do not recommend creating raw images by dd'ing block device
-    files, we discuss how to create raw images later.
+Adding metadata to an image
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-UEC tarball
- A UEC (Ubuntu Enterprise Cloud) tarball is a gzipped tarfile that
- contains an AMI file, AKI file, and ARI file.
+You can add metadata to Image service images by using the
+``--property key=value`` parameter with the
+:command:`openstack image create` or :command:`openstack image set`
+command. More than one property can be specified. For example:
 
- .. note::
+.. code-block:: console
 
-    Ubuntu Enterprise Cloud refers to a discontinued Eucalyptus-based
-    Ubuntu cloud solution that has been replaced by the OpenStack-based
-    Ubuntu Cloud Infrastructure.
+   $ openstack image set --property architecture=arm \
+     --property hypervisor_type=qemu image_name_or_id
 
-VDI
- VirtualBox uses the
- `VDI <https://forums.virtualbox.org/viewtopic.php?t=8046>`_
- (Virtual Disk Image) format for image files. None of the OpenStack Compute
- hypervisors support VDI directly, so you will need to convert these files
- to a different format to use them with OpenStack.
+Common image properties are also specified in the
+``/etc/glance/schema-image.json`` file.  Other useful property keys and values,
+are listed in the
+`Useful image properties
+<https://docs.openstack.org/glance/latest/admin/useful-image-properties.html>`_
+section of the Glance Administration Guide.
 
-VHD
- Microsoft Hyper-V uses the VHD (Virtual Hard Disk) format for images.
+All associated properties for an image can be displayed using the
+:command:`openstack image show` command. For example:
 
-VHDX
- The version of Hyper-V that ships with Microsoft Server 2012 uses the newer
- `VHDX <http://technet.microsoft.com/en-us/library/hh831446.aspx>`_ format,
- which has some additional features over VHD such as support for larger disk
- sizes and protection against data corruption during power failures.
+.. code-block:: console
 
-VMDK
- VMware ESXi hypervisor uses the
- `VMDK <https://developercenter.vmware.com/web/sdk/60/vddk>`_
- (Virtual Machine Disk) format for images.
+   $ openstack image show cirros
+   +------------------+------------------------------------------------------+
+   | Field            | Value                                                |
+   +------------------+------------------------------------------------------+
+   | checksum         | ee1eca47dc88f4879d8a229cc70a07c6                     |
+   | container_format | bare                                                 |
+   | created_at       | 2016-04-15T13:57:38Z                                 |
+   | disk_format      | qcow2                                                |
+   | file             | /v2/images/55f0907f-70a5-4376-a346-432e4ec509ed/file |
+   | id               | 55f0907f-70a5-4376-a346-432e4ec509ed                 |
+   | min_disk         | 0                                                    |
+   | min_ram          | 0                                                    |
+   | name             | cirros                                               |
+   | owner            | f9574e69042645d6b5539035cb8c00bf                     |
+   | properties       | architecture='arm', hypervisor_type='qemu'           |
+   | protected        | False                                                |
+   | schema           | /v2/schemas/image                                    |
+   | size             | 13287936                                             |
+   | status           | active                                               |
+   | tags             |                                                      |
+   | updated_at       | 2016-04-15T13:57:57Z                                 |
+   | virtual_size     | None                                                 |
+   | visibility       | public                                               |
+   +------------------+------------------------------------------------------+
+
+.. note::
+
+   **Volume-from-Image properties**
+
+   When creating Block Storage volumes from images, also consider your
+   configured image properties. If you alter the core image properties,
+   you should also update your Block Storage configuration.
+   Amend ``glance_core_properties`` in the ``/etc/cinder/cinder.conf``
+   file on all controller nodes to match the core properties you have
+   set in the Image service.
+
+Metadata definition (metadefs) service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Images are not the only OpenStack resource that can have metadata associated
+with them.  Many other resources (for example, volumes) support setting
+metadata on the resources.  As with images, the metadata may be consumed by
+humans to understand something about the resource, or may be used by other
+OpenStack services so that they can make efficient use of the resource (for
+example, the nova filter scheduler using the image ``architecture`` property to
+determine an appropraite host on which to build an instance from that image).
+Thus it is important that there be a discoverable way for people and services
+to determine what metadata properties and values are available throughout an
+OpenStack cloud.
+
+To facilitate this, Glance (the OpenStack Image service) hosts a metadata
+definition service, which is also known as the *OpenStack metadefs catalog*.
+
+With this service you can define:
+
+Namespace
+ * Contains metadata definitions.
+
+ * Specifies the access controls for everything defined in the namespace.
+   These access controls determine who can define and use the definitions
+   in the namespace.
+
+ * Associates the definitions with different types of resources.
+
+Property
+ A single property and its primitive constraints. Each property can only
+ be a primitive type. For example, string, integer, number, boolean, or array.
+
+Object
+ Describes a group of one to many properties and their primitive
+ constraints. Each property in the group can only be a primitive type. For
+ example, string, integer, number, boolean, or array.
+
+ The object may optionally define required properties under the semantic
+ understanding that if you use the object, you should provide all required
+ properties.
+
+Resource type association
+ Specifies the relationship between resource types and the namespaces
+ that are applicable to them. This information can be used to drive UI
+ and CLI views. For example, the same namespace of objects, properties,
+ and tags may be used for images, snapshots, volumes, and flavors.
+ Or a namespace may only apply to images.
+
+The Image service has predefined namespaces for the metadata definitions
+catalog. To load files from this directory into the database:
+
+.. code-block:: console
+
+   $ glance-manage db_load_metadefs
+
+To unload the files from the database:
+
+.. code-block:: console
+
+   $ glance-manage db_unload_metadefs
+
+To export the definitions in JSON format:
+
+.. code-block:: console
+
+   $ glance-manage db_export_metadefs
+
+.. note::
+
+   By default, files are loaded from and exported to the Image service's
+   ``/etc/glance/metadefs`` directory.
+
+There is no special relationship between the Image service and the Metadefs
+service. If you want to apply the keys and values defined in the Metadefs
+service to images, you must use the Image service API or client tools just as
+you would for any other OpenStack service.
+
+For more information about the OpenStack Metadefs catalog, see:
+
+* `Using Glance’s Metadata Definitions Catalog Public APIs
+  <https://docs.openstack.org/glance/latest/user/glancemetadefcatalogapi.html>`_
+  in the Glance User Guide
+* The `Metadata Definitions Service API Reference
+  <https://docs.openstack.org/api-ref/image/v2/metadefs-index.html>`_
