@@ -38,6 +38,9 @@ Current API versions
 
 `Acceleration API v1 <https://docs.openstack.org/api-ref/accelerator/v1/>`__
 
+`Admin Logic API
+<https://docs.openstack.org/api-ref/admin-logic/>`__
+
 `Application Catalog API v1 <https://docs.openstack.org/api-ref/application-catalog/v1/>`__
 
 `Application Container Service API <https://docs.openstack.org/api-ref/application-container/>`__ (microversions)
