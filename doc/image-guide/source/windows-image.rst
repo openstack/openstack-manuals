@@ -36,18 +36,25 @@ using the :command:`virt-install` command and the KVM hypervisor.
    Use :command:`virt-manager` or :command:`virt-viewer` to
    connect to the VM and start the Windows installation.
 
-#. Enable the VirtIO drivers.
+#. Enable the VirtIO drivers. By default, the Windows installer does not detect
+   the disk.
 
-   The disk is not detected by default by the Windows installer.
-   When requested to choose an installation target, click
-   :guilabel:`Load driver` and browse the file system to select
-   the ``E:\virtio-win-0.1XX\viostor\2k12\amd64`` folder. The Windows
-   installer displays a list of drivers to install. Select the
-   :guilabel:`VirtIO SCSI` and :guilabel:`network drivers` and
-   continue the installation.
+#. Load VirtIO SCSI drivers and  network drivers by choosing an installation
+   target when prompted. Click :guilabel:`Load driver` and browse the file
+   system.
 
-   Once the installation is completed, the VM restarts.
-   Define a password for the administrator when prompted.
+#. Select the ``E:\virtio-win-0.1XX\viostor\2k12\amd64`` folder. The Windows
+   installer displays a list of drivers to install.
+
+#. Select the VirtIO SCSI drivers.
+
+#. Click :guilabel:`Load driver` and browse the file system, and
+   select the ``E:\NETKVM\2k12\amd64`` folder.
+
+#. Select the network drivers, and continue the installation. Once the
+   installation is completed, the VM restarts.
+
+#. Define a password for the administrator when prompted.
 
 #. Log in as administrator and start a command window.
 
