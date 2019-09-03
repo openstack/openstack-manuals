@@ -2770,7 +2770,7 @@ O
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
-      and Train.
+      Train, and Ussuri.
       Code names are cities or counties near where the
       corresponding OpenStack design summit took place. An
       exception, called the Waldon exception, is granted to
@@ -3820,7 +3820,7 @@ T
    Train
 
       The code name for the twentieth release of OpenStack. The
-      OpenStack Infrastructure Summit will take place in Denver,
+      OpenStack Infrastructure Summit took place in Denver,
       Colorado, US.
 
       Two Project Team Gathering meetings in Denver were held at a
@@ -3904,6 +3904,12 @@ U
    User Mode Linux (UML)
 
       An OpenStack-supported hypervisor.
+
+   Ussuri
+
+      The code name for the twenty first release of OpenStack. The
+      OpenStack Infrastructure Summit took place in Shanghai, People's
+      Republic of China. The release is named after the Ussuri river.
 
 V
 ~
