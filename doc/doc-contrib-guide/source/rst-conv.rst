@@ -43,7 +43,7 @@ use simpler formatting.
 Useful links
 ~~~~~~~~~~~~
 
-* `Sphinx documentation <http://sphinx.readthedocs.org/en/latest/rest.html>`_
+* `Sphinx documentation <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
 * `reStructuredText: Markup Syntax and Parser Component of Docutils
   <http://docutils.sourceforge.net/rst.html>`_
 * `Quick reStructuredText <http://docutils.sourceforge.net/docs/user/rst/quickref.html>`_
