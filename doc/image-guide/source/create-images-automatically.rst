@@ -223,8 +223,8 @@ More parameters can be added to further customize the image:
 
    # build-openstack-debian-image --release stretch \
      --hook-script /root/my-hook-script.sh \
-     --debootstrap-url http://ftp.fr.debian.org \
-     --sources.list-mirror http://ftp.fr.debian.org \
+     --debootstrap-url http://ftp.fr.debian.org/debian \
+     --sources.list-mirror http://ftp.fr.debian.org/debian \
      --login myusername \
      --extra-packages vim,emacs
 
