@@ -44,9 +44,9 @@ Install and configure components
 Finalize installation
 ~~~~~~~~~~~~~~~~~~~~~
 
-#. Enable and start the etcd service:
+#. Enable and restart the etcd service:
 
    .. code-block:: console
 
       # systemctl enable etcd
-      # systemctl start etcd
+      # systemctl restart etcd
