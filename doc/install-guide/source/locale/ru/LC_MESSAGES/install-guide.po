@@ -22,15 +22,16 @@
 # Yulia Ryndenkova <yryndenkova@hystax.com>, 2016. #zanata
 # Thomas Vysokos <thomas.vysokos@hivemind.agency>, 2017. #zanata
 # Ilya Alekseyev <ilyaalekseyev@acm.org>, 2018. #zanata
+# Ilya Alekseyev <ilyaalekseyev@acm.org>, 2019. #zanata
 msgid ""
 msgstr ""
-"Project-Id-Version: openstackinstallguide\n"
+"Project-Id-Version: Installation Guide\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-26 01:42+0000\n"
+"POT-Creation-Date: 2019-10-15 06:44+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-10-26 12:49+0000\n"
+"PO-Revision-Date: 2019-10-15 09:23+0000\n"
 "Last-Translator: Ilya Alekseyev <ilyaalekseyev@acm.org>\n"
 "Language: ru\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -149,6 +150,14 @@ msgstr ""
 "существующий публичный ключ."
 
 msgid ""
+"As of Ubuntu 18.04, the ``etcd`` package is no longer available from the "
+"default repository. To install successfully, enable the ``Universe`` "
+"repository on Ubuntu."
+msgstr ""
+"Для Ubuntu 18.04, пакет ``etcd`` больше недоступен в репозитории по "
+"умолчанию. Для установки разрешите репозиторий ``Universe``."
+
+msgid ""
 "As the number of OpenStack services and virtual machines increase, so do the "
 "hardware requirements for the best performance. If performance degrades "
 "after enabling additional services or virtual machines, consider adding "
@@ -190,6 +199,9 @@ msgstr "Блочное Хранилище"
 msgid "Block storage node (Optional)"
 msgstr "Узел блочного хранилища (опционально)"
 
+msgid "Change the existing line ``MEMCACHED_PARAMS=\"-l 127.0.0.1\"``."
+msgstr "Замените имеющуюся строку ``MEMCACHED_PARAMS=\"-l 127.0.0.1\"``."
+
 msgid "Check the status of your floating IP address:"
 msgstr "Проверьте статус своего внешнего IP-адреса:"
 
@@ -227,6 +239,13 @@ msgstr "Настройте первый интерфейс как управля
 # #-#-#-#-#  swift-storage-node.pot (Installation Guide 0.1)  #-#-#-#-#
 msgid "Configure the management interface:"
 msgstr "Настройте управляющий интерфейс:"
+
+msgid ""
+"Configure the service to use the management IP address of the controller "
+"node. This is to enable access by other nodes via the management network:"
+msgstr ""
+"Сконфигурируйте сервис на использование IP адреса менеджмент сети ноды "
+"контроллера. Это позволит другим нодам получить доступ через менеджмент сеть:"
 
 msgid ""
 "Contents in the *Name/IP address* column should indicate the hostname of the "
@@ -275,6 +294,17 @@ msgid "Create a volume"
 msgstr "Создайте диск"
 
 msgid ""
+"Create and edit the ``/etc/etcd/etcd.conf.yml`` file and set the ``initial-"
+"cluster``, ``initial-advertise-peer-urls``, ``advertise-client-urls``, "
+"``listen-client-urls`` to the management IP address of the controller node "
+"to enable access by other nodes via the management network:"
+msgstr ""
+"Создайте и отредактируйте файл ``/etc/etcd/etcd.conf.yml`` задав опции "
+"``initial-cluster``, ``initial-advertise-peer-urls``, ``advertise-client-"
+"urls``, ``listen-client-urls`` как  IP адресс менеджмент сети ноды "
+"контроллера чтобы обеспечить доступ других нод по менеджмент сети:"
+
+msgid ""
 "Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file and complete the "
 "following actions:"
 msgstr ""
@@ -288,8 +318,18 @@ msgstr ""
 "Создайте и отредактируйте файл ``/etc/mysql/mariadb.conf.d/99-openstack."
 "cnf`` и выполните следующие действия: "
 
+msgid "Create and edit the ``/usr/lib/systemd/system/etcd.service`` file:"
+msgstr ""
+"Создайте и отредактируйте файл ``/usr/lib/systemd/system/etcd.service``:"
+
+msgid "Create etcd user:"
+msgstr "Создайте пользователя etcd:"
+
 msgid "Create m1.nano flavor"
 msgstr "Создайте тип инстанса m1.nano"
+
+msgid "Create the necessary directories:"
+msgstr "Создайте необходимые директории:"
 
 # #-#-#-#-#  networking-nova.pot (Installation Guide 0.1)  #-#-#-#-#
 # #-#-#-#-#  neutron-initial-networks.pot (Installation Guide 0.1)  #-#-#-#-#
@@ -344,6 +384,9 @@ msgstr "Описание"
 msgid "Determine instance options"
 msgstr "Задайте настройки инстанса"
 
+msgid "Determine your system architecture:"
+msgstr "Определите архитектуру вашей системы:"
+
 msgid ""
 "Disable or remove any automatic update services because they can impact your "
 "OpenStack environment."
@@ -363,12 +406,46 @@ msgstr ""
 msgid "Do not change the ``HWADDR`` and ``UUID`` keys."
 msgstr "Не изменяйте ключи ``HWADDR`` и ``UUID``."
 
+msgid "Download and install the etcd tarball for x86_64/amd64:"
+msgstr "Скачайте tar архив и установите etcd для x86_64/amd64:"
+
+msgid ""
+"Edit the ``/etc/default/etcd`` file and set the ``ETCD_INITIAL_CLUSTER``, "
+"``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``, "
+"``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the controller "
+"node to enable access by other nodes via the management network:"
+msgstr ""
+"Отредактируйте файл ``/etc/default/etcd`` и установите параметры "
+"``ETCD_INITIAL_CLUSTER``, ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, "
+"``ETCD_ADVERTISE_CLIENT_URLS``, ``ETCD_LISTEN_CLIENT_URLS`` как  IP адрес "
+"ноды контроллера в менеджмент сети , чтобы обеспечить доступ других нод "
+"через менеджмент сеть:"
+
+msgid ""
+"Edit the ``/etc/etcd/etcd.conf`` file and set the ``ETCD_INITIAL_CLUSTER``, "
+"``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``, "
+"``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the controller "
+"node to enable access by other nodes via the management network:"
+msgstr ""
+"Отредактируйте файл ``/etc/etcd/etcd.conf`` и установите параметры "
+"``ETCD_INITIAL_CLUSTER``, ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, "
+"``ETCD_ADVERTISE_CLIENT_URLS``, ``ETCD_LISTEN_CLIENT_URLS`` как  IP адрес "
+"ноды контроллера в менеджмент сети , чтобы обеспечить доступ других нод "
+"через менеджмент сеть:"
+
 msgid "Edit the ``/etc/hosts`` file to contain the following:"
 msgstr "Отредактируйте файл `/etc/hosts``, чтобы он содержал следующее:"
 
 msgid "Edit the ``/etc/network/interfaces`` file to contain the following:"
 msgstr ""
 "Отредактируйте файл ``/etc/network/interfaces``, чтобы он содержал следующее:"
+
+msgid ""
+"Edit the ``/etc/sysconfig/memcached`` file and complete the following "
+"actions:"
+msgstr ""
+"Отредактируйте файл ``/etc/sysconfig/memcached`` и выполните следующие "
+"действия:"
 
 msgid ""
 "Edit the ``/etc/sysconfig/network-scripts/ifcfg-INTERFACE_NAME`` file to "
@@ -384,14 +461,29 @@ msgstr ""
 "Отредактируйте файл ``/etc/sysconfig/network/ifcfg-INTERFACE_NAME``, чтобы "
 "он содержал следующее:"
 
+msgid "Enable and restart the etcd service:"
+msgstr "Разрешите и запустите сервис etcd:"
+
+msgid "Enable and start the etcd service:"
+msgstr "Разрешите и запустите сервис etcd:"
+
 msgid "Enable the OpenStack repository"
 msgstr "Разрешите доступ к репозиторию OpenStack"
 
 msgid "Environment"
 msgstr "Окружение"
 
+msgid "Etcd"
+msgstr "Etcd"
+
+msgid "Etcd for RHEL and CentOS"
+msgstr "Etcd для RHEL и CentOS"
+
 msgid "Etcd for SUSE"
 msgstr "Etcd для SUSE"
+
+msgid "Etcd for Ubuntu"
+msgstr "Etcd для Ubuntu"
 
 msgid "Example architecture"
 msgstr "Пример архитектуры"
@@ -578,6 +670,9 @@ msgstr "Установите etcd:"
 msgid "Install the OpenStack client:"
 msgstr "Установите клиент OpenStack"
 
+msgid "Install the ``etcd`` package:"
+msgstr "Установите пакет ``etcd``:"
+
 msgid "Install the package:"
 msgstr "Установите пакет:"
 
@@ -652,6 +747,12 @@ msgstr "Управляющая на 10.0.0.0/24 со шлюзом 10.0.0.1"
 msgid "Memcached"
 msgstr "Memcached"
 
+msgid "Memcached for RHEL and CentOS"
+msgstr "Memcached для RHEL и CentOS"
+
+msgid "Memcached for SUSE"
+msgstr "Memcached для SUSE"
+
 msgid "Message queue"
 msgstr "Очередь сообщений"
 
@@ -680,7 +781,7 @@ msgid "Networking"
 msgstr "Сеть"
 
 msgid "Networking Option 1: Provider networks"
-msgstr "Вариант сети 2: Провайдерские Сети"
+msgstr "Вариант сети 1: Провайдерские Сети"
 
 msgid "Networking Option 2: Self-service networks"
 msgstr "Вариант сети 2: Сети самообслуживания"
@@ -753,11 +854,23 @@ msgid "OpenStack packages"
 msgstr "Пакеты OpenStack"
 
 msgid ""
+"OpenStack services may use Etcd, a distributed reliable key-value store for "
+"distributed key locking, storing configuration, keeping track of service "
+"live-ness and other scenarios."
+msgstr ""
+"Сервисы OpenStack могут использовать Etcd, распределенное надежное хранилище "
+"данных типа ключ-значение для распределенной блокировки ключа, хранения "
+"конфигурации, отслеживания работоспособности сервисов и для других сценариев."
+
+msgid ""
 "Optionally, the controller node runs portions of the Block Storage, Object "
 "Storage, Orchestration, and Telemetry services."
 msgstr ""
 "Дополнительно,  узел контроллера может запускать управляющие модули блочного "
 "хранилища, хранилища объектов, службы оркестрации и телеметрии"
+
+msgid "Or download and install the etcd tarball for arm64:"
+msgstr "Или скачайте tar архив и установите etcd для arm64:"
 
 msgid "Orchestration"
 msgstr "Оркестрация"
@@ -843,6 +956,9 @@ msgstr ""
 "Перенастройка сетевых интерфейсов сбросит сетевые соединения. Мы рекомендуем "
 "использовать локальную терминальную сессию для этих процедур."
 
+msgid "Reload systemd service files with:"
+msgstr "Перезагрузите файлы конфигурации сервиса systemd:"
+
 msgid ""
 "Replace ``DNS_RESOLVER`` with the IP address of a DNS resolver. In most "
 "cases, you can use one from the ``/etc/resolv.conf`` file on the host."
@@ -916,6 +1032,15 @@ msgstr "Перезапустите сервис баз данных:"
 
 msgid "Return to :ref:`launch-instance`."
 msgstr "Вернитесь к :ref:`launch-instance`."
+
+msgid ""
+"Right now, there is no distro package available for etcd3. This guide uses "
+"the tarball installation as a workaround until proper distro packages are "
+"available."
+msgstr ""
+"В текущий момент пакет для etcd3 в дистрибутиве недоступен. В этом "
+"руководстве мы используем инсталляцию из tar архива, как временный вариант, "
+"пока в дистрибутиве не появится пакет."
 
 msgid "Root password for the database"
 msgstr "Пароль root для базы данных"
@@ -1035,6 +1160,9 @@ msgstr ""
 
 msgid "The controller node requires a minimum of two network interfaces."
 msgstr "Узел управления требует как минимум два сетевых интерфейса."
+
+msgid "The etcd service runs on the controller node."
+msgstr "Сервис etcd работает на ноде контроллера."
 
 msgid ""
 "The following instructions and diagrams use example IP address ranges. You "
