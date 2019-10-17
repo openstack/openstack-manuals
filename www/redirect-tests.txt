@@ -223,6 +223,14 @@
 {%- endfor %}
 # End service-type redirects
 
+# Redirect project-deploy-guide/code-name to project-deploy-guide/code-name/latest
+{% for project in projects -%}
+{%- if project.type == 'deployment'  %}
+{{ dir_to_page('/project-deploy-guide/' + project.name, '/project-deploy-guide' + project.name + '/latest/') }}
+{%- endif %}
+{%- endfor %}
+# End redirect project-deploy-guide
+
 # Redirects from code-name without a series to latest
 {% for repo in REGULAR_REPOS %}
 {{ dir_to_page('/' + repo.base, '/' + repo.base + '/latest/') }}
