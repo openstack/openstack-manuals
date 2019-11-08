@@ -6,6 +6,8 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for Train
+  <https://docs.openstack.org/train/install/>`_
 * `OpenStack Installation Guides for Stein
   <https://docs.openstack.org/stein/install/>`_
 * `OpenStack Installation Guides for Rocky
@@ -14,6 +16,29 @@ locations:
   <https://docs.openstack.org/queens/install/>`_
 * `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
+
+Minimal deployment for Train
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Train
+  <https://docs.openstack.org/keystone/train/install/>`_
+* Image service – `glance installation for Train
+  <https://docs.openstack.org/glance/train/install/>`_
+* Placement service – `placement installation for Train
+  <https://docs.openstack.org/placement/train/install/>`_
+* Compute service – `nova installation for Train
+  <https://docs.openstack.org/nova/train/install/>`_
+* Networking service – `neutron installation for Train
+  <https://docs.openstack.org/neutron/train/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Train <https://docs.openstack.org/horizon/train/install/>`_
+* Block Storage service – `cinder installation for Train <https://docs.openstack.org/cinder/train/install/>`_
 
 Minimal deployment for Stein
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
