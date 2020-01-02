@@ -432,6 +432,7 @@ _INFRA_REPOS_EXCEPTION = [
     'opendev/pynotedb',
     'opendev/subunit2sql',
     'openstack/diskimage-builder',
+    'openstack/reviewstats'
 ]
 
 
