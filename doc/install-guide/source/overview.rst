@@ -28,8 +28,16 @@ following steps toward deployment using a production architecture:
 * Increase security using methods such as firewalls, encryption, and
   service policies.
 
-* Implement a deployment tool such as Ansible, Chef, Puppet, or Salt
+* Use a deployment tool such as Ansible, Chef, Puppet, or Salt
   to automate deployment and management of the production environment.
+  The OpenStack project has a couple of deployment projects with
+  specific guides per version:
+
+  - `Train release <https://docs.openstack.org/train/deploy/>`_
+  - `Stein release <https://docs.openstack.org/stein/deploy/>`_
+  - `Rocky release <https://docs.openstack.org/rocky/deploy/>`_
+  - `Queens release <https://docs.openstack.org/queens/deploy/>`_
+  - `Pike release <https://docs.openstack.org/pike/deploy/>`_
 
 .. _overview-example-architectures:
 
