@@ -2770,7 +2770,7 @@ O
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
-      Train, and Ussuri.
+      Train, Ussuri, and Victoria.
       Code names are cities or counties near where the
       corresponding OpenStack design summit took place. An
       exception, called the Waldon exception, is granted to
@@ -3915,6 +3915,13 @@ V
 ~
 
 .. glossary::
+
+   Victoria
+
+      The code name for the twenty second release of OpenStack. The
+      OpenStack Infrastructure Summit took place in Vancouver,
+      British Columbia, Canada. The release is named after Victoria,
+      the capital city of British Columbia.
 
    VIF UUID
 
