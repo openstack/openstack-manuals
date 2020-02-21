@@ -108,9 +108,7 @@ Here are a few representative files under ``www/``:
   * ``schema.yaml``
 
 * ``redirect-tests.txt`` -- input file for `whereto <https://docs.openstack.org/whereto/>`_
-  to test ``.htaccess``;
-  see http://files.openstack.org/docs-404s/ for a list of recent 404
-  errors
+  to test ``.htaccess``.
 * ``static`` -- contains files that are not templates (CSS, JS,
   sitemap, etc.)
 * ``templates`` -- contains reused templates (base pages, partial
