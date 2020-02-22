@@ -111,9 +111,6 @@ The basic steps are:
         "sidebar_mode": "toc",
     }
 
-    # Must set this variable to include year, month, day, hours, and minutes.
-    html_last_updated_fmt = '%Y-%m-%d %H:%M'
-
 #. Update the ``test-requirements.txt`` file for the project with a line for
    the ``os-api-ref`` Sphinx extension::
 

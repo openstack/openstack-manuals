@@ -20,7 +20,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import os
+# import os
 # import sys
 
 
@@ -160,7 +160,7 @@ html_theme_options = {
 # So that we can enable "log-a-bug" links from each output HTML page, this
 # variable must be set to a format that includes year, month, day, hours and
 # minutes.
-html_last_updated_fmt = '%Y-%m-%d %H:%M'
+# html_last_updated_fmt = '%Y-%m-%d %H:%M'
 
 
 # If true, SmartyPants will be used to convert quotes and dashes to
@@ -208,28 +208,6 @@ htmlhelp_basename = 'doc-contrib-guide'
 html_copy_source = False
 
 # -- Options for LaTeX output ---------------------------------------------
-
-latex_engine = 'xelatex'
-
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    # 'papersize': 'letterpaper',
-
-    # set font (TODO: different fonts for translated PDF document builds)
-    'fontenc': '\\usepackage{fontspec}',
-    'fontpkg': '''\
-\defaultfontfeatures{Scale=MatchLowercase}
-\setmainfont{Liberation Serif}
-\setsansfont{Liberation Sans}
-\setmonofont[SmallCapsFont={Liberation Mono}]{Liberation Mono}
-''',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    # 'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    # 'preamble': '',
-}
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
