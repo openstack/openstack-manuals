@@ -107,8 +107,12 @@ Here are a few representative files under ``www/``:
   * ``README.rst``
   * ``schema.yaml``
 
-* ``redirect-tests.txt`` -- input file for `whereto <https://docs.openstack.org/whereto/>`_
-  to test ``.htaccess``.
+* ``redirect-tests.txt`` -- input file for `whereto
+  <https://docs.openstack.org/whereto/>`_ to test ``.htaccess``.  To
+  see recent 404 errors check the output of the
+  `system-config-static-404-checker
+  <http://zuul.openstack.org/builds?job_name=system-config-static-404-checker>`__
+  job.
 * ``static`` -- contains files that are not templates (CSS, JS,
   sitemap, etc.)
 * ``templates`` -- contains reused templates (base pages, partial
