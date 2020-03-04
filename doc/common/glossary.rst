@@ -2770,12 +2770,18 @@ O
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
-      Train, Ussuri, and Victoria.
-      Code names are cities or counties near where the
-      corresponding OpenStack design summit took place. An
-      exception, called the Waldon exception, is granted to
-      elements of the state flag that sound especially cool. Code
-      names are chosen by popular vote.
+      Train, Ussuri, Victoria, and Wallaby.
+
+      Wallaby was the first code name choosen by a new policy: Code
+      names are choosen by the community following the alphabet, for
+      details see `release name criteria
+      <https://governance.openstack.org/tc/reference/release-naming.html#release-name-criteria>`__.
+
+      The Victoria name was the last name where code names are cities
+      or counties near where the corresponding OpenStack design summit
+      took place. An exception, called the Waldon exception, was
+      granted to elements of the state flag that sound especially
+      cool. Code names are chosen by popular vote.
 
    openSUSE
 
@@ -4109,6 +4115,12 @@ W
 ~
 
 .. glossary::
+
+   Wallaby
+
+      The code name for the twenty third release of OpenStack.
+      Wallabies are native to Australia, which at the start of this
+      naming period was experiencing unprecedented wild fires.
 
    Watcher
 
