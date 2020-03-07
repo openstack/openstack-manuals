@@ -23,7 +23,7 @@ function copy_rst_trans {
     target=$1
     # Copy over some RST files
     mkdir -p $PROJECT_DIR/$target/source/locale
-    for lang in id ja ; do
+    for lang in de id ja tr_TR ; do
         TARGET=$PROJECT_DIR/$target/source/locale/$lang/LC_MESSAGES
         mkdir -p $TARGET
         cp doc/common/source/locale/$lang/LC_MESSAGES/common.po \
