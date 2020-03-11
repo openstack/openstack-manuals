@@ -109,10 +109,10 @@ Here are a few representative files under ``www/``:
 
 * ``redirect-tests.txt`` -- input file for `whereto
   <https://docs.openstack.org/whereto/>`_ to test ``.htaccess``.  To
-  see recent 404 errors check the output of the
-  `system-config-static-404-checker
-  <http://zuul.openstack.org/builds?job_name=system-config-static-404-checker>`__
-  job.
+  see recent 404 errors check the "Goaccess report" artifact on builds of
+  docs-openstack-goaccess-report in Zuul. To search for recent runs of this
+  job visit the `Zuul builds page
+  <http://zuul.openstack.org/builds?pipeline=periodic&job_name=docs-openstack-goaccess-report#>`_.
 * ``static`` -- contains files that are not templates (CSS, JS,
   sitemap, etc.)
 * ``templates`` -- contains reused templates (base pages, partial
