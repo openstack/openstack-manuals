@@ -285,7 +285,7 @@ git and git review
   state of the repository. In many cases, this can be achieved by pressing
   the ``Rebase`` button in the gerrit interface. If this fails, you must
   `rebase manually
-  <https://docs.openstack.org/infra/manual/developers.html#understanding-changes-and-patch-sets>`_.
+  <https://docs.opendev.org/opendev/infra-manual/latest/developers.html#understanding-changes-and-patch-sets>`_.
 
   For a basic introduction to solving merge conflicts, see the GitHub article
   `Resolving merge conflicts after a git rebase
@@ -303,7 +303,7 @@ git and git review
        leaving the word *recheck* in the comments section of your
        Gerrit review.
 
-  .. seealso:: * `Automated Testing <https://docs.openstack.org/infra/manual/developers.html#automated-testing>`_
+  .. seealso:: * `Automated Testing <https://docs.opendev.org/opendev/infra-manual/latest/developers.html#automated-testing>`_
                * :ref:`build_jobs`
 
 Network
@@ -322,7 +322,7 @@ Try again when your network connection improves.
 If you suspect that SSH over non-standards ports might be blocked or need to
 access the web using http/https, you can configure git-review to
 `use an https endpoint instead of ssh
-<https://docs.openstack.org/infra/manual/developers.html#accessing-gerrit-over-https>`_
+<https://docs.opendev.org/opendev/infra-manual/latest/developers.html#accessing-gerrit-over-https>`_
 as explained in the Infrastructure Manual.
 
 Python
@@ -363,11 +363,11 @@ instead:
 
 .. Links
 
-.. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.openstack.org/infra/manual/developers.html#sign-the-appropriate-individual-contributor-license-agreement
-.. _`Installing git-review`: https://docs.openstack.org/infra/manual/developers.html#install-the-git-review-utility
+.. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#sign-the-appropriate-individual-contributor-license-agreement
+.. _`Installing git-review`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#install-the-git-review-utility
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
 .. _`OpenStack Foundation`: https://www.openstack.org/join
-.. _`Development Workflow`: https://docs.openstack.org/infra/manual/developers.html#development-workflow
+.. _`Development Workflow`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#development-workflow
 .. _`git`: http://msysgit.github.io
 .. _`curl`: http://curl.haxx.se/
 .. _`tar`: http://gnuwin32.sourceforge.net/packages/gtar.htm
@@ -377,9 +377,9 @@ instead:
 .. _`GitHub help`: https://help.github.com/articles/set-up-git
 .. _`Settings page on gerrit`: https://review.opendev.org/#/settings/
 .. _`Settings > SSH Public Keys`: https://review.opendev.org/#/settings/ssh-keys
-.. _`Starting Work on a New Project`: https://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project
-.. _`Starting a Change`: https://docs.openstack.org/infra/manual/developers.html#starting-a-change
-.. _`Committing a change`: https://docs.openstack.org/infra/manual/developers.html#committing-a-change
-.. _`Submitting a Change for Review`: https://docs.openstack.org/infra/manual/developers.html#submitting-a-change-for-review
-.. _`Updating a Change`: https://docs.openstack.org/infra/manual/developers.html#updating-a-change
+.. _`Starting Work on a New Project`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#starting-work-on-a-new-project
+.. _`Starting a Change`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#starting-a-change
+.. _`Committing a change`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#committing-a-change
+.. _`Submitting a Change for Review`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#submitting-a-change-for-review
+.. _`Updating a Change`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#updating-a-change
 

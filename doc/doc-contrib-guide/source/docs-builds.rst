@@ -12,7 +12,7 @@ files reside.
 
 For the instructions on how to clone a repository so that you can work
 on it locally, refer to the `Starting Work on a New Project
-<https://docs.openstack.org/infra/manual/developers.html#starting-work-on-a-new-project>`_
+<https://docs.opendev.org/opendev/infra-manual/latest/developers.html#starting-work-on-a-new-project>`_
 of the Infrastructure manual.
 
 See :ref:`troubleshoot_setup` if you have difficulty with a repository
@@ -51,7 +51,7 @@ in the repository.
    clone if you want to build the documentation.
 
    For more information on ``bindep`` and packages, see `Package Requirements
-   <https://docs.openstack.org/infra/manual/drivers.html#package-requirements>`_.
+   <https://docs.opendev.org/opendev/infra-manual/latest/drivers.html#package-requirements>`_.
 
 * On Ubuntu or Debian:
 
