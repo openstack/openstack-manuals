@@ -3925,9 +3925,12 @@ V
    Victoria
 
       The code name for the twenty second release of OpenStack. The
-      OpenStack Infrastructure Summit took place in Vancouver,
-      British Columbia, Canada. The release is named after Victoria,
-      the capital city of British Columbia.
+      OpenDev + PTG was planned to take place in Vancouver, British
+      Columbia, Canada. The release is named after Victoria, the
+      capital city of British Columbia.
+
+      The in-person event was cancelled due to COVID-19. The event is
+      being virtualized instead.
 
    VIF UUID
 
