@@ -12,7 +12,7 @@ To contribute to the development of ``openstack-doc-tools``, proceed with
 the following steps:
 
 #. Complete the procedures described
-   in the `Developers Guide <https://docs.openstack.org/infra/manual/developers.html>`_.
+   in the `Developers Guide <https://docs.opendev.org/opendev/infra-manual/latest/developers.html>`_.
 
 #. Follow  `OpenStack Style Commandments <https://docs.openstack.org/hacking/latest/>`_
    while developing improvements for the tool.
@@ -23,7 +23,7 @@ the following steps:
    and ``bashate`` tests. A test suite would be welcome.
 
 #. Submit your change for review through the Gerrit tool as described
-   in the `gerrit workflow <https://docs.openstack.org/infra/manual/developers.html#development-workflow>`_.
+   in the `gerrit workflow <https://docs.opendev.org/opendev/infra-manual/latest/developers.html#development-workflow>`_.
 
    .. warning::
 

@@ -18,7 +18,7 @@ To see current proposed changes, make sure you register and log into
 `review.openstack Code Review
 <https://review.opendev.org>`_. For more details on the review process in
 OpenStack, see `Code Review
-<https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+<https://docs.opendev.org/opendev/infra-manual/latest/developers.html#code-review>`_.
 
 Review guidelines
 ~~~~~~~~~~~~~~~~~
@@ -44,7 +44,7 @@ Reviewing a documentation patch
 Before you proceed with reviewing patches, make sure to read carefully
 the :doc:`Review Guidelines <docs-review-guidelines>` for documentation
 and `Code Review Guidelines
-<https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+<https://docs.opendev.org/opendev/infra-manual/latest/developers.html#code-review>`_.
 Once done, follow the steps below to submit a patch review.
 
 #. If you want to review patches for the repositories managed by the
@@ -75,12 +75,12 @@ Once done, follow the steps below to submit a patch review.
    A patch with WorkInProgress (WIP) status needs additional work
    before review and possible approval. Therefore, you may skip such a patch
    and review once it is ready. For more information, see `Work In Progress
-   <https://docs.openstack.org/infra/manual/core.html#work-in-progress>`_.
+   <https://docs.opendev.org/opendev/infra-manual/latest/core.html#work-in-progress>`_.
 
 .. seealso::
 
    `Peer Review
-   <https://docs.openstack.org/infra/manual/developers.html#peer-review>`_
+   <https://docs.opendev.org/opendev/infra-manual/latest/developers.html#peer-review>`_
 
 .. note::
 
@@ -135,7 +135,7 @@ unfavorable gets through, without discouraging contributions.
 
 General instructions for being a core reviewer are located in the
 `Core Reviewer's Guide
-<https://docs.openstack.org/infra/manual/developers.html#code-review>`_.
+<https://docs.opendev.org/opendev/infra-manual/latest/developers.html#code-review>`_.
 This section is for openstack-manuals core reviewers.
 
 In almost all cases, patches can be merged with at least one +1 vote, and
