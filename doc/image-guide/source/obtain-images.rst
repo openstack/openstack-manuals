@@ -35,13 +35,14 @@ You can download a CirrOS image in various formats from the
 
 If your deployment uses QEMU or KVM, we recommend using the images
 in qcow2 format. The most recent 64-bit qcow2 image as of this
-writing is `cirros-0.4.0-x86_64-disk.img
-<http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img>`_.
+writing is `cirros-0.5.1-x86_64-disk.img
+<http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img>`_.
 
 .. note::
 
    In a CirrOS image, the login account is ``cirros``.
-   The password is ``gocubsgo``.
+   The password is ``gocubsgo``. Since the fixed PW allows anyone to
+   login, you should not run this image with a public IP attached.
 
 Debian
 ~~~~~~
@@ -85,21 +86,22 @@ Ubuntu
 ~~~~~~
 
 Canonical maintains an official set of `Ubuntu-based images
-<http://cloud-images.ubuntu.com/>`_.
+<https://cloud-images.ubuntu.com/>`_.
 
 Images are arranged by Ubuntu release, and by image release date,
 with ``current`` being the most recent.
 For example, the page that contains the most recently built image for
-Ubuntu 16.04 Xenial Xerus is `Ubuntu 16.04 LTS (Xenial Xerus) Daily Build
-<https://cloud-images.ubuntu.com/xenial/current/>`_.
+Ubuntu 18.04 Bionic Beaver is `Ubuntu 18.04 LTS (Bionic Beaver) Daily Build
+<https://cloud-images.ubuntu.com/bionic/current/>`_.
 Scroll to the bottom of the page for links to the images that can be
 downloaded directly.
 
 If your deployment uses QEMU or KVM, we recommend using the images
-in qcow2 format.
-The most recent version of the 64-bit QCOW2 image for Ubuntu 16.04 is
-`xenial-server-cloudimg-amd64-disk1.img
-<http://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img>`_.
+in qcow2 format, with name ending in ``.img``.
+The most recent version of the 64-bit amd64-arch QCOW2 image for
+Ubuntu 18.04 is
+`bionic-server-cloudimg-amd64-disk.img
+<https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img>`_.
 
 .. note::
 
