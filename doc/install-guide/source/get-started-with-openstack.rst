@@ -9,7 +9,7 @@ from around the world create the OpenStack project.
 
 OpenStack provides an :term:`Infrastructure-as-a-Service (IaaS)` solution
 through a set of interrelated services. Each service offers an
-:term:`application programming interface (API)` that facilitates this
+:term:`Application Programming Interface (API)` that facilitates this
 integration. Depending on your needs, you can install some or all
 services.
 

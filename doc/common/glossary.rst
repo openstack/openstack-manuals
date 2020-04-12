@@ -807,7 +807,7 @@ C
       compression for things such as Object Storage objects or Image service
       VM images.
 
-   Compute API (Nova API)
+   Compute API (nova API)
 
       The nova-api daemon provides access to nova services. Can communicate with
       other APIs, such as the Amazon EC2 API.
@@ -2547,7 +2547,7 @@ N
 
    neutron
 
-      Codename for OpenStack :term:`Networking service <Networking Service
+      Codename for OpenStack :term:`Networking service <Networking service
       (neutron)>`.
 
    neutron API
@@ -2578,7 +2578,7 @@ N
 
       Provides support for NexentaStor devices in Compute.
 
-   NFV Orchestration Service (tacker)
+   NFV Orchestration service (tacker)
 
       OpenStack service that aims to implement Network Function Virtualization
       (NFV) orchestration services and libraries for end-to-end life-cycle
@@ -2674,7 +2674,7 @@ O
 
    Object Storage API
 
-      API used to access OpenStack :term:`Object Storage<Object Storage
+      API used to access OpenStack :term:`Object Storage <Object Storage
       service (swift)>`.
 
    Object Storage Device (OSD)
@@ -2688,7 +2688,7 @@ O
 
    object versioning
 
-      Allows a user to set a flag on an :term:`Object Storage<Object Storage
+      Allows a user to set a flag on an :term:`Object Storage <Object Storage
       service (swift)>` container so that all objects within the container are
       versioned.
 
@@ -2705,7 +2705,7 @@ O
 
    Oldie
 
-      Term for an :term:`Object Storage<Object Storage service (swift)>`
+      Term for an :term:`Object Storage <Object Storage service (swift)>`
       process that runs for a long time.  Can indicate a hung process.
 
    Open Cloud Computing Interface (OCCI)
@@ -2813,7 +2813,7 @@ O
 
    Oslo
 
-      Codename for the :term:`Common Libraries project<Common Libraries
+      Codename for the :term:`Common Libraries project <Common Libraries
       (oslo)>`.
 
 P
