@@ -27,6 +27,18 @@ Enable the OpenStack repository
 * Enable the Open Build Service repositories based on your openSUSE or
   SLES version, and on the version of OpenStack you want to install:
 
+  **On openSUSE for OpenStack Ussuri:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Ussuri/openSUSE_Leap_15.1 Ussuri
+
+  **On openSUSE for OpenStack Train:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Train/openSUSE_Leap_15.0 Train
+
   **On openSUSE for OpenStack Stein:**
 
   .. code-block:: console
@@ -63,6 +75,18 @@ Enable the OpenStack repository
      .. code-block:: console
 
         # zypper rm patterns-openSUSE-minimal_base-conflicts
+
+  **On SLES for OpenStack Ussuri:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Ussuri/SLE_15_SP2 Ussuri
+
+  **On SLES for OpenStack Train:**
+
+  .. code-block:: console
+
+     # zypper addrepo -f obs://Cloud:OpenStack:Train/SLE_15_SP1 Train
 
   **On SLES for OpenStack Stein:**
 

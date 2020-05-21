@@ -33,6 +33,7 @@ following steps toward deployment using a production architecture:
   The OpenStack project has a couple of deployment projects with
   specific guides per version:
 
+  - `Ussuri release <https://docs.openstack.org/ussuri/deploy/>`_
   - `Train release <https://docs.openstack.org/train/deploy/>`_
   - `Stein release <https://docs.openstack.org/stein/deploy/>`_
   - `Rocky release <https://docs.openstack.org/rocky/deploy/>`_
