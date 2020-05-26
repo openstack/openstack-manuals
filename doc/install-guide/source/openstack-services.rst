@@ -6,6 +6,8 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for Ussuri
+  <https://docs.openstack.org/ussuri/install/>`_
 * `OpenStack Installation Guides for Train
   <https://docs.openstack.org/train/install/>`_
 * `OpenStack Installation Guides for Stein
@@ -16,6 +18,29 @@ locations:
   <https://docs.openstack.org/queens/install/>`_
 * `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
+
+Minimal deployment for Ussuri
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Ussuri
+  <https://docs.openstack.org/keystone/ussuri/install/>`_
+* Image service – `glance installation for Ussuri
+  <https://docs.openstack.org/glance/ussuri/install/>`_
+* Placement service – `placement installation for Ussuri
+  <https://docs.openstack.org/placement/ussuri/install/>`_
+* Compute service – `nova installation for Ussuri
+  <https://docs.openstack.org/nova/ussuri/install/>`_
+* Networking service – `neutron installation for Ussuri
+  <https://docs.openstack.org/neutron/ussuri/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Ussuri <https://docs.openstack.org/horizon/ussuri/install/>`_
+* Block Storage service – `cinder installation for Ussuri <https://docs.openstack.org/cinder/ussuri/install/>`_
 
 Minimal deployment for Train
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
