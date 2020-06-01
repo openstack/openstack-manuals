@@ -14,8 +14,10 @@ distribution, see the documentation.
 
    * `Ubuntu Network Configuration
      <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__
-   * `RHEL 7 Network Configuration
-     <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Config_Using_CLI.html>`__
+   * `RHEL 7
+     <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/index>`__
+     or `RHEL 8
+     <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/index>`__ Network Configuration
    * `SLES 12
      <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
      or `SLES 15
