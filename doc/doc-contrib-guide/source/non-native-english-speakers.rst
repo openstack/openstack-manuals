@@ -5,7 +5,7 @@ Non-native English speakers
 OpenStack projects communicate in English, and our documentation is written
 in US English. However, many documentation contributors have English as a
 second (or third, or fourth) language. This poses many challenges for non-
-native English speakers, but there are some things that native English-
+native English speakers, but there are some things that native English
 speakers can do to make it easier to include non-native speakers in our
 community. This chapter contains some suggestions for both native and
 non-native English speakers to help make our community more inclusive and
