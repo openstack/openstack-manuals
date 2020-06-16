@@ -439,9 +439,44 @@ _INFRA_REPOS_EXCEPTION = [
 # List of repos that are retired, we link /REPO/latest/.* to
 # it's README.rst file.
 _RETIRED_REPOS = [
+    'openstack/anchor',
+    'openstack/bandit',
+    'openstack/castellan-ui',
     'openstack/congress',
+    'openstack/congress-dashboard',
+    'openstack/congress-tempest-plugin',
+    'openstack/dragonflow',
     'openstack/faafo',
+    'openstack/fuel-docs',
+    'openstack/fuxi',
+    'openstack/kolla-kubernetes',
+    'openstack/networking-calico',
+    'openstack/networking-l2gw',
+    'openstack/networking-onos',
+    'openstack/neutron-interconnection',
+    'openstack/neutron-fwaas',
+    'openstack/openstack-ansible-os_almanach',
+    'openstack/openstack-ansible-os_molteniron',
+    'openstack/openstack-ansible-os_monasca',
+    'openstack/openstack-ansible-os_monasca-agent',
+    'openstack/openstack-ansible-os_monasca-ui',
+    'openstack/openstack-ansible-os_searchlight',
+    'openstack/openstack-ansible-os_zaqar',
+    'openstack/openstack-ansible-pip_install',
+    'openstack/openstack-ansible-pip_lock_down',
+    'openstack/openstack-ansible-repo_build',
+    'openstack/openstack-ansible-security',
+    'openstack/os-acc',
+    'openstack/os-cloud-config',
+    'openstack/oslosphinx',
+    'openstack/paunch',
+    'openstack/python-ceilometerclient',
+    'openstack/python-congressclient',
+    'openstack/python-dracclient',
+    'openstack/python-tricircleclient',
     'openstack/syntribos',
+    'openstack/tricircle'
+    'openstack/tripleo-incubator',
 ]
 
 
@@ -470,6 +505,10 @@ def _get_official_repos():
         repo = repository.name
         base = repo.rsplit('/')[-1]
 
+        if repo in _RETIRED_REPOS:
+            # Skip in case repo is not removed yet from governance
+            # or is only deprecated.
+            continue
         if repo in seen_repos:
             # Sometimes the governance data ends up with
             # duplicates, but we don't want duplicate rules to
