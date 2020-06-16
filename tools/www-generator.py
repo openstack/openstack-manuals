@@ -436,6 +436,14 @@ _INFRA_REPOS_EXCEPTION = [
     'openstack/reviewstats'
 ]
 
+# List of repos that are retired, we link /REPO/latest/.* to
+# it's README.rst file.
+_RETIRED_REPOS = [
+    'openstack/congress',
+    'openstack/faafo',
+    'openstack/syntribos',
+]
+
 
 @cache
 def _get_official_repos():
@@ -449,6 +457,7 @@ def _get_official_repos():
     regular_repos = []
     infra_repos = []
     deliverables = set()
+    retired_repos = []
 
     # NOTE(dhellmann): We could get fancy and support loading
     # governance data from a local repo so we could support zuul's
@@ -479,12 +488,17 @@ def _get_official_repos():
         elif repo not in _IGNORED_REPOS:
             add({'name': repo, 'base': base})
 
-    return (regular_repos, infra_repos, list(sorted(deliverables)))
+    for repo in _RETIRED_REPOS:
+        base = repo.rsplit('/')[-1]
+        retired_repos.append({'name': repo, 'base': base})
+
+    return (regular_repos, infra_repos, retired_repos,
+            list(sorted(deliverables)))
 
 
 def render_template(environment, project_data, regular_repos, infra_repos,
-                    template_files, template_file, output_directory,
-                    is_publish, extra={}):
+                    retired_repos, template_files, template_file,
+                    output_directory, is_publish, extra={}):
     logger = logging.getLogger()
     logger.info("generating %s", template_file)
 
@@ -538,6 +552,7 @@ def render_template(environment, project_data, regular_repos, infra_repos,
             RELEASED_SERIES=RELEASED_SERIES,
             MAINTAINED_SERIES=MAINTAINED_SERIES,
             SERIES_IN_DEVELOPMENT=SERIES_IN_DEVELOPMENT,
+            RETIRED_REPOS=retired_repos,
             TOPDIR=topdir,
             SCRIPTDIR=scriptdir,
             CSSDIR=cssdir,
@@ -579,7 +594,8 @@ def main():
     logger = initialize_logging(args.debug, args.verbose)
 
     logger.debug("getting official repos ...")
-    regular_repos, infra_repos, deliverables = _get_official_repos()
+    (regular_repos, infra_repos, retired_repos,
+     deliverables) = _get_official_repos()
     logger.debug("loading project data ...")
     project_data = load_project_data(
         source_directory=args.source_directory,
@@ -616,6 +632,7 @@ def main():
             project_data,
             regular_repos,
             infra_repos,
+            retired_repos,
             template_files,
             template_file,
             args.output_directory,

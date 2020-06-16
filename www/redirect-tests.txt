@@ -243,6 +243,18 @@
 {%- endfor %}
 # End infra code-name redirects
 
+# Redirects retired repos from code-name without a series to latest
+{% for repo in RETIRED_REPOS %}
+{{ dir_to_page('/' + repo.base, '/' + repo.base + '/latest/') }}
+{%- endfor %}
+# End latest code-name redirects
+
+# Redirects retired repos /latest to https://opendev.org/openstack/REPO/src/branch/master/README.rst
+{% for repo in RETIRED_REPOS %}
+{{ path_to_page('/' + repo.base + '/latest', 'https://opendev.org/' + repo.name + '/src/branch/master/README.rst' ) }}
+{%- endfor %}
+# End retired repos redirects
+
 # Redirect https://docs.openstack.org/infra/zuul/feature/zuulv3/ to
 # https://zuul-ci.org/docs/zuul
 /infra/zuul/feature/zuulv3/user/config.html 301 https://zuul-ci.org/docs/zuul/user/config.html
