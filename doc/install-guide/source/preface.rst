@@ -47,8 +47,14 @@ openSUSE and SUSE Linux Enterprise Server
   Service Cloud repository.
 
 Red Hat Enterprise Linux and CentOS
-  You can install OpenStack by using packages available on Red Hat
-  Enterprise Linux 7 and its derivatives through the RDO repository.
+  You can install OpenStack by using packages available on both Red
+  Hat Enterprise Linux 7 and 8 and their derivatives through the RDO
+  repository.
+
+  ..note::
+
+    OpenStack Ussuri is available for both CentOS 8 and RHEL 8. OpenStack
+    Train and earlier are available on both CentOS 7 and RHEL 7.
 
 Ubuntu
   You can walk through an installation by using packages available through
