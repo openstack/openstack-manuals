@@ -477,6 +477,7 @@ _RETIRED_REPOS = [
     'openstack/syntribos',
     'openstack/tricircle'
     'openstack/tripleo-incubator',
+    'openstack/mox3',
 ]
 
 
