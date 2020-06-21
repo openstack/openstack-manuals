@@ -450,11 +450,12 @@ _RETIRED_REPOS = [
     'openstack/fuel-docs',
     'openstack/fuxi',
     'openstack/kolla-kubernetes',
+    'openstack/mox3',
     'openstack/networking-calico',
     'openstack/networking-l2gw',
     'openstack/networking-onos',
-    'openstack/neutron-interconnection',
     'openstack/neutron-fwaas',
+    'openstack/neutron-interconnection',
     'openstack/openstack-ansible-os_almanach',
     'openstack/openstack-ansible-os_molteniron',
     'openstack/openstack-ansible-os_monasca',
@@ -475,9 +476,8 @@ _RETIRED_REPOS = [
     'openstack/python-dracclient',
     'openstack/python-tricircleclient',
     'openstack/syntribos',
-    'openstack/tricircle'
+    'openstack/tricircle',
     'openstack/tripleo-incubator',
-    'openstack/mox3',
 ]
 
 
