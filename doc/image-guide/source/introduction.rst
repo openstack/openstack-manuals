@@ -157,7 +157,7 @@ metadata on the resources.  As with images, the metadata may be consumed by
 humans to understand something about the resource, or may be used by other
 OpenStack services so that they can make efficient use of the resource (for
 example, the nova filter scheduler using the image ``architecture`` property to
-determine an appropraite host on which to build an instance from that image).
+determine an appropriate host on which to build an instance from that image).
 Thus it is important that there be a discoverable way for people and services
 to determine what metadata properties and values are available throughout an
 OpenStack cloud.
