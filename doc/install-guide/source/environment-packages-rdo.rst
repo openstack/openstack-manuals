@@ -122,9 +122,17 @@ Enable the OpenStack repository
 * On RHEL, download and install the RDO repository RPM to enable the
   OpenStack repository.
 
+  **On RHEL 7:**
+
   .. code-block:: console
 
      # yum install https://rdoproject.org/repos/rdo-release.rpm
+
+  **On RHEL 8:**
+
+  .. code-block:: console
+
+     # dnf install https://www.rdoproject.org/repos/rdo-release.el8.rpm
 
   The RDO repository RPM installs the latest available OpenStack release.
 
