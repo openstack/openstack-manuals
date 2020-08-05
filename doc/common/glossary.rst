@@ -717,6 +717,27 @@ C
       and services, that can be rapidly provisioned and released with
       minimal management effort or service provider interaction.
 
+   cloud computing infrastructure
+
+      The hardware and software components -- such as servers, storage,
+      and network and virtualization software -- that are needed to support
+      the computing requirements of a cloud computing model.
+
+   cloud computing platform software
+
+      The delivery of different services through the Internet. These resources
+      include tools and applications like data storage, servers, databases,
+      networking, and software. As long as an electronic device has access to
+      the web, it has access to the data and the software programs to run it.
+
+
+   cloud computing service architecture
+
+      Cloud service architecture defines the overall cloud computing services
+      and solutions that are implemented in and across the boundaries of an
+      enterprise business network. Considers the core business requirements
+      and matches them with a possible cloud solution.
+
    cloud controller
 
       Collection of Compute components that represent the global state
@@ -739,6 +760,12 @@ C
 
       An in-progress specification for cloud management. Currently
       unsupported in OpenStack.
+
+   cloud technology
+
+      Clouds are tools of virtual sources orchestrated by management
+      and automation softwares. This includes, raw processing
+      power, memory, network, storage of cloud based applications.
 
    cloud-init
 
@@ -777,6 +804,11 @@ C
 
       Lists allowed commands within the Compute rootwrap
       facility.
+
+   Command-Line Interface (CLI)
+
+      A text-based client that helps you create scripts to interact
+      with OpenStack clouds.
 
    Common Internet File System (CIFS)
 
@@ -909,6 +941,25 @@ C
       A content delivery network is a specialized network that is
       used to distribute content to clients, typically located
       close to the client for increased performance.
+
+   continuous delivery
+
+      A software engineering approach in which teams produce software
+      in short cycles, ensuring that the software can be reliably released
+      at any time and, when releasing the software, doing so manually.
+
+
+   continuous deployment
+
+      A software release process that uses automated testing to validate
+      if changes to a codebase are correct and stable for immediate autonomous
+      deployment to a production environment.
+
+   continuous integration
+
+      The practice of merging all developers' working copies
+      to a shared mainline several times a day.
+
 
    controller node
 
@@ -1311,6 +1362,11 @@ E
       Used along with an EC2 access key when communicating with the
       Compute EC2 API; used to digitally sign each request.
 
+   edge computing
+
+      Running fewer processes in the cloud and moving those processes
+      to local places.
+
    Elastic Block Storage (EBS)
 
       The Amazon commercial block storage product.
@@ -1339,6 +1395,11 @@ E
       A list of URL and port number endpoints that indicate where a
       service, such as Object Storage, Compute, Identity, and so on, can be
       accessed.
+
+   enterprise cloud computing
+
+       A computing environment residing behind a firewall that delivers
+       software, infrastructure and platform services to an enterprise.
 
    entity
 
@@ -1754,6 +1815,12 @@ H
       to connect colocation, managed and/or dedicated services
       with cloud resources.
 
+   hybrid cloud computing
+
+      A mix of on-premises, private cloud and third-party,
+      public cloud services with orchestration between the two
+      platforms.
+
    Hyper-V
 
       One of the hypervisors supported by OpenStack.
@@ -2021,6 +2088,10 @@ I
       Storage protocol that encapsulates SCSI frames for transport
       over IP networks.
       Supported by Compute, Object Storage, and Image service.
+
+   IO
+
+      The abbreviation for input and output.
 
    IP address
 
@@ -2419,6 +2490,18 @@ M
       advanced monitoring services that can be used by both operators and
       projects to gain operational insight and visibility, ensuring availability
       and stability.
+
+   multi-cloud computing
+
+      The use of multiple cloud computing and storage services in a single
+      network architecture.
+
+   multi-cloud SDKs
+
+      SDKs that provide a multi-cloud abstraction layer and include support
+      for OpenStack. These SDKs are excellent for writing applications that
+      need to consume more than one type of cloud provider, but may expose a
+      more limited set of features.
 
    multi-factor authentication
 
@@ -2936,6 +3019,11 @@ P
       A tool to automate system configuration and installation on
       Debian-based Linux distributions.
 
+   private cloud
+
+      Computing resources used exclusively by one business or
+      organization.
+
    private image
 
       An Image service VM image that is only available to specified
@@ -3004,6 +3092,10 @@ P
 
       An API endpoint used for both service-to-service communication
       and end-user interactions.
+
+   public cloud
+
+      Data centers available to many users over the Internet.
 
    public image
 
@@ -3350,6 +3442,11 @@ S
       Contains information about a user as provided by the identity
       provider. It is an indication that a user has been authenticated.
 
+   Sandbox
+
+      A virtual space in which new or untested software can be run
+      securely.
+
    scheduler manager
 
       A Compute component that determines where VM instances should
@@ -3584,6 +3681,11 @@ S
 
       A controlled reboot where a VM instance is properly restarted
       through operating system commands.
+
+   Software Development Kit (SDK)
+
+      Contains code, examples, and documentation that you use to create
+      applications in the language of your choice.
 
    Software Development Lifecycle Automation service (solum)
 
