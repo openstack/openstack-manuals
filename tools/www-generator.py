@@ -449,6 +449,7 @@ _RETIRED_REPOS = [
     'openstack/faafo',
     'openstack/fuel-docs',
     'openstack/fuxi',
+    'openstack/kolla-cli',
     'openstack/kolla-kubernetes',
     'openstack/mox3',
     'openstack/networking-calico',
