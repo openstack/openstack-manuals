@@ -64,7 +64,7 @@ Bugs differ depending on:
    problems with your environment, and you are following the installation
    tutorials, seek assistance from the relevant team and operations
    specialists on IRC,
-   `ask.openstack.org <https://ask.openstack.org/en/questions/>`_
+   `Stack Overflow <https://stackoverflow.com/questions/>`_
    or the OpenStack mailing list.
 
    For more information about the relevant IRC channels, see the
