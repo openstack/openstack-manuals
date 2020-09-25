@@ -114,8 +114,9 @@ The openSUSE community provides images for `openSUSE
 <https://software.opensuse.org/distributions/leap#JeOS-ports>`_.
 
 SUSE maintains official SUSE Linux Enterprise Server cloud images.
-Go to `download.suse.com <https://download.suse.com>`_ and search
-for ``SUSE Linux Enterprise Server 15 JeOS``.
+Go to the `SUSE Linux Enterprise Server download page
+<https://www.suse.com/download/sles/>`_, select the ``AMD64 / Intel 64``
+architecture and search for ``OpenStack-Cloud``.
 
 .. note::
 
