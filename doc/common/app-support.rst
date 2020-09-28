@@ -57,21 +57,6 @@ documentation:
 
 *  `Documentation Contributor Guide <https://docs.openstack.org/doc-contrib-guide/>`_
 
-ask.openstack.org
-~~~~~~~~~~~~~~~~~
-
-During the set up or testing of OpenStack, you might have questions
-about how a specific task is completed or be in a situation where a
-feature does not work correctly. Use the
-`ask.openstack.org <https://ask.openstack.org>`_ site to ask questions
-and get answers. When you visit the `Ask OpenStack
-<https://ask.openstack.org>`_ site, scan
-the recently asked questions to see whether your question has already
-been answered. If not, ask a new question. Be sure to give a clear,
-concise summary in the title and provide as much detail as possible in
-the description. Paste in your command output or stack traces, links to
-screen shots, and any other information which might be useful.
-
 The OpenStack wiki
 ~~~~~~~~~~~~~~~~~~
 
