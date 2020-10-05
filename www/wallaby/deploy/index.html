@@ -1,0 +1,48 @@
+{% set projects = PROJECT_DATA[SERIES] %}
+{% extends "templates/base.tmpl" %}
+{% block pagetitle %}{{SERIES_TITLE}} Deployment Guides{% endblock %}
+{% block title %}
+<a href="https://docs.openstack.org">Documentation</a> &gt; {{SERIES_TITLE}} Deployment Guides
+{% endblock %}
+{% block content %}
+    <!-- Begin Page Content -->
+    <div class="top-docs-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <h1>OpenStack {{SERIES_TITLE}} Deployment Guides</h1>
+                <p>The following deployment guides support different installation
+                methods for core and optional OpenStack services.</p>
+                <p>This is documentation in progress for the next release.</p>
+       </div>
+    </div>
+</div>
+<div class="mid-docs-wrapper" id="docs-main-body">
+        <div class="container">
+            <div class="row docs-toc">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="docs-link-sections">
+                        <h3><i class="fa fa-cogs"></i>By deployment method</h3>
+{% for project in projects|sort(attribute='name') -%}
+{% if project.type == 'deployment' and project.has_deployment_guide %}
+                  <p><a href="/project-deploy-guide/{{project.name}}/{{SERIES}}/">
+                      {{project.service}} Guide
+                  </a></p>
+{% endif %}
+{%- endfor %}
+                  <p><a href="/project-deploy-guide/tripleo-docs/latest/">
+                      TripleO Deployment Guide
+                  </a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="row docs-contribute-wrapper">
+                <div class="col-lg-12">
+                    <p>Documentation treated like code, powered by the community - interested?</p>
+                    <a href="/doc-contrib-guide/" class="overview-btn contribute-btn">How To Contribute <i class="fa fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
+</div>
+
+{% endblock content %}

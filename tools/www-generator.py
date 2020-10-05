@@ -66,6 +66,7 @@ SERIES_INFO = {
     'train': SeriesInfo(date='October 2019', status='maintained'),
     'ussuri': SeriesInfo(date='May 2020', status='maintained'),
     'victoria': SeriesInfo(date='October 2020', status='development'),
+    'wallaby': SeriesInfo(date='April 2021', status='development'),
 }
 
 # Build a list of the series that are not the current series being
