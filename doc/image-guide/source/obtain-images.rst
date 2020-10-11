@@ -136,3 +136,13 @@ Hat Enterprise Linux subscription is required to download these images.
 .. note::
 
    In a RHEL cloud image, the login account is ``cloud-user``.
+
+FreeBSD, OpenBSD, and NetBSD
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unofficial images for BSD are available on `BSD-Cloud-Image.org <https://bsd-cloud-image.org/>_`.
+
+.. note::
+
+   The login accounts are ``freebsd`` for FreeBSD, ``openbsd`` for OpenBSD,
+   and ``netbsd`` for NetBSD.
