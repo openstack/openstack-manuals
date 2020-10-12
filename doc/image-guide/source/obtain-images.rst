@@ -141,7 +141,7 @@ Hat Enterprise Linux subscription is required to download these images.
 FreeBSD, OpenBSD, and NetBSD
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unofficial images for BSD are available on `BSD-Cloud-Image.org <https://bsd-cloud-image.org/>_`.
+Unofficial images for BSD are available on `BSD-Cloud-Image.org <https://bsd-cloud-image.org/>`_.
 
 .. note::
 
