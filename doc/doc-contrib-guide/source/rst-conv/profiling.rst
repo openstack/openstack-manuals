@@ -2,11 +2,11 @@
 Profiling
 =========
 
-Installation Guides has content that depends upon the operating
+Installation Guides have content that depends upon the operating
 systems.
 
 Use separate files to specify content that is operating-system specific. Each
-file should have the same name but for an addition suffix. The following
+file should have the same name but with an additional suffix. The following
 suffixes should be used:
 
 * ``ubuntu`` for Ubuntu
@@ -16,5 +16,5 @@ suffixes should be used:
 
 .. note::
 
-  Previously, ``.. only`` directives were used to generate conditional output.
+  Previously, ``.. only`` directive was used to generate conditional output.
   This required multiple builds and has since been phased out.
