@@ -15,12 +15,12 @@ projects continue to change.
 
 Open source tools can help streamline the review process by making
 diagrams easy to edit. Many open-source tools contain shapes and
-stencils that can be used in OpenStack. The following is a list
-recommended open source tools:
+stencils that can be used in OpenStack. The following is a list of
+recommended open-source tools:
 
 * `Draw.io <https://www.draw.io/>`_: Draw.io contains most of the
   customization options needed to make diagrams. Diagrams can also
-  be saved as an ``.svg`` file, which allows contributors to edit
+  be saved as a ``.svg`` file, which allows contributors to edit
   individual elements of each diagram.
 
 .. I have left this space for other contributors to recommend
