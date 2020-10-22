@@ -3,8 +3,8 @@ How to contribute
 =================
 
 Our community welcomes all people interested in open source cloud
-computing, and encourages you to join the `OpenStack Foundation
-<https://www.openstack.org/join>`_.
+computing, and encourages you to join the `Open Infrastructure Foundation
+<https://openinfra.dev/join>`_.
 
 The best way to get involved with the community is to talk with others
 online or at a meet up and offer contributions through our processes,

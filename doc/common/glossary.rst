@@ -827,9 +827,9 @@ C
    community project
 
       A project that is not officially endorsed by the OpenStack
-      Foundation. If the project is successful enough, it might be elevated
-      to an incubated project and then to a core project, or it might be
-      merged with the main code trunk.
+      Technical Commitee. If the project is successful enough, it
+      might be elevated to an incubated project and then to a core
+      project, or it might be merged with the main code trunk.
 
    compression
 

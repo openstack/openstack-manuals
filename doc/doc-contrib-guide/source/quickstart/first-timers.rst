@@ -366,7 +366,6 @@ instead:
 .. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#sign-the-appropriate-individual-contributor-license-agreement
 .. _`Installing git-review`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#install-the-git-review-utility
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
-.. _`OpenStack Foundation`: https://www.openstack.org/join
 .. _`Development Workflow`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#development-workflow
 .. _`git`: http://msysgit.github.io
 .. _`curl`: http://curl.haxx.se/
