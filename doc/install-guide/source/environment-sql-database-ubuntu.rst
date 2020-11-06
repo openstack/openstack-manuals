@@ -27,11 +27,19 @@ Install and configure components
 
 #. Install the packages:
 
-   .. code-block:: console
+   - As of Ubuntu 20.04, install the packages:
 
-      # apt install mariadb-server python-pymysql
+     .. code-block:: console
 
-2. Create and edit the ``/etc/mysql/mariadb.conf.d/99-openstack.cnf`` file
+        # apt install mariadb-server python3-pymysql
+
+   - As of Ubuntu 18.04 or 16.04, install the packages:
+
+     .. code-block:: console
+
+        # apt install mariadb-server python-pymysql
+
+#. Create and edit the ``/etc/mysql/mariadb.conf.d/99-openstack.cnf`` file
    and complete the following actions:
 
    - Create a ``[mysqld]`` section, and set the ``bind-address``
