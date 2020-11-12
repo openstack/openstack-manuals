@@ -62,7 +62,7 @@ SERIES_INFO = {
     'pike': SeriesInfo(date='August 2017', status='extended-maintenance'),
     'queens': SeriesInfo(date='March 2018', status='extended-maintenance'),
     'rocky': SeriesInfo(date='August 2018', status='extended-maintenance'),
-    'stein': SeriesInfo(date='April 2019', status='maintained'),
+    'stein': SeriesInfo(date='April 2019', status='extended-maintenance'),
     'train': SeriesInfo(date='October 2019', status='maintained'),
     'ussuri': SeriesInfo(date='May 2020', status='maintained'),
     'victoria': SeriesInfo(date='October 2020', status='maintained'),
