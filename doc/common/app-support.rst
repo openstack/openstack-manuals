@@ -156,9 +156,6 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: Container service
    (zun) <https://bugs.launchpad.net/zun>`_
 
-*  `Bugs: Function engine
-   (qinling) <https://storyboard.openstack.org/#!/project/openstack/qinling>`_
-
 *  `Bugs: OpenStack API Documentation
    (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`_
 
