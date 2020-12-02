@@ -45,8 +45,8 @@ A
 
    access key
 
-      Alternative term for an Amazon EC2 access key. See EC2 access
-      key.
+      Alternative term for an Amazon EC2 access key.
+      See :term:`EC2 access key`.
 
    account
 
@@ -486,7 +486,7 @@ B
 
    Block Storage service (cinder)
 
-      The OpenStack service that implement services and libraries to provide
+      The OpenStack service that implements services and libraries to provide
       on-demand, self-service access to Block Storage resources via abstraction
       and automation on top of other block storage devices.
 
@@ -667,7 +667,7 @@ C
 
    changes since
 
-      A Compute API parameter that downloads changes to the requested
+      A Compute API parameter that allows downloading changes to the requested
       item since your last request, instead of downloading a new, fresh set
       of data and comparing it against the old data.
 
@@ -1323,7 +1323,7 @@ E
    east-west traffic
 
       Network traffic between servers in the same cloud or data center.
-      See also north-south traffic.
+      See also :term:`north-south traffic <north-south traffic>`.
 
    EBS boot volume
 
@@ -1384,7 +1384,7 @@ E
 
    endpoint
 
-      See API endpoint.
+      See :term:`API endpoint <API endpoint>`.
 
    endpoint registry
 
@@ -1954,7 +1954,7 @@ I
 
    Image service (glance)
 
-      The OpenStack service that provide services and associated libraries
+      The OpenStack service that provides services and associated libraries
       to store, browse, share, distribute and manage bootable disk images,
       other data closely associated with initializing compute resources,
       and metadata definitions.
@@ -2436,7 +2436,7 @@ M
 
       The project that provides a messaging service that affords a
       variety of distributed application patterns in an efficient,
-      scalable and highly available manner, and to create and maintain
+      scalable, and highly available manner, and to create and maintain
       associated Python libraries and documentation.
 
    Meta-Data Server (MDS)
