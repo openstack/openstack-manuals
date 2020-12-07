@@ -459,6 +459,7 @@ _RETIRED_REPOS = [
     'openstack/networking-onos',
     'openstack/neutron-fwaas',
     'openstack/neutron-interconnection',
+    'openstack/openstack-ansible-galera_client',
     'openstack/openstack-ansible-os_almanach',
     'openstack/openstack-ansible-os_congress',
     'openstack/openstack-ansible-os_molteniron',
