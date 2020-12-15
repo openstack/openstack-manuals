@@ -451,6 +451,7 @@ _RETIRED_REPOS = [
     'openstack/fuel-docs',
     'openstack/fuxi',
     'openstack/karbor',
+    'openstack/karbor-dashboard',
     'openstack/kolla-cli',
     'openstack/kolla-kubernetes',
     'openstack/mox3',
