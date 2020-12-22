@@ -402,7 +402,7 @@ there should be one new device created for each partition:
 
 .. code-block:: console
 
-   $ ls -l /dev/nbd3*
+   $ ls -l /dev/nbd0*
    brw-rw---- 1 root disk 43, 48 2012-03-05 15:32 /dev/nbd0
    brw-rw---- 1 root disk 43, 49 2012-03-05 15:32 /dev/nbd0p1
    brw-rw---- 1 root disk 43, 50 2012-03-05 15:32 /dev/nbd0p2
@@ -412,7 +412,7 @@ there should be one new device created for each partition:
 
    If the network block device you selected was already in use,
    the initial :command:`qemu-nbd` command will fail silently, and the
-   ``/dev/nbd3p{1,2,3}`` device files will not be created.
+   ``/dev/nbd0p{1,2,3}`` device files will not be created.
 
 If the image partitions are not managed with LVM,
 they can be mounted directly:
@@ -420,7 +420,7 @@ they can be mounted directly:
 .. code-block:: console
 
    # mkdir /mnt/image
-   # mount /dev/nbd3p2 /mnt/image
+   # mount /dev/nbd0p2 /mnt/image
 
 When you are done, clean up:
 
