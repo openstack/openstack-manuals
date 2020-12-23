@@ -242,3 +242,42 @@ an example for customizing the motd:
 This hook script will conveniently be called at the correct moment of the
 build process, when everything is installed, but before unmounting the
 partition.
+
+windows-openstack-imaging-tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`windows-openstack-imaging-tools
+<https://github.com/cloudbase/windows-openstack-imaging-tools>`_
+is a PowerShell module that automates the Windows image creation for
+OpenStack and supports building VHDX, QCOW2, RAW and VMDK image types.
+
+For easier installation, the tool is published as a PowerShellGallery module
+`WindowsImageBuilder
+<https://www.powershellgallery.com/packages/WindowsImageBuilder>`_.
+
+Windows image build example:
+
+.. code-block:: powershell
+
+   # Install and import WindowsImageBuilder module from PowerShellGallery
+   Install-Module WindowsImageBuilder -Force
+   Import-Module WindowsImageBuilder
+
+   New-WindowsImageConfig -ConfigFilePath ".\windows-image-config.ini"
+   # Update the configuration file to fit your specific use case
+   # Extensive information for all the configuration can be found here:
+   # https://github.com/cloudbase/windows-openstack-imaging-tools/blob/master/Config.psm1#L21
+
+   # Generate the Windows image
+   New-WindowsOnlineImage -ConfigFilePath ".\windows-image-config.ini"
+
+Requirements:
+
+* A Windows host, with Hyper-V virtualization enabled, PowerShell >=v4
+  support and Windows Assessment and Deployment Kit (ADK).
+* A Windows installation ISO or DVD.
+* Windows compatible drivers, if required by the target environment.
+  For example, `VirtIO
+  <https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/>`_,
+  network card, or storage adapter drivers.
+* Git environment.
