@@ -58,10 +58,13 @@ Red Hat Enterprise Linux and CentOS
 
 Ubuntu
   You can walk through an installation by using packages available through
-  Canonical's Ubuntu Cloud archive repository for Ubuntu 16.04 (LTS).
+  Canonical's Ubuntu Cloud archive repository for Ubuntu 16.04+ (LTS).
 
   .. note::
 
      The Ubuntu Cloud Archive pockets for Pike and Queens provide
      OpenStack packages for Ubuntu 16.04 LTS; OpenStack Queens is
-     installable direct using Ubuntu 18.04 LTS.
+     installable direct using Ubuntu 18.04 LTS; the Ubuntu Cloud
+     Archive pockets for Rocky and Stein provide OpenStack packages
+     for Ubuntu 18.04 LTS; the Ubuntu Cloud Archive pocket for
+     Victoria provides OpenStack packages for Ubuntu 20.04 LTS.

@@ -29,6 +29,12 @@ having to enable an Ubuntu Cloud Archive repository.
 Enable the repository for Ubuntu Cloud Archive
 ----------------------------------------------
 
+**OpenStack Victoria for Ubuntu 20.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:victoria
+
 **OpenStack Stein for Ubuntu 18.04 LTS:**
 
 .. code-block:: console
@@ -81,7 +87,7 @@ Finalize the installation
 
 2. Install the OpenStack client:
 
-   **OpenStack Stein for Ubuntu 18.04 LTS:**
+   **OpenStack Victoria for Ubuntu 20.04 LTS and Stein for Ubuntu 18.04 LTS:**
 
    .. code-block:: console
 
