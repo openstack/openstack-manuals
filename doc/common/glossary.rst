@@ -4296,6 +4296,11 @@ X
       A Block Storage volume plug-in that enables communication with
       the Xen Storage Manager API.
 
+   Xena
+
+      The code name for the twenty fourth release of OpenStack.
+      The release is named after a fictional warrior princess.
+
    XenServer
 
       An OpenStack-supported hypervisor.
