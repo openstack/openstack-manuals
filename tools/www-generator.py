@@ -490,6 +490,7 @@ _RETIRED_REPOS = [
     'openstack/searchlight-specs',
     'openstack/searchlight-ui',
     'openstack/syntribos',
+    'openstack/tempest-horizon',
     'openstack/tricircle',
     'openstack/tripleo-incubator',
 ]
