@@ -454,6 +454,8 @@ _RETIRED_REPOS = [
     'openstack/karbor-dashboard',
     'openstack/kolla-cli',
     'openstack/kolla-kubernetes',
+    'openstack/monasca-ceilometer',
+    'openstack/monasca-log-api',
     'openstack/mox3',
     'openstack/networking-calico',
     'openstack/networking-l2gw',
