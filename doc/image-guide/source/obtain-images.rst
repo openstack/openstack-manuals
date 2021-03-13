@@ -147,3 +147,14 @@ Unofficial images for BSD are available on `BSD-Cloud-Image.org <https://bsd-clo
 
    The login accounts are ``freebsd`` for FreeBSD, ``openbsd`` for OpenBSD,
    and ``netbsd`` for NetBSD.
+
+Arch Linux
+~~~~~~~~~~
+
+Arch Linux provides a cloud image for download. More details can be found on
+the `arch-boxes project page
+<https://gitlab.archlinux.org/archlinux/arch-boxes/>`_.
+
+.. note::
+
+   In a Arch Linux image, the login account is ``arch``.
