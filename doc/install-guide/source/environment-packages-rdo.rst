@@ -82,6 +82,13 @@ Enable the OpenStack repository
   repository. For CentOS8, you will also need to enable the PowerTools
   repository.
 
+  **When installing the Victoria release, run:**
+
+  .. code-block:: console
+
+     # yum install centos-release-openstack-victoria
+     # yum config-manager --set-enabled PowerTools
+
   **When installing the Ussuri release, run:**
 
   .. code-block:: console

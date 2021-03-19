@@ -6,6 +6,8 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for Victoria
+  <https://docs.openstack.org/victoria/install/>`_
 * `OpenStack Installation Guides for Ussuri
   <https://docs.openstack.org/ussuri/install/>`_
 * `OpenStack Installation Guides for Train
@@ -18,6 +20,29 @@ locations:
   <https://docs.openstack.org/queens/install/>`_
 * `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
+
+Minimal deployment for Victoria
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Victoria
+  <https://docs.openstack.org/keystone/victoria/install/>`_
+* Image service – `glance installation for Victoria
+  <https://docs.openstack.org/glance/victoria/install/>`_
+* Placement service – `placement installation for Victoria
+  <https://docs.openstack.org/placement/victoria/install/>`_
+* Compute service – `nova installation for Victoria
+  <https://docs.openstack.org/nova/victoria/install/>`_
+* Networking service – `neutron installation for Victoria
+  <https://docs.openstack.org/neutron/victoria/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Victoria <https://docs.openstack.org/horizon/victoria/install/>`_
+* Block Storage service – `cinder installation for Victoria <https://docs.openstack.org/cinder/victoria/install/>`_
 
 Minimal deployment for Ussuri
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
