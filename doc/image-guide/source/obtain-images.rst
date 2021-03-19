@@ -112,7 +112,7 @@ openSUSE and SUSE Linux Enterprise Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The openSUSE community provides images for `openSUSE
-<https://software.opensuse.org/distributions/leap#JeOS-ports>`_.
+<https://get.opensuse.org/leap#jeos_images>`_.
 
 SUSE maintains official SUSE Linux Enterprise Server cloud images.
 Go to the `SUSE Linux Enterprise Server download page
