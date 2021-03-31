@@ -461,6 +461,7 @@ _RETIRED_REPOS = [
     'openstack/mox3',
     'openstack/networking-calico',
     'openstack/networking-l2gw',
+    'openstack/networking-midonet',
     'openstack/networking-onos',
     'openstack/neutron-fwaas',
     'openstack/neutron-interconnection',
