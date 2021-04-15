@@ -15,73 +15,76 @@ ports that each OpenStack service uses:
 
    * - OpenStack service
      - Default ports
-     - Port type
    * - Application Catalog (``murano``)
      - 8082
-     -
+   * - Backup Service (``Freezer``)
+     - 9090
+   * - Big Data Processing Framework (``sahara``)
+     - 8386
    * - Block Storage (``cinder``)
      - 8776
-     - publicurl and adminurl
    * - Clustering (``senlin``)
-     - 8778
-     - publicurl and adminurl
+     - 8777
    * - Compute (``nova``) endpoints
      - 8774
-     - publicurl and adminurl
-   * - Compute API (``nova-api``)
-     - 8773, 8775
-     -
    * - Compute ports for access to virtual machine consoles
      - 5900-5999
-     -
-   * - Compute VNC proxy for browsers ( openstack-nova-novncproxy)
+   * - Compute VNC proxy for browsers (openstack-nova-novncproxy)
      - 6080
-     -
    * - Compute VNC proxy for traditional VNC clients (openstack-nova-xvpvncproxy)
      - 6081
-     -
-   * - Proxy port for HTML5 console used by Compute service
-     - 6082
-     -
+   * - Container Infrastructure Management (``Magnum``)
+     - 9511
+   * - Container Service (``Zun``)
+     - 9517
    * - Data processing service (``sahara``) endpoint
      - 8386
-     - publicurl and adminurl
-   * - Identity service (``keystone``) administrative endpoint
+   * - Database service (``Trove``)
+     - 8779
+   * - DNS service (``Designate``)
+     - 9001
+   * - High Availability Service (``Masakari``)
+     - 15868
+   * - Identity service (``keystone``) endpoint
      - 5000
-     - adminurl
-   * - Identity service public endpoint
-     - 5000
-     - publicurl
    * - Image service (``glance``) API
      - 9292
-     - publicurl and adminurl
-   * - Image service registry
-     - 9191
-     -
+   * - Key Manager service (``Barbican``)
+     - 9311
+   * - Loadbalancer service (``Octavia``)
+     - 9876
    * - Networking (``neutron``)
      - 9696
-     - publicurl and adminurl
+   * - NFV Orchestration service (``tacker``)
+     - 9890
    * - Object Storage (``swift``)
      - 6000, 6001, 6002
-     -
    * - Orchestration (``heat``) endpoint
      - 8004
-     - publicurl and adminurl
    * - Orchestration AWS CloudFormation-compatible API (``openstack-heat-api-cfn``)
      - 8000
-     -
    * - Orchestration AWS CloudWatch-compatible API (``openstack-heat-api-cloudwatch``)
+     - 8778
+   * - Placement API (``placement``)
      - 8003
-     -
+   * - Proxy port for HTML5 console used by Compute service
+     - 6082
+   * - Rating service (``Cloudkitty``)
+     - 8889
+   * - Registration service (``Adjutant``)
+     - 5050
+   * - Resource Reservation service (``Blazar``)
+     - 1234
    * - Root Cause Analysis service (``Vitrage``)
      - 8999
-     -
-   * - Telemetry (``ceilometer``)
-     - 8777
-     - publicurl and adminurl
+   * - Shared File Systems service (``Manila``)
+     - 8786
+   * - Telemetry alarming service (``Aodh``)
+     - 8042
+   * - Telemetry event service (``Panko``)
+     - 8977
    * - Workflow service (``Mistral``)
      - 8989
-     -
 
 To function properly, some OpenStack components depend on other,
 non-OpenStack services. For example, the OpenStack dashboard uses HTTP
