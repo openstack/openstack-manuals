@@ -33,6 +33,7 @@ following steps toward deployment using a production architecture:
   The OpenStack project has a couple of deployment projects with
   specific guides per version:
 
+  - `Wallaby release <https://docs.openstack.org/wallaby/deploy/>`_
   - `Victoria release <https://docs.openstack.org/victoria/deploy/>`_
   - `Ussuri release <https://docs.openstack.org/ussuri/deploy/>`_
   - `Train release <https://docs.openstack.org/train/deploy/>`_

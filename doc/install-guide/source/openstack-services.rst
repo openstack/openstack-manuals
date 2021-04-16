@@ -6,6 +6,8 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for Wallaby
+  <https://docs.openstack.org/wallaby/install/>`_
 * `OpenStack Installation Guides for Victoria
   <https://docs.openstack.org/victoria/install/>`_
 * `OpenStack Installation Guides for Ussuri
@@ -20,6 +22,29 @@ locations:
   <https://docs.openstack.org/queens/install/>`_
 * `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
+
+Minimal deployment for Wallaby
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Wallaby
+  <https://docs.openstack.org/keystone/wallaby/install/>`_
+* Image service – `glance installation for Wallaby
+  <https://docs.openstack.org/glance/wallaby/install/>`_
+* Placement service – `placement installation for Wallaby
+  <https://docs.openstack.org/placement/wallaby/install/>`_
+* Compute service – `nova installation for Wallaby
+  <https://docs.openstack.org/nova/wallaby/install/>`_
+* Networking service – `neutron installation for Wallaby
+  <https://docs.openstack.org/neutron/wallaby/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Wallaby <https://docs.openstack.org/horizon/wallaby/install/>`_
+* Block Storage service – `cinder installation for Wallaby <https://docs.openstack.org/cinder/wallaby/install/>`_
 
 Minimal deployment for Victoria
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
