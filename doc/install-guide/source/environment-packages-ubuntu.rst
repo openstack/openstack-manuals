@@ -6,34 +6,44 @@ are provided every two years. OpenStack packages from interim releases of
 Ubuntu are made available to the prior Ubuntu LTS via the Ubuntu Cloud
 Archive.
 
-OpenStack Queens is available directly using Ubuntu 18.04 LTS and
-OpenStack Mitaka is available directly using Ubuntu 16.04 LTS without
-having to enable an Ubuntu Cloud Archive repository.
-
 .. note::
 
-   The set up of OpenStack packages described here needs to be done on
-   all nodes: controller, compute, and Block Storage nodes.
-
-.. warning::
-
-   Your hosts must contain the latest versions of base installation
-   packages available for your distribution before proceeding further.
-
-.. note::
-
-   Disable or remove any automatic update services because they can
-   impact your OpenStack environment.
+   The archive enablement described here needs to be done on all nodes
+   that run OpenStack services.
 
 
-Enable the repository for Ubuntu Cloud Archive
-----------------------------------------------
+Archive Enablement
+------------------
+
+**OpenStack Wallaby for Ubuntu 20.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:wallaby
 
 **OpenStack Victoria for Ubuntu 20.04 LTS:**
 
 .. code-block:: console
 
    # add-apt-repository cloud-archive:victoria
+
+**OpenStack Ussuri for Ubuntu 20.04 LTS:**
+
+.. code-block:: console
+
+   OpenStack Ussuri is available by default using Ubuntu 20.04 LTS.
+
+**OpenStack Ussuri for Ubuntu 18.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:ussuri
+
+**OpenStack Train for Ubuntu 18.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:train
 
 **OpenStack Stein for Ubuntu 18.04 LTS:**
 
@@ -47,22 +57,11 @@ Enable the repository for Ubuntu Cloud Archive
 
    # add-apt-repository cloud-archive:rocky
 
-**OpenStack Queens for Ubuntu 16.04 LTS:**
+**OpenStack Queens for Ubuntu 18.04 LTS:**
 
 .. code-block:: console
 
-   # apt install software-properties-common
-   # add-apt-repository cloud-archive:queens
-
-Note that OpenStack Queens is included in Ubuntu 18.04 LTS without
-enabling the Ubuntu Cloud Archive.
-
-**OpenStack Pike for Ubuntu 16.04 LTS:**
-
-.. code-block:: console
-
-   # apt install software-properties-common
-   # add-apt-repository cloud-archive:pike
+   OpenStack Queens is available by default using Ubuntu 18.04 LTS.
 
 .. note::
 
@@ -71,30 +70,17 @@ enabling the Ubuntu Cloud Archive.
    https://www.ubuntu.com/about/release-cycle.
 
 
-Finalize the installation
--------------------------
+Sample Installation
+-------------------
 
-1. Upgrade packages on all nodes:
+.. code-block:: console
 
-   .. code-block:: console
+   # apt install nova-compute
 
-      # apt update && apt dist-upgrade
 
-   .. note::
+Client Installation
+-------------------
 
-      If the upgrade process includes a new kernel, reboot your host
-      to activate it.
+.. code-block:: console
 
-2. Install the OpenStack client:
-
-   **OpenStack Victoria for Ubuntu 20.04 LTS and Stein for Ubuntu 18.04 LTS:**
-
-   .. code-block:: console
-
-      # apt install python3-openstackclient
-
-   **Others:**
-
-   .. code-block:: console
-
-      # apt install python-openstackclient
+   # apt install python3-openstackclient
