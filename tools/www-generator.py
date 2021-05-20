@@ -495,6 +495,7 @@ _RETIRED_REPOS = [
     'openstack/searchlight',
     'openstack/searchlight-specs',
     'openstack/searchlight-ui',
+    'openstack/sushy-cli',
     'openstack/syntribos',
     'openstack/tempest-horizon',
     'openstack/tricircle',
