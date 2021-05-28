@@ -9,7 +9,7 @@ computing, and encourages you to join the `Open Infrastructure Foundation
 The best way to get involved with the community is to talk with others
 online or at a meet up and offer contributions through our processes,
 the `OpenStack wiki <https://wiki.openstack.org>`_, blogs, or on IRC at
-``#openstack`` on ``irc.freenode.net``.
+``#openstack`` on ``irc.oftc.net``.
 
 We welcome all types of contributions, from blueprint designs to
 documentation to testing to deployment scripts.

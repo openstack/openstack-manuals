@@ -166,7 +166,7 @@ Documentation feedback
 ~~~~~~~~~~~~~~~~~~~~~~
 
 To provide feedback on documentation, join our IRC channel ``#openstack-doc``
-on the Freenode IRC network, or `report a bug in Launchpad
+on the OFTC IRC network, or `report a bug in Launchpad
 <https://bugs.launchpad.net/openstack/+filebug>`_ and choose the particular
 project that the documentation is a part of.
 
@@ -174,10 +174,10 @@ The OpenStack IRC channel
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The OpenStack community lives in the #openstack IRC channel on the
-Freenode network. You can hang out, ask questions, or get immediate
+OFTC network. You can hang out, ask questions, or get immediate
 feedback for urgent and pressing issues. To install an IRC client or use
 a browser-based client, go to
-`https://webchat.freenode.net/ <https://webchat.freenode.net>`_. You can
+`https://webchat.oftc.net/ <https://webchat.oftc.net>`_. You can
 also use `Colloquy <http://colloquy.info/>`_ (Mac OS X),
 `mIRC <http://www.mirc.com/>`_ (Windows),
 or XChat (Linux). When you are in the IRC channel
@@ -186,7 +186,7 @@ is to use a Paste Bin. The OpenStack project has one at `Paste
 <http://paste.openstack.org>`_. Just paste your longer amounts of text or
 logs in the web form and you get a URL that you can paste into the
 channel. The OpenStack IRC channel is ``#openstack`` on
-``irc.freenode.net``. You can find a list of all OpenStack IRC channels on
+``irc.oftc.net``. You can find a list of all OpenStack IRC channels on
 the `IRC page on the wiki <https://wiki.openstack.org/wiki/IRC>`_.
 
 OpenStack mailing lists
