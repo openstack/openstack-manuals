@@ -185,6 +185,9 @@ redirect 301 /doc-contrib-guide/ui-text-guidelines /doc-contrib-guide/ux-ui-guid
 {%- endif %}
 {%- endfor %}
 
+# Redirect project contributor docs for stable series to latest
+redirectmatch 301 /([^/]+)/(?!latest)[^/]+/contributor(/.*)?$ /$1/latest/contributor$2
+
 # Redirect old cli-reference to the OSC latest docs
 {{ path_to_page('/cli-reference', '/python-openstackclient/latest/') }}
 
