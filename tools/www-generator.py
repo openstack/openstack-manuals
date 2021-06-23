@@ -467,6 +467,8 @@ _RETIRED_REPOS = [
     'openstack/neutron-fwaas',
     'openstack/neutron-interconnection',
     'openstack/openstack-ansible-galera_client',
+    'openstack/openstack-ansible-nspawn_hosts',
+    'openstack/openstack-ansible-nspawn_container_create',
     'openstack/openstack-ansible-os_almanach',
     'openstack/openstack-ansible-os_congress',
     'openstack/openstack-ansible-os_molteniron',
