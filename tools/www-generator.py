@@ -465,6 +465,7 @@ _RETIRED_REPOS = [
     'openstack/networking-midonet',
     'openstack/networking-onos',
     'openstack/neutron-fwaas',
+    'openstack/neutron-lbaas-dashboard',
     'openstack/neutron-interconnection',
     'openstack/openstack-ansible-galera_client',
     'openstack/openstack-ansible-nspawn_hosts',
