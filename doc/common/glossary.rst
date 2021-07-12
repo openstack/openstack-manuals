@@ -2853,7 +2853,7 @@ O
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
-      Train, Ussuri, Victoria, and Wallaby.
+      Train, Ussuri, Victoria, Wallaby, Xena, and Yoga.
 
       Wallaby was the first code name choosen by a new policy: Code
       names are choosen by the community following the alphabet, for
@@ -4310,6 +4310,15 @@ X
       High-performance 64-bit file system created by Silicon
       Graphics. Excels in parallel I/O operations and data
       consistency.
+
+Y
+~
+
+   Yoga
+
+      The code name for the twenty fifth release of OpenStack.
+      The release is named after a a philosophical school with mental
+      and physical practices from India.
 
 Z
 ~
