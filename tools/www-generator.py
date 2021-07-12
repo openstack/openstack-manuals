@@ -447,6 +447,7 @@ _RETIRED_REPOS = [
     'openstack/congress',
     'openstack/congress-dashboard',
     'openstack/congress-tempest-plugin',
+    'openstack/django_openstack_auth',
     'openstack/dragonflow',
     'openstack/faafo',
     'openstack/fuel-docs',
