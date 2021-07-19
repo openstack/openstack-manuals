@@ -11,10 +11,17 @@ Install and configure components
 
 #. Install the packages:
 
+For Ubuntu versions prior to 18.04 use:
 
    .. code-block:: console
 
       # apt install memcached python-memcache
+
+For Ubuntu 18.04 and newer versions use:
+
+   .. code-block:: console
+
+      # apt install memcached python3-memcache
 
 2. Edit the ``/etc/memcached.conf`` file and configure the
    service to use the management IP address of the controller node.
