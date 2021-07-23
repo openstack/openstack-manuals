@@ -477,6 +477,7 @@ _RETIRED_REPOS = [
     'openstack/openstack-ansible-os_monasca',
     'openstack/openstack-ansible-os_monasca-agent',
     'openstack/openstack-ansible-os_monasca-ui',
+    'openstack/openstack-ansible-os_panko',
     'openstack/openstack-ansible-os_searchlight',
     'openstack/openstack-ansible-os_zaqar',
     'openstack/openstack-ansible-pip_install',
