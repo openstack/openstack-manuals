@@ -64,7 +64,7 @@ Set up project specific installation guides:
         - Compute, Telemetry Alarming, or Root Cause Analysis
 
       * - codename
-        - The name how the different components of the project are refering to the project
+        - The name how the different components of the project are referring to the project
         - nova, aodh, or vitrage as in nova-conductor or vitrage-api
 
    A directory will be created with the name that was defined in
