@@ -15,6 +15,12 @@ Archive.
 Archive Enablement
 ------------------
 
+**OpenStack Xena for Ubuntu 20.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:xena
+
 **OpenStack Wallaby for Ubuntu 20.04 LTS:**
 
 .. code-block:: console
