@@ -31,7 +31,7 @@ the commands should look something like this:
 
 .. code-block:: console
 
-   # wget -o /var/lib/libvirt/boot/bionic-mini.iso \
+   # wget -O /var/lib/libvirt/boot/bionic-mini.iso \
      http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso
    # chown libvirt-qemu:kvm /var/lib/libvirt/boot/bionic-mini.iso
    # qemu-img create -f qcow2 /var/lib/libvirt/images/bionic.qcow2 10G
