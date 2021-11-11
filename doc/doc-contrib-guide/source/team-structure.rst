@@ -8,28 +8,19 @@ The Documentation project provides documentation for various OpenStack
 projects to promote OpenStack, develop and maintain tools and processes
 to ensure quality and accuracy of documentation.
 
-The OpenStack community has the following documentation subteams
-with their respective leads:
-
-* :doc:`api-site <api-guides>`: *vacant*
-* `Contributor Guide
-  <https://docs.openstack.org/contributors/>`_:
-  Kendall Nelson
-* `Security Guide
-  <https://wiki.openstack.org/wiki/Documentation/SecurityGuide>`_:
-  Luke Hinds
-* `Training Guides <https://wiki.openstack.org/wiki/Training-guides>`_:
-  Matjaz Pancur
-* `Training labs
-  <https://wiki.openstack.org/wiki/Documentation/training-labs>`_:
-  Roger Luethi, Julen Larrucea
+The OpenStack community has merged the Documentation team (also know as
+'Technical Writing' SIG ) into the OpenStack Technical Committee:
+https://review.opendev.org/c/openstack/governance/+/815869 If you have
+any question regarding the documentation or training guides please feel
+free to contact `the OpenStack Technical Committee
+<https://governance.openstack.org/tc/>`_
 
 The current list of docs cores for openstack-manuals, openstackdocstheme,
 and openstack-doc-tools repositories can be found at
 https://review.opendev.org/#/admin/groups/30,members.
 
-The api-site, contributor-guide, security-doc, training-guides, and
-training-labs repositories have separate core teams but also include the
+The api-site, contributor-guide, security-doc, and training-guides
+repositories have separate core teams but also include the
 docs core team.
 
 The cross-project liaisons (CPLs) assist with subject matter questions,
