@@ -51,11 +51,11 @@ Red Hat Enterprise Linux and CentOS
   Hat Enterprise Linux 7 and 8 and their derivatives through the RDO
   repository.
 
-  ..note::
+  .. note::
 
-    OpenStack Wallaby is available for CentOS Stream 8. OpenStack Ussuri and
-    Victoria are available for both CentOS 8 and RHEL 8. OpenStack Train and
-    earlier are available on both CentOS 7 and RHEL 7.
+     OpenStack Wallaby is available for CentOS Stream 8. OpenStack Ussuri and
+     Victoria are available for both CentOS 8 and RHEL 8. OpenStack Train and
+     earlier are available on both CentOS 7 and RHEL 7.
 
 Ubuntu
   You can walk through an installation by using packages available through
