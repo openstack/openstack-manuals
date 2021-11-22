@@ -15,15 +15,6 @@ or as connected entities.
 Explanations of configuration options and sample configuration files
 are included.
 
-.. note::
-
-   The Training Labs scripts provide an automated way of deploying the
-   cluster described in this Installation Guide into VirtualBox or KVM
-   VMs. You will need a desktop computer or a laptop with at least 8
-   GB memory and 20 GB free storage running Linux, MacOS, or Windows.
-   Please see the
-   `OpenStack Training Labs <https://docs.openstack.org/training_labs/>`_.
-
 This guide documents the installation of OpenStack starting with the
 Pike release. It covers multiple releases.
 

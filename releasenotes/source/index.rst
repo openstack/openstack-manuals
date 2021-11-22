@@ -12,7 +12,6 @@ Thus this file covers the content of the following repositories:
 * openstack-manuals
 * security-guide
 * training-guide
-* training-labs
 
 Contents
 ~~~~~~~~
