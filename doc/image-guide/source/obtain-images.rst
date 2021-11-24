@@ -21,6 +21,8 @@ The CentOS project maintains official images for direct download.
 * `CentOS 6 images <http://cloud.centos.org/centos/6/images/>`_
 * `CentOS 7 images <http://cloud.centos.org/centos/7/images/>`_
 * `CentOS 8 images <https://cloud.centos.org/centos/8/>`_
+* `CentOS 8 stream images <https://cloud.centos.org/centos/8-stream/>`_
+* `CentOS 9 stream images <https://cloud.centos.org/centos/9-stream/>`_
 
 .. note::
 
