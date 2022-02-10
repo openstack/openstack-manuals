@@ -87,14 +87,14 @@ Enable the OpenStack repository
   .. code-block:: console
 
      # yum install centos-release-openstack-victoria
-     # yum config-manager --set-enabled PowerTools
+     # yum config-manager --set-enabled powertools
 
   **When installing the Ussuri release, run:**
 
   .. code-block:: console
 
      # yum install centos-release-openstack-ussuri
-     # yum config-manager --set-enabled PowerTools
+     # yum config-manager --set-enabled powertools
 
   **When installing the Train release, run:**
 
