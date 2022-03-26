@@ -2853,7 +2853,7 @@ O
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
-      Train, Ussuri, Victoria, Wallaby, Xena, and Yoga.
+      Train, Ussuri, Victoria, Wallaby, Xena, Yoga, and Zed.
 
       Wallaby was the first code name choosen by a new policy: Code
       names are choosen by the community following the alphabet, for
@@ -4314,10 +4314,12 @@ X
 Y
 ~
 
+.. glossary::
+
    Yoga
 
       The code name for the twenty fifth release of OpenStack.
-      The release is named after a a philosophical school with mental
+      The release is named after a philosophical school with mental
       and physical practices from India.
 
 Z
@@ -4328,6 +4330,11 @@ Z
    zaqar
 
       Codename for the :term:`Message service <Message service (zaqar)>`.
+
+   Zed
+
+      The code name for the twenty sixth release of OpenStack.
+      The release is named after the pronunciation of the letter Z.
 
    ZeroMQ
 
