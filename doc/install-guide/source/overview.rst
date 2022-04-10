@@ -32,7 +32,8 @@ following steps toward deployment using a production architecture:
   to automate deployment and management of the production environment.
   The OpenStack project has a couple of deployment projects with
   specific guides per version:
-
+  - `Yoga release <https://docs.openstack.org/yoga/deploy/>`_
+  - `Xena release <https://docs.openstack.org/xena/deploy/>`_
   - `Wallaby release <https://docs.openstack.org/wallaby/deploy/>`_
   - `Victoria release <https://docs.openstack.org/victoria/deploy/>`_
   - `Ussuri release <https://docs.openstack.org/ussuri/deploy/>`_

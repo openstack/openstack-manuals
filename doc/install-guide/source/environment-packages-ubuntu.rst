@@ -14,6 +14,11 @@ Archive.
 
 Archive Enablement
 ------------------
+**OpenStack Yoga for Ubuntu 20.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:yoga
 
 **OpenStack Xena for Ubuntu 20.04 LTS:**
 

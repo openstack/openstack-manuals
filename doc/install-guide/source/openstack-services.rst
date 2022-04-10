@@ -6,6 +6,10 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for Yoga
+  <https://docs.openstack.org/yoga/install/>`_
+* `OpenStack Installation Guides for Xena
+  <https://docs.openstack.org/xena/install/>`_
 * `OpenStack Installation Guides for Wallaby
   <https://docs.openstack.org/wallaby/install/>`_
 * `OpenStack Installation Guides for Victoria
@@ -22,6 +26,52 @@ locations:
   <https://docs.openstack.org/queens/install/>`_
 * `OpenStack Installation Guides for Pike
   <https://docs.openstack.org/pike/install/>`_
+
+Minimal deployment for Yoga
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Yoga
+  <https://docs.openstack.org/keystone/yoga/install/>`_
+* Image service – `glance installation for Yoga
+  <https://docs.openstack.org/glance/yoga/install/>`_
+* Placement service – `placement installation for Yoga
+  <https://docs.openstack.org/placement/yoga/install/>`_
+* Compute service – `nova installation for Yoga
+  <https://docs.openstack.org/nova/yoga/install/>`_
+* Networking service – `neutron installation for Yoga
+  <https://docs.openstack.org/neutron/yoga/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Yoga <https://docs.openstack.org/horizon/yoga/install/>`_
+* Block Storage service – `cinder installation for Yoga <https://docs.openstack.org/cinder/yoga/install/>`_
+
+Minimal deployment for Xena
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Xena
+  <https://docs.openstack.org/keystone/xena/install/>`_
+* Image service – `glance installation for Xena
+  <https://docs.openstack.org/glance/xena/install/>`_
+* Placement service – `placement installation for Xena
+  <https://docs.openstack.org/placement/xena/install/>`_
+* Compute service – `nova installation for Xena
+  <https://docs.openstack.org/nova/xena/install/>`_
+* Networking service – `neutron installation for Xena
+  <https://docs.openstack.org/neutron/xena/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Xena <https://docs.openstack.org/horizon/xena/install/>`_
+* Block Storage service – `cinder installation for Xena <https://docs.openstack.org/cinder/xena/install/>`_
 
 Minimal deployment for Wallaby
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
