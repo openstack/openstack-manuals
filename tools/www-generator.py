@@ -58,7 +58,7 @@ SERIES_INFO = {
     'liberty': SeriesInfo(date='October 2015', status='EOL'),
     'mitaka': SeriesInfo(date='April 2016', status='EOL'),
     'newton': SeriesInfo(date='October 2016', status='EOL'),
-    'ocata': SeriesInfo(date='February 2017', status='extended-maintenance'),
+    'ocata': SeriesInfo(date='February 2017', status='EOL'),
     'pike': SeriesInfo(date='August 2017', status='extended-maintenance'),
     'queens': SeriesInfo(date='March 2018', status='extended-maintenance'),
     'rocky': SeriesInfo(date='August 2018', status='extended-maintenance'),
