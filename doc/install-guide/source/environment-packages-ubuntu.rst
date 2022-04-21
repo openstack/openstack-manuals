@@ -14,6 +14,12 @@ Archive.
 
 Archive Enablement
 ------------------
+**OpenStack Ussuri for Ubuntu 22.04 LTS:**
+
+.. code-block:: console
+
+   OpenStack Yoga is available by default using Ubuntu 22.04 LTS.
+
 **OpenStack Yoga for Ubuntu 20.04 LTS:**
 
 .. code-block:: console
