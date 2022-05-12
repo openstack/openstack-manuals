@@ -278,6 +278,24 @@ git and git review
 
   On Windows, look for it in the same location.
 
+  If you still received a ``Permission denied (publickey)`` message,
+  you might need to check if you hit ``no mutual signature algorithm``.
+  Any given system running OpenSSH 8.8 or newer as this release disables RSA
+  signatures using the SHA-1 hash algorithm by default.
+  Try to run the following command:
+
+  .. code-block:: console
+
+     ssh -vv -p 29418 {username}@review.opendev.org
+
+  If you saw ``no mutual signature algorithm``,
+  you need to consider using another algorithm instead of RSA.
+  For example, use ``ed25519`` to generate your key and upload ``id_ed25519.pub``.
+
+  .. code-block:: console
+
+     ssh-keygen -t ed25519 -C "your_email@example.com"
+
 * Merge conflict, rebase required
 
   Sometimes your change creates a merge conflict with another patch.
