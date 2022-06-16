@@ -10,6 +10,8 @@ one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to
 
+* `Object Storage Installation Guide for Yoga <https://docs.openstack.org/swift/yoga/install/>`_
+
 * `Object Storage Installation Guide for Stein <https://docs.openstack.org/swift/stein/install/>`_
 
 * `Object Storage Installation Guide for Rocky <https://docs.openstack.org/swift/rocky/install/>`_
