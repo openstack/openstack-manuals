@@ -131,6 +131,8 @@ Red Hat Enterprise Linux
 Red Hat maintains official Red Hat Enterprise Linux cloud images. A valid Red
 Hat Enterprise Linux subscription is required to download these images.
 
+* `Red Hat Enterprise Linux 8 KVM Guest Image
+  <https://access.redhat.com/downloads/content/479/ver=/rhel---8/x86_64/product-downloads>`_
 * `Red Hat Enterprise Linux 7 KVM Guest Image
   <https://access.redhat.com/downloads/content/69/ver=/rhel---7/x86_64/product-downloads>`_
 * `Red Hat Enterprise Linux 6 KVM Guest Image
