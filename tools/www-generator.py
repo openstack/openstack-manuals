@@ -429,6 +429,7 @@ _IGNORED_REPOS = [
     'openstack/ha-guide',
     'openstack/arch-design',
     'openstack/project-team-guide',
+    'openstack/large-scale',
 ]
 
 # List of infra repos that publish to the normal location (/REPO/) and
