@@ -36,7 +36,7 @@ complete other actions in your OpenStack cloud.
 Current API versions
 --------------------
 
-`Acceleration API v1 <https://docs.openstack.org/api-ref/accelerator/v1/>`__
+`Acceleration API v2 <https://docs.openstack.org/api-ref/accelerator/>`__
 
 `Admin Logic API
 <https://docs.openstack.org/api-ref/admin-logic/>`__
