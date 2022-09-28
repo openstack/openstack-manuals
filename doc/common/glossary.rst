@@ -18,6 +18,16 @@ OpenStack contribution process.
 
 .. glossary::
 
+   2023.1 Antelope
+
+      The code name for the twenty seventh release of OpenStack.
+      This release is the first release based on the new `release
+      identification process
+      <https://governance.openstack.org/tc/resolutions/20220524-release-identification-process.html>`__
+      which is formed after `"year"."release count within the year"`
+      and the name Antelope, a swift and gracious animal, also a
+      type of steam locomotive.
+
    6to4
 
       A mechanism that allows IPv6 packets to be transmitted
@@ -2853,7 +2863,16 @@ O
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
       Folsom, Grizzly, Havana, Icehouse, Juno, Kilo, Liberty,
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
-      Train, Ussuri, Victoria, Wallaby, Xena, Yoga, and Zed.
+      Train, Ussuri, Victoria, Wallaby, Xena, Yoga, Zed.
+
+      At the same time as OpenStack releases run out of alphabet the
+      Technical Committee changed the `naming process
+      <https://governance.openstack.org/tc/resolutions/20220524-release-identification-process.html>`__
+      to have release number and a release name as an identification
+      code. The release number will be the primary identifier:
+      `"year"."release count within the year"` and the name will be
+      used mostly for marketing purposes. The first such release will
+      be: 2023.1 Antelope.
 
       Wallaby was the first code name choosen by a new policy: Code
       names are choosen by the community following the alphabet, for
