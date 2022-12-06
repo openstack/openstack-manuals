@@ -14,7 +14,13 @@ Archive.
 
 Archive Enablement
 ------------------
-**OpenStack Ussuri for Ubuntu 22.04 LTS:**
+**OpenStack Zed for Ubuntu 22.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:zed
+
+**OpenStack Yoga for Ubuntu 22.04 LTS:**
 
 .. code-block:: console
 
