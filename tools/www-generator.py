@@ -70,7 +70,7 @@ SERIES_INFO = {
     'xena': SeriesInfo(date='October 2021', status='maintained'),
     'yoga': SeriesInfo(date='April 2022', status='maintained'),
     'zed': SeriesInfo(date='October 2022', status='maintained'),
-    '2023.1.antelope': SeriesInfo(date='March 2023', status='development'),
+    '2023.1.antelope': SeriesInfo(date='March 2023', status='maintained'),
     '2023.2.bobcat': SeriesInfo(date='October 2023', status='development'),
 }
 
