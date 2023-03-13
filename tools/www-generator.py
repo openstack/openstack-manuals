@@ -71,6 +71,7 @@ SERIES_INFO = {
     'yoga': SeriesInfo(date='April 2022', status='maintained'),
     'zed': SeriesInfo(date='October 2022', status='maintained'),
     '2023.1.antelope': SeriesInfo(date='March 2023', status='development'),
+    '2023.2.bobcat': SeriesInfo(date='October 2023', status='development'),
 }
 
 # Build a list of the series that are not the current series being
