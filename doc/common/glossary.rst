@@ -28,6 +28,10 @@ OpenStack contribution process.
       and the name Antelope, a swift and gracious animal, also a
       type of steam locomotive.
 
+   2023.2 Bobcat
+
+      The code name for the twenty eighth release of OpenStack.
+
    6to4
 
       A mechanism that allows IPv6 packets to be transmitted
@@ -2865,15 +2869,6 @@ O
       Mitaka, Newton, Ocata, Pike, Queens, Rocky, Stein,
       Train, Ussuri, Victoria, Wallaby, Xena, Yoga, Zed.
 
-      At the same time as OpenStack releases run out of alphabet the
-      Technical Committee changed the `naming process
-      <https://governance.openstack.org/tc/resolutions/20220524-release-identification-process.html>`__
-      to have release number and a release name as an identification
-      code. The release number will be the primary identifier:
-      `"year"."release count within the year"` and the name will be
-      used mostly for marketing purposes. The first such release will
-      be: 2023.1 Antelope.
-
       Wallaby was the first code name choosen by a new policy: Code
       names are choosen by the community following the alphabet, for
       details see `release name criteria
@@ -2884,6 +2879,15 @@ O
       took place. An exception, called the Waldon exception, was
       granted to elements of the state flag that sound especially
       cool. Code names are chosen by popular vote.
+
+      At the same time as OpenStack releases run out of alphabet the
+      Technical Committee changed the `naming process
+      <https://governance.openstack.org/tc/resolutions/20220524-release-identification-process.html>`__
+      to have release number and a release name as an identification
+      code. The release number will be the primary identifier:
+      `"year"."release count within the year"` and the name will be
+      used mostly for marketing purposes. The first such release is
+      2023.1 Antelope. Followed by, respectively, 2023.2 Bobcat.
 
    openSUSE
 
