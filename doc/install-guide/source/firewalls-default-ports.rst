@@ -113,7 +113,10 @@ This table lists the ports that other OpenStack components use:
      - OpenStack Object Storage. Required.
    * - iSCSI target
      - 3260
-     - OpenStack Block Storage. Required.
+     - OpenStack Block Storage. Required when using LVM with iSCSI target (tgt, LIO, iSER)
+   * - NVMe-oF target
+     - 4420
+     - OpenStack Block Storage. Required when using LVM with NVMe-oF target (nvmet).
    * - MySQL database service
      - 3306
      - Most OpenStack components.
