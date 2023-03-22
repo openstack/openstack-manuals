@@ -43,49 +43,53 @@ SeriesInfo = collections.namedtuple('SeriesInfo', 'date status')
 #   'maintained'  -- the release still has an open branch
 #   'development' -- the current release being developed
 
-SERIES_INFO = {
-    'austin': SeriesInfo(date='October 2010', status='obsolete'),
-    'bexar': SeriesInfo(date='February 2011', status='obsolete'),
-    'cactus': SeriesInfo(date='April 2011', status='obsolete'),
-    'diablo': SeriesInfo(date='September 2011', status='obsolete'),
-    'essex': SeriesInfo(date='April 2012', status='obsolete'),
-    'folsom': SeriesInfo(date='September 2012', status='obsolete'),
-    'grizzly': SeriesInfo(date='April 2013', status='obsolete'),
-    'havana': SeriesInfo(date='October 2013', status='obsolete'),
-    'icehouse': SeriesInfo(date='April 2014', status='EOL'),
-    'juno': SeriesInfo(date='October 2014', status='EOL'),
-    'kilo': SeriesInfo(date='April 2015', status='EOL'),
-    'liberty': SeriesInfo(date='October 2015', status='EOL'),
-    'mitaka': SeriesInfo(date='April 2016', status='EOL'),
-    'newton': SeriesInfo(date='October 2016', status='EOL'),
-    'ocata': SeriesInfo(date='February 2017', status='EOL'),
-    'pike': SeriesInfo(date='August 2017', status='EOL'),
-    'queens': SeriesInfo(date='March 2018', status='EOL'),
-    'rocky': SeriesInfo(date='August 2018', status='extended-maintenance'),
-    'stein': SeriesInfo(date='April 2019', status='extended-maintenance'),
-    'train': SeriesInfo(date='October 2019', status='extended-maintenance'),
-    'ussuri': SeriesInfo(date='May 2020', status='extended-maintenance'),
-    'victoria': SeriesInfo(date='October 2020', status='extended-maintenance'),
-    'wallaby': SeriesInfo(date='April 2021', status='extended-maintenance'),
-    'xena': SeriesInfo(date='October 2021', status='maintained'),
-    'yoga': SeriesInfo(date='April 2022', status='maintained'),
-    'zed': SeriesInfo(date='October 2022', status='maintained'),
-    '2023.1.antelope': SeriesInfo(date='March 2023', status='maintained'),
-    '2023.2.bobcat': SeriesInfo(date='October 2023', status='development'),
-}
+# The order of this dict should reflect the order the releases were made in.
+# We can no longer alpha numerically sort our releases as we've wrapped the
+# alphabet so we're just explicit about the order now.
+SERIES_INFO = collections.OrderedDict([
+    ('austin', SeriesInfo(date='October 2010', status='obsolete')),
+    ('bexar', SeriesInfo(date='February 2011', status='obsolete')),
+    ('cactus', SeriesInfo(date='April 2011', status='obsolete')),
+    ('diablo', SeriesInfo(date='September 2011', status='obsolete')),
+    ('essex', SeriesInfo(date='April 2012', status='obsolete')),
+    ('folsom', SeriesInfo(date='September 2012', status='obsolete')),
+    ('grizzly', SeriesInfo(date='April 2013', status='obsolete')),
+    ('havana', SeriesInfo(date='October 2013', status='obsolete')),
+    ('icehouse', SeriesInfo(date='April 2014', status='EOL')),
+    ('juno', SeriesInfo(date='October 2014', status='EOL')),
+    ('kilo', SeriesInfo(date='April 2015', status='EOL')),
+    ('liberty', SeriesInfo(date='October 2015', status='EOL')),
+    ('mitaka', SeriesInfo(date='April 2016', status='EOL')),
+    ('newton', SeriesInfo(date='October 2016', status='EOL')),
+    ('ocata', SeriesInfo(date='February 2017', status='EOL')),
+    ('pike', SeriesInfo(date='August 2017', status='EOL')),
+    ('queens', SeriesInfo(date='March 2018', status='EOL')),
+    ('rocky', SeriesInfo(date='August 2018', status='extended-maintenance')),
+    ('stein', SeriesInfo(date='April 2019', status='extended-maintenance')),
+    ('train', SeriesInfo(date='October 2019', status='extended-maintenance')),
+    ('ussuri', SeriesInfo(date='May 2020', status='extended-maintenance')),
+    ('victoria',
+        SeriesInfo(date='October 2020', status='extended-maintenance')),
+    ('wallaby', SeriesInfo(date='April 2021', status='extended-maintenance')),
+    ('xena', SeriesInfo(date='October 2021', status='maintained')),
+    ('yoga', SeriesInfo(date='April 2022', status='maintained')),
+    ('zed', SeriesInfo(date='October 2022', status='maintained')),
+    ('2023.1.antelope', SeriesInfo(date='March 2023', status='maintained')),
+    ('2023.2.bobcat', SeriesInfo(date='October 2023', status='development')),
+])
 
 # Build a list of the series that are not the current series being
 # developed.
 PAST_SERIES = [
     name
-    for name, info in sorted(SERIES_INFO.items())
+    for name, info in SERIES_INFO.items()
     if info.status != 'development'
 ]
 
 # Find the currently maintained series.
 MAINTAINED_SERIES = [
     name
-    for name, info in sorted(SERIES_INFO.items())
+    for name, info in SERIES_INFO.items()
     if info.status == 'maintained'
 ]
 
@@ -95,12 +99,12 @@ RELEASED_SERIES = MAINTAINED_SERIES[-1]
 # Find the series being developed.
 SERIES_IN_DEVELOPMENT = [
     name
-    for name, info in sorted(SERIES_INFO.items())
+    for name, info in SERIES_INFO.items()
     if info.status == 'development'
 ][0]
 
 # Do not modify this variable.
-ALL_SERIES = list(sorted(SERIES_INFO.keys()))
+ALL_SERIES = list(SERIES_INFO.keys())
 
 SERIES_PAT = re.compile('^(' + '|'.join(ALL_SERIES) + ')/')
 
