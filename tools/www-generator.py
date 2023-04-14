@@ -496,6 +496,7 @@ _RETIRED_REPOS = [
     'openstack/os-cloud-config',
     'openstack/oslosphinx',
     'openstack/paunch',
+    'openstack/patrole',
     'openstack/python-ceilometerclient',
     'openstack/python-congressclient',
     'openstack/python-dracclient',
