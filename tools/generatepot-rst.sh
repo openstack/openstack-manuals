@@ -66,8 +66,7 @@ if [[ "$REPOSITORY" = "openstack-manuals" && "$DOCNAME" = "common" ]] ; then
     # In case of common, we use the working directory 'common-work'.
     # Copies the generated POT to common/source/locale
     # and finally removes the working directory.
-    msgcat ${DIRECTORY}/source/locale/common.pot | \
-        awk '$0 !~ /^\# [a-z0-9]+$/' \
+    msgcat ${DIRECTORY}/source/locale/common.pot \
         > ${TOPDIR}common/source/locale/common.pot
     rm -rf $DIRECTORY
 else
@@ -77,9 +76,8 @@ else
     # Take care of deleting all temporary files so that
     # "git add ${DIRECTORY}/source/locale" will only add the
     # single pot file.
-    # Remove UUIDs, those are not necessary and change too often
-    msgcat --sort-by-file ${DIRECTORY}/source/locale/*.pot | \
-        awk '$0 !~ /^\# [a-z0-9]+$/' > ${DIRECTORY}/source/$DOCNAME.pot
+    msgcat --sort-by-file ${DIRECTORY}/source/locale/*.pot \
+        > ${DIRECTORY}/source/$DOCNAME.pot
     rm  ${DIRECTORY}/source/locale/*.pot
     rm -rf ${DIRECTORY}/source/locale/.doctrees/
     mv ${DIRECTORY}/source/$DOCNAME.pot ${DIRECTORY}/source/locale/$DOCNAME.pot
