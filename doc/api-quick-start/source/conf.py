@@ -51,10 +51,10 @@ master_doc = 'index'
 
 # General information about the project.
 openstackdocs_repo_name = 'openstack/openstack-manuals'
-project = u'OpenStack API Documentation'
+project = 'OpenStack API Documentation'
 openstackdocs_bug_project = 'openstack-manuals'
-openstackdocs_bug_tag = u'api-quick-start'
-copyright = u'2017-2020, OpenStack contributors'
+openstackdocs_bug_tag = 'api-quick-start'
+copyright = '2017-2020, OpenStack contributors'
 openstackdocs_auto_name = False
 
 # Do not show any version
