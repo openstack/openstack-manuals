@@ -1,12 +1,3 @@
-========================
-Team and repository tags
-========================
-
-.. image:: https://governance.openstack.org/tc/badges/openstack-manuals.svg
-    :target: https://governance.openstack.org/tc/reference/tags/index.html
-
-.. Change things from this point on
-
 =================
 OpenStack Manuals
 =================
@@ -18,9 +9,8 @@ Guide <https://docs.openstack.org/doc-contrib-guide/>`_.
 
 It includes these manuals:
 
-* Architecture Design Guide
+* API Guide (Quick Start)
 * Documentation Contributor Guide
-* High Availability Guide
 * Installation Guide
 * Virtual Machine Image Guide
 
