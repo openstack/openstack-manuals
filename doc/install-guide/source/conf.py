@@ -53,10 +53,10 @@ master_doc = 'index'
 # General information about the project.
 openstackdocs_repo_name = "openstack/openstack-manuals"
 openstackdocs_bug_project = 'openstack-manuals'
-project = u'Installation Guide'
+project = 'Installation Guide'
 openstackdocs_auto_name = False
-openstackdocs_bug_tag = u'install-guide'
-copyright = u'2015-2020, OpenStack contributors'
+openstackdocs_bug_tag = 'install-guide'
+copyright = '2015-2020, OpenStack contributors'
 openstackdocs_pdf_link = True
 openstackdocs_pdf_filename = "InstallGuide.pdf"
 

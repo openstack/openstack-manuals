@@ -55,11 +55,11 @@ master_doc = 'index'
 # General information about the project.
 openstackdocs_repo_name = "openstack/openstack-manuals"
 openstackdocs_bug_project = 'openstack-manuals'
-project = u'Documentation Contributor Guide'
-openstackdocs_bug_tag = u'doc-contrib-guide'
+project = 'Documentation Contributor Guide'
+openstackdocs_bug_tag = 'doc-contrib-guide'
 openstackdocs_auto_name = False
 
-copyright = u'2015-2020, OpenStack contributors'
+copyright = '2015-2020, OpenStack contributors'
 
 # Do not show any version
 openstackdocs_auto_version = False
