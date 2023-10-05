@@ -14,6 +14,12 @@ Archive.
 
 Archive Enablement
 ------------------
+**OpenStack 2023.2 Bobcat for Ubuntu 22.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:bobcat
+
 **OpenStack 2023.1 Antelope for Ubuntu 22.04 LTS:**
 
 .. code-block:: console
