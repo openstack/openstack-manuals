@@ -454,6 +454,7 @@ _RETIRED_REPOS = [
     'openstack/anchor',
     'openstack/bandit',
     'openstack/castellan-ui',
+    'openstack/cinderlib',
     'openstack/compute-hyperv',
     'openstack/congress',
     'openstack/congress-dashboard',
