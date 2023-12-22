@@ -10,15 +10,15 @@ one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to
 
+* `Object Storage Installation Guide for 2023.2 (Bobcat) <https://docs.openstack.org/swift/2023.2/install/>`_
+
+* `Object Storage Installation Guide for 2023.1 (Antelope) <https://docs.openstack.org/swift/2023.1/install/>`_
+
+* `Object Storage Installation Guide for Zed <https://docs.openstack.org/swift/zed/install/>`_
+
 * `Object Storage Installation Guide for Yoga <https://docs.openstack.org/swift/yoga/install/>`_
 
 * `Object Storage Installation Guide for Stein <https://docs.openstack.org/swift/stein/install/>`_
-
-* `Object Storage Installation Guide for Rocky <https://docs.openstack.org/swift/rocky/install/>`_
-
-* `Object Storage Installation Guide for Queens <https://docs.openstack.org/swift/queens/install/>`_
-
-* `Object Storage Installation Guide for Pike <https://docs.openstack.org/swift/pike/install/>`_
 
 after configuring the appropriate nodes for it.
 
@@ -78,11 +78,15 @@ of nested VMs.
    interface.
 
 For more information about system requirements, see the
-`OpenStack Pike Administrator Guides <https://docs.openstack.org/pike/admin/>`_,
+`OpenStack 2023.2 (Bobcat) Administrator Guides <https://docs.openstack.org/2023.2/admin/>`_,
 the
-`OpenStack Queens Administrator Guides <https://docs.openstack.org/queens/admin/>`_,
+`OpenStack 2023.1 (Antelope) Administrator Guides <https://docs.openstack.org/2023.1/admin/>`_,
+the
+`OpenStack Zed Administrator Guides <https://docs.openstack.org/zed/admin/>`_,
+the
+`OpenStack Yoga Administrator Guides <https://docs.openstack.org/yoga/admin/>`_,
 or the
-`OpenStack Rocky Administrator Guides <https://docs.openstack.org/rocky/admin/>`_.
+`OpenStack Stein Administrator Guides <https://docs.openstack.org/stein/admin/>`_.
 
 .. toctree::
    :maxdepth: 1
