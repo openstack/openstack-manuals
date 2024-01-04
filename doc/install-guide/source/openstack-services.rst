@@ -6,6 +6,12 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for 2023.2 (Bobcat)
+  <https://docs.openstack.org/2023.2/install/>`_
+* `OpenStack Installation Guides for 2023.1 (Antelope)
+  <https://docs.openstack.org/2023.1/install/>`_
+* `OpenStack Installation Guides for Zed
+  <https://docs.openstack.org/zed/install/>`_
 * `OpenStack Installation Guides for Yoga
   <https://docs.openstack.org/yoga/install/>`_
 * `OpenStack Installation Guides for Xena
@@ -20,15 +26,78 @@ locations:
   <https://docs.openstack.org/train/install/>`_
 * `OpenStack Installation Guides for Stein
   <https://docs.openstack.org/stein/install/>`_
-* `OpenStack Installation Guides for Rocky
-  <https://docs.openstack.org/rocky/install/>`_
-* `OpenStack Installation Guides for Queens
-  <https://docs.openstack.org/queens/install/>`_
-* `OpenStack Installation Guides for Pike
-  <https://docs.openstack.org/pike/install/>`_
+
+Minimal deployment for 2023.2 (Bobcat)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for 2023.2 (Bobcat)
+  <https://docs.openstack.org/keystone/2023.2/install/>`_
+* Image service – `glance installation for 2023.2 (Bobcat)
+  <https://docs.openstack.org/glance/2023.2/install/>`_
+* Placement service – `placement installation for 2023.2 (Bobcat)
+  <https://docs.openstack.org/placement/2023.2/install/>`_
+* Compute service – `nova installation for 2023.2 (Bobcat)
+  <https://docs.openstack.org/nova/2023.2/install/>`_
+* Networking service – `neutron installation for 2023.2 (Bobcat)
+  <https://docs.openstack.org/neutron/2023.2/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for 2023.2 (Bobcat) <https://docs.openstack.org/horizon/2023.2/install/>`_
+* Block Storage service – `cinder installation for 2023.2 (Bobcat) <https://docs.openstack.org/cinder/2023.2/install/>`_
+
+Minimal deployment for 2023.1 (Antelope)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for 2023.1 (Antelope)
+  <https://docs.openstack.org/keystone/2023.1/install/>`_
+* Image service – `glance installation for 2023.1 (Antelope)
+  <https://docs.openstack.org/glance/2023.1/install/>`_
+* Placement service – `placement installation for 2023.1 (Antelope)
+  <https://docs.openstack.org/placement/2023.1/install/>`_
+* Compute service – `nova installation for 2023.1 (Antelope)
+  <https://docs.openstack.org/nova/2023.1/install/>`_
+* Networking service – `neutron installation for 2023.1 (Antelope)
+  <https://docs.openstack.org/neutron/2023.1/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for 2023.1 (Antelope) <https://docs.openstack.org/horizon/2023.1/install/>`_
+* Block Storage service – `cinder installation for 2023.1 (Antelope) <https://docs.openstack.org/cinder/2023.1/install/>`_
+
+Minimal deployment for Zed
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you need to install the following services. Install the services
+in the order specified below:
+
+* Identity service – `keystone installation for Zed
+  <https://docs.openstack.org/keystone/zed/install/>`_
+* Image service – `glance installation for Zed
+  <https://docs.openstack.org/glance/zed/install/>`_
+* Placement service – `placement installation for Zed
+  <https://docs.openstack.org/placement/zed/install/>`_
+* Compute service – `nova installation for Zed
+  <https://docs.openstack.org/nova/zed/install/>`_
+* Networking service – `neutron installation for Zed
+  <https://docs.openstack.org/neutron/zed/install/>`_
+
+We advise to also install the following components after you have installed the
+minimal deployment services:
+
+* Dashboard – `horizon installation for Zed <https://docs.openstack.org/horizon/zed/install/>`_
+* Block Storage service – `cinder installation for Zed <https://docs.openstack.org/cinder/zed/install/>`_
 
 Minimal deployment for Yoga
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At a minimum, you need to install the following services. Install the services
 in the order specified below:
@@ -51,7 +120,7 @@ minimal deployment services:
 * Block Storage service – `cinder installation for Yoga <https://docs.openstack.org/cinder/yoga/install/>`_
 
 Minimal deployment for Xena
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At a minimum, you need to install the following services. Install the services
 in the order specified below:
@@ -74,7 +143,7 @@ minimal deployment services:
 * Block Storage service – `cinder installation for Xena <https://docs.openstack.org/cinder/xena/install/>`_
 
 Minimal deployment for Wallaby
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At a minimum, you need to install the following services. Install the services
 in the order specified below:
@@ -188,65 +257,3 @@ minimal deployment services:
 * Dashboard – `horizon installation for Stein <https://docs.openstack.org/horizon/stein/install/>`_
 * Block Storage service – `cinder installation for Stein <https://docs.openstack.org/cinder/stein/install/>`_
 
-Minimal deployment for Rocky
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-At a minimum, you need to install the following services. Install the services
-in the order specified below:
-
-* Identity service – `keystone installation for Rocky
-  <https://docs.openstack.org/keystone/rocky/install/>`_
-* Image service – `glance installation for Rocky
-  <https://docs.openstack.org/glance/rocky/install/>`_
-* Compute service – `nova installation for Rocky
-  <https://docs.openstack.org/nova/rocky/install/>`_
-* Networking service – `neutron installation for Rocky
-  <https://docs.openstack.org/neutron/rocky/install/>`_
-
-We advise to also install the following components after you have installed the
-minimal deployment services:
-
-* Dashboard – `horizon installation for Rocky <https://docs.openstack.org/horizon/rocky/install/>`_
-* Block Storage service – `cinder installation for Rocky <https://docs.openstack.org/cinder/rocky/install/>`_
-
-Minimal deployment for Queens
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-At a minimum, you need to install the following services. Install the services
-in the order specified below:
-
-* Identity service – `keystone installation for Queens
-  <https://docs.openstack.org/keystone/queens/install/>`_
-* Image service – `glance installation for Queens
-  <https://docs.openstack.org/glance/queens/install/>`_
-* Compute service – `nova installation for Queens
-  <https://docs.openstack.org/nova/queens/install/>`_
-* Networking service – `neutron installation for Queens
-  <https://docs.openstack.org/neutron/queens/install/>`_
-
-We advise to also install the following components after you have installed the
-minimal deployment services:
-
-* Dashboard – `horizon installation for Queens <https://docs.openstack.org/horizon/queens/install/>`_
-* Block Storage service – `cinder installation for Queens <https://docs.openstack.org/cinder/queens/install/>`_
-
-Minimal deployment for Pike
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-At a minimum, you need to install the following services. Install the services
-in the order specified below:
-
-* Identity service – `keystone installation for Pike
-  <https://docs.openstack.org/keystone/pike/install/>`_
-* Image service – `glance installation for Pike
-  <https://docs.openstack.org/glance/pike/install/>`_
-* Compute service – `nova installation for Pike
-  <https://docs.openstack.org/nova/pike/install/>`_
-* Networking service – `neutron installation for Pike
-  <https://docs.openstack.org/neutron/pike/install/>`_
-
-We advise to also install the following components after you have installed the
-minimal deployment services:
-
-* Dashboard – `horizon installation for Pike <https://docs.openstack.org/horizon/pike/install/>`_
-* Block Storage service – `cinder installation for Pike <https://docs.openstack.org/cinder/pike/install/>`_
