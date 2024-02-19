@@ -363,8 +363,8 @@ instead:
 
 .. Links
 
-.. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#sign-the-appropriate-individual-contributor-license-agreement
-.. _`Installing git-review`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#install-the-git-review-utility
+.. _`Sign the appropriate Individual Contributor License Agreement`: https://docs.openstack.org/contributors/common/setup-gerrit.html#individual-contributor-license-agreement
+.. _`Installing git-review`: https://docs.opendev.org/opendev/infra-manual/latest/gettingstarted.html#install-the-git-review-utility
 .. _`OpenStack Documentation Bug Team`: https://launchpad.net/~openstack-doc-bugs
 .. _`Development Workflow`: https://docs.opendev.org/opendev/infra-manual/latest/developers.html#development-workflow
 .. _`git`: http://msysgit.github.io
