@@ -65,7 +65,7 @@ SERIES_INFO = collections.OrderedDict([
     ('pike', SeriesInfo(date='August 2017', status='EOL')),
     ('queens', SeriesInfo(date='March 2018', status='EOL')),
     ('rocky', SeriesInfo(date='August 2018', status='EOL')),
-    ('stein', SeriesInfo(date='April 2019', status='extended-maintenance')),
+    ('stein', SeriesInfo(date='April 2019', status='EOL')),
     ('train', SeriesInfo(date='October 2019', status='extended-maintenance')),
     ('ussuri', SeriesInfo(date='May 2020', status='extended-maintenance')),
     ('victoria',
