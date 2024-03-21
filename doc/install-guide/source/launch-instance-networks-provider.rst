@@ -85,8 +85,9 @@ Create the provider network
 
    The ``--provider-physical-network provider`` and
    ``--provider-network-type flat`` options connect the flat virtual network
-   to the flat (native/untagged) physical network on the ``eth1`` interface
-   on the host using information from the following files:
+   to the flat (native/untagged) physical network on the ``br0`` bridge, which
+   can have a port which is connected to ``eth0`` on the host using information
+   from the following files:
 
    ``ml2_conf.ini``:
 
@@ -95,12 +96,12 @@ Create the provider network
       [ml2_type_flat]
       flat_networks = provider
 
-   ``linuxbridge_agent.ini``:
+   ``ml2_conf.ini``:
 
    .. code-block:: ini
 
-      [linux_bridge]
-      physical_interface_mappings = provider:eth1
+      [ovs]
+      bridge_mappings = provider:br0
 
 #. Create a subnet on the network:
 
