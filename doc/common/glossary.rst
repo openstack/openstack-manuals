@@ -36,6 +36,10 @@ OpenStack contribution process.
 
       The code name for the twenty ninth release of OpenStack.
 
+   2024.2 Dalmatian
+
+      The code name for the thirtieth release of OpenStack.
+
    6to4
 
       A mechanism that allows IPv6 packets to be transmitted
