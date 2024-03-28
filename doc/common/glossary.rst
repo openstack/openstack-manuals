@@ -2896,7 +2896,7 @@ O
       `"year"."release count within the year"` and the name will be
       used mostly for marketing purposes. The first such release is
       2023.1 Antelope. Followed by, respectively, 2023.2 Bobcat,
-      2024.1 Caracal.
+      2024.1 Caracal, 2024.2 Dalmatian.
 
    openSUSE
 
