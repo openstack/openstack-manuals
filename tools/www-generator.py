@@ -75,7 +75,8 @@ SERIES_INFO = collections.OrderedDict([
     ('zed', SeriesInfo(date='October 2022', status='maintained')),
     ('2023.1', SeriesInfo(date='March 2023', status='maintained')),
     ('2023.2', SeriesInfo(date='October 2023', status='maintained')),
-    ('2024.1', SeriesInfo(date='April 2024', status='development')),
+    ('2024.1', SeriesInfo(date='April 2024', status='maintained')),
+    ('2024.2', SeriesInfo(date='October 2024', status='development')),
 ])
 
 # Build a list of the series that are not the current series being
