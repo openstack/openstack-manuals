@@ -1,31 +1,52 @@
+======================================
 OpenStack packages for RHEL and CentOS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+======================================
+
+.. contents:: :depth: 3
 
 Distributions release OpenStack packages as part of the distribution or
-using other methods because of differing release schedules. Perform
-these procedures on all nodes.
-
-.. warning::
-
-   Starting with the Ussuri release, you will need to use either CentOS8
-   or RHEL 8. Previous OpenStack releases will need to use either CentOS7
-   or RHEL 7. Instructions are included for both distributions and
-   versions where different.
-
-.. note::
-
-   The set up of OpenStack packages described here needs to be done on
-   all nodes: controller, compute, and Block Storage nodes.
+using other methods because of differing release schedules. **Perform
+these procedures on all nodes (controller, compute, network, dashboard,
+storage etc. nodes).**
 
 .. warning::
 
    Your hosts must contain the latest versions of base installation
    packages available for your distribution before proceeding further.
 
+.. warning::
+
+   The following instructions refer to RDO: a free, community supported
+   distribution of OpenStack for RHEL and CentOS. For the Red Hat-supported
+   *Red Hat OpenStack Platform*, `see here
+   <https://www.redhat.com/en/technologies/linux-platforms/openstack-platform>`_.
+
+   According to RDO Packstack documentation, RDO should work on RHEL but is
+   currently only tested on CentOS Stream.
+
 .. note::
 
    Disable or remove any automatic update services because they can
    impact your OpenStack environment.
+
+Operating System
+----------------
+
+.. list-table:: **Operating System**
+   :header-rows: 1
+
+   * - OS
+     - Compatible Releases
+     - Maintained Releases
+   * - CentOS 7 / RHEL 7
+     - ? to Train
+     - *None*
+   * - CentOS Stream 8 / RHEL 8
+     - Ussuri to Yoga
+     - *None*
+   * - CentOS Stream 9 / RHEL 9
+     - Xena and following releases
+     - Zed, 2023.1 Antelope (SLURP), 2023.2 Bobcat, 2024.1 Caracal (SLURP)
 
 Prerequisites
 -------------
@@ -36,45 +57,160 @@ Prerequisites
    in EPEL breaking backwards compatibility. Or, preferably pin package
    versions using the ``yum-versionlock`` plugin.
 
-.. note::
+   If EPEL is needed, also consider `lowering its priority in DNF
+   <https://dnf.readthedocs.io/en/latest/conf_ref.html#repo-options>`_.
 
-   The following steps apply to RHEL only. CentOS does not require these
-   steps.
+CentOS Stream
+~~~~~~~~~~~~~
 
-#. When using RHEL, it is assumed that you have registered your system using
-   Red Hat Subscription Management and that you have the
-   ``rhel-7-server-rpms`` or ``rhel-8-for-x86_64-baseos-rpms`` repository
-   enabled by default depending on your version.
+Enable PowerTools/CRB repository:
 
-   For more information on registering a RHEL 7 system, see the
-   `Red Hat Enterprise Linux 7 System Administrator's Guide
-   <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/part-Subscription_and_Support.html>`_.
+  .. code-block:: console
 
-#. In addition to ``rhel-7-server-rpms`` on a RHEL 7 system, you also need to
-   have the ``rhel-7-server-optional-rpms``, ``rhel-7-server-extras-rpms``,
-   and ``rhel-7-server-rh-common-rpms`` repositories enabled:
+   # ### CentOS Stream 9
+   # dnf install dnf-plugins-core
+   # dnf config-manager --set-enabled crb
 
-   .. code-block:: console
+RHEL
+~~~~
 
-      # subscription-manager repos --enable=rhel-7-server-optional-rpms \
-        --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-rh-common-rpms
+* When using RHEL, it is assumed that you have registered your system using
+  Red Hat Subscription Management.   For more information on registering a RHEL
+  9 system, see the `Red Hat Enterprise Linux 9 Installation Guide
+  <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/performing_a_standard_rhel_9_installation/assembly_installing-on-amd64-intel-64-and-64-bit-arm_installing-rhel#post-installation-tasks_assembly_installing-on-amd64-intel-64-and-64-bit-arm>`_.
 
-   For more information on registering a RHEL 8 system, see the
-   `Red Hat Enterprise Linux 8 Installation Guide
-   <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_a_standard_rhel_installation/post-installation-tasks_installing-rhel>`_.
+* Enable the required repositories:
 
-   In addition to ``rhel-8-for-x86_64-baseos-rpms`` on a RHEL 8 system, you
-   also need to have the ``rhel-8-for-x86_64-appstream-rpms``,
-   ``rhel-8-for-x86_64-supplementary-rpms``, and ``codeready-builder-for-rhel-8-x86_64-rpms``
-   repositories enabled:
+  .. code-block:: console
 
-   .. code-block:: console
+      # ### RHEL 9
+      # subscription-manager repos --enable=rhel-9-for-x86_64-baseos-rpms \
+         --enable=rhel-9-for-x86_64-appstream-rpms \
+         --enable=rhel-9-for-x86_64-supplementary-rpms
 
-      # subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms \
-        --enable=rhel-8-for-x86_64-supplementary-rpms --enable=codeready-builder-for-rhel-8-x86_64-rpms
+* Enable CodeReady Linux Builder (CRB) repository:
+
+  .. code-block:: console
+
+      # ### RHEL 9
+      # subscription-manager repos --enable=codeready-builder-for-rhel-9-x86_64-rpms
+
 
 Enable the OpenStack repository
 -------------------------------
+
+To choose which OpenStack release to install, `check the release page
+<https://releases.openstack.org/>`_.
+
+CentOS Stream
+~~~~~~~~~~~~~
+
+* On CentOS Stream, the ``extras`` repository provides the RPM that enables the
+  OpenStack repository. CentOS includes the ``extras`` repository by
+  default, so you can simply install the package to enable the OpenStack
+  repository:
+
+  .. code-block:: console
+
+   # ### CentOS Stream 9
+   # dnf install centos-release-openstack-<release>
+
+   # ### So for example
+   # ### Zed
+   # dnf install centos-release-openstack-zed
+   # ### 2023.1 Antelope
+   # dnf install centos-release-openstack-antelope
+   # ### 2023.2 Bobcat
+   # dnf install centos-release-openstack-bobcat
+
+RHEL
+~~~~
+
+* On RHEL, download and install the RDO repository RPM to enable the
+  OpenStack repository.
+
+  .. code-block:: console
+
+   # ### RHEL 9
+   # dnf install https://www.rdoproject.org/repos/rdo-release.el9.rpm
+
+  **The RDO repository RPM installs the latest available OpenStack release.**
+
+Finalize the installation
+-------------------------
+
+1. Upgrade the packages on all nodes:
+
+   .. code-block:: console
+
+      # dnf upgrade
+
+   .. note::
+
+      If the upgrade process includes a new kernel, reboot your host
+      to activate it.
+
+2. Install the appropriate OpenStack client for your version.
+
+   .. code-block:: console
+
+      # ### EL9
+      # dnf install python3-openstackclient
+
+3. RHEL and CentOS enable :term:`SELinux` by default. Install the
+   ``openstack-selinux`` package to automatically manage security
+   policies for OpenStack services:
+
+   .. code-block:: console
+
+      # ### EL9
+      # dnf install openstack-selinux
+
+Older versions
+--------------
+
+.. warning::
+
+   Information here is kept for historical/archival purposes. Includes
+   unmaintained/end of life operating systems and OpenStack releases.
+   **Do not follow these instructions**.
+
+Prerequisites
+~~~~~~~~~~~~~
+
+**RHEL**
+
+* When using RHEL, it is assumed that you have registered your system using
+  Red Hat Subscription Management. For more information on registering a RHEL 7
+  system, see the `Red Hat Enterprise Linux 7 System Administrator's Guide
+  <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/part-Subscription_and_Support.html>`_
+  For more information on registering a RHEL 8 system, see the `Red Hat Enterprise Linux 8 Installation Guide
+  <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_a_standard_rhel_installation/post-installation-tasks_installing-rhel>`_.
+
+* Enable the required repositories:
+
+  .. code-block:: console
+
+      # ### RHEL 7
+      # subscription-manager repos --enable=rhel-7-server-rpms \
+         --enable=rhel-7-server-optional-rpms \
+         --enable=rhel-7-server-extras-rpms \
+         --enable=rhel-7-server-rh-common-rpms
+
+      # ### RHEL 8
+      # subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms \
+         --enable=rhel-8-for-x86_64-appstream-rpms \
+         --enable=rhel-8-for-x86_64-supplementary-rpms
+
+* Enable Powertools CodeReady Linux Builder (CRB) repository:
+
+  .. code-block:: console
+
+      # ### RHEL 8
+      # subscription-manager repos --enable=codeready-builder-for-rhel-8-x86_64-rpms
+
+Enable the OpenStack repository
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * On CentOS, the ``extras`` repository provides the RPM that enables the
   OpenStack repository. CentOS includes the ``extras`` repository by
@@ -126,55 +262,10 @@ Enable the OpenStack repository
 
      # yum install centos-release-openstack-pike
 
-* On RHEL, download and install the RDO repository RPM to enable the
-  OpenStack repository.
+Further references
+------------------
 
-  **On RHEL 7:**
-
-  .. code-block:: console
-
-     # yum install https://rdoproject.org/repos/rdo-release.rpm
-
-  **On RHEL 8:**
-
-  .. code-block:: console
-
-     # dnf install https://www.rdoproject.org/repos/rdo-release.el8.rpm
-
-  The RDO repository RPM installs the latest available OpenStack release.
-
-Finalize the installation
--------------------------
-
-1. Upgrade the packages on all nodes:
-
-   .. code-block:: console
-
-      # yum upgrade
-
-   .. note::
-
-      If the upgrade process includes a new kernel, reboot your host
-      to activate it.
-
-2. Install the appropriate OpenStack client for your version.
-
-   **For CentOS 7 and RHEL 7**
-
-   .. code-block:: console
-
-      # yum install python-openstackclient
-
-   **For CentOS 8 and RHEL 8**
-
-   .. code-block:: console
-
-      # yum install python3-openstackclient
-
-3. RHEL and CentOS enable :term:`SELinux` by default. Install the
-   ``openstack-selinux`` package to automatically manage security
-   policies for OpenStack services:
-
-   .. code-block:: console
-
-      # yum install openstack-selinux
+* `Red Hat - Introduction to Red Hat OpenStack Platform / Understanding Red Hat OpenStack Platform
+  <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.1/html/introduction_to_red_hat_openstack_platform/assembly_understanding-red-hat-openstack-platform>`_
+* `RDO - Overview of available RDO repos <https://www.rdoproject.org/what/repos/>`_
+* `RDO - Packstack <https://www.rdoproject.org/install/packstack/>`_
