@@ -38,8 +38,8 @@ You can download a CirrOS image in various formats from the
 
 If your deployment uses QEMU or KVM, we recommend using the images
 in qcow2 format. The most recent 64-bit qcow2 image as of this
-writing is `cirros-0.5.1-x86_64-disk.img
-<http://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img>`_.
+writing is `cirros-0.6.2-x86_64-disk.img
+<http://download.cirros-cloud.net/0.6.2/cirros-0.6.2-x86_64-disk.img>`_.
 
 .. note::
 
