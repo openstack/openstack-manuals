@@ -66,7 +66,7 @@ and their associated references in the guide.
 OpenStack and supporting services require administrative privileges
 during installation and operation. In some cases, services perform
 modifications to the host that can interfere with deployment automation
-tools such as Ansible, Chef, and Puppet. For example, some OpenStack
+tools such as Ansible and Puppet. For example, some OpenStack
 services add a root wrapper to ``sudo`` that can interfere with security
 policies. See the
 `Compute service documentation for Pike <https://docs.openstack.org/nova/pike/admin/root-wrap-reference.html>`_,
