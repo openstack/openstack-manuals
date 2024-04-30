@@ -94,17 +94,17 @@ Canonical maintains an official set of `Ubuntu-based images
 Images are arranged by Ubuntu release, and by image release date,
 with ``current`` being the most recent.
 For example, the page that contains the most recently built image for
-Ubuntu 18.04 Bionic Beaver is `Ubuntu 18.04 LTS (Bionic Beaver) Daily Build
-<https://cloud-images.ubuntu.com/bionic/current/>`_.
+Ubuntu 24.04 Noble Numbat is `Ubuntu 24.04 LTS (Noble Numbat) Daily Build
+<https://cloud-images.ubuntu.com/noble/current/>`_.
 Scroll to the bottom of the page for links to the images that can be
 downloaded directly.
 
 If your deployment uses QEMU or KVM, we recommend using the images
 in qcow2 format, with name ending in ``.img``.
 The most recent version of the 64-bit amd64-arch QCOW2 image for
-Ubuntu 18.04 is
-`bionic-server-cloudimg-amd64-disk.img
-<https://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img>`_.
+Ubuntu 24.04 is
+`noble-server-cloudimg-amd64.img
+<https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img>`_.
 
 .. note::
 
