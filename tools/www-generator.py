@@ -72,7 +72,7 @@ SERIES_INFO = collections.OrderedDict([
     ('wallaby', SeriesInfo(date='April 2021', status='unmaintained')),
     ('xena', SeriesInfo(date='October 2021', status='unmaintained')),
     ('yoga', SeriesInfo(date='April 2022', status='unmaintained')),
-    ('zed', SeriesInfo(date='October 2022', status='maintained')),
+    ('zed', SeriesInfo(date='October 2022', status='unmaintained')),
     ('2023.1', SeriesInfo(date='March 2023', status='maintained')),
     ('2023.2', SeriesInfo(date='October 2023', status='maintained')),
     ('2024.1', SeriesInfo(date='April 2024', status='maintained')),
