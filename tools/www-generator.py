@@ -461,6 +461,7 @@ _RETIRED_REPOS = [
     'openstack/congress-tempest-plugin',
     'openstack/django_openstack_auth',
     'openstack/dragonflow',
+    'openstack/ec2-api',
     'openstack/faafo',
     'openstack/fuel-docs',
     'openstack/fuxi',
