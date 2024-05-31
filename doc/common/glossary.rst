@@ -191,11 +191,6 @@ A
       Both a VM container format and disk format. Supported by Image
       service.
 
-   Anvil
-
-      A project that ports the shell script-based project named
-      DevStack to Python.
-
    aodh
 
       Part of the OpenStack :term:`Telemetry service <Telemetry
@@ -693,11 +688,6 @@ C
       item since your last request, instead of downloading a new, fresh set
       of data and comparing it against the old data.
 
-   Chef
-
-      An operating system configuration management tool supporting
-      OpenStack deployments.
-
    child cell
 
       If a requested resource such as CPU time, disk storage, or
@@ -905,11 +895,6 @@ C
       requests from the compute process. Using conductor improves security
       because compute nodes do not need direct access to the
       database.
-
-   congress
-
-      Code name for the :term:`Governance service
-      <Governance service (congress)>`.
 
    consistency window
 
@@ -1704,12 +1689,6 @@ G
       A method of operating system installation where a finalized disk
       image is created and then used by all nodes without
       modification.
-
-   Governance service (congress)
-
-      The project that provides Governance-as-a-Service across
-      any collection of cloud services in order to monitor,
-      enforce, and audit policy over dynamic infrastructure.
 
    Graphic Interchange Format (GIF)
 
