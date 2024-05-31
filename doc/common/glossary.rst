@@ -157,7 +157,7 @@ A
 
       The open standard messaging protocol used by OpenStack
       components for intra-service communications, provided by RabbitMQ,
-      Qpid, or ZeroMQ.
+      or Qpid.
 
    Advanced RISC Machine (ARM)
 
@@ -3442,8 +3442,7 @@ R
    RPC driver
 
       Modular system that allows the underlying message queue software
-      of Compute to be changed. For example, from RabbitMQ to ZeroMQ or
-      Qpid.
+      of Compute to be changed. For example, from RabbitMQ to Qpid.
 
    rsync
 
@@ -4367,11 +4366,6 @@ Z
 
       The code name for the twenty sixth release of OpenStack.
       The release is named after the pronunciation of the letter Z.
-
-   ZeroMQ
-
-      Message queue software supported by OpenStack. An alternative to
-      RabbitMQ. Also spelled 0MQ.
 
    Zuul
 
