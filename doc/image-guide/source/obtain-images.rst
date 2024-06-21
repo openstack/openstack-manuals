@@ -111,6 +111,20 @@ The Fedora project maintains a list of official cloud images at
 
    In a Fedora cloud image, the login account is ``fedora``.
 
+Kali Linux
+~~~~~~~~~~~~
+
+Kali Linux provides cloud images for download at the
+`Get Kali/Cloud page.
+<https://www.kali.org/get-kali/#kali-cloud>`_
+See also the page `Common Cloud Based Setup Information
+<https://www.kali.org/docs/troubleshooting/common-cloud-setup/>`_
+for cloud setup information.
+
+.. note::
+
+   In a Kali Linux cloud image, the login account is ``kali``.
+
 Microsoft Windows
 ~~~~~~~~~~~~~~~~~
 
