@@ -1,8 +1,13 @@
-===============================
-Tool support for image creation
-===============================
+================================
+Tools to automate image creation
+================================
 
 There are several tools that are designed to automate image creation.
+
+.. contents:: :depth: 3
+
+OpenStack tools
+---------------
 
 Diskimage-builder
 ~~~~~~~~~~~~~~~~~
@@ -35,6 +40,70 @@ More elements are available in the `git source directory
 <https://opendev.org/openstack/diskimage-builder/src/branch/master/diskimage_builder/elements>`_
 and documented in the `diskimage-builder elements documentation
 <https://docs.openstack.org/diskimage-builder/latest/elements.html>`_.
+
+External tools
+--------------
+
+image-bootstrap
+~~~~~~~~~~~~~~~
+
+`image-bootstrap <https://github.com/hartwork/image-bootstrap>`_
+is a command line tool that generates bootable virtual machine images
+with support for Arch, Debian, Gentoo and Ubuntu, and is prepared for use
+with OpenStack.
+
+KIWI
+~~~~
+
+The `KIWI appliance builder <https://github.com/OSInside/kiwii>`_
+provides an operating system image builder for various Linux supported
+hardware platforms as well as for virtualization and cloud systems. It
+allows building of images based on openSUSE, SUSE Linux Enterprise,
+and Red Hat Enterprise Linux. The `KIWI NG Documentation
+<https://osinside.github.io/kiwi/>`_ explains how to use it.
+
+openstack-debian-images
+~~~~~~~~~~~~~~~~~~~~~~~
+
+`openstack-debian-images <https://packages.debian.org/openstack-debian-images>`_
+is the tool Debian uses to create its official OpenStack image. It is made of
+a single very simple shell script that is easy to understand and modify.
+It supports Grub and Syslinux, BIOS or EFI, amd64 and arm64 arch.
+
+openstack-debian-images can also be used to create a bootable image directly
+on a hard disk, instead of using the Debian installer.
+
+To build an image, type this:
+
+.. code-block:: console
+
+   # build-openstack-debian-image --release stretch
+
+More parameters can be added to further customize the image:
+
+.. code-block:: console
+
+   # build-openstack-debian-image --release stretch \
+     --hook-script /root/my-hook-script.sh \
+     --debootstrap-url http://ftp.fr.debian.org/debian \
+     --sources.list-mirror http://ftp.fr.debian.org/debian \
+     --login myusername \
+     --extra-packages vim,emacs
+
+The file ``/root/my-hook-script.sh`` will recieve 2 environment variable:
+``BODI_CHROOT_PATH`` path where the image is mounted, and ``BODI_RELEASE``
+which is the name of the Debian release that is being bootstraped. Here's
+an example for customizing the motd:
+
+.. code-block:: console
+
+   # #!/bin/sh
+     set -e
+     echo "My message" >${BODI_CHROOT_PATH}/etc/motd
+
+This hook script will conveniently be called at the correct moment of the
+build process, when everything is installed, but before unmounting the
+partition.
 
 Oz
 ~~
@@ -132,44 +201,11 @@ For example:
 Oz will invoke libvirt to boot the image inside of KVM,
 then Oz will ssh into the instance and perform the customizations.
 
-VeeWee
-~~~~~~
-
-`VeeWee <https://github.com/jedi4ever/veewee>`_ is often used
-to build `Vagrant <http://vagrantup.com>`_ boxes,
-but it can also be used to build the KVM images.
-
 Packer
 ~~~~~~
 
 `Packer <https://packer.io>`_ is a tool for creating machine
 images for multiple platforms from a single source configuration.
-
-image-bootstrap
-~~~~~~~~~~~~~~~
-
-`image-bootstrap <https://github.com/hartwork/image-bootstrap>`_
-is a command line tool that generates bootable virtual machine images
-with support of Arch, Debian, Gentoo, Ubuntu, and is prepared for use
-with OpenStack.
-
-imagefactory
-~~~~~~~~~~~~
-
-`imagefactory <http://imgfac.org/>`_ is a newer tool designed
-to automate the building, converting, and uploading images
-to different cloud providers. It uses Oz as its back-end and
-includes support for OpenStack-based clouds.
-
-KIWI
-~~~~
-
-The `KIWI OS image builder <http://github.com/openSUSE/kiwi>`_
-provides an operating system image builder for various Linux supported
-hardware platforms as well as for virtualization and cloud systems. It
-allows building of images based on openSUSE, SUSE Linux Enterprise,
-and Red Hat Enterprise Linux. The `openSUSE Documentation
-<https://doc.opensuse.org/#kiwi-doc>`_ explains how to use KIWI.
 
 virt-builder
 ~~~~~~~~~~~~
@@ -199,49 +235,6 @@ To import it into libvirt with :command:`virsh`:
 
    # virt-install --name fedora --ram 2048 \
      --disk path=image.qcow2,format=qcow2 --import
-
-openstack-debian-images
-~~~~~~~~~~~~~~~~~~~~~~~
-
-`openstack-debian-images <https://packages.debian.org/openstack-debian-images>`_
-is the tool Debian uses to create its official OpenStack image. It is made of
-a single very simple shell script that is easy to understand and modify.
-It supports Grub and Syslinux, BIOS or EFI, amd64 and arm64 arch.
-
-openstack-debian-images can also be used to create a bootable image directly
-on a hard disk, instead of using the Debian installer.
-
-To build an image, type this:
-
-.. code-block:: console
-
-   # build-openstack-debian-image --release stretch
-
-More parameters can be added to further customize the image:
-
-.. code-block:: console
-
-   # build-openstack-debian-image --release stretch \
-     --hook-script /root/my-hook-script.sh \
-     --debootstrap-url http://ftp.fr.debian.org/debian \
-     --sources.list-mirror http://ftp.fr.debian.org/debian \
-     --login myusername \
-     --extra-packages vim,emacs
-
-The file ``/root/my-hook-script.sh`` will recieve 2 environment variable:
-``BODI_CHROOT_PATH`` path where the image is mounted, and ``BODI_RELEASE``
-which is the name of the Debian release that is being bootstraped. Here's
-an example for customizing the motd:
-
-.. code-block:: console
-
-   # #!/bin/sh
-     set -e
-     echo "My message" >${BODI_CHROOT_PATH}/etc/motd
-
-This hook script will conveniently be called at the correct moment of the
-build process, when everything is installed, but before unmounting the
-partition.
 
 windows-openstack-imaging-tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
