@@ -7,8 +7,10 @@ mainly on Fedora 25. Because the Fedora installation process
 might differ across versions, the installation steps might
 differ if you use a different version of Fedora.
 
+.. contents:: :depth: 2
+
 Download a Fedora install ISO
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 #. Visit the `Fedora download site <https://getfedora.org/>`_.
 
@@ -23,7 +25,7 @@ Download a Fedora install ISO
    installation.
 
 Start the installation process
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Start the installation process using either the :command:`virt-manager`
 or the :command:`virt-install` command as described previously.
@@ -51,19 +53,19 @@ something like this:
      --location=/tmp/Fedora-Server-netinst-x86_64-25-1.3.iso
 
 Step through the installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 After the installation program starts, choose your preferred language and click
 :guilabel:`Continue` to get to the installation summary. Accept the defaults.
 
 Review the Ethernet status
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Ensure that the Ethernet setting is ``ON``. Additionally, make sure that
 ``IPv4 Settings' Method`` is ``Automatic (DHCP)``, which is the default.
 
 Hostname
---------
+~~~~~~~~
 
 The installer allows you to choose a host name.
 The default (``localhost.localdomain``) is fine.
@@ -72,7 +74,7 @@ which sets the host name on boot when a new instance
 is provisioned using this image.
 
 Partition the disks
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 There are different options for partitioning the disks.
 The default installation uses LVM partitions, and creates
@@ -87,19 +89,19 @@ list will allow it to grow without crossing another
 partition's boundary.
 
 Select software to install
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Step through the installation, using the default options.
 The simplest thing to do is to choose the ``Minimal Install``
 install, which installs an SSH server.
 
 Set the root password
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 During the installation, remember to set the root password when prompted.
 
 Detach the CD-ROM and reboot
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Wait until the installation is complete.
 
@@ -138,7 +140,7 @@ and reboot it by manually stopping and starting.
    # virsh reboot fedora
 
 Install the ACPI service
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 To enable the hypervisor to reboot or shutdown an instance,
 you must install and run the ``acpid`` service on the guest system.
@@ -153,7 +155,7 @@ system boots:
    # systemctl enable acpid
 
 Configure cloud-init to fetch metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 An instance must interact with the metadata service to perform
 several tasks on start up. For example, the instance must get
@@ -186,7 +188,7 @@ syntax in the configuration file:
        (...)
 
 Install cloud-utils-growpart to allow partitions to resize
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------------
 
 In order for the root partition to properly resize, install the
 ``cloud-utils-growpart`` package, which contains the proper tools
@@ -197,7 +199,7 @@ to allow the disk to resize using cloud-init.
    # dnf install cloud-utils-growpart
 
 Disable the zeroconf route
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 For the instance to access the metadata service,
 you must disable the default zeroconf route:
@@ -207,7 +209,7 @@ you must disable the default zeroconf route:
    # echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 
 Configure console
-~~~~~~~~~~~~~~~~~
+-----------------
 
 For the :command:`nova console-log` command to work properly
 on Fedora, you might need to do the following steps:
@@ -235,7 +237,7 @@ on Fedora, you might need to do the following steps:
      done
 
 Shut down the instance
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 From inside the instance, run as root:
 
@@ -244,7 +246,7 @@ From inside the instance, run as root:
    # poweroff
 
 Clean up (remove MAC address details)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 The operating system records the MAC address of the virtual Ethernet
 card in locations such as ``/etc/sysconfig/network-scripts/ifcfg-eth0``
@@ -261,7 +263,7 @@ It will clean up a virtual machine image in place:
    # virt-sysprep -d fedora
 
 Undefine the libvirt domain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 Now that you can upload the image to the Image service, you no
 longer need to have this virtual machine image managed by libvirt.
@@ -272,7 +274,7 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
    # virsh undefine fedora
 
 Image is complete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The underlying image file that you created with the
 :command:`qemu-img create` command is ready to be uploaded.

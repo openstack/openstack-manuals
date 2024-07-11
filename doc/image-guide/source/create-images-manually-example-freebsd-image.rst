@@ -17,7 +17,10 @@ use that same platform in the image creation step.
 This example shows how to create a FreeBSD 10 image. To create
 a FreeBSD 9.2 image, follow these steps with the noted differences.
 
-**To create a FreeBSD image**
+.. contents:: :depth: 2
+
+Prerequisites
+-------------
 
 #. Make a virtual drive:
 
@@ -70,6 +73,9 @@ a FreeBSD 9.2 image, follow these steps with the noted differences.
 
    You now have a VM that boots from the downloaded install ISO and
    is connected to the blank virtual disk that you created previously.
+
+Installation
+------------
 
 #. To install the operating system, complete the following
    steps inside the VM:

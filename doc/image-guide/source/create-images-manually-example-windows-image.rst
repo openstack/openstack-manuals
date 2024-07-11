@@ -2,8 +2,13 @@
 Example: Microsoft Windows image
 ================================
 
+.. contents:: :depth: 2
+
 This example creates a Windows Server 2012 qcow2 image,
 using the :command:`virt-install` command and the KVM hypervisor.
+
+Prerequisites
+-------------
 
 #. Follow these steps to prepare the installation:
 
@@ -18,6 +23,9 @@ using the :command:`virt-install` command and the KVM hypervisor.
       .. code-block:: console
 
          $ qemu-img create -f qcow2 ws2012.qcow2 15G
+
+Installation
+------------
 
 #. Start the Windows Server 2012 installation with the
    :command:`virt-install` command:
@@ -93,6 +101,9 @@ using the :command:`virt-install` command and the KVM hypervisor.
    check boxes and click :guilabel:`Finish`.
 
    Wait for the machine shutdown.
+
+Image ready
+-----------
 
 Your image is ready to upload to the Image service:
 
