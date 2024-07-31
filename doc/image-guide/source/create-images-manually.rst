@@ -2,18 +2,6 @@
 Create images manually
 ======================
 
-.. toctree::
-   :maxdepth: 1
-
-   net-running.rst
-   virt-manager.rst
-   virt-install.rst
-   centos-image.rst
-   ubuntu-image.rst
-   fedora-image.rst
-   windows-image.rst
-   freebsd-image.rst
-
 Creating a new image is a step done outside of your
 OpenStack installation. You create the new image manually on
 your own system and then upload the image to your cloud.
@@ -39,3 +27,23 @@ to find a VNC client that works on your local desktop.
 To create an image for the Database service,
 see `Building Guest Images for OpenStack Trove
 <https://docs.openstack.org/trove/latest/admin/building_guest_images.html>`_.
+
+Tools
+-----
+
+.. toctree::
+   :maxdepth: 1
+
+   create-images-manually-tools-libvirt.rst
+
+Examples
+--------
+
+.. toctree::
+   :maxdepth: 1
+
+   create-images-manually-example-centos-image.rst
+   create-images-manually-example-fedora-image.rst
+   create-images-manually-example-freebsd-image.rst
+   create-images-manually-example-windows-image.rst
+   create-images-manually-example-ubuntu-image.rst

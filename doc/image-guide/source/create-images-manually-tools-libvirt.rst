@@ -1,6 +1,93 @@
-========================================================
+=====================================
+Tools: libvirt and virsh/virt-manager
+=====================================
+
+.. contents:: :depth: 3
+
+Prerequisites
+-------------
+
+Verify the libvirt default network is running
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before starting a virtual machine with libvirt, verify
+that the libvirt ``default`` network has started.
+This network must be active for your virtual machine
+to be able to connect out to the network.
+Starting this network will create a Linux bridge (usually
+called ``virbr0``), iptables rules, and a dnsmasq process
+that will serve as a DHCP server.
+
+To verify that the libvirt ``default`` network is enabled,
+use the :command:`virsh net-list` command and verify
+that the ``default`` network is active:
+
+.. code-block:: console
+
+   # virsh net-list
+   Name                 State      Autostart
+   -----------------------------------------
+   default              active     yes
+
+If the network is not active, start it by doing:
+
+.. code-block:: console
+
+   # virsh net-start default
+
+Use the virt-manager X11 GUI
+----------------------------
+
+If you plan to create a virtual machine image on a machine that
+can run X11 applications, the simplest way to do so is to use
+the :command:`virt-manager` GUI, which is installable as the
+``virt-manager`` package on both Fedora-based and Debian-based systems.
+This GUI has an embedded VNC client that will let you view and
+interact with the guest's graphical console.
+
+If you are building the image on a headless server, and
+you have an X server on your local machine, you can launch
+:command:`virt-manager` using ssh X11 forwarding to access the GUI.
+Since virt-manager interacts directly with libvirt, you typically
+need to be root to access it. If you can ssh directly in as root
+(or with a user that has permissions to interact with libvirt), do:
+
+.. code-block:: console
+
+   $ ssh -X root@server virt-manager
+
+If the account you use to ssh into your server does not have
+permissions to run libvirt, but has sudo privileges, do:
+
+.. code-block:: console
+
+   $ ssh -X user@server
+   $ sudo virt-manager
+
+.. note::
+
+   The ``-X`` flag passed to ssh will enable X11 forwarding over ssh.
+   If this does not work, try replacing it with the ``-Y`` flag.
+
+Click the :guilabel:`Create a new virtual machine` button at the top-left,
+or go to :menuselection:`File --> New Virtual Machine`. Then, follow the
+instructions.
+
+.. figure:: figures/virt-manager.png
+   :width: 100%
+
+You will be shown a series of dialog boxes that will allow you
+to specify information about the virtual machine.
+
+.. note::
+
+   When using qcow2 format images, you should check the option
+   ``Customize configuration before install``, go to disk properties and
+   explicitly select the :guilabel:`qcow2` format.
+   This ensures the virtual machine disk size will be correct.
+
 Use virt-install and connect by using a local VNC client
-========================================================
+--------------------------------------------------------
 
 If you do not wish to use :command:`virt-manager` (for example,
 you do not want to install the dependencies on your server, you do

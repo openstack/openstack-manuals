@@ -7,8 +7,10 @@ mainly on CentOS 7. Because the CentOS installation process
 might differ across versions, the installation steps might
 differ if you use a different version of CentOS.
 
+.. contents:: :depth: 2
+
 Download a CentOS install ISO
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 #. Navigate to the `CentOS mirrors
    <https://www.centos.org/download/mirrors/>`_ page.
@@ -24,7 +26,7 @@ Download a CentOS install ISO
    packages from the Internet during installation.
 
 Start the installation process
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Start the installation process using either the :command:`virt-manager`
 or the :command:`virt-install` command as described previously.
@@ -52,7 +54,7 @@ something like this:
      --location=/data/isos/CentOS-7-x86_64-NetInstall-1611.iso
 
 Step through the installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 At the initial Installer boot menu, choose the
 :guilabel:`Install CentOS 7` option. After the installation program starts,
@@ -63,7 +65,7 @@ installation summary. Accept the defaults.
    :width: 100%
 
 Change the Ethernet status
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default Ethernet setting is ``OFF``. Change the setting of
 the Ethernet form ``OFF`` to ``ON``. In particular, ensure that
@@ -74,7 +76,7 @@ default.
    :width: 100%
 
 Hostname
---------
+~~~~~~~~
 
 The installer allows you to choose a host name.
 The default (``localhost.localdomain``) is fine.
@@ -83,7 +85,7 @@ which sets the host name on boot when a new instance
 is provisioned using this image.
 
 Point the installer to a CentOS web server
-------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Depending on the version of CentOS, the net installer requires
 the user to specify either a URL or the web site and
@@ -109,13 +111,13 @@ to get a full list of mirrors, click on the ``HTTP`` link
 of a mirror to retrieve the web site name of a mirror.
 
 Storage devices
----------------
+~~~~~~~~~~~~~~~
 
 If prompted about which type of devices your installation uses,
 choose :guilabel:`Virtio Block Device`.
 
 Partition the disks
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 There are different options for partitioning the disks.
 The default installation uses LVM partitions, and creates
@@ -130,19 +132,19 @@ list will allow it to grow without crossing another
 partition's boundary.
 
 Select installation option
---------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Step through the installation, using the default options.
 The simplest thing to do is to choose the ``Minimal Install``
 install, which installs an SSH server.
 
 Set the root password
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 During the installation, remember to set the root password when prompted.
 
 Detach the CD-ROM and reboot
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Wait until the installation is complete.
 
@@ -181,7 +183,7 @@ and reboot it by manually stopping and starting.
    # virsh reboot centos
 
 Install the ACPI service
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 To enable the hypervisor to reboot or shutdown an instance,
 you must install and run the ``acpid`` service on the guest system.
@@ -196,7 +198,7 @@ system boots:
    # systemctl enable acpid
 
 Configure to fetch metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 An instance must interact with the metadata service to perform
 several tasks on start up. For example, the instance must get
@@ -210,7 +212,7 @@ the instance performs these tasks, use one of these methods:
   the metadata service, as described in the next section.
 
 Use cloud-init to fetch the public key
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------
 
 The ``cloud-init`` package automatically fetches the public key
 from the metadata server and places the key in an account.
@@ -237,7 +239,7 @@ syntax in the configuration file:
        (...)
 
 Install cloud-utils-growpart to allow partitions to resize
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------------------------------------
 
 In order for the root partition to properly resize, install the
 ``cloud-utils-growpart`` package, which contains the proper tools
@@ -248,7 +250,7 @@ to allow the disk to resize using cloud-init.
    # yum install cloud-utils-growpart
 
 Write a script to fetch the public key (if no cloud-init)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------------------------
 
 If you are not able to install the ``cloud-init`` package in your
 image, to fetch the ssh public key and add it to the root account,
@@ -303,7 +305,7 @@ before the line ``touch /var/lock/subsys/local``:
    AESDG-chapter-instancedata.html>`_ for details on how to get user data.
 
 Disable the zeroconf route
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------
 
 For the instance to access the metadata service,
 you must disable the default zeroconf route:
@@ -313,7 +315,7 @@ you must disable the default zeroconf route:
    # echo "NOZEROCONF=yes" >> /etc/sysconfig/network
 
 Configure console
-~~~~~~~~~~~~~~~~~
+-----------------
 
 For the :command:`nova console-log` command to work properly
 on CentOS 7, you might need to do the following steps:
@@ -346,7 +348,7 @@ on CentOS 7, you might need to do the following steps:
      done
 
 Shut down the instance
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 From inside the instance, run as root:
 
@@ -355,7 +357,7 @@ From inside the instance, run as root:
    # poweroff
 
 Clean up (remove MAC address details)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 The operating system records the MAC address of the virtual Ethernet
 card in locations such as ``/etc/sysconfig/network-scripts/ifcfg-eth0``
@@ -372,7 +374,7 @@ It will clean up a virtual machine image in place:
    # virt-sysprep -d centos
 
 Undefine the libvirt domain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 Now that you can upload the image to the Image service, you no
 longer need to have this virtual machine image managed by libvirt.
@@ -383,7 +385,7 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
    # virsh undefine centos
 
 Image is complete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The underlying image file that you created with the
 :command:`qemu-img create` command is ready to be uploaded.

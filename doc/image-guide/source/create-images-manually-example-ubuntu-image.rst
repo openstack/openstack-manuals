@@ -6,8 +6,10 @@ This example installs an Ubuntu 18.04 (Bionic Beaver) image.
 To create an image for a different version of Ubuntu,
 follow these steps with the noted differences.
 
+.. contents:: :depth: 2
+
 Download an Ubuntu installation ISO
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 Because the goal is to make the smallest possible base image,
 this example uses the network installation ISO.
@@ -15,7 +17,7 @@ The Ubuntu 64-bit 18.04 network installation ISO is at the `Ubuntu download
 page <http://archive.ubuntu.com/ubuntu/dists/bionic/main/installer-amd64/current/images/netboot/mini.iso>`_.
 
 Start the installation process
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------------
 
 Start the installation process by using either :command:`virt-manager`
 or :command:`virt-install` as described in the previous section.
@@ -44,7 +46,7 @@ the commands should look something like this:
      --os-type=linux --os-variant=ubuntu18.04
 
 Step through the installation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 At the initial Installer boot menu, choose the :guilabel:`Install` option.
 Step through the installation prompts, the defaults should be fine.
@@ -112,14 +114,14 @@ For more information on configuring Grub, see the section
 called ":ref:`write-to-console`".
 
 Log in to newly created image
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 When you boot for the first time after install, it may ask
 you about authentication tools, you can just choose :guilabel:`Exit`.
 Then, log in as admin user using the password you specified.
 
 Install cloud-init
-~~~~~~~~~~~~~~~~~~
+------------------
 
 The :command:`cloud-init` script starts on instance boot and
 will search for a metadata provider to fetch a public key from.
@@ -161,7 +163,7 @@ syntax in the configuration file:
        (...)
 
 Shut down the instance
-~~~~~~~~~~~~~~~~~~~~~~
+----------------------
 
 From inside the instance, as root:
 
@@ -170,7 +172,7 @@ From inside the instance, as root:
    # /sbin/shutdown -h now
 
 Clean up (remove MAC address details)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-------------------------------------
 
 The operating system records the MAC address of the virtual Ethernet
 card in locations such as ``/etc/udev/rules.d/70-persistent-net.rules``
@@ -187,7 +189,7 @@ It will clean up a virtual machine image in place:
    # virt-sysprep -d bionic
 
 Undefine the libvirt domain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 Now that the image is ready to be uploaded to the Image service,
 you no longer need to have this virtual machine image managed by libvirt.
@@ -198,7 +200,7 @@ Use the :command:`virsh undefine vm-image` command to inform libvirt:
    # virsh undefine bionic
 
 Image is complete
-~~~~~~~~~~~~~~~~~
+-----------------
 
 The underlying image file that you created with the
 :command:`qemu-img create` command, such as
