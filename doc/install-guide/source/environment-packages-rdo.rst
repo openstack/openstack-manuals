@@ -184,7 +184,8 @@ Prerequisites
   Red Hat Subscription Management. For more information on registering a RHEL 7
   system, see the `Red Hat Enterprise Linux 7 System Administrator's Guide
   <https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/part-Subscription_and_Support.html>`_
-  For more information on registering a RHEL 8 system, see the `Red Hat Enterprise Linux 8 Installation Guide
+  For more information on registering a RHEL 8 system, see the
+  `Red Hat Enterprise Linux 8 Installation Guide
   <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_a_standard_rhel_installation/post-installation-tasks_installing-rhel>`_.
 
 * Enable the required repositories:
