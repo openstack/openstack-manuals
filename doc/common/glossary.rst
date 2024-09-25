@@ -40,6 +40,10 @@ OpenStack contribution process.
 
       The code name for the thirtieth release of OpenStack.
 
+   2025.1 Epoxy
+
+      The code name for the thirty first release of OpenStack.
+
    6to4
 
       A mechanism that allows IPv6 packets to be transmitted
@@ -2875,7 +2879,7 @@ O
       `"year"."release count within the year"` and the name will be
       used mostly for marketing purposes. The first such release is
       2023.1 Antelope. Followed by, respectively, 2023.2 Bobcat,
-      2024.1 Caracal, 2024.2 Dalmatian.
+      2024.1 Caracal, 2024.2 Dalmatian, 2025.1 Epoxy.
 
    openSUSE
 
