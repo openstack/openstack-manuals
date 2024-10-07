@@ -14,6 +14,12 @@ Archive.
 
 Archive Enablement
 ------------------
+**OpenStack 2024.1 Caracal for Ubuntu 22.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:caracal
+
 **OpenStack 2023.2 Bobcat for Ubuntu 22.04 LTS:**
 
 .. code-block:: console
