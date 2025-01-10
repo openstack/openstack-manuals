@@ -45,7 +45,7 @@ Current API versions
 
 `Application Container Service API <https://docs.openstack.org/api-ref/application-container/>`__ (microversions)
 
-`Backup API v1 <https://docs.openstack.org/api-ref/backup/v1/>`__
+`Backup API v2 <https://docs.openstack.org/api-ref/backup/v2/>`__
 
 `Bare Metal API v1 <https://docs.openstack.org/api-ref/baremetal/>`__ (microversions)
 
