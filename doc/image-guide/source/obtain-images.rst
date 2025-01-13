@@ -63,11 +63,12 @@ CentOS
 
 The CentOS project maintains official images for direct download:
 
-* `CentOS 9 stream images <https://cloud.centos.org/centos/9-stream/>`_
+* `CentOS 9 Stream images <https://cloud.centos.org/centos/9-stream/>`_
+* `CentOS 10 Stream images <https://cloud.centos.org/centos/10-stream/>`_
 
 .. note::
 
-   In a CentOS cloud image, the login account is ``centos``.
+   In a CentOS cloud image, the login account is ``cloud-user``.
 
 CirrOS (test)
 ~~~~~~~~~~~~~
