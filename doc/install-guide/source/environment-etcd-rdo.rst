@@ -15,7 +15,7 @@ Install and configure components
 
    .. code-block:: console
 
-      # yum install etcd
+      # dnf install etcd
 
 2. Edit the ``/etc/etcd/etcd.conf`` file and set the ``ETCD_INITIAL_CLUSTER``,
    ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``,
