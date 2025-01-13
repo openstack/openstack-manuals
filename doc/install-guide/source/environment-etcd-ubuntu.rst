@@ -23,6 +23,12 @@ Install and configure components
       available from the default repository. To install successfully,
       enable the ``Universe`` repository on Ubuntu.
 
+   As for Ubuntu 24.04 install the package with following name:
+
+   .. code-block:: console
+
+      # apt install etcd-server
+
 #. Edit the ``/etc/default/etcd`` file and set the ``ETCD_INITIAL_CLUSTER``,
    ``ETCD_INITIAL_ADVERTISE_PEER_URLS``, ``ETCD_ADVERTISE_CLIENT_URLS``,
    ``ETCD_LISTEN_CLIENT_URLS`` to the management IP address of the
