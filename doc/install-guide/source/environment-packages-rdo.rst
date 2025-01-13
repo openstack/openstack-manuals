@@ -116,10 +116,10 @@ CentOS Stream
    # dnf install centos-release-openstack-<release>
 
    # ### So for example
-   # ### Zed
-   # dnf install centos-release-openstack-zed
-   # ### 2023.1 Antelope
-   # dnf install centos-release-openstack-antelope
+   # ### 2024.2 Dalmatian
+   # dnf install centos-release-openstack-dalmatian
+   # ### 2024.1 Caracal
+   # dnf install centos-release-openstack-caracal
    # ### 2023.2 Bobcat
    # dnf install centos-release-openstack-bobcat
 
