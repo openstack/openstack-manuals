@@ -11,17 +11,9 @@ Install and configure components
 
 #. Install the packages:
 
-   **For CentOS 7 and RHEL 7**
-
    .. code-block:: console
 
-      # yum install memcached python-memcached
-
-   **For CentOS 8 and RHEL 8**
-
-   .. code-block:: console
-
-      # yum install memcached python3-memcached
+      # dnf install memcached python3-memcached
 
 2. Edit the ``/etc/sysconfig/memcached`` file and complete the
    following actions:
