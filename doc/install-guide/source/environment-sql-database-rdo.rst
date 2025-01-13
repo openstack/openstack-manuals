@@ -14,7 +14,7 @@ Install and configure components
 
    .. code-block:: console
 
-      # yum install mariadb mariadb-server python2-PyMySQL
+      # dnf install mariadb mariadb-server python3-PyMySQL
 
 2. Create and edit the ``/etc/my.cnf.d/openstack.cnf`` file
    (backup existing configuration files in ``/etc/my.cnf.d/`` if needed)
