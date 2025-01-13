@@ -19,6 +19,8 @@ ports that each OpenStack service uses:
      - 8082
    * - Backup Service (``Freezer``)
      - 9090
+   * - Bare Metal provisioning service (``Ironic``)
+     - 6385
    * - Big Data Processing Framework (``sahara``)
      - 8386
    * - Block Storage (``cinder``)
