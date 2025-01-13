@@ -132,7 +132,7 @@ RHEL
   .. code-block:: console
 
    # ### RHEL 9
-   # dnf install https://www.rdoproject.org/repos/rdo-release.el9.rpm
+   # dnf install https://trunk.rdoproject.org/rdo_release/rdo-release.el9s.rpm
 
   **The RDO repository RPM installs the latest available OpenStack release.**
 
