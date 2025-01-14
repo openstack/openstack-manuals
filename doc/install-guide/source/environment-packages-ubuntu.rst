@@ -114,6 +114,9 @@ Archive Enablement
 Sample Installation
 -------------------
 
+For example, Nova service can be installed on compute
+or control node as follows:
+
 .. code-block:: console
 
    # apt install nova-compute
@@ -121,6 +124,9 @@ Sample Installation
 
 Client Installation
 -------------------
+
+The openstack client is the CLI for openstack operations
+and is installed as follows:
 
 .. code-block:: console
 
