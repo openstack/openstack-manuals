@@ -21,7 +21,7 @@ Install and configure components
 
    .. code-block:: console
 
-      # yum install chrony
+      # dnf install chrony
 
    For SUSE:
 
