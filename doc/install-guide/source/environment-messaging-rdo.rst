@@ -21,7 +21,7 @@ Install and configure components
 
    .. code-block:: console
 
-      # yum install rabbitmq-server
+      # dnf install rabbitmq-server
 
 2. Start the message queue service and configure it to start when the
    system boots:
