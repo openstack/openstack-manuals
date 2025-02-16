@@ -170,7 +170,7 @@ running:
 
 .. code-block:: console
 
-   # yum install cloud-init
+   # dnf install cloud-init
 
 The account varies by distribution. On Fedora-based virtual machines,
 the account is called ``fedora``.
