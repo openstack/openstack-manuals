@@ -1635,8 +1635,8 @@ F
 
    freezer
 
-      Code name for the :term:`Backup, Restore, and Disaster Recovery service
-      <Backup, Restore, and Disaster Recovery service (freezer)>`.
+      Code name for the :term:`Backup and Restore service
+      <Backup and Restore service (freezer)>`.
 
    front end
 
