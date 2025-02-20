@@ -481,6 +481,7 @@ _RETIRED_REPOS = [
     'openstack/networking-l2gw',
     'openstack/networking-midonet',
     'openstack/networking-onos',
+    'openstack/networking-ovn',
     'openstack/neutron-lbaas-dashboard',
     'openstack/neutron-interconnection',
     'openstack/openstack-ansible-galera_client',
