@@ -480,6 +480,7 @@ _RETIRED_REPOS = [
     'openstack/networking-hyperv',
     'openstack/networking-l2gw',
     'openstack/networking-midonet',
+    'openstack/networking-odl',
     'openstack/networking-onos',
     'openstack/networking-ovn',
     'openstack/neutron-lbaas-dashboard',
