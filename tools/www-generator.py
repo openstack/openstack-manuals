@@ -466,6 +466,7 @@ _RETIRED_REPOS = [
     'openstack/faafo',
     'openstack/fuel-docs',
     'openstack/fuxi',
+    'openstack/ironic-lib',
     'openstack/karbor',
     'openstack/karbor-dashboard',
     'openstack/kolla-cli',
