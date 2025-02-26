@@ -91,10 +91,12 @@ redirect 301 /api/api-specs.html https://docs.openstack.org/api-quick-start/inde
 redirectmatch 301 (.*)//(.*) $1/$2
 
 # Redirect networking-guide since it is now versioned
-{{ dir_to_page('/networking-guide', '/ocata/networking-guide/') }}
+{{ dir_to_page('/networking-guide', '/neutron/latest/admin/') }}
+redirect 301 /newton/networking-guide/intro-basic-networking.html /neutron/latest/admin/intro-basic-networking.html
+redirect 301 /ocata/networking-guide/intro-basic-networking.html /neutron/latest/admin/intro-basic-networking.html
 
 # Redirect old releases content to new location
-{{ deep_links('/releases', 'http://releases.openstack.org/$1') }}
+{{ deep_links('/releases', 'https://releases.openstack.org/$1') }}
 
 # redirect all kuryr sub-repositories appropriately
 {{ deep_links('/developer/kuryr-(kubernetes|libnetwork|tempest-plugin)', '/kuryr-$1/latest/$2') }}
@@ -165,8 +167,8 @@ redirect 301 /doc-contrib-guide/ui-text-guidelines /doc-contrib-guide/ux-ui-guid
 
 # Redirect old install guide list pages to their new home
 {{ path_to_page('/(havana|icehouse|juno|kilo|mitaka)/install-guide', '/$1/') }}
-{{ dir_to_page('/project-install-guide/newton', '/newton/install/') }}
-{{ deep_links('/project-install-guide/ocata', '/ocata/install/$1') }}
+redirect 301 /project-install-guide/newton /latest/install/
+redirect 301 /project-install-guide/ocata /latest/install/
 
 # Redirecting infra docs links to new location
 {{ deep_links('/infra/shade', '/shade/latest/$1') }}
