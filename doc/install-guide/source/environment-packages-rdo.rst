@@ -46,7 +46,7 @@ Operating System
      - *None*
    * - CentOS Stream 9 / RHEL 9
      - Xena and following releases
-     - Zed, 2023.1 Antelope (SLURP), 2023.2 Bobcat, 2024.1 Caracal (SLURP)
+     - 2023.2 Bobcat, 2024.1 Caracal (SLURP), 2024.2 Dalmatian
 
 Prerequisites
 -------------
@@ -55,7 +55,7 @@ Prerequisites
 
    We recommend disabling EPEL when using RDO packages due to updates
    in EPEL breaking backwards compatibility. Or, preferably pin package
-   versions using the ``yum-versionlock`` plugin.
+   versions using the ``dnf versionlock`` plugin (if unavailable please use ``dnf install 'dnf-command(versionlock)'``).
 
    If EPEL is needed, also consider `lowering its priority in DNF
    <https://dnf.readthedocs.io/en/latest/conf_ref.html#repo-options>`_.
