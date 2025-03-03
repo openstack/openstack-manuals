@@ -39,6 +39,13 @@ Install and configure components
 
       server controller iburst
 
+   For RHEL/CentOS in case of using firewalld don't forget to update firewall rules as follows:
+
+   .. code-block:: console
+
+      # firewall-cmd --permanent --add-service=ntp
+      # firewall-cmd --reload
+
    For Ubuntu, edit the ``/etc/chrony/chrony.conf`` file:
 
    .. code-block:: ini
