@@ -41,3 +41,8 @@ Install and configure components
       # rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
       Setting permissions for user "openstack" in vhost "/" ...
+
+.. note::
+
+   Sometimes it's necessary to increase the file descriptor limit for RabbitMQ to
+   handle a large number of connections properly.
