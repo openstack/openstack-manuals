@@ -1,0 +1,75 @@
+{% set projects = PROJECT_DATA[SERIES] %}
+{% extends "templates/base.tmpl" %}
+{% block pagetitle %}{{SERIES_TITLE}} Installation Guides{% endblock %}
+{% block title %}
+<a href="https://docs.openstack.org">Documentation</a> &gt; {{SERIES_TITLE}} Installation Guides
+{% endblock %}
+{% block content %}
+<!-- Begin Page Content -->
+<div class="top-docs-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <h1>OpenStack {{SERIES_TITLE}} Installation Guides</h1>
+                <p>
+                  These documents cover installation procedures for OpenStack
+                  services.
+                </p>
+                <p>
+                  If you prefer to install OpenStack using an automated deployment
+                  tool, see the <a href="../deploy/">Deployment Guides.</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mid-docs-wrapper" id="docs-main-body">
+    <div class="container">
+        <div class="row docs-toc">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="docs-link-sections services-section">
+                    <h3><i class="fa fa-cogs"></i>Installation Guide</h3>
+                    <p>The following guide provides information about getting started,
+                       setting up your environment, and launching your instance.
+                  </p>
+                    <p>
+                       <a class="overview-btn docs-btn" style="width:80%;text-transform:initial;"
+                          href="/install-guide/">
+                          OpenStack Installation Guide
+                       </a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="docs-link-sections">
+                    <h3><i class="fa fa-cogs"></i>Project Installation Guides</h3>
+                 <ul>
+
+{% for project in projects|sort(attribute='service') -%}
+{% if project.type in ['service', 'other'] and project.has_install_guide %}
+                   <li><a href="/{{project.name}}/{{SERIES}}/install/">{{project.service}} ({{project.name|title}})</a></li>
+{% endif %}
+{%- endfor %}
+                 </ul>
+            </div>
+        </div>
+        <div class="row docs-contribute-wrapper">
+            <div class="col-lg-12">
+                <p>Documentation treated like code, powered by the community - interested?</p>
+                <a href="/doc-contrib-guide/" class="overview-btn contribute-btn">How To Contribute <i class="fa fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    var elements = document.getElementsByClassName("os-box");
+    var maximum =  Number.MIN_VALUE;
+    for (var i = 0, len = elements.length; i < len; i++) {
+       if(elements[i].offsetHeight>maximum){
+          maximum = elements[i].offsetHeight;
+       }
+    }
+    $('.os-box').height(maximum);
+</script>
+{% endblock content %}
