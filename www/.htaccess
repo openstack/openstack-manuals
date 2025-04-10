@@ -92,8 +92,25 @@ redirectmatch 301 (.*)//(.*) $1/$2
 
 # Redirect networking-guide since it is now versioned
 {{ dir_to_page('/networking-guide', '/neutron/latest/admin/') }}
+
+# Redirect networking-guide to latest version
 redirect 301 /newton/networking-guide/intro-basic-networking.html /neutron/latest/admin/intro-basic-networking.html
 redirect 301 /ocata/networking-guide/intro-basic-networking.html /neutron/latest/admin/intro-basic-networking.html
+
+# Redirect VPNaaS scenario to latest version
+redirect 301 /neutron/rocky/admin/vpnaas-scenario.html /neutron/latest/admin/vpnaas-scenario.html
+
+# Redirect Glossary to latest version
+redirect 301 /mitaka/user-guide/common/glossary.html /glossary/common/glossary.html
+
+# Redirect CPU topologies to latest version
+redirect 301 /nova/pike/admin/cpu-topologies.html /nova/latest/admin/cpu-topologies.html
+
+# Redirect Hypervisors to latest version
+redirect 301 /ocata/config-reference/compute/hypervisors.html /nova/latest/admin/configuration/hypervisors.html
+
+# Redirect OpenStack-Ansible LXC to latest version
+redirect 301 /openstack-ansible-lxc_container_create/ocata/ /openstack-ansible-lxc_container_create/latest/
 
 # Redirect old releases content to new location
 {{ deep_links('/releases', 'https://releases.openstack.org/$1') }}
@@ -140,6 +157,7 @@ redirect 301 /ocata/networking-guide/intro-basic-networking.html /neutron/latest
 {{ path_to_released_series('/admin', '/admin/') }}
 {{ path_to_page('/latest/admin', '/' + SERIES_IN_DEVELOPMENT + '/admin/') }}
 {{ dir_to_page('/latest', '/' + SERIES_IN_DEVELOPMENT + '/') }}
+{{ path_to_page('/deploy/install', '/' + SERIES_IN_DEVELOPMENT + '/install/') }}
 
 # Redirect some pages users search for
 {{ path_to_page('/arch-design/content', '/arch-design/') }}
