@@ -208,8 +208,8 @@ html_copy_source = False
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'ContributorGuide.tex', u'Contributor Guide',
-     u'OpenStack contributors', 'manual'),
+    ('index', 'ContributorGuide.tex', 'Contributor Guide',
+     'OpenStack contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -238,8 +238,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'contributorguide', u'Contributor Guide',
-     [u'OpenStack contributors'], 1)
+    ('index', 'contributorguide', 'Contributor Guide',
+     ['OpenStack contributors'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -252,8 +252,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'UserGuide', u'User Guide',
-     u'OpenStack contributors', 'UserGuide',
+    ('index', 'UserGuide', 'User Guide',
+     'OpenStack contributors', 'UserGuide',
      'This manual explains the principles of the contributing to the '
      'OpenStack documentation', 'Miscellaneous'),
 ]
@@ -276,6 +276,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'ContributorGuide', u'Contributor Guide', u'OpenStack '
+    ('index', 'ContributorGuide', 'Contributor Guide', 'OpenStack '
      'contributors'),
 ]

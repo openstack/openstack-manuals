@@ -203,8 +203,8 @@ html_copy_source = False
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'ImageGuide.tex', u'Virtual Machine Image Guide',
-     u'OpenStack contributors', 'manual'),
+    ('index', 'ImageGuide.tex', 'Virtual Machine Image Guide',
+     'OpenStack contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -233,8 +233,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'ImageGuide', u'Virtual Machine Image Guide',
-     [u'OpenStack contributors'], 1)
+    ('index', 'ImageGuide', 'Virtual Machine Image Guide',
+     ['OpenStack contributors'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -247,8 +247,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'ImageGuide', u'Virtual Machine Image Guide',
-     u'OpenStack contributors', 'ImageGuide',
+    ('index', 'ImageGuide', 'Virtual Machine Image Guide',
+     'OpenStack contributors', 'ImageGuide',
      'This document is for system administrators who want to look up'
      'how to create a virtual machine image.', 'Miscellaneous'),
 ]
@@ -271,6 +271,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'ImageGuide', u'Virtual Machine Image Guide',
-     u'OpenStack contributors')
+    ('index', 'ImageGuide', 'Virtual Machine Image Guide',
+     'OpenStack contributors')
 ]

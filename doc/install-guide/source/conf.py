@@ -208,8 +208,8 @@ html_copy_source = False
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'InstallGuide.tex', u'Install Guide',
-     u'OpenStack contributors', 'manual'),
+    ('index', 'InstallGuide.tex', 'Install Guide',
+     'OpenStack contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -238,8 +238,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'installguide', u'Install Guide',
-     [u'OpenStack contributors'], 1)
+    ('index', 'installguide', 'Install Guide',
+     ['OpenStack contributors'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -252,8 +252,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'InstallGuide', u'Install Guide',
-     u'OpenStack contributors', 'InstallGuide',
+    ('index', 'InstallGuide', 'Install Guide',
+     'OpenStack contributors', 'InstallGuide',
      'This guide shows OpenStack end users how to install '
      'an OpenStack cloud.', 'Miscellaneous'),
 ]
@@ -276,6 +276,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'InstallGuide', u'Install Guide',
-     u'OpenStack contributors')
+    ('index', 'InstallGuide', 'Install Guide',
+     'OpenStack contributors')
 ]

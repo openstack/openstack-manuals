@@ -208,8 +208,8 @@ html_copy_source = False
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'OpenStackAPI.tex', u'OpenStack API Documentation',
-     u'OpenStack Doc Team', 'manual'),
+    ('index', 'OpenStackAPI.tex', 'OpenStack API Documentation',
+     'OpenStack Doc Team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -238,8 +238,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'openstack-api-documentation', u'OpenStack API Documentation',
-     [u'OpenStack Doc Team'], 1)
+    ('index', 'openstack-api-documentation', 'OpenStack API Documentation',
+     ['OpenStack Doc Team'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -252,8 +252,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'openstack-api-documentation', u'OpenStack API Documentation',
-     u'OpenStack Doc Team', 'OpenStackAPIDocs', 'Describes OpenStack API reference and concepts.',
+    ('index', 'openstack-api-documentation', 'OpenStack API Documentation',
+     'OpenStack Doc Team', 'OpenStackAPIDocs', 'Describes OpenStack API reference and concepts.',
      'Miscellaneous'),
 ]
 
@@ -278,6 +278,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'openstack-api-documentation', u'OpenStack API Documentation',
-     u'OpenStack contributors')
+    ('index', 'openstack-api-documentation', 'OpenStack API Documentation',
+     'OpenStack contributors')
 ]
