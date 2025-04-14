@@ -59,12 +59,12 @@ A
 
 .. glossary::
 
-   absolute limit
+   Absolute Limit
 
       Impassable limits for guest VMs. Settings include total RAM
       size, maximum number of vCPUs, and maximum disk size.
 
-   access control list (ACL)
+   Access Control List (ACL)
 
       A list of permissions attached to an object. An ACL specifies
       which users or system processes have access to objects. It also
@@ -73,45 +73,44 @@ A
       instance, the ACL entry ``(Alice, delete)`` for a file gives
       Alice permission to delete the file.
 
-   access key
+   Access Key
 
-      Alternative term for an Amazon EC2 access key.
-      See :term:`EC2 access key`.
+      Alternative term for an Amazon EC2 access key. See :term:`EC2 access key`.
 
-   account
+   Account
 
       The Object Storage context of an account. Do not confuse with a
       user account from an authentication service, such as Active Directory,
       /etc/passwd, OpenLDAP, OpenStack Identity, and so on.
 
-   account auditor
+   Account Auditor
 
       Checks for missing replicas and incorrect or corrupted objects
       in a specified Object Storage account by running queries against the
       back-end SQLite database.
 
-   account database
+   Account Database
 
       A SQLite database that contains Object Storage accounts and
       related metadata and that the accounts server accesses.
 
-   account reaper
+   Account Reaper
 
       An Object Storage worker that scans for and deletes account
       databases and that the account server has marked for deletion.
 
-   account server
+   Account Server
 
       Lists containers in Object Storage and stores container
       information in the account database.
 
-   account service
+   Account Service
 
       An Object Storage component that provides account services such
       as list, create, modify, and audit. Do not confuse with OpenStack
       Identity service, OpenLDAP, or similar user-account services.
 
-   accounting
+   Accounting
 
       The Compute service provides accounting information through the
       event notification and system usage data facilities.
@@ -121,42 +120,41 @@ A
       Authentication and identity service by Microsoft, based on LDAP.
       Supported in OpenStack.
 
-   active/active configuration
+   Active/Active Configuration
 
       In a high-availability setup with an active/active
       configuration, several systems share the load together and if one
       fails, the load is distributed to the remaining systems.
 
-   active/passive configuration
+   Active/Passive Configuration
 
       In a high-availability setup with an active/passive
       configuration, systems are set up to bring additional resources online
       to replace those that have failed.
 
-   address pool
+   Address Pool
 
       A group of fixed and/or floating IP addresses that are assigned
-      to a project and can be used by or assigned to the VM instances in a
-      project.
+      to a project and can be used by or assigned to the VM instances in a project.
 
    Address Resolution Protocol (ARP)
 
       The protocol by which layer-3 IP addresses are resolved into
       layer-2 link local addresses.
 
-   admin API
+   Admin API
 
       A subset of API calls that are accessible to authorized
       administrators and are generally not accessible to end users or the
       public Internet. They can exist as a separate service (keystone) or
       can be a subset of another API (nova).
 
-   admin server
+   Admin Server
 
       In the context of the Identity service, the worker process that
       provides access to the admin API.
 
-   administrator
+   Administrator
 
       The person responsible for installing, configuring,
       and managing an OpenStack cloud.
@@ -164,42 +162,37 @@ A
    Advanced Message Queuing Protocol (AMQP)
 
       The open standard messaging protocol used by OpenStack
-      components for intra-service communications, provided by RabbitMQ,
-      or Qpid.
+      components for intra-service communications, provided by RabbitMQ, or Qpid.
 
    Advanced RISC Machine (ARM)
 
-      Lower power consumption CPU often found in mobile and embedded
-      devices. Supported by OpenStack.
+      Lower power consumption CPU often found in mobile and embedded devices.
+      Supported by OpenStack.
 
-   alert
+   Alert
 
       The Compute service can send alerts through its notification
       system, which includes a facility to create custom notification
       drivers. Alerts can be sent to and displayed on the dashboard.
 
-   allocate
+   Allocate
 
       The process of taking a floating IP address from the address
-      pool so it can be associated with a fixed IP on a guest VM
-      instance.
+      pool so it can be associated with a fixed IP on a guest VM instance.
 
    Amazon Kernel Image (AKI)
 
-      Both a VM container format and disk format. Supported by Image
-      service.
+      Both a VM container format and disk format. Supported by Image service.
 
    Amazon Machine Image (AMI)
 
-      Both a VM container format and disk format. Supported by Image
-      service.
+      Both a VM container format and disk format. Supported by Image service.
 
    Amazon Ramdisk Image (ARI)
 
-      Both a VM container format and disk format. Supported by Image
-      service.
+      Both a VM container format and disk format. Supported by Image service.
 
-   aodh
+   Aodh
 
       Part of the OpenStack :term:`Telemetry service <Telemetry
       service (telemetry)>`; provides alarming functionality.
@@ -217,49 +210,46 @@ A
 
    Apache Web Server
 
-      The most common web server software currently used on the
-      Internet.
+      The most common web server software currently used on the Internet.
 
-   API endpoint
+   API Endpoint
 
       The daemon, worker, or service that a client communicates with
       to access an API. API endpoints can provide any number of services,
       such as authentication, sales data, performance meters, Compute VM
       commands, census data, and so on.
 
-   API extension
+   API Extension
 
       Custom modules that extend some OpenStack core APIs.
 
-   API extension plug-in
+   API Extension Plug-in
 
-      Alternative term for a Networking plug-in or Networking API
-      extension.
+      Alternative term for a Networking plug-in or Networking API extension.
 
-   API key
+   API Key
 
       Alternative term for an API token.
 
-   API server
+   API Server
 
-      Any node running a daemon or worker that provides an API
-      endpoint.
+      Any node running a daemon or worker that provides an API endpoint.
 
-   API token
+   API Token
 
       Passed to API requests and used by OpenStack to verify that the
       client is authorized to run the requested operation.
 
-   API version
+   API Version
 
       In OpenStack, the API version for a project is part of the URL.
       For example, ``example.com/nova/v1/foobar``.
 
-   applet
+   Applet
 
       A Java program that can be embedded into a web page.
 
-   Application Catalog service (murano)
+   Application Catalog Service (Murano)
 
       The project that provides an application catalog service so that users
       can compose and deploy composite environments on an application
@@ -271,7 +261,7 @@ A
       application, or program. Includes service calls, required parameters
       for each call, and the expected return values.
 
-   application server
+   Application Server
 
       A piece of software that makes available another piece of
       software over a network.
@@ -279,114 +269,107 @@ A
    Application Service Provider (ASP)
 
       Companies that rent specialized applications that help
-      businesses and organizations provide additional services
-      with lower cost.
+      businesses and organizations provide additional services with lower cost.
 
    arptables
 
       Tool used for maintaining Address Resolution Protocol packet
       filter rules in the Linux kernel firewall modules. Used along with
-      iptables, ebtables, and ip6tables in Compute to provide firewall
-      services for VMs.
+      iptables, ebtables, and ip6tables in Compute to provide firewall services for VMs.
 
-   associate
+   Associate
 
-      The process associating a Compute floating IP address with a
-      fixed IP address.
+      The process associating a Compute floating IP address with a fixed IP address.
 
    Asynchronous JavaScript and XML (AJAX)
 
       A group of interrelated web development techniques used on the
-      client-side to create asynchronous web applications. Used extensively
-      in horizon.
+      client-side to create asynchronous web applications. Used extensively in Horizon.
 
    ATA over Ethernet (AoE)
 
       A disk storage protocol tunneled within Ethernet.
 
-   attach
+   Attach
 
       The process of connecting a VIF or vNIC to a L2 network in
       Networking. In the context of Compute, this process connects a storage
       volume to an instance.
 
-   attachment (network)
+   Attachment (Network)
 
-      Association of an interface ID to a logical port. Plugs an
-      interface into a port.
+      Association of an interface ID to a logical port. Plugs an interface into a port.
 
-   auditing
+   Auditing
 
-      Provided in Compute through the system usage data
-      facility.
+      Provided in Compute through the system usage data facility.
 
-   auditor
+   Auditor
 
       A worker process that verifies the integrity of Object Storage
       objects, containers, and accounts. Auditors is the collective term for
-      the Object Storage account auditor, container auditor, and object
-      auditor.
+      the Object Storage account auditor, container auditor, and object auditor.
 
    Austin
 
       The code name for the initial release of
-      OpenStack. The first design summit took place in
-      Austin, Texas, US.
+      OpenStack. The first design summit took place in Austin, Texas, US.
 
-   auth node
+   Auth Node
 
-      Alternative term for an Object Storage authorization
-      node.
+      Alternative term for an Object Storage authorization node.
 
-   authentication
+   Authentication
 
       The process that confirms that the user, process, or client is
       really who they say they are through private key, secret token,
       password, fingerprint, or similar method.
 
-   authentication token
+   Authentication Token
 
       A string of text provided to the client after authentication.
-      Must be provided by the user or process in subsequent requests to the
-      API endpoint.
+      Must be provided by the user or process in subsequent requests to the API endpoint.
 
    AuthN
 
-      The Identity service component that provides authentication
-      services.
+      The Identity service component that provides authentication services.
 
-   authorization
+   Authorization
 
       The act of verifying that a user, process, or client is
       authorized to perform an action.
 
-   authorization node
+   Authorization Node
 
-      An Object Storage node that provides authorization
-      services.
+      An Object Storage node that provides authorization services.
 
    AuthZ
 
-      The Identity component that provides high-level
-      authorization services.
+      The Identity component that provides high-level authorization services.
 
    Auto ACK
 
       Configuration setting within RabbitMQ that enables or disables
       message acknowledgment. Enabled by default.
 
-   auto declare
+   Auto Declare
 
       A Compute RabbitMQ setting that determines whether a message
       exchange is automatically created when the program starts.
 
-   availability zone
+   Availability Zones (AZ)
 
-      An Amazon EC2 concept of an isolated area that is used for fault
-      tolerance. Do not confuse with an OpenStack Compute zone or
-      cell.
+      Availability Zones in OpenStack are essentially a way to segregate and manage
+      resources within an OpenStack cloud. They allow for the division of physical resources
+      (such as compute nodes, storage, and networking) into logical groups that can be
+      managed and utilized independently. This adds a layer of redundancy and fault tolerance
+      to the system by ensuring that if one Availability Zone goes down, the resources and
+      services in the other zones remain unaffected. Though this largely depends on the
+      deployment architecture. If only one Availability Zone hosts the control planes
+      (e.g., the "main" AZ), and others are edge zones with only compute nodes,
+      an outage in the main zone can still impact the overall availability of services.
 
-   AWS CloudFormation template
+   AWS CloudFormation Template
 
       AWS CloudFormation allows Amazon Web Services (AWS) users to create and manage a
       collection of related resources. The Orchestration service
@@ -397,20 +380,20 @@ B
 
 .. glossary::
 
-   back end
+   Back-end
 
       Interactions and processes that are obfuscated from the user,
       such as Compute volume mount, data transmission to an iSCSI target by
       a daemon, or Object Storage object integrity checks.
 
-   back-end catalog
+   Back-end Catalog
 
       The storage method used by the Identity service catalog service
       to store and retrieve information about API endpoints that are
       available to the client. Examples include an SQL database, LDAP
       database, or KVS back end.
 
-   back-end store
+   Back-end Store
 
       The persistent data store used to save and retrieve information
       for a service, such as lists of Object Storage objects, current state
@@ -419,38 +402,37 @@ B
       Storage, locally mounted file system, RADOS block devices, VMware
       datastore, and HTTP.
 
-   Backup and Restore service (freezer)
+   Backup and Restore Service (Freezer)
 
       The project that provides integrated tooling for backing up and restoring
       instances or database backups.
 
-   bandwidth
+   Bandwidth
 
       The amount of available data used by communication resources,
       such as the Internet. Represents the amount of data that is used to
       download things or the amount of data available to download.
 
-   barbican
+   Barbican
 
-      Code name of the :term:`Key Manager service
-      <Key Manager service (barbican)>`.
+      Code name of the :term:`Key Manager service <Key Manager service (barbican)>`.
 
-   bare
+   Bare
 
-      An Image service container format that indicates that no
-      container exists for the VM image.
+      An Image service container format that indicates that no container
+      exists for the VM image.
 
-   Bare Metal service (ironic)
+   Bare Metal Service (Ironic)
 
       The OpenStack service that provides a service and associated libraries
       capable of managing and provisioning physical machines in a
       security-aware and fault-tolerant manner.
 
-   base image
+   Base Image
 
       An OpenStack-provided image.
 
-   Bell-LaPadula model
+   Bell-LaPadula Model
 
       A security model that focuses on data confidentiality
       and controlled access to classified information.
@@ -459,12 +441,11 @@ B
       object to determine if the subject is authorized for the specific access mode.
       The clearance or classification scheme is expressed in terms of a lattice.
 
-   Benchmark service (rally)
+   Benchmark Service (Rally)
 
       OpenStack project that provides a framework for
       performance analysis and benchmarking of individual
-      OpenStack components as well as full production OpenStack
-      cloud deployments.
+      OpenStack components as well as full production OpenStack cloud deployments.
 
    Bexar
 
@@ -475,41 +456,38 @@ B
       OpenStack. The design summit took place in
       San Antonio, Texas, US, which is the county seat for Bexar county.
 
-   binary
+   Binary
 
       Information that consists solely of ones and zeroes, which is
       the language of computers.
 
-   bit
+   Bit
 
       A bit is a single digit number that is in base of 2 (either a
       zero or one). Bandwidth usage is measured in bits per second.
 
-   bits per second (BPS)
+   Bits Per Second (BPS)
 
-      The universal measurement of how quickly data is transferred
-      from place to place.
+      The universal measurement of how quickly data is transferred from place to place.
 
-   block device
+   Block Device
 
       A device that moves data in the form of blocks. These device
       nodes interface the devices, such as hard disks, CD-ROM drives, flash
       drives, and other addressable regions of memory.
 
-   block migration
+   Block Migration
 
       A method of VM live migration used by KVM to evacuate instances
       from one host to another with very little downtime during a
-      user-initiated switchover. Does not require shared storage. Supported
-      by Compute.
+      user-initiated switchover. Does not require shared storage. Supported by Compute.
 
    Block Storage API
 
       An API on a separate endpoint for attaching,
-      detaching, and creating block storage for compute
-      VMs.
+      detaching, and creating block storage for compute VMs.
 
-   Block Storage service (cinder)
+   Block Storage Service (Cinder)
 
       The OpenStack service that implements services and libraries to provide
       on-demand, self-service access to Block Storage resources via abstraction
@@ -522,10 +500,9 @@ B
       and acts as a server. Manages the interface between system management
       software and platform hardware.
 
-   bootable disk image
+   Bootable Disk Image
 
-      A type of VM image that exists as a single, bootable
-      file.
+      A type of VM image that exists as a single, bootable file.
 
    Bootstrap Protocol (BOOTP)
 
@@ -541,41 +518,37 @@ B
       backbone of the Internet, this protocol connects disparate
       networks to form a larger network.
 
-   browser
+   Browser
 
-      Any client software that enables a computer or device to access
-      the Internet.
+      Any client software that enables a computer or device to access the Internet.
 
-   builder file
+   Builder File
 
       Contains configuration information that Object Storage uses to
-      reconfigure a ring or to re-create it from scratch after a serious
-      failure.
+      reconfigure a ring or to re-create it from scratch after a serious failure.
 
-   bursting
+   Bursting
 
       The practice of utilizing a secondary environment to
       elastically build instances on-demand when the primary
       environment is resource constrained.
 
-   button class
+   Button Class
 
       A group of related button types within horizon. Buttons to
       start, stop, and suspend VMs are in one class. Buttons to associate
-      and disassociate floating IP addresses are in another class, and so
-      on.
+      and disassociate floating IP addresses are in another class, and so on.
 
-   byte
+   Byte
 
-      Set of bits that make up a single character; there are usually 8
-      bits to a byte.
+      Set of bits that make up a single character; there are usually 8 bits to a byte.
 
 C
 ~
 
 .. glossary::
 
-   cache pruner
+   Cache Pruner
 
       A program that keeps the Image service VM image cache at or
       below its configured maximum size.
@@ -588,27 +561,25 @@ C
       Cactus is a city in Texas, US and is the code name for
       the third release of OpenStack. When OpenStack releases went
       from three to six months long, the code name of the release
-      changed to match a geography nearest the previous
-      summit.
+      changed to match a geography nearest the previous summit.
 
    CALL
 
-      One of the RPC primitives used by the OpenStack message queue
-      software. Sends a message and waits for a response.
+      One of the RPC primitives used by the OpenStack message queue software.
+      Sends a message and waits for a response.
 
-   capability
+   Capability
 
       Defines resources for a cell, including CPU, storage, and
-      networking. Can apply to the specific services within a cell or a
-      whole cell.
+      networking. Can apply to the specific services within a cell or a whole cell.
 
-   capacity cache
+   Capacity Cache
 
       A Compute back-end database table that contains the current
       workload, amount of free RAM, and number of VMs running on each host.
       Used to determine on which host a VM starts.
 
-   capacity updater
+   Capacity Updater
 
       A notification driver that monitors VM instances and updates the
       capacity cache as needed.
@@ -618,40 +589,36 @@ C
       One of the RPC primitives used by the OpenStack message queue
       software. Sends a message and does not wait for a response.
 
-   catalog
+   Catalog
 
       A list of API endpoints that are available to a user after
       authentication with the Identity service.
 
-   catalog service
+   Catalog Service
 
       An Identity service that lists API endpoints that are available
       to a user after authentication with the Identity service.
 
-   ceilometer
+   Ceilometer
 
       Part of the OpenStack :term:`Telemetry service <Telemetry
-      service (telemetry)>`; gathers and stores metrics from other
-      OpenStack services.
+      service (telemetry)>`; gathers and stores metrics from other OpenStack services.
 
-   cell
+   Cell
 
       Provides logical partitioning of Compute resources in a child
       and parent relationship. Requests are passed from parent cells to
-      child cells if the parent cannot provide the requested
-      resource.
+      child cells if the parent cannot provide the requested resource.
 
-   cell forwarding
+   Cell Forwarding
 
       A Compute option that enables parent cells to pass resource
-      requests to child cells if the parent cannot provide the requested
-      resource.
+      requests to child cells if the parent cannot provide the requested resource.
 
-   cell manager
+   Cell Manager
 
       The Compute component that contains a list of the current
-      capabilities of each host within the cell and routes requests as
-      appropriate.
+      capabilities of each host within the cell and routes requests as appropriate.
 
    CentOS
 
@@ -667,7 +634,7 @@ C
 
       The POSIX-compliant file system provided by Ceph.
 
-   certificate authority (CA)
+   Certificate Authority (CA)
 
       In cryptography, an entity that issues digital certificates. The digital
       certificate certifies the ownership of a public key by the named
@@ -685,87 +652,80 @@ C
 
       An iSCSI authentication method supported by Compute.
 
-   chance scheduler
+   Chance Scheduler
 
       A scheduling method used by Compute that randomly chooses an
       available host from the pool.
 
-   changes since
+   Changes Since
 
       A Compute API parameter that allows downloading changes to the requested
       item since your last request, instead of downloading a new, fresh set
       of data and comparing it against the old data.
 
-   child cell
+   Child Cell
 
       If a requested resource such as CPU time, disk storage, or
       memory is not available in the parent cell, the request is forwarded
       to its associated child cells. If the child cell can fulfill the
-      request, it does. Otherwise, it attempts to pass the request to any of
-      its children.
+      request, it does. Otherwise, it attempts to pass the request to any of its children.
 
-   cinder
+   Cinder
 
-      Codename for :term:`Block Storage service
-      <Block Storage service (cinder)>`.
+      Codename for :term:`Block Storage service <Block Storage service (cinder)>`.
 
    CirrOS
 
       A minimal Linux distribution designed for use as a test
       image on clouds such as OpenStack.
 
-   Cisco neutron plug-in
+   Cisco Neutron Plug-in
 
-      A Networking plug-in for Cisco devices and technologies,
-      including UCS and Nexus.
+      A Networking plug-in for Cisco devices and technologies, including UCS and Nexus.
 
-   cloud architect
+   Cloud Architect
 
-      A person who plans, designs, and oversees the creation of
-      clouds.
+      A person who plans, designs, and oversees the creation of clouds.
 
    Cloud Auditing Data Federation (CADF)
 
-      Cloud Auditing Data Federation (CADF) is a
-      specification for audit event data. CADF is
-      supported by OpenStack Identity.
+      Cloud Auditing Data Federation (CADF) is a specification for audit event data.
+      CADF is supported by OpenStack Identity.
 
-   cloud computing
+   Cloud Computing
 
       A model that enables access to a shared pool of configurable
       computing resources, such as networks, servers, storage, applications,
       and services, that can be rapidly provisioned and released with
       minimal management effort or service provider interaction.
 
-   cloud computing infrastructure
+   Cloud Computing Infrastructure
 
       The hardware and software components -- such as servers, storage,
       and network and virtualization software -- that are needed to support
       the computing requirements of a cloud computing model.
 
-   cloud computing platform software
+   Cloud Computing Platform Software
 
       The delivery of different services through the Internet. These resources
       include tools and applications like data storage, servers, databases,
       networking, and software. As long as an electronic device has access to
       the web, it has access to the data and the software programs to run it.
 
-
-   cloud computing service architecture
+   Cloud Computing Service Architecture
 
       Cloud service architecture defines the overall cloud computing services
       and solutions that are implemented in and across the boundaries of an
       enterprise business network. Considers the core business requirements
       and matches them with a possible cloud solution.
 
-   cloud controller
+   Cloud Controller
 
       Collection of Compute components that represent the global state
       of the cloud; talks to services, such as Identity authentication,
-      Object Storage, and node/storage workers through a
-      queue.
+      Object Storage, and node/storage workers through a queue.
 
-   cloud controller node
+   Cloud Controller Node
 
       A node that runs network, volume, API, scheduler, and image
       services. Each service may be broken out into separate nodes for
@@ -778,57 +738,35 @@ C
 
    Cloud Infrastructure Management Interface (CIMI)
 
-      An in-progress specification for cloud management. Currently
-      unsupported in OpenStack.
+      An in-progress specification for cloud management. Currently unsupported in OpenStack.
 
-   cloud technology
+   Cloud Technology
 
       Clouds are tools of virtual sources orchestrated by management
       and automation softwares. This includes, raw processing
       power, memory, network, storage of cloud based applications.
 
-   cloud-init
+   Cloud-init
 
       A package commonly installed in VM images that performs
       initialization of an instance after boot using information that it
-      retrieves from the metadata service, such as the SSH public key and
-      user data.
+      retrieves from the metadata service, such as the SSH public key and user data.
 
-   cloudadmin
+   Cloudadmin
 
-      One of the default roles in the Compute RBAC system. Grants
-      complete system access.
+      One of the default roles in the Compute RBAC system. Grants complete system access.
 
    Cloudbase-Init
 
-      A Windows project providing guest initialization features,
-      similar to cloud-init.
+      A Windows project providing guest initialization features, similar to cloud-init.
 
-   cloudpipe
+   Command Filter
 
-      A compute service that creates VPNs on a per-project
-      basis.
-
-   cloudpipe image
-
-      A pre-made VM image that serves as a cloudpipe server.
-      Essentially, OpenVPN running on Linux.
-
-   Clustering service (senlin)
-
-      The project that implements clustering services and libraries
-      for the management of groups of homogeneous objects exposed
-      by other OpenStack services.
-
-   command filter
-
-      Lists allowed commands within the Compute rootwrap
-      facility.
+      Lists allowed commands within the Compute rootwrap facility.
 
    Command-Line Interface (CLI)
 
-      A text-based client that helps you create scripts to interact
-      with OpenStack clouds.
+      A text-based client that helps you create scripts to interact with OpenStack clouds.
 
    Common Internet File System (CIFS)
 
@@ -841,172 +779,160 @@ C
 
       The project that produces a set of python libraries containing code
       shared by OpenStack projects. The APIs provided by these libraries
-      should be high quality, stable, consistent, documented and generally
-      applicable.
+      should be high quality, stable, consistent, documented and generally applicable.
 
-   community project
+   Community Project
 
       A project that is not officially endorsed by the OpenStack
       Technical Commitee. If the project is successful enough, it
       might be elevated to an incubated project and then to a core
       project, or it might be merged with the main code trunk.
 
-   compression
+   Compression
 
       Reducing the size of files by special encoding, the file can be
       decompressed again to its original content. OpenStack supports
       compression at the Linux file system level but does not support
-      compression for things such as Object Storage objects or Image service
-      VM images.
+      compression for things such as Object Storage objects or Image service VM images.
 
-   Compute API (nova API)
+   Compute API (Nova API)
 
       The nova-api daemon provides access to nova services. Can communicate with
       other APIs, such as the Amazon EC2 API.
 
-   compute controller
+   Compute Controller
 
-      The Compute component that chooses suitable hosts on which to
-      start VM instances.
+      The Compute component that chooses suitable hosts on which to start VM instances.
 
-   compute host
+   Compute Host
 
       Physical host dedicated to running compute nodes.
 
-   compute node
+   Compute Node
 
       A node that runs the nova-compute daemon that manages VM
       instances that provide a wide
       range of services, such as web applications and analytics.
 
-   Compute service (nova)
+   Compute Service (Nova)
 
       The OpenStack core project that implements services and associated
       libraries to provide massively-scalable, on-demand, self-service
-      access to compute resources, including bare metal, virtual machines,
-      and containers.
+      access to compute resources, including bare metal, virtual machines, and containers.
 
-   compute worker
+   Compute Worker
 
       The Compute component that runs on each compute node and manages
       the VM instance lifecycle, including run, reboot, terminate,
       attach/detach volumes, and so on. Provided by the nova-compute daemon.
 
-   concatenated object
+   Concatenated Object
 
-      A set of segment objects that Object Storage combines and sends
-      to the client.
+      A set of segment objects that Object Storage combines and sends to the client.
 
-   conductor
+   Conductor
 
       In Compute, conductor is the process that proxies database
       requests from the compute process. Using conductor improves security
-      because compute nodes do not need direct access to the
-      database.
+      because compute nodes do not need direct access to the database.
 
-   consistency window
+   Consistency Window
 
       The amount of time it takes for a new Object Storage object to
       become accessible to all clients.
 
-   console log
+   Console Log
 
       Contains the output from a Linux VM console in Compute.
 
-   container
+   Container
 
       Organizes and stores objects in Object Storage. Similar to the
       concept of a Linux directory but cannot be nested. Alternative term
       for an Image service container format.
 
-   container auditor
+   Container Auditor
 
       Checks for missing replicas or incorrect objects in specified
-      Object Storage containers through queries to the SQLite back-end
-      database.
+      Object Storage containers through queries to the SQLite back-end database.
 
-   container database
+   Container Database
 
       A SQLite database that stores Object Storage containers and
-      container metadata. The container server accesses this
-      database.
+      container metadata. The container server accesses this database.
 
-   container format
+   Container Format
 
       A wrapper used by the Image service that contains a VM image and
-      its associated metadata, such as machine state, OS disk size, and so
-      on.
+      its associated metadata, such as machine state, OS disk size, and so on.
 
-   Container Infrastructure Management service (magnum)
+   Container Infrastructure Management Service (Magnum)
 
       The project which provides a set of services for provisioning, scaling,
       and managing container orchestration engines.
 
-   container server
+   Container Server
 
       An Object Storage server that manages containers.
 
-   container service
+   Container Service
 
       The Object Storage component that provides container services,
       such as create, delete, list, and so on.
 
-   content delivery network (CDN)
+   Content Delivery Network (CDN)
 
       A content delivery network is a specialized network that is
       used to distribute content to clients, typically located
       close to the client for increased performance.
 
-   continuous delivery
+   Continuous Delivery
 
       A software engineering approach in which teams produce software
       in short cycles, ensuring that the software can be reliably released
       at any time and, when releasing the software, doing so manually.
 
-
-   continuous deployment
+   Continuous Deployment
 
       A software release process that uses automated testing to validate
       if changes to a codebase are correct and stable for immediate autonomous
       deployment to a production environment.
 
-   continuous integration
+   Continuous Integration
 
       The practice of merging all developers' working copies
       to a shared mainline several times a day.
 
-
-   controller node
+   Controller Node
 
       Alternative term for a cloud controller node.
 
-   core API
+   Core API
 
       Depending on context, the core API is either the OpenStack API
       or the main API of a specific core project, such as Compute,
       Networking, Image service, and so on.
 
-   core service
+   Core Service
 
       An official OpenStack service defined as core by
       Interop Working Group. Currently, consists of
       Block Storage service (cinder), Compute service (nova),
-      Identity service (keystone), Image service (glance),
-      Networking service (neutron), and Object Storage service (swift).
+      Identity service (keystone), Placement service (placement), Image service (glance),
+      Networking service (neutron) and Object Storage service (swift).
 
-   cost
+   Cost
 
       Under the Compute distributed scheduler, this is calculated by
       looking at the capabilities of each host relative to the flavor of the
       VM instance being requested.
 
-   credentials
+   Credentials
 
       Data that is only known to or accessible by a user and
       used to verify that the user is who he says he is.
-      Credentials are presented to the server during
-      authentication. Examples include a password, secret key,
-      digital certificate, and fingerprint.
+      Credentials are presented to the server during authentication.
+      Examples include a password, secret key, digital certificate, and fingerprint.
 
    CRL
 
@@ -1027,17 +953,17 @@ C
       An open source community project by SUSE that aims to provide
       all necessary services to quickly deploy and manage clouds.
 
-   current workload
+   Current Workload
 
       An element of the Compute capacity cache that is calculated
       based on the number of build, snapshot, migrate, and resize operations
       currently in progress on a given host.
 
-   customer
+   Customer
 
       Alternative term for project.
 
-   customization module
+   Customization Module
 
       A user-created Python module that is loaded by horizon to change
       the look and feel of the dashboard.
@@ -1047,18 +973,17 @@ D
 
 .. glossary::
 
-   daemon
+   Daemon
 
       A process that runs in the background and waits for requests.
-      May or may not listen on a TCP or UDP port. Do not confuse with a
-      worker.
+      May or may not listen on a TCP or UDP port. Do not confuse with a worker.
 
-   Dashboard (horizon)
+   Dashboard (Horizon)
 
       OpenStack project which provides an extensible, unified, web-based
       user interface for all OpenStack services.
 
-   data encryption
+   Data Encryption
 
       Both Image service and Compute support encrypted virtual machine
       (VM) images (but not instances). In-transit data encryption is
@@ -1066,39 +991,37 @@ D
       SSH. Object Storage does not support object encryption at the
       application level but may support storage that uses disk encryption.
 
-   Data loss prevention (DLP) software
+   Data Loss Prevention (DLP) Software
 
       Software programs used to protect sensitive information
       and prevent it from leaking outside a network boundary
       through the detection and denying of the data transportation.
 
-   Data Processing service (sahara)
+   Data Processing Service (Sahara)
 
       OpenStack project that provides a scalable
-      data-processing stack and associated management
-      interfaces.
+      data-processing stack and associated management interfaces.
 
-   data store
+   Data Store
 
       A database engine supported by the Database service.
 
-   database ID
+   Database ID
 
-      A unique ID given to each replica of an Object Storage
-      database.
+      A unique ID given to each replica of an Object Storage database.
 
-   database replicator
+   Database Replicator
 
       An Object Storage component that copies changes in the account,
       container, and object databases to other nodes.
 
-   Database service (trove)
+   Database Service (Trove)
 
       An integrated project that provides scalable and reliable
       Cloud Database-as-a-Service functionality for both
       relational and non-relational database engines.
 
-   deallocate
+   Deallocate
 
       The process of removing the association between a floating IP
       address and a fixed IP address. Once this association is removed, the
@@ -1108,50 +1031,48 @@ D
 
       A Linux distribution that is compatible with OpenStack.
 
-   deduplication
+   Deduplication
 
       The process of finding duplicate data at the disk block, file,
-      and/or object level to minimize storage use—currently unsupported
-      within OpenStack.
+      and/or object level to minimize storage use—currently unsupported within OpenStack.
 
-   default panel
+   Default Panel
 
-      The default panel that is displayed when a user accesses the
-      dashboard.
+      The default panel that is displayed when a user accesses the dashboard.
 
-   default project
+   Default Project
 
       New users are assigned to this project if no project is specified
       when a user is created.
 
-   default token
+   Default Token
 
       An Identity service token that is not associated with a specific
       project and is exchanged for a scoped token.
 
-   delayed delete
+   Delayed Delete
 
       An option within Image service so that an image is deleted after
       a predefined number of seconds instead of immediately.
 
-   delivery mode
+   Delivery Mode
 
       Setting for the Compute RabbitMQ message delivery mode; can be
       set to either transient or persistent.
 
-   denial of service (DoS)
+   Denial of Service (DoS)
 
       Denial of service (DoS) is a short form for
       denial-of-service attack. This is a malicious attempt to
       prevent legitimate users from using a service.
 
-   deprecated auth
+   Deprecated Auth
 
       An option within Compute that enables administrators to create
       and manage users through the ``nova-manage`` command as
       opposed to using the Identity service.
 
-   designate
+   Designate
 
       Code name for the :term:`DNS service <DNS service (designate)>`.
 
@@ -1162,17 +1083,16 @@ D
       any location. This may provide general use, development, or
       even homogeneous testing environments.
 
-   developer
+   Developer
 
       One of the default roles in the Compute RBAC system and the
       default role assigned to a new user.
 
-   device ID
+   Device ID
 
-      Maps Object Storage partitions to physical storage
-      devices.
+      Maps Object Storage partitions to physical storage devices.
 
-   device weight
+   Device Weight
 
       Distributes partitions proportionately across Object Storage
       devices based on the storage capacity of each device.
@@ -1182,10 +1102,9 @@ D
       Community project that uses shell scripts to quickly build
       complete OpenStack development environments.
 
-   DHCP agent
+   DHCP Agent
 
-      OpenStack Networking agent that provides DHCP services
-      for virtual networks.
+      OpenStack Networking agent that provides DHCP services for virtual networks.
 
    Diablo
 
@@ -1194,32 +1113,28 @@ D
       Compute (nova 2011.3), Object Storage (swift 1.4.3), and the Image
       service (glance).
       Diablo is the code name for the fourth release of
-      OpenStack. The design summit took place in
-      the Bay Area near Santa Clara,
+      OpenStack. The design summit took place in the Bay Area near Santa Clara,
       California, US and Diablo is a nearby city.
 
-   direct consumer
+   Direct Consumer
 
       An element of the Compute RabbitMQ that comes to life when a RPC
       call is executed. It connects to a direct exchange through a unique
       exclusive queue, sends the message, and terminates.
 
-   direct exchange
+   Direct Exchange
 
       A routing table that is created within the Compute RabbitMQ
-      during RPC calls; one is created for each RPC call that is
-      invoked.
+      during RPC calls; one is created for each RPC call that is invoked.
 
-   direct publisher
+   Direct Publisher
 
-      Element of RabbitMQ that provides a response to an incoming MQ
-      message.
+      Element of RabbitMQ that provides a response to an incoming MQ message.
 
-   disassociate
+   Disassociate
 
       The process of removing the association between a floating IP
-      address and fixed IP and thus returning the floating IP address to the
-      address pool.
+      address and fixed IP and thus returning the floating IP address to the address pool.
 
    Discretionary Access Control (DAC)
 
@@ -1228,56 +1143,52 @@ D
       The traditional UNIX system of users, groups, and read-write-execute
       permissions is an example of DAC.
 
-   disk encryption
+   Disk Encryption
 
       The ability to encrypt data at the file system, disk partition,
       or whole-disk level. Supported within Compute VMs.
 
-   disk format
+   Disk Format
 
       The underlying format that a disk image for a VM is stored as
-      within the Image service back-end store. For example, AMI, ISO, QCOW2,
-      VMDK, and so on.
+      within the Image service back-end store. For example, AMI, ISO, QCOW2, VMDK, and so on.
 
-   dispersion
+   Dispersion
 
       In Object Storage, tools to test and ensure dispersion of
       objects and containers to ensure fault tolerance.
 
-   distributed virtual router (DVR)
+   Distributed Virtual Router (DVR)
 
       Mechanism for highly available multi-host routing when using
-      OpenStack Networking (neutron).
+      OpenStack Networking (Neutron).
 
    Django
 
-      A web framework used extensively in horizon.
+      A web framework used extensively in Horizon.
 
-   DNS record
+   DNS Record
 
       A record that specifies information about a particular domain
       and belongs to the domain.
 
-   DNS service (designate)
+   DNS Service (Designate)
 
       OpenStack project that provides scalable, on demand, self
-      service access to authoritative DNS services, in a
-      technology-agnostic manner.
+      service access to authoritative DNS services, in a technology-agnostic manner.
 
-   dnsmasq
+   Dnsmasq
 
-      Daemon that provides DNS, DHCP, BOOTP, and TFTP services for
-      virtual networks.
+      Daemon that provides DNS, DHCP, BOOTP, and TFTP services for virtual networks.
 
-   domain
+   Domain
 
       An Identity API v3 entity. Represents a collection of
       projects, groups and users that defines administrative boundaries for
       managing OpenStack Identity entities.
       On the Internet, separates a website from other sites. Often,
       the domain name has two or more parts that are separated by dots.
-      For example, yahoo.com, usa.gov, harvard.edu, or
-      mail.yahoo.com.
+      For example, yahoo.com, usa.gov, harvard.edu, or mail.yahoo.com.
       Also, a domain is an entity or container of all DNS-related
       information containing one or more records.
 
@@ -1298,20 +1209,17 @@ D
       with floating IP addresses, nodes, or cells so that hostnames are
       consistent across reboots.
 
-   download
+   Download
 
-      The transfer of data, usually in the form of files, from one
-      computer to another.
+      The transfer of data, usually in the form of files, from one computer to another.
 
-   durable exchange
+   Durable Exchange
 
-      The Compute RabbitMQ message exchange that remains active when
-      the server restarts.
+      The Compute RabbitMQ message exchange that remains active when the server restarts.
 
-   durable queue
+   Durable Queue
 
-      A Compute RabbitMQ message queue that remains active when the
-      server restarts.
+      A Compute RabbitMQ message queue that remains active when the server restarts.
 
    Dynamic Host Configuration Protocol (DHCP)
 
@@ -1319,33 +1227,31 @@ D
       network so that they can communicate on that network by using the
       Internet Protocol (IP). The protocol is implemented in a client-server
       model where DHCP clients request configuration data, such as an IP
-      address, a default route, and one or more DNS server addresses from a
-      DHCP server.
+      address, a default route, and one or more DNS server addresses from a DHCP server.
       A method to automatically configure networking for a host at
       boot time. Provided by both Networking and Compute.
 
    Dynamic HyperText Markup Language (DHTML)
 
       Pages that use HTML, JavaScript, and Cascading Style Sheets to
-      enable users to interact with a web page or show simple
-      animation.
+      enable users to interact with a web page or show simple animation.
 
 E
 ~
 
 .. glossary::
 
-   east-west traffic
+   East-West Traffic
 
       Network traffic between servers in the same cloud or data center.
       See also :term:`north-south traffic <north-south traffic>`.
 
-   EBS boot volume
+   EBS Boot Volume
 
       An Amazon EBS storage volume that contains a bootable VM image,
       currently unsupported in OpenStack.
 
-   ebtables
+   Ebtables
 
       Filtering tool for a Linux bridging firewall, enabling
       filtering of network traffic passing through a Linux bridge.
@@ -1354,82 +1260,73 @@ E
 
    EC2
 
-      The Amazon commercial compute product, similar to
-      Compute.
+      The Amazon commercial compute product, similar to Compute.
 
-   EC2 access key
+   EC2 Access Key
 
-      Used along with an EC2 secret key to access the Compute EC2
-      API.
+      Used along with an EC2 secret key to access the Compute EC2 API.
 
    EC2 API
 
-      OpenStack supports accessing the Amazon EC2 API through
-      Compute.
+      OpenStack supports accessing the Amazon EC2 API through Compute.
 
    EC2 Compatibility API
 
-      A Compute component that enables OpenStack to communicate with
-      Amazon EC2.
+      A Compute component that enables OpenStack to communicate with Amazon EC2.
 
-   EC2 secret key
+   EC2 Secret Key
 
       Used along with an EC2 access key when communicating with the
       Compute EC2 API; used to digitally sign each request.
 
-   edge computing
+   Edge Computing
 
-      Running fewer processes in the cloud and moving those processes
-      to local places.
+      Running fewer processes in the cloud and moving those processes to local places.
 
    Elastic Block Storage (EBS)
 
       The Amazon commercial block storage product.
 
-   encapsulation
+   Encapsulation
 
       The practice of placing one packet type within another for
-      the purposes of abstracting or securing data. Examples
-      include GRE, MPLS, or IPsec.
+      the purposes of abstracting or securing data. Examples include GRE, MPLS, or IPsec.
 
-   encryption
+   Encryption
 
       OpenStack supports encryption technologies such as HTTPS, SSH,
       SSL, TLS, digital certificates, and data encryption.
 
-   endpoint
+   Endpoint
 
       See :term:`API endpoint <API endpoint>`.
 
-   endpoint registry
+   Endpoint Registry
 
       Alternative term for an Identity service catalog.
 
-   endpoint template
+   Endpoint Template
 
       A list of URL and port number endpoints that indicate where a
-      service, such as Object Storage, Compute, Identity, and so on, can be
-      accessed.
+      service, such as Object Storage, Compute, Identity, and so on, can be accessed.
 
-   enterprise cloud computing
+   Enterprise Cloud Computing
 
        A computing environment residing behind a firewall that delivers
        software, infrastructure and platform services to an enterprise.
 
-   entity
+   Entity
 
       Any piece of hardware or software that wants to connect to the
       network services provided by Networking, the network connectivity
-      service. An entity can make use of Networking by implementing a
-      VIF.
+      service. An entity can make use of Networking by implementing a VIF.
 
-   ephemeral image
+   Ephemeral Image
 
       A VM image that does not save changes made to its volumes and
-      reverts them to their original state after the instance is
-      terminated.
+      reverts them to their original state after the instance is terminated.
 
-   ephemeral volume
+   Ephemeral Volume
 
       Volume that does not save the changes made to it and reverts to
       its original state when the current user relinquishes control.
@@ -1438,9 +1335,8 @@ E
 
       A grouped release of projects related to OpenStack that came out
       in April 2012, the fifth release of OpenStack. It included Compute
-      (nova 2012.1), Object Storage (swift 1.4.8), Image (glance), Identity
-      (keystone), and Dashboard (horizon).
-      Essex is the code name for the fifth release of
+      (nova 2012.1), Object Storage (swift 1.4.8), Image (Glance), Identity
+      (Keystone) and Dashboard (Horizon). Essex is the code name for the fifth release of
       OpenStack. The design summit took place in
       Boston, Massachusetts, US and Essex is a nearby city.
 
@@ -1450,10 +1346,9 @@ E
 
    ETag
 
-      MD5 hash of an object within Object Storage, used to ensure data
-      integrity.
+      MD5 hash of an object within Object Storage, used to ensure data integrity.
 
-   euca2ools
+   Euca2ools
 
       A collection of command-line tools for administering VMs; most
       are compatible with OpenStack.
@@ -1470,44 +1365,43 @@ E
 
       Used along with an EKI to create an EMI.
 
-   evacuate
+   Evacuate
 
       The process of migrating one or all virtual machine (VM)
       instances from one host to another, compatible with both shared
       storage live migration and block migration.
 
-   exchange
+   Exchange
 
       Alternative term for a RabbitMQ message exchange.
 
-   exchange type
+   Exchange Type
 
       A routing algorithm in the Compute RabbitMQ.
 
-   exclusive queue
+   Exclusive Queue
 
       Connected to by a direct consumer in RabbitMQ—Compute, the
       message can be consumed only by the current connection.
 
-   extended attributes (xattr)
+   Extended Attributes (xattr)
 
       File system option that enables storage of additional
       information beyond owner, group, permissions, modification time, and
       so on. The underlying Object Storage file system must support extended
       attributes.
 
-   extension
+   Extension
 
       Alternative term for an API extension or plug-in. In the context
       of Identity service, this is a call that is specific to the
       implementation, such as adding support for OpenID.
 
-   external network
+   External Network
 
-      A network segment typically used for instance Internet
-      access.
+      A network segment typically used for instance Internet access.
 
-   extra specs
+   Extra Specs
 
       Specifies additional requirements when Compute determines where
       to start a new instance. Examples include a minimum amount of network
@@ -1523,16 +1417,15 @@ F
       An easy method to create a local LDAP directory for testing
       Identity and Compute. Requires Redis.
 
-   fan-out exchange
+   Fan-Out Exchange
 
       Within RabbitMQ and Compute, it is the messaging interface that
       is used by the scheduler service to receive capability messages from
       the compute, volume, and network nodes.
 
-   federated identity
+   Federated Identity
 
-      A method to establish trusts between identity providers and the
-      OpenStack cloud.
+      A method to establish trusts between identity providers and the OpenStack cloud.
 
    Fedora
 
@@ -1547,33 +1440,30 @@ F
 
       The fibre channel protocol tunneled within Ethernet.
 
-   fill-first scheduler
+   Fill-First Scheduler
 
       The Compute scheduling method that attempts to fill a host with
       VMs rather than starting new VMs on a variety of hosts.
 
-   filter
+   Filter
 
       The step in the Compute scheduling process when hosts that
       cannot run VMs are eliminated and not chosen.
 
-   firewall
+   Firewall
 
       Used to restrict communications between hosts and/or nodes,
-      implemented in Compute using iptables, arptables, ip6tables, and
-      ebtables.
+      implemented in Compute using firewalld, iptables, arptables, ip6tables, and ebtables.
 
    FireWall-as-a-Service (FWaaS)
 
-      A Networking extension that provides perimeter firewall
-      functionality.
+      A Networking extension that provides perimeter firewall functionality.
 
-   fixed IP address
+   Fixed IP address
 
       An IP address that is associated with the same instance each
       time that instance boots, is generally not accessible to end users or
-      the public Internet, and is used for management of the
-      instance.
+      the public Internet, and is used for management of the instance.
 
    Flat Manager
 
@@ -1581,35 +1471,32 @@ F
       nodes and assumes DHCP, DNS, and routing configuration and services
       are provided by something else.
 
-   flat mode injection
+   Flat Mode Injection
 
       A Compute networking method where the OS network configuration
-      information is injected into the VM image before the instance
-      starts.
+      information is injected into the VM image before the instance starts.
 
-   flat network
+   Flat Network
 
       Virtual network type that uses neither VLANs nor tunnels to
       segregate project traffic. Each flat network typically requires
       a separate underlying physical interface defined by bridge
-      mappings. However, a flat network can contain multiple
-      subnets.
+      mappings. However, a flat network can contain multiple subnets.
 
    FlatDHCP Manager
 
       The Compute component that provides dnsmasq (DHCP, DNS, BOOTP,
       TFTP) and radvd (routing) services.
 
-   flavor
+   Flavor
 
       Alternative term for a VM instance type.
 
-   flavor ID
+   Flavor ID
 
-      UUID for each Compute or Image service VM flavor or instance
-      type.
+      UUID for each Compute or Image service VM flavor or instance type.
 
-   floating IP address
+   Floating IP address
 
       An IP address that a project can associate with a VM so that the
       instance has the same public IP address each time that it boots. You
@@ -1622,23 +1509,21 @@ F
       A grouped release of projects related to OpenStack that came out
       in the fall of 2012, the sixth release of OpenStack. It includes
       Compute (nova), Object Storage (swift), Identity (keystone),
-      Networking (neutron), Image service (glance), and Volumes or Block
-      Storage (cinder).
+      Networking (neutron), Image service (glance), and Volumes or Block Storage (cinder).
       Folsom is the code name for the sixth release of
       OpenStack. The design summit took place in
       San Francisco, California, US and Folsom is a nearby city.
 
    FormPost
 
-      Object Storage middleware that uploads (posts) an image through
-      a form on a web page.
+      Object Storage middleware that uploads (posts) an image through a form on a web page.
 
-   freezer
+   Freezer
 
       Code name for the :term:`Backup and Restore service
       <Backup and Restore service (freezer)>`.
 
-   front end
+   Front-end
 
       The point where a user interacts with a service; can be an API
       endpoint, the dashboard, or a command-line tool.
@@ -1648,88 +1533,88 @@ G
 
 .. glossary::
 
-   gateway
+   Gateway
 
       An IP address, typically assigned to a router, that
       passes network traffic between different networks.
 
-   generic receive offload (GRO)
+   Generic Receive Offload (GRO)
 
       Feature of certain network interface drivers that
       combines many smaller received packets into a large packet
       before delivery to the kernel IP stack.
 
-   generic routing encapsulation (GRE)
+   Generic Routing Encapsulation (GRE)
 
       Protocol that encapsulates a wide variety of network
       layer protocols inside virtual point-to-point links.
 
-   glance
+   Geneve
+
+      A flexible network virtualization protocol that adapts to the changing
+      needs and capabilities of devices in virtualized networks. It provides
+      a tunneling framework without being prescriptive, supporting evolving network
+      requirements. Geneve is predominantly used for OVN tenant networks.
+
+   Glance
 
       Codename for the :term:`Image service<Image service (glance)>`.
 
-   glance API server
+   Glance API Server
 
       Alternative name for the :term:`Image API`.
 
-   glance registry
+   Glance Registry
 
       Alternative term for the Image service :term:`image registry`.
 
-   global endpoint template
+   Global Endpoint Template
 
       The Identity service endpoint template that contains services
       available to all projects.
 
    GlusterFS
 
-      A file system designed to aggregate NAS hosts, compatible with
-      OpenStack.
+      A file system designed to aggregate NAS hosts, compatible with OpenStack.
 
-   gnocchi
+   Gnocchi
 
       Part of the OpenStack :term:`Telemetry service <Telemetry
-      service (telemetry)>`; provides an indexer and time-series
-      database.
+      service (telemetry)>`; provides an indexer and time-series database.
 
-   golden image
+   Golden Image
 
       A method of operating system installation where a finalized disk
-      image is created and then used by all nodes without
-      modification.
+      image is created and then used by all nodes without modification.
 
    Graphic Interchange Format (GIF)
 
-      A type of image file that is commonly used for animated images
-      on web pages.
+      A type of image file that is commonly used for animated images on web pages.
 
    Graphics Processing Unit (GPU)
 
-      Choosing a host based on the existence of a GPU is currently
-      unsupported in OpenStack.
+      Choosing a host based on the existence of a GPU is currently unsupported in OpenStack.
 
    Green Threads
 
       The cooperative threading model used by Python; reduces race
-      conditions and only context switches when specific library calls are
-      made. Each OpenStack service is its own thread.
+      conditions and only context switches when specific library calls are made.
+      Each OpenStack service is its own thread.
 
    Grizzly
 
       The code name for the seventh release of
       OpenStack. The design summit took place in
-      San Diego, California, US and Grizzly is an element of the state flag of
-      California.
+      San Diego, California, US and Grizzly is an element of the state flag of California.
 
    Group
 
       An Identity v3 API entity. Represents a collection of users that is
       owned by a specific domain.
 
-   guest OS
+   Guest OS
 
-      An operating system instance running under the control of a
-      hypervisor.
+      An operating system instance running under the control of a hypervisor.
 
 H
 ~
@@ -1746,7 +1631,7 @@ H
       A distributed, highly fault-tolerant file system designed to run
       on low-cost commodity hardware.
 
-   handover
+   Handover
 
       An object state in Object Storage where a new replica of the
       object is automatically created due to a drive failure.
@@ -1756,11 +1641,10 @@ H
       Provides a load balancer for TCP and HTTP-based applications that
       spreads requests across multiple servers.
 
-   hard reboot
+   Hard Reboot
 
       A type of reboot where a physical or virtual power button is
-      pressed as opposed to a graceful, proper shutdown of the operating
-      system.
+      pressed as opposed to a graceful, proper shutdown of the operating system.
 
    Havana
 
@@ -1768,24 +1652,23 @@ H
       design summit took place in Portland, Oregon, US and Havana is
       an unincorporated community in Oregon.
 
-   health monitor
+   Health Monitor
 
       Determines whether back-end members of a VIP pool can
       process a request. A pool can have several health monitors
       associated with it. When a pool has several monitors
       associated with it, all monitors check each member of the
-      pool. All monitors must declare a member to be healthy for
-      it to stay active.
+      pool. All monitors must declare a member to be healthy for it to stay active.
 
-   heat
-      Codename for the :term:`Orchestration service
-      <Orchestration service (heat)>`.
+   Heat
+
+      Codename for the :term:`Orchestration service <Orchestration service (heat)>`.
 
    Heat Orchestration Template (HOT)
 
       Heat input in the format native to OpenStack.
 
-   high availability (HA)
+   High Availability (HA)
 
       A high availability system design approach and associated
       service implementation ensures that a prearranged level of
@@ -1793,48 +1676,41 @@ H
       measurement period. High availability systems seek to
       minimize system downtime and data loss.
 
-   horizon
+   Horizon
 
       Codename for the :term:`Dashboard <Dashboard (horizon)>`.
 
-   horizon plug-in
+   Horizon Plug-in
 
       A plug-in for the OpenStack Dashboard (horizon).
 
-   host
+   Host
 
       A physical computer, not a VM instance (node).
 
-   host aggregate
+   Host Aggregate
 
       A method to further subdivide availability zones into hypervisor
       pools, a collection of common hosts.
 
    Host Bus Adapter (HBA)
 
-      Device plugged into a PCI slot, such as a fibre channel or
-      network card.
+      Device plugged into a PCI slot, such as a fibre channel or network card.
 
-   hybrid cloud
+   Hybrid Cloud
 
       A hybrid cloud is a composition of two or more clouds
       (private, community or public) that remain distinct entities
       but are bound together, offering the benefits of multiple
       deployment models.  Hybrid cloud can also mean the ability
-      to connect colocation, managed and/or dedicated services
-      with cloud resources.
+      to connect colocation, managed and/or dedicated services with cloud resources.
 
-   hybrid cloud computing
+   Hybrid Cloud Computing
 
       A mix of on-premises, private cloud and third-party,
-      public cloud services with orchestration between the two
-      platforms.
+      public cloud services with orchestration between the two platforms.
 
-   Hyper-V
-
-      One of the hypervisors supported by OpenStack.
-
-   hyperlink
+   Hyperlink
 
       Any kind of text that contains a link to some other site,
       commonly found in documents where clicking on a word or words opens up
@@ -1859,15 +1735,13 @@ H
       Most OpenStack API endpoints and many inter-component communications
       support HTTPS communication.
 
-   hypervisor
+   Hypervisor
 
-      Software that arbitrates and controls VM access to the actual
-      underlying hardware.
+      Software that arbitrates and controls VM access to the actual underlying hardware.
 
-   hypervisor pool
+   Hypervisor Pool
 
-      A collection of hypervisors grouped together through host
-      aggregates.
+      A collection of hypervisors grouped together through host aggregates.
 
 I
 ~
@@ -1877,10 +1751,9 @@ I
    Icehouse
 
       The code name for the ninth release of OpenStack. The
-      design summit took place in Hong Kong and Ice House is a
-      street in that city.
+      design summit took place in Hong Kong and Ice House is a street in that city.
 
-   ID number
+   ID Number
 
       Unique numeric ID associated with each user in Identity,
       conceptually similar to a Linux or LDAP UID.
@@ -1889,18 +1762,17 @@ I
 
       Alternative term for the Identity service API.
 
-   Identity back end
+   Identity Back-end
 
       The source used by Identity service to retrieve user
       information; an OpenLDAP server, for example.
 
-   identity provider
+   Identity Provider
 
       A directory service, which allows users to login with a user
-      name and password. It is a typical source of authentication
-      tokens.
+      name and password. It is a typical source of authentication tokens.
 
-   Identity service (keystone)
+   Identity Service (Keystone)
 
       The project that facilitates API client authentication, service
       discovery, distributed multi-project authorization, and auditing.
@@ -1908,10 +1780,9 @@ I
       services they can access. It also registers endpoints for OpenStack
       services and acts as a common authentication system.
 
-   Identity service API
+   Identity Service API
 
-      The API used to access the OpenStack Identity service provided
-      through keystone.
+      The API used to access the OpenStack Identity service provided through Keystone.
 
    IETF
 
@@ -1919,7 +1790,7 @@ I
      organization that develops Internet standards, particularly the
      standards pertaining to TCP/IP.
 
-   image
+   Image
 
       A collection of files for a specific operating system (OS) that
       you use to create or rebuild a server. OpenStack provides pre-built
@@ -1929,67 +1800,61 @@ I
 
    Image API
 
-      The Image service API endpoint for management of VM
-      images.
+      The Image service API endpoint for management of VM images.
       Processes client requests for VMs, updates Image service
       metadata on the registry server, and communicates with the store
       adapter to upload VM images from the back-end store.
 
-   image cache
+   Image Cache
 
       Used by Image service to obtain images on the local host rather
-      than re-downloading them from the image server each time one is
-      requested.
+      than re-downloading them from the image server each time one is requested.
 
-   image ID
+   Image ID
 
       Combination of a URI and UUID used to access Image service VM
       images through the image API.
 
-   image membership
+   Image Membership
 
-      A list of projects that can access a given VM image within Image
-      service.
+      A list of projects that can access a given VM image within Image service.
 
-   image owner
+   Image Owner
 
-      The project who owns an Image service virtual machine
-      image.
+      The project who owns an Image service virtual machine image.
 
-   image registry
+   Image Registry
 
-      A list of VM images that are available through Image
-      service.
+      A list of VM images that are available through Image service.
 
-   Image service (glance)
+   Image Service (Glance)
 
       The OpenStack service that provides services and associated libraries
       to store, browse, share, distribute and manage bootable disk images,
       other data closely associated with initializing compute resources,
       and metadata definitions.
 
-   image status
+   Image Status
 
       The current status of a VM image in Image service, not to be
       confused with the status of a running instance.
 
-   image store
+   Image Store
 
       The back-end store used by Image service to store VM images,
       options include Object Storage, locally mounted file system,
       RADOS block devices, VMware datastore, or HTTP.
 
-   image UUID
+   Image UUID
 
-      UUID used by Image service to uniquely identify each VM
-      image.
+      UUID used by Image service to uniquely identify each VM image.
 
-   incubated project
+   Incubated Project
 
       A community project may be elevated to this status and is then
       promoted to a core project.
 
-   Infrastructure Optimization service (watcher)
+   Infrastructure Optimization Service (Watcher)
 
       OpenStack project that aims to provide a flexible and scalable resource
       optimization service for multi-project OpenStack-based clouds.
@@ -2003,18 +1868,16 @@ I
       it. The client typically pays on a per-use basis.
       IaaS is a model for providing cloud services.
 
-   ingress filtering
+   Ingress Filtering
 
-      The process of filtering incoming network traffic. Supported by
-      Compute.
+      The process of filtering incoming network traffic. Supported by Compute.
 
-   INI format
+   INI Format
 
       The OpenStack configuration files use an INI format to
-      describe options and their values. It consists of sections
-      and key value pairs.
+      describe options and their values. It consists of sections and key value pairs.
 
-   injection
+   Injection
 
       The process of putting a file into a virtual machine image
       before the instance is started.
@@ -2022,38 +1885,37 @@ I
    Input/Output Operations Per Second (IOPS)
 
       IOPS are a common performance measurement used to benchmark computer
-      storage devices like hard disk drives, solid state drives, and
-      storage area networks.
+      storage devices like hard disk drives, solid state drives, and storage area networks.
 
-   instance
+   Instance
 
       A running VM, or a VM in a known state such as suspended, that
       can be used like a hardware server.
 
-   instance ID
+   Instance ID
 
       Alternative term for instance UUID.
 
-   instance state
+   Instance State
 
       The current state of a guest VM image.
 
-   instance tunnels network
+   Instance Tunnels Network
 
       A network segment used for instance traffic tunnels
       between compute nodes and the network node.
 
-   instance type
+   Instance Type
 
       Describes the parameters of the various virtual machine images
       that are available to users; includes parameters such as CPU, storage,
       and memory. Alternative term for flavor.
 
-   instance type ID
+   Instance Type ID
 
       Alternative term for a flavor ID.
 
-   instance UUID
+   Instance UUID
 
       Unique ID assigned to each guest VM instance.
 
@@ -2066,36 +1928,31 @@ I
       turned on or not; connecting to the hardware rather than an operating
       system or login shell.
 
-   interface
+   Interface
 
-      A physical or virtual device that provides connectivity
-      to another device or medium.
+      A physical or virtual device that provides connectivity to another device or medium.
 
-   interface ID
+   Interface ID
 
-      Unique ID for a Networking VIF or vNIC in the form of a
-      UUID.
+      Unique ID for a Networking VIF or vNIC in the form of a UUID.
 
    Internet Control Message Protocol (ICMP)
 
       A network protocol used by network devices for control messages.
-      For example, :command:`ping` uses ICMP to test
-      connectivity.
+      For example, :command:`ping` uses ICMP to test connectivity.
 
-   Internet protocol (IP)
+   Internet Protocol (IP)
 
       Principal communications protocol in the internet protocol
       suite for relaying datagrams across network boundaries.
 
    Internet Service Provider (ISP)
 
-      Any business that provides Internet access to individuals or
-      businesses.
+      Any business that provides Internet access to individuals or businesses.
 
    Internet Small Computer System Interface (iSCSI)
 
-      Storage protocol that encapsulates SCSI frames for transport
-      over IP networks.
+      Storage protocol that encapsulates SCSI frames for transport over IP networks.
       Supported by Compute, Object Storage, and Image service.
 
    IO
@@ -2105,14 +1962,12 @@ I
    IP address
 
       Number that is unique to every computer system on the Internet.
-      Two versions of the Internet Protocol (IP) are in use for addresses:
-      IPv4 and IPv6.
+      Two versions of the Internet Protocol (IP) are in use for addresses: IPv4 and IPv6.
 
    IP Address Management (IPAM)
 
       The process of automating IP address allocation, deallocation,
-      and management. Currently provided by Compute, melange, and
-      Networking.
+      and management. Currently provided by Compute, melange, and Networking.
 
    ip6tables
 
@@ -2121,7 +1976,7 @@ I
       ip6tables is used along with arptables, ebtables, and iptables to
       create firewalls for both nodes and VMs.
 
-   ipset
+   IPSET
 
       Extension to iptables that allows creation of firewall rules
       that match entire "sets" of IP addresses simultaneously. These
@@ -2138,10 +1993,9 @@ I
       ip6tables to IPv6, arptables to ARP, and ebtables to Ethernet frames.
       Requires root privilege to manipulate.
 
-   ironic
+   Ironic
 
-      Codename for the :term:`Bare Metal service <Bare Metal service
-      (ironic)>`.
+      Codename for the :term:`Bare Metal service <Bare Metal service (ironic)>`.
 
    iSCSI Qualified Name (IQN)
 
@@ -2155,13 +2009,7 @@ I
 
    ISO9660
 
-      One of the VM image disk formats supported by Image
-      service.
-
-   itsec
-
-      A default role in the Compute RBAC system that can quarantine an
-      instance in any project.
+      One of the VM image disk formats supported by Image service.
 
 J
 ~
@@ -2181,7 +2029,7 @@ J
 
       One of the supported response formats in OpenStack.
 
-   jumbo frame
+   Jumbo Frame
 
       Feature in modern Ethernet networks that supports frames up to
       approximately 9000 bytes.
@@ -2204,7 +2052,7 @@ K
       network, and allows nodes to prove their identity to one another in a
       secure manner.
 
-   kernel-based VM (KVM)
+   Kernel-Based VM (KVM)
 
       An OpenStack-supported hypervisor. KVM is a full
       virtualization solution for Linux on x86 hardware containing
@@ -2213,13 +2061,13 @@ K
       module, that provides the core virtualization infrastructure
       and a processor specific module.
 
-   Key Manager service (barbican)
+   Key Manager Service (Barbican)
 
       The project that produces a secret storage and
       generation system capable of providing key management for
       services wishing to enable encryption features.
 
-   keystone
+   Keystone
 
       Codename of the :term:`Identity service <Identity service (keystone)>`.
 
@@ -2242,7 +2090,7 @@ L
 
 .. glossary::
 
-   large object
+   Large Object
 
       An object within Object Storage that is larger than 5 GB.
 
@@ -2250,24 +2098,23 @@ L
 
       The collaboration site for OpenStack.
 
-   Layer-2 (L2) agent
+   Layer-2 (L2) Agent
 
-      OpenStack Networking agent that provides layer-2
-      connectivity for virtual networks.
+      OpenStack Networking agent that provides layer-2 connectivity for virtual networks.
 
-   Layer-2 network
+   Layer-2 Network
 
       Term used in the OSI network architecture for the data link
       layer. The data link layer is responsible for media access
       control, flow control and detecting and possibly correcting
       errors that may occur in the physical layer.
 
-   Layer-3 (L3) agent
+   Layer-3 (L3) Agent
 
       OpenStack Networking agent that provides layer-3
       (routing) services for virtual networks.
 
-   Layer-3 network
+   Layer-3 Network
 
       Term used in the OSI network architecture for the network
       layer. The network layer is responsible for packet
@@ -2277,8 +2124,7 @@ L
 
       The code name for the twelfth release of OpenStack. The
       design summit took place in Vancouver, Canada and Liberty is
-      the name of a village in the Canadian province of
-      Saskatchewan.
+      the name of a village in the Canadian province of Saskatchewan.
 
    libvirt
 
@@ -2295,34 +2141,32 @@ L
       Unix-like computer operating system assembled under the model of
       free and open-source software development and distribution.
 
-   Linux bridge
+   Linux Bridge
 
-      Software that enables multiple VMs to share a single physical
-      NIC within Compute.
+      Software that enables multiple VMs to share a single physical NIC within Compute.
 
-   Linux Bridge neutron plug-in
+   Linux Bridge Neutron Plug-in
 
       Enables a Linux bridge to understand a Networking port,
       interface attachment, and other abstractions.
 
-   Linux containers (LXC)
+   Linux Containers (LXC)
 
       An OpenStack-supported hypervisor.
 
-   live migration
+   Live Migration
 
       The ability within Compute to move running virtual machine
       instances from one host to another with only a small service
       interruption during switchover.
 
-   load balancer
+   Load Balancer
 
       A load balancer is a logical device that belongs to a cloud
       account. It is used to distribute workloads between multiple back-end
-      systems or services, based on the criteria defined as part of its
-      configuration.
+      systems or services, based on the criteria defined as part of its configuration.
 
-   load balancing
+   Load Balancing
 
       The process of spreading client requests between two or more
       nodes to improve performance and availability.
@@ -2332,7 +2176,7 @@ L
       Enables Networking to distribute incoming requests evenly
       between designated instances.
 
-   Load-balancing service (octavia)
+   Load-Balancing Service (Octavia)
 
       The project that aims to provide scalable, on demand, self service
       access to load-balancer services, in technology-agnostic manner.
@@ -2340,108 +2184,99 @@ L
    Logical Volume Manager (LVM)
 
       Provides a method of allocating space on mass-storage
-      devices that is more flexible than conventional partitioning
-      schemes.
+      devices that is more flexible than conventional partitioning schemes.
 
 M
 ~
 
 .. glossary::
 
-   magnum
+   Magnum
 
       Code name for the :term:`Containers Infrastructure Management
       service<Container Infrastructure Management service (magnum)>`.
 
-   management API
+   Management API
 
       Alternative term for an admin API.
 
-   management network
+   Management Network
 
-      A network segment used for administration, not accessible to the
-      public Internet.
+      A network segment used for administration, not accessible to the public Internet.
 
-   manager
+   Manager
 
       Logical groupings of related code, such as the Block Storage
       volume manager or network manager.
 
-   manifest
+   Manifest
 
-      Used to track segments of a large object within Object
-      Storage.
+      Used to track segments of a large object within Object Storage.
 
-   manifest object
+   Manifest Object
 
-      A special Object Storage object that contains the manifest for a
-      large object.
+      A special Object Storage object that contains the manifest for a large object.
 
-   manila
+   Manila
 
       Codename for OpenStack :term:`Shared File Systems service<Shared
       File Systems service (manila)>`.
 
-   manila-share
+   Manila-Share
 
       Responsible for managing Shared File System Service devices, specifically
       the back-end devices.
 
-   maximum transmission unit (MTU)
+   Maximum Transmission Unit (MTU)
 
       Maximum frame or packet size for a particular network
       medium. Typically 1500 bytes for Ethernet networks.
 
-   mechanism driver
+   Mechanism Driver
 
       A driver for the Modular Layer 2 (ML2) neutron plug-in that
       provides layer-2 connectivity for virtual instances. A
-      single OpenStack installation can use multiple mechanism
-      drivers.
+      single OpenStack installation can use multiple mechanism drivers.
 
-   melange
+   Melange
 
-      Project name for OpenStack Network Information Service. To be
-      merged with Networking.
+      Project name for OpenStack Network Information Service. To be merged with Networking.
 
-   membership
+   Membership
 
       The association between an Image service VM image and a project.
       Enables images to be shared with specified projects.
 
-   membership list
+   Membership List
 
-      A list of projects that can access a given VM image within Image
-      service.
+      A list of projects that can access a given VM image within Image service.
 
-   memcached
+   Memcached
 
-      A distributed memory object caching system that is used by
-      Object Storage for caching.
+      A distributed memory object caching system that is used by Object Storage for caching.
 
-   memory overcommit
+   Memory Overcommit
 
       The ability to start new VM instances based on the actual memory
       usage of a host, as opposed to basing the decision on the amount of
-      RAM each running instance thinks it has available. Also known as RAM
-      overcommit.
+      RAM each running instance thinks it has available. Also known as RAM overcommit.
 
-   message broker
+   Message Broker
 
       The software package used to provide AMQP messaging capabilities
       within Compute. Default package is RabbitMQ.
 
-   message bus
+   Message Bus
 
       The main virtual communication line used by all AMQP messages
       for inter-cloud communications within Compute.
 
-   message queue
+   Message Queue
 
       Passes requests from clients to the appropriate workers and
       returns the output to the client after the job completes.
 
-   Message service (zaqar)
+   Message Service (Zaqar)
 
       The project that provides a messaging service that affords a
       variety of distributed application patterns in an efficient,
@@ -2452,32 +2287,29 @@ M
 
       Stores CephFS metadata.
 
-   Metadata agent
+   Metadata Agent
 
-      OpenStack Networking agent that provides metadata
-      services for instances.
+      OpenStack Networking agent that provides metadata services for instances.
 
-   migration
+   Migration
 
-      The process of moving a VM instance from one host to
-      another.
+      The process of moving a VM instance from one host to another.
 
-   mistral
+   Mistral
 
       Code name for :term:`Workflow service <Workflow service (mistral)>`.
 
    Mitaka
 
       The code name for the thirteenth release of OpenStack.
-      The design summit took place in Tokyo, Japan. Mitaka
-      is a city in Tokyo.
+      The design summit took place in Tokyo, Japan. Mitaka is a city in Tokyo.
 
-   Modular Layer 2 (ML2) neutron plug-in
+   Modular Layer 2 (ML2) Neutron Plug-in
 
       Can concurrently use multiple layer-2 networking technologies,
       such as 802.1Q and VXLAN, in Networking.
 
-   monasca
+   Monasca
 
       Codename for OpenStack :term:`Monitoring <Monitoring (monasca)>`.
 
@@ -2491,7 +2323,7 @@ M
       A Ceph component that communicates with external clients, checks
       data state and consistency, and performs quorum functions.
 
-   Monitoring (monasca)
+   Monitoring (Monasca)
 
       The OpenStack service that provides a multi-project, highly scalable,
       performant, fault-tolerant monitoring-as-a-service solution for metrics,
@@ -2500,40 +2332,34 @@ M
       projects to gain operational insight and visibility, ensuring availability
       and stability.
 
-   multi-cloud computing
+   Multi-Cloud Computing
 
       The use of multiple cloud computing and storage services in a single
       network architecture.
 
-   multi-cloud SDKs
+   Multi-Cloud SDKs
 
       SDKs that provide a multi-cloud abstraction layer and include support
       for OpenStack. These SDKs are excellent for writing applications that
       need to consume more than one type of cloud provider, but may expose a
       more limited set of features.
 
-   multi-factor authentication
+   Multi-Factor Authentication
 
       Authentication method that uses two or more credentials, such as
-      a password and a private key. Currently not supported in
-      Identity.
+      a password and a private key. Currently not supported in Identity.
 
-   multi-host
+   Multi-Host
 
       High-availability mode for legacy (nova) networking.
       Each compute node handles NAT and DHCP and acts as a gateway
       for all of the VMs on it. A networking failure on one compute
       node doesn't affect VMs on other compute nodes.
 
-   multinic
+   Multinic
 
       Facility in Compute that allows each virtual machine instance to
       have more than one VIF connected to it.
-
-   murano
-
-      Codename for the :term:`Application Catalog service <Application Catalog
-      service (murano)>`.
 
 N
 ~
@@ -2542,34 +2368,31 @@ N
 
    Nebula
 
-      Released as open source by NASA in 2010 and is the basis for
-      Compute.
+      Released as open source by NASA in 2010 and is the basis for Compute.
 
-   netadmin
+   Netadmin
 
       One of the default roles in the Compute RBAC system. Enables the
       user to allocate publicly accessible IP addresses to instances and
       change firewall rules.
 
-   NetApp volume driver
+   NetApp Volume Driver
 
       Enables Compute to communicate with NetApp storage devices
-      through the NetApp OnCommand
-      Provisioning Manager.
+      through the NetApp OnCommand Provisioning Manager.
 
-   network
+   Network
 
       A virtual network that provides connectivity between entities.
       For example, a collection of virtual ports that share network
-      connectivity. In Networking terminology, a network is always a layer-2
-      network.
+      connectivity. In Networking terminology, a network is always a layer-2 network.
 
    Network Address Translation (NAT)
 
       Process of modifying IP address information while in transit.
       Supported by Compute and Networking.
 
-   network controller
+   Network Controller
 
       A Compute daemon that orchestrates the network configuration of
       nodes, including IP addresses, VLANs, and bridging. Also manages
@@ -2580,31 +2403,29 @@ N
       A method for making file systems available over the network.
       Supported by OpenStack.
 
-   network ID
+   Network ID
 
-      Unique ID assigned to each network segment within Networking.
-      Same as network UUID.
+      Unique ID assigned to each network segment within Networking. Same as network UUID.
 
-   network manager
+   Network Manager
 
       The Compute component that manages various network components,
       such as firewall rules, IP address allocation, and so on.
 
-   network namespace
+   Network Namespace
 
       Linux kernel feature that provides independent virtual
       networking instances on a single host with separate routing
       tables and interfaces. Similar to virtual routing and forwarding
       (VRF) services on physical network equipment.
 
-   network node
+   Network Node
 
       Any compute node that runs the network worker daemon.
 
-   network segment
+   Network Segment
 
-      Represents a virtual, isolated OSI layer-2 subnet in
-      Networking.
+      Represents a virtual, isolated OSI layer-2 subnet in Networking.
 
    Network Service Header (NSH)
 
@@ -2616,47 +2437,43 @@ N
       Method of keeping a clock for a host or node correct via
       communication with a trusted, accurate time source.
 
-   network UUID
+   Network UUID
 
       Unique ID for a Networking network segment.
 
-   network worker
+   Network Worker
 
       The ``nova-network`` worker daemon; provides
-      services such as giving an IP address to a booting nova
-      instance.
+      services such as giving an IP address to a booting nova instance.
 
    Networking API (Neutron API)
 
       API used to access OpenStack Networking. Provides an extensible
       architecture to enable custom plug-in creation.
 
-   Networking service (neutron)
+   Networking Service (Neutron)
 
       The OpenStack project which implements services and associated
       libraries to provide on-demand, scalable, and technology-agnostic
       network abstraction.
 
-   neutron
+   Neutron
 
-      Codename for OpenStack :term:`Networking service <Networking service
-      (neutron)>`.
+      Codename for OpenStack :term:`Networking service <Networking service (neutron)>`.
 
-   neutron API
+   Neutron API
 
-      An alternative name for :term:`Networking API <Networking API
-      (Neutron API)>`.
+      An alternative name for :term:`Networking API <Networking API (Neutron API)>`.
 
-   neutron manager
+   Neutron Manager
 
       Enables Compute and Networking integration, which enables
       Networking to perform network management for guest VMs.
 
-   neutron plug-in
+   Neutron Plug-in
 
       Interface within Networking that enables organizations to create
-      custom plug-ins for advanced features, such as QoS, ACLs, or
-      IDS.
+      custom plug-ins for advanced features, such as QoS, ACLs, or IDS.
 
    Newton
 
@@ -2666,11 +2483,11 @@ N
       1013 E. Ninth St., Austin, TX. which is listed on the
       National Register of Historic Places.
 
-   Nexenta volume driver
+   Nexenta Volume Driver
 
       Provides support for NexentaStor devices in Compute.
 
-   NFV Orchestration service (tacker)
+   NFV Orchestration Service (Tacker)
 
       OpenStack service that aims to implement Network Function Virtualization
       (NFV) orchestration services and libraries for end-to-end life-cycle
@@ -2686,31 +2503,31 @@ N
       Disables server-side message acknowledgment in the Compute
       RabbitMQ. Increases performance but decreases reliability.
 
-   node
+   Node (Compute)
 
       A VM instance that runs on a host.
 
-   non-durable exchange
+   Non-Durable Exchange
 
       Message exchange that is cleared when the service restarts. Its
       data is not written to persistent storage.
 
-   non-durable queue
+   Non-Durable Queue
 
       Message queue that is cleared when the service restarts. Its
       data is not written to persistent storage.
 
-   non-persistent volume
+   Non-Persistent Volume
 
       Alternative term for an ephemeral volume.
 
-   north-south traffic
+   North-South Traffic
 
       Network traffic between a user or client (north) and a
       server (south), or traffic into the cloud (south) and
       out of the cloud (north). See also east-west traffic.
 
-   nova
+   Nova
 
       Codename for OpenStack :term:`Compute service <Compute service (nova)>`.
 
@@ -2718,7 +2535,7 @@ N
 
       Alternative term for the :term:`Compute API <Compute API (nova API)>`.
 
-   nova-network
+   Nova-Network
 
       A Compute component that manages IP address allocation,
       firewalls, and other network-related tasks. This is the legacy
@@ -2729,71 +2546,65 @@ O
 
 .. glossary::
 
-   object
+   Object
 
-      A BLOB of data held by Object Storage; can be in any
-      format.
+      A BLOB of data held by Object Storage; can be in any format.
 
-   object auditor
+   Object Auditor
 
       Opens all objects for an object server and verifies the MD5
       hash, size, and metadata for each object.
 
-   object expiration
+   Object Expiration
 
       A configurable option within Object Storage to automatically
       delete objects after a specified amount of time has passed or a
       certain date is reached.
 
-   object hash
+   Object Hash
 
       Unique ID for an Object Storage object.
 
-   object path hash
+   Object Path Hash
 
       Used by Object Storage to determine the location of an object in
       the ring. Maps objects to partitions.
 
-   object replicator
+   Object Replicator
 
       An Object Storage component that copies an object to remote
       partitions for fault tolerance.
 
-   object server
+   Object Server
 
-      An Object Storage component that is responsible for managing
-      objects.
+      An Object Storage component that is responsible for managing objects.
 
    Object Storage API
 
-      API used to access OpenStack :term:`Object Storage <Object Storage
-      service (swift)>`.
+      API used to access OpenStack :term:`Object Storage <Object Storage service (swift)>`.
 
    Object Storage Device (OSD)
 
       The Ceph storage daemon.
 
-   Object Storage service (swift)
+   Object Storage Service (Swift)
 
       The OpenStack core project that provides eventually consistent
       and redundant storage and retrieval of fixed digital content.
 
-   object versioning
+   Object Versioning
 
       Allows a user to set a flag on an :term:`Object Storage <Object Storage
-      service (swift)>` container so that all objects within the container are
-      versioned.
+      service (swift)>` container so that all objects within the container are versioned.
 
    Ocata
 
       The code name for the fifteenth release of OpenStack. The
-      design summit took place in Barcelona, Spain. Ocata is
-      a beach north of Barcelona.
+      design summit took place in Barcelona, Spain. Ocata is a beach north of Barcelona.
 
    Octavia
 
-      Code name for the :term:`Load-balancing service
-      <Load-balancing service (octavia)>`.
+      Code name for the :term:`Load-balancing service <Load-balancing service (octavia)>`.
 
    Oldie
 
@@ -2818,12 +2629,12 @@ O
       management interfaces and protocols (for example NetFlow,
       sFlow, SPAN, RSPAN, CLI, LACP, 802.1ag).
 
-   Open vSwitch (OVS) agent
+   Open vSwitch (OVS) Agent
 
       Provides an interface to the underlying Open vSwitch service for
       the Networking plug-in.
 
-   Open vSwitch neutron plug-in
+   Open vSwitch Neutron Plug-in
 
       Provides support for Open vSwitch in Networking.
 
@@ -2844,8 +2655,7 @@ O
 
    OpenLDAP
 
-      An open source LDAP server. Supported by both Compute and
-      Identity.
+      An open source LDAP server. Supported by both Compute and Identity.
 
    OpenStack
 
@@ -2856,7 +2666,7 @@ O
       web interface. OpenStack is an open source project licensed under the
       Apache License 2.0.
 
-   OpenStack code name
+   OpenStack Code Name
 
       Each OpenStack release has a code name. Code names ascend in
       alphabetical order: Austin, Bexar, Cactus, Diablo, Essex,
@@ -2889,12 +2699,11 @@ O
 
       A Linux distribution that is compatible with OpenStack.
 
-   operator
+   Operator (Enginner)
 
-      The person responsible for planning and maintaining an OpenStack
-      installation.
+      The person responsible for planning and maintaining an OpenStack installation.
 
-   optional service
+   Optional Service
 
       An official OpenStack service defined as optional by
       Interop Working Group. Currently, consists of
@@ -2902,79 +2711,70 @@ O
       Orchestration service (heat), Database service (trove),
       Bare Metal service (ironic), and so on.
 
-   Orchestration service (heat)
+   Orchestration Service (Heat)
 
       The OpenStack service which orchestrates composite cloud
       applications using a declarative template format through
       an OpenStack-native REST API.
 
-   orphan
+   Orphan
 
       In the context of Object Storage, this is a process that is not
       terminated after an upgrade, restart, or reload of the service.
 
    Oslo
 
-      Codename for the :term:`Common Libraries project <Common Libraries
-      (oslo)>`.
+      Codename for the :term:`Common Libraries project <Common Libraries (oslo)>`.
 
 P
 ~
 
 .. glossary::
 
-   panko
-
-      Part of the OpenStack :term:`Telemetry service <Telemetry
-      service (telemetry)>`; provides event storage.
-
-   parent cell
+   Parent Cell
 
       If a requested resource, such as CPU time, disk storage, or
       memory, is not available in the parent cell, the request is forwarded
       to associated child cells.
 
-   partition
+   Partition
 
       A unit of storage within Object Storage used to store objects.
-      It exists on top of devices and is replicated for fault
-      tolerance.
+      It exists on top of devices and is replicated for fault tolerance.
 
-   partition index
+   Partition Index
 
-      Contains the locations of all Object Storage partitions within
-      the ring.
+      Contains the locations of all Object Storage partitions within the ring.
 
-   partition shift value
+   Partition Shift Value
 
-      Used by Object Storage to determine which partition data should
-      reside on.
+      Used by Object Storage to determine which partition data should reside on.
 
-   path MTU discovery (PMTUD)
+   Path MTU Discovery (PMTUD)
 
       Mechanism in IP networks to detect end-to-end MTU and adjust
       packet size accordingly.
 
-   pause
+   Pause
 
       A VM state where no changes occur (no changes in memory, network
       communications stop, etc); the VM is frozen but not shut down.
 
-   PCI passthrough
+   PCI Passthrough
 
       Gives guest VMs exclusive access to a PCI device. Currently
       supported in OpenStack Havana and later releases.
 
-   persistent message
+   Persistent Message
 
       A message that is stored both in memory and on disk. The message
       is not lost after a failure or restart.
 
-   persistent volume
+   Persistent Volume
 
       Changes to these types of disk volumes are saved.
 
-   personality file
+   Personality File
 
       A file used to customize a Compute instance. It can be used to
       inject SSH keys or a specific network configuration.
@@ -2984,8 +2784,7 @@ P
       The code name for the sixteenth release of OpenStack. The OpenStack
       summit took place in Boston, Massachusetts, US. The release
       is named after the Massachusetts Turnpike, abbreviated commonly
-      as the Mass Pike, which is the easternmost stretch of
-      Interstate 90.
+      as the Mass Pike, which is the easternmost stretch of Interstate 90.
 
    Platform-as-a-Service (PaaS)
 
@@ -2993,25 +2792,24 @@ P
       language runtime and libraries (collectively, the "platform")
       upon which they can run their own application code, without
       providing any control over the underlying infrastructure.
-      Examples of Platform-as-a-Service providers include Cloud Foundry
-      and OpenShift.
+      Examples of Platform-as-a-Service providers include Cloud Foundry and OpenShift.
 
-   plug-in
+   Plug-in
 
       Software component providing the actual implementation for
       Networking APIs, or for Compute APIs, depending on the context.
 
-   policy service
+   Policy Service
 
       Component of Identity that provides a rule-management
       interface and a rule-based authorization engine.
 
-   policy-based routing (PBR)
+   Policy-Based Routing (PBR)
 
       Provides a mechanism to implement packet forwarding and routing
       according to the policies defined by the network administrator.
 
-   pool
+   Pool
 
       A logical set of devices, such as web servers, that you
       group together to receive and process traffic. The load
@@ -3019,41 +2817,37 @@ P
       the new requests or connections received on the VIP
       address. Each VIP has one pool.
 
-   pool member
+   Pool Member
 
-      An application that runs on the back-end server in a
-      load-balancing system.
+      An application that runs on the back-end server in a load-balancing system.
 
-   port
+   Port
 
-      A virtual network port within Networking; VIFs / vNICs are
-      connected to a port.
+      A virtual network port within Networking; VIFs / vNICs are connected to a port.
 
-   port UUID
+   Port UUID
 
       Unique ID for a Networking port.
 
-   preseed
+   Preseed
 
       A tool to automate system configuration and installation on
       Debian-based Linux distributions.
 
-   private cloud
+   Private Cloud
 
-      Computing resources used exclusively by one business or
-      organization.
+      Computing resources used exclusively by one business or organization.
 
-   private image
+   Private Image
 
-      An Image service VM image that is only available to specified
-      projects.
+      An Image service VM image that is only available to specified projects.
 
-   private IP address
+   Private IP address
 
       An IP address used for management and administration, not
       available to the public Internet.
 
-   private network
+   Private Network
 
       The Network Controller provides virtual networks to enable
       compute servers to interact with each other and with the public
@@ -3061,76 +2855,70 @@ P
       interface. A private network interface can be a flat or VLAN network
       interface. A flat network interface is controlled by the
       flat_interface with flat managers. A VLAN network interface is
-      controlled by the ``vlan_interface`` option with VLAN
-      managers.
+      controlled by the ``vlan_interface`` option with VLAN managers.
 
-   project
+   Project
 
       Projects represent the base unit of “ownership” in OpenStack,
       in that all resources in OpenStack should be owned by a specific project.
       In OpenStack Identity, a project must be owned by a specific domain.
 
-   project ID
+   Project ID
 
       Unique ID assigned to each project by the Identity service.
 
-   project VPN
+   Project VPN
 
       Alternative term for a cloudpipe.
 
-   promiscuous mode
+   Promiscuous Mode
 
       Causes the network interface to pass all traffic it
-      receives to the host rather than passing only the frames
-      addressed to it.
+      receives to the host rather than passing only the frames addressed to it.
 
-   protected property
+   Protected Property
 
       Generally, extra properties on an Image service image to
       which only cloud administrators have access. Limits which user
       roles can perform CRUD operations on that property. The cloud
-      administrator can configure any image property as
-      protected.
+      administrator can configure any image property as protected.
 
-   provider
+   Provider
 
-      An administrator who has access to all hosts and
-      instances.
+      An administrator who has access to all hosts and instances.
 
-   proxy node
+   Proxy Node
 
       A node that provides the Object Storage proxy service.
 
-   proxy server
+   Proxy Server
 
       Users of Object Storage interact with the service through the
       proxy server, which in turn looks up the location of the requested
       data within the ring and returns the results to the user.
 
-   public API
+   Public API
 
       An API endpoint used for both service-to-service communication
       and end-user interactions.
 
-   public cloud
+   Public Cloud
 
       Data centers available to many users over the Internet.
 
-   public image
+   Public Image
 
-      An Image service VM image that is available to all
-      projects.
+      An Image service VM image that is available to all projects.
 
-   public IP address
+   Public IP address
 
       An IP address that is accessible to end-users.
 
-   public key authentication
+   Public Key Authentication
 
-      Authentication method that uses keys rather than
-      passwords.
+      Authentication method that uses keys rather than passwords.
 
-   public network
+   Public Network
 
       The Network Controller provides virtual networks to enable
       compute servers to interact with each other and with the public
@@ -3140,8 +2928,7 @@ P
 
    Puppet
 
-      An operating system configuration-management tool supported by
-      OpenStack.
+      An operating system configuration-management tool supported by OpenStack.
 
    Python
 
@@ -3152,27 +2939,24 @@ Q
 
 .. glossary::
 
-   QEMU Copy On Write 2 (QCOW2)
+   QEMU Copy On Write 2 (Qcow2)
 
-      One of the VM image disk formats supported by Image
-      service.
+      One of the VM image disk formats supported by Image service.
 
    Qpid
 
-      Message queue software supported by OpenStack; an alternative to
-      RabbitMQ.
+      Message queue software supported by OpenStack; an alternative to RabbitMQ.
 
    Quality of Service (QoS)
 
       The ability to guarantee certain network or storage requirements to
-      satisfy a Service Level Agreement (SLA) between an application provider
-      and end users.
+      satisfy a Service Level Agreement (SLA) between an application provider and end users.
       Typically includes performance requirements like networking bandwidth,
       latency, jitter correction, and reliability as well as storage
       performance in Input/Output Operations Per Second (IOPS), throttling
       agreements, and performance expectations at peak load.
 
-   quarantine
+   Quarantine
 
       If Object Storage finds objects, containers, or accounts that
       are corrupt, they are placed in this state, are not replicated, cannot
@@ -3182,17 +2966,14 @@ Q
 
       The code name for the seventeenth release of OpenStack. The
       OpenStack summit took place in Sydney, Australia. The release
-      is named after the Queens Pound river in the South Coast region
-      of New South Wales.
+      is named after the Queens Pound river in the South Coast region of New South Wales.
 
    Quick EMUlator (QEMU)
 
-      QEMU is a generic and open source machine emulator and
-      virtualizer.
-      One of the hypervisors supported by OpenStack, generally used
-      for development purposes.
+      QEMU is a generic and open source machine emulator and virtualizer.
+      One of the hypervisors supported by OpenStack, generally used for development purposes.
 
-   quota
+   Quota
 
       In Compute and Block Storage, the ability to set resource limits
       on a per-project basis.
@@ -3208,53 +2989,48 @@ R
 
    Rackspace Cloud Files
 
-      Released as open source by Rackspace in 2010; the basis for
-      Object Storage.
+      Released as open source by Rackspace in 2010; the basis for Object Storage.
 
    RADOS Block Device (RBD)
 
       Ceph component that enables a Linux block device to be striped
       over multiple distributed data stores.
 
-   radvd
+   Radvd
 
       The router advertisement daemon, used by the Compute VLAN
-      manager and FlatDHCP manager to provide routing services for VM
-      instances.
+      manager and FlatDHCP manager to provide routing services for VM instances.
 
-   rally
+   Rally
 
       Codename for the :term:`Benchmark service<Benchmark service (rally)>`.
 
    RAM filter
 
-      The Compute setting that enables or disables RAM
-      overcommitment.
+      The Compute setting that enables or disables RAM overcommitment.
 
    RAM overcommit
 
       The ability to start new VM instances based on the actual memory
       usage of a host, as opposed to basing the decision on the amount of
-      RAM each running instance thinks it has available. Also known as
-      memory overcommit.
+      RAM each running instance thinks it has available. Also known as memory overcommit.
 
-   rate limit
+   Rate Limit
 
       Configurable option within Object Storage to limit database
       writes on a per-account and/or per-container basis.
 
-   raw
+   Raw
 
       One of the VM image disk formats supported by Image service; an
       unstructured disk image.
 
-   rebalance
+   Rebalance
 
       The process of distributing Object Storage partitions across all
-      drives in the ring; used during initial ring creation and after ring
-      reconfiguration.
+      drives in the ring; used during initial ring creation and after ring reconfiguration.
 
-   reboot
+   Reboot
 
       Either a soft or hard reboot of a server. With a soft reboot,
       the operating system is signaled to restart, which enables a graceful
@@ -3263,7 +3039,7 @@ R
       reboot action has completed successfully, even in cases in which the
       underlying domain/VM is paused or halted/stopped.
 
-   rebuild
+   Rebuild
 
       Removes all data on the server and replaces it with the
       specified image. Server ID and IP addresses remain the same.
@@ -3272,17 +3048,16 @@ R
 
       An Object Storage component that collects meters.
 
-   record
+   Record
 
-      Belongs to a particular domain and is used to specify
-      information about the domain.
+      Belongs to a particular domain and is used to specify information about the domain.
       There are several types of DNS records. Each record type contains
       particular information used to describe the purpose of that record.
       Examples include mail exchange (MX) records, which specify the mail
       server for a particular domain; and name server (NS) records, which
       specify the authoritative name servers for a domain.
 
-   record ID
+   Record ID
 
       A number within a database that is incremented each time a
       change is made. Used by Object Storage when replicating.
@@ -3291,68 +3066,65 @@ R
 
       A Linux distribution that is compatible with OpenStack.
 
-   reference architecture
+   Reference Architecture
 
       A recommended architecture for an OpenStack cloud.
 
-   region
+   Region
 
-      A discrete OpenStack environment with dedicated API endpoints
-      that typically shares only the Identity (keystone) with other
-      regions.
+      A region in OpenStack represents a complete OpenStack cluster that has a dedicated
+      control plane and set of API endpoints. It is not uncommon for operators of large
+      clouds to offer their users several OpenStack regions, which differ by
+      their geographical location or purpose. In order to easily navigate in a multi-region
+      environment, cloud users need a way to distinguish clusters by their names.
 
-   registry
+   Registry
 
       Alternative term for the Image service registry.
 
-   registry server
+   Registry Server
 
-      An Image service that provides VM image metadata information to
-      clients.
+      An Image service that provides VM image metadata information to clients.
 
-   Reliable, Autonomic Distributed Object Store
-      (RADOS)
+   Reliable, Autonomic Distributed Object Store (RADOS)
 
       A collection of components that provides object storage within
       Ceph. Similar to OpenStack Object Storage.
 
    Remote Procedure Call (RPC)
 
-      The method used by the Compute RabbitMQ for intra-service
-      communications.
+      The method used by the Compute RabbitMQ for intra-service communications.
 
-   replica
+   Replica
 
       Provides data redundancy and fault tolerance by creating copies
       of Object Storage objects, accounts, and containers so that they are
       not lost when the underlying storage fails.
 
-   replica count
+   Replica Count
 
-      The number of replicas of the data in an Object Storage
-      ring.
+      The number of replicas of the data in an Object Storage ring.
 
-   replication
+   Replication
 
       The process of copying data to a separate physical device for
       fault tolerance and performance.
 
-   replicator
+   Replicator
 
-      The Object Storage back-end process that creates and manages
-      object replicas.
+      The Object Storage back-end process that creates and manages object replicas.
 
-   request ID
+   Request ID
 
       Unique ID assigned to each request sent to Compute.
 
-   rescue image
+   Rescue Image
 
       A special type of VM image that is booted when an instance is
       placed into rescue mode. Allows an administrator to mount the file
       systems for an instance to correct the problem.
 
-   resize
+   Resize
 
       Converts an existing server to a different flavor, which scales
       the server up or down. The original server is saved to enable rollback
@@ -3365,17 +3137,15 @@ R
       State Transfer. REST is the style of architecture for hypermedia
       systems that is used for the World Wide Web.
 
-   ring
+   Ring
 
       An entity that maps Object Storage data to partitions. A
-      separate ring exists for each service, such as account, object, and
-      container.
+      separate ring exists for each service, such as account, object, and container.
 
-   ring builder
+   Ring Builder
 
       Builds and manages rings within Object Storage, assigns
-      partitions to devices, and pushes the configuration to other storage
-      nodes.
+      partitions to devices, and pushes the configuration to other storage nodes.
 
    Rocky
 
@@ -3383,7 +3153,7 @@ R
       OpenStack summit took place in Vancouver, Canada. The release
       is named after the Rocky Mountains.
 
-   role
+   Role
 
       A personality that a user assumes to perform a specific set of
       operations. A role includes a set of rights and privileges. A user
@@ -3395,120 +3165,101 @@ R
       such as start or stop VMs, reset passwords, and so on. Supported in
       both Identity and Compute and can be configured using the dashboard.
 
-   role ID
+   Role ID
 
       Alphanumeric ID assigned to each Identity service role.
 
-   Root Cause Analysis (RCA) service (Vitrage)
+   Root Cause Analysis (RCA) Service (Vitrage)
 
       OpenStack project that aims to organize, analyze and visualize OpenStack
       alarms and events, yield insights regarding the root cause of problems
       and deduce their existence before they are directly detected.
 
-   rootwrap
+   Rootwrap
 
       A feature of Compute that allows the unprivileged "nova" user to
       run a specified list of commands as the Linux root user.
 
-   round-robin scheduler
+   Round-Robin Scheduler
 
-      Type of Compute scheduler that evenly distributes instances
-      among available hosts.
+      Type of Compute scheduler that evenly distributes instances among available hosts.
 
-   router
+   Router
 
       A physical or virtual network device that passes network
       traffic between different networks.
 
-   routing key
+   Routing Key
 
       The Compute direct exchanges, fanout exchanges, and topic
       exchanges use this key to determine how to process a message;
       processing varies depending on exchange type.
 
-   RPC driver
+   RPC Driver
 
       Modular system that allows the underlying message queue software
       of Compute to be changed. For example, from RabbitMQ to Qpid.
 
-   rsync
+   Rsync
 
       Used by Object Storage to push object replicas.
-
-   RXTX cap
-
-      Absolute limit on the amount of network traffic a Compute VM
-      instance can send and receive.
-
-   RXTX quota
-
-      Soft limit on the amount of network traffic a Compute VM
-      instance can send and receive.
 
 S
 ~
 
 .. glossary::
 
-   sahara
+   SAML Assertion
 
-      Codename for the :term:`Data Processing service<Data Processing
-      service (sahara)>`.
-
-   SAML assertion
-
-      Contains information about a user as provided by the identity
-      provider. It is an indication that a user has been authenticated.
+      Contains information about a user as provided by the identity provider.
+      It is an indication that a user has been authenticated.
 
    Sandbox
 
-      A virtual space in which new or untested software can be run
-      securely.
+      A virtual space in which new or untested software can be run securely.
 
-   scheduler manager
+   Scheduler Manager
 
-      A Compute component that determines where VM instances should
-      start. Uses modular design to support a variety of scheduler
-      types.
+      A Compute component that determines where VM instances should start.
+      Uses modular design to support a variety of scheduler types.
 
-   scoped token
+   Scoped Token
 
-      An Identity service API access token that is associated with a
-      specific project.
+      An Identity service API access token that is associated with a specific project.
+      This token provides access based on defined scopes, which can vary depending on
+      the level of access required. Scopes can include system-level access, domain-level
+      access, or project-specific access.
 
-   scrubber
+   Scrubber
 
       Checks for and deletes unused VMs; the component of Image
       service that implements delayed delete.
 
-   secret key
+   Secret Key
 
       String of text known only by the user; used along with an access
       key to make requests to the Compute API.
 
-   secure boot
+   Secure Boot
 
       Process whereby the system firmware validates the authenticity of
       the code involved in the boot process.
 
-   secure shell (SSH)
+   Secure Shell (SSH)
 
       Open source tool used to access remote hosts through an
-      encrypted communications channel, SSH key injection is supported by
-      Compute.
+      encrypted communications channel, SSH key injection is supported by Compute.
 
-   security group
+   Security Group
 
-      A set of network traffic filtering rules that are applied to a
-      Compute instance.
+      A set of network traffic filtering rules that are applied to a Compute instance.
 
-   segmented object
+   Segmented Object
 
       An Object Storage large object that has been broken up into
-      pieces. The re-assembled object is called a concatenated
-      object.
+      pieces. The re-assembled object is called a concatenated object.
 
-   self-service
+   Self-Service
 
       For IaaS, ability for a regular (non-privileged) account to
       manage a virtual infrastructure component such as networks without
@@ -3519,34 +3270,28 @@ S
       Linux kernel security module that provides the mechanism for
       supporting access control policies.
 
-   senlin
-
-      Code name for the :term:`Clustering service
-      <Clustering service (senlin)>`.
-
-   server
+   Server
 
       Computer that provides explicit services to the client software
-      running on that system, often managing a variety of computer
-      operations.
+      running on that system, often managing a variety of computer operations.
       A server is a VM instance in the Compute system. Flavor and
       image are requisite elements when creating a server.
 
-   server image
+   Server Image
 
       Alternative term for a VM image.
 
-   server UUID
+   Server UUID
 
       Unique ID assigned to each guest VM instance.
 
-   service
+   Service
 
       An OpenStack service, such as Compute, Object Storage, or Image
       service. Provides one or more endpoints through which users can access
       resources and perform operations.
 
-   service catalog
+   Service Catalog
 
       Alternative term for the Identity service catalog.
 
@@ -3555,61 +3300,58 @@ S
       For a given service, SFC is the abstracted view of the required
       service functions and the order in which they are to be applied.
 
-   service ID
+   Service ID
 
       Unique ID assigned to each service that is available in the
       Identity service catalog.
 
    Service Level Agreement (SLA)
 
-      Contractual obligations that ensure the availability of a
-      service.
+      Contractual obligations that ensure the availability of a service.
 
-   service project
+   Service Project
 
-      Special project that contains all services that are listed in the
-      catalog.
+      Special project that contains all services that are listed in the catalog.
 
-   service provider
+   Service Provider
 
       A system that provides services to other system entities. In
-      case of federated identity, OpenStack Identity is the service
-      provider.
+      case of federated identity, OpenStack Identity is the service provider.
 
-   service registration
+   Service Registration
 
       An Identity service feature that enables services, such as
       Compute, to automatically register with the catalog.
 
-   service token
+   Service Token
 
       An administrator-defined token used by Compute to communicate
       securely with the Identity service.
 
-   session back end
+   Session Back-end
 
       The method of storage used by horizon to track client sessions,
       such as local memory, cookies, a database, or memcached.
 
-   session persistence
+   Session Persistence
 
       A feature of the load-balancing service. It attempts to force
       subsequent connections to a service to be redirected to the same node
       as long as it is online.
 
-   session storage
+   Session Storage
 
-      A horizon component that stores and tracks client session
+      A Horizon component that stores and tracks client session
       information. Implemented through the Django sessions framework.
 
-   share
+   Share
 
       A remote, mountable file system in the context of the :term:`Shared
       File Systems service<Shared File Systems service (manila)>`. You can
       mount a share to, and access a share from, several hosts by several
       users at a time.
 
-   share network
+   Share Network
 
       An entity in the context of the :term:`Shared File Systems
       service<Shared File Systems service (manila)>` that encapsulates
@@ -3624,7 +3366,7 @@ S
       File Systems service. There is python-manilaclient to interact with
       the API.
 
-   Shared File Systems service (manila)
+   Shared File Systems Service (Manila)
 
       The service that provides a set of services for
       management of shared file systems in a multi-project cloud
@@ -3635,7 +3377,7 @@ S
       system and mount the file system on your instances. You can also
       read and write data from your instances to and from your file system.
 
-   shared IP address
+   Shared IP address
 
       An IP address that can be assigned to a VM instance within the
       shared IP group. Public IP addresses can be shared across multiple
@@ -3647,7 +3389,7 @@ S
       standard heartbeat facilities, such as keepalive, that monitor for
       failure and manage IP failover.
 
-   shared IP group
+   Shared IP Group
 
       A collection of servers that can share IPs with other members of
       the group. Any server in a group can share one or more public IPs with
@@ -3655,15 +3397,14 @@ S
       in a shared IP group, servers must be launched into shared IP groups.
       A server may be a member of only one shared IP group.
 
-   shared storage
+   Shared Storage
 
       Block storage that is simultaneously accessible by multiple
       clients, for example, NFS.
 
    Sheepdog
 
-      Distributed block storage system for QEMU, supported by
-      OpenStack.
+      Distributed block storage system for QEMU, supported by OpenStack.
 
    Simple Cloud Identity Management (SCIM)
 
@@ -3681,21 +3422,15 @@ S
       device, enables it to appear as multiple separate PCIe devices. This
       enables multiple virtualized guests to share direct access to the
       physical device, offering improved performance over an equivalent
-      virtual device. Currently supported in OpenStack Havana and later
-      releases.
+      virtual device. Currently supported in OpenStack Havana and later releases.
 
-   SmokeStack
-
-      Runs automated tests against the core OpenStack API; written in
-      Rails.
-
-   snapshot
+   Snapshot
 
       A point-in-time copy of an OpenStack storage volume or image.
       Use storage volume snapshots to back up volumes. Use image snapshots
       to back up data, or as "gold" images for additional servers.
 
-   soft reboot
+   Soft Reboot
 
       A controlled reboot where a VM instance is properly restarted
       through operating system commands.
@@ -3709,25 +3444,23 @@ S
 
       OpenStack project that aims to make cloud services easier to
       consume and integrate with application development process
-      by automating the source-to-image process, and simplifying
-      app-centric deployment.
+      by automating the source-to-image process, and simplifying app-centric deployment.
 
-   Software-defined networking (SDN)
+   Software-Defined Networking (SDN)
 
       Provides an approach for network administrators to manage computer
       network services through abstraction of lower-level functionality.
 
    SolidFire Volume Driver
 
-      The Block Storage driver for the SolidFire iSCSI storage
-      appliance.
+      The Block Storage driver for the SolidFire iSCSI storage appliance.
 
-   solum
+   Solum
 
       Code name for the :term:`Software Development Lifecycle Automation
       service <Software Development Lifecycle Automation service (solum)>`.
 
-   spread-first scheduler
+   Spread-First Scheduler
 
       The Compute VM scheduling algorithm that attempts to start a new
       VM on the host with the least amount of load.
@@ -3741,19 +3474,17 @@ S
       A lightweight SQL database, used as the default persistent
       storage method in many OpenStack services.
 
-   stack
+   Stack
 
       A set of OpenStack resources created and managed by the
       Orchestration service according to a given template (either an
-      AWS CloudFormation template or a Heat Orchestration
-      Template (HOT)).
+      AWS CloudFormation template or a Heat Orchestration Template (HOT)).
 
    StackTach
 
-      Community project that captures Compute AMQP communications;
-      useful for debugging.
+      Community project that captures Compute AMQP communications; useful for debugging.
 
-   static IP address
+   Static IP address
 
       Alternative term for a fixed IP address.
 
@@ -3768,46 +3499,45 @@ S
       OpenStack Summit took place in Berlin, Germany. The release is
       named after the street Steinstraße in Berlin.
 
-   storage back end
+   Storage Back-end
 
       The method that a service uses for persistent storage, such as
       iSCSI, NFS, or local disk.
 
-   storage manager
+   Storage Manager
 
       A XenAPI component that provides a pluggable interface to
       support a wide variety of persistent storage back ends.
 
-   storage manager back end
+   Storage Manager Back-end
 
-      A persistent storage method supported by XenAPI, such as iSCSI
-      or NFS.
+      A persistent storage method supported by XenAPI, such as iSCSI or NFS.
 
-   storage node
+   Storage Node
 
       An Object Storage node that provides container services, account
       services, and object services; controls the account databases,
       container databases, and object storage.
 
-   storage services
+   Storage Services
 
       Collective name for the Object Storage object services,
       container services, and account services.
 
-   strategy
+   Strategy
 
       Specifies the authentication source used by Image service or
       Identity. In the Database service, it refers to the extensions
       implemented for a data store.
 
-   subdomain
+   Subdomain
 
       A domain within a parent domain. Subdomains cannot be
       registered. Subdomains enable you to delegate domains. Subdomains can
       themselves have subdomains, so third-level, fourth-level, fifth-level,
       and deeper levels of nesting are possible.
 
-   subnet
+   Subnet
 
       Logical subdivision of an IP network.
 
@@ -3815,68 +3545,65 @@ S
 
       A Linux distribution that is compatible with OpenStack.
 
-   suspend
+   Suspend
 
       The VM instance is paused and its state is saved to disk of the host.
 
-   swap
+   Swap
 
       Disk-based virtual memory used by operating systems to provide
       more memory than is actually available on the system.
 
-   swift
+   Swift
 
       Codename for OpenStack :term:`Object Storage service<Object
       Storage service (swift)>`.
 
-   swift All in One (SAIO)
+   Swift All In One (SAIO)
 
       Creates a full Object Storage development environment within a
       single VM.
 
-   swift middleware
+   Swift Middleware
 
-      Collective term for Object Storage components that provide
-      additional functionality.
+      Collective term for Object Storage components that provide additional functionality.
 
-   swift proxy server
+   Swift Proxy Server
 
       Acts as the gatekeeper to Object Storage and is responsible for
       authenticating the user.
 
-   swift storage node
+   Swift Storage Node
 
-      A node that runs Object Storage account, container, and object
-      services.
+      A node that runs Object Storage account, container, and object services.
 
-   sync point
+   Sync Point
 
       Point in time since the last container and accounts database
       sync among nodes within Object Storage.
 
-   sysadmin
+   Sysadmin
 
       One of the default roles in the Compute RBAC system. Enables a
       user to add other users to a project, interact with VM images that are
       associated with the project, and start and stop VM instances.
 
-   system usage
+   System Usage
 
       A Compute component that, along with the notification system,
-      collects meters and usage information. This information can be used
-      for billing.
+      collects meters and usage information. This information can be used for billing.
 
 T
 ~
 
 .. glossary::
 
-   tacker
+   Tacker
 
-      Code name for the :term:`NFV Orchestration service <NFV Orchestration
-      service (tacker)>`
+      Code name for the
+      :term:`NFV Orchestration service <NFV Orchestration service (tacker)>`.
 
-   Telemetry service (telemetry)
+   Telemetry Service (Telemetry)
 
       The OpenStack project which collects measurements of the utilization
       of the physical and virtual resources comprising deployed clouds,
@@ -3899,7 +3626,7 @@ T
       An Object Storage middleware component that enables creation of
       URLs for temporary object access.
 
-   tenant
+   Tenant
 
       A group of users; used to isolate access to Compute resources.
       An alternative term for a project.
@@ -3908,46 +3635,42 @@ T
 
       An API that is accessible to projects.
 
-   tenant endpoint
+   Tenant Endpoint
 
-      An Identity service API endpoint that is associated with one or
-      more projects.
+      An Identity service API endpoint that is associated with one or more projects.
 
-   tenant ID
+   Tenant ID
 
       An alternative term for :term:`project ID`.
 
-   token
+   Token
 
-      An alpha-numeric string of text used to access OpenStack APIs
-      and resources.
+      An alpha-numeric string of text used to access OpenStack APIs and resources.
 
-   token services
+   Token Services
 
       An Identity service component that manages and validates tokens
       after a user or project has been authenticated.
 
-   tombstone
+   Tombstone
 
       Used to mark Object Storage objects that have been
       deleted; ensures that the object is not updated on another node after
       it has been deleted.
 
-   topic publisher
+   Topic Publisher
 
       A process that is created when a RPC call is executed; used to
       push the message to the topic exchange.
 
    Torpedo
 
-      Community project used to run automated tests against the
-      OpenStack API.
+      Community project used to run automated tests against the OpenStack API.
 
    Train
 
       The code name for the twentieth release of OpenStack. The
-      OpenStack Infrastructure Summit took place in Denver,
-      Colorado, US.
+      OpenStack Infrastructure Summit took place in Denver, Colorado, US.
 
       Two Project Team Gathering meetings in Denver were held at a
       hotel next to the train line from downtown to the airport. The
@@ -3959,39 +3682,31 @@ T
       ideal. As a result, many jokes popped up about Denver and
       trains - and thus the release is called train.
 
-   transaction ID
+   Transaction ID
 
-      Unique ID assigned to each Object Storage request; used for
-      debugging and tracing.
+      Unique ID assigned to each Object Storage request; used for debugging and tracing.
 
-   transient
+   Transient
 
       Alternative term for non-durable.
 
-   transient exchange
+   Transient Exchange
 
       Alternative term for a non-durable exchange.
 
-   transient message
+   Transient Message
 
-      A message that is stored in memory and is lost after the server
-      is restarted.
+      A message that is stored in memory and is lost after the server is restarted.
 
-   transient queue
+   Transient Queue
 
       Alternative term for a non-durable queue.
 
-   TripleO
+   Trove
 
-      OpenStack-on-OpenStack program. The code name for the
-      OpenStack Deployment program.
+      Codename for OpenStack :term:`Database service <Database service (trove)>`.
 
-   trove
-
-      Codename for OpenStack :term:`Database service <Database service
-      (trove)>`.
-
-   trusted platform module (TPM)
+   Trusted Platform Module (TPM)
 
       Specialized microprocessor for incorporating cryptographic keys
       into devices for authenticating and securing a hardware platform.
@@ -4005,22 +3720,22 @@ U
 
       A Debian-based Linux distribution.
 
-   unscoped token
+   Unscoped Token
 
       Alternative term for an Identity service default token.
 
-   updater
+   Updater
 
       Collective term for a group of Object Storage components that
       processes queued and failed updates for containers and objects.
 
-   user
+   User
 
       In OpenStack Identity,  entities represent individual API
       consumers and are owned by a specific domain. In OpenStack Compute,
       a user can be associated with roles, projects, or both.
 
-   user data
+   User Data
 
       A blob of data that the user can specify when they launch
       an instance. The instance can access this data through the
@@ -4058,13 +3773,11 @@ V
 
    Virtual Central Processing Unit (vCPU)
 
-      Subdivides physical CPUs. Instances can then use those
-      divisions.
+      Subdivides physical CPUs. Instances can then use those divisions.
 
    Virtual Disk Image (VDI)
 
-      One of the VM image disk formats supported by Image
-      service.
+      One of the VM image disk formats supported by Image service.
 
    Virtual Extensible LAN (VXLAN)
 
@@ -4078,20 +3791,19 @@ V
       One of the VM image disk formats supported by Image
       service.
 
-   virtual IP address (VIP)
+   Virtual IP address (VIP)
 
       An Internet Protocol (IP) address configured on the load
       balancer for use by clients connecting to a service that is load
       balanced. Incoming connections are distributed to back-end nodes based
       on the configuration of the load balancer.
 
-   virtual machine (VM)
+   Virtual Machine (VM)
 
       An operating system instance that runs on top of a hypervisor.
-      Multiple VMs can run at the same time on the same physical
-      host.
+      Multiple VMs can run at the same time on the same physical host.
 
-   virtual network
+   Virtual Network
 
       An L2 network segment within Networking.
 
@@ -4103,81 +3815,71 @@ V
    Virtual Network InterFace (VIF)
 
       An interface that is plugged into a port in a Networking
-      network. Typically a virtual network interface belonging to a
-      VM.
+      network. Typically a virtual network interface belonging to a VM.
 
-   virtual networking
+   Virtual Networking
 
       A generic term for virtualization of network functions
       such as switching, routing, load balancing, and security using
-      a combination of VMs and overlays on physical network
-      infrastructure.
+      a combination of VMs and overlays on physical network infrastructure.
 
-   virtual port
+   Virtual Port
 
-      Attachment point where a virtual interface connects to a virtual
-      network.
+      Attachment point where a virtual interface connects to a virtual network.
 
-   virtual private network (VPN)
+   Virtual Private Network (VPN)
 
       Provided by Compute in the form of cloudpipes, specialized
       instances that are used to create VPNs on a per-project basis.
 
-   virtual server
+   Virtual Server
 
-      Alternative term for a VM or guest.
+      Alternative term for a VM or instance.
 
-   virtual switch (vSwitch)
+   Virtual Switch (vSwitch)
 
       Software that runs on a host or node and provides the features
       and functions of a hardware-based network switch.
 
-   virtual VLAN
+   Virtual VLAN
 
       Alternative term for a virtual network.
-
-   VirtualBox
-
-      An OpenStack-supported hypervisor.
 
    Vitrage
 
       Code name for the :term:`Root Cause Analysis service <Root Cause
       Analysis (RCA) service (Vitrage)>`.
 
-   VLAN manager
+   VLAN Manager
 
       A Compute component that provides dnsmasq and radvd and sets up
       forwarding to and from cloudpipe instances.
 
-   VLAN network
+   VLAN Network
 
       The Network Controller provides virtual networks to enable
       compute servers to interact with each other and with the public
       network. All machines must have a public and private network
       interface. A VLAN network is a private network interface, which is
-      controlled by the ``vlan_interface`` option with VLAN
-      managers.
+      controlled by the ``vlan_interface`` option with VLAN managers.
 
-   VM disk (VMDK)
+   VM Disk (VMDK)
 
-      One of the VM image disk formats supported by Image
-      service.
+      One of the VM image disk formats supported by Image service.
 
-   VM image
+   VM Image
 
       Alternative term for an image.
 
    VM Remote Control (VMRC)
 
-      Method to access VM instance consoles using a web browser.
-      Supported by Compute.
+      Method to access VM instance consoles using a web browser. Supported by Compute.
 
    VMware API
 
       Supports interaction with VMware products in Compute.
 
-   VMware NSX Neutron plug-in
+   VMware NSX Neutron Plug-in
 
       Provides support for VMware NSX in Neutron.
 
@@ -4186,45 +3888,42 @@ V
       A Compute component that provides users access to the consoles
       of their VM instances through VNC or VMRC.
 
-   volume
+   Volume
 
       Disk-based data storage generally represented as an iSCSI target
-      with a file system that supports extended attributes; can be
-      persistent or ephemeral.
+      with a file system that supports extended attributes; can be persistent or ephemeral.
 
    Volume API
 
       Alternative name for the Block Storage API.
 
-   volume controller
+   Volume Controller
 
-      A Block Storage component that oversees and coordinates storage
-      volume actions.
+      A Block Storage component that oversees and coordinates storage volume actions.
 
-   volume driver
+   Volume Driver
 
       Alternative term for a volume plug-in.
 
-   volume ID
+   Volume ID
 
-      Unique ID applied to each storage volume under the Block Storage
-      control.
+      Unique ID applied to each storage volume under the Block Storage control.
 
-   volume manager
+   Volume Manager
 
       A Block Storage component that creates, attaches, and detaches
       persistent storage volumes.
 
-   volume node
+   Volume Node
 
       A Block Storage node that runs the cinder-volume daemon.
 
-   volume plug-in
+   Volume Plug-in
 
       Provides support for new and specialized types of back-end
       storage for the Block Storage volume manager.
 
-   volume worker
+   Volume Worker
 
       A cinder component that interacts with back-end storage to manage
       the creation and deletion of volumes and the creation of compute
@@ -4250,29 +3949,29 @@ W
       Code name for the :term:`Infrastructure Optimization service
       <Infrastructure Optimization service (watcher)>`.
 
-   weight
+   Weight
 
       Used by Object Storage devices to determine which storage
       devices are suitable for the job. Devices are weighted by size.
 
-   weighted cost
+   Weighted Cost
 
       The sum of each cost used when deciding where to start a new VM
       instance in Compute.
 
-   weighting
+   Weighting
 
       A Compute process that determines the suitability of the VM
       instances for a job for a particular host. For example, not enough RAM
       on the host, too many CPUs on the host, and so on.
 
-   worker
+   Worker
 
       A daemon that listens to a queue and carries out tasks in
       response to messages. For example, the cinder-volume worker manages volume
       creation and deletion on storage arrays.
 
-   Workflow service (mistral)
+   Workflow Service (Mistral)
 
       The OpenStack service that provides a simple YAML-based language to
       write workflows (tasks and transition rules) and a service that
@@ -4294,34 +3993,10 @@ X
       attributes as well depending upon the version. The most recent
       and standard version of X.509 is v3.
 
-   Xen
-
-      Xen is a hypervisor using a microkernel design, providing
-      services that allow multiple computer operating systems to
-      execute on the same computer hardware concurrently.
-
-   Xen API
-
-      The Xen administrative API, which is supported by
-      Compute.
-
-   Xen Cloud Platform (XCP)
-
-      An OpenStack-supported hypervisor.
-
-   Xen Storage Manager Volume Driver
-
-      A Block Storage volume plug-in that enables communication with
-      the Xen Storage Manager API.
-
    Xena
 
       The code name for the twenty fourth release of OpenStack.
       The release is named after a fictional warrior princess.
-
-   XenServer
-
-      An OpenStack-supported hypervisor.
 
    XFS
 
@@ -4345,7 +4020,7 @@ Z
 
 .. glossary::
 
-   zaqar
+   Zaqar
 
       Codename for the :term:`Message service <Message service (zaqar)>`.
 
