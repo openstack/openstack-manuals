@@ -2699,7 +2699,7 @@ O
 
       A Linux distribution that is compatible with OpenStack.
 
-   Operator (Enginner)
+   Operator
 
       The person responsible for planning and maintaining an OpenStack installation.
 
