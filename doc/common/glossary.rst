@@ -814,12 +814,6 @@ C
       A Windows project providing guest initialization features,
       similar to cloud-init.
 
-   Clustering service (senlin)
-
-      The project that implements clustering services and libraries
-      for the management of groups of homogeneous objects exposed
-      by other OpenStack services.
-
    command filter
 
       Lists allowed commands within the Compute rootwrap
@@ -3523,11 +3517,6 @@ S
 
       Linux kernel security module that provides the mechanism for
       supporting access control policies.
-
-   senlin
-
-      Code name for the :term:`Clustering service
-      <Clustering service (senlin)>`.
 
    server
 
