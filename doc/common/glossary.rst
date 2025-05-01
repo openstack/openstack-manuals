@@ -3450,11 +3450,6 @@ S
 
 .. glossary::
 
-   sahara
-
-      Codename for the :term:`Data Processing service<Data Processing
-      service (sahara)>`.
-
    SAML assertion
 
       Contains information about a user as provided by the identity
