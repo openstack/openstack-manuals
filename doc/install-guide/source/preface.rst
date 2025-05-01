@@ -31,32 +31,23 @@ Operating systems
 Currently, this guide describes OpenStack installation for the following
 Linux distributions:
 
-openSUSE and SUSE Linux Enterprise Server
-  You can install OpenStack by using packages on openSUSE Leap 42.3, openSUSE
-  Leap 15, SUSE Linux Enterprise Server 12 SP4, SUSE Linux Enterprise
-  Server 15 through the Open Build
-  Service Cloud repository.
-
-Red Hat Enterprise Linux and CentOS
-  You can install OpenStack by using packages available on both Red
-  Hat Enterprise Linux 7 and 8 and their derivatives through the RDO
-  repository.
+Red Hat Enterprise Linux and CentOS Stream
+  You can install OpenStack using packages available for Red Hat
+  Enterprise Linux 9, CentOS Stream 9 and their derivatives through
+  the RDO repository.
 
   .. note::
 
-     OpenStack Wallaby is available for CentOS Stream 8. OpenStack Ussuri and
-     Victoria are available for both CentOS 8 and RHEL 8. OpenStack Train and
-     earlier are available on both CentOS 7 and RHEL 7.
+     OpenStack 2023.2 Bobcat, 2024.1 Caracal and 2024.2 Dalmatian are
+     available for Red Hat Enterprise Linux 9 and CentOS Stream 9.
 
 Ubuntu
   You can walk through an installation by using packages available through
-  Canonical's Ubuntu Cloud archive repository for Ubuntu 16.04+ (LTS).
+  Canonical's Ubuntu Cloud archive repository for Ubuntu 22.04+ (LTS).
 
   .. note::
 
-     The Ubuntu Cloud Archive pockets for Pike and Queens provide
-     OpenStack packages for Ubuntu 16.04 LTS; OpenStack Queens is
-     installable direct using Ubuntu 18.04 LTS; the Ubuntu Cloud
-     Archive pockets for Rocky and Stein provide OpenStack packages
-     for Ubuntu 18.04 LTS; the Ubuntu Cloud Archive pocket for
-     Victoria provides OpenStack packages for Ubuntu 20.04 LTS.
+     The Ubuntu Cloud Archive pockets for Zed, 2023.1 Antelope,
+     2023.2 Bobcat and 2024.1 Caracal provides OpenStack packages for
+     Ubuntu 22.04 LTS; the Ubuntu Cloud Archive pocket for 2024.2 Dalmatian
+     provides OpenStack packages for 24.04 LTS.
