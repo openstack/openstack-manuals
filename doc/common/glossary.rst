@@ -3981,11 +3981,6 @@ T
 
       Alternative term for a non-durable queue.
 
-   TripleO
-
-      OpenStack-on-OpenStack program. The code name for the
-      OpenStack Deployment program.
-
    trove
 
       Codename for OpenStack :term:`Database service <Database service
