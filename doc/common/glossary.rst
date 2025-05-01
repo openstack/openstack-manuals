@@ -2805,6 +2805,14 @@ O
       A standardized interface for managing compute, data, and network
       resources, currently unsupported in OpenStack.
 
+   Open Virtual Network (OVN)
+
+      OVN (Open Virtual Network) is a set of services that convert
+      virtual network setups into OpenFlow rules, and apply them into
+      Open vSwitch. OVN provides a more abstract layer than Open vSwitch,
+      allowing working with logical routers and logical switches, instead of
+      flows.
+
    Open Virtualization Format (OVF)
 
       Standard for packaging VM images. Supported in OpenStack.
