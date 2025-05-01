@@ -794,11 +794,6 @@ C
       retrieves from the metadata service, such as the SSH public key and
       user data.
 
-   cloudadmin
-
-      One of the default roles in the Compute RBAC system. Grants
-      complete system access.
-
    Cloudbase-Init
 
       A Windows project providing guest initialization features,
@@ -1161,11 +1156,6 @@ D
       that users access to receive a desktop experience from
       any location. This may provide general use, development, or
       even homogeneous testing environments.
-
-   developer
-
-      One of the default roles in the Compute RBAC system and the
-      default role assigned to a new user.
 
    device ID
 
@@ -2158,11 +2148,6 @@ I
       One of the VM image disk formats supported by Image
       service.
 
-   itsec
-
-      A default role in the Compute RBAC system that can quarantine an
-      instance in any project.
-
 J
 ~
 
@@ -2544,12 +2529,6 @@ N
 
       Released as open source by NASA in 2010 and is the basis for
       Compute.
-
-   netadmin
-
-      One of the default roles in the Compute RBAC system. Enables the
-      user to allocate publicly accessible IP addresses to instances and
-      change firewall rules.
 
    NetApp volume driver
 
@@ -3853,12 +3832,6 @@ S
 
       Point in time since the last container and accounts database
       sync among nodes within Object Storage.
-
-   sysadmin
-
-      One of the default roles in the Compute RBAC system. Enables a
-      user to add other users to a project, interact with VM images that are
-      associated with the project, and start and stop VM instances.
 
    system usage
 
