@@ -2923,11 +2923,6 @@ P
 
 .. glossary::
 
-   panko
-
-      Part of the OpenStack :term:`Telemetry service <Telemetry
-      service (telemetry)>`; provides event storage.
-
    parent cell
 
       If a requested resource, such as CPU time, disk storage, or
