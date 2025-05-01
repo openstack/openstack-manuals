@@ -382,9 +382,11 @@ A
 
    availability zone
 
-      An Amazon EC2 concept of an isolated area that is used for fault
-      tolerance. Do not confuse with an OpenStack Compute zone or
-      cell.
+     An Availability Zone (AZ) is a logical subdivision of cloud storage,
+     compute and network services. It provides a way for cloud operators
+     to logically segment their compute based on arbitrary factors like
+     location (country, data center, rack), network layout and/or power
+     source.
 
    AWS CloudFormation template
 
