@@ -4294,34 +4294,10 @@ X
       attributes as well depending upon the version. The most recent
       and standard version of X.509 is v3.
 
-   Xen
-
-      Xen is a hypervisor using a microkernel design, providing
-      services that allow multiple computer operating systems to
-      execute on the same computer hardware concurrently.
-
-   Xen API
-
-      The Xen administrative API, which is supported by
-      Compute.
-
-   Xen Cloud Platform (XCP)
-
-      An OpenStack-supported hypervisor.
-
-   Xen Storage Manager Volume Driver
-
-      A Block Storage volume plug-in that enables communication with
-      the Xen Storage Manager API.
-
    Xena
 
       The code name for the twenty fourth release of OpenStack.
       The release is named after a fictional warrior princess.
-
-   XenServer
-
-      An OpenStack-supported hypervisor.
 
    XFS
 
