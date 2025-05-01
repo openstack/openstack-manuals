@@ -1653,6 +1653,14 @@ G
       An IP address, typically assigned to a router, that
       passes network traffic between different networks.
 
+   generic network virtualization encapsulation (Geneve)
+
+      A flexible network protocol that adapts to the changing needs
+      and capabilities of devices in virtualized networks. It provides
+      a tunneling framework without being prescriptive, supporting
+      evolving network requirements. Geneve is predominantly used for
+      OVN projects networks.
+
    generic receive offload (GRO)
 
       Feature of certain network interface drivers that
