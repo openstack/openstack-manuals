@@ -3684,11 +3684,6 @@ S
       virtual device. Currently supported in OpenStack Havana and later
       releases.
 
-   SmokeStack
-
-      Runs automated tests against the core OpenStack API; written in
-      Rails.
-
    snapshot
 
       A point-in-time copy of an OpenStack storage volume or image.
