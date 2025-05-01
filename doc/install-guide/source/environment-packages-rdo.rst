@@ -268,5 +268,5 @@ Further references
 
 * `Red Hat - Introduction to Red Hat OpenStack Platform / Understanding Red Hat OpenStack Platform
   <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.1/html/introduction_to_red_hat_openstack_platform/assembly_understanding-red-hat-openstack-platform>`_
-* `RDO - Overview of available RDO repos <https://www.rdoproject.org/what/repos/>`_
-* `RDO - Packstack <https://www.rdoproject.org/install/packstack/>`_
+* `RDO - Overview of available RDO repos <https://www.rdoproject.org/deliverables/repos/>`_
+* `RDO - Packstack <https://www.rdoproject.org/deploy/packstack/>`_
