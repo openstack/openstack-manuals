@@ -3473,8 +3473,12 @@ S
 
    scoped token
 
-      An Identity service API access token that is associated with a
-      specific project.
+      An Identity service API access token that is associated
+      with a single scope of operation. This token provides
+      access based on defined scopes, which can vary depending
+      on the level of access required. Scopes can include
+      system-level access, domain-level access, or
+      project-specific access.
 
    scrubber
 
