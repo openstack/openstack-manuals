@@ -3383,6 +3383,10 @@ R
       OpenStack summit took place in Vancouver, Canada. The release
       is named after the Rocky Mountains.
 
+   Rocky Linux
+
+      A Linux distribution that is compatible with OpenStack.
+
    role
 
       A personality that a user assumes to perform a specific set of
