@@ -144,6 +144,12 @@ A
       The protocol by which layer-3 IP addresses are resolved into
       layer-2 link local addresses.
 
+   admin (Role)
+
+      A role that grants highest privileges in an OpenStack deployment.
+      In many cases, admin rights can imply broader system access, depending on
+      deployment policies.
+
    admin API
 
       A subset of API calls that are accessible to authorized
@@ -2367,6 +2373,14 @@ M
       Logical groupings of related code, such as the Block Storage
       volume manager or network manager.
 
+   manager (Role)
+
+      A role positioned between the admin and member roles, providing
+      limited identity management. It has a narrower scope and purpose,
+      focused on managing identity-related resources. When assigned at the
+      domain scope, the manager role allows users to manage users,
+      projects, groups, and role assignments within an entire domain.
+
    manifest
 
       Used to track segments of a large object within Object
@@ -2403,6 +2417,12 @@ M
 
       Project name for OpenStack Network Information Service. To be
       merged with Networking.
+
+   member (Role)
+
+      A role that provides intermediate privileges between the admin and reader
+      roles. The member role offers a way to introduce more granular access
+      control and flexibility across different scopes.
 
    membership
 
@@ -3248,6 +3268,15 @@ R
       One of the VM image disk formats supported by Image service; an
       unstructured disk image.
 
+   reader (Role)
+
+      A role that grants read-only access to resources within a specific
+      scope — system, domain, or project. The behavior of the reader role
+      depends on its assigned scope. For example, a system-level reader
+      can view all projects in the deployment, while a domain-level reader
+      can only view projects within their domain. This scope-based distinction
+      affects how APIs behave for different users with the reader role.
+
    rebalance
 
       The process of distributing Object Storage partitions across all
@@ -3545,6 +3574,16 @@ S
       An OpenStack service, such as Compute, Object Storage, or Image
       service. Provides one or more endpoints through which users can access
       resources and perform operations.
+
+   service (Role)
+
+      A role reserved for service-to-service communication. It allows one
+      service to interact with another and be granted only the necessary
+      elevated privileges by the receiving service. The service role was
+      introduced to replace the previous practice of assigning the overly
+      privileged admin role to service users. With this role,
+      service-to-service APIs can now default to using the service role,
+      ensuring more secure and limited access tailored to inter-service needs.
 
    service catalog
 
