@@ -164,8 +164,7 @@ To begin sending API requests, use one of the following methods:
    automation tasks in Python by making calls on Python objects rather
    than making REST calls directly. All OpenStack command-line tools are
    implemented by using the Python SDK. See `OpenStack Python
-   SDK <https://docs.openstack.org/user-guide/sdk.html>`__ in the
-   *OpenStack End User Guide*.
+   SDK <https://docs.openstack.org/user-guide/sdk.html>`__ in the *OpenStack End User Guide*.
 
 .. toctree::
    :maxdepth: 2

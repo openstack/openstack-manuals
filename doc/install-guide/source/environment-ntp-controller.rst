@@ -1,8 +1,8 @@
 .. _environment-ntp-controller:
 
-=================
+================
  Controller node
-=================
+================
 
 Perform these steps on the controller node.
 
@@ -17,28 +17,22 @@ Install and configure components
 
       # apt install chrony
 
-   For RHEL or CentOS:
+   For RHEL or CentOS Stream:
 
    .. code-block:: console
 
       # dnf install chrony
 
-   For SUSE:
-
-   .. code-block:: console
-
-      # zypper install chrony
-
 2. Edit the ``chrony.conf`` file and add, change, or remove the following keys
    as necessary for your environment.
 
-   For RHEL, CentOS, or SUSE, edit the ``/etc/chrony.conf`` file:
+   For RHEL or CentOS Stream, edit the ``/etc/chrony.conf`` file:
 
    .. code-block:: ini
 
       server NTP_SERVER iburst
 
-   For RHEL/CentOS in case of using firewalld don't forget to update firewall rules as follows:
+   For RHEL/CentOS Stream in case of using firewalld don't forget to update firewall rules as follows:
 
    .. code-block:: console
 
@@ -80,7 +74,7 @@ Install and configure components
 
       # service chrony restart
 
-   For RHEL, CentOS, or SUSE:
+   For RHEL or CentOS Stream:
 
    .. code-block:: console
 
