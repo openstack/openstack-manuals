@@ -2543,11 +2543,6 @@ M
       Facility in Compute that allows each virtual machine instance to
       have more than one VIF connected to it.
 
-   murano
-
-      Codename for the :term:`Application Catalog service <Application Catalog
-      service (murano)>`.
-
 N
 ~
 
