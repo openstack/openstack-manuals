@@ -2311,6 +2311,9 @@ L
       Enables a Linux bridge to understand a Networking port,
       interface attachment, and other abstractions.
 
+      This driver was removed in the 2025.1 (Epoxy) release of
+      OpenStack, it is recommended to migrate to the OVN driver.
+
    Linux containers (LXC)
 
       An OpenStack-supported hypervisor.
