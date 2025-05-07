@@ -190,6 +190,10 @@ A
       pool so it can be associated with a fixed IP on a guest VM
       instance.
 
+   AlmaLinux
+
+      A free, open-source RHEL-compatible Linux distribution.
+
    Amazon Kernel Image (AKI)
 
       Both a VM container format and disk format. Supported by Image
