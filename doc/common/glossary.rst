@@ -2731,12 +2731,6 @@ N
 
       Alternative term for the :term:`Compute API <Compute API (nova API)>`.
 
-   nova-network
-
-      A Compute component that manages IP address allocation,
-      firewalls, and other network-related tasks. This is the legacy
-      networking option and an alternative to Networking.
-
 O
 ~
 
