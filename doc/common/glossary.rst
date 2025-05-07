@@ -814,16 +814,6 @@ C
       A Windows project providing guest initialization features,
       similar to cloud-init.
 
-   cloudpipe
-
-      A compute service that creates VPNs on a per-project
-      basis.
-
-   cloudpipe image
-
-      A pre-made VM image that serves as a cloudpipe server.
-      Essentially, OpenVPN running on Linux.
-
    Clustering service (senlin)
 
       The project that implements clustering services and libraries
