@@ -4166,10 +4166,6 @@ V
 
       Alternative term for a virtual network.
 
-   VirtualBox
-
-      An OpenStack-supported hypervisor.
-
    Vitrage
 
       Code name for the :term:`Root Cause Analysis service <Root Cause
