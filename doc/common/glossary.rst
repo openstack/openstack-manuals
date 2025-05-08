@@ -209,6 +209,12 @@ A
       Both a VM container format and disk format. Supported by Image
       service.
 
+   Ansible
+
+      Ansible is an open-source automation tool that can be used to deploy,
+      configure, and manage OpenStack environments using simple, repeatable
+      playbooks.
+
    aodh
 
       Part of the OpenStack :term:`Telemetry service <Telemetry
