@@ -2909,10 +2909,12 @@ O
       In the context of Object Storage, this is a process that is not
       terminated after an upgrade, restart, or reload of the service.
 
-   Oslo
+   oslo
 
       Codename for the :term:`Common Libraries project <Common Libraries
-      (oslo)>`.
+      (oslo)>`. It's a collection of tools and libraries that help
+      OpenStack services share common features like logging, configuration,
+      and messaging.
 
 P
 ~
