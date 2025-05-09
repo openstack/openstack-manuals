@@ -3696,6 +3696,12 @@ S
       virtual device. Currently supported in OpenStack Havana and later
       releases.
 
+   Skyline
+
+      An OpenStack dashboard with optimized modern user interface (UI) and
+      user experience (UX). It offers an improved performance, supporting
+      higher concurrency compared to previous dashboard solutions.
+
    snapshot
 
       A point-in-time copy of an OpenStack storage volume or image.
