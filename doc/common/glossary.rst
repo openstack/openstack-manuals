@@ -3276,11 +3276,16 @@ R
 
       A recommended architecture for an OpenStack cloud.
 
-   region
+   Region
 
-      A discrete OpenStack environment with dedicated API endpoints
-      that typically shares only the Identity (keystone) with other
-      regions.
+      A region in OpenStack represents a complete OpenStack
+      cluster that has a dedicated control plane and set
+      of API endpoints. It is common for operators
+      of large clouds to offer their users several OpenStack
+      regions, which differ by their geographical
+      location or purpose. In order to easily navigate
+      in a multi-region environment, cloud users need
+      a way to distinguish clusters by their names.
 
    registry
 
