@@ -2884,6 +2884,13 @@ O
       2023.1 Antelope. Followed by, respectively, 2023.2 Bobcat,
       2024.1 Caracal, 2024.2 Dalmatian, 2025.1 Epoxy, 2025.2 Flamingo.
 
+   OpenStack-Ansible
+
+      OpenStack-Ansible (OSA) provides Ansible playbooks and
+      roles for deploying and configuring an OpenStack
+      environment, enabling scalable and automated cloud
+      infrastructure management.
+
    openSUSE
 
       A Linux distribution that is compatible with OpenStack.
