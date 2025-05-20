@@ -24,17 +24,17 @@ For the available OpenStack documentation, see
 The following guides explain how to install a Proof-of-Concept OpenStack cloud
 and its associated components:
 
-* `Rocky Installation Guides <https://docs.openstack.org/rocky/install/>`_
+* `2025.1 Epoxy Installation Guides <https://docs.openstack.org/2025.1/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
 *  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
 
-*  `Rocky Administrator Guides <https://docs.openstack.org/rocky/admin/>`_
+*  `Administrator Guides <https://docs.openstack.org/2025.1/admin/>`_
 
-*  `Rocky Configuration Guides <https://docs.openstack.org/rocky/configuration/>`_
+*  `Configuration Guides <https://docs.openstack.org/2025.1/configuration/>`_
 
-*  `Rocky Networking Guide <https://docs.openstack.org/neutron/rocky/admin/>`_
+*  `Networking Guide <https://docs.openstack.org/neutron/2025.1/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
@@ -44,8 +44,8 @@ The following books explain how to configure and run an OpenStack cloud:
 
 The following book explains how to use the command-line clients:
 
-*  `Rocky API Bindings
-   <https://docs.openstack.org/rocky/language-bindings.html>`_
+*  `API Bindings
+   <https://docs.openstack.org/2025.1/language-bindings.html>`_
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
@@ -92,7 +92,7 @@ Some tips:
    ``"Kilo release" vs git commit bc79c3ecc55929bac585d04a03475b72e06a3208``.
 
 *  Any deployment-specific information is helpful, such as whether you
-   are using Ubuntu 14.04 or are performing a multi-node installation.
+   are using CentOS Stream 9 or are performing a multi-node installation.
 
 The following Launchpad Bugs areas are available:
 
@@ -116,24 +116,19 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: OpenStack Object Storage
    (swift) <https://bugs.launchpad.net/swift>`_
 
-*  `Bugs: Application catalog (murano) <https://bugs.launchpad.net/murano>`_
-
 *  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`_
 
 *  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`_
 
 *  `Bugs: Container Infrastructure Management service (magnum) <https://bugs.launchpad.net/magnum>`_
 
-*  `Bugs: Data processing service
-   (sahara) <https://bugs.launchpad.net/sahara>`_
-
-*  `Bugs: Database service (trove) <https://bugs.launchpad.net/trove>`_
+*  `Bugs: Database service (trove) <https://storyboard.openstack.org/#!/project_group/trove>`_
 
 *  `Bugs: DNS service (designate) <https://bugs.launchpad.net/designate>`_
 
 *  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`_
 
-*  `Bugs: Monitoring (monasca) <https://bugs.launchpad.net/monasca>`_
+*  `Bugs: Monitoring (monasca) <https://storyboard.openstack.org/#!/project_group/monasca>`_
 
 *  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`_
 
@@ -143,9 +138,6 @@ The following Launchpad Bugs areas are available:
 
 *  `Bugs: Telemetry
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`_
-
-*  `Bugs: Telemetry v3
-   (gnocchi) <https://bugs.launchpad.net/gnocchi>`_
 
 *  `Bugs: Workflow service
    (mistral) <https://bugs.launchpad.net/mistral>`_
@@ -178,12 +170,12 @@ OFTC network. You can hang out, ask questions, or get immediate
 feedback for urgent and pressing issues. To install an IRC client or use
 a browser-based client, go to
 `https://webchat.oftc.net/ <https://webchat.oftc.net>`_. You can
-also use `Colloquy <http://colloquy.info/>`_ (Mac OS X),
-`mIRC <http://www.mirc.com/>`_ (Windows),
+also use `Colloquy <https://colloquy.app/>`_ (Mac OS X),
+`mIRC <https://www.mirc.com/>`_ (Windows),
 or XChat (Linux). When you are in the IRC channel
 and want to share code or command output, the generally accepted method
 is to use a Paste Bin. The OpenStack project has one at `Paste
-<http://paste.openstack.org>`_. Just paste your longer amounts of text or
+<https://paste.opendev.org>`_. Just paste your longer amounts of text or
 logs in the web form and you get a URL that you can paste into the
 channel. The OpenStack IRC channel is ``#openstack`` on
 ``irc.oftc.net``. You can find a list of all OpenStack IRC channels on
@@ -196,7 +188,7 @@ A great way to get answers and insights is to post your question or
 problematic scenario to the OpenStack mailing list. You can learn from
 and help others who might have similar issues. To subscribe or view the
 archives, go to the `general OpenStack mailing list
-<http://lists.openstack.org/cgi-bin/mailman/listinfo/openstack>`_. If you are
+<https://lists.openstack.org/mailman3/lists/openstack-discuss.lists.openstack.org/>`_. If you are
 interested in the other mailing lists for specific projects or development,
 refer to `Mailing Lists <https://wiki.openstack.org/wiki/Mailing_Lists>`_.
 
@@ -206,10 +198,7 @@ OpenStack distribution packages
 The following Linux distributions provide community-supported packages
 for OpenStack:
 
-*  **CentOS, Fedora, and Red Hat Enterprise Linux:**
+*  **CentOS Stream and Red Hat Enterprise Linux:**
    https://www.rdoproject.org/
-
-*  **openSUSE and SUSE Linux Enterprise Server:**
-   https://en.opensuse.org/Portal:OpenStack
 
 *  **Ubuntu:** https://wiki.ubuntu.com/OpenStack/CloudArchive

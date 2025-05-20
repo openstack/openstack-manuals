@@ -1,8 +1,8 @@
 .. _environment-ntp-other:
 
-=============
+============
  Other nodes
-=============
+============
 
 Other nodes reference the controller node for clock synchronization.
 Perform these steps on all other nodes.
@@ -18,28 +18,22 @@ Install and configure components
 
       # apt install chrony
 
-   For RHEL or CentOS:
+   For RHEL or CentOS Stream:
 
    .. code-block:: console
 
       # dnf install chrony
 
-   For SUSE:
-
-   .. code-block:: console
-
-      # zypper install chrony
-
 2. Configure the ``chrony.conf`` file and comment out or remove all
    but one ``server`` key. Change it to reference the controller node.
 
-   For RHEL, CentOS, or SUSE, edit the ``/etc/chrony.conf`` file:
+   For RHEL or CentOS Stream, edit the ``/etc/chrony.conf`` file:
 
    .. code-block:: ini
 
       server controller iburst
 
-   For RHEL/CentOS in case of using firewalld don't forget to update firewall rules as follows:
+   For RHEL/CentOS Stream in case of using firewalld don't forget to update firewall rules as follows:
 
    .. code-block:: console
 
@@ -62,7 +56,7 @@ Install and configure components
 
       # service chrony restart
 
-   For RHEL, CentOS, or SUSE:
+   For RHEL or CentOS Stream:
 
    .. code-block:: console
 
