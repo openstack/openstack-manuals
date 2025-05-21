@@ -14,6 +14,25 @@ Archive.
 
 Archive Enablement
 ------------------
+
+**OpenStack 2025.1 Epoxy for Ubuntu 24.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:epoxy
+
+**OpenStack 2024.2 Dalmatian for Ubuntu 24.04 LTS:**
+
+.. code-block:: console
+
+   # add-apt-repository cloud-archive:dalmatian
+
+**OpenStack 2024.1 Caracal for Ubuntu 24.04 LTS:**
+
+.. code-block:: console
+
+   OpenStack Caracal is available by default using Ubuntu 24.04 LTS.
+
 **OpenStack 2024.1 Caracal for Ubuntu 22.04 LTS:**
 
 .. code-block:: console
