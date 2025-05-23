@@ -2891,10 +2891,6 @@ O
       environment, enabling scalable and automated cloud
       infrastructure management.
 
-   openSUSE
-
-      A Linux distribution that is compatible with OpenStack.
-
    operator
 
       The person responsible for planning and maintaining an OpenStack
@@ -3836,10 +3832,6 @@ S
    subnet
 
       Logical subdivision of an IP network.
-
-   SUSE Linux Enterprise Server (SLES)
-
-      A Linux distribution that is compatible with OpenStack.
 
    suspend
 
