@@ -292,7 +292,7 @@ Clean up
 --------
 
 The image needs to be cleaned up of details such as the MAC address - the tool
-used is :command:`virt-sysprep`, part of `libguestfs <https://libguestfs.org/virt-sysprep.1.html>`_
+used is `virt-sysprep <https://libguestfs.org/virt-sysprep.1.html>`_, part of `libguestfs <https://libguestfs.org>`_
 
 .. code-block:: console
 
@@ -302,8 +302,8 @@ Resize the image
 ----------------
 
 Resize and compress the image to remove unused space (the image will then use
-available space after initialization) using :command:`virt-sparsify`, part of
-`libguestfs <https://libguestfs.org/virt-sparsify.1.html>`_
+available space after initialization) using `virt-sparsify <https://libguestfs.org/virt-sparsify.1.html>`_, part of
+`libguestfs <https://libguestfs.org>`_
 
 .. code-block:: console
 
