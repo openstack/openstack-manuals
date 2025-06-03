@@ -63,66 +63,6 @@ Archive Enablement
 
    OpenStack Yoga is available by default using Ubuntu 22.04 LTS.
 
-**OpenStack Yoga for Ubuntu 20.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:yoga
-
-**OpenStack Xena for Ubuntu 20.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:xena
-
-**OpenStack Wallaby for Ubuntu 20.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:wallaby
-
-**OpenStack Victoria for Ubuntu 20.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:victoria
-
-**OpenStack Ussuri for Ubuntu 20.04 LTS:**
-
-.. code-block:: console
-
-   OpenStack Ussuri is available by default using Ubuntu 20.04 LTS.
-
-**OpenStack Ussuri for Ubuntu 18.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:ussuri
-
-**OpenStack Train for Ubuntu 18.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:train
-
-**OpenStack Stein for Ubuntu 18.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:stein
-
-**OpenStack Rocky for Ubuntu 18.04 LTS:**
-
-.. code-block:: console
-
-   # add-apt-repository cloud-archive:rocky
-
-**OpenStack Queens for Ubuntu 18.04 LTS:**
-
-.. code-block:: console
-
-   OpenStack Queens is available by default using Ubuntu 18.04 LTS.
-
 .. note::
 
    For a full list of supported Ubuntu OpenStack releases,
