@@ -506,6 +506,7 @@ _RETIRED_REPOS = [
     'openstack/openstack-ansible-pip_lock_down',
     'openstack/openstack-ansible-repo_build',
     'openstack/openstack-ansible-security',
+    'openstack/openstack-helm-infra',
     'openstack/os-acc',
     'openstack/os-cloud-config',
     'openstack/oslosphinx',
