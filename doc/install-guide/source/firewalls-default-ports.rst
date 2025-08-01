@@ -15,18 +15,12 @@ ports that each OpenStack service uses:
 
    * - OpenStack service
      - Default ports
-   * - Application Catalog (``murano``)
-     - 8082
    * - Backup Service (``Freezer``)
      - 9090
    * - Bare Metal provisioning service (``Ironic``)
      - 6385
-   * - Big Data Processing Framework (``sahara``)
-     - 8386
    * - Block Storage (``cinder``)
      - 8776
-   * - Clustering (``senlin``)
-     - 8777
    * - Compute (``nova``) endpoints
      - 8774
    * - Compute ports for access to virtual machine consoles
@@ -39,8 +33,6 @@ ports that each OpenStack service uses:
      - 9511
    * - Container Service (``Zun``)
      - 9517
-   * - Data processing service (``sahara``) endpoint
-     - 8386
    * - Database service (``Trove``)
      - 8779
    * - DNS service (``Designate``)
@@ -81,8 +73,6 @@ ports that each OpenStack service uses:
      - 8786
    * - Telemetry alarming service (``Aodh``)
      - 8042
-   * - Telemetry event service (``Panko``)
-     - 8977
    * - Workflow service (``Mistral``)
      - 8989
 

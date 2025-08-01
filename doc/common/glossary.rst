@@ -275,12 +275,6 @@ A
 
       A Java program that can be embedded into a web page.
 
-   Application Catalog service (murano)
-
-      The project that provides an application catalog service so that users
-      can compose and deploy composite environments on an application
-      abstraction level while managing the application lifecycle.
-
    Application Programming Interface (API)
 
       A collection of specifications used to access a service,
@@ -1068,12 +1062,6 @@ D
       Software programs used to protect sensitive information
       and prevent it from leaking outside a network boundary
       through the detection and denying of the data transportation.
-
-   Data Processing service (sahara)
-
-      OpenStack project that provides a scalable
-      data-processing stack and associated management
-      interfaces.
 
    data store
 

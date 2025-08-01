@@ -118,8 +118,6 @@ The following Launchpad Bugs areas are available:
 
 *  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`_
 
-*  `Bugs: Clustering service (senlin) <https://bugs.launchpad.net/senlin>`_
-
 *  `Bugs: Container Infrastructure Management service (magnum) <https://bugs.launchpad.net/magnum>`_
 
 *  `Bugs: Database service (trove) <https://storyboard.openstack.org/#!/project_group/trove>`_
