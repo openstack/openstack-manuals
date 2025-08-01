@@ -65,8 +65,6 @@ ports that each OpenStack service uses:
      - 8004
    * - Orchestration AWS CloudFormation-compatible API (``openstack-heat-api-cfn``)
      - 8000
-   * - Orchestration AWS CloudWatch-compatible API (``openstack-heat-api-cloudwatch``)
-     - 8778
    * - Placement API (``placement``)
      - 8003
    * - Proxy port for HTML5 console used by Compute service
