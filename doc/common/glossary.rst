@@ -983,14 +983,6 @@ C
       or the main API of a specific core project, such as Compute,
       Networking, Image service, and so on.
 
-   core service
-
-      An official OpenStack service defined as core by
-      Interop Working Group. Currently, consists of
-      Block Storage service (cinder), Compute service (nova),
-      Identity service (keystone), Image service (glance),
-      Networking service (neutron), and Object Storage service (swift).
-
    cost
 
       Under the Compute distributed scheduler, this is calculated by
