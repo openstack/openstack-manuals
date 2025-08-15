@@ -1,4 +1,5 @@
 #!/bin/bash -e
+set -e -u -x
 
 mkdir -p publish-docs/html
 

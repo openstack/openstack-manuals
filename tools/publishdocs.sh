@@ -12,6 +12,9 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+## Shell Opts
+set -e -u -x
+
 mkdir -p publish-docs/html
 
 # Build all RST guides including PDF files
