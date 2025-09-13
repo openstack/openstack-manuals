@@ -48,6 +48,10 @@ OpenStack contribution process.
 
       The code name for the thirty second release of OpenStack.
 
+   2026.1 Gazpacho
+
+      The code name for the thirty third release of OpenStack.
+
    6to4
 
       A mechanism that allows IPv6 packets to be transmitted
