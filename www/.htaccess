@@ -34,9 +34,9 @@ redirectmatch {{ code }} ^{{ path }}($|/.*$) {{ result }}
    Arguments:
      path -- the partial regex representing the input path (should not end in /)
      result -- the subdirectory under /RELEASED_SERIES, (should start with /)
-     code -- the response code (defaults to 301)
+     code -- the response code (defaults to 302)
 #}
-{% macro path_to_released_series(path, result, code=301) -%}
+{% macro path_to_released_series(path, result, code=302) -%}
 {{ path_to_page(path, '/' + RELEASED_SERIES + result, code) }}
 {%- endmacro %}
 
@@ -66,16 +66,16 @@ redirectmatch {{ code }} ^{{ path }}(?![^/])/?(.*)$ {{ result }}
 
 # Redirect old top-level HTML pages to the version under most recent
 # full release.
-redirectmatch 301 ^/$ /{{ RELEASED_SERIES }}/
-redirectmatch 301 ^/index.html$ /{{ RELEASED_SERIES }}/
-redirectmatch 301 ^/openstack-projects.html$ /{{ RELEASED_SERIES }}/projects.html
-redirectmatch 301 ^/language-bindings.html$ /{{ RELEASED_SERIES }}/language-bindings.html
+redirectmatch 302 ^/$ /{{ RELEASED_SERIES }}/
+redirectmatch 302 ^/index.html$ /{{ RELEASED_SERIES }}/
+redirectmatch 302 ^/openstack-projects.html$ /{{ RELEASED_SERIES }}/projects.html
+redirectmatch 302 ^/language-bindings.html$ /{{ RELEASED_SERIES }}/language-bindings.html
 
 # Redirect docs.openstack.org index.html subpage pointers to main page
-{{ dir_to_page('/install', '/' + RELEASED_SERIES + '/install/') }}
-{{ dir_to_page('/basic-install', '/' + RELEASED_SERIES + '/install/') }}
+{{ dir_to_page('/install', '/' + RELEASED_SERIES + '/install/', 302) }}
+{{ dir_to_page('/basic-install', '/' + RELEASED_SERIES + '/install/', 302) }}
 {{ dir_to_page('/run', '/') }}
-redirect 301 /developer/index.html /{{ RELEASED_SERIES }}/projects.html
+redirect 302 /developer/index.html /{{ RELEASED_SERIES }}/projects.html
 {{ dir_to_page('/cli', '/') }}
 redirect 301 /api/api-specs.html https://docs.openstack.org/api-quick-start/index.html
 
@@ -140,7 +140,7 @@ redirect 301 /openstack-ansible-lxc_container_create/ocata/ /openstack-ansible-l
 {{ path_to_released_series('/trunk/openstack-ops', '/admin/') }}
 
 # Redirect api list
-{{ deep_links('/api', '/' + RELEASED_SERIES + '/api/') }}
+{{ deep_links('/api', '/' + RELEASED_SERIES + '/api/', 302) }}
 
 # Redirect missing project page for openstack-charms
 {{ path_to_page('/openstack-charms', '/charm-guide/') }}
