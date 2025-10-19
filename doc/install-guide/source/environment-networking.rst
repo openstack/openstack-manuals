@@ -13,17 +13,9 @@ distribution, see the documentation.
 .. seealso::
 
    * `Ubuntu Network Configuration
-     <https://help.ubuntu.com/lts/serverguide/network-configuration.html>`__
-   * `RHEL 7
-     <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/index>`__
-     or `RHEL 8
-     <https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/index>`__ Network Configuration
-   * `SLES 12
-     <https://www.suse.com/documentation/sles-12/book_sle_admin/data/sec_basicnet_manconf.html>`__
-     or `SLES 15
-     <https://www.suse.com/documentation/sles-15/book_sle_admin/data/sec_network_manconf.html>`__
-     or `openSUSE
-     <https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.network.html>`__ Network Configuration
+     <https://documentation.ubuntu.com/server/explanation/networking/configuring-networks/>`__
+   * `RHEL 9
+     <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/configuring_and_managing_networking/index>`__ Network Configuration
 
 All nodes require Internet access for administrative purposes such as package
 installation, security updates, :term:`DNS <Domain Name System (DNS)>`, and
@@ -72,11 +64,6 @@ variations, this guide refers to the first interface as the
 interface with the lowest number and the second interface as the
 interface with the highest number.
 
-.. note::
-
-   Ubuntu has changed the network interface naming concept.
-   Refer `Changing Network Interfaces name Ubuntu 16.04 <https://askubuntu.com/questions/767786/changing-network-interfaces-name-ubuntu-16-04>`_.
-
 Unless you intend to use the exact configuration provided in this
 example architecture, you must modify the networks in this procedure to
 match your environment. Each node must resolve the other nodes by
@@ -92,7 +79,7 @@ the controller node.
 
 .. note::
 
-   RHEL, CentOS and SUSE distributions enable a restrictive
+   RHEL and CentOS Stream distributions enable a restrictive
    :term:`firewall` by default. Ubuntu does not. For more
    information about securing your environment, refer to the
    `OpenStack Security Guide
