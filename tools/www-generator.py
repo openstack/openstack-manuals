@@ -510,6 +510,7 @@ _RETIRED_REPOS = [
     'openstack/openstack-helm-infra',
     'openstack/os-acc',
     'openstack/os-cloud-config',
+    'openstack/os-net-config',
     'openstack/oslosphinx',
     'openstack/os-win',
     'openstack/oswin-tempest-plugin',
@@ -539,7 +540,13 @@ _RETIRED_REPOS = [
     'openstack/syntribos',
     'openstack/tempest-horizon',
     'openstack/tricircle',
+    'openstack/tripleo-ansible',
+    'openstack/tripleo-common',
+    'openstack/tripleo-docs',
     'openstack/tripleo-incubator',
+    'openstack/tripleo-operator-ansible',
+    'openstack/tripleo-quickstart',
+    'openstack/tripleo-validations',
 ]
 
 
