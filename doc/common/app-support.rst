@@ -116,6 +116,8 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: OpenStack Object Storage
    (swift) <https://bugs.launchpad.net/swift>`_
 
+*  `Bugs: OpenStack Placement (placement) <https://bugs.launchpad.net/placement>`_
+
 *  `Bugs: Bare metal service (ironic) <https://bugs.launchpad.net/ironic>`_
 
 *  `Bugs: Container Infrastructure Management service (magnum) <https://bugs.launchpad.net/magnum>`_
