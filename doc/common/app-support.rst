@@ -128,7 +128,7 @@ The following Launchpad Bugs areas are available:
 
 *  `Bugs: Monitoring (monasca) <https://storyboard.openstack.org/#!/project_group/monasca>`_
 
-*  `Bugs: Orchestration (heat) <https://bugs.launchpad.net/heat>`_
+*  `Bugs: Orchestration (heat) <https://storyboard.openstack.org/#!/project_group/heat>`_
 
 *  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`_
 
