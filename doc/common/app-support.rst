@@ -137,6 +137,9 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: Telemetry
    (ceilometer) <https://bugs.launchpad.net/ceilometer>`_
 
+*  `Bugs: Alarming
+   (aodh) <https://bugs.launchpad.net/aodh>`_
+
 *  `Bugs: Workflow service
    (mistral) <https://bugs.launchpad.net/mistral>`_
 
