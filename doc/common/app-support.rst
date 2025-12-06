@@ -128,8 +128,6 @@ The following Launchpad Bugs areas are available:
 
 *  `Bugs: Key Manager Service (barbican) <https://bugs.launchpad.net/barbican>`_
 
-*  `Bugs: Monitoring (monasca) <https://storyboard.openstack.org/#!/project_group/monasca>`_
-
 *  `Bugs: Orchestration (heat) <https://storyboard.openstack.org/#!/project_group/heat>`_
 
 *  `Bugs: Rating (cloudkitty) <https://bugs.launchpad.net/cloudkitty>`_
