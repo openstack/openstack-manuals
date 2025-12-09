@@ -10,27 +10,17 @@ one networking service, and the Dashboard, the Object Storage service can
 operate independently. If your use case only involves Object Storage, you can
 skip to
 
-* `Object Storage Installation Guide for 2023.2 (Bobcat) <https://docs.openstack.org/swift/2023.2/install/>`_
+* `Object Storage Installation Guide for 2025.2 (Flamingo) <https://docs.openstack.org/swift/2025.2/install/>`_
 
-* `Object Storage Installation Guide for 2023.1 (Antelope) <https://docs.openstack.org/swift/2023.1/install/>`_
+* `Object Storage Installation Guide for 2025.1 (Epoxy) <https://docs.openstack.org/swift/2025.1/install/>`_
 
-* `Object Storage Installation Guide for Zed <https://docs.openstack.org/swift/zed/install/>`_
-
-* `Object Storage Installation Guide for Yoga <https://docs.openstack.org/swift/yoga/install/>`_
-
-* `Object Storage Installation Guide for Stein <https://docs.openstack.org/swift/stein/install/>`_
+* `Object Storage Installation Guide for 2024.2 (Dalmatian) <https://docs.openstack.org/swift/2024.2/install/>`_
 
 after configuring the appropriate nodes for it.
 
 You must use an account with administrative privileges to configure each node.
 Either run the commands as the ``root`` user or configure the ``sudo``
 utility.
-
-.. note::
-
-  The :command:`systemctl enable` call on openSUSE outputs a warning
-  message when the service uses SysV Init scripts instead of native
-  systemd files. This warning can be ignored.
 
 
 For best performance, we recommend that your environment meets or exceeds
@@ -78,15 +68,11 @@ of nested VMs.
    interface.
 
 For more information about system requirements, see the
-`OpenStack 2023.2 (Bobcat) Administrator Guides <https://docs.openstack.org/2023.2/admin/>`_,
+`OpenStack 2025.2 (Flamingo) Administrator Guides <https://docs.openstack.org/2025.2/admin/>`_,
 the
-`OpenStack 2023.1 (Antelope) Administrator Guides <https://docs.openstack.org/2023.1/admin/>`_,
-the
-`OpenStack Zed Administrator Guides <https://docs.openstack.org/zed/admin/>`_,
-the
-`OpenStack Yoga Administrator Guides <https://docs.openstack.org/yoga/admin/>`_,
+`OpenStack 2025.1 (Epoxy) Administrator Guides <https://docs.openstack.org/2025.1/admin/>`_,
 or the
-`OpenStack Stein Administrator Guides <https://docs.openstack.org/stein/admin/>`_.
+`OpenStack 2024.2 (Dalmatian) Administrator Guides <https://docs.openstack.org/2024.2/admin/>`_.
 
 .. toctree::
    :maxdepth: 1

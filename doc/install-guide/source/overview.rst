@@ -32,16 +32,9 @@ following steps toward deployment using a production architecture:
   to automate deployment and management of the production environment.
   The OpenStack project has a couple of deployment projects with
   specific guides per version:
-  - `2023.2 (Bobcat) release <https://docs.openstack.org/2023.2/deploy/>`_
-  - `2023.1 (Antelope) release <https://docs.openstack.org/2023.1/deploy/>`_
-  - `Zed release <https://docs.openstack.org/zed/deploy/>`_
-  - `Yoga release <https://docs.openstack.org/yoga/deploy/>`_
-  - `Xena release <https://docs.openstack.org/xena/deploy/>`_
-  - `Wallaby release <https://docs.openstack.org/wallaby/deploy/>`_
-  - `Victoria release <https://docs.openstack.org/victoria/deploy/>`_
-  - `Ussuri release <https://docs.openstack.org/ussuri/deploy/>`_
-  - `Train release <https://docs.openstack.org/train/deploy/>`_
-  - `Stein release <https://docs.openstack.org/stein/deploy/>`_
+  - `2025.2 (Flamingo) release <https://docs.openstack.org/2025.2/deploy/>`_
+  - `2025.1 (Epoxy) release <https://docs.openstack.org/2025.1/deploy/>`_
+  - `2024.2 (Dalmatian) release <https://docs.openstack.org/2024.2/deploy/>`_
 
 .. _overview-example-architectures:
 
