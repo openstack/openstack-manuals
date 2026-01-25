@@ -11,8 +11,7 @@ suffixes should be used:
 
 * ``ubuntu`` for Ubuntu
 * ``debian`` for Debian
-* ``rdo`` for Red Hat Enterprise Linux and CentOS
-* ``obs`` for openSUSE and SUSE Linux Enterprise
+* ``rdo`` for Red Hat Enterprise Linux and CentOS Stream
 
 .. note::
 
