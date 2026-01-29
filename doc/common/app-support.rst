@@ -149,6 +149,9 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: Container service
    (zun) <https://bugs.launchpad.net/zun>`_
 
+*  `Bugs: Backup and Restore Service platform
+   (freezer) <https://bugs.launchpad.net/freezer>`_
+
 *  `Bugs: OpenStack API Documentation
    (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`_
 
