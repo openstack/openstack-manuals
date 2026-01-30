@@ -24,7 +24,7 @@ AlmaLinux provides cloud images for download, more detail on the
 
 .. note::
 
-   In an Almalinux cloud image, the login account is ``almalinux``.
+   In an AlmaLinux cloud image, the login account is ``almalinux``.
 
 Alpine Linux
 ~~~~~~~~~~~~
@@ -113,7 +113,7 @@ The Fedora project maintains a list of official cloud images at
    In a Fedora cloud image, the login account is ``fedora``.
 
 Kali Linux
-~~~~~~~~~~~~
+~~~~~~~~~~
 
 Kali Linux provides cloud images for download at the
 `Get Kali/Cloud page.
