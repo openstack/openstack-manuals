@@ -532,6 +532,7 @@ _RETIRED_REPOS = [
     'openstack/python-ceilometerclient',
     'openstack/python-congressclient',
     'openstack/python-dracclient',
+    'openstack/python-ironic-inspector-client',
     'openstack/python-karborclient',
     'openstack/python-monascaclient',
     'openstack/python-muranoclient',
