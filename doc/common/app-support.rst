@@ -24,17 +24,17 @@ For the available OpenStack documentation, see
 The following guides explain how to install a Proof-of-Concept OpenStack cloud
 and its associated components:
 
-* `2025.1 Epoxy Installation Guides <https://docs.openstack.org/2025.1/install/>`_
+* `2025.2 Flamingo Installation Guides <https://docs.openstack.org/2025.2/install/>`_
 
 The following books explain how to configure and run an OpenStack cloud:
 
 *  `Architecture Design Guide <https://docs.openstack.org/arch-design/>`_
 
-*  `Administrator Guides <https://docs.openstack.org/2025.1/admin/>`_
+*  `Administrator Guides <https://docs.openstack.org/2025.2/admin/>`_
 
-*  `Configuration Guides <https://docs.openstack.org/2025.1/configuration/>`_
+*  `Configuration Guides <https://docs.openstack.org/2025.2/configuration/>`_
 
-*  `Networking Guide <https://docs.openstack.org/neutron/2025.1/admin/>`_
+*  `Networking Guide <https://docs.openstack.org/neutron/2025.2/admin/>`_
 
 *  `High Availability Guide <https://docs.openstack.org/ha-guide/>`_
 
@@ -45,7 +45,7 @@ The following books explain how to configure and run an OpenStack cloud:
 The following book explains how to use the command-line clients:
 
 *  `API Bindings
-   <https://docs.openstack.org/2025.1/language-bindings.html>`_
+   <https://docs.openstack.org/2025.2/language-bindings.html>`_
 
 The following documentation provides reference and guidance information
 for the OpenStack APIs:
@@ -92,7 +92,7 @@ Some tips:
    ``"Kilo release" vs git commit bc79c3ecc55929bac585d04a03475b72e06a3208``.
 
 *  Any deployment-specific information is helpful, such as whether you
-   are using CentOS Stream 9 or are performing a multi-node installation.
+   are using CentOS Stream 10 or are performing a multi-node installation.
 
 The following Launchpad Bugs areas are available:
 
