@@ -152,6 +152,12 @@ The following Launchpad Bugs areas are available:
 *  `Bugs: Backup and Restore Service platform
    (freezer) <https://bugs.launchpad.net/freezer>`_
 
+*  `Bugs: OpenStack Modern Dashboard
+   (skyline-console) <https://bugs.launchpad.net/skyline-console>`_
+
+*  `Bugs: OpenStack Skyline APIServer
+   (skyline-apiserver) <https://bugs.launchpad.net/skyline-apiserver>`_
+
 *  `Bugs: OpenStack API Documentation
    (developer.openstack.org) <https://bugs.launchpad.net/openstack-api-site>`_
 
