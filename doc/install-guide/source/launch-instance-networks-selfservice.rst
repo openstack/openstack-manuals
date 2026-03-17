@@ -85,7 +85,7 @@ Create the self-service network
    .. code-block:: ini
 
       [ml2]
-      tenant_network_types = vxlan
+      project_network_types = vxlan
 
       [ml2_type_vxlan]
       vni_ranges = 1:1000
