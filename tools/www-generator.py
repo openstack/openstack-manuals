@@ -545,6 +545,7 @@ _RETIRED_REPOS = [
     'openstack/python-senlinclient',
     'openstack/python-solumclient',
     'openstack/python-tricircleclient',
+    'openstack/python-venusclient',
     'openstack/qinling',
     'openstack/qinling-dashboard',
     'openstack/sahara',
@@ -565,6 +566,10 @@ _RETIRED_REPOS = [
     'openstack/tripleo-operator-ansible',
     'openstack/tripleo-quickstart',
     'openstack/tripleo-validations',
+    'openstack/venus',
+    'openstack/venus-dashboard',
+    'openstack/venus-specs',
+    'openstack/venus-tempest-plugin',
     'openstack/virtualpdu',
 ]
 
