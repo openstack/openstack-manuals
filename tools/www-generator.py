@@ -79,7 +79,7 @@ SERIES_INFO = collections.OrderedDict([
     ('2024.2', SeriesInfo(date='October 2024', status='maintained')),
     ('2025.1', SeriesInfo(date='April 2025', status='maintained')),
     ('2025.2', SeriesInfo(date='October 2025', status='maintained')),
-    ('2026.1', SeriesInfo(date='April 2026', status='development')),
+    ('2026.1', SeriesInfo(date='April 2026', status='maintained')),
     ('2026.2', SeriesInfo(date='September 2026', status='development')),
 ])
 
