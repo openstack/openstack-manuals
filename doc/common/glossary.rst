@@ -2473,10 +2473,6 @@ M
       Can concurrently use multiple layer-2 networking technologies,
       such as 802.1Q and VXLAN, in Networking.
 
-   monasca
-
-      Codename for OpenStack :term:`Monitoring <Monitoring (monasca)>`.
-
    Monitor (LBaaS)
 
       LBaaS feature that provides availability monitoring using the
@@ -2486,15 +2482,6 @@ M
 
       A Ceph component that communicates with external clients, checks
       data state and consistency, and performs quorum functions.
-
-   Monitoring (monasca)
-
-      The OpenStack service that provides a multi-project, highly scalable,
-      performant, fault-tolerant monitoring-as-a-service solution for metrics,
-      complex event processing and logging. To build an extensible platform for
-      advanced monitoring services that can be used by both operators and
-      projects to gain operational insight and visibility, ensuring availability
-      and stability.
 
    multi-cloud computing
 
