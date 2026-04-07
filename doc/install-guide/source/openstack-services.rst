@@ -6,12 +6,37 @@ The installation of individual OpenStack services is covered in the
 Project Installation Guides that are available at the following
 locations:
 
+* `OpenStack Installation Guides for 2026.1 (Gazpacho)
+  <https://docs.openstack.org/2026.1/install/>`_
 * `OpenStack Installation Guides for 2025.2 (Flamingo)
   <https://docs.openstack.org/2025.2/install/>`_
 * `OpenStack Installation Guides for 2025.1 (Epoxy)
   <https://docs.openstack.org/2025.1/install/>`_
 * `OpenStack Installation Guides for 2024.2 (Dalmatian)
   <https://docs.openstack.org/2024.2/install/>`_
+
+Minimal deployment for 2026.1 (Gazpacho)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At a minimum, you will need to install the following services
+in the order below:
+
+* Identity service – `keystone installation for 2026.1 (Gazpacho)
+  <https://docs.openstack.org/keystone/2026.1/install/>`_
+* Image service – `glance installation for 2026.1 (Gazpacho)
+  <https://docs.openstack.org/glance/2026.1/install/>`_
+* Placement service – `placement installation for 2026.1 (Gazpacho)
+  <https://docs.openstack.org/placement/2026.1/install/>`_
+* Compute service – `nova installation for 2026.1 (Gazpacho)
+  <https://docs.openstack.org/nova/2026.1/install/>`_
+* Networking service – `neutron installation for 2026.1 (Gazpacho)
+  <https://docs.openstack.org/neutron/2026.1/install/>`_
+
+After you have installed the minimum services, we advise that
+the following components also be installed:
+
+* Dashboard – `horizon installation for 2026.1 (Gazpacho) <https://docs.openstack.org/horizon/2026.1/install/>`_
+* Block Storage service – `cinder installation for 2026.1 (Gazpacho) <https://docs.openstack.org/cinder/2026.1/install/>`_
 
 Minimal deployment for 2025.2 (Flamingo)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
