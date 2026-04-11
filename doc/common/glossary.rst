@@ -186,6 +186,12 @@ A
       Lower power consumption CPU often found in mobile and embedded
       devices. Supported by OpenStack.
 
+   Aetos
+
+      The aetos service provides a multi-tenancy layer and OpenStack
+      authentication for Prometheus. Part of the OpenStack
+      :term:`Telemetry service <Telemetry service (telemetry)>`.
+
    alert
 
       The Compute service can send alerts through its notification
