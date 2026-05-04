@@ -92,6 +92,19 @@
 
             </div>
         </div>
+        <div class="row docs-toc">
+            <div class="col-lg-12">
+    <div class="docs-link-sections">
+        <h3><i class="fa fa-times-circle"></i>Inactive Projects</h3>
+{% for project in projects|sort(attribute='service') %}
+{% if project.inactive %}
+        <a href="/{{project.name}}/{{SERIES}}/">
+            {{project.service}} ({{project.name}})</a><br />
+{% endif %}
+{% endfor %}
+    </div>
+            </div>
+        </div>
         <div class="row docs-contribute-wrapper">
             <div class="col-lg-12">
                 <p>Documentation treated like code, powered by the community - interested?</p>
