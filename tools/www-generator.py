@@ -15,6 +15,7 @@
 import argparse
 import collections
 import glob
+import json
 import logging
 import multiprocessing
 import multiprocessing.pool
@@ -316,6 +317,7 @@ def load_project_data(source_directory,
             for url_info in _URLS:
                 if url_info.flag_name not in project:
                     project[url_info.flag_name] = url_info.default
+            project.setdefault('inactive', False)
 
             if (series == 'latest' and
                     deliverable_name not in governed_deliverables):
@@ -743,6 +745,20 @@ def main():
 
     if args.skip_render:
         return 0
+
+    # Write the list of inactive projects for the badge mechanism.
+    inactive_projects = sorted(
+        project['name']
+        for project in project_data.get('latest', [])
+        if project.get('inactive', False)
+    )
+    inactive_dir = os.path.join(args.output_directory, 'inactive')
+    if not os.path.isdir(inactive_dir):
+        os.makedirs(inactive_dir)
+    inactive_json_path = os.path.join(inactive_dir, 'projects.json')
+    logger.info('writing inactive projects list to %s', inactive_json_path)
+    with open(inactive_json_path, 'wb') as f:
+        f.write(json.dumps(inactive_projects).encode('utf8'))
 
     # Render the templates.
     output_pages = []
