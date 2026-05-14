@@ -563,6 +563,7 @@ _RETIRED_REPOS = [
     'openstack/tripleo-operator-ansible',
     'openstack/tripleo-quickstart',
     'openstack/tripleo-validations',
+    'openstack/virtualpdu',
 ]
 
 
