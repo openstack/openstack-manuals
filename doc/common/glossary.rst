@@ -3058,6 +3058,10 @@ P
 
       Alternative term for a cloudpipe.
 
+   Prometheus
+
+      Open source metrics and monitoring for systems and services.
+
    promiscuous mode
 
       Causes the network interface to pass all traffic it
