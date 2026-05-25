@@ -3719,11 +3719,6 @@ S
       The Block Storage driver for the SolidFire iSCSI storage
       appliance.
 
-   solum
-
-      Code name for the :term:`Software Development Lifecycle Automation
-      service <Software Development Lifecycle Automation service (solum)>`.
-
    spread-first scheduler
 
       The Compute VM scheduling algorithm that attempts to start a new
