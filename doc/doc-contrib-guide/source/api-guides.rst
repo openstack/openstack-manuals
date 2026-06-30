@@ -100,11 +100,11 @@ The basic steps are:
     ]
 
     # The prefix and repo name like
-    repository_name = 'openstack/glance'
+    openstackdocs_repo_name = 'openstack/glance'
     # Set Launchpad bug tag, default is empty
-    bug_tag = ''
+    openstackdocs_bug_tag = ''
     # The launchpad project name like
-    bug_project = 'glance'
+    openstackdocs_bug_project = 'glance'
 
     html_theme = 'openstackdocs'
     html_theme_options = {
@@ -192,7 +192,6 @@ documentation, patch the ``reference/projects.yaml`` file in the
 .. _`microversions`: https://docs.openstack.org/api-guide/compute/microversions.html
 .. _`API Quick Start page`: https://docs.openstack.org/api-quick-start/
 .. _`cycle-with-milestones release model`: https://releases.openstack.org/reference/release_models.html#cycle-with-milestones
-.. _`nova example`: https://github.com/openstack/nova/blob/master/api-ref/source/conf.py
+.. _`nova example`: https://opendev.org/openstack/nova/src/branch/master/api-ref/source/conf.py
 .. _`openstack/api-site repository`: https://opendev.org/openstack/api-site/src/branch/master/api-quick-start/source/index.rst
 .. _`openstack/governance repository`: https://opendev.org/openstack/governance/src/branch/master/reference/projects.yaml
-
