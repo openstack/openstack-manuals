@@ -56,6 +56,10 @@ OpenStack contribution process.
 
       The code name for the thirty fourth release of OpenStack.
 
+   2027.1 Indri
+
+      The code name for the thirty fifth release of OpenStack.
+
    6to4
 
       A mechanism that allows IPv6 packets to be transmitted
@@ -2863,7 +2867,8 @@ O
       `"year"."release count within the year"` and the name will be
       used mostly for marketing purposes. The first such release is
       2023.1 Antelope. Followed by, respectively, 2023.2 Bobcat,
-      2024.1 Caracal, 2024.2 Dalmatian, 2025.1 Epoxy, 2025.2 Flamingo.
+      2024.1 Caracal, 2024.2 Dalmatian, 2025.1 Epoxy, 2025.2 Flamingo,
+      2026.1 Gazpacho, 2026.2 Hibiscus, 2027.1 Indri.
 
    OpenStack-Ansible
 
